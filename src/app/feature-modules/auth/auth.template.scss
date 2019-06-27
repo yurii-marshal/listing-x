@@ -1,0 +1,17 @@
+.main-container {
+  display: flex;
+
+  .thumb {
+    flex: 0 0 460px;
+    border: 1px solid gainsboro;
+  }
+
+  .auth-container {
+    border: 1px solid gainsboro;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,23 @@
+<div class="main-container">
+  <div class="thumb">
+    <img src="https://dummyimage.com/460x800">
+  </div>
+  <div class="auth-container">
+    <form novalidate [formGroup]="form">
+      <div class="fieldset">
+        <label>E-MAIL</label>
+        <input formControlName="email" placeholder="example@mail.com" class="form-item">
+      </div>
+      <div class="fieldset">
+        <label>PASSWORD</label>
+        <input formControlName="email" placeholder="example@mail.com" type="password"  class="form-item">
+      </div>
+
+      <mat-checkbox class="example-margin" formControlName="remember">Checked</mat-checkbox>
+
+      <div class="fieldset">
+        <button mat-flat-button color="primary" style="width: 100%">SIGN IN</button>
+      </div>
+    </form>
+  </div>
+</div>
