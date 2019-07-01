@@ -14,4 +14,48 @@
     align-items: center;
     justify-content: center;
   }
+
+  form {
+    min-width: 540px;
+    margin-bottom: 25px;
+    .fieldset {
+      width: 100%;
+      margin-bottom: 1rem;
+      flex-grow: 1;
+
+      label {
+        text-transform: uppercase;
+        font-weight: bold;
+        user-select: none;
+        display: block;
+        font-size: 14px;
+        line-height: 17px;
+        margin-bottom: 10px;
+      }
+
+      .form-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        input:not([disabled]):hover {
+          border-color: gray;
+        }
+      }
+
+      *.ng-invalid.ng-touched {
+        border: 1px solid #c85578 !important;
+      }
+    }
+
+
+  }
+
+  .router-link {
+    text-decoration: underline;
+    outline: none;
+    cursor: pointer;
+  }
 }
+
+

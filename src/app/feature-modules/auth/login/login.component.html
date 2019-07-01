@@ -4,19 +4,27 @@
   </div>
   <div class="auth-container">
     <form novalidate [formGroup]="form">
+      <h2>Sign In to ListingX</h2>
+      <h5>Don't have an account? <span routerLink="../register" class="router-link">Create new one</span></h5>
       <div class="fieldset">
         <label>E-MAIL</label>
         <input formControlName="email" placeholder="example@mail.com" class="form-item">
+        <app-form-validation-error [control]="form.get('email')"></app-form-validation-error>
       </div>
       <div class="fieldset">
         <label>PASSWORD</label>
-        <input formControlName="email" placeholder="example@mail.com" type="password"  class="form-item">
+        <input formControlName="password" placeholder="example@mail.com" type="password" class="form-item">
+        <app-form-validation-error [control]="form.get('password')"></app-form-validation-error>
       </div>
 
-      <mat-checkbox class="example-margin" formControlName="remember">Checked</mat-checkbox>
+      <div class="fieldset u-flex u-flex-justify--space-between">
+        <mat-checkbox formControlName="remember" disableRipple="true" class="example-margin">Remember me</mat-checkbox>
+        <span routerLink="../reset" class="router-link">Forgot password?</span>
+      </div>
 
       <div class="fieldset">
-        <button mat-flat-button color="primary" style="width: 100%">SIGN IN</button>
+        <button mat-flat-button [disabled]="!form.dirty || form.invalid" color="primary" style="width: 100%">SIGN IN
+        </button>
       </div>
     </form>
   </div>

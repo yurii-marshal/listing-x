@@ -1,0 +1,175 @@
+.u-flex {
+  display: flex;
+}
+
+.u-flex-1 {
+  flex: 1 1 auto;
+}
+
+.u-flex-direction {
+  &--column {
+    flex-direction: column;
+  }
+  &--column-reverse {
+    flex-direction: column-reverse;
+  }
+  &--row {
+    flex-direction: row;
+  }
+  &--row-reverse {
+    flex-direction: row-reverse;
+  }
+}
+
+.u-flex-container {
+  display: flex;
+  flex-direction: row;
+
+  &--vertical {
+    flex-direction: column;
+    align-items: flex-start;
+
+    &-reverce {
+      flex-direction: column-reverse;
+    }
+  }
+
+  &--reverse {
+    flex-direction: row-reverse;
+  }
+
+  &--wrap {
+    flex-wrap: wrap;
+  }
+}
+
+.u-flex-wrap {
+  &--wrap {
+    flex-wrap: wrap;
+  }
+
+  &--no-wrap {
+    flex-wrap: nowrap;
+  }
+
+  &--wrap-reverse {
+    flex-wrap: wrap-reverse;
+  }
+}
+
+.u-flex-grow {
+  &--none {
+    flex-grow: 0;
+  }
+  @for $i from 1 through 12 {
+    &--#{$i} {
+      flex-grow: $i;
+    }
+  }
+
+  &--auto {
+    flex-grow: auto;
+  }
+}
+
+.u-flex-justify {
+  &--start {
+    justify-content: flex-start;
+  }
+
+  &--center {
+    justify-content: center;
+  }
+
+  &--end {
+    justify-content: flex-end;
+  }
+
+  &--space-around {
+    justify-content: space-around;
+  }
+
+  &--space-between {
+    justify-content: space-between;
+  }
+
+  &--space-evenly {
+    justify-content: space-evenly;
+  }
+}
+
+.u-flex-align-items {
+  &--start {
+    align-items: flex-start;
+  }
+
+  &--center {
+    align-items: center;
+  }
+
+  &--end {
+    align-items: flex-end;
+  }
+
+  &--baseline {
+    align-items: baseline;
+  }
+
+  &--stretch {
+    align-items: stretch;
+  }
+}
+
+.u-flex-align-self {
+  &--start {
+    align-self: flex-start;
+  }
+
+  &--center {
+    align-self: center;
+  }
+
+  &--end {
+    align-self: flex-end;
+  }
+
+  &--baseline {
+    align-self: baseline;
+  }
+
+  &--stretch {
+    align-self: stretch;
+  }
+}
+
+.u-flex-basis {
+  &--none {
+    flex-basis: 0;
+  }
+  &--auto {
+    flex-basis: fill;
+  }
+}
+
+.u-flex-wrap {
+  flex-wrap: wrap;
+
+  &--nowrap {
+    flex-wrap: nowrap;
+  }
+
+  &--reverse {
+    flex-wrap: wrap-reverse;
+  }
+}
+@for $i from -12 through 12 {
+  .u-flex-order--#{$i} {
+    order: $i;
+  }
+}
+
+.u-flex-container--center {
+  @extend .u-flex-container;
+  @extend .u-flex-justify--center;
+  @extend .u-flex-align-items--center;
+}

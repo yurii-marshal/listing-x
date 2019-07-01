@@ -1,1 +1,45 @@
-<p>register works!</p>
+<div class="main-container">
+  <div class="thumb">
+    <img src="https://dummyimage.com/460x800">
+  </div>
+  <div class="auth-container">
+    <form novalidate [formGroup]="form">
+      <h2>Get started with new ListingX account.</h2>
+      <h5>Already have an account? Please<span routerLink="../login" class="router-link">Sign in</span></h5>
+      <div class="fieldset">
+        <label>First Name</label>
+        <input formControlName="firstName" placeholder="Your first name" class="form-item">
+        <app-form-validation-error [control]="form.get('firstName')"></app-form-validation-error>
+      </div>
+
+      <div class="fieldset">
+        <label>last name</label>
+        <input formControlName="lastName" placeholder="Your last name" class="form-item">
+        <app-form-validation-error [control]="form.get('lastName')"></app-form-validation-error>
+      </div>
+
+      <div class="fieldset">
+        <label>E-mail</label>
+        <input formControlName="email" placeholder="example@mail.com" class="form-item">
+        <app-form-validation-error [control]="form.get('email')"></app-form-validation-error>
+      </div>
+
+      <div class="fieldset">
+        <label>Password</label>
+        <input formControlName="password" type="password" class="form-item">
+        <app-form-validation-error [control]="form.get('password')"></app-form-validation-error>
+      </div>
+
+      <div class="fieldset">
+        <label>Confirm Password</label>
+        <input formControlName="confirmPassword" type="password" class="form-item">
+        <app-form-validation-error [control]="form.get('confirmPassword')"></app-form-validation-error>
+      </div>
+
+      <div class="fieldset">
+        <button mat-flat-button [disabled]="!form.dirty || form.invalid" color="primary">Registration</button>
+        <p>By..</p>
+      </div>
+    </form>
+  </div>
+</div>

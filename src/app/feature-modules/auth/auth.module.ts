@@ -6,6 +6,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { AuthRoutingModule } from './auth-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule, MatCheckboxModule } from '@angular/material';
+import { SharedModule } from '../../shared-modules/shared.module';
 
 const MatModules = [
   MatCheckboxModule,
@@ -13,12 +14,17 @@ const MatModules = [
 ];
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent, ResetPasswordComponent],
+  declarations: [
+    LoginComponent,
+    RegisterComponent,
+    ResetPasswordComponent
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     AuthRoutingModule,
-    ...MatModules
+    ...MatModules,
+    SharedModule
   ]
 })
 export class AuthModule {
