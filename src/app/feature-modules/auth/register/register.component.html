@@ -31,12 +31,13 @@
       </div>
 
       <div class="fieldset">
-        <label>Confirm Password</label>
+        <label>Confirm Password<span style="opacity: .7">{{ form.hasError('passwords') | json }}</span></label>
         <input formControlName="confirmPassword" type="password" class="form-item">
         <app-form-validation-error [control]="form.get('confirmPassword')"></app-form-validation-error>
+        <app-form-validation-error [control]="form"></app-form-validation-error>
       </div>
 
-      <div class="fieldset">
+      <div class="u-flex u-flex-justify--space-between">
         <button mat-flat-button [disabled]="!form.dirty || form.invalid" color="primary">Registration</button>
         <p>By..</p>
       </div>
