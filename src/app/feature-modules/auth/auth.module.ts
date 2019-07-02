@@ -25,6 +25,9 @@ const MatModules = [
     AuthRoutingModule,
     ...MatModules,
     SharedModule
+  ],
+  providers: [
+
   ]
 })
 export class AuthModule {
