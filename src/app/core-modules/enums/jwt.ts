@@ -1,5 +1,5 @@
 export enum Jwt {
   Token = 'token',
-  RefreshToken = 'refreshToken',
+  RefreshToken = 'refresh_token',
   Expiration = 'expires_at'
 }
