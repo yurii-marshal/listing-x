@@ -23,6 +23,10 @@ export class RegisterComponent implements OnInit {
     }, {validator: this.passwordMatch.bind(this)});
   }
 
+  onSubmit() {
+    console.log('Form submit', this.form.value);
+  }
+
   private passwordMatch(control: AbstractControl): ValidationErrors | null {
     const password = control.get('password');
     const confirmPassword = control.get('confirmPassword');

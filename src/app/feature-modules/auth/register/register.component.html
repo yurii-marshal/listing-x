@@ -38,8 +38,13 @@
       </div>
 
       <div class="u-flex u-flex-justify--space-between">
-        <button mat-flat-button [disabled]="!form.dirty || form.invalid" color="primary">Registration</button>
-        <p>By..</p>
+        <button mat-flat-button
+                [disabled]="!form.dirty || form.invalid"
+                (click)="onSubmit()"
+                color="primary">
+          Registration
+        </button>
+        <p>By clicking..</p>
       </div>
     </form>
   </div>
