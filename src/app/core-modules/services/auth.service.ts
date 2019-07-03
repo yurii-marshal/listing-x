@@ -5,7 +5,7 @@ import * as moment from 'moment';
 import { User } from '../../feature-modules/auth/models';
 import { map, tap } from 'rxjs/operators';
 import { Jwt } from '../enums/jwt';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { JwtResponse } from '../interfaces/jwt-response';
 
 @Injectable({
@@ -26,13 +26,14 @@ export class AuthService {
     return localStorage.getItem(Jwt.Token);
   }
 
+  // TODO: return moment().isBefore(this.expirationTime);
   isLoggedIn(): Observable<boolean> {
-    const token = this.token;
-    return this.http.post<boolean>(ApiEndpoint.Verify, {token})
-      .pipe(
-        map(data => !!data)
-      );
-    // TODO: return moment().isBefore(this.expirationTime);
+    if (!this.token) {
+      return of(false);
+    }
+
+    return this.http.post<boolean>(ApiEndpoint.Verify, {token: this.token})
+      .pipe(map(data => !!data));
   }
 
   login(user: User): Observable<JwtResponse> {

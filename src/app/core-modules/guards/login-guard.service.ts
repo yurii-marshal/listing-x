@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class LoginGuardService implements CanActivate, CanActivateChild {
@@ -9,15 +11,14 @@ export class LoginGuardService implements CanActivate, CanActivateChild {
               private router: Router) {
   }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree {
-    if (this.authService.isLoggedIn()) {
-      return this.router.parseUrl('portal'); // Transactions
-    } else {
-      return true;
-    }
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
+    const redirectUrl = route.queryParams.redirectUrl || '/portal';
+    return this.authService.isLoggedIn().pipe(
+      map(isLoggedIn => isLoggedIn ? this.router.parseUrl(redirectUrl) : true)
+    );
   }
 
-  canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree {
+  canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
     return this.canActivate(childRoute, state);
   }
 }
