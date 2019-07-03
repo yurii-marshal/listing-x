@@ -25,7 +25,7 @@ export class ProgressService {
   private progressStream: Observable<boolean> = this.processingSubject
     .asObservable()
     .pipe(
-      bufferTime(100),
+      bufferTime(500),
       filter(states => states.length > 0),
       scan((total: number, states: ProgressBarState[]) => total + _.sum(states), 0),
       map((diff: number) => diff !== 0),
