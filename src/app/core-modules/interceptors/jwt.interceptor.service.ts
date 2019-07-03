@@ -1,18 +1,24 @@
 import { Injectable } from '@angular/core';
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { ApiEndpoint } from '../enums/api-endpoint';
-import { MatSnackBar } from '@angular/material';
 import { environment } from '../../../environments/environment';
+import { AuthService } from '../services/auth.service';
+import { catchError, filter, switchMap, take, tap } from 'rxjs/operators';
+import { HttpStatusCodes } from '../enums/http-status-codes';
+import { JwtResponse } from '../interfaces/jwt-response';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
+  private isRefreshing = false;
+  private refreshTokenSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+
   private readonly excluded: ApiEndpoint[] = [
     ApiEndpoint.Login,
     ApiEndpoint.Register
   ];
 
-  constructor(private snackBar: MatSnackBar) {
+  constructor(private authService: AuthService) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -25,26 +31,47 @@ export class JwtInterceptor implements HttpInterceptor {
 
     const token = localStorage.getItem('token');
     if (token) {
-      const cloned = req.clone({
-        headers: req.headers.set('Authorization', `Bearer ${token}`)
-      });
-      return next.handle(cloned);
+      req = this.addToken(req, token);
     }
 
     return next.handle(req)
       .pipe(
-        // TODO: refresh token logic for 401 status code
+        catchError(error => {
+          if (error instanceof HttpErrorResponse && error.status === HttpStatusCodes.UNAUTHORIZED) {
+            return this.handle401Error(req, next);
+          } else {
+            return throwError(error);
+          }
+        })
       );
   }
 
-  private globalHttpErrorParser(event: HttpEvent<any>) {
-    if (event instanceof HttpResponse) {
-      const httpResponse = event as HttpResponse<any>;
-      const code = httpResponse.body.ReturnCode;
-      if (parseFloat(code) >= 400) {
-        const responseMessage = httpResponse.body.ResponseMessage;
-        this.snackBar.open(responseMessage, 'OK', {duration: 5000});
-      }
+  private addToken(req: HttpRequest<any>, token: string): HttpRequest<any> {
+    return req.clone({
+      headers: req.headers.set('Authorization', `JWT ${token}`)
+    });
+  }
+
+
+  private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
+    if (this.isRefreshing) {
+      return this.refreshTokenSubject
+        .pipe(
+          filter(token => token != null),
+          take(1),
+          switchMap(token => next.handle(this.addToken(request, token)))
+        );
+    } else {
+      this.isRefreshing = true;
+      this.refreshTokenSubject.next(null);
+      return this.authService.refreshToken()
+        .pipe(
+          tap((resp: JwtResponse) => {
+            this.isRefreshing = false;
+            this.refreshTokenSubject.next(resp.token);
+          }),
+          switchMap((resp: JwtResponse) => next.handle(this.addToken(request, resp.token)))
+        );
     }
   }
 

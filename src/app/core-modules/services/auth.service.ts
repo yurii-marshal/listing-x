@@ -3,9 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { ApiEndpoint } from '../enums/api-endpoint';
 import * as moment from 'moment';
 import { User } from '../../feature-modules/auth/models';
-import { shareReplay, tap } from 'rxjs/operators';
+import { map, shareReplay, tap } from 'rxjs/operators';
 import { Jwt } from '../enums/jwt';
 import { Observable } from 'rxjs';
+import { JwtResponse } from '../interfaces/jwt-response';
 
 @Injectable({
   providedIn: 'root'
@@ -21,15 +22,19 @@ export class AuthService {
     return moment(expiresAt);
   }
 
-  isLoggedIn(): boolean {
-    return moment().isBefore(this.expirationTime);
+  isLoggedIn(): Observable<boolean> {
+    const token = localStorage.getItem(Jwt.Token);
+    return this.http.post<boolean>(ApiEndpoint.Verify, {token})
+      .pipe(
+        map(data => !!data)
+      );
+    // TODO: return moment().isBefore(this.expirationTime);
   }
 
-  login(user: User) {
+  login(user: User): Observable<{token: string}> {
     return this.http.post<any>(ApiEndpoint.Login, user.serializeLogin())
       .pipe(
         tap(resp => this.setSession(resp)),
-        shareReplay()
       );
   }
 
@@ -37,16 +42,14 @@ export class AuthService {
     return this.http.post<User>(ApiEndpoint.Register, user.serialize())
       .pipe(
         tap(resp => this.setSession(resp)),
-        shareReplay()
       );
   }
 
-  refreshToken(): Observable<any> {
+  refreshToken(): Observable<JwtResponse> {
     const token = localStorage.getItem(Jwt.Token);
-    return this.http.post<any>(ApiEndpoint.RefreshToken, {token})
+    return this.http.post<JwtResponse>(ApiEndpoint.RefreshToken, {token})
       .pipe(
         tap(resp => this.setSession(resp)),
-        shareReplay()
       );
   }
 

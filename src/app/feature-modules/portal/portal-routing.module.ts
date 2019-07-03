@@ -7,7 +7,7 @@ const routes: Routes = [
   {
     path: '',
     component: TransactionsComponent,
-    canActivateChild: [AuthGuardService]
+    canActivate: [AuthGuardService]
   }
 ];
 
