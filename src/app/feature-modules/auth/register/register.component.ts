@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import * as _ from 'lodash';
+import { CustomValidators } from '../../../core-modules/validators/custom-validators';
 
 @Component({
   selector: 'app-register',
@@ -20,19 +21,11 @@ export class RegisterComponent implements OnInit {
       email: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required]],
       confirmPassword: [null, [Validators.required]]
-    }, {validator: this.passwordMatch.bind(this)});
+    }, {validator: CustomValidators.passwordMatch});
   }
 
   onSubmit() {
     console.log('Form submit', this.form.value);
   }
 
-  private passwordMatch(control: AbstractControl): ValidationErrors | null {
-    const password = control.get('password');
-    const confirmPassword = control.get('confirmPassword');
-    if (!password || !confirmPassword || !password.value || !confirmPassword.value) {
-      return null;
-    }
-    return _.trim(password.value) === _.trim(confirmPassword.value) ? null : { passwords: true };
-  }
 }

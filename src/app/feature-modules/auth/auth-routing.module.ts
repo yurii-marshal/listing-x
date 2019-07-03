@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { NewPasswordComponent } from './new-password/new-password.component';
 
 const routes: Routes = [
   {
@@ -17,7 +18,17 @@ const routes: Routes = [
     component: RegisterComponent
   }, {
     path: 'reset',
-    component: ResetPasswordComponent
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        component: ResetPasswordComponent
+      },
+      {
+        path: 'new', // FIXME: token
+        component: NewPasswordComponent
+      }
+    ]
   }
 ];
 
@@ -26,4 +37,5 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: []
 })
-export class AuthRoutingModule { }
+export class AuthRoutingModule {
+}

@@ -65,6 +65,10 @@ export class AuthService {
     return this.http.post<any>(ApiEndpoint.Unknown, {email});
   }
 
+  resetPassword(password: string) {
+    return this.http.post<any>(ApiEndpoint.Unknown, {password});
+  }
+
   logout() {
     localStorage.removeItem(Jwt.Token);
     localStorage.removeItem(Jwt.Expiration);

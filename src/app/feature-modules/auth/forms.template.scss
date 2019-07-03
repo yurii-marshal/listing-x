@@ -59,11 +59,11 @@
 
       app-form-validation-error {
         position: absolute;
-        bottom: 5px;
+        bottom: 3px;
         left: 0;
       }
 
-      *.ng-invalid.ng-touched {
+      input.ng-invalid.ng-touched {
         border: 1px solid #c85578 !important;
       }
     }
