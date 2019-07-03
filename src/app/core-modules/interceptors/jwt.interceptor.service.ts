@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiEndpoint } from '../enums/api-endpoint';
-import { catchError, tap } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material';
 import { environment } from '../../../environments/environment';
 
@@ -21,7 +20,7 @@ export class JwtInterceptor implements HttpInterceptor {
 
 
     if (this.excluded.some((endpoint: ApiEndpoint) => req.url.includes(endpoint))) {
-      return next.handle(req); // Ignore
+      return next.handle(req); // Exit
     }
 
     const token = localStorage.getItem('token');

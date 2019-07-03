@@ -11,7 +11,7 @@
 // Input Placeholders
 @mixin placeholder() {
   font-size: 15px;
-  line-height: 16px;
+  line-height: normal;
   color: #c7ccd6;
   font-family: 'SFUIDisplay' !important;
 }

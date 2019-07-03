@@ -13,17 +13,19 @@
       </div>
       <div class="fieldset">
         <label>PASSWORD</label>
-        <input formControlName="password" placeholder="example@mail.com" type="password" class="form-control">
+        <input formControlName="password" placeholder="****************" type="password" class="form-control">
         <app-form-validation-error [control]="form.get('password')"></app-form-validation-error>
       </div>
 
-      <div class="fieldset u-flex u-flex-justify--space-between description">
-        <mat-checkbox formControlName="remember" disableRipple="true" class="example-margin">Remember me</mat-checkbox>
+      <div class="fieldset u-flex u-flex-justify--end description">
+        <!--mat-checkbox formControlName="remember" disableRipple="true" class="example-margin">Remember me</mat-checkbox-->
         <span routerLink="../reset" class="router-link">Forgot password?</span>
       </div>
 
       <div class="fieldset" style="margin-top: 48px">
-        <button mat-flat-button [disabled]="!form.dirty || form.invalid" color="primary" style="width: 100%">SIGN IN</button>
+        <button mat-flat-button [disabled]="!form.dirty || form.invalid" (click)="onSubmit()" color="primary" style="width: 100%">
+          SIGN IN
+        </button>
       </div>
     </form>
   </div>

@@ -5,8 +5,11 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './core-modules/interceptors/jwt.interceptor.service';
-import { MAT_DATE_LOCALE } from '@angular/material';
+import { MAT_DATE_LOCALE, MatProgressBarModule, MatSnackBarModule } from '@angular/material';
 import { AuthService } from './core-modules/services/auth.service';
+import { HttpErrorsInterceptor } from './core-modules/interceptors/http.errors.interceptor.service';
+import { ProgressService } from './core-modules/services/progress.service';
+import { HttpProgressInterceptor } from './core-modules/interceptors/http.progress.interceptor.service';
 
 @NgModule({
   declarations: [
@@ -16,13 +19,25 @@ import { AuthService } from './core-modules/services/auth.service';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatSnackBarModule,
+    MatProgressBarModule
   ],
   providers: [
     AuthService,
+    ProgressService,
     {
       provide: HTTP_INTERCEPTORS,
+      useClass: HttpProgressInterceptor,
+      multi: true,
+    }, {
+      provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorsInterceptor,
       multi: true,
     },
     {

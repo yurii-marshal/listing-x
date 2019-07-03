@@ -41,14 +41,8 @@ export class AuthService {
       );
   }
 
-  /**
-   * POST auth/refresh/
-   * Headers: Content-Type: application/json
-   * Body:
-   * {"token": current_token"}
-   **/
   refreshToken(): Observable<any> {
-    const token = localStorage.getItem(Jwt.RefreshToken);
+    const token = localStorage.getItem(Jwt.Token);
     return this.http.post<any>(ApiEndpoint.RefreshToken, {token})
       .pipe(
         tap(resp => this.setSession(resp)),
@@ -56,9 +50,12 @@ export class AuthService {
       );
   }
 
+  requestNewPassword(email: string) {
+    return this.http.post<any>(ApiEndpoint.Unknown, {email});
+  }
+
   logout() {
     localStorage.removeItem(Jwt.Token);
-    localStorage.removeItem(Jwt.RefreshToken);
     localStorage.removeItem(Jwt.Expiration);
   }
 
@@ -66,7 +63,6 @@ export class AuthService {
     const expiresAt: moment.Moment = moment().add(resp[Jwt.Expiration], 'second');
     const unixTimestamp: number = expiresAt.valueOf(); // in ms
     localStorage.setItem(Jwt.Token, resp[Jwt.Token]);
-    localStorage.setItem(Jwt.RefreshToken, resp[Jwt.RefreshToken]);
     localStorage.setItem(Jwt.Expiration, JSON.stringify(unixTimestamp));
   }
 }
