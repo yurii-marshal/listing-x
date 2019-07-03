@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
 import { tap } from 'rxjs/operators';
@@ -11,7 +11,7 @@ import * as _ from 'lodash';
   providedIn: 'root'
 })
 export class HttpErrorsInterceptor implements HttpInterceptor {
-  private readonly excluded: ApiEndpoint[] = [];
+  private readonly excluded: ApiEndpoint[] = [ApiEndpoint.Verify];
 
   constructor(private snackBar: MatSnackBar) {
   }
