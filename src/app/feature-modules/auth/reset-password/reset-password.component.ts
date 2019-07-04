@@ -26,6 +26,6 @@ export class ResetPasswordComponent implements OnInit {
       .pipe(
         tap({error: err => this.form.get('email').setErrors({emailnotfound: true})})
       )
-      .subscribe(); // TODO: Navigate
+      .subscribe(); // TODO: Navigate to input password
   }
 }
