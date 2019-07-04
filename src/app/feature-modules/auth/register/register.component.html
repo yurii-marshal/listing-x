@@ -3,7 +3,7 @@
     <img src="https://dummyimage.com/460x800">
   </div>
   <div class="auth-container">
-    <form novalidate [formGroup]="form" *ngIf="!flag">
+    <form novalidate [formGroup]="form" *ngIf="!isActivated">
       <h2>Get started with new ListingX account.</h2>
       <h5>Already have an account? Please&nbsp;<span routerLink="../login" class="router-link">Sign in</span></h5>
       <div class="fieldset">
@@ -51,7 +51,7 @@
       </div>
     </form>
 
-    <ng-container *ngIf="flag">
+    <ng-container *ngIf="isActivated">
 
       <h2>Thanks for registration!</h2>
       <h5>We sent you the instructions on your mailbox {{ form.get('email').value }}

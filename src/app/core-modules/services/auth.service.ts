@@ -54,7 +54,11 @@ export class AuthService {
       // );
   }
 
-  activate(token: string): Observable<boolean> {
+  resendActivation(email: string): Observable<JwtResponse> {
+    return this.http.post<JwtResponse>(ApiEndpoint.ResendActivation, {email});
+  }
+
+    activate(token: string): Observable<boolean> {
     const url = ApiEndpoint.ActivateAccount + token + '/';
     return this.http.get<boolean>(url);
   }

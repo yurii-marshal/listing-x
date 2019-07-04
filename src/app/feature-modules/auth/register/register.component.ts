@@ -5,6 +5,7 @@ import { CustomValidators } from '../../../core-modules/validators/custom-valida
 import { AuthService } from '../../../core-modules/services/auth.service';
 import { User } from '../models';
 import { tap } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-register',
@@ -15,10 +16,11 @@ export class RegisterComponent implements OnInit {
 
   form: FormGroup;
 
-  flag: boolean;
+  isActivated: boolean;
 
   constructor(private formBuilder: FormBuilder,
-              private service: AuthService) { }
+              private service: AuthService,
+              private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -36,11 +38,13 @@ export class RegisterComponent implements OnInit {
       .pipe(
         tap({error: err => this.form.get('email').setErrors({uniqemail: true})})
       )
-      .subscribe(() => this.flag = true);
+      .subscribe(() => this.isActivated = true);
   }
 
   onResendEmail() {
-    // FIXME:
+    const user = new User(this.form.value);
+    this.service.resendActivation(user.email)
+      .subscribe(() => this.snackBar.open('Activation link re-sent to your email', 'OK', {duration: 5000}));
   }
 
 }
