@@ -5,5 +5,6 @@ export enum ApiEndpoint {
   RefreshToken = '/auth/refresh/',
   ActivateAccount = '/users/activate/',
   ResendActivation = '/users/resend-activation/',
+  ForgotPassword = '/users/forgot-password/',
   Unknown = '/unknown'
 }

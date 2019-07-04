@@ -10,6 +10,7 @@ import { AbstractControl } from '@angular/forms';
         <div *ngIf="control.errors.maxlength"><small>More than {{ control.errors.maxlength.requiredLength }} symbols</small></div>
         <div *ngIf="control.errors.email"><small>Invalid email</small></div>
         <div *ngIf="control.errors.uniqemail"><small>User with this email address already exists.</small></div>
+        <div *ngIf="control.errors.emailnotfound"><small>Email address not found.</small></div>
         <div *ngIf="control.hasError('passwords')"><small>Passwords should be the same</small></div>
         <!-- TODO: all possible validation errors -->
       </div>

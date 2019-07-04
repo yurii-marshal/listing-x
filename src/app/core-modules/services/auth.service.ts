@@ -72,7 +72,7 @@ export class AuthService {
   }
 
   requestNewPassword(email: string) {
-    return this.http.post<any>(ApiEndpoint.Unknown, {email});
+    return this.http.post<any>(ApiEndpoint.ForgotPassword, {email});
   }
 
   resetPassword(password: string, token: string) {

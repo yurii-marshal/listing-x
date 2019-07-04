@@ -11,7 +11,10 @@ import * as _ from 'lodash';
   providedIn: 'root'
 })
 export class HttpErrorsInterceptor implements HttpInterceptor {
-  private readonly excluded: ApiEndpoint[] = [ApiEndpoint.Verify];
+  private readonly excluded: ApiEndpoint[] = [
+    ApiEndpoint.Verify,
+    ApiEndpoint.ForgotPassword
+  ];
 
   constructor(private snackBar: MatSnackBar) {
   }
