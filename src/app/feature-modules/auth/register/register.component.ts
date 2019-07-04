@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import * as _ from 'lodash';
 import { CustomValidators } from '../../../core-modules/validators/custom-validators';
+import { AuthService } from '../../../core-modules/services/auth.service';
+import { User } from '../models';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-register',
@@ -12,7 +15,10 @@ export class RegisterComponent implements OnInit {
 
   form: FormGroup;
 
-  constructor(protected formBuilder: FormBuilder) { }
+  flag: boolean;
+
+  constructor(private formBuilder: FormBuilder,
+              private service: AuthService) { }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -25,7 +31,16 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('Form submit', this.form.value);
+    const user = new User(this.form.value);
+    this.service.register(user)
+      .pipe(
+        tap({error: err => this.form.get('email').setErrors({uniqemail: true})})
+      )
+      .subscribe(() => this.flag = true);
+  }
+
+  onResendEmail() {
+    // FIXME:
   }
 
 }

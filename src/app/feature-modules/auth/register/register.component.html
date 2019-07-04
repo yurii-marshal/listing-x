@@ -3,38 +3,38 @@
     <img src="https://dummyimage.com/460x800">
   </div>
   <div class="auth-container">
-    <form novalidate [formGroup]="form">
+    <form novalidate [formGroup]="form" *ngIf="!flag">
       <h2>Get started with new ListingX account.</h2>
       <h5>Already have an account? Please&nbsp;<span routerLink="../login" class="router-link">Sign in</span></h5>
       <div class="fieldset">
         <label>First Name</label>
         <input formControlName="firstName" placeholder="Your first name" class="form-control">
-        <app-form-validation-error [formControl]="form.get('firstName')"></app-form-validation-error>
+        <app-form-validation-error [baseControl]="form.get('firstName')"></app-form-validation-error>
       </div>
 
       <div class="fieldset">
         <label>last name</label>
         <input formControlName="lastName" placeholder="Your last name" class="form-control">
-        <app-form-validation-error [formControl]="form.get('lastName')"></app-form-validation-error>
+        <app-form-validation-error [baseControl]="form.get('lastName')"></app-form-validation-error>
       </div>
 
       <div class="fieldset">
         <label>E-mail</label>
         <input formControlName="email" placeholder="example@mail.com" class="form-control">
-        <app-form-validation-error [formControl]="form.get('email')"></app-form-validation-error>
+        <app-form-validation-error [baseControl]="form.get('email')"></app-form-validation-error>
       </div>
 
       <div class="fieldset">
         <label>Password</label>
         <input formControlName="password" type="password" placeholder="****************" class="form-control">
-        <app-form-validation-error [formControl]="form.get('password')"></app-form-validation-error>
+        <app-form-validation-error [baseControl]="form.get('password')"></app-form-validation-error>
       </div>
 
       <div class="fieldset">
         <label>Confirm Password</label>
         <input formControlName="confirmPassword" type="password" placeholder="****************" class="form-control">
-        <app-form-validation-error [formControl]="form.get('confirmPassword')"></app-form-validation-error>
-        <app-form-validation-error [formControl]="form"></app-form-validation-error>
+        <app-form-validation-error [baseControl]="form.get('confirmPassword')"></app-form-validation-error>
+        <app-form-validation-error [baseControl]="form"></app-form-validation-error>
       </div>
 
       <div class="u-flex u-flex-justify--space-between" style="margin-top: 48px">
@@ -50,5 +50,26 @@
         </p>
       </div>
     </form>
+
+    <ng-container *ngIf="flag">
+
+      <h2>Thanks for registration!</h2>
+      <h5>We sent you the instructions on your mailbox {{ form.get('email').value }}
+        Click the button below you didn’t receive the email.</h5>
+
+
+      <div class="fieldset u-flex u-flex-justify--space-between u-flex-align-items" style="margin-top: 48px">
+        <button mat-flat-button
+                (click)="onResendEmail()"
+                color="primary">
+          RESEND THE EMAIL
+        </button>
+        <button mat-stroked-button
+                routerLink="../login"
+                color="primary">
+          RESEND THE EMAIL
+        </button>
+      </div>
+    </ng-container>
   </div>
 </div>

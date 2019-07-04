@@ -16,18 +16,18 @@ const MatModules = [
 ];
 
 @NgModule({
-  declarations: [
-    LoginComponent,
-    RegisterComponent,
-    ResetPasswordComponent,
-    NewPasswordComponent
-  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     AuthRoutingModule,
     ...MatModules,
     SharedModule
+  ],
+  declarations: [
+    LoginComponent,
+    RegisterComponent,
+    ResetPasswordComponent,
+    NewPasswordComponent
   ],
   providers: [
 

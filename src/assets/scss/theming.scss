@@ -17,3 +17,15 @@ $custom-typography: mat-typography-config(
 
 // Override the typography in the core CSS.
 @include mat-core($custom-typography);
+
+
+// Override material
+snack-bar-container {
+  /** Extra CSS classes to be added to the snack bar container. */
+  &.error-bar {
+    background: #c85578 !important;
+    .mat-button-wrapper {
+      color: white!important;
+    }
+  }
+}

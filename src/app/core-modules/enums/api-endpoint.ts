@@ -1,7 +1,8 @@
 export enum ApiEndpoint {
   Login = '/auth/login/',
   Verify = '/auth/verify/',
-  Register = '/register',
+  Register = '/users/',
   RefreshToken = '/auth/refresh/',
+  ActivateAccount = '/users/activate/',
   Unknown = '/unknown'
 }

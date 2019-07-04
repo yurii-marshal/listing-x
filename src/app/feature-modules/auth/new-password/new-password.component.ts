@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../core-modules/services/auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../models';
 import { CustomValidators } from '../../../core-modules/validators/custom-validators';
 
@@ -16,7 +16,8 @@ export class NewPasswordComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private service: AuthService,
-              private router: Router) { }
+              private router: Router,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -26,8 +27,9 @@ export class NewPasswordComponent implements OnInit {
   }
 
   onSubmit() {
+    const token = this.route.snapshot.paramMap.get('token');
     const user = new User(this.form.value);
-    this.service.resetPassword(user.password)
+    this.service.resetPassword(user.password, token)
       .subscribe(() => this.router.navigateByUrl('/portal'));
   }
 

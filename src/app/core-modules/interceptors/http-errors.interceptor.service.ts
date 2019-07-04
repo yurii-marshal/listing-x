@@ -31,7 +31,10 @@ export class HttpErrorsInterceptor implements HttpInterceptor {
     const code = +errorResponse.status;
     if (code !== HttpStatusCodes.UNAUTHORIZED) {
       const msg = _.values(errorResponse.error).join('\n');
-      this.snackBar.open(msg || 'Something went wrong', 'OK', {duration: 5000});
+      this.snackBar.open(msg || 'Something went wrong', 'OK', {
+        duration: 5000,
+        panelClass: 'error-bar'
+      });
     }
   }
 }

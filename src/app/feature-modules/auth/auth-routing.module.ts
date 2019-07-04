@@ -4,6 +4,8 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { NewPasswordComponent } from './new-password/new-password.component';
+import { LoginGuardService } from '../../core-modules/guards/login-guard.service';
+import { ActivationResolver } from '../../core-modules/resolvers/activation.resolver';
 
 const routes: Routes = [
   {
@@ -12,7 +14,8 @@ const routes: Routes = [
     redirectTo: 'login'
   }, {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
+    canActivate: [LoginGuardService]
   }, {
     path: 'register',
     component: RegisterComponent
@@ -25,10 +28,14 @@ const routes: Routes = [
         component: ResetPasswordComponent
       },
       {
-        path: 'new', // FIXME: token
+        path: ':token',
         component: NewPasswordComponent
       }
     ]
+  }, {
+    path: 'activation/:token',
+    resolve: { activated: ActivationResolver},
+    component: LoginComponent
   }
 ];
 

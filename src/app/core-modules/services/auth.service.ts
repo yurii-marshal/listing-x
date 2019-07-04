@@ -12,6 +12,7 @@ import { JwtResponse } from '../interfaces/jwt-response';
   providedIn: 'root'
 })
 export class AuthService {
+  private user: User;
 
   constructor(private http: HttpClient) {
   }
@@ -47,10 +48,15 @@ export class AuthService {
   }
 
   register(user: User): Observable<JwtResponse> {
-    return this.http.post<JwtResponse>(ApiEndpoint.Register, user.serialize())
-      .pipe(
-        tap(resp => this.setSession(resp)),
-      );
+    return this.http.post<JwtResponse>(ApiEndpoint.Register, user.serialize());
+      // .pipe(
+      //   tap(resp => this.setSession(resp)),
+      // );
+  }
+
+  activate(token: string): Observable<boolean> {
+    const url = ApiEndpoint.ActivateAccount + token + '/';
+    return this.http.get<boolean>(url);
   }
 
   refreshToken(): Observable<JwtResponse> {
@@ -65,8 +71,8 @@ export class AuthService {
     return this.http.post<any>(ApiEndpoint.Unknown, {email});
   }
 
-  resetPassword(password: string) {
-    return this.http.post<any>(ApiEndpoint.Unknown, {password});
+  resetPassword(password: string, token: string) {
+    return this.http.post<any>(ApiEndpoint.Unknown, {password, token});
   }
 
   logout() {
