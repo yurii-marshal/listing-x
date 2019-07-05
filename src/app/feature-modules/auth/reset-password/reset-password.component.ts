@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../core-modules/services/auth.service';
 import { tap } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-reset-password',
@@ -13,7 +14,8 @@ export class ResetPasswordComponent implements OnInit {
   form: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
-              private service: AuthService) { }
+              private service: AuthService,
+              private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -26,6 +28,6 @@ export class ResetPasswordComponent implements OnInit {
       .pipe(
         tap({error: err => this.form.get('email').setErrors({emailnotfound: true})})
       )
-      .subscribe(); // TODO: Navigate to input password
+      .subscribe(() => this.snackBar.open('Email sent to your mail box.', 'OK', {duration: 5000}));
   }
 }

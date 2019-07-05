@@ -4,6 +4,7 @@ import { FormValidationErrorComponent } from './components/form-validation-error
 import { MatButtonModule, MatCheckboxModule, MatDialogModule, MatIconModule } from '@angular/material';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ArrayPipe } from './pipes/array.pipe';
+import { DebounceClickDirective } from './directives/debounce-click.directive';
 
 const materialModules = [
   MatDialogModule,
@@ -20,11 +21,13 @@ const materialModules = [
   ],
   declarations: [
     FormValidationErrorComponent,
-    ArrayPipe
+    ArrayPipe,
+    DebounceClickDirective,
   ],
   exports: [
     FormValidationErrorComponent,
-    ArrayPipe
+    ArrayPipe,
+    DebounceClickDirective
   ]
 })
 export class SharedModule { }

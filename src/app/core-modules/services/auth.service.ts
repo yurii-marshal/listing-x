@@ -76,7 +76,7 @@ export class AuthService {
   }
 
   resetPassword(password: string, token: string) {
-    return this.http.post<any>(AuthEndpoints.Unknown, {password, token});
+    return this.http.post<any>(AuthEndpoints.ResetPassword, {password, token});
   }
 
   logout() {
