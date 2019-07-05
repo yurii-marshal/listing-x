@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { ApiEndpoint } from '../enums/api-endpoint';
+import { AuthEndpoints } from '../enums/auth-endpoints';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../services/auth.service';
 import { catchError, filter, switchMap, take, tap } from 'rxjs/operators';
@@ -13,9 +13,11 @@ export class JwtInterceptor implements HttpInterceptor {
   private isRefreshing = false;
   private refreshTokenSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
 
-  private readonly excluded: ApiEndpoint[] = [
-    ApiEndpoint.Login,
-    ApiEndpoint.Register
+  private readonly excluded: AuthEndpoints[] = [
+    AuthEndpoints.Login,
+    AuthEndpoints.Register,
+    AuthEndpoints.RefreshToken,
+    AuthEndpoints.ForgotPassword
   ];
 
   constructor(private authService: AuthService) {
@@ -25,7 +27,7 @@ export class JwtInterceptor implements HttpInterceptor {
     req = req.clone({url: this.getApiURL(req.url)});
 
 
-    if (this.excluded.some((endpoint: ApiEndpoint) => req.url.includes(endpoint))) {
+    if (this.excluded.some((endpoint: AuthEndpoints) => req.url.endsWith(endpoint))) {
       return next.handle(req); // Exit
     }
 

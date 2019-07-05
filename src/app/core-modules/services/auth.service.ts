@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ApiEndpoint } from '../enums/api-endpoint';
+import { AuthEndpoints } from '../enums/auth-endpoints';
 import * as moment from 'moment';
 import { User } from '../../feature-modules/auth/models';
 import { catchError, map, shareReplay, switchMap, tap } from 'rxjs/operators';
@@ -33,7 +33,7 @@ export class AuthService {
       return of(false);
     }
 
-    return this.http.post<boolean>(ApiEndpoint.Verify, {token: this.jwtToken})
+    return this.http.post<boolean>(AuthEndpoints.Verify, {token: this.jwtToken})
       .pipe(
         map(data => !!data),
         catchError(() => of(false)),
@@ -41,42 +41,42 @@ export class AuthService {
   }
 
   login(user: User): Observable<JwtResponse> {
-    return this.http.post<any>(ApiEndpoint.Login, user.serializeLogin())
+    return this.http.post<any>(AuthEndpoints.Login, user.serializeLogin())
       .pipe(
         tap(resp => this.setSession(resp)),
       );
   }
 
   register(user: User): Observable<JwtResponse> {
-    return this.http.post<JwtResponse>(ApiEndpoint.Register, user.serialize());
+    return this.http.post<JwtResponse>(AuthEndpoints.Register, user.serialize());
       // .pipe(
       //   tap(resp => this.setSession(resp)),
       // );
   }
 
   resendActivation(email: string): Observable<JwtResponse> {
-    return this.http.post<JwtResponse>(ApiEndpoint.ResendActivation, {email});
+    return this.http.post<JwtResponse>(AuthEndpoints.ResendActivation, {email});
   }
 
     activate(token: string): Observable<boolean> {
-    const url = ApiEndpoint.ActivateAccount + token + '/';
+    const url = AuthEndpoints.ActivateAccount + token + '/';
     return this.http.get<boolean>(url);
   }
 
   refreshToken(): Observable<JwtResponse> {
     const token = this.jwtToken;
-    return this.http.post<JwtResponse>(ApiEndpoint.RefreshToken, {token})
+    return this.http.post<JwtResponse>(AuthEndpoints.RefreshToken, {token})
       .pipe(
         tap(resp => this.setSession(resp)),
       );
   }
 
   requestNewPassword(email: string) {
-    return this.http.post<any>(ApiEndpoint.ForgotPassword, {email});
+    return this.http.post<any>(AuthEndpoints.ForgotPassword, {email});
   }
 
   resetPassword(password: string, token: string) {
-    return this.http.post<any>(ApiEndpoint.Unknown, {password, token});
+    return this.http.post<any>(AuthEndpoints.Unknown, {password, token});
   }
 
   logout() {

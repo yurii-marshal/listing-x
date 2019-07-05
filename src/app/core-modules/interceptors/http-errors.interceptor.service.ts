@@ -4,23 +4,23 @@ import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
 import { tap } from 'rxjs/operators';
 import { HttpStatusCodes } from '../enums/http-status-codes';
-import { ApiEndpoint } from '../enums/api-endpoint';
+import { AuthEndpoints } from '../enums/auth-endpoints';
 import * as _ from 'lodash';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpErrorsInterceptor implements HttpInterceptor {
-  private readonly excluded: ApiEndpoint[] = [
-    ApiEndpoint.Verify,
-    ApiEndpoint.ForgotPassword
+  private readonly excluded: AuthEndpoints[] = [
+    AuthEndpoints.Verify,
+    AuthEndpoints.ForgotPassword
   ];
 
   constructor(private snackBar: MatSnackBar) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (_.some(this.excluded, (endpoint: ApiEndpoint) => _.includes(req.url, endpoint))) {
+    if (_.some(this.excluded, (endpoint: AuthEndpoints) => _.endsWith(req.url, endpoint))) {
       return next.handle(req); // Exit
     }
 
