@@ -1,4 +1,4 @@
-import { NgModule, Pipe } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormValidationErrorComponent } from './components/form-validation-error/form-validation-error.component';
 import { MatButtonModule, MatCheckboxModule, MatDialogModule, MatIconModule } from '@angular/material';

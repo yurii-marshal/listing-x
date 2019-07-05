@@ -7,7 +7,7 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'portal'
+    redirectTo: 'auth/login'
   }, {
     path: 'auth',
     loadChildren: () => import('./feature-modules/auth/auth.module').then(m => m.AuthModule),
