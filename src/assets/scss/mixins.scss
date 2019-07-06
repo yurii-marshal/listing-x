@@ -1,0 +1,71 @@
+$ease-out-duration: 400ms !default;
+$ease-out-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1) !default;
+
+// This mixin will ensure that lines that overflow the container will hide the overflow and
+// truncate neatly with an ellipsis.
+@mixin mat-truncate-line() {
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+}
+
+// This mixin normalizes default element styles, e.g. font weight for heading text.
+@mixin mat-normalize-text() {
+  & > * {
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+    font-size: inherit;
+  }
+}
+
+@mixin animate-property($property) {
+  transition: {
+    duration: $ease-out-duration;
+    timing-function: $ease-out-timing-function;
+    property: $property;
+  }
+}
+
+@mixin animate-hover() {
+  transition: {
+    duration: $ease-out-duration;
+    timing-function: $ease-out-timing-function;
+    property: transform;
+  }
+  &:hover {
+    transform: scale(1.25);
+  }
+}
+
+@mixin menu-arrow {
+  border-left: 1px solid $background-gray2;
+  border-top: 1px solid $background-gray2;
+  content: '';
+  display: inline-block;
+  height: 20px;
+  left: calc(100% - 30px);
+  position: absolute;
+  transform: rotate(45deg);
+  width: 20px;
+}
+
+@mixin arrow-left {
+  border-left: 2px solid $background-gray2;
+  border-top: 2px solid $background-gray2;
+  content: '';
+  display: inline-block;
+  height: 10px;
+  left: -9px;
+  position: absolute;
+  transform: rotate(315deg) translateZ(-1px);
+  width: 10px;
+}
+
+@mixin empty-content($content) {
+  &:empty {
+    &::after {
+      content: $content;
+    }
+  }
+}

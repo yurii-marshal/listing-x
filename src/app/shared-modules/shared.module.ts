@@ -5,6 +5,7 @@ import { MatButtonModule, MatCheckboxModule, MatDialogModule, MatIconModule } fr
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ArrayPipe } from './pipes/array.pipe';
 import { DebounceClickDirective } from './directives/debounce-click.directive';
+import { BaseTemplateComponent } from './components/base-template/base-template.component';
 
 const materialModules = [
   MatDialogModule,
@@ -14,20 +15,23 @@ const materialModules = [
   OverlayModule
 ];
 
+const components  = [
+  FormValidationErrorComponent,
+  ArrayPipe,
+  DebounceClickDirective,
+  BaseTemplateComponent,
+]
+
 @NgModule({
   imports: [
     CommonModule,
     ...materialModules
   ],
   declarations: [
-    FormValidationErrorComponent,
-    ArrayPipe,
-    DebounceClickDirective,
+    ...components
   ],
   exports: [
-    FormValidationErrorComponent,
-    ArrayPipe,
-    DebounceClickDirective
+    ...components
   ]
 })
 export class SharedModule { }
