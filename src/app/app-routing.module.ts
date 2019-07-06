@@ -15,6 +15,12 @@ const routes: Routes = [
   }, {
     path: 'portal',
     loadChildren: () => import('./feature-modules/portal/portal.module').then(m => m.PortalModule),
+  }, {
+    path: 'error',
+    loadChildren: () => import('./feature-modules/errors/errors.module').then(m => m.ErrorsModule),
+  }, {
+    path: '**',
+    redirectTo: '/error/404'
   }
 ];
 
