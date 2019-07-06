@@ -7,6 +7,7 @@ import { catchError, map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { Jwt } from '../enums/jwt';
 import { Observable, of } from 'rxjs';
 import { JwtResponse } from '../interfaces/jwt-response';
+import * as _ from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -17,11 +18,24 @@ export class AuthService {
   constructor(private http: HttpClient) {
   }
 
-  private get expirationTime() {
+  /** @Deprecated */
+  private get expirationTm() {
     const expiration = localStorage.getItem(Jwt.Expiration);
     const expiresAt = JSON.parse(expiration);
     return moment(expiresAt);
   }
+
+  private get expirationTime(): moment.Moment {
+    const base64Token = localStorage.getItem(Jwt.Token);
+    if (base64Token) {
+      const [header, payload, signature] = _.split(base64Token, '.');
+      const decodedPayload = JSON.parse(atob(payload));
+      const expiresAt: number = _.get(decodedPayload, 'exp');
+      return moment.unix(expiresAt);
+    }
+    return null;
+  }
+
 
   private get jwtToken(): string {
     return localStorage.getItem(Jwt.Token);
@@ -49,16 +63,16 @@ export class AuthService {
 
   register(user: User): Observable<JwtResponse> {
     return this.http.post<JwtResponse>(AuthEndpoints.Register, user.serialize());
-      // .pipe(
-      //   tap(resp => this.setSession(resp)),
-      // );
+    // .pipe(
+    //   tap(resp => this.setSession(resp)),
+    // );
   }
 
   resendActivation(email: string): Observable<JwtResponse> {
     return this.http.post<JwtResponse>(AuthEndpoints.ResendActivation, {email});
   }
 
-    activate(token: string): Observable<boolean> {
+  activate(token: string): Observable<boolean> {
     const url = AuthEndpoints.ActivateAccount + token + '/';
     return this.http.get<boolean>(url);
   }

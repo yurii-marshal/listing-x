@@ -6,6 +6,7 @@ import { tap } from 'rxjs/operators';
 import { HttpStatusCodes } from '../enums/http-status-codes';
 import { AuthEndpoints } from '../enums/auth-endpoints';
 import * as _ from 'lodash';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,8 @@ export class HttpErrorsInterceptor implements HttpInterceptor {
     AuthEndpoints.ForgotPassword
   ];
 
-  constructor(private snackBar: MatSnackBar) {
+  constructor(private snackBar: MatSnackBar,
+              private router: Router) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -32,12 +34,18 @@ export class HttpErrorsInterceptor implements HttpInterceptor {
 
   private globalHttpErrorParser(errorResponse: HttpErrorResponse) {
     const code = +errorResponse.status;
-    if (code !== HttpStatusCodes.UNAUTHORIZED) {
-      const msg = _.values(errorResponse.error).join('\n');
-      this.snackBar.open(msg || 'Something went wrong', 'OK', {
-        duration: 5000,
-        panelClass: 'error-bar'
-      });
+    let msg = '';
+    if (code === HttpStatusCodes.UNAUTHORIZED) {
+      msg = 'Your session has expired. Please login again to continue working.';
+      this.router.navigateByUrl('/auth/login');
+    } else {
+      msg = _.values(errorResponse.error).join('\n');
     }
+
+    this.snackBar.open(msg || 'Something went wrong', 'OK', {
+      duration: 5000,
+      verticalPosition: 'top',
+      panelClass: 'error-bar'
+    });
   }
 }

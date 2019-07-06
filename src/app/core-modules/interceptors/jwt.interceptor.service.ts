@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthEndpoints } from '../enums/auth-endpoints';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../services/auth.service';
-import { catchError, filter, switchMap, take, tap } from 'rxjs/operators';
-import { HttpStatusCodes } from '../enums/http-status-codes';
+import { filter, switchMap, take, tap } from 'rxjs/operators';
 import { JwtResponse } from '../interfaces/jwt-response';
+import { Jwt } from '../enums/jwt';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
@@ -26,27 +26,18 @@ export class JwtInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     req = req.clone({url: this.getApiURL(req.url)});
 
-
     if (this.excluded.some((endpoint: AuthEndpoints) => req.url.endsWith(endpoint))) {
       return next.handle(req); // Exit
     }
 
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem(Jwt.Token);
     if (token) {
       req = this.addToken(req, token);
     }
 
-    return next.handle(req)
-      .pipe(
-        catchError(error => {
-          if (error instanceof HttpErrorResponse && error.status === HttpStatusCodes.UNAUTHORIZED) {
-            return this.handle401Error(req, next);
-          } else {
-            return throwError(error);
-          }
-        })
-      );
+    return next.handle(req);
   }
+
 
   private addToken(req: HttpRequest<any>, token: string): HttpRequest<any> {
     return req.clone({
@@ -54,6 +45,13 @@ export class JwtInterceptor implements HttpInterceptor {
     });
   }
 
+
+  private getApiURL(url: string): string {
+    if (url.includes(environment.API_BASE_URL)) {
+      return url;
+    }
+    return environment.API_BASE_URL + url;
+  }
 
   private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
     if (this.isRefreshing) {
@@ -77,10 +75,5 @@ export class JwtInterceptor implements HttpInterceptor {
     }
   }
 
-  private getApiURL(url: string): string {
-    if (url.includes(environment.API_BASE_URL)) {
-      return url;
-    }
-    return environment.API_BASE_URL + url;
-  }
+
 }
