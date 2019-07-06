@@ -1,6 +1,15 @@
+@import "../../../../assets/scss/mixins";
+
 .dummy-header {
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
   height: 74px;
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
   background-color: #ffffff;
+  .trigger {
+    @include animate-hover();
+    margin-right: 220px;
+  }
 }
