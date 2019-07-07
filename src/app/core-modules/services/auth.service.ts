@@ -90,7 +90,7 @@ export class AuthService {
   }
 
   resetPassword(password: string, token: string) {
-    return this.http.post<any>(AuthEndpoints.ResetPassword, {password, token});
+    return this.http.post<any>(AuthEndpoints.ResetPassword, {token, new_password: password});
   }
 
   logout() {

@@ -17,7 +17,8 @@ export class JwtInterceptor implements HttpInterceptor {
     AuthEndpoints.Login,
     AuthEndpoints.Register,
     AuthEndpoints.RefreshToken,
-    AuthEndpoints.ForgotPassword
+    AuthEndpoints.ForgotPassword,
+    AuthEndpoints.ResetPassword
   ];
 
   constructor(private authService: AuthService) {

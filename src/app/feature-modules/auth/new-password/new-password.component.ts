@@ -4,6 +4,9 @@ import { AuthService } from '../../../core-modules/services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../models';
 import { CustomValidators } from '../../../core-modules/validators/custom-validators';
+import { tap } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { HttpStatusCodes } from '../../../core-modules/enums/http-status-codes';
 
 @Component({
   selector: 'app-new-password',
@@ -13,6 +16,8 @@ import { CustomValidators } from '../../../core-modules/validators/custom-valida
 export class NewPasswordComponent implements OnInit {
 
   form: FormGroup;
+
+  isChanged: boolean;
 
   constructor(private formBuilder: FormBuilder,
               private service: AuthService,
@@ -30,7 +35,15 @@ export class NewPasswordComponent implements OnInit {
     const token = this.route.snapshot.paramMap.get('token');
     const user = new User(this.form.value);
     this.service.resetPassword(user.password, token)
-      .subscribe(() => this.router.navigateByUrl('/portal'));
+      .pipe(tap({error: (err: HttpErrorResponse) => {
+          if (err.error.new_password) {
+            this.form.get('password').setErrors({passwordused: true});
+          } else if (err.error.token) { // invalid token
+            this.router.navigateByUrl('/error/expired');
+          }
+        }
+      }))
+      .subscribe(() => this.isChanged = true);
   }
 
 }

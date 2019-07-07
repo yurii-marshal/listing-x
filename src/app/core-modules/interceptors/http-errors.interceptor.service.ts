@@ -13,8 +13,6 @@ import { Router } from '@angular/router';
 })
 export class HttpErrorsInterceptor implements HttpInterceptor {
   private readonly excluded: AuthEndpoints[] = [
-    AuthEndpoints.Verify,
-    AuthEndpoints.ForgotPassword
   ];
 
   constructor(private snackBar: MatSnackBar,
@@ -33,18 +31,22 @@ export class HttpErrorsInterceptor implements HttpInterceptor {
   }
 
   private globalHttpErrorParser(errorResponse: HttpErrorResponse) {
-    const code = +errorResponse.status;
+    const code = errorResponse.status;
+    if (code === HttpStatusCodes.BAD_REQUEST) {
+      return; // Ignore form's errors
+    }
+
     let msg = '';
     if (code === HttpStatusCodes.UNAUTHORIZED) {
       msg = 'Your session has expired. Please login again to continue working.';
       this.router.navigateByUrl('/auth/login');
-    } else {
+    } else  {
       msg = _.values(errorResponse.error).join('\n');
+      msg = _.truncate(msg); // 30 symbols
     }
 
     this.snackBar.open(msg || 'Something went wrong', 'OK', {
-      duration: 5000,
-      verticalPosition: 'top',
+      duration: 7000,
       panelClass: 'error-bar'
     });
   }
