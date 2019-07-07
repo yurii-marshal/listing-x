@@ -52,24 +52,25 @@
     </form>
 
     <ng-container *ngIf="isActivated">
+      <form [formGroup]="form">
+        <h2>Thanks for registration!</h2>
+        <h5>We sent you the instructions on your mailbox {{ form.get('email').value }}
+          Click the button below you didn’t receive the email.</h5>
 
-      <h2>Thanks for registration!</h2>
-      <h5>We sent you the instructions on your mailbox {{ form.get('email').value }}
-        Click the button below you didn’t receive the email.</h5>
 
-
-      <div class="fieldset u-flex u-flex-justify--space-between u-flex-align-items" style="margin-top: 48px">
-        <button mat-flat-button
-                (click)="onResendEmail()"
-                color="primary">
-          RESEND THE EMAIL
-        </button>
-        <button mat-stroked-button
-                routerLink="../login"
-                color="primary">
-          RESEND THE EMAIL
-        </button>
-      </div>
+        <div class="fieldset u-flex u-flex-justify--space-between u-flex-align-items" style="margin-top: 48px">
+          <button mat-flat-button
+                  (click)="onResendEmail()"
+                  color="primary">
+            RESEND THE EMAIL
+          </button>
+          <button mat-stroked-button
+                  routerLink="/auth/login"
+                  color="primary">
+            RETURN TO SIGN IN
+          </button>
+        </div>
+      </form>
     </ng-container>
   </div>
 </div>
