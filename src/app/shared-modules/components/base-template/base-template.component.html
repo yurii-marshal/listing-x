@@ -1,4 +1,17 @@
 <div class="dummy-header">
+  <img src="assets/images/icons/logo.svg" width="125" class="logo">
+  <nav mat-tab-nav-bar>
+    <a mat-tab-link *ngFor="let link of navLinks"
+       [routerLink]="link.path"
+       routerLinkActive #rla="routerLinkActive"
+       [active]="rla.isActive"
+       class="top-bar">
+      {{ link.label }}
+    </a>
+  </nav>
+  <img src="assets/images/icons/alarm.png" height="22" class="notifications">
+  <p [class.hidden]="!user?.firstName">Hi, {{ user?.firstName }}</p>
   <img (click)="logout()" src="assets/images/icons/exit.png" height="22" class="trigger">
 </div>
+
 <ng-content></ng-content>

@@ -1,5 +1,33 @@
+// Import material theming functions
 @import '~@angular/material/theming';
 
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Copy the palettes from your selected theme (usually theme.scss).
+$app-primary: mat-palette($mat-green); // 66ad58
+$app-accent:  mat-palette($mat-light-green);
+$app-warn:    mat-palette($mat-red);
+
+// Create your Sass color vars (will be available in all the project)
+$primary: mat-color($app-primary);
+$accent: mat-color($app-accent);
+$warn: mat-color($app-warn);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($app-theme);
+
+
+/**
+Fonts
+*/
 // Define a custom typography config that overrides the font-family as well as the
 // `headlines` and `body-1` levels.
 $custom-typography: mat-typography-config(
@@ -19,7 +47,11 @@ $custom-typography: mat-typography-config(
 @include mat-core($custom-typography);
 
 
-// Override material
+/**
+Override material
+*/
+
+
 snack-bar-container {
   /** Extra CSS classes to be added to the snack bar container. */
   &.error-bar {

@@ -13,7 +13,7 @@ import * as _ from 'lodash';
   providedIn: 'root'
 })
 export class AuthService {
-  private user: User;
+  user: User;
 
   constructor(private http: HttpClient) {
   }
@@ -49,6 +49,8 @@ export class AuthService {
 
     return this.http.post<boolean>(AuthEndpoints.Verify, {token: this.jwtToken})
       .pipe(
+        switchMap(() => this.http.get<boolean>(AuthEndpoints.CurrentUser)),
+        tap(user => this.user = new User(user)),
         map(data => !!data),
         catchError(() => of(false)),
       );

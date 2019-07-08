@@ -4,12 +4,24 @@
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   height: 74px;
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
   background-color: #ffffff;
+  .logo {
+    margin-right: 68px;
+  }
+  .notifications {
+    margin-left: 220px;
+  }
+  .username {
+    margin: 0 30px;
+  }
   .trigger {
     @include animate-hover();
-    margin-right: 220px;
+  }
+  p {
+    margin: 0 15px;
+    &.hidden { opacity: 0; }
   }
 }

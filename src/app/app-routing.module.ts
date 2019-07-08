@@ -16,6 +16,9 @@ const routes: Routes = [
     path: 'portal',
     loadChildren: () => import('./feature-modules/portal/portal.module').then(m => m.PortalModule),
   }, {
+    path: 'addresses',
+    loadChildren: () => import('./feature-modules/addresses/addresses.module').then(m => m.AddressesModule),
+  }, {
     path: 'error',
     loadChildren: () => import('./feature-modules/errors/errors.module').then(m => m.ErrorsModule),
   }, {

@@ -7,6 +7,7 @@ export enum AuthEndpoints {
   ResendActivation = '/users/resend-activation/',
   ForgotPassword = '/users/forgot-password/',
   ResetPassword = '/users/reset-password/',
+  CurrentUser = '/users/current/',
   Unknown = '/unknown'
 }
 

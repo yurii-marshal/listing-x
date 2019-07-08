@@ -42,7 +42,7 @@ export class HttpErrorsInterceptor implements HttpInterceptor {
       this.router.navigateByUrl('/auth/login');
     } else  {
       msg = _.values(errorResponse.error).join('\n');
-      msg = _.truncate(msg); // 30 symbols
+      msg = _.truncate(msg, {length: 60});
     }
 
     this.snackBar.open(msg || 'Something went wrong', 'OK', {

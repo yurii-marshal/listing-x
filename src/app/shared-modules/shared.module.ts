@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormValidationErrorComponent } from './components/form-validation-error/form-validation-error.component';
-import { MatButtonModule, MatCheckboxModule, MatDialogModule, MatIconModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatDialogModule, MatIconModule, MatTabsModule } from '@angular/material';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ArrayPipe } from './pipes/array.pipe';
 import { DebounceClickDirective } from './directives/debounce-click.directive';
 import { BaseTemplateComponent } from './components/base-template/base-template.component';
 import { EmptyPageComponent } from './components/empty-page/empty-page.component';
+import { RouterModule } from '@angular/router';
 
 const materialModules = [
   MatDialogModule,
@@ -14,6 +15,7 @@ const materialModules = [
   MatCheckboxModule,
   MatIconModule,
   OverlayModule,
+  MatTabsModule
 ];
 
 const components  = [
@@ -27,6 +29,7 @@ const components  = [
 @NgModule({
   imports: [
     CommonModule,
+    RouterModule,
     ...materialModules
   ],
   declarations: [
