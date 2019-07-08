@@ -17,12 +17,9 @@ export class ActivationResolver implements Resolve<boolean> {
     const token = route.paramMap.get('token');
     return this.service.activate(token)
       .pipe(
-        map(resp => !resp),
-        catchError(err => {
-          if (err.status === HttpStatusCodes.FORBIDDEN) {
-            this.router.navigate(['/forbidden']);
-          }
-          return of(false);
+        tap({
+          next: () => this.router.navigate(['/auth/login'], { queryParams: {activated: true}}),
+          error: err => this.router.navigate(['/error/expired'])
         }),
         first()
       );

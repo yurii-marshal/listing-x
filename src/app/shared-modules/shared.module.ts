@@ -6,13 +6,14 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { ArrayPipe } from './pipes/array.pipe';
 import { DebounceClickDirective } from './directives/debounce-click.directive';
 import { BaseTemplateComponent } from './components/base-template/base-template.component';
+import { EmptyPageComponent } from './components/empty-page/empty-page.component';
 
 const materialModules = [
   MatDialogModule,
   MatButtonModule,
   MatCheckboxModule,
   MatIconModule,
-  OverlayModule
+  OverlayModule,
 ];
 
 const components  = [
@@ -20,7 +21,8 @@ const components  = [
   ArrayPipe,
   DebounceClickDirective,
   BaseTemplateComponent,
-]
+  EmptyPageComponent
+];
 
 @NgModule({
   imports: [
@@ -28,7 +30,7 @@ const components  = [
     ...materialModules
   ],
   declarations: [
-    ...components
+    ...components,
   ],
   exports: [
     ...components

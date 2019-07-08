@@ -6,6 +6,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { NewPasswordComponent } from './new-password/new-password.component';
 import { LoginGuardService } from '../../core-modules/guards/login-guard.service';
 import { ActivationResolver } from '../../core-modules/resolvers/activation.resolver';
+import { EmptyPageComponent } from '../../shared-modules/components/empty-page/empty-page.component';
 
 const routes: Routes = [
   {
@@ -34,7 +35,7 @@ const routes: Routes = [
   }, {
     path: 'activation/:token',
     resolve: { activated: ActivationResolver},
-    component: LoginComponent
+    component: EmptyPageComponent
   }
 ];
 

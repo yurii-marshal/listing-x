@@ -2,10 +2,21 @@
   display: flex;
 
   .thumb {
+    position: relative;
     max-height: 800px;
     overflow-y: hidden;
     flex: 0 0 460px;
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.4);
+    &:before {
+      position: absolute;
+      left: 43px;
+      top: 42px;
+      content: "";
+      // background: url(/assets/images/icons/logo.svg) 0 0/185px 48px no-repeat;
+      padding-left: 185px;
+      height: 48px;
+      color: white!important;
+    }
   }
 
   .auth-container {

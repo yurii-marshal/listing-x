@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
               private snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    const isAccountActivated = !!this.route.snapshot.data.activated;
+    const isAccountActivated = !!this.route.snapshot.queryParams.activated;
 
     if (isAccountActivated) {
       this.snackBar.open('Your account has been activated successfully.', 'OK', {duration: 5000});
