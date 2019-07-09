@@ -2,6 +2,9 @@ import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/co
 import { BaseTableDataSource } from '../../../core-modules/datasources/base-table-data-source';
 import { AddressesService } from '../addresses.service';
 import { Address } from '../../model';
+import { switchMap } from 'rxjs/operators';
+import { MatDialog } from '@angular/material';
+import { AddressDialogComponent } from '../../../shared-modules/dialogs/address-dialog/address-dialog.component';
 
 @Component({
   selector: 'app-addresses-list',
@@ -14,7 +17,8 @@ export class AddressesListComponent implements OnInit, AfterViewInit {
   dataSource: BaseTableDataSource<Address>;
 
   constructor(private cdr: ChangeDetectorRef,
-              private dataService: AddressesService) { }
+              private dataService: AddressesService,
+              private dialog: MatDialog) { }
 
   ngOnInit() {
   }
@@ -24,7 +28,25 @@ export class AddressesListComponent implements OnInit, AfterViewInit {
     this.cdr.detectChanges();
   }
 
-  onAdd(): void {
+  onCreate() {
+    const dialogRef = this.dialog.open(AddressDialogComponent, {width: '600px'});
+    dialogRef.afterClosed()
+      .pipe(switchMap(item => this.dataService.add(item)))
+      .subscribe(() => this.dataSource.reload())
 
+  }
+
+  onEdit(item: Address) {
+    this.dataService.update(item)
+      .subscribe(() => this.dataSource.reload())
+  }
+
+  onCopyLink(link: string): void {
+    // TODO:
+  }
+
+  onDelete(id: number) {
+    this.dataService.delete(id)
+      .subscribe(() => this.dataSource.reload());
   }
 }

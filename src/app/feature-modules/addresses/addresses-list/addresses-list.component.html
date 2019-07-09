@@ -4,7 +4,7 @@
       <h2>
         Addresses
       </h2>
-      <button mat-flat-button (click)="onAdd()" color="primary" style="margin-bottom: 85px;">
+      <button mat-flat-button (click)="onCreate()" color="primary" style="margin-bottom: 85px;">
         ADD NEW ADDRESS
       </button>
 
@@ -45,8 +45,9 @@
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef>Actions</th>
           <td mat-cell *matCellDef="let element">
-            <span>Create</span>
-            <span>Delete</span>
+            <button mat-icon-button (click)="onCopyLink(element.generatedLink)"><mat-icon fontSet="fa" fontIcon="fa-clone"></mat-icon></button>
+            <button mat-icon-button (click)="onDelete(element.id)"><mat-icon fontSet="fa" fontIcon="fa-trash-alt"></mat-icon></button>
+            <button mat-icon-button (click)="onEdit(element)"><mat-icon fontSet="fa" fontIcon="fa-edit"></mat-icon></button>
           </td>
         </ng-container>
 

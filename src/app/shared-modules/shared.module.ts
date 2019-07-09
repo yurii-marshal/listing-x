@@ -8,6 +8,8 @@ import { DebounceClickDirective } from './directives/debounce-click.directive';
 import { BaseTemplateComponent } from './components/base-template/base-template.component';
 import { EmptyPageComponent } from './components/empty-page/empty-page.component';
 import { RouterModule } from '@angular/router';
+import { AddressDialogComponent } from './dialogs/address-dialog/address-dialog.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const materialModules = [
   MatDialogModule,
@@ -15,21 +17,23 @@ const materialModules = [
   MatCheckboxModule,
   MatIconModule,
   OverlayModule,
-  MatTabsModule
+  MatTabsModule,
 ];
 
-const components  = [
+const components = [
   FormValidationErrorComponent,
   ArrayPipe,
   DebounceClickDirective,
   BaseTemplateComponent,
-  EmptyPageComponent
+  EmptyPageComponent,
+  AddressDialogComponent,
 ];
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
+    ReactiveFormsModule,
     ...materialModules
   ],
   declarations: [
@@ -37,6 +41,10 @@ const components  = [
   ],
   exports: [
     ...components
+  ],
+  entryComponents: [
+    AddressDialogComponent
   ]
 })
-export class SharedModule { }
+export class SharedModule {
+}
