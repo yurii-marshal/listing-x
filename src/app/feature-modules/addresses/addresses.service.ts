@@ -15,8 +15,8 @@ export class AddressesService implements IDataService <Address> {
     return this.http.get<Address[]>(ApiEndpoint.Addresses)
   }
 
-  add(model: any): Observable<any> {
-    return undefined;
+  add(model: Address): Observable<Address> {
+    return this.http.post<Address>(ApiEndpoint.Addresses, model.serialize())
   }
 
   delete(id: number): Observable<boolean> {
@@ -28,8 +28,9 @@ export class AddressesService implements IDataService <Address> {
     return undefined;
   }
 
-  update(model: any): Observable<any> {
-    return undefined;
+  update(model: Address): Observable<Address> {
+    const url: string = `${ApiEndpoint.Addresses}/${model.id}`;
+    return this.http.put<Address>(url, model.serialize())
   }
 
   wrap(item: any): Address {

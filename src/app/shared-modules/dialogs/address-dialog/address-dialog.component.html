@@ -5,20 +5,47 @@
 <div mat-dialog-content class="form-container">
   <form novalidate [formGroup]="form" style="width: 100%!important;">
     <h5>Information</h5>
-    <div class="fieldset">
-      <label>First name</label>
-      <input formControlName="email" placeholder="First name" spellcheck="false" class="form-control">
-      <app-form-validation-error [baseControl]="form.get('email')"></app-form-validation-error>
+    <div class="u-flex u-flex-align-items--center u-flex-justify--space-between">
+      <div class="fieldset">
+        <label>First name</label>
+        <input formControlName="firstName" placeholder="First name" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="form.get('firstName')"></app-form-validation-error>
+      </div>
+      <div class="fieldset">
+        <label>Last name</label>
+        <input formControlName="lastName" placeholder="Last name" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="form.get('lastName')"></app-form-validation-error>
+      </div>
     </div>
+    <h5>Address</h5>
     <div class="fieldset">
-      <label>Last Name</label>
-      <input formControlName="password" placeholder="Last Name" class="form-control">
-      <app-form-validation-error [baseControl]="form.get('password')"></app-form-validation-error>
+      <label>Street</label>
+      <input formControlName="street" placeholder="Street" spellcheck="false" class="form-control">
+      <app-form-validation-error [baseControl]="form.get('street')"></app-form-validation-error>
     </div>
+
+    <div class="u-flex u-flex-align-items--center u-flex-justify--space-between">
+      <div class="fieldset">
+        <label>City</label>
+        <input formControlName="city" placeholder="City" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="form.get('city')"></app-form-validation-error>
+      </div>
+      <div class="fieldset">
+        <label>State</label>
+        <input formControlName="state" placeholder="State" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="form.get('state')"></app-form-validation-error>
+      </div>
+      <div class="fieldset">
+        <label>Zip</label>
+        <input formControlName="zip" placeholder="Zip" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="form.get('zip')"></app-form-validation-error>
+      </div>
+    </div>
+
   </form>
 
 </div>
 <div mat-dialog-actions>
-  <button mat-button mat-dialog-close color="secondary">No</button>
-  <button mat-button color="primary" (click)="close()" [disabled]="!form.dirty || form.invalid">Save</button>
+  <button mat-button mat-dialog-close color="secondary">Cancel</button>
+  <button mat-flat-button color="primary" (click)="close()" [disabled]="!form.dirty || form.invalid">Save</button>
 </div>

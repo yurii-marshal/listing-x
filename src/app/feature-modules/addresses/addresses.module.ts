@@ -7,8 +7,9 @@ import { RouterModule } from '@angular/router';
 import { MatButtonModule, MatDialogModule, MatIconModule, MatTableModule } from '@angular/material';
 import { SharedModule } from '../../shared-modules/shared.module';
 import { AddressesService } from './addresses.service';
+import { ReactiveFormsModule } from '@angular/forms';
 
-const matModules  = [
+const MatModules  = [
   MatButtonModule,
   MatDialogModule,
   MatTableModule,
@@ -21,11 +22,15 @@ const matModules  = [
   ],
   imports: [
     CommonModule,
-    RouterModule,
-    ...matModules,
     AddressesRoutingModule,
+    ReactiveFormsModule,
+    RouterModule,
+    ...MatModules,
     SharedModule
   ],
-  providers: [AddressesService]
+  providers: [AddressesService],
+  entryComponents: [
+    // AddressDialogComponent
+  ]
 })
 export class AddressesModule { }

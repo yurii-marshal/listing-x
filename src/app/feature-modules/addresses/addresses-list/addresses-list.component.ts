@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/co
 import { BaseTableDataSource } from '../../../core-modules/datasources/base-table-data-source';
 import { AddressesService } from '../addresses.service';
 import { Address } from '../../model';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { AddressDialogComponent } from '../../../shared-modules/dialogs/address-dialog/address-dialog.component';
 
@@ -18,7 +18,8 @@ export class AddressesListComponent implements OnInit, AfterViewInit {
 
   constructor(private cdr: ChangeDetectorRef,
               private dataService: AddressesService,
-              private dialog: MatDialog) { }
+              private dialog: MatDialog) {
+  }
 
   ngOnInit() {
   }
@@ -28,17 +29,12 @@ export class AddressesListComponent implements OnInit, AfterViewInit {
     this.cdr.detectChanges();
   }
 
-  onCreate() {
-    const dialogRef = this.dialog.open(AddressDialogComponent, {width: '600px'});
-    dialogRef.afterClosed()
-      .pipe(switchMap(item => this.dataService.add(item)))
-      .subscribe(() => this.dataSource.reload())
-
+  onCreate(isEdit: boolean) {
+    this.openDialog();
   }
 
   onEdit(item: Address) {
-    this.dataService.update(item)
-      .subscribe(() => this.dataSource.reload())
+    this.openDialog(item);
   }
 
   onCopyLink(link: string): void {
@@ -49,4 +45,22 @@ export class AddressesListComponent implements OnInit, AfterViewInit {
     this.dataService.delete(id)
       .subscribe(() => this.dataSource.reload());
   }
+
+  private openDialog(model?: Address) {
+    const dialogRef = this.dialog.open(AddressDialogComponent, {
+      width: '600px',
+      data: {model: model || new Address()}
+    });
+
+    const isEdit: boolean = !!model;
+    dialogRef.afterClosed()
+      .pipe(
+        switchMap((item: Address) => isEdit
+          ? this.dataService.update(item)
+          : this.dataService.add(item)
+        )
+      )
+      .subscribe(() => this.dataSource.reload());
+  }
+
 }

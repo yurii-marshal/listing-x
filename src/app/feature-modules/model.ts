@@ -2,7 +2,7 @@ export class Address {
   id: number;
   firstName: string;
   lastName: string;
-  streetName: string;
+  street: string;
   city: string;
   state: string;
   zip: string;
@@ -21,7 +21,7 @@ export class Address {
       this.id = +data.id;
       this.firstName = data.first_name || '';
       this.lastName = data.last_name || '';
-      this.streetName = data.street_name || '';
+      this.street = data.street_name || '';
       this.city = data.city;
       this.state = data.state;
       this.zip = data.zip;
@@ -29,7 +29,7 @@ export class Address {
 
       this.date = new Date(data.created_at);
       this.name = `${this.firstName} ${this.lastName}`;
-      this.address = `${this.streetName}, ${this.city} ${this.state}, ${this.zip}`;
+      this.address = `${this.street}, ${this.city} ${this.state}, ${this.zip}`;
       this.offersCreated = +data.offers_created;
       this.offersSigned = +data.offers_signed;
     }
@@ -40,7 +40,7 @@ export class Address {
       id: this.id,
       first_name: this.firstName,
       last_name: this.lastName,
-      street_name: this.streetName,
+      street_name: this.street,
       city: this.city,
       state: this.state,
       zip: this.zip,
