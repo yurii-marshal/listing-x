@@ -7,10 +7,10 @@ export enum AuthEndpoints {
   ResendActivation = '/users/resend-activation/',
   ForgotPassword = '/users/forgot-password/',
   ResetPassword = '/users/reset-password/',
-  CurrentUser = '/users/current/',
   Unknown = '/unknown'
 }
 
 export enum ApiEndpoint {
-  CurrentUser = '/users/current/'
+  CurrentUser = '/users/current/',
+  Addresses = '/addresses/'
 }

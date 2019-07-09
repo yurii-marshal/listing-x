@@ -8,8 +8,8 @@
 
 // Copy the palettes from your selected theme (usually theme.scss).
 $app-primary: mat-palette($mat-green); // 66ad58
-$app-accent:  mat-palette($mat-light-green);
-$app-warn:    mat-palette($mat-red);
+$app-accent: mat-palette($mat-light-green);
+$app-warn: mat-palette($mat-red);
 
 // Create your Sass color vars (will be available in all the project)
 $primary: mat-color($app-primary);
@@ -56,8 +56,27 @@ snack-bar-container {
   /** Extra CSS classes to be added to the snack bar container. */
   &.error-bar {
     background: #c85578 !important;
+
     .mat-button-wrapper {
-      color: white!important;
+      color: white !important;
     }
+  }
+}
+
+.common-grid {
+  width: 90%;
+
+  .mat-header-cell {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.7px;
+    color: #444c5c;
+    text-transform: uppercase;
+  }
+  .mat-cell {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: normal;
+    color: #444c5c;
   }
 }

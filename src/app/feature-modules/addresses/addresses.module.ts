@@ -4,22 +4,27 @@ import { CommonModule } from '@angular/common';
 import { AddressesRoutingModule } from './addresses-routing.module';
 import { AddressesListComponent } from './addresses-list/addresses-list.component';
 import { RouterModule } from '@angular/router';
-import { MatButtonModule, MatDialogModule } from '@angular/material';
+import { MatButtonModule, MatDialogModule, MatTableModule } from '@angular/material';
 import { SharedModule } from '../../shared-modules/shared.module';
+import { AddressesService } from './addresses.service';
 
 const matModules  = [
   MatButtonModule,
-  MatDialogModule
+  MatDialogModule,
+  MatTableModule
 ];
 
 @NgModule({
-  declarations: [AddressesListComponent],
+  declarations: [
+    AddressesListComponent
+  ],
   imports: [
     CommonModule,
     RouterModule,
     ...matModules,
     AddressesRoutingModule,
     SharedModule
-  ]
+  ],
+  providers: [AddressesService]
 })
 export class AddressesModule { }

@@ -10,8 +10,8 @@ export class User {
   constructor(data?: any) {
     if (data) {
       this.id = data.id;
-      this.firstName = data.first_name;
-      this.lastName = data.last_name;
+      this.firstName = data.firstName;
+      this.lastName = data.lastName;
       this.email = data.email;
       this.password = data.password;
     }

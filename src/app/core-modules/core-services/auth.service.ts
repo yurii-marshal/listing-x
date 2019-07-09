@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AuthEndpoints } from '../enums/auth-endpoints';
+import { ApiEndpoint, AuthEndpoints } from '../enums/auth-endpoints';
 import * as moment from 'moment';
 import { User } from '../../feature-modules/auth/models';
 import { catchError, map, shareReplay, switchMap, tap } from 'rxjs/operators';
@@ -13,7 +13,7 @@ import * as _ from 'lodash';
   providedIn: 'root'
 })
 export class AuthService {
-  user: User;
+  currentUser: User;
 
   constructor(private http: HttpClient) {
   }
@@ -45,12 +45,14 @@ export class AuthService {
   isLoggedIn(): Observable<boolean> {
     if (!this.jwtToken) {
       return of(false);
+    } else if(this.currentUser) {
+      return of(true);
     }
 
     return this.http.post<boolean>(AuthEndpoints.Verify, {token: this.jwtToken})
       .pipe(
-        switchMap(() => this.http.get<boolean>(AuthEndpoints.CurrentUser)),
-        tap(user => this.user = new User(user)),
+        switchMap(() => this.http.get<boolean>(ApiEndpoint.CurrentUser)),
+        tap(user => this.currentUser = new User(user)),
         map(data => !!data),
         catchError(() => of(false)),
       );
@@ -65,9 +67,6 @@ export class AuthService {
 
   register(user: User): Observable<JwtResponse> {
     return this.http.post<JwtResponse>(AuthEndpoints.Register, user.serialize());
-    // .pipe(
-    //   tap(resp => this.setSession(resp)),
-    // );
   }
 
   resendActivation(email: string): Observable<JwtResponse> {
@@ -96,6 +95,7 @@ export class AuthService {
   }
 
   logout() {
+    this.currentUser = null;
     localStorage.removeItem(Jwt.Token);
     localStorage.removeItem(Jwt.Expiration);
   }
