@@ -1,0 +1,24 @@
+<h1 mat-dialog-title>
+  I'm selling
+  <!--  <i (click)="close()" tabindex="0" class="icon icon&#45;&#45;failure dialog-close-action" alt=""></i>-->
+</h1>
+<div mat-dialog-content class="form-container">
+  <form novalidate [formGroup]="form" style="width: 100%!important;">
+    <h5>Information</h5>
+    <div class="fieldset">
+      <label>First name</label>
+      <input formControlName="email" placeholder="First name" spellcheck="false" class="form-control">
+      <app-form-validation-error [baseControl]="form.get('email')"></app-form-validation-error>
+    </div>
+    <div class="fieldset">
+      <label>Last Name</label>
+      <input formControlName="password" placeholder="Last Name" class="form-control">
+      <app-form-validation-error [baseControl]="form.get('password')"></app-form-validation-error>
+    </div>
+  </form>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close color="secondary">No</button>
+  <button mat-button color="primary" (click)="close()" [disabled]="!form.dirty || form.invalid">Save</button>
+</div>
