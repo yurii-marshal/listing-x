@@ -3,10 +3,10 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/c
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthEndpoints } from '../enums/auth-endpoints';
 import { environment } from '../../../environments/environment';
-import { AuthService } from '../services/auth.service';
 import { filter, switchMap, take, tap } from 'rxjs/operators';
 import { JwtResponse } from '../interfaces/jwt-response';
 import { Jwt } from '../enums/jwt';
+import { AuthService } from '../core-services/auth.service';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {

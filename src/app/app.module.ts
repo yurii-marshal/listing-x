@@ -6,10 +6,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './core-modules/interceptors/jwt.interceptor.service';
 import { MAT_DATE_LOCALE, MatProgressBarModule, MatSnackBarModule } from '@angular/material';
-import { AuthService } from './core-modules/services/auth.service';
 import { HttpErrorsInterceptor } from './core-modules/interceptors/http-errors.interceptor.service';
-import { ProgressService } from './core-modules/services/progress.service';
 import { HttpProgressInterceptor } from './core-modules/interceptors/http-progress.interceptor.service';
+import { AuthService } from './core-modules/core-services/auth.service';
+import { ProgressService } from './core-modules/core-services/progress.service';
 
 @NgModule({
   declarations: [

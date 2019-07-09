@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../../core-modules/services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../models';
 import { CustomValidators } from '../../../core-modules/validators/custom-validators';
 import { tap } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
-import { HttpStatusCodes } from '../../../core-modules/enums/http-status-codes';
+import { AuthService } from '../../../core-modules/core-services/auth.service';
 
 @Component({
   selector: 'app-new-password',

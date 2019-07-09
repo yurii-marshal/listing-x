@@ -3,10 +3,9 @@ import { HttpParams } from '@angular/common/http';
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { MatPaginator, MatSort } from '@angular/material';
 import { BehaviorSubject, merge, Observable, Subject } from 'rxjs';
-import { debounceTime, map, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, map, switchMap } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { IDataService } from '../interfaces/data.service';
-import { EntitiesFactory } from '../base-classes/entities-factory';
 
 /**
  * This is a custom data source class with basic logic for working with

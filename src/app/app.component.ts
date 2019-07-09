@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ProgressService } from './core-modules/services/progress.service';
-import { tap } from 'rxjs/operators';
+import { ProgressService } from './core-modules/core-services/progress.service';
 
 @Component({
   selector: 'app-root',

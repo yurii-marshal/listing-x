@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../../core-modules/services/auth.service';
 import { Router } from '@angular/router';
 import { User } from '../../../feature-modules/auth/models';
+import { AuthService } from '../../../core-modules/core-services/auth.service';
 
 @Component({
   selector: 'app-base-template',

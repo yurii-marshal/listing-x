@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
-import { AuthService } from '../services/auth.service';
-import { Observable, of } from 'rxjs';
-import { catchError, first, map, tap } from 'rxjs/operators';
-import { HttpStatusCodes } from '../enums/http-status-codes';
+import { Observable } from 'rxjs';
+import { first, tap } from 'rxjs/operators';
+import { AuthService } from '../core-services/auth.service';
 
 @Injectable()
 export class ActivationResolver implements Resolve<boolean> {

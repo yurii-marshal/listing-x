@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import * as _ from 'lodash';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CustomValidators } from '../../../core-modules/validators/custom-validators';
-import { AuthService } from '../../../core-modules/services/auth.service';
 import { User } from '../models';
 import { tap } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material';
+import { AuthService } from '../../../core-modules/core-services/auth.service';
 
 @Component({
   selector: 'app-register',
