@@ -54,7 +54,7 @@ export class AddressesListComponent implements OnInit, AfterViewInit {
     snackBarRef.onAction()
       .pipe(
         switchMap(() => this.service.delete(item.id)),
-        tap(() => this.snackbar.open('Successfully deleted address', 'OK', {duration: 3000}))
+        tap(() => this.snackbar.open('Successfully deleted item.', 'OK', {duration: 3000}))
       )
       .subscribe(() => this.dataSource.reload());
   }

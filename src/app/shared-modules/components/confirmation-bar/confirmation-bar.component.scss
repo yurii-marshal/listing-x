@@ -1,14 +1,27 @@
-:host {
+$snack-bar-button-horizontal-margin: 8px !default;
+$snack-bar-button-height: 36px !default;
+$snack-bar-line-height: 20px !default;
+// Button vertical margin is used to ensure that a button height of 36px, when the containing
+// space falls below 36px.
+$snack-bar-button-vertical-margin:
+  -(($snack-bar-button-height - $snack-bar-line-height) / 2);
+
+.confirmation-snackbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: white;
-  font-size: 14px;
+  height: 100%;
+  line-height: $snack-bar-line-height;
+  opacity: 1;
 
-  ::ng-deep ul {
-    list-style-type: disc;
-  }
-  button {
-    height: initial;
+  .snackbar-action {
+    flex-shrink: 0;
+    margin: $snack-bar-button-vertical-margin $snack-bar-button-horizontal-margin * -1
+    $snack-bar-button-vertical-margin $snack-bar-button-horizontal-margin;
+
+    button {
+      max-height: $snack-bar-button-height;
+      min-width: 0;
+    }
   }
 }
