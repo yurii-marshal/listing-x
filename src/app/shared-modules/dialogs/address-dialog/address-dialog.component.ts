@@ -15,17 +15,18 @@ export class AddressDialogComponent implements OnInit {
   constructor(private snackBar: MatSnackBar,
               private formBuilder: FormBuilder,
               public dialogRef: MatDialogRef<AddressDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: {model: Address}) { }
+              @Inject(MAT_DIALOG_DATA) public data: { model: Address }) {
+  }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
       id: [this.data.model.id, []],
-      firstName: [this.data.model.firstName, [Validators.required]],
-      lastName: [this.data.model.lastName, [Validators.required]],
+      firstName: [this.data.model.firstName, [Validators.required, Validators.maxLength(30)]],
+      lastName: [this.data.model.lastName, [Validators.required, Validators.maxLength(150)]],
       street: [this.data.model.street, [Validators.required]],
-      city: [this.data.model.city, [Validators.required]],
-      state: [this.data.model.state, []],
-      zip: [this.data.model.zip, []],
+      city: [this.data.model.city, [Validators.required, Validators.maxLength(255)]],
+      state: [this.data.model.state, [Validators.required, Validators.maxLength(150)]],
+      zip: [this.data.model.zip, [Validators.maxLength(10)]],
     });
   }
 
