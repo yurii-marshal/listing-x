@@ -3,8 +3,9 @@ import { BaseTableDataSource } from '../../../core-modules/datasources/base-tabl
 import { AddressesService } from '../addresses.service';
 import { Address } from '../../model';
 import { switchMap, tap } from 'rxjs/operators';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { AddressDialogComponent } from '../../../shared-modules/dialogs/address-dialog/address-dialog.component';
+import { ConfirmationBarComponent } from '../../../shared-modules/components/confirmation-bar/confirmation-bar.component';
 
 @Component({
   selector: 'app-addresses-list',
@@ -17,19 +18,20 @@ export class AddressesListComponent implements OnInit, AfterViewInit {
   dataSource: BaseTableDataSource<Address>;
 
   constructor(private cdr: ChangeDetectorRef,
-              private dataService: AddressesService,
-              private dialog: MatDialog) {
+              private service: AddressesService,
+              private dialog: MatDialog,
+              private snackbar: MatSnackBar) {
   }
 
   ngOnInit() {
   }
 
   ngAfterViewInit(): void {
-    this.dataSource = new BaseTableDataSource(this.dataService, null, null);
+    this.dataSource = new BaseTableDataSource(this.service, null, null);
     this.cdr.detectChanges();
   }
 
-  onCreate(isEdit: boolean) {
+  onCreate() {
     this.openDialog();
   }
 
@@ -38,11 +40,22 @@ export class AddressesListComponent implements OnInit, AfterViewInit {
   }
 
   onCopyLink(link: string): void {
-    // TODO:
+    // TODO: redirection
   }
 
-  onDelete(id: number) {
-    this.dataService.delete(id)
+  onDelete(item: Address) {
+    const config = {
+      data: {
+        message: 'Are you sure want to delete?',
+        dismiss: 'Cancel'
+      }
+    };
+    const snackBarRef = this.snackbar.openFromComponent(ConfirmationBarComponent, config);
+    snackBarRef.onAction()
+      .pipe(
+        switchMap(() => this.service.delete(item.id)),
+        tap(() => this.snackbar.open('Successfully deleted address', 'OK', {duration: 3000}))
+      )
       .subscribe(() => this.dataSource.reload());
   }
 
@@ -56,8 +69,8 @@ export class AddressesListComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed()
       .pipe(
         switchMap((item: Address) => isEdit
-          ? this.dataService.update(item)
-          : this.dataService.add(item)
+          ? this.service.update(item)
+          : this.service.add(item)
         )
       )
       .subscribe(() => this.dataSource.reload());

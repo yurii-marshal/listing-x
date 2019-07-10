@@ -10,6 +10,7 @@ import { EmptyPageComponent } from './components/empty-page/empty-page.component
 import { RouterModule } from '@angular/router';
 import { AddressDialogComponent } from './dialogs/address-dialog/address-dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ConfirmationBarComponent } from './components/confirmation-bar/confirmation-bar.component';
 
 const materialModules = [
   MatDialogModule,
@@ -27,6 +28,7 @@ const components = [
   BaseTemplateComponent,
   EmptyPageComponent,
   AddressDialogComponent,
+  ConfirmationBarComponent
 ];
 
 @NgModule({
@@ -43,7 +45,8 @@ const components = [
     ...components
   ],
   entryComponents: [
-    AddressDialogComponent
+    ConfirmationBarComponent,
+    AddressDialogComponent,
   ]
 })
 export class SharedModule {

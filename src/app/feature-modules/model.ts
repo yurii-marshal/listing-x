@@ -4,7 +4,7 @@ export class Address {
   lastName: string;
   street: string;
   city: string;
-  state: string;
+  state: string = 'California';
   zip: string;
   generatedLink: string;
 

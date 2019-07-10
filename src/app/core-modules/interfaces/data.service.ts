@@ -8,13 +8,13 @@ export interface IDataService<TModel> {
 
   loadList(params?: HttpParams): Observable<TModel[]>;
 
-  loadOne(slug: string): Observable<TModel>;
+  loadOne(id: number): Observable<TModel>;
 
   add(model: TModel): Observable<TModel>;
 
   update(model: TModel): Observable<TModel>;
 
-  delete(id: number): Observable<boolean>;
+  delete(id: number): Observable<void>;
 
   /**
    * Wrap raw data from server into angular compatible model

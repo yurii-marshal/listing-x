@@ -19,8 +19,9 @@ export class AddressesService implements IDataService <Address> {
     return this.http.post<Address>(ApiEndpoint.Addresses, model.serialize())
   }
 
-  delete(id: number): Observable<boolean> {
-    return undefined;
+  delete(id: number): Observable<void> {
+    const url: string = `${ApiEndpoint.Addresses}/${id}/`; // common func
+    return this.http.delete<void>(url)
   }
 
 
@@ -29,7 +30,7 @@ export class AddressesService implements IDataService <Address> {
   }
 
   update(model: Address): Observable<Address> {
-    const url: string = `${ApiEndpoint.Addresses}/${model.id}`;
+    const url: string = `${ApiEndpoint.Addresses}/${model.id}/`; // common func
     return this.http.put<Address>(url, model.serialize())
   }
 
