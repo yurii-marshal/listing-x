@@ -68,6 +68,7 @@ export class AddressesListComponent implements OnInit, AfterViewInit {
   private openDialog(model?: Address) {
     const dialogRef = this.dialog.open(AddressDialogComponent, {
       width: '600px',
+      disableClose: true,
       data: {model: model || new Address()}
     });
 
