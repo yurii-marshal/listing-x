@@ -6,6 +6,7 @@ import { filter, switchMap, tap } from 'rxjs/operators';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { AddressDialogComponent } from '../../../shared-modules/dialogs/address-dialog/address-dialog.component';
 import { ConfirmationBarComponent } from '../../../shared-modules/components/confirmation-bar/confirmation-bar.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-addresses-list',
@@ -20,10 +21,15 @@ export class AddressesListComponent implements OnInit, AfterViewInit {
   constructor(private cdr: ChangeDetectorRef,
               private service: AddressesService,
               private dialog: MatDialog,
-              private snackbar: MatSnackBar) {
+              private snackbar: MatSnackBar,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit() {
+    const isSelling = this.route.snapshot.queryParams.selling;
+    if (isSelling) {
+      this.openDialog();
+    }
   }
 
   ngAfterViewInit(): void {

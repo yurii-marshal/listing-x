@@ -17,6 +17,7 @@ const routes: Routes = [
     loadChildren: () => import('./feature-modules/portal/portal.module').then(m => m.PortalModule),
   }, {
     path: 'addresses',
+    // TODO:  prevent access
     loadChildren: () => import('./feature-modules/addresses/addresses.module').then(m => m.AddressesModule),
   }, {
     path: 'error',
