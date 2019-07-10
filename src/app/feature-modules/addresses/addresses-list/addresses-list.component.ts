@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/co
 import { BaseTableDataSource } from '../../../core-modules/datasources/base-table-data-source';
 import { AddressesService } from '../addresses.service';
 import { Address } from '../../model';
-import { switchMap, tap } from 'rxjs/operators';
+import { filter, switchMap, tap } from 'rxjs/operators';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { AddressDialogComponent } from '../../../shared-modules/dialogs/address-dialog/address-dialog.component';
 import { ConfirmationBarComponent } from '../../../shared-modules/components/confirmation-bar/confirmation-bar.component';
@@ -68,6 +68,7 @@ export class AddressesListComponent implements OnInit, AfterViewInit {
     const isEdit: boolean = !!model;
     dialogRef.afterClosed()
       .pipe(
+        filter(dialogResult => !!dialogResult),
         switchMap((item: Address) => isEdit
           ? this.service.update(item)
           : this.service.add(item)
