@@ -41,13 +41,21 @@ export class HttpErrorsInterceptor implements HttpInterceptor {
       msg = 'Your session has expired. Please login again to continue working.';
       this.router.navigateByUrl('/auth/login');
     } else  {
-      msg = _.values(errorResponse.error).join('\n');
-      msg = _.truncate(msg, {length: 60});
+      msg = this.formatMsg(errorResponse)
     }
 
     this.snackBar.open(msg || 'Something went wrong', 'OK', {
       duration: 7000,
       panelClass: 'error-bar'
     });
+  }
+
+  private formatMsg(errorResponse: HttpErrorResponse) {
+    return _.chain(errorResponse.error)
+      .mapValues((value, key) => `${key}: ${value}`)
+      .values()
+      .join('\n')
+      .truncate({length: 60})
+      .value();
   }
 }

@@ -6,6 +6,7 @@ export class Address {
   city: string;
   state: string = 'California';
   zip: string;
+  apn: string;
   generatedLink: string;
 
   // internal transient property
@@ -25,6 +26,7 @@ export class Address {
       this.city = data.city;
       this.state = data.state;
       this.zip = data.zip;
+      this.apn = data.apn;
       this.generatedLink = data.generated_link;
 
       this.date = new Date(data.created_at);
@@ -44,8 +46,8 @@ export class Address {
       city: this.city,
       state: this.state,
       zip: this.zip,
-      generated_link: this.generatedLink
-      
+      generated_link: this.generatedLink,
+      apn: this.apn
     }
   }
 }
