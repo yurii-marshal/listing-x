@@ -35,7 +35,7 @@ export class AddressDialogComponent implements OnInit {
       street: [this.data.model.street, [Validators.required]],
       city: [this.data.model.city, [Validators.required, Validators.maxLength(255)]],
       state: [this.data.model.state, [Validators.required, Validators.maxLength(150)]],
-      zip: [this.data.model.zip, [CustomValidators.number, Validators.maxLength(10)]],
+      zip: [this.data.model.zip, [Validators.required, CustomValidators.number, Validators.maxLength(10)]],
       apn: [this.data.model.apn, [CustomValidators.number]],
     });
   }
