@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { ApiEndpoint } from '../../../core-modules/enums/auth-endpoints';
 import { AddressDialogComponent } from '../../../shared-modules/dialogs/address-dialog/address-dialog.component';
 import { filter } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';

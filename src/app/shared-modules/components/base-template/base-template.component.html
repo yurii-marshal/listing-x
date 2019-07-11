@@ -10,8 +10,8 @@
     </a>
   </nav>
   <!-- FIXME: matBadge="8" matBadgeSize="small" matBadgeColor="accent" -->
-  <button mat-icon-button>
-    <img src="assets/images/icons/alarm.png" height="22" class="notifications">
+  <button mat-icon-button class="notifications">
+    <img src="assets/images/icons/alarm.png" height="22" >
   </button>
   <p [class.hidden]="!user?.firstName">Hi, {{ user?.firstName }}</p>
   <img (click)="logout()" src="assets/images/icons/exit.png" height="22" class="trigger">
