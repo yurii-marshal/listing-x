@@ -17,11 +17,13 @@ const routes: Routes = [
     loadChildren: () => import('./feature-modules/portal/portal.module').then(m => m.PortalModule),
   }, {
     path: 'addresses',
-    // TODO:  prevent access
     loadChildren: () => import('./feature-modules/addresses/addresses.module').then(m => m.AddressesModule),
   }, {
     path: 'error',
     loadChildren: () => import('./feature-modules/errors/errors.module').then(m => m.ErrorsModule),
+  }, {
+    path: 'address-generated-link',
+    loadChildren: () => import('./feature-modules/anonymous/anonymous.module').then(m => m.AnonymousModule),
   }, {
     path: '**',
     redirectTo: '/error/404'

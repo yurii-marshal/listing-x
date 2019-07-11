@@ -13,6 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ConfirmationBarComponent } from './components/confirmation-bar/confirmation-bar.component';
 import { CopyToClipboard } from './directives/copy-to-clipboard';
 import { AddressesService } from '../feature-modules/addresses/addresses.service';
+import { WriteOfferDialogComponent } from './dialogs/write-offer-dialog/write-offer-dialog.component';
 
 const materialModules = [
   MatDialogModule,
@@ -32,7 +33,8 @@ const components = [
   EmptyPageComponent,
   AddressDialogComponent,
   ConfirmationBarComponent,
-  CopyToClipboard
+  CopyToClipboard,
+  WriteOfferDialogComponent,
 ];
 
 @NgModule({
@@ -51,6 +53,7 @@ const components = [
   entryComponents: [
     ConfirmationBarComponent,
     AddressDialogComponent,
+    WriteOfferDialogComponent,
   ],
   providers: [
     AddressesService
