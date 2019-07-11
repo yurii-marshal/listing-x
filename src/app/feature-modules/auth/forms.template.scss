@@ -64,9 +64,7 @@
         letter-spacing: 0.25px;
         color: #444c5c;
 
-        input:not([disabled]):hover {
-          border-color: gray;
-        }
+        &[disabled] {color: rgba(68, 76, 92, 0.83); cursor: initial;};
       }
 
       button {

@@ -1,10 +1,11 @@
 import { Directive, Input, Output, EventEmitter, HostListener } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 
-@Directive({ selector: '[copy-to-clipboard]' })
+@Directive({selector: '[copy-to-clipboard]'})
 export class CopyToClipboard {
 
-  constructor(private snackbar: MatSnackBar) {}
+  constructor(private snackbar: MatSnackBar) {
+  }
 
   @Input('copy-to-clipboard')
   public content: string;
@@ -16,10 +17,13 @@ export class CopyToClipboard {
   public onClick(event: MouseEvent): void {
 
     event.preventDefault();
-    if (!this.content)
+    if (!this.content) {
       return;
+    }
 
-    let listener = (e: ClipboardEvent) => {
+    this.copyText(this.content);
+    this.snackbar.open('Copied!.', 'OK', {duration: 3000});
+/*    let listener = (e: ClipboardEvent) => {
       let clipboard = e.clipboardData || window['clipboardData'];
       clipboard.setData('text', this.content.toString());
       e.preventDefault();
@@ -30,6 +34,22 @@ export class CopyToClipboard {
 
     document.addEventListener('copy', listener, false);
     document.execCommand('copy');
-    document.removeEventListener('copy', listener, false);
+    document.removeEventListener('copy', listener, false);*/
+  }
+
+  /* To copy any Text */
+  copyText(val: string) {
+    let selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = val;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+
   }
 }
