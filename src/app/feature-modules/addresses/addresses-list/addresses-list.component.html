@@ -50,13 +50,18 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>Actions</th>
         <td mat-cell *matCellDef="let element">
-          <button [disabled]="true" mat-icon-button (click)="onCopyLink(element.generatedLink)">
+          <button
+            matTooltip="Copy to clipboard"
+            matTooltipShowDelay="1000"
+            [copy-to-clipboard]="element.generatedLink"
+            color="accent"
+            mat-icon-button>
             <mat-icon fontSet="fa" fontIcon="fa-clone" class="icon"></mat-icon>
           </button>
-          <button mat-icon-button (click)="onDelete(element)">
+          <button mat-icon-button color="accent" (click)="onDelete(element)">
             <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
           </button>
-          <button mat-icon-button (click)="onEdit(element)">
+          <button mat-icon-button color="accent" (click)="onEdit(element)">
             <mat-icon fontSet="fa" fontIcon="fa-edit" class="icon"></mat-icon>
           </button>
         </td>

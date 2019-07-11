@@ -45,9 +45,6 @@ export class AddressesListComponent implements OnInit, AfterViewInit {
     this.openDialog(item);
   }
 
-  onCopyLink(link: string): void {
-    // TODO: redirection
-  }
 
   onDelete(item: Address) {
     const config = {
@@ -69,19 +66,11 @@ export class AddressesListComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(AddressDialogComponent, {
       width: '600px',
       disableClose: true,
-      data: {model: model || new Address()}
+      data: {model: model}
     });
 
-    const isEdit: boolean = !!model;
     dialogRef.afterClosed()
-      .pipe(
-        filter(dialogResult => !!dialogResult),
-        switchMap((item: Address) => isEdit
-          ? this.service.update(item)
-          : this.service.add(item)
-        )
-      )
+      .pipe(filter(dialogResult => !!dialogResult))
       .subscribe(() => this.dataSource.reload());
   }
-
 }

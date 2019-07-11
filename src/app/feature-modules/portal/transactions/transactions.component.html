@@ -5,7 +5,7 @@
       <img src="assets/images/icons/write_offer.svg">
       <span>Write Offer</span>
     </div>
-    <div routerLink="/addresses" [queryParams]="{selling: true}" class="custom-btn">
+    <div (click)="openCreateAddressDialog()" class="custom-btn">
       <img src="assets/images/icons/im-selling.svg">
       <span>I’m Selling</span>
     </div>

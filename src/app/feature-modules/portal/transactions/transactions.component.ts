@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ApiEndpoint } from '../../../core-modules/enums/auth-endpoints';
+import { AddressDialogComponent } from '../../../shared-modules/dialogs/address-dialog/address-dialog.component';
+import { filter } from 'rxjs/operators';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-transactions',
@@ -11,14 +14,26 @@ import { ApiEndpoint } from '../../../core-modules/enums/auth-endpoints';
 export class TransactionsComponent implements OnInit {
 
   constructor(private router: Router,
-              private http: HttpClient) { }
+              private http: HttpClient,
+              private dialog: MatDialog,) { }
 
   ngOnInit() {
   }
 
   onSubmit() {
-    this.http.get<boolean>(ApiEndpoint.CurrentUser).subscribe();
-    // this.router.navigate(['/portal'], {queryParams: {param: new Date().getTime()}});
   }
+
+  openCreateAddressDialog() {
+    const dialogRef = this.dialog.open(AddressDialogComponent, {
+      width: '600px',
+      disableClose: true,
+      data: {model: null, verbose: true}
+    });
+
+    dialogRef.afterClosed()
+      .pipe(filter(dialogResult => !!dialogResult),)
+      .subscribe();
+  }
+
 
 }

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormValidationErrorComponent } from './components/form-validation-error/form-validation-error.component';
-import { MatButtonModule, MatCheckboxModule, MatDialogModule, MatIconModule, MatTabsModule } from '@angular/material';
+import { MatBadgeModule, MatButtonModule, MatCheckboxModule, MatDialogModule, MatIconModule, MatTabsModule } from '@angular/material';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ArrayPipe } from './pipes/array.pipe';
 import { DebounceClickDirective } from './directives/debounce-click.directive';
@@ -11,6 +11,8 @@ import { RouterModule } from '@angular/router';
 import { AddressDialogComponent } from './dialogs/address-dialog/address-dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ConfirmationBarComponent } from './components/confirmation-bar/confirmation-bar.component';
+import { CopyToClipboard } from './directives/copy-to-clipboard';
+import { AddressesService } from '../feature-modules/addresses/addresses.service';
 
 const materialModules = [
   MatDialogModule,
@@ -19,6 +21,7 @@ const materialModules = [
   MatIconModule,
   OverlayModule,
   MatTabsModule,
+  MatBadgeModule
 ];
 
 const components = [
@@ -28,7 +31,8 @@ const components = [
   BaseTemplateComponent,
   EmptyPageComponent,
   AddressDialogComponent,
-  ConfirmationBarComponent
+  ConfirmationBarComponent,
+  CopyToClipboard
 ];
 
 @NgModule({
@@ -47,6 +51,9 @@ const components = [
   entryComponents: [
     ConfirmationBarComponent,
     AddressDialogComponent,
+  ],
+  providers: [
+    AddressesService
   ]
 })
 export class SharedModule {
