@@ -22,19 +22,8 @@ export class CopyToClipboard {
     }
 
     this.copyText(this.content);
-    this.snackbar.open('Copied!.', 'OK', {duration: 3000});
-/*    let listener = (e: ClipboardEvent) => {
-      let clipboard = e.clipboardData || window['clipboardData'];
-      clipboard.setData('text', this.content.toString());
-      e.preventDefault();
-
-      this.copied.emit(this.content);
-      this.snackbar.open('Copied!.', 'OK', {duration: 3000})
-    };
-
-    document.addEventListener('copy', listener, false);
-    document.execCommand('copy');
-    document.removeEventListener('copy', listener, false);*/
+    this.snackbar.open('Copied.', 'OK', {duration: 3000});
+    this.copied.emit(this.content);
   }
 
   /* To copy any Text */

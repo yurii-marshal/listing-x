@@ -12,7 +12,7 @@ export class AddressesService implements IDataService <Address> {
   }
 
   loadList(params?: HttpParams): Observable<Address[]> {
-    return this.http.get<Address[]>(ApiEndpoint.Addresses)
+    return this.http.get<Address[]>(ApiEndpoint.Addresses, { params })
   }
 
   add(model: Address): Observable<Address> {

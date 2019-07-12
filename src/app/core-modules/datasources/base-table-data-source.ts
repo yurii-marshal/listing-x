@@ -95,8 +95,9 @@ export class BaseTableDataSource<T> extends DataSource<any> {
 
     if (this.sort && this.sort.active && this.sort.direction !== '') {
       const direction: string = this.sort.direction  === 'desc' ? '-' : '';
-
       params = params.set('ordering', `${direction}${this.sort.active}`);
+    } else {
+      params = params.set('ordering', '-id'); // Default ordering
     }
 
     if (this.filter) {
