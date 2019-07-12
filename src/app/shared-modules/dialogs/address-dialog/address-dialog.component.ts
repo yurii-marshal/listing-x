@@ -17,14 +17,13 @@ export class AddressDialogComponent implements OnInit {
   form: FormGroup;
   isEdit: boolean;
 
-  constructor(private snackBar: MatSnackBar,
-              private service: AddressesService,
+  constructor(private service: AddressesService,
               private formBuilder: FormBuilder,
               private snackbar: MatSnackBar,
               public dialogRef: MatDialogRef<AddressDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: { model: Address, verbose: boolean }) {
     this.isEdit = !!data.model;
-    data.model = data.model || new Address()
+    data.model = data.model || new Address();
   }
 
   ngOnInit() {
@@ -51,7 +50,8 @@ export class AddressDialogComponent implements OnInit {
           ? this.service.update(item)
           : this.service.add(item)
         ),
-        tap(() => this.data.verbose && this.snackbar.open(message, 'OK', {duration: 3000}))
+        // TODO: catch error
+        tap(() => this.data.verbose && this.snackbar.open(message, null, {duration: 3000}))
       )
       .subscribe(() => this.dialogRef.close(model));
   }

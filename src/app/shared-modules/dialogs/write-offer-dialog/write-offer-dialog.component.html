@@ -1,11 +1,63 @@
 <div mat-dialog-title class="u-flex u-flex-justify--space-between u-flex-align-items--center">
   <div class="title">Write Offer - Step 1</div>
-  <button mat-icon-button mat-dialog-close>
+  <button mat-icon-button mat-dialog-close routerLink="/auth/login">
     <mat-icon fontSet="fa" fontIcon="fa-times"></mat-icon>
   </button>
 </div>
 <div mat-dialog-content class="form-container dialog-form" style="min-height: 400px">
-  <h1>Under construction</h1>
+  <form novalidate [formGroup]="form" style="width: 100%!important;">
+    <h4>Buyer information</h4>
+    <!--  form control loop  -->
+    <h6>buyer #1</h6>
+    <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
+      <div class="fieldset u-flex-1">
+        <label>First name</label>
+        <input formControlName="firstName" placeholder="First name" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="form.get('firstName')"></app-form-validation-error>
+      </div>
+      <div class="fieldset u-flex-1">
+        <label>Last name</label>
+        <input formControlName="lastName" placeholder="Last name" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="form.get('lastName')"></app-form-validation-error>
+      </div>
+      <div class="fieldset u-flex-1">
+        <label>Email</label>
+        <input formControlName="email" placeholder="Email" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="form.get('email')"></app-form-validation-error>
+      </div>
+    </div>
+    <!--h4 style="margin-top: 5px;">Address</h4>
+    <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
+      <div class="fieldset u-flex-1">
+        <label>Street</label>
+        <input formControlName="street" placeholder="Street" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="form.get('street')"></app-form-validation-error>
+      </div>
+      <div class="fieldset">
+        <label>City</label>
+        <input formControlName="city" placeholder="City" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="form.get('city')"></app-form-validation-error>
+      </div>
+    </div>
+    <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
+      <div class="fieldset">
+        <label>State</label>
+        <input formControlName="state" placeholder="State" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="form.get('state')"></app-form-validation-error>
+      </div>
+      <div class="fieldset">
+        <label>Zip</label>
+        <input formControlName="zip" placeholder="Zip" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="form.get('zip')"></app-form-validation-error>
+      </div>
+      <div class="fieldset">
+        <label>APN</label>
+        <input formControlName="apn" placeholder="Apn" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="form.get('apn')"></app-form-validation-error>
+      </div>
+    </div-->
+
+  </form>
 </div>
 
 <div mat-dialog-actions class="fieldset u-flex u-flex-justify--space-between u-flex-align-items--center button-bar">
