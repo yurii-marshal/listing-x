@@ -62,9 +62,7 @@
       <div (click)="add(Type.Sellers)" class="link">add more seller</div>
     </div>
 
-    <h1>Under construction</h1>
-
-    <!--h4 style="margin-top: 5px;">Address</h4>
+    <h4 style="margin-top: 5px;">Address</h4>
     <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
       <div class="fieldset u-flex-1">
         <label>Street</label>
@@ -93,13 +91,30 @@
         <input formControlName="apn" placeholder="Apn" spellcheck="false" class="form-control">
         <app-form-validation-error [baseControl]="form.get('apn')"></app-form-validation-error>
       </div>
-    </div-->
+    </div>
 
+    <h4 style="margin-top: 5px;">OFFER INFORMATION</h4>
+    <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
+      <div class="fieldset u-flex-1">
+        <label>Offer price</label>
+        <input formControlName="price" placeholder="Price" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="form.get('price')"></app-form-validation-error>
+      </div>
+      <div>How long do you need to close escrow?</div>
+      <div class="fieldset">
+        <input formControlName="closeEscrowDays" placeholder="Days" spellcheck="false" class="form-control">
+      </div>
+      <div>Days</div>
+    </div>
   </form>
 </div>
 
 <div mat-dialog-actions class="fieldset u-flex u-flex-justify--space-between u-flex-align-items--center button-bar">
   <button mat-stroked-button mat-dialog-close routerLink="/auth/login" color="primary">CANCEL</button>
-  <!-- TODO: (debounceClick)="close()" [disabled]="!form.dirty || form.invalid" -->
-  <button mat-flat-button appDebounceClick color="primary">SAVE</button>
+  <button mat-flat-button appDebounceClick
+          (debounceClick)="close()"
+          [disabled]="!form.dirty || form.invalid"
+          color="primary">
+    SAVE
+  </button>
 </div>

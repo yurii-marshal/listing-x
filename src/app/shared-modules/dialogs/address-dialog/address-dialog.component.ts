@@ -1,10 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
-import { Address } from '../../../feature-modules/model';
+import { Address } from '../../../core-modules/models/address';
 import * as _ from 'lodash';
 import { CustomValidators } from '../../../core-modules/validators/custom-validators';
-import { AddressesService } from '../../../feature-modules/addresses/addresses.service';
+import { AddressesService } from '../../../core-modules/core-services/addresses.service';
 import { switchMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 

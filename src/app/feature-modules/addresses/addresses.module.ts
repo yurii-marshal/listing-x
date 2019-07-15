@@ -6,7 +6,7 @@ import { AddressesListComponent } from './addresses-list/addresses-list.componen
 import { RouterModule } from '@angular/router';
 import { MatButtonModule, MatDialogModule, MatIconModule, MatSnackBarModule, MatTableModule, MatTooltipModule } from '@angular/material';
 import { SharedModule } from '../../shared-modules/shared.module';
-import { AddressesService } from './addresses.service';
+import { AddressesService } from '../../core-modules/core-services/addresses.service';
 import { ReactiveFormsModule } from '@angular/forms';
 
 const MatModules  = [

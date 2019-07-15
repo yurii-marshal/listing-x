@@ -63,8 +63,14 @@
         font-size: 13px;
         letter-spacing: 0.25px;
         color: #444c5c;
+        &:not([disabled]):hover { border-color: #858c9c;}
 
-        &[disabled] {color: rgba(68, 76, 92, 0.83); cursor: initial;};
+        &[disabled] {
+          border-color: #bcc7dd;
+          background-color: rgba(0, 0, 0, 0.03);
+          color: rgba(68, 76, 92, 0.83);
+          cursor: initial;
+        };
       }
 
       button {

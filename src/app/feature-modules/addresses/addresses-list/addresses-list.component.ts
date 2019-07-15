@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { BaseTableDataSource } from '../../../core-modules/datasources/base-table-data-source';
-import { AddressesService } from '../addresses.service';
-import { Address } from '../../model';
+import { AddressesService } from '../../../core-modules/core-services/addresses.service';
+import { Address } from '../../../core-modules/models/address';
 import { filter, switchMap, tap } from 'rxjs/operators';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { AddressDialogComponent } from '../../../shared-modules/dialogs/address-dialog/address-dialog.component';

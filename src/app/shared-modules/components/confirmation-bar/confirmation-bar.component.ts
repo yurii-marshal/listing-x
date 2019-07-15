@@ -2,7 +2,6 @@ import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { MAT_DIALOG_DATA, MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material';
 import { filter, take } from 'rxjs/operators';
-import { Address } from '../../../feature-modules/model';
 
 
 @Component({

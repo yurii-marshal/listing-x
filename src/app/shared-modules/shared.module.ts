@@ -12,8 +12,9 @@ import { AddressDialogComponent } from './dialogs/address-dialog/address-dialog.
 import { ReactiveFormsModule } from '@angular/forms';
 import { ConfirmationBarComponent } from './components/confirmation-bar/confirmation-bar.component';
 import { CopyToClipboard } from './directives/copy-to-clipboard';
-import { AddressesService } from '../feature-modules/addresses/addresses.service';
+import { AddressesService } from '../core-modules/core-services/addresses.service';
 import { WriteOfferDialogComponent } from './dialogs/write-offer-dialog/write-offer-dialog.component';
+import { OfferService } from '../core-modules/core-services/offer.service';
 
 const materialModules = [
   MatDialogModule,
@@ -56,7 +57,8 @@ const components = [
     WriteOfferDialogComponent,
   ],
   providers: [
-    AddressesService
+    AddressesService,
+    OfferService
   ]
 })
 export class SharedModule {

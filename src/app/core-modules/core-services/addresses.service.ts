@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { IDataService } from '../../core-modules/interfaces/data.service';
+import { IDataService } from '../interfaces/data.service';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { ApiEndpoint } from '../../core-modules/enums/auth-endpoints';
-import { Address } from '../model';
+import { ApiEndpoint } from '../enums/auth-endpoints';
+import { Address } from '../models/address';
 
 @Injectable()
 export class AddressesService implements IDataService <Address> {

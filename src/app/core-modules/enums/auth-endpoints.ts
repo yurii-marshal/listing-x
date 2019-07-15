@@ -12,5 +12,6 @@ export enum AuthEndpoints {
 
 export enum ApiEndpoint {
   CurrentUser = '/users/current/',
-  Addresses = '/addresses/'
+  Addresses = '/addresses/',
+  Offer = '/offers/'
 }
