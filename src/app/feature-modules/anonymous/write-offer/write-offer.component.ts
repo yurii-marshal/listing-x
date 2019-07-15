@@ -17,7 +17,7 @@ export class WriteOfferComponent implements OnInit {
     const dialogRef = this.dialog.open(WriteOfferDialogComponent, {
       width: '600px',
       disableClose: true,
-      data: {model: null, verbose: true}
+      data: {model: {}, verbose: true} // FIXME: null
     });
 
     dialogRef.afterClosed()
