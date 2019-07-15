@@ -14,6 +14,7 @@ enum Type {
   Sellers  = 'sellers'
 }
 
+
 @Component({
   selector: 'app-write-offer-dialog',
   templateUrl: './write-offer-dialog.component.html',
@@ -41,17 +42,19 @@ export class WriteOfferDialogComponent implements OnInit {
   }
 
   ngOnInit() {
+    const disabled: boolean = this.data.isAnonymous;
     const buyers = _.map(this.data.model.buyers, item => this.createEntity(item));
-    const sellers = _.map(this.data.model.sellers, item => this.createEntity(item, this.data.isAnonymous));
+    const sellers = _.map(this.data.model.sellers, item => this.createEntity(item, disabled));
+
     this.form = this.formBuilder.group({
       id: [this.data.model.id, []],
       buyers: this.formBuilder.array(buyers),
       sellers: this.formBuilder.array(sellers),
-      street: [this.data.model.streetName, [Validators.required]],
-      city: [this.data.model.city, [Validators.required, Validators.maxLength(255)]],
+      street: [{value: this.data.model.streetName, disabled}, [Validators.required]],
+      city: [{value: this.data.model.city, disabled}, [Validators.required, Validators.maxLength(255)]],
       state: [{value: this.data.model.state, disabled: true}, [Validators.required, Validators.maxLength(150)]],
-      zip: [this.data.model.zip, [Validators.required, CustomValidators.number, Validators.maxLength(10)]],
-      apn: [this.data.model.apn, [CustomValidators.number]],
+      zip: [{value: this.data.model.zip, disabled}, [Validators.required, CustomValidators.number, Validators.maxLength(10)]],
+      apn: [{value: this.data.model.apn, disabled}, [CustomValidators.number]],
       price: [this.data.model.price, []],
       closeEscrowDays: [this.data.model.closeEscrowDays, []]
     });
@@ -59,9 +62,9 @@ export class WriteOfferDialogComponent implements OnInit {
 
   createEntity(model: any, disabled: boolean = false): FormGroup {
     return this.formBuilder.group({
-      firstName: [{value: model.firstName, disabled: disabled}, [Validators.required, Validators.maxLength(30)]],
-      lastName: [{value: model.lastName, disabled: disabled}, [Validators.required, Validators.maxLength(150)]],
-      email: [{value: model.email, disabled: disabled}, [Validators.required, Validators.email]], // CustomValidators.unique(this.)
+      firstName: [{value: model.firstName, disabled}, [Validators.required, Validators.maxLength(30)]],
+      lastName: [{value: model.lastName, disabled}, [Validators.required, Validators.maxLength(150)]],
+      email: [{value: model.email, disabled}, [Validators.required, Validators.email]], // CustomValidators.unique(this.)
     });
   }
 
