@@ -7,25 +7,27 @@
 <div mat-dialog-content class="form-container dialog-form" style="min-height: 400px">
   <form novalidate [formGroup]="form" style="width: 100%!important;">
     <h4>Buyer information</h4>
-    <!--  form control loop  -->
-    <h6>buyer #1</h6>
-    <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
-      <div class="fieldset u-flex-1">
-        <label>First name</label>
-        <input formControlName="firstName" placeholder="First name" spellcheck="false" class="form-control">
-        <app-form-validation-error [baseControl]="form.get('firstName')"></app-form-validation-error>
-      </div>
-      <div class="fieldset u-flex-1">
-        <label>Last name</label>
-        <input formControlName="lastName" placeholder="Last name" spellcheck="false" class="form-control">
-        <app-form-validation-error [baseControl]="form.get('lastName')"></app-form-validation-error>
-      </div>
-      <div class="fieldset u-flex-1">
-        <label>Email</label>
-        <input formControlName="email" placeholder="Email" spellcheck="false" class="form-control">
-        <app-form-validation-error [baseControl]="form.get('email')"></app-form-validation-error>
+    <div *ngFor="let control of buyers.controls; let i = index;" [formGroup]="control">
+      <h6 class="subtitle">buyer #{{ i + 1}}</h6>
+      <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
+        <div class="fieldset u-flex-1">
+          <label>First name</label>
+          <input formControlName="firstName" placeholder="First name" spellcheck="false" class="form-control">
+          <app-form-validation-error [baseControl]="control.get('firstName')"></app-form-validation-error>
+        </div>
+        <div class="fieldset u-flex-1">
+          <label>Last name</label>
+          <input formControlName="lastName" placeholder="Last name" spellcheck="false" class="form-control">
+          <app-form-validation-error [baseControl]="control.get('lastName')"></app-form-validation-error>
+        </div>
+        <div class="fieldset u-flex-1">
+          <label>Email</label>
+          <input formControlName="email" placeholder="Email" spellcheck="false" class="form-control">
+          <app-form-validation-error [baseControl]="control.get('email')"></app-form-validation-error>
+        </div>
       </div>
     </div>
+    <div (click)="add()" class="link">add more buyer</div>
     <!--h4 style="margin-top: 5px;">Address</h4>
     <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
       <div class="fieldset u-flex-1">

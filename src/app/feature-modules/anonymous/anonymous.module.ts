@@ -5,6 +5,8 @@ import { AnonymousRoutingModule } from './anonymous-routing.module';
 import { WriteOfferComponent } from './write-offer/write-offer.component';
 import { SharedModule } from '../../shared-modules/shared.module';
 import { MatButtonModule, MatDialogModule, MatIconModule, MatSnackBarModule, MatTableModule, MatTooltipModule } from '@angular/material';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 const MatModules  = [
   MatButtonModule,
@@ -21,9 +23,11 @@ const MatModules  = [
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
+    ...MatModules,
     SharedModule,
-    AnonymousRoutingModule,
-    ...MatModules
+    RouterModule,
+    AnonymousRoutingModule
   ]
 })
 export class AnonymousModule { }

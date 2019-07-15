@@ -31,7 +31,5 @@ const MatModules  = [
     SharedModule
   ],
   providers: [AddressesService],
-  entryComponents: [
-  ]
 })
 export class AddressesModule { }
