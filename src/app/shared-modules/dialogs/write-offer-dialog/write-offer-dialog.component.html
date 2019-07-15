@@ -35,7 +35,7 @@
     </div>
 
     <div>
-      <h4>seller information</h4>
+      <h4 *ngIf="!data.isAnonymous">seller information</h4>
       <div *ngFor="let control of sellers.controls; let i = index;" [formGroup]="control">
         <h6 class="subtitle">seler #{{ i + 1}}</h6>
         <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
@@ -59,7 +59,7 @@
           </button>
         </div>
       </div>
-      <div (click)="add(Type.Sellers)" class="link">add more seller</div>
+      <div *ngIf="!data.isAnonymous" (click)="add(Type.Sellers)" class="link">add more seller</div>
     </div>
 
     <h4 style="margin-top: 5px;">Address</h4>
@@ -100,11 +100,11 @@
         <input formControlName="price" placeholder="Price" spellcheck="false" class="form-control">
         <app-form-validation-error [baseControl]="form.get('price')"></app-form-validation-error>
       </div>
-      <div>How long do you need to close escrow?</div>
+      <div class="question">How long do you need to close escrow?</div>
       <div class="fieldset">
         <input formControlName="closeEscrowDays" placeholder="Days" spellcheck="false" class="form-control">
       </div>
-      <div>Days</div>
+      <div class="question">Days</div>
     </div>
   </form>
 </div>

@@ -17,12 +17,12 @@ export class WriteOfferComponent implements OnInit {
 
   ngOnInit() {
     const offer = new Offer();
-    // TODO: retrieve buyers from LS
+    // TODO: retrieve buyers from LS and inject here
     const dialogRef = this.dialog.open(WriteOfferDialogComponent, {
       width: '600px',
       // height: '1050px',
       disableClose: true,
-      data: {model: offer, verbose: true} // FIXME: null
+      data: {model: offer, isAnonymous: true} // FIXME: null
     });
 
     dialogRef.afterClosed()

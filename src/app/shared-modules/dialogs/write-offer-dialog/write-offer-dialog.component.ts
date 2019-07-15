@@ -35,14 +35,14 @@ export class WriteOfferDialogComponent implements OnInit {
                private service: OfferService,
                private snackbar: MatSnackBar,
                public dialogRef: MatDialogRef<WriteOfferDialogComponent>,
-               @Inject(MAT_DIALOG_DATA) public data: {model: Offer, isEdit: boolean, verbose?: boolean}) {
+               @Inject(MAT_DIALOG_DATA) public data: {model: Offer, isEdit: boolean, isAnonymous: boolean}) {
 
     // TODO: retrieve from LS
   }
 
   ngOnInit() {
     const buyers = _.map(this.data.model.buyers, item => this.createEntity(item));
-    const sellers = _.map(this.data.model.sellers, item => this.createEntity(item));
+    const sellers = _.map(this.data.model.sellers, item => this.createEntity(item, this.data.isAnonymous));
     this.form = this.formBuilder.group({
       id: [this.data.model.id, []],
       buyers: this.formBuilder.array(buyers),
@@ -57,12 +57,11 @@ export class WriteOfferDialogComponent implements OnInit {
     });
   }
 
-  createEntity(model?: any): FormGroup {
-    // TODO: disabled state
+  createEntity(model: any, disabled: boolean = false): FormGroup {
     return this.formBuilder.group({
-      firstName: [model.firstName, [Validators.required, Validators.maxLength(30)]],
-      lastName: [model.lastName, [Validators.required, Validators.maxLength(150)]],
-      email: [model.email, [Validators.required, Validators.email]], // CustomValidators.unique(this.)
+      firstName: [{value: model.firstName, disabled: disabled}, [Validators.required, Validators.maxLength(30)]],
+      lastName: [{value: model.lastName, disabled: disabled}, [Validators.required, Validators.maxLength(150)]],
+      email: [{value: model.email, disabled: disabled}, [Validators.required, Validators.email]], // CustomValidators.unique(this.)
     });
   }
 
@@ -85,7 +84,7 @@ export class WriteOfferDialogComponent implements OnInit {
           ? this.service.update(item)
           : this.service.add(item)
         ),
-        tap(() => this.data.verbose && this.snackbar.open(message, null, {duration: 3000}))
+        tap(() => this.snackbar.open(message, null, {duration: 3000}))
       )
       .subscribe(() => this.dialogRef.close(this.formData));
 
