@@ -4,6 +4,7 @@ import { TransactionsComponent } from './transactions/transactions.component';
 import { AuthGuardService } from '../../core-modules/guards/auth-guard.service';
 import { DialogsWrapperComponent } from '../../shared-modules/components/dialogs-wrapper/dialogs-wrapper.component';
 import { WriteOfferDialogComponent } from '../../shared-modules/dialogs/write-offer-dialog/write-offer-dialog.component';
+import { OfferResolver } from '../../core-modules/resolvers/offer.resolver';
 
 const routes: Routes = [
   {
@@ -14,8 +15,8 @@ const routes: Routes = [
       {
         path: 'step-1',
         component: DialogsWrapperComponent,
-        data: { component: WriteOfferDialogComponent}
-        // TODO: resolve:
+        data: { component: WriteOfferDialogComponent},
+        resolve: { model: OfferResolver }
       }
     ]
   }
@@ -24,6 +25,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [AuthGuardService]
+  providers: [AuthGuardService, OfferResolver]
 })
 export class PortalRoutingModule { }

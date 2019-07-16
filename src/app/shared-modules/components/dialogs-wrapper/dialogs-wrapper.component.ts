@@ -16,8 +16,9 @@ export class DialogsWrapperComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    // this.route.snapshot.data
-    this.openWriteOfferDialog(new Offer());
+    const offer: Offer = this.route.snapshot.data.model || new Offer();
+    // FIXME: creation from scratch mode
+    this.openWriteOfferDialog(offer);
   }
 
   openWriteOfferDialog(offer: Offer, isEdit: boolean = true) {

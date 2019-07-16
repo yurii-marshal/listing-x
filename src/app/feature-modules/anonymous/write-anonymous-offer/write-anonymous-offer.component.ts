@@ -40,7 +40,9 @@ export class WriteAnonymousOfferComponent implements OnInit {
     dialogRef.afterClosed()
       .pipe(filter(dialogResult => !!dialogResult),)
       .subscribe((model: Offer) => {
-        localStorage.setItem(LocalStorageKey.Offer, JSON.stringify(model.serialize()));
+        const token = this.route.snapshot.params.token;
+        const o = {offer: model.serialize(), token};
+        localStorage.setItem(LocalStorageKey.Offer, JSON.stringify(o));
         this.router.navigate(['/auth/login']);
       });
   }

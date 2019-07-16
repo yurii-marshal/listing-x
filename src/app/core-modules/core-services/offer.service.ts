@@ -12,7 +12,6 @@ export class OfferService implements IDataService <Offer> {
   constructor(private http: HttpClient) {
   }
 
-
   add(model: Offer, token?: string): Observable<Offer> {
     let params = new HttpParams();
     if (token) {
@@ -36,7 +35,8 @@ export class OfferService implements IDataService <Offer> {
   }
 
   loadOne(id: number): Observable<Offer> {
-    return undefined;
+    return this.http.get<Offer>(ApiEndpoint.Offer + id + '/')
+      .pipe(map(raw => new Offer(raw)));
   }
 
   update(model: Offer): Observable<Offer> {
