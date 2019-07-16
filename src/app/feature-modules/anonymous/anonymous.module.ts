@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AnonymousRoutingModule } from './anonymous-routing.module';
-import { WriteOfferComponent } from './write-offer/write-offer.component';
 import { SharedModule } from '../../shared-modules/shared.module';
 import { MatButtonModule, MatDialogModule, MatIconModule, MatSnackBarModule, MatTableModule, MatTooltipModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { WriteAnonymousOfferComponent } from './write-anonymous-offer/write-anonymous-offer.component';
 
 const MatModules  = [
   MatButtonModule,
@@ -19,7 +19,7 @@ const MatModules  = [
 
 @NgModule({
   declarations: [
-    WriteOfferComponent
+    WriteAnonymousOfferComponent
   ],
   imports: [
     CommonModule,

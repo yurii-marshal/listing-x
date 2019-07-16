@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { WriteOfferComponent } from './write-offer/write-offer.component';
+import { WriteAnonymousOfferComponent } from './write-anonymous-offer/write-anonymous-offer.component';
 
 const routes: Routes = [
   {
     path: ':token',
-    component: WriteOfferComponent
+    component: WriteAnonymousOfferComponent
   }
 ];
 

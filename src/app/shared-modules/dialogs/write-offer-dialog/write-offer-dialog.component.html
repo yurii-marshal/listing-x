@@ -1,6 +1,6 @@
 <div mat-dialog-title class="u-flex u-flex-justify--space-between u-flex-align-items--center">
   <div class="title">Write Offer - Step 1</div>
-  <button mat-icon-button mat-dialog-close routerLink="/auth/login">
+  <button mat-icon-button mat-dialog-close>
     <mat-icon fontSet="fa" fontIcon="fa-times"></mat-icon>
   </button>
 </div>
@@ -26,7 +26,7 @@
             <input formControlName="email" placeholder="Email" spellcheck="false" class="form-control">
             <app-form-validation-error [baseControl]="control.get('email')"></app-form-validation-error>
           </div>
-          <button mat-icon-button color="accent" (click)="remove(Type.Buyers, i)">
+          <button *ngIf="buyers.controls.length > 1" mat-icon-button color="accent" (click)="remove(Type.Buyers, i)">
             <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
           </button>
         </div>
@@ -36,7 +36,7 @@
 
     <div>
       <h4 *ngIf="!data.isAnonymous">seller information</h4>
-      <div *ngFor="let control of sellers.controls; let i = index;" [formGroup]="control">
+      <div *ngFor="let control of sellers.controls; let i = index" [formGroup]="control">
         <h6 class="subtitle">seler #{{ i + 1}}</h6>
         <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
           <div class="fieldset u-flex-1">
@@ -54,7 +54,7 @@
             <input formControlName="email" placeholder="Email" spellcheck="false" class="form-control">
             <app-form-validation-error [baseControl]="control.get('email')"></app-form-validation-error>
           </div>
-          <button mat-icon-button color="accent" (click)="remove(Type.Sellers, i)">
+          <button *ngIf="sellers.controls.length > 1" mat-icon-button color="accent" (click)="remove(Type.Sellers, i)">
             <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
           </button>
         </div>
@@ -110,7 +110,7 @@
 </div>
 
 <div mat-dialog-actions class="fieldset u-flex u-flex-justify--space-between u-flex-align-items--center button-bar">
-  <button mat-stroked-button mat-dialog-close routerLink="/auth/login" color="primary">CANCEL</button>
+  <button mat-stroked-button mat-dialog-close color="primary">CANCEL</button>
   <button mat-flat-button appDebounceClick
           (debounceClick)="close()"
           [disabled]="!form.dirty || form.invalid"

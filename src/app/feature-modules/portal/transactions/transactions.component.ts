@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { AddressDialogComponent } from '../../../shared-modules/dialogs/address-dialog/address-dialog.component';
 import { filter } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
@@ -13,10 +12,10 @@ import { MatDialog } from '@angular/material';
 export class TransactionsComponent implements OnInit {
 
   constructor(private router: Router,
-              private http: HttpClient,
-              private dialog: MatDialog,) { }
+              private dialog: MatDialog) { }
 
   ngOnInit() {
+
   }
 
   onSubmit() {
@@ -33,6 +32,4 @@ export class TransactionsComponent implements OnInit {
       .pipe(filter(dialogResult => !!dialogResult),)
       .subscribe();
   }
-
-
 }

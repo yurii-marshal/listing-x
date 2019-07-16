@@ -10,10 +10,12 @@ import { HttpErrorsInterceptor } from './core-modules/interceptors/http-errors.i
 import { HttpProgressInterceptor } from './core-modules/interceptors/http-progress.interceptor.service';
 import { AuthService } from './core-modules/core-services/auth.service';
 import { ProgressService } from './core-modules/core-services/progress.service';
+import { WriteOfferComponent } from './feature-modules/write-offer/write-offer.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    WriteOfferComponent
   ],
   imports: [
     BrowserModule,

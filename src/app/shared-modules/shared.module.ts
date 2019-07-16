@@ -15,6 +15,7 @@ import { CopyToClipboard } from './directives/copy-to-clipboard';
 import { AddressesService } from '../core-modules/core-services/addresses.service';
 import { WriteOfferDialogComponent } from './dialogs/write-offer-dialog/write-offer-dialog.component';
 import { OfferService } from '../core-modules/core-services/offer.service';
+import { DialogsWrapperComponent } from './components/dialogs-wrapper/dialogs-wrapper.component';
 
 const materialModules = [
   MatDialogModule,
@@ -36,6 +37,7 @@ const components = [
   ConfirmationBarComponent,
   CopyToClipboard,
   WriteOfferDialogComponent,
+  DialogsWrapperComponent,
 ];
 
 @NgModule({

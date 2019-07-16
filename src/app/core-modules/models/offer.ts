@@ -15,8 +15,8 @@ export class Offer {
   constructor(data?: any) {
     if (data) {
       this.id = data.id;
-      this.buyers = data.buyers;
-      this.sellers = data.sellers;
+      this.buyers = this.parseBuyers(data.buyers);
+      this.sellers = _.map(data.sellers, item => new Person(item));
       this.streetName = data.street_name;
       this.city = data.city;
       this.state = data.state;
@@ -30,7 +30,7 @@ export class Offer {
     }
   }
 
-  serializeStepOne(): any {
+  serialize(): any {
     return {
       id: this.id,
       buyers: _.map(this.buyers, item => item.serialize()),
@@ -43,6 +43,14 @@ export class Offer {
       price: this.price,
       close_escrow_days: this.closeEscrowDays
     }
+  }
+
+  private parseBuyers(buyers: any[]): Person[] {
+    if (_.isEmpty(buyers)) {
+      return [new Person()]; // predefined one section with buyer
+    }
+
+    return _.map(buyers, item => new Person(item))
   }
 }
   

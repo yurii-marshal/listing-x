@@ -1,9 +1,9 @@
 <app-base-template>
 
   <div class="buttons-bar u-flex u-flex-justify--center u-flex-align-items--center">
-    <div class="custom-btn">
+    <div routerLink="/portal/step1" class="custom-btn">
       <img src="assets/images/icons/write_offer.svg">
-      <span>Write Offer</span>
+      <span >Write Offer</span>
     </div>
     <div (click)="openCreateAddressDialog()" class="custom-btn">
       <img src="assets/images/icons/im-selling.svg">
@@ -17,6 +17,10 @@
       </div>
       <span>Supporting Docs</span>
     </div>
+  </div>
+
+  <div class="dialog">
+    <router-outlet></router-outlet>
   </div>
 
   <h2 class="u-flex u-flex-justify--center">Transactions</h2>

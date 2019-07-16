@@ -4,7 +4,7 @@ import { ApiEndpoint, AuthEndpoints } from '../enums/auth-endpoints';
 import * as moment from 'moment';
 import { User } from '../../feature-modules/auth/models';
 import { catchError, map, shareReplay, switchMap, tap } from 'rxjs/operators';
-import { Jwt } from '../enums/jwt';
+import { LocalStorageKey } from '../enums/local-storage-key';
 import { Observable, of } from 'rxjs';
 import { JwtResponse } from '../interfaces/jwt-response';
 import * as _ from 'lodash';
@@ -20,13 +20,13 @@ export class AuthService {
 
   /** @Deprecated */
   private get expirationTm() {
-    const expiration = localStorage.getItem(Jwt.Expiration);
+    const expiration = localStorage.getItem(LocalStorageKey.Expiration);
     const expiresAt = JSON.parse(expiration);
     return moment(expiresAt);
   }
 
   private get expirationTime(): moment.Moment {
-    const base64Token = localStorage.getItem(Jwt.Token);
+    const base64Token = localStorage.getItem(LocalStorageKey.Token);
     if (base64Token) {
       const [header, payload, signature] = _.split(base64Token, '.');
       const decodedPayload = JSON.parse(atob(payload));
@@ -38,7 +38,7 @@ export class AuthService {
 
 
   private get jwtToken(): string {
-    return localStorage.getItem(Jwt.Token);
+    return localStorage.getItem(LocalStorageKey.Token);
   }
 
   // TODO: return moment().isBefore(this.expirationTime);
@@ -96,15 +96,15 @@ export class AuthService {
 
   logout() {
     this.currentUser = null;
-    localStorage.removeItem(Jwt.Token);
-    localStorage.removeItem(Jwt.Expiration);
+    localStorage.removeItem(LocalStorageKey.Token);
+    localStorage.removeItem(LocalStorageKey.Expiration);
   }
 
   private setSession(resp: JwtResponse): void {
-    const unix = +resp[Jwt.Expiration];
+    const unix = +resp[LocalStorageKey.Expiration];
     const expiresAt: moment.Moment = moment.unix(unix).add(1, 'second');
     const unixTimestamp: number = expiresAt.valueOf(); // in ms.
-    localStorage.setItem(Jwt.Token, resp[Jwt.Token]);
-    localStorage.setItem(Jwt.Expiration, JSON.stringify(unixTimestamp));
+    localStorage.setItem(LocalStorageKey.Token, resp[LocalStorageKey.Token]);
+    localStorage.setItem(LocalStorageKey.Expiration, JSON.stringify(unixTimestamp));
   }
 }

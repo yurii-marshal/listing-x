@@ -36,7 +36,7 @@ export class WriteOfferDialogComponent implements OnInit {
                private service: OfferService,
                private snackbar: MatSnackBar,
                public dialogRef: MatDialogRef<WriteOfferDialogComponent>,
-               @Inject(MAT_DIALOG_DATA) public data: {model: Offer, isEdit: boolean, isAnonymous: boolean}) {
+               @Inject(MAT_DIALOG_DATA) public data: {model: Offer, isEdit: boolean, isAnonymous: boolean, verbose: boolean}) {
 
     // TODO: retrieve from LS
   }
@@ -80,22 +80,25 @@ export class WriteOfferDialogComponent implements OnInit {
   }
 
   close(): void {
+    const model: Offer = this.formData;
+    if (this.data.isAnonymous) {
+      this.dialogRef.close(model);
+      return; // Exit
+    }
+
     const message = `Successfully ${this.data.isEdit ? 'updated' : 'created new'} offer.`;
-    of(this.formData)
+    of(model)
       .pipe(
         switchMap((item: Offer) => this.data.isEdit
           ? this.service.update(item)
           : this.service.add(item)
         ),
-        tap(() => this.snackbar.open(message, null, {duration: 3000}))
+        tap(() => this.data.verbose && this.snackbar.open(message, null, {duration: 3000}))
       )
-      .subscribe(() => this.dialogRef.close(this.formData));
-
-    // TODO: serializeStepOne into LS
-    // TODO: redirect depends on anonimous or not
+      .subscribe(() => this.dialogRef.close(model));
   }
 
-  private get formData() {
+  private get formData(): Offer {
     const model: Offer = _.cloneDeep(this.data.model);
     Object.assign(model, this.form.value);
     model.buyers = _.map(this.buyers.value, item => Object.assign(new Person(), item));

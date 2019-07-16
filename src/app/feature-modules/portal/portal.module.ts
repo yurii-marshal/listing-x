@@ -4,6 +4,7 @@ import { TransactionsComponent } from './transactions/transactions.component';
 import { PortalRoutingModule } from './portal-routing.module';
 import { MatButtonModule, MatCheckboxModule, MatTableModule, MatTabsModule } from '@angular/material';
 import { SharedModule } from '../../shared-modules/shared.module';
+import { RouterModule } from '@angular/router';
 
 const MatModules = [
   MatCheckboxModule,
@@ -15,12 +16,13 @@ const MatModules = [
 @NgModule({
   imports: [
     CommonModule,
+    RouterModule,
     PortalRoutingModule,
     SharedModule,
     ...MatModules
   ],
   declarations: [
-    TransactionsComponent
+    TransactionsComponent,
   ]
 })
 export class PortalModule { }

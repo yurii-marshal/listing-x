@@ -5,7 +5,7 @@ import { AuthEndpoints } from '../enums/auth-endpoints';
 import { environment } from '../../../environments/environment';
 import { filter, switchMap, take, tap } from 'rxjs/operators';
 import { JwtResponse } from '../interfaces/jwt-response';
-import { Jwt } from '../enums/jwt';
+import { LocalStorageKey } from '../enums/local-storage-key';
 import { AuthService } from '../core-services/auth.service';
 
 @Injectable()
@@ -32,7 +32,7 @@ export class JwtInterceptor implements HttpInterceptor {
       return next.handle(req); // Exit
     }
 
-    const token = localStorage.getItem(Jwt.Token);
+    const token = localStorage.getItem(LocalStorageKey.Token);
     if (token) {
       req = this.addToken(req, token);
     }
