@@ -66,7 +66,7 @@ export class BaseTableDataSource<T> extends DataSource<any> {
         switchMap(params => this.service.loadList(params)),
         map((response: any) => {
           this.count = response.count || 0;
-          this.data = _.map(response.results, entity => this.service.wrap(entity));
+          this.data = response.results;
           return this.data;
         })
       );

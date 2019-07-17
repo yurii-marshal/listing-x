@@ -12,8 +12,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class HttpErrorsInterceptor implements HttpInterceptor {
-  private readonly excluded: AuthEndpoints[] = [
-  ];
+  private readonly excluded: AuthEndpoints[] = [];
 
   constructor(private snackBar: MatSnackBar,
               private router: Router) {

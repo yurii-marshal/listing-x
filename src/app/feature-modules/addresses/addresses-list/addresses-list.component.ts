@@ -14,7 +14,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./addresses-list.component.scss']
 })
 export class AddressesListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['date', 'name', 'address', 'offersCreated', 'offersSigned', 'actions'];
+  displayedColumns: string[] = ['createdAt', 'name', 'address', 'offersCreated', 'offersSigned', 'actions'];
 
   dataSource: BaseTableDataSource<Address>;
 

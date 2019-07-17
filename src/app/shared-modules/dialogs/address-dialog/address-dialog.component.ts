@@ -22,33 +22,48 @@ export class AddressDialogComponent implements OnInit {
               private snackbar: MatSnackBar,
               public dialogRef: MatDialogRef<AddressDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: { model: Address, verbose: boolean }) {
+
     this.isEdit = !!data.model;
-    data.model = data.model || new Address();
   }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
       id: [this.data.model.id, []],
-      firstName: [this.data.model.firstName, [Validators.required, Validators.maxLength(30)]],
-      lastName: [this.data.model.lastName, [Validators.required, Validators.maxLength(150)]],
-      street: [this.data.model.street, [Validators.required]],
-      city: [this.data.model.city, [Validators.required, Validators.maxLength(255)]],
-      state: [{value: this.data.model.state, disabled: true}, [Validators.required, Validators.maxLength(150)]],
-      zip: [this.data.model.zip, [Validators.required, CustomValidators.number, Validators.maxLength(10)]],
-      apn: [this.data.model.apn, [CustomValidators.number]],
+      firstName: [null, [Validators.required, Validators.maxLength(30)]],
+      lastName: [null, [Validators.required, Validators.maxLength(150)]],
+      streetName: [null, [Validators.required]],
+      city: [null, [Validators.required, Validators.maxLength(255)]],
+      state: [{value: 'California', disabled: true}, [Validators.required, Validators.maxLength(150)]],
+      zip: [null, [Validators.required, CustomValidators.number, Validators.maxLength(10)]],
+      apn: [null, [CustomValidators.number]],
+    });
+
+    if (this.data.model) {
+      this.patchFromValues();
+    }
+  }
+
+  patchFromValues() {
+    this.form.patchValue({
+      id: this.data.model.id,
+      firstName: this.data.model.firstName,
+      lastName: this.data.model.lastName,
+      streetName: this.data.model.streetName,
+      city: this.data.model.city,
+      state: this.data.model.state,
+      zip: this.data.model.zip,
+      apn: this.data.model.apn
     });
   }
 
   close(): void {
-    const model: Address = _.cloneDeep(this.data.model);
-    Object.assign(model, this.form.value);
-
+    const model: Address = this.form.value;
     const message = `Successfully ${this.isEdit ? 'updated' : 'created new'} address.`;
     of(model)
       .pipe(
-        switchMap((item: Address) => this.isEdit
-          ? this.service.update(item)
-          : this.service.add(item)
+        switchMap(() => this.isEdit
+          ? this.service.update(model)
+          : this.service.add(model)
         ),
         // TODO: catch error
         tap(() => this.data.verbose && this.snackbar.open(message, null, {duration: 3000}))

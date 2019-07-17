@@ -15,9 +15,4 @@ export interface IDataService<TModel> {
   update(model: TModel): Observable<TModel>;
 
   delete(id: number): Observable<void>;
-
-  /**
-   * Wrap raw data from server into angular compatible model
-   * */
-  wrap(item: any): TModel;
 }
