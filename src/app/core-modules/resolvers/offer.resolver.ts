@@ -21,7 +21,7 @@ export class OfferResolver implements Resolve<Offer> {
     const offerId: number = Number(route.queryParams.id);
     if (raw) {
       const o = JSON.parse(raw);
-      const model = new Offer(o.offer);
+      const model = o.offer as Offer;
       const token = o.token; // from generation link
       return this.offerService.add(model, token)
         .pipe(
@@ -33,7 +33,7 @@ export class OfferResolver implements Resolve<Offer> {
     } else if (!isNaN(offerId)) {
       return this.offerService.loadOne(offerId);
     } else {
-      return of(new Offer());
+      return of(null);
     }
   }
 }

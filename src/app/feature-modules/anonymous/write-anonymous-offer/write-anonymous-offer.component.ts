@@ -6,7 +6,6 @@ import { Offer } from '../../../core-modules/models/offer';
 import { OfferService } from '../../../core-modules/core-services/offer.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageKey } from '../../../core-modules/enums/local-storage-key';
-import { pipe } from 'rxjs';
 
 @Component({
   selector: 'app-write-offer',
@@ -15,7 +14,6 @@ import { pipe } from 'rxjs';
 })
 export class WriteAnonymousOfferComponent implements OnInit {
 
-  // TODO:: refactor using dialog wrapper
   constructor(private dialog: MatDialog,
               private service: OfferService,
               private router: Router,
@@ -30,19 +28,18 @@ export class WriteAnonymousOfferComponent implements OnInit {
       .subscribe((model: Offer) => this.openDialog(model));
   }
 
-  private openDialog(offer: Offer) {
+  private openDialog(model: Offer) {
     const dialogRef = this.dialog.open(WriteOfferDialogComponent, {
       width: '600px',
       disableClose: true,
-      data: {model: offer, isAnonymous: true}
+      data: {model, isAnonymous: true}
     });
 
     dialogRef.afterClosed()
       .pipe(filter(dialogResult => !!dialogResult),)
-      .subscribe((model: Offer) => {
+      .subscribe((offer: Offer) => {
         const token = this.route.snapshot.params.token;
-        const o = {offer: model.serialize(), token};
-        localStorage.setItem(LocalStorageKey.Offer, JSON.stringify(o));
+        localStorage.setItem(LocalStorageKey.Offer, JSON.stringify({offer, token}));
         this.router.navigate(['/auth/login']);
       });
   }

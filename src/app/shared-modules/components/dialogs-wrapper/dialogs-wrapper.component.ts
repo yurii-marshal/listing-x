@@ -23,12 +23,11 @@ export class DialogsWrapperComponent implements OnInit {
 
   openWriteOfferDialog() {
     const model = this.route.snapshot.data.model;
-    const isEdit =  !!this.route.snapshot.queryParams.id;
     const provider = this.route.snapshot.data.component as Type<Component>;
     const dialogRef = this.dialog.open(provider, {
       width: '600px',
       disableClose: true,
-      data: {model, isEdit}
+      data: {model}
     });
 
     dialogRef.afterClosed()

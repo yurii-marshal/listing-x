@@ -118,6 +118,6 @@
           (debounceClick)="close()"
           [disabled]="!form.dirty || form.invalid"
           color="primary">
-    SAVE
+    {{ isEdit ? 'UPDATE' : 'SAVE'}}
   </button>
 </div>

@@ -25,7 +25,7 @@ export class TransactionsComponent implements OnInit {
     const dialogRef = this.dialog.open(AddressDialogComponent, {
       width: '600px',
       disableClose: true,
-      data: {model: null, verbose: true}
+      data: {verbose: true}
     });
 
     dialogRef.afterClosed()

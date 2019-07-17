@@ -17,13 +17,12 @@ export class OfferService implements IDataService <Offer> {
     if (token) {
       params = params.set('token', token);
     }
-    return this.http.post<Offer>(ApiEndpoint.Offer, model.serialize(), {params: params});
+    return this.http.post<Offer>(ApiEndpoint.Offer, model, {params: params});
   }
 
   getAnonymousOffer(token): Observable<Offer> {
     const url = ApiEndpoint.AnonymousOffer + token + '/';
     return this.http.get<Offer>(url)
-      .pipe(map(raw => new Offer(raw)));
   }
 
   delete(id: number): Observable<void> {
@@ -35,15 +34,10 @@ export class OfferService implements IDataService <Offer> {
   }
 
   loadOne(id: number): Observable<Offer> {
-    return this.http.get<Offer>(ApiEndpoint.Offer + id + '/')
-      .pipe(map(raw => new Offer(raw)));
+    return this.http.get<Offer>(ApiEndpoint.Offer + id + '/');
   }
 
   update(model: Offer): Observable<Offer> {
-    return undefined;
-  }
-
-  wrap(item: any): Offer {
     return undefined;
   }
 }

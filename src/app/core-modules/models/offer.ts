@@ -1,17 +1,18 @@
 import * as _ from 'lodash';
 
-export class Offer {
+export interface Offer {
   id: number;
   buyers: Person[];
   sellers: Person[];
   streetName: string;
   city: string;
-  state: string = 'California';
+  state: string; //  'California'
   apn: string;
   zip: number;
   price: number;
   closeEscrowDays: number;
 
+/*
   constructor(data?: any) {
     if (data) {
       this.id = data.id;
@@ -52,15 +53,16 @@ export class Offer {
 
     return _.map(buyers, item => new Person(item))
   }
+*/
 }
   
-export class Person {
+export interface Person {
     id: number;
     firstName: string;
     lastName: string;
     email: string;
 
-  constructor(data?: any) {
+/*  constructor(data?: any) {
     if (data) {
       this.id = +data.id;
       this.firstName = data.first_name;
@@ -76,5 +78,5 @@ export class Person {
         last_name: this.lastName,
         email: this.email
       };
-    }
+    }*/
 }

@@ -44,7 +44,7 @@ export class AddressDialogComponent implements OnInit {
   }
 
   patchFromValues() {
-    this.form.patchValue({
+    this.form.setValue({
       id: this.data.model.id,
       firstName: this.data.model.firstName,
       lastName: this.data.model.lastName,

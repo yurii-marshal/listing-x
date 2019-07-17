@@ -22,6 +22,7 @@ enum Type {
 export class WriteOfferDialogComponent implements OnInit {
   form: FormGroup;
   Type = Type;
+  isEdit: boolean;
 
   get buyers(): FormArray {
     return this.form.get('buyers') as FormArray;
@@ -35,8 +36,8 @@ export class WriteOfferDialogComponent implements OnInit {
                private service: OfferService,
                private snackbar: MatSnackBar,
                public dialogRef: MatDialogRef<WriteOfferDialogComponent>,
-               @Inject(MAT_DIALOG_DATA) public data: {model: Offer, isEdit: boolean, isAnonymous: boolean, verbose: boolean}) {
-
+               @Inject(MAT_DIALOG_DATA) public data: {model: Offer, isAnonymous: boolean, verbose: boolean}) {
+    this.isEdit = !!data.model;
   }
 
   ngOnInit() {
@@ -45,35 +46,62 @@ export class WriteOfferDialogComponent implements OnInit {
 
   private buildForm() {
     const disabled: boolean = this.data.isAnonymous;
-    const buyers = _.map(this.data.model.buyers, item => this.createEntity(item));
-    const sellers = _.map(this.data.model.sellers, item => this.createEntity(item, disabled));
 
     this.form = this.formBuilder.group({
-      id: [this.data.model.id, []],
-      buyers: this.formBuilder.array(buyers),
-      sellers: this.formBuilder.array(sellers),
-      street: [{value: this.data.model.streetName, disabled}, [Validators.required]],
-      city: [{value: this.data.model.city, disabled}, [Validators.required, Validators.maxLength(255)]],
-      state: [{value: this.data.model.state, disabled: true}, [Validators.required, Validators.maxLength(150)]],
-      zip: [{value: this.data.model.zip, disabled}, [Validators.required, CustomValidators.number, Validators.maxLength(10)]],
-      apn: [{value: this.data.model.apn, disabled}, [CustomValidators.number]],
-      price: [this.data.model.price, [Validators.required, CustomValidators.number]],
+      id: [null, []],
+      buyers: this.formBuilder.array([this.createEntity()]),
+      sellers: this.formBuilder.array([]),
+      street: [{value: null, disabled}, [Validators.required]],
+      city: [{value: null, disabled}, [Validators.required, Validators.maxLength(255)]],
+      state: [{value: null, disabled: true}, [Validators.required, Validators.maxLength(150)]],
+      zip: [{value: null, disabled}, [Validators.required, CustomValidators.number, Validators.maxLength(10)]],
+      apn: [{value: null, disabled}, [CustomValidators.number]],
+      price: [null, [Validators.required, CustomValidators.number]],
       closeEscrowDays: [this.data.model.closeEscrowDays, [Validators.required, CustomValidators.number, Validators.max(90)]]
     });
+
+    if (this.data.model) {
+      this.applyFormValues(this.data.model);
+    }
   }
 
-  createEntity(model: any, disabled: boolean = false): FormGroup {
-    return this.formBuilder.group({
-      firstName: [{value: model.firstName, disabled}, [Validators.required, Validators.maxLength(30)]],
-      lastName: [{value: model.lastName, disabled}, [Validators.required, Validators.maxLength(150)]],
-      email: [{value: model.email, disabled}, [Validators.required, Validators.email]], // CustomValidators.unique(this.)
+  applyFormValues(model?: Offer) {
+    this.form.patchValue({
+      id: model.id,
+      street: model.streetName,
+      city: model.city,
+      state: model.state,
+      zip: model.zip,
+      apn: model.apn,
+      price: model.price,
+      closeEscrowDays: model.closeEscrowDays,
     });
+
+    // Nested forms
+    const buyers = _.map(model.buyers, item => this.createEntity(item));
+    const sellers = _.map(model.sellers, item => this.createEntity(item, this.data.isAnonymous));
+    this.form.setControl('buyers', this.formBuilder.array(buyers));
+    this.form.setControl('sellers', this.formBuilder.array(sellers));
   }
 
-  add(type: Type = Type.Buyers, model?: any) {
+  createEntity(model?: Person, disabled: boolean = false): FormGroup {
+    const formGroup = this.formBuilder.group({
+      id: [null, []],
+      firstName: [{value: null, disabled}, [Validators.required, Validators.maxLength(30)]],
+      lastName: [{value: null, disabled}, [Validators.required, Validators.maxLength(150)]],
+      email: [{value: null, disabled}, [Validators.required, Validators.email]], // CustomValidators.unique(this.)
+    });
+
+    if (model) {
+      formGroup.patchValue(model);
+    }
+
+    return formGroup;
+  }
+
+  add(type: Type = Type.Buyers) {
     const control = this.form.get(type) as FormArray;
-    model = model || new Person();
-    control.push(this.createEntity(model));
+    control.push(this.createEntity());
   }
 
   remove(type: Type, index: number) {
@@ -82,16 +110,16 @@ export class WriteOfferDialogComponent implements OnInit {
   }
 
   close(): void {
-    const model: Offer = this.formData;
+    const model: Offer = this.form.value;
     if (this.data.isAnonymous) {
       this.dialogRef.close(model);
       return; // Exit
     }
 
-    const message = `Successfully ${this.data.isEdit ? 'updated' : 'created new'} offer.`;
+    const message = `Successfully ${this.isEdit ? 'updated' : 'created new'} offer.`;
     of(model)
       .pipe(
-        switchMap((item: Offer) => this.data.isEdit
+        switchMap((item: Offer) => this.isEdit
           ? this.service.update(item)
           : this.service.add(item)
         ),
@@ -100,11 +128,4 @@ export class WriteOfferDialogComponent implements OnInit {
       .subscribe(() => this.dialogRef.close(model));
   }
 
-  private get formData(): Offer {
-    const model: Offer = _.cloneDeep(this.data.model);
-    Object.assign(model, this.form.value);
-    model.buyers = _.map(this.buyers.value, item => Object.assign(new Person(), item));
-    model.sellers = _.map(this.sellers.value, item => Object.assign(new Person(), item));
-    return model;
-  }
 }
