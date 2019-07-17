@@ -50,10 +50,10 @@ export class WriteOfferDialogComponent implements OnInit {
     this.form = this.formBuilder.group({
       id: [null, []],
       buyers: this.formBuilder.array([this.createEntity()]),
-      sellers: this.formBuilder.array([]),
-      street: [{value: null, disabled}, [Validators.required]],
+      sellers: this.formBuilder.array([this.createEntity()]),
+      streetName: [{value: null, disabled}, [Validators.required]],
       city: [{value: null, disabled}, [Validators.required, Validators.maxLength(255)]],
-      state: [{value: null, disabled: true}, [Validators.required, Validators.maxLength(150)]],
+      state: [{value: 'California', disabled: true}, [Validators.required, Validators.maxLength(150)]],
       zip: [{value: null, disabled}, [Validators.required, CustomValidators.number, Validators.maxLength(10)]],
       apn: [{value: null, disabled}, [CustomValidators.number]],
       price: [null, [Validators.required, CustomValidators.number]],
@@ -68,7 +68,7 @@ export class WriteOfferDialogComponent implements OnInit {
   applyFormValues(model?: Offer) {
     this.form.patchValue({
       id: model.id,
-      street: model.streetName,
+      streetName: model.streetName,
       city: model.city,
       state: model.state,
       zip: model.zip,
@@ -110,7 +110,7 @@ export class WriteOfferDialogComponent implements OnInit {
   }
 
   close(): void {
-    const model: Offer = this.form.value;
+    const model: Offer = this.form.getRawValue(); // include 'state'
     if (this.data.isAnonymous) {
       this.dialogRef.close(model);
       return; // Exit
