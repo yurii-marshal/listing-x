@@ -1,7 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormValidationErrorComponent } from './components/form-validation-error/form-validation-error.component';
-import { MatBadgeModule, MatButtonModule, MatCheckboxModule, MatDialogModule, MatIconModule, MatTabsModule } from '@angular/material';
+import {
+  MatBadgeModule,
+  MatButtonModule,
+  MatCheckboxModule,
+  MatDialogModule,
+  MatIconModule,
+  MatRadioModule,
+  MatTabsModule
+} from '@angular/material';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ArrayPipe } from './pipes/array.pipe';
 import { DebounceClickDirective } from './directives/debounce-click.directive';
@@ -25,7 +33,8 @@ const materialModules = [
   MatIconModule,
   OverlayModule,
   MatTabsModule,
-  MatBadgeModule
+  MatBadgeModule,
+  MatRadioModule
 ];
 
 const dialogs = [

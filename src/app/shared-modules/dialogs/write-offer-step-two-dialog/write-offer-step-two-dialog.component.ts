@@ -16,6 +16,8 @@ import { LoanType } from '../../../core-modules/enums/loan-type';
 export class WriteOfferStepTwoDialogComponent implements OnInit {
   form: FormGroup;
 
+  loanTypes: {value, label} [] = Object.keys(LoanType).map(key => ({ value: LoanType[key], label: LoanType[key] }));
+
   get loans(): FormArray {
     return this.form.get('loans') as FormArray;
   }
@@ -32,9 +34,13 @@ export class WriteOfferStepTwoDialogComponent implements OnInit {
     this.form = this.formBuilder.group({
       loans: this.formBuilder.array([ this.createLoan() ]),
       loanType: [LoanType.CONVENTIONAL],
-      downPayment: [null],
-      anySpecialFinancialTerms: [null],
+      downPayment: [],
+      anySpecialFinancialTerms: [],
     });
+
+    if (this.data.model) {
+      // apply form values
+    }
   }
 
   addLoan(): void {
@@ -61,10 +67,10 @@ export class WriteOfferStepTwoDialogComponent implements OnInit {
   }
 
   close(): void {
-    const model: Offer = _.cloneDeep(this.data.model); // keep all fields from step 1
+    const model: Offer = _.cloneDeep(this.data.model); // keep all fields from step 1 and extend with step 2 fields
     Object.assign(model, this.form.value);
-    //FIXME: loan: model.buyers = _.map(this.buyers.value, item => Object.assign(new Person(), item));
-
+    this.service.update(model)
+      .subscribe(() => this.dialogRef.close(model))
   }
 
 }

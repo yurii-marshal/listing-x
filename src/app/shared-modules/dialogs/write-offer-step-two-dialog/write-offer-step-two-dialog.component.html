@@ -36,62 +36,30 @@
           </button>
         </div>
       </div>
-      <div *ngIf="loans.controls.length < 3" (click)="addLoan()" class="link">add 2nd Loan</div>
+      <div *ngIf="loans.controls.length < 3" (click)="addLoan()" class="link">add Loan</div>
     </div>
 
+    <mat-radio-group formControlName="loanType" aria-label="Select an option">
+      <mat-radio-button *ngFor="let item of loanTypes" [value]="item.value">{{ item.label }}</mat-radio-button>
+    </mat-radio-group>
 
-    <!--h4 style="margin-top: 5px;">Address</h4>
-    <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
-      <div class="fieldset u-flex-1">
-        <label>Street</label>
-        <input formControlName="street" placeholder="Street" spellcheck="false" class="form-control">
-        <app-form-validation-error [baseControl]="form.get('street')"></app-form-validation-error>
-      </div>
-      <div class="fieldset">
-        <label>City</label>
-        <input formControlName="city" placeholder="City" spellcheck="false" class="form-control">
-        <app-form-validation-error [baseControl]="form.get('city')"></app-form-validation-error>
-      </div>
-    </div>
-    <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
-      <div class="fieldset">
-        <label>State</label>
-        <input formControlName="state" placeholder="State" spellcheck="false" class="form-control">
-        <app-form-validation-error [baseControl]="form.get('state')"></app-form-validation-error>
-      </div>
-      <div class="fieldset">
-        <label>Zip</label>
-        <input formControlName="zip" placeholder="Zip" spellcheck="false" class="form-control">
-        <app-form-validation-error [baseControl]="form.get('zip')"></app-form-validation-error>
-      </div>
-      <div class="fieldset">
-        <label>APN</label>
-        <input formControlName="apn" placeholder="Apn" spellcheck="false" class="form-control">
-        <app-form-validation-error [baseControl]="form.get('apn')"></app-form-validation-error>
-      </div>
+    <div class="fieldset" style="margin-top: 30px; width: 300px;">
+      <label>Down Payment</label>
+      <input formControlName="downPayment" placeholder="Payment" spellcheck="false" class="form-control" >
+      <app-form-validation-error [baseControl]="form.get('downPayment')"></app-form-validation-error>
     </div>
 
-    <h4 style="margin-top: 5px;">OFFER INFORMATION</h4>
-    <div class="fieldset">
-      <label>Offer price</label>
-      <div class="u-flex u-flex-align-items--center u-flex-justify--space-between">
-        <div style="position: relative;">
-          <input formControlName="price" placeholder="Price" spellcheck="false" class="form-control">
-          <app-form-validation-error [baseControl]="form.get('price')"></app-form-validation-error>
-        </div>
-        <div class="question">How long do you need to close escrow?</div>
-        <div style="position: relative;">
-          <input formControlName="closeEscrowDays" placeholder="Days" spellcheck="false" class="form-control" style="width: 48px;">
-          <app-form-validation-error [baseControl]="form.get('closeEscrowDays')"></app-form-validation-error>
-        </div>
-        <div class="question">Days</div>
-      </div>
-    </div-->
+    <div class="fieldset" >
+      <label>Any special financing terms?</label>
+      <textarea formControlName="anySpecialFinancialTerms" placeholder="Your message here..." spellcheck="false" class="form-control" style="height: 157px;"></textarea>
+      <app-form-validation-error [baseControl]="form.get('anySpecialFinancialTerms')"></app-form-validation-error>
+    </div>
   </form>
 </div>
 
 <div mat-dialog-actions class="fieldset u-flex u-flex-justify--space-between u-flex-align-items--center button-bar">
-  <button mat-stroked-button mat-dialog-close routerLink="../" color="primary">CANCEL</button>
+  <!--  FIXME -->
+  <button mat-stroked-button mat-dialog-close routerLink="../" color="primary">BACK</button>
   <button mat-flat-button appDebounceClick
           (debounceClick)="close()"
           [disabled]="!form.dirty || form.invalid"
