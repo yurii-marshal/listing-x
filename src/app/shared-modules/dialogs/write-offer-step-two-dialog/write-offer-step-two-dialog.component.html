@@ -9,29 +9,34 @@
     <div>
       <h4>Payment information</h4>
       <div *ngFor="let control of loans.controls; let i = index;" [formGroup]="control">
-        <h6 class="subtitle">buyer #{{ i + 1}}</h6>
+        <h6 *ngIf="loans.controls.length > 1" class="subtitle">loan #{{ i + 1}}</h6>
         <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
           <div class="fieldset u-flex-1">
-            <label>First name</label>
-            <input formControlName="firstName" placeholder="First name" spellcheck="false" class="form-control">
-            <app-form-validation-error [baseControl]="control.get('firstName')"></app-form-validation-error>
+            <label>Initial deposit</label>
+            <input formControlName="initialDeposit" placeholder="Deposit" spellcheck="false" class="form-control">
+            <app-form-validation-error [baseControl]="control.get('initialDeposit')"></app-form-validation-error>
           </div>
           <div class="fieldset u-flex-1">
-            <label>Last name</label>
-            <input formControlName="lastName" placeholder="Last name" spellcheck="false" class="form-control">
-            <app-form-validation-error [baseControl]="control.get('lastName')"></app-form-validation-error>
+            <label>loan amount</label>
+            <input formControlName="loanAmount" placeholder="Amount" spellcheck="false" class="form-control">
+            <app-form-validation-error [baseControl]="control.get('loanAmount')"></app-form-validation-error>
           </div>
           <div class="fieldset u-flex-1">
-            <label>Email</label>
-            <input formControlName="email" placeholder="Email" spellcheck="false" class="form-control">
-            <app-form-validation-error [baseControl]="control.get('email')"></app-form-validation-error>
+            <label>interest rate</label>
+            <input formControlName="interestRate" placeholder="Rate" spellcheck="false" class="form-control">
+            <app-form-validation-error [baseControl]="control.get('interestRate')"></app-form-validation-error>
+          </div>
+          <div class="fieldset u-flex-1">
+            <label>points</label>
+            <input formControlName="points" placeholder="points" spellcheck="false" class="form-control">
+            <app-form-validation-error [baseControl]="control.get('Points')"></app-form-validation-error>
           </div>
           <button *ngIf="loans.controls.length > 1" mat-icon-button color="accent" (click)="remove(i)">
             <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
           </button>
         </div>
       </div>
-      <div *ngIf="loans.controls.length < 4" (click)="add()" class="link">add 2nd Loan</div>
+      <div *ngIf="loans.controls.length < 3" (click)="addLoan()" class="link">add 2nd Loan</div>
     </div>
 
 

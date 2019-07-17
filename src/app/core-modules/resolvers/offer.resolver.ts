@@ -12,14 +12,11 @@ import { AuthService } from '../core-services/auth.service';
 export class OfferResolver implements Resolve<Offer> {
 
   constructor(private http: HttpClient,
-              private offerService: OfferService,
-              private authService: AuthService,
-              private router: Router,
-              private route: ActivatedRoute) {
+              private offerService: OfferService) {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Offer> | Offer {
-    const offerId: number = Number(route.queryParams.id);
+    const offerId: number = Number(route.queryParams.offerId);
 
     if (isNaN(offerId)) {
       return of(null);

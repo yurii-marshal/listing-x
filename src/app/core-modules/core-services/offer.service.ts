@@ -6,6 +6,7 @@ import { Observable, of } from 'rxjs';
 import { ApiEndpoint } from '../enums/auth-endpoints';
 import { map, tap } from 'rxjs/operators';
 import { LocalStorageKey } from '../enums/local-storage-key';
+import { detailUrl } from '../utils/util';
 
 @Injectable()
 export class OfferService implements IDataService <Offer> {
@@ -22,7 +23,7 @@ export class OfferService implements IDataService <Offer> {
   }
 
   getAnonymousOffer(token): Observable<Offer> {
-    const url = ApiEndpoint.AnonymousOffer + token + '/';
+    const url = detailUrl(ApiEndpoint.AnonymousOffer, token);
     return this.http.get<Offer>(url)
   }
 
@@ -35,11 +36,13 @@ export class OfferService implements IDataService <Offer> {
   }
 
   loadOne(id: number): Observable<Offer> {
-    return this.http.get<Offer>(ApiEndpoint.Offer + id + '/');
+    const url = detailUrl(ApiEndpoint.Offer, id);
+    return this.http.get<Offer>(url);
   }
 
   update(model: Offer): Observable<Offer> {
-    return undefined;
+    const url = detailUrl(ApiEndpoint.Offer, model.id);
+    return this.http.put<Offer>(url, model);
   }
 
   saveAnonymousOffer(): Observable<Offer> {
