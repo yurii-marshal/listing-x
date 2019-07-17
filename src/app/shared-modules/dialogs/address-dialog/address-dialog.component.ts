@@ -7,6 +7,7 @@ import { CustomValidators } from '../../../core-modules/validators/custom-valida
 import { AddressesService } from '../../../core-modules/core-services/addresses.service';
 import { switchMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { AuthService } from '../../../core-modules/core-services/auth.service';
 
 @Component({
   selector: 'app-address-dialog',
@@ -18,6 +19,7 @@ export class AddressDialogComponent implements OnInit {
   isEdit: boolean;
 
   constructor(private service: AddressesService,
+              private authService: AuthService,
               private formBuilder: FormBuilder,
               private snackbar: MatSnackBar,
               public dialogRef: MatDialogRef<AddressDialogComponent>,
@@ -27,10 +29,12 @@ export class AddressDialogComponent implements OnInit {
   }
 
   ngOnInit() {
+    const {firstName, lastName} = this.authService.currentUser;
+
     this.form = this.formBuilder.group({
-      id: [this.data.model.id, []],
-      firstName: [null, [Validators.required, Validators.maxLength(30)]],
-      lastName: [null, [Validators.required, Validators.maxLength(150)]],
+      id: [null, []],
+      firstName: [{value: firstName, disabled: true}, [Validators.required, Validators.maxLength(30)]],
+      lastName: [{value: lastName, disabled: true}, [Validators.required, Validators.maxLength(150)]],
       streetName: [null, [Validators.required]],
       city: [null, [Validators.required, Validators.maxLength(255)]],
       state: [{value: 'California', disabled: true}, [Validators.required, Validators.maxLength(150)]],
@@ -44,16 +48,9 @@ export class AddressDialogComponent implements OnInit {
   }
 
   patchFromValues() {
-    this.form.setValue({
-      id: this.data.model.id,
-      firstName: this.data.model.firstName,
-      lastName: this.data.model.lastName,
-      streetName: this.data.model.streetName,
-      city: this.data.model.city,
-      state: this.data.model.state,
-      zip: this.data.model.zip,
-      apn: this.data.model.apn
-    });
+    const controlNames: string[] = Object.keys(this.form.controls);
+    const formData = _.pick(this.data.model, controlNames);
+    this.form.setValue(formData);
   }
 
   close(): void {

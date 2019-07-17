@@ -35,7 +35,7 @@ export class NewPasswordComponent implements OnInit {
     const user = new User(this.form.value);
     this.service.resetPassword(user.password, token)
       .pipe(tap({error: (err: HttpErrorResponse) => {
-          if (err.error.new_password) {
+          if (err.error.newPassword) {
             this.form.get('password').setErrors({passwordused: true});
           } else if (err.error.token) { // invalid token
             this.router.navigateByUrl('/error/expired');
