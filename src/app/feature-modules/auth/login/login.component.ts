@@ -39,13 +39,14 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     const user = new User(this.form.value);
+    const url = this.redirectUrl;
     this.service.login(user)
       .pipe( // force to create offer stored by anonymous user
         switchMap(() => this.hasOfferData
           ? this.offerService.saveAnonymousOffer()
           : of(null))
       )
-      .subscribe(() => this.router.navigateByUrl(this.redirectUrl));
+      .subscribe(() => this.router.navigateByUrl(url));
   }
 
   private get redirectUrl(): string {
