@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { IDataService } from '../interfaces/data.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Offer } from '../models/offer';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ApiEndpoint } from '../enums/auth-endpoints';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
+import { LocalStorageKey } from '../enums/local-storage-key';
 
 @Injectable()
 export class OfferService implements IDataService <Offer> {
@@ -39,5 +40,16 @@ export class OfferService implements IDataService <Offer> {
 
   update(model: Offer): Observable<Offer> {
     return undefined;
+  }
+
+  saveAnonymousOffer(): Observable<Offer> {
+    const raw: string = localStorage.getItem(LocalStorageKey.Offer);
+    const o = JSON.parse(raw); // from generation link
+    const model = o.offer as Offer;
+    const token = o.token;
+    return this.add(model, token)
+      .pipe(
+        tap(() => localStorage.removeItem(LocalStorageKey.Offer))
+      );
   }
 }

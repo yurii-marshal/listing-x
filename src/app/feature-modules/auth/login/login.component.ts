@@ -5,6 +5,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
 import { LocalStorageKey } from '../../../core-modules/enums/local-storage-key';
+import { of } from 'rxjs';
+import { OfferService } from '../../../core-modules/core-services/offer.service';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +21,8 @@ export class LoginComponent implements OnInit {
               private service: AuthService,
               private router: Router,
               private route: ActivatedRoute,
-              private snackBar: MatSnackBar) { }
+              private snackBar: MatSnackBar,
+              private offerService: OfferService) { }
 
   ngOnInit() {
     const isAccountActivated = !!this.route.snapshot.queryParams.activated;
@@ -34,12 +38,27 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    let redirectUrl = this.route.snapshot.queryParams.redirectUrl || '/portal';
-    if (localStorage.getItem(LocalStorageKey.Offer)) {
-      redirectUrl = '/portal/step-1'; // Pre-process anonymous offer
-    }
     const user = new User(this.form.value);
     this.service.login(user)
-      .subscribe(() => this.router.navigateByUrl(redirectUrl));
+      .pipe( // force to create offer stored by anonymous user
+        switchMap(() => this.hasOfferData
+          ? this.offerService.saveAnonymousOffer()
+          : of(null))
+      )
+      .subscribe(() => this.router.navigateByUrl(this.redirectUrl));
   }
+
+  private get redirectUrl(): string {
+    let uri = this.route.snapshot.queryParams.redirectUrl || '/portal';
+    if (this.hasOfferData) {
+      uri = '/portal/step-2';
+    }
+    return uri;
+  }
+
+
+  private get hasOfferData(): boolean {
+    return !!localStorage.getItem(LocalStorageKey.Offer);
+  }
+
 }
