@@ -1,0 +1,94 @@
+<div mat-dialog-title class="u-flex u-flex-justify--space-between u-flex-align-items--center">
+  <div class="title">Write Offer - Step 2</div>
+  <button mat-icon-button mat-dialog-close routerLink="../">
+    <mat-icon fontSet="fa" fontIcon="fa-times"></mat-icon>
+  </button>
+</div>
+<div mat-dialog-content class="form-container dialog-form" style="min-height: 400px">
+  <form novalidate [formGroup]="form" style="width: 100%!important;">
+    <div>
+      <h4>Payment information</h4>
+      <div *ngFor="let control of loans.controls; let i = index;" [formGroup]="control">
+        <h6 class="subtitle">buyer #{{ i + 1}}</h6>
+        <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
+          <div class="fieldset u-flex-1">
+            <label>First name</label>
+            <input formControlName="firstName" placeholder="First name" spellcheck="false" class="form-control">
+            <app-form-validation-error [baseControl]="control.get('firstName')"></app-form-validation-error>
+          </div>
+          <div class="fieldset u-flex-1">
+            <label>Last name</label>
+            <input formControlName="lastName" placeholder="Last name" spellcheck="false" class="form-control">
+            <app-form-validation-error [baseControl]="control.get('lastName')"></app-form-validation-error>
+          </div>
+          <div class="fieldset u-flex-1">
+            <label>Email</label>
+            <input formControlName="email" placeholder="Email" spellcheck="false" class="form-control">
+            <app-form-validation-error [baseControl]="control.get('email')"></app-form-validation-error>
+          </div>
+          <button *ngIf="loans.controls.length > 1" mat-icon-button color="accent" (click)="remove(i)">
+            <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
+          </button>
+        </div>
+      </div>
+      <div *ngIf="loans.controls.length < 4" (click)="add()" class="link">add 2nd Loan</div>
+    </div>
+
+
+    <!--h4 style="margin-top: 5px;">Address</h4>
+    <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
+      <div class="fieldset u-flex-1">
+        <label>Street</label>
+        <input formControlName="street" placeholder="Street" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="form.get('street')"></app-form-validation-error>
+      </div>
+      <div class="fieldset">
+        <label>City</label>
+        <input formControlName="city" placeholder="City" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="form.get('city')"></app-form-validation-error>
+      </div>
+    </div>
+    <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
+      <div class="fieldset">
+        <label>State</label>
+        <input formControlName="state" placeholder="State" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="form.get('state')"></app-form-validation-error>
+      </div>
+      <div class="fieldset">
+        <label>Zip</label>
+        <input formControlName="zip" placeholder="Zip" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="form.get('zip')"></app-form-validation-error>
+      </div>
+      <div class="fieldset">
+        <label>APN</label>
+        <input formControlName="apn" placeholder="Apn" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="form.get('apn')"></app-form-validation-error>
+      </div>
+    </div>
+
+    <h4 style="margin-top: 5px;">OFFER INFORMATION</h4>
+    <div class="fieldset">
+      <label>Offer price</label>
+      <div class="u-flex u-flex-align-items--center u-flex-justify--space-between">
+        <div style="position: relative;">
+          <input formControlName="price" placeholder="Price" spellcheck="false" class="form-control">
+          <app-form-validation-error [baseControl]="form.get('price')"></app-form-validation-error>
+        </div>
+        <div class="question">How long do you need to close escrow?</div>
+        <div style="position: relative;">
+          <input formControlName="closeEscrowDays" placeholder="Days" spellcheck="false" class="form-control" style="width: 48px;">
+          <app-form-validation-error [baseControl]="form.get('closeEscrowDays')"></app-form-validation-error>
+        </div>
+        <div class="question">Days</div>
+      </div>
+    </div-->
+  </form>
+</div>
+
+<div mat-dialog-actions class="fieldset u-flex u-flex-justify--space-between u-flex-align-items--center button-bar">
+  <button mat-stroked-button mat-dialog-close routerLink="../" color="primary">CANCEL</button>
+  <button mat-flat-button appDebounceClick
+          (debounceClick)="close()"
+          [disabled]="!form.dirty || form.invalid"
+          color="primary">SAVE</button>
+</div>

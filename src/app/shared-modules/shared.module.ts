@@ -16,6 +16,7 @@ import { AddressesService } from '../core-modules/core-services/addresses.servic
 import { WriteOfferDialogComponent } from './dialogs/write-offer-dialog/write-offer-dialog.component';
 import { OfferService } from '../core-modules/core-services/offer.service';
 import { DialogsWrapperComponent } from './components/dialogs-wrapper/dialogs-wrapper.component';
+import { WriteOfferStepTwoDialogComponent } from './dialogs/write-offer-step-two-dialog/write-offer-step-two-dialog.component';
 
 const materialModules = [
   MatDialogModule,
@@ -27,17 +28,22 @@ const materialModules = [
   MatBadgeModule
 ];
 
+const dialogs = [
+  WriteOfferDialogComponent,
+  WriteOfferStepTwoDialogComponent,
+  AddressDialogComponent
+];
+
 const components = [
   FormValidationErrorComponent,
   ArrayPipe,
   DebounceClickDirective,
   BaseTemplateComponent,
   EmptyPageComponent,
-  AddressDialogComponent,
   ConfirmationBarComponent,
   CopyToClipboard,
-  WriteOfferDialogComponent,
   DialogsWrapperComponent,
+  ...dialogs
 ];
 
 @NgModule({
@@ -54,9 +60,7 @@ const components = [
     ...components
   ],
   entryComponents: [
-    ConfirmationBarComponent,
-    AddressDialogComponent,
-    WriteOfferDialogComponent,
+    ...dialogs
   ],
   providers: [
     AddressesService,

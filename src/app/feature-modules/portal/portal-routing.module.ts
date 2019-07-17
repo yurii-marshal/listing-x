@@ -5,6 +5,7 @@ import { AuthGuardService } from '../../core-modules/guards/auth-guard.service';
 import { DialogsWrapperComponent } from '../../shared-modules/components/dialogs-wrapper/dialogs-wrapper.component';
 import { WriteOfferDialogComponent } from '../../shared-modules/dialogs/write-offer-dialog/write-offer-dialog.component';
 import { OfferResolver } from '../../core-modules/resolvers/offer.resolver';
+import { WriteOfferStepTwoDialogComponent } from '../../shared-modules/dialogs/write-offer-step-two-dialog/write-offer-step-two-dialog.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,11 @@ const routes: Routes = [
         path: 'step-1',
         component: DialogsWrapperComponent,
         data: { component: WriteOfferDialogComponent, next: '/portal/step-2'},
+        resolve: { model: OfferResolver }
+      }, {
+        path: 'step-2',
+        component: DialogsWrapperComponent,
+        data: { component: WriteOfferStepTwoDialogComponent, next: '/portal/upload'},
         resolve: { model: OfferResolver }
       }
     ]

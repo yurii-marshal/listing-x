@@ -40,6 +40,10 @@ export class WriteOfferDialogComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.buildForm();
+  }
+
+  private buildForm() {
     const disabled: boolean = this.data.isAnonymous;
     const buyers = _.map(this.data.model.buyers, item => this.createEntity(item));
     const sellers = _.map(this.data.model.sellers, item => this.createEntity(item, disabled));

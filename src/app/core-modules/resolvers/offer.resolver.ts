@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRoute, ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { LocalStorageKey } from '../enums/local-storage-key';
@@ -12,7 +12,8 @@ export class OfferResolver implements Resolve<Offer> {
 
   constructor(private http: HttpClient,
               private offerService: OfferService,
-              private router: Router) {
+              private router: Router,
+              private route: ActivatedRoute) {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Offer> | Offer {
@@ -24,8 +25,9 @@ export class OfferResolver implements Resolve<Offer> {
       const token = o.token; // from generation link
       return this.offerService.add(model, token)
         .pipe(
-          tap(() => localStorage.removeItem(LocalStorageKey.Offer)),
-          // tap(({id}) => this.router.navigate(['.'], {relativeTo: route, queryParams: {id: 4}})),
+          // TODO: redirect step2
+          // tap(() => localStorage.removeItem(LocalStorageKey.Offer)),
+          tap(({id}) => this.router.navigate(['.'], {relativeTo: this.route, queryParams: {id}})),
           switchMap(({id}) => this.offerService.loadOne(id))
         );
     } else if (!isNaN(offerId)) {
