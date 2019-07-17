@@ -11,6 +11,7 @@ const routes: Routes = [
     path: '',
     component: TransactionsComponent,
     canActivate: [AuthGuardService],
+    canActivateChild: [AuthGuardService],
     children: [
       {
         path: 'step-1',
