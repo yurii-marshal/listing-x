@@ -1,6 +1,6 @@
 <div mat-dialog-title class="u-flex u-flex-justify--space-between u-flex-align-items--center">
   <div class="title">Write Offer - Step 1</div>
-  <button mat-icon-button mat-dialog-close>
+  <button mat-icon-button mat-dialog-close routerLink="../">
     <mat-icon fontSet="fa" fontIcon="fa-times"></mat-icon>
   </button>
 </div>
@@ -103,6 +103,7 @@
       <div class="question">How long do you need to close escrow?</div>
       <div class="fieldset">
         <input formControlName="closeEscrowDays" placeholder="Days" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="form.get('closeEscrowDays')"></app-form-validation-error>
       </div>
       <div class="question">Days</div>
     </div>
@@ -110,7 +111,7 @@
 </div>
 
 <div mat-dialog-actions class="fieldset u-flex u-flex-justify--space-between u-flex-align-items--center button-bar">
-  <button mat-stroked-button mat-dialog-close color="primary">CANCEL</button>
+  <button mat-stroked-button mat-dialog-close routerLink="../" color="primary">CANCEL</button>
   <button mat-flat-button appDebounceClick
           (debounceClick)="close()"
           [disabled]="!form.dirty || form.invalid"

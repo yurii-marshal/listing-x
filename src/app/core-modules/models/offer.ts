@@ -55,12 +55,14 @@ export class Offer {
 }
   
 export class Person {
+    id: number;
     firstName: string;
     lastName: string;
     email: string;
 
   constructor(data?: any) {
     if (data) {
+      this.id = +data.id;
       this.firstName = data.first_name;
       this.lastName = data.last_name;
       this.email = data.email;
@@ -69,6 +71,7 @@ export class Person {
 
   serialize(): any {
       return {
+        id: this.id,
         first_name: this.firstName,
         last_name: this.lastName,
         email: this.email

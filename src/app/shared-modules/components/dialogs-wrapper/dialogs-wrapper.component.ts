@@ -1,9 +1,11 @@
 import { Component, OnInit, Type } from '@angular/core';
-import { Offer } from '../../../core-modules/models/offer';
-import { filter } from 'rxjs/operators';
+import { filter, tap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 
+/**
+ * Base wrapper for dialog available by some route
+ * */
 @Component({
   selector: 'app-dialogs-wrapper',
   template: '',
@@ -16,25 +18,24 @@ export class DialogsWrapperComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    const offer: Offer = this.route.snapshot.data.model || new Offer();
-    // FIXME: creation from scratch mode
-    this.openWriteOfferDialog(offer);
+    this.openWriteOfferDialog();
   }
 
-  openWriteOfferDialog(offer: Offer, isEdit: boolean = true) {
+  openWriteOfferDialog() {
+    const model = this.route.snapshot.data.model;
+    const isEdit =  !!this.route.snapshot.queryParams.id;
     const provider = this.route.snapshot.data.component as Type<Component>;
     const dialogRef = this.dialog.open(provider, {
       width: '600px',
       disableClose: true,
-      data: {model: offer, isEdit}
+      data: {model, isEdit}
     });
 
     dialogRef.afterClosed()
-      .pipe(filter(dialogResult => !!dialogResult))
-      .subscribe((model: Offer) => {
-        // navigate to parent or redirect url
-        // TODO: Navigate to step 2
-      });
+      .pipe(
+        filter(dialogResult => !!dialogResult)
+      )
+      .subscribe(model => this.router.navigateByUrl(this.route.snapshot.data.next || '../'));
   }
 
 }

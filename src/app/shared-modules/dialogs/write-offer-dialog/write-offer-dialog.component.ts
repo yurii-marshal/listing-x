@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
-import { Address } from '../../../core-modules/models/address';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as _ from 'lodash';
 import { CustomValidators } from '../../../core-modules/validators/custom-validators';
@@ -38,7 +37,6 @@ export class WriteOfferDialogComponent implements OnInit {
                public dialogRef: MatDialogRef<WriteOfferDialogComponent>,
                @Inject(MAT_DIALOG_DATA) public data: {model: Offer, isEdit: boolean, isAnonymous: boolean, verbose: boolean}) {
 
-    // TODO: retrieve from LS
   }
 
   ngOnInit() {
@@ -55,8 +53,8 @@ export class WriteOfferDialogComponent implements OnInit {
       state: [{value: this.data.model.state, disabled: true}, [Validators.required, Validators.maxLength(150)]],
       zip: [{value: this.data.model.zip, disabled}, [Validators.required, CustomValidators.number, Validators.maxLength(10)]],
       apn: [{value: this.data.model.apn, disabled}, [CustomValidators.number]],
-      price: [this.data.model.price, []],
-      closeEscrowDays: [this.data.model.closeEscrowDays, []]
+      price: [this.data.model.price, [Validators.required, CustomValidators.number]],
+      closeEscrowDays: [this.data.model.closeEscrowDays, [Validators.required, CustomValidators.number, Validators.max(90)]]
     });
   }
 

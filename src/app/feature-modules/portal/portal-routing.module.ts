@@ -15,7 +15,7 @@ const routes: Routes = [
       {
         path: 'step-1',
         component: DialogsWrapperComponent,
-        data: { component: WriteOfferDialogComponent},
+        data: { component: WriteOfferDialogComponent, next: '/portal/step-2'},
         resolve: { model: OfferResolver }
       }
     ]

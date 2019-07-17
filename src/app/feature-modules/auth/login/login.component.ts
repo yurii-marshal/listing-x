@@ -4,6 +4,7 @@ import { User } from '../models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
+import { LocalStorageKey } from '../../../core-modules/enums/local-storage-key';
 
 @Component({
   selector: 'app-login',
@@ -33,8 +34,12 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
+    let redirectUrl = this.route.snapshot.queryParams.redirectUrl || '/portal';
+    if (localStorage.getItem(LocalStorageKey.Offer)) {
+      redirectUrl = '/portal/step-1'; // Pre-process anonymous offer
+    }
     const user = new User(this.form.value);
     this.service.login(user)
-      .subscribe(() => this.router.navigateByUrl('/portal'));
+      .subscribe(() => this.router.navigateByUrl(redirectUrl));
   }
 }

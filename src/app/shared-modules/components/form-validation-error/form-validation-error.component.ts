@@ -8,6 +8,7 @@ import { AbstractControl } from '@angular/forms';
       <div class="text-danger" *ngIf="control && control.errors && (control.dirty || control.touched)">
         <div *ngIf="control.errors.required"><small>This field is required</small></div>
         <div *ngIf="control.errors.maxlength"><small>More than {{ control.errors.maxlength.requiredLength }} symbols</small></div>
+        <div *ngIf="control.errors.max"><small>Max {{ control.errors.max.max }} allowed</small></div>
         <div *ngIf="control.errors.email"><small>Invalid email</small></div>
         <div *ngIf="control.errors.uniqemail"><small>User with this email address already exists.</small></div>
         <div *ngIf="control.errors.emailnotfound"><small>Email address not found.</small></div>
