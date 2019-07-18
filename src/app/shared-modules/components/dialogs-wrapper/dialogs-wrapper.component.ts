@@ -27,7 +27,10 @@ export class DialogsWrapperComponent implements OnInit {
     const dialogRef = this.dialog.open(provider, {
       width: '600px',
       disableClose: true,
-      data: {model}
+      data: {
+        model,
+        isEdit: !!this.route.snapshot.queryParams.offerId
+      }
     });
 
     dialogRef.afterClosed()

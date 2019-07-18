@@ -29,7 +29,6 @@ const routes: Routes = [
         path: 'upload',
         component: DialogsWrapperComponent,
         data: { component: WriteOfferUploadDocumentsDialogComponent},
-        resolve: { model: OfferResolver }
       }
     ]
   }

@@ -7,6 +7,7 @@ import { Offer, Person } from '../../../core-modules/models/offer';
 import { OfferService } from '../../../core-modules/core-services/offer.service';
 import { of } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 enum Type {
   Buyers  = 'buyers',
@@ -22,7 +23,6 @@ enum Type {
 export class WriteOfferDialogComponent implements OnInit {
   form: FormGroup;
   Type = Type;
-  isEdit: boolean;
 
   get buyers(): FormArray {
     return this.form.get('buyers') as FormArray;
@@ -35,9 +35,9 @@ export class WriteOfferDialogComponent implements OnInit {
   constructor( private formBuilder: FormBuilder,
                private service: OfferService,
                private snackbar: MatSnackBar,
+               private router: Router,
                public dialogRef: MatDialogRef<WriteOfferDialogComponent>,
-               @Inject(MAT_DIALOG_DATA) public data: {model: Offer, isAnonymous: boolean, verbose: boolean}) {
-    this.isEdit = !!data.model;
+               @Inject(MAT_DIALOG_DATA) public data: {model: Offer, isAnonymous: boolean, isEdit: boolean, verbose: boolean}) {
   }
 
   ngOnInit() {
@@ -122,16 +122,19 @@ export class WriteOfferDialogComponent implements OnInit {
       return; // Exit
     }
 
-    const message = `Successfully ${this.isEdit ? 'updated' : 'created new'} offer.`;
+    const message = `Successfully ${this.data.isEdit ? 'updated' : 'created new'} offer.`;
     of(model)
       .pipe(
-        switchMap((item: Offer) => this.isEdit
+        switchMap((item: Offer) => this.data.isEdit
           ? this.service.update(item)
           : this.service.add(item)
         ),
         tap(() => this.data.verbose && this.snackbar.open(message, null, {duration: 3000}))
       )
-      .subscribe(() => this.dialogRef.close(model));
+      .subscribe(({id}) => {
+        this.dialogRef.close(model);
+        this.router.navigate(['/portal/step-2/'], {queryParams: {offerId: id}});
+      });
   }
 
 }
