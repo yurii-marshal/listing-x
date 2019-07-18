@@ -14,12 +14,16 @@ export class OfferService implements IDataService <Offer> {
   constructor(private http: HttpClient) {
   }
 
-  add(model: Offer, token?: string): Observable<Offer> {
+  add(model: Offer): Observable<Offer> {
+    const offerData = this.anonymousOfferData;
     let params = new HttpParams();
-    if (token) {
-      params = params.set('token', token);
+    if (offerData) {
+      params = params.set('token', offerData.token);
     }
-    return this.http.post<Offer>(ApiEndpoint.Offer, model, {params: params});
+    return this.http.post<Offer>(ApiEndpoint.Offer, model, {params: params})
+      .pipe(
+        tap(() => offerData && localStorage.removeItem(LocalStorageKey.Offer)) // tear down
+      );
   }
 
   getAnonymousOffer(token): Observable<Offer> {
@@ -45,14 +49,11 @@ export class OfferService implements IDataService <Offer> {
     return this.http.put<Offer>(url, model);
   }
 
-  saveAnonymousOffer(): Observable<Offer> {
+  get anonymousOfferData(): {offer: Offer, token: string} {
     const raw: string = localStorage.getItem(LocalStorageKey.Offer);
-    const o = JSON.parse(raw); // from generation link
-    const model = o.offer as Offer;
-    const token = o.token;
-    return this.add(model, token)
-      .pipe(
-        tap(() => localStorage.removeItem(LocalStorageKey.Offer))
-      );
+    if (!raw) {
+      return null;
+    }
+    return JSON.parse(raw); // from generation link
   }
 }

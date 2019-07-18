@@ -17,11 +17,15 @@ export class OfferResolver implements Resolve<Offer> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Offer> | Offer {
     const offerId: number = Number(route.queryParams.offerId);
-
-    if (isNaN(offerId)) {
-      return of(null);
+    if (!isNaN(offerId)) {
+      return this.offerService.loadOne(offerId);
     }
 
-    return this.offerService.loadOne(offerId);
+    const data = this.offerService.anonymousOfferData;
+    if (data) {
+      return data.offer;
+    }
+
+    return null;
   }
 }
