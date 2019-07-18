@@ -1,0 +1,18 @@
+<div mat-dialog-title class="u-flex u-flex-justify--space-between u-flex-align-items--center">
+  <div class="title">Write Offer - Supporting Docs</div>
+  <button mat-icon-button mat-dialog-close>
+    <mat-icon fontSet="fa" fontIcon="fa-times"></mat-icon>
+  </button>
+</div>
+<div mat-dialog-content class="form-container dialog-form" style="min-height: 400px">
+  <h1>Under construction</h1>
+</div>
+
+<div mat-dialog-actions class="fieldset button-bar">
+  <div class="u-flex u-flex-justify--space-between u-flex-align-items--center">
+    <button mat-stroked-button mat-dialog-close routerLink="/auth/login" color="primary">CANCEL</button>
+    <!-- TODO: (debounceClick)="close()" [disabled]="!form.dirty || form.invalid" -->
+    <button mat-flat-button appDebounceClick color="primary">SAVE</button>
+  </div>
+  <p (click)="goToNext()" class="skip-label">Skip this step</p>
+</div>

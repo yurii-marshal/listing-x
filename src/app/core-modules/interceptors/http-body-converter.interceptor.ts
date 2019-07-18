@@ -17,7 +17,7 @@ export class HttpBodyConverterInterceptor implements HttpInterceptor {
       .pipe(
         map((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {
-          let camelCaseObject = this.toCamelCaseKeys(event.body);
+          const camelCaseObject = this.toCamelCaseKeys(event.body);
           return event.clone({ body: camelCaseObject });
         }
         return event;
@@ -38,11 +38,11 @@ export class HttpBodyConverterInterceptor implements HttpInterceptor {
 
   private mapKeysDeep(obj, cb) {
     if (_.isArray(obj)) {
-      return obj.map(innerObj => this.mapKeysDeep(innerObj, cb));
+      return obj.map(innerObj => this.mapKeysDeep(innerObj, cb)); // recursion
     }
     else if (_.isObject(obj)) {
       return _.mapValues(
-        _.mapKeys(obj, cb), val => this.mapKeysDeep(val, cb),
+        _.mapKeys(obj, cb), val => this.mapKeysDeep(val, cb), // recursion
       )
     } else {
       return obj;

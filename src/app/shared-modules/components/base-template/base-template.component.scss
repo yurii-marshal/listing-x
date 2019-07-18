@@ -15,10 +15,9 @@
     margin-left: 220px;
   }
   .username {
-    margin: 0 30px;
-  }
-  .trigger {
-    @include animate-hover();
+    font-size: 15px;
+    font-weight: 500;
+    color: #444c5d;
   }
   p {
     margin: 0 15px;

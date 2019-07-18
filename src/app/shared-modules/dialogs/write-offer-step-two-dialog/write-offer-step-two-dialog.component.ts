@@ -6,6 +6,7 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
 import { Loan, Offer, Person } from '../../../core-modules/models/offer';
 import * as _ from 'lodash';
 import { LoanType } from '../../../core-modules/enums/loan-type';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -25,6 +26,7 @@ export class WriteOfferStepTwoDialogComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private service: OfferService,
               private snackbar: MatSnackBar,
+              private router: Router,
               public dialogRef: MatDialogRef<WriteOfferStepTwoDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: { model: Offer, isEdit: boolean, verbose: boolean }) {
 
@@ -62,7 +64,6 @@ export class WriteOfferStepTwoDialogComponent implements OnInit {
     if (model) {
       formGroup.patchValue(model);
     }
-
     return formGroup;
   }
 
@@ -70,7 +71,10 @@ export class WriteOfferStepTwoDialogComponent implements OnInit {
     const model: Offer = _.cloneDeep(this.data.model); // keep all fields from step 1 and extend with step 2 fields
     Object.assign(model, this.form.value);
     this.service.update(model)
-      .subscribe(() => this.dialogRef.close(model))
+      .subscribe(() => {
+        this.dialogRef.close(model);
+        this.router.navigate(['/portal/upload/'], {queryParams: {offerId: model.id}});
+      })
   }
 
 }

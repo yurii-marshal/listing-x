@@ -34,7 +34,7 @@ export class DialogsWrapperComponent implements OnInit {
       .pipe(
         filter(dialogResult => !!dialogResult)
       )
-      .subscribe(model => this.router.navigateByUrl(this.route.snapshot.data.next || '../'));
+      .subscribe();
   }
 
 }

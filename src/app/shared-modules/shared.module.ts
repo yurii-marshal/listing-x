@@ -25,6 +25,7 @@ import { WriteOfferDialogComponent } from './dialogs/write-offer-dialog/write-of
 import { OfferService } from '../core-modules/core-services/offer.service';
 import { DialogsWrapperComponent } from './components/dialogs-wrapper/dialogs-wrapper.component';
 import { WriteOfferStepTwoDialogComponent } from './dialogs/write-offer-step-two-dialog/write-offer-step-two-dialog.component';
+import { WriteOfferUploadDocumentsDialogComponent } from './dialogs/write-offer-upload-documents-dialog/write-offer-upload-documents-dialog.component';
 
 const materialModules = [
   MatDialogModule,
@@ -64,6 +65,7 @@ const components = [
   ],
   declarations: [
     ...components,
+    WriteOfferUploadDocumentsDialogComponent,
   ],
   exports: [
     ...components
