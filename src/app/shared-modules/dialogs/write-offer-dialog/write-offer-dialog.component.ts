@@ -78,10 +78,16 @@ export class WriteOfferDialogComponent implements OnInit {
     });
 
     // Nested forms
-    const buyers = _.map(model.buyers, item => this.createEntity(item));
-    const sellers = _.map(model.sellers, item => this.createEntity(item, this.data.isAnonymous));
-    this.form.setControl('buyers', this.formBuilder.array(buyers));
-    this.form.setControl('sellers', this.formBuilder.array(sellers));
+
+    if (!_.isEmpty(model.buyers)) {
+      const buyers = _.map(model.buyers, item => this.createEntity(item));
+      this.form.setControl('buyers', this.formBuilder.array(buyers));
+    }
+
+    if (!_.isEmpty(model.sellers)) {
+      const sellers = _.map(model.sellers, item => this.createEntity(item, this.data.isAnonymous));
+      this.form.setControl('sellers', this.formBuilder.array(sellers));
+    }
   }
 
   createEntity(model?: Person, disabled: boolean = false): FormGroup {
@@ -110,7 +116,7 @@ export class WriteOfferDialogComponent implements OnInit {
   }
 
   close(): void {
-    const model: Offer = this.form.getRawValue(); // include 'state'
+    const model: Offer = this.form.getRawValue(); // to include 'state'
     if (this.data.isAnonymous) {
       this.dialogRef.close(model);
       return; // Exit
