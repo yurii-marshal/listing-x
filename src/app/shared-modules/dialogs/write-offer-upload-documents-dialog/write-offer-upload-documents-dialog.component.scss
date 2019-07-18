@@ -1,4 +1,12 @@
+@import "../../../feature-modules/auth/forms.template";
+
+@import "../dialogs.template";
+
 .skip-label {
   font-size: 10px;
   color: #8e96a7;
+}
+
+.button-bar {
+  flex-direction: column;
 }
