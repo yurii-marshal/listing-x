@@ -1,9 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CustomValidators } from '../../../core-modules/validators/custom-validators';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { OfferService } from '../../../core-modules/core-services/offer.service';
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
-import { Loan, Offer, Person } from '../../../core-modules/models/offer';
+import { Loan, Offer } from '../../../core-modules/models/offer';
 import * as _ from 'lodash';
 import { LoanType } from '../../../core-modules/enums/loan-type';
 import { Router } from '@angular/router';
@@ -41,7 +40,20 @@ export class WriteOfferStepTwoDialogComponent implements OnInit {
     });
 
     if (this.data.model) {
-      // apply form values
+      this.applyFormValues();
+    }
+  }
+
+  applyFormValues() {
+    const model: Offer = this.data.model;
+    const formControlNames: string[] = _.without(Object.keys(this.form.controls), 'loans');
+    const formData = _.pick(model, formControlNames);
+    this.form.patchValue(formData);
+
+    // Nested form
+    if (!_.isEmpty(model.loans)) {
+      const buyers = _.map(model.loans, item => this.createLoan(item));
+      this.form.setControl('loans', this.formBuilder.array(buyers));
     }
   }
 

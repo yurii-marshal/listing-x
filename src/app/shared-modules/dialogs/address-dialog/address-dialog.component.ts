@@ -48,8 +48,8 @@ export class AddressDialogComponent implements OnInit {
   }
 
   patchFromValues() {
-    const controlNames: string[] = Object.keys(this.form.controls);
-    const formData = _.pick(this.data.model, controlNames);
+    const formControlNames: string[] = Object.keys(this.form.controls);
+    const formData = _.pick(this.data.model, formControlNames);
     this.form.setValue(formData);
   }
 
