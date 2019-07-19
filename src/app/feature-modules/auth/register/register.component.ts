@@ -32,7 +32,7 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    const user = this.form.value;
+    const user: User = this.form.value;
     this.service.register(user)
       .pipe(
         tap({error: err => this.form.get('email').setErrors({uniqemail: true})})
@@ -41,7 +41,7 @@ export class RegisterComponent implements OnInit {
   }
 
   onResendEmail() {
-    const user = new User(this.form.value);
+    const user: User = this.form.value;
     this.service.resendActivation(user.email)
       .subscribe(() => this.snackBar.open('Activation link re-sent to your email', 'OK', {duration: 5000}));
   }

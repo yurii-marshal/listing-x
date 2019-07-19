@@ -32,7 +32,7 @@ export class NewPasswordComponent implements OnInit {
 
   onSubmit() {
     const token = this.route.snapshot.paramMap.get('token');
-    const user = new User(this.form.value);
+    const user = this.form.value;
     this.service.resetPassword(user.password, token)
       .pipe(tap({error: (err: HttpErrorResponse) => {
           if (err.error.newPassword) {
