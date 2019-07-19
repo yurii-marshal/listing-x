@@ -51,22 +51,22 @@ export class AuthService {
 
     return this.http.post<boolean>(AuthEndpoints.Verify, {token: this.jwtToken})
       .pipe(
-        switchMap(() => this.http.get<boolean>(ApiEndpoint.CurrentUser)),
-        tap(user => this.currentUser = new User(user)),
+        switchMap(() => this.http.get<User>(ApiEndpoint.CurrentUser)),
+        tap(user => this.currentUser = user),
         map(data => !!data),
         catchError(() => of(false)),
       );
   }
 
   login(user: User): Observable<JwtResponse> {
-    return this.http.post<any>(AuthEndpoints.Login, user.serializeLogin())
+    return this.http.post<any>(AuthEndpoints.Login, user)
       .pipe(
         tap(resp => this.setSession(resp)),
       );
   }
 
   register(user: User): Observable<JwtResponse> {
-    return this.http.post<JwtResponse>(AuthEndpoints.Register, user.serialize());
+    return this.http.post<JwtResponse>(AuthEndpoints.Register, user);
   }
 
   resendActivation(email: string): Observable<JwtResponse> {

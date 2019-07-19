@@ -8,31 +8,31 @@
       <h5>Already have an account? Please&nbsp;<span routerLink="../login" class="router-link">Sign in</span></h5>
       <div class="fieldset">
         <label>First Name</label>
-        <input formControlName="firstName" placeholder="Your first name" class="form-control">
+        <input formControlName="firstName"  placeholder="Your first name" spellcheck="false" class="form-control">
         <app-form-validation-error [baseControl]="form.get('firstName')"></app-form-validation-error>
       </div>
 
       <div class="fieldset">
         <label>last name</label>
-        <input formControlName="lastName" placeholder="Your last name" class="form-control">
+        <input formControlName="lastName" placeholder="Your last name" spellcheck="false" class="form-control">
         <app-form-validation-error [baseControl]="form.get('lastName')"></app-form-validation-error>
       </div>
 
       <div class="fieldset">
         <label>E-mail</label>
-        <input formControlName="email" placeholder="example@mail.com" class="form-control">
+        <input formControlName="email" placeholder="example@mail.com" spellcheck="false" class="form-control">
         <app-form-validation-error [baseControl]="form.get('email')"></app-form-validation-error>
       </div>
 
       <div class="fieldset">
         <label>Password</label>
-        <input formControlName="password" type="password" placeholder="****************" class="form-control">
+        <input formControlName="password" type="password" placeholder="****************" spellcheck="false" class="form-control">
         <app-form-validation-error [baseControl]="form.get('password')"></app-form-validation-error>
       </div>
 
       <div class="fieldset">
         <label>Confirm Password</label>
-        <input formControlName="confirmPassword" type="password" placeholder="****************" class="form-control">
+        <input formControlName="confirmPassword" type="password" placeholder="****************" spellcheck="false" class="form-control">
         <app-form-validation-error [baseControl]="form.get('confirmPassword')"></app-form-validation-error>
         <app-form-validation-error [baseControl]="form"></app-form-validation-error>
       </div>

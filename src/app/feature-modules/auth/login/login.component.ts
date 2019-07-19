@@ -38,9 +38,8 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    const user = new User(this.form.value);
     const url = this.redirectUrl;
-    this.service.login(user)
+    this.service.login(this.form.value)
       .subscribe(() => this.router.navigateByUrl(url));
   }
 
