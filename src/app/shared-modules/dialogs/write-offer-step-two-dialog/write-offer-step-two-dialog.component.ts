@@ -1,11 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OfferService } from '../../../core-modules/core-services/offer.service';
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
 import { Loan, Offer } from '../../../core-modules/models/offer';
 import * as _ from 'lodash';
 import { LoanType } from '../../../core-modules/enums/loan-type';
 import { Router } from '@angular/router';
+import { CustomValidators } from '../../../core-modules/validators/custom-validators';
 
 
 @Component({
@@ -67,10 +68,10 @@ export class WriteOfferStepTwoDialogComponent implements OnInit {
 
   createLoan(model?: Loan): FormGroup {
     const formGroup = this.formBuilder.group({
-      initialDeposit: [],
-      loanAmount: [],
-      interestRate: [],
-      points: []
+      initialDeposit: [null, [CustomValidators.number]],
+      loanAmount: [null, [CustomValidators.number]],
+      interestRate: [null, [CustomValidators.number, Validators.max(100)]],
+      points: [null, [CustomValidators.number, Validators.max(100)]]
     });
 
     if (model) {

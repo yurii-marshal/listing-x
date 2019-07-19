@@ -39,9 +39,10 @@ const materialModules = [
 ];
 
 const dialogs = [
+  AddressDialogComponent,
   WriteOfferDialogComponent,
   WriteOfferStepTwoDialogComponent,
-  AddressDialogComponent
+  WriteOfferUploadDocumentsDialogComponent,
 ];
 
 const components = [
@@ -65,7 +66,6 @@ const components = [
   ],
   declarations: [
     ...components,
-    WriteOfferUploadDocumentsDialogComponent,
   ],
   exports: [
     ...components
