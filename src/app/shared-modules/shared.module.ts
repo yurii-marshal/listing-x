@@ -39,6 +39,7 @@ const materialModules = [
 ];
 
 const dialogs = [
+  ConfirmationBarComponent,
   AddressDialogComponent,
   WriteOfferDialogComponent,
   WriteOfferStepTwoDialogComponent,
@@ -51,7 +52,6 @@ const components = [
   DebounceClickDirective,
   BaseTemplateComponent,
   EmptyPageComponent,
-  ConfirmationBarComponent,
   CopyToClipboard,
   DialogsWrapperComponent,
   ...dialogs
