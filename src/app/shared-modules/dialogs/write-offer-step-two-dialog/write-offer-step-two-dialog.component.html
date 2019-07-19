@@ -58,8 +58,7 @@
 </div>
 
 <div mat-dialog-actions class="fieldset u-flex u-flex-justify--space-between u-flex-align-items--center button-bar">
-  <!--  FIXME -->
-  <button mat-stroked-button mat-dialog-close routerLink="../" color="primary">BACK</button>
+  <button mat-stroked-button mat-dialog-close routerLink="/portal/step-1/" [queryParams]="{offerId: data.model.id}" color="primary">BACK</button>
   <button mat-flat-button appDebounceClick
           (debounceClick)="close()"
           [disabled]="!form.dirty || form.invalid"

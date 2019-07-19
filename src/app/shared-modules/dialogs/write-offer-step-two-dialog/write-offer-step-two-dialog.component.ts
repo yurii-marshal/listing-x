@@ -90,4 +90,8 @@ export class WriteOfferStepTwoDialogComponent implements OnInit {
       })
   }
 
+  onCancel() {
+    this.router.navigate(['/portal/step-1/'], {queryParams: {offerId: this.data.model.id}});
+  }
+
 }
