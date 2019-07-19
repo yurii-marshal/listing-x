@@ -54,7 +54,7 @@ export class AddressDialogComponent implements OnInit {
   }
 
   close(): void {
-    const model: Address = this.form.value;
+    const model: Address = this.form.getRawValue(); // include disabled control
     const message = `Successfully ${this.isEdit ? 'updated' : 'created new'} address.`;
     of(model)
       .pipe(
