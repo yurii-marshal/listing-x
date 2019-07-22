@@ -2,5 +2,5 @@ export enum LoanType {
   CONVENTIONAL = 'CONVENTIONAL LOAN',
   FHA = 'FHA LOAN',
   VA = 'VA LOAN',
-  ALL_CACHE = 'ALL CACHE OFFER'
+  ALL_CACHE = 'ALL CASH OFFER'
 }

@@ -28,6 +28,8 @@ import { WriteOfferStepTwoDialogComponent } from './dialogs/write-offer-step-two
 import { WriteOfferUploadDocumentsDialogComponent } from './dialogs/write-offer-upload-documents-dialog/write-offer-upload-documents-dialog.component';
 import { TooltipDirective } from './directives/tooltip.directive';
 import { TooltipContentComponent } from './components/tooltip-content/tooltip-content.component';
+import { FileOption, FilePickerComponent } from './components/file-picker/file-picker.component';
+import { A11yModule } from '@angular/cdk/a11y';
 
 const materialModules = [
   MatDialogModule,
@@ -37,7 +39,8 @@ const materialModules = [
   OverlayModule,
   MatTabsModule,
   MatBadgeModule,
-  MatRadioModule
+  MatRadioModule,
+  A11yModule,
 ];
 
 const dialogs = [
@@ -58,6 +61,8 @@ const components = [
   CopyToClipboard,
   DialogsWrapperComponent,
   TooltipDirective,
+  FilePickerComponent,
+  FileOption,
   ...dialogs
 ];
 

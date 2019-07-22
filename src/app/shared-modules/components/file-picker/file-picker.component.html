@@ -1,0 +1,16 @@
+<div class="file-picker" role="dialog" aria-label="Color picker">
+  <div role="listbox" tabindex="0" aria-label="Select a color"
+       cdkTrapFocus
+       cdkTrapFocusAutoCapture
+       (keydown)="keyDownHandler($event)">
+    <div *ngFor="let color of colors; index as i"
+         role="option"
+         [attr.aria-label]="color.name"
+         [attr.aria-selected]="color.hex == selectedColor"
+         (keydown.enter)="onClick(i)"
+         (click)="onClick(i)">
+      <img src="assets/images/icons/pdf.svg" height="64">
+      <div class="filename">Proof of Funds</div>
+    </div>
+  </div>
+</div>
