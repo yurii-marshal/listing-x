@@ -1,11 +1,11 @@
-import { Directive, Input, Output, EventEmitter, HostListener } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
+import { Directive, Input, Output, EventEmitter, HostListener, ElementRef, OnInit, ComponentRef } from '@angular/core';
+import { Overlay, OverlayPositionBuilder, OverlayRef } from '@angular/cdk/overlay';
+import { TooltipContentComponent } from '../components/tooltip-content/tooltip-content.component';
+import { ComponentPortal } from '@angular/cdk/portal';
 
 @Directive({selector: '[copy-to-clipboard]'})
-export class CopyToClipboard {
-
-  constructor(private snackbar: MatSnackBar) {
-  }
+export class CopyToClipboard  implements OnInit {
+  private overlayRef: OverlayRef;
 
   @Input('copy-to-clipboard')
   public content: string;
@@ -13,21 +13,47 @@ export class CopyToClipboard {
   @Output('copied')
   public copied: EventEmitter<string> = new EventEmitter<string>();
 
+  constructor(private overlay: Overlay,
+              private overlayPositionBuilder: OverlayPositionBuilder,
+              private elementRef: ElementRef,) {
+  }
+
+
+  ngOnInit(): void {
+    const positionStrategy = this.overlayPositionBuilder.flexibleConnectedTo(this.elementRef).withPositions([
+      {
+        originX: 'center',
+        originY: 'top',
+        overlayX: 'center',
+        overlayY: 'top',
+        offsetY: 40,
+      },
+    ]);
+
+    this.overlayRef = this.overlay.create({ positionStrategy });
+  }
+
   @HostListener('click', ['$event'])
   public onClick(event: MouseEvent): void {
-
     event.preventDefault();
     if (!this.content) {
       return;
     }
 
     this.copyText(this.content);
-    this.snackbar.open('Copied.', 'OK', {duration: 3000});
     this.copied.emit(this.content);
+    const tooltipRef: ComponentRef<TooltipContentComponent> = this.overlayRef.attach(new ComponentPortal(TooltipContentComponent));
+    tooltipRef.instance.text = 'Copied!';
+  }
+
+
+  @HostListener('mouseout')
+  hide() {
+    this.overlayRef.detach();
   }
 
   /* To copy any Text */
-  copyText(val: string) {
+  private copyText(val: string) {
     let selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
     selBox.style.left = '0';

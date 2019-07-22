@@ -19,10 +19,6 @@ export class HttpErrorsInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (_.some(this.excluded, (endpoint: AuthEndpoints) => _.endsWith(req.url, endpoint))) {
-      return next.handle(req); // Exit
-    }
-
     return next.handle(req)
       .pipe(
         tap({error: (err: HttpErrorResponse) => this.globalHttpErrorParser(err)})
@@ -31,7 +27,9 @@ export class HttpErrorsInterceptor implements HttpInterceptor {
 
   private globalHttpErrorParser(errorResponse: HttpErrorResponse) {
     const code = errorResponse.status;
-    if (code === HttpStatusCodes.BAD_REQUEST) {
+    const authUrls: string[] = Object.values(AuthEndpoints);
+    const isAuthEndpoint: boolean = _.some(authUrls, (uri: string) => _.endsWith(errorResponse.url, uri));
+    if (code === HttpStatusCodes.BAD_REQUEST && isAuthEndpoint) {
       return; // Ignore form's errors
     }
 
@@ -39,14 +37,13 @@ export class HttpErrorsInterceptor implements HttpInterceptor {
     if (code === HttpStatusCodes.UNAUTHORIZED) {
       msg = 'Your session has expired. Please login again to continue working.';
       this.router.navigateByUrl('/auth/login');
+    } else if (code === HttpStatusCodes.INTERNAL_SERVER_ERROR) {
+      msg = 'Internal server error'
     } else  {
       msg = this.formatMsg(errorResponse)
     }
 
-    this.snackBar.open(msg || 'Something went wrong', 'OK', {
-      duration: 7000,
-      panelClass: 'error-bar'
-    });
+    this.snackBar.open(msg || 'Something went wrong', 'OK', {duration: 7000, panelClass: 'error-bar'});
   }
 
   private formatMsg(errorResponse: HttpErrorResponse) {
@@ -54,7 +51,7 @@ export class HttpErrorsInterceptor implements HttpInterceptor {
       .mapValues((value, key) => `${key}: ${value}`)
       .values()
       .join('\n')
-      .truncate({length: 60})
+      .truncate({length: 100})
       .value();
   }
 }

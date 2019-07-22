@@ -129,7 +129,7 @@ export class WriteOfferDialogComponent implements OnInit {
           ? this.service.update(item)
           : this.service.add(item)
         ),
-        tap(() => this.data.verbose && this.snackbar.open(message, null, {duration: 3000}))
+        tap(() => this.data.verbose && this.snackbar.open(message))
       )
       .subscribe(({id}) => {
         this.dialogRef.close(model);

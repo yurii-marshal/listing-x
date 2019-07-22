@@ -61,6 +61,9 @@ snack-bar-container {
       color: white !important;
     }
   }
+  &.mat-snack-bar-top {
+    margin-top: 4px;
+  }
 }
 
 .common-grid {
@@ -86,5 +89,4 @@ snack-bar-container {
       }
     }
   }
-
 }

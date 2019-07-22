@@ -26,6 +26,8 @@ import { OfferService } from '../core-modules/core-services/offer.service';
 import { DialogsWrapperComponent } from './components/dialogs-wrapper/dialogs-wrapper.component';
 import { WriteOfferStepTwoDialogComponent } from './dialogs/write-offer-step-two-dialog/write-offer-step-two-dialog.component';
 import { WriteOfferUploadDocumentsDialogComponent } from './dialogs/write-offer-upload-documents-dialog/write-offer-upload-documents-dialog.component';
+import { TooltipDirective } from './directives/tooltip.directive';
+import { TooltipContentComponent } from './components/tooltip-content/tooltip-content.component';
 
 const materialModules = [
   MatDialogModule,
@@ -44,6 +46,7 @@ const dialogs = [
   WriteOfferDialogComponent,
   WriteOfferStepTwoDialogComponent,
   WriteOfferUploadDocumentsDialogComponent,
+  TooltipContentComponent,
 ];
 
 const components = [
@@ -54,6 +57,7 @@ const components = [
   EmptyPageComponent,
   CopyToClipboard,
   DialogsWrapperComponent,
+  TooltipDirective,
   ...dialogs
 ];
 

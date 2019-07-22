@@ -63,7 +63,7 @@ export class AddressDialogComponent implements OnInit {
           : this.service.add(model)
         ),
         // TODO: catch error
-        tap(() => this.data.verbose && this.snackbar.open(message, null, {duration: 3000}))
+        tap(() => this.data.verbose && this.snackbar.open(message))
       )
       .subscribe(() => this.dialogRef.close(model));
   }

@@ -1,0 +1,15 @@
+@import '~@angular/material/theming';
+
+:host {
+  display: block;
+  margin: 0 20px;
+}
+
+.tooltip-container {
+  background: mat-color($mat-grey, 700, 0.9);
+  font-size: 10px;
+  color: white;
+  border-radius: 4px;
+  box-shadow: 0 0 4px 4px rgba(0, 0, 0, 0.1);
+  padding: 8px;
+}
