@@ -4,9 +4,11 @@
     <mat-icon fontSet="fa" fontIcon="fa-times"></mat-icon>
   </button>
 </div>
-<div mat-dialog-content class="form-container dialog-form" style="min-height: 400px">
-  <app-file-picker></app-file-picker>
-  <h1>Under construction</h1>
+<div mat-dialog-content cdkTrapFocus class="form-container dialog-form" style="min-height: 400px">
+  <app-file-picker [type]="Type.PreApproval"></app-file-picker>
+  <app-file-picker [type]="Type.FundsProof"></app-file-picker>
+  <app-file-picker [type]="Type.CoverLetter"></app-file-picker>
+  <!-- Interaction about selected items -->
 </div>
 
 <div mat-dialog-actions class="fieldset button-bar">

@@ -30,6 +30,7 @@ import { TooltipDirective } from './directives/tooltip.directive';
 import { TooltipContentComponent } from './components/tooltip-content/tooltip-content.component';
 import { FileOption, FilePickerComponent } from './components/file-picker/file-picker.component';
 import { A11yModule } from '@angular/cdk/a11y';
+import { FileUploaderComponent } from './components/file-uploader/file-uploader.component';
 
 const materialModules = [
   MatDialogModule,
@@ -63,6 +64,7 @@ const components = [
   TooltipDirective,
   FilePickerComponent,
   FileOption,
+  FileUploaderComponent,
   ...dialogs
 ];
 

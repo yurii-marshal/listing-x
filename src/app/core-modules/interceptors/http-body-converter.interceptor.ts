@@ -10,8 +10,10 @@ import * as _ from 'lodash';
 export class HttpBodyConverterInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    let pythonObject = this.toPythonCaseKeys(req.body);
-    req = req.clone({body: pythonObject});
+    if (!(req.body instanceof FormData)) {
+      let pythonObject = this.toPythonCaseKeys(req.body);
+      req = req.clone({body: pythonObject});
+    }
 
     return next.handle(req)
       .pipe(

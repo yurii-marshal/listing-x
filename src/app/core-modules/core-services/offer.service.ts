@@ -7,6 +7,8 @@ import { ApiEndpoint } from '../enums/auth-endpoints';
 import { map, tap } from 'rxjs/operators';
 import { LocalStorageKey } from '../enums/local-storage-key';
 import { detailUrl } from '../utils/util';
+import { UploadDocumentType } from '../enums/upload-document-type';
+import { UploadedDocument } from '../models/uploaded-document';
 
 @Injectable()
 export class OfferService implements IDataService <Offer> {
@@ -47,6 +49,21 @@ export class OfferService implements IDataService <Offer> {
   update(model: Offer): Observable<Offer> {
     const url = detailUrl(ApiEndpoint.Offer, model.id);
     return this.http.put<Offer>(url, model);
+  }
+
+  upload(files: File[], type?: UploadDocumentType): Observable<UploadedDocument[]> {
+    const formData: FormData = new FormData();
+    if (files.length) {
+      files.forEach((file: File) => formData.append('files', file));
+    }
+    const params = new HttpParams();
+    if (type) {
+      params.set('type', type);
+    }
+    return this.http.post(ApiEndpoint.Upload, formData, {params})
+      .pipe(
+        map((body: any) => body.results as UploadedDocument[])
+      );
   }
 
   get anonymousOfferData(): {offer: Offer, token: string} {

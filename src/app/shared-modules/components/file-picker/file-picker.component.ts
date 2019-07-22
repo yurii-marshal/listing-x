@@ -1,6 +1,9 @@
-import { AfterViewInit, Component, Directive, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, Directive, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { ActiveDescendantKeyManager, Highlightable } from '@angular/cdk/a11y';
+import { OfferService } from '../../../core-modules/core-services/offer.service';
+import { UploadDocumentType } from '../../../core-modules/enums/upload-document-type';
+import { ENTER } from '@angular/cdk/keycodes';
 
 @Directive({
   selector: '[role="option"]',
@@ -26,6 +29,10 @@ export class FileOption implements Highlightable {
   styleUrls: ['./file-picker.component.scss']
 })
 export class FilePickerComponent implements OnInit, AfterViewInit, ControlValueAccessor {
+
+  @Input()
+  type: UploadDocumentType;
+
   @ViewChildren(FileOption) options: QueryList<FileOption>;
 
   keyKeyManager: ActiveDescendantKeyManager<FileOption>;
@@ -44,7 +51,7 @@ export class FilePickerComponent implements OnInit, AfterViewInit, ControlValueA
     {hex: '#795548', name: 'Brown'},
   ];
 
-  constructor() {
+  constructor(private service: OfferService) {
   }
 
   ngOnInit() {
@@ -52,15 +59,24 @@ export class FilePickerComponent implements OnInit, AfterViewInit, ControlValueA
 
 
   ngAfterViewInit(): void {
-    this.keyKeyManager = new ActiveDescendantKeyManager(this.options);
+    this.keyKeyManager = new ActiveDescendantKeyManager(this.options).withWrap();
   }
 
   keyDownHandler(event: KeyboardEvent): void {
-    this.keyKeyManager.onKeydown(event);
+    if (event.keyCode === ENTER) {
+      // TODO: select
+    } else {
+      this.keyKeyManager.onKeydown(event);
+    }
   }
 
   onClick(index: number) {
     this.keyKeyManager.setActiveItem(index);
+  }
+
+  onSelectFilesForUpload(files: File[]) {
+    this.service.upload(files, this.type)
+      .subscribe(() =>  this.reloadFilesList()); // reload list
   }
 
   /**
@@ -76,5 +92,10 @@ export class FilePickerComponent implements OnInit, AfterViewInit, ControlValueA
   }
 
   writeValue(obj: any): void {
+  }
+
+
+  private reloadFilesList() {
+    // TODO:
   }
 }
