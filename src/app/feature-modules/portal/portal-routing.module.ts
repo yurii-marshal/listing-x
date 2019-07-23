@@ -8,6 +8,7 @@ import { OfferResolver } from '../../core-modules/resolvers/offer.resolver';
 import { WriteOfferStepTwoDialogComponent } from '../../shared-modules/dialogs/write-offer-step-two-dialog/write-offer-step-two-dialog.component';
 import { WriteOfferUploadDocumentsDialogComponent } from '../../shared-modules/dialogs/write-offer-upload-documents-dialog/write-offer-upload-documents-dialog.component';
 import { WriteOfferSummaryComponent } from '../../shared-modules/dialogs/write-offer-summary/write-offer-summary.component';
+import { OfferDocumentsResolver } from '../../core-modules/resolvers/offer-documents.resolver';
 
 const routes: Routes = [
   {
@@ -30,6 +31,7 @@ const routes: Routes = [
         path: 'upload',
         component: DialogsWrapperComponent,
         data: { component: WriteOfferUploadDocumentsDialogComponent},
+        resolve: { model:  OfferDocumentsResolver}
       }, {
         path: 'summary',
         component: DialogsWrapperComponent,
@@ -42,6 +44,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [AuthGuardService, OfferResolver]
+  providers: [AuthGuardService, OfferResolver, OfferDocumentsResolver]
 })
 export class PortalRoutingModule { }

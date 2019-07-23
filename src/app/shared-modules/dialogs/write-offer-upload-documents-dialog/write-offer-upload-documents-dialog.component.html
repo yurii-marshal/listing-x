@@ -4,18 +4,21 @@
     <mat-icon fontSet="fa" fontIcon="fa-times"></mat-icon>
   </button>
 </div>
-<div mat-dialog-content cdkTrapFocus class="form-container dialog-form" style="min-height: 400px">
-  <app-file-picker [type]="Type.PreApproval"></app-file-picker>
-  <app-file-picker [type]="Type.FundsProof"></app-file-picker>
-  <app-file-picker [type]="Type.CoverLetter"></app-file-picker>
-  <!-- Interaction about selected items -->
+<div [formGroup]="form" mat-dialog-content cdkTrapFocus class="form-container dialog-form" style="min-height: 400px">
+  <app-file-picker formControlName="preApproval" [type]="Type.PreApproval"></app-file-picker>
+  <app-file-picker formControlName="proofOfFunds" [type]="Type.FundsProof"></app-file-picker>
+  <app-file-picker formControlName="coverLetter" [type]="Type.CoverLetter"></app-file-picker>
 </div>
 
 <div mat-dialog-actions class="fieldset button-bar">
   <div class="u-flex u-flex-justify--space-between u-flex-align-items--center" style="width: 100%;">
-    <button mat-stroked-button mat-dialog-close routerLink="../step-2" [queryParams]="route.snapshot.queryParams" color="primary">BACK</button>
+    <button mat-stroked-button mat-dialog-close routerLink="../step-2" [queryParams]="route.snapshot.queryParams"
+            color="primary">BACK
+    </button>
     <!-- TODO: (debounceClick)="close()" [disabled]="!form.dirty || form.invalid" -->
-    <button mat-flat-button appDebounceClick color="primary">CREATE OFFER</button>
+    <button mat-flat-button appDebounceClick (debounceClick)="close()" color="primary">CREATE OFFER</button>
   </div>
-  <p routerLink="../summary" class="skip-label">Skip this step</p>
+  <!--  FIXME: redirection -->
+  <p mat-dialog-close routerLink="/portal/step-2/summary" [queryParams]="route.snapshot.queryParams" class="skip-label">
+    Skip this step</p>
 </div>

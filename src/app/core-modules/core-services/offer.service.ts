@@ -2,13 +2,11 @@ import { Injectable } from '@angular/core';
 import { IDataService } from '../interfaces/data.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Offer } from '../models/offer';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ApiEndpoint } from '../enums/auth-endpoints';
-import { map, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { LocalStorageKey } from '../enums/local-storage-key';
 import { detailUrl } from '../utils/util';
-import { UploadDocumentType } from '../enums/upload-document-type';
-import { UploadedDocument } from '../models/uploaded-document';
 
 @Injectable()
 export class OfferService implements IDataService <Offer> {
@@ -49,24 +47,6 @@ export class OfferService implements IDataService <Offer> {
   update(model: Offer): Observable<Offer> {
     const url = detailUrl(ApiEndpoint.Offer, model.id);
     return this.http.put<Offer>(url, model);
-  }
-
-  upload(files: File[], type?: UploadDocumentType): Observable<UploadedDocument[]> {
-    const formData: FormData = new FormData();
-    if (files.length) {
-      files.forEach((file: File) => formData.append('files', file));
-    }
-    const params = new HttpParams();
-    if (type) {
-      params.set('type', type);
-    }
-    return this.http.post(ApiEndpoint.Upload, formData, {params})
-      .pipe(map((body: any) => body.results as UploadedDocument[]));
-  }
-
-  loadDocuments(type?: UploadDocumentType): Observable<UploadedDocument[]> {
-    return this.http.get<any>(ApiEndpoint.Upload,  {params: new HttpParams().set('type', type)})
-      .pipe(map((body: any) => body.results as UploadedDocument[]));
   }
 
   get anonymousOfferData(): {offer: Offer, token: string} {

@@ -14,5 +14,5 @@ export enum ApiEndpoint {
   Addresses = '/addresses/',
   Offer = '/offers/',
   AnonymousOffer = '/offers/token/',
-  Upload = '/documents/upload/'
+  Upload = '/documents/upload/',
 }

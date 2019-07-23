@@ -1,6 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { UploadDocumentType } from '../../../core-modules/enums/upload-document-type';
 import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MAT_DIALOG_DATA } from '@angular/material';
+import { LinkedDocuments } from '../../../core-modules/models/linked-documents';
+import { DocumentLinkingService } from '../../../core-modules/core-services/document-linking.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-write-offer-upload-documents-dialog',
@@ -8,16 +13,37 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./write-offer-upload-documents-dialog.component.scss']
 })
 export class WriteOfferUploadDocumentsDialogComponent implements OnInit {
+  form: FormGroup;
+
   Type = UploadDocumentType;
 
-  constructor(public route: ActivatedRoute) { }
+  constructor(public route: ActivatedRoute,
+              private service: DocumentLinkingService,
+              private formBuilder: FormBuilder,
+              @Inject(MAT_DIALOG_DATA) public data: { model: LinkedDocuments, isEdit: boolean }) { }
 
   ngOnInit() {
+    this.form = this.formBuilder.group({
+      preApproval: [[]],
+      proofOfFunds: [[]],
+      coverLetter: [[]],
+    });
 
+    if (this.data.model) {
+      const model = _.pick(this.data.model, Object.keys(this.form.controls));
+      debugger;
+      this.form.setValue(model);
+    }
   }
 
   goToNext() {
     // TODO: summary page
   }
 
+  close() {
+    const model: LinkedDocuments = this.form.value;
+    model.offerId = this.data.model.offerId;
+    this.service.linkDocumentsToOffer(model)
+      .subscribe(); // FIXME:
+  }
 }
