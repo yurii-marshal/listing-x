@@ -61,9 +61,12 @@ export class OfferService implements IDataService <Offer> {
       params.set('type', type);
     }
     return this.http.post(ApiEndpoint.Upload, formData, {params})
-      .pipe(
-        map((body: any) => body.results as UploadedDocument[])
-      );
+      .pipe(map((body: any) => body.results as UploadedDocument[]));
+  }
+
+  loadDocuments(type?: UploadDocumentType): Observable<UploadedDocument[]> {
+    return this.http.get<any>(ApiEndpoint.Upload,  {params: new HttpParams().set('type', type)})
+      .pipe(map((body: any) => body.results as UploadedDocument[]));
   }
 
   get anonymousOfferData(): {offer: Offer, token: string} {

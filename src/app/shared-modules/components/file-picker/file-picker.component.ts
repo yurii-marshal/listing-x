@@ -4,6 +4,8 @@ import { ActiveDescendantKeyManager, Highlightable } from '@angular/cdk/a11y';
 import { OfferService } from '../../../core-modules/core-services/offer.service';
 import { UploadDocumentType } from '../../../core-modules/enums/upload-document-type';
 import { ENTER } from '@angular/cdk/keycodes';
+import { UploadedDocument } from '../../../core-modules/models/uploaded-document';
+import { tap } from 'rxjs/operators';
 
 @Directive({
   selector: '[role="option"]',
@@ -37,24 +39,16 @@ export class FilePickerComponent implements OnInit, AfterViewInit, ControlValueA
 
   keyKeyManager: ActiveDescendantKeyManager<FileOption>;
 
-  selectedColor = '';
+  selectedDocument: UploadedDocument;
 
-  colors = [
-    {hex: '#F44336', name: 'Purple'},
-    {hex: '#E91E63', name: 'Red'},
-    {hex: '#673AB7', name: 'Pink'},
-    {hex: '#3F51B5', name: 'Indigo'},
-    {hex: '#00BCD4', name: 'Cyan'},
-    {hex: '#4CAF50', name: 'Green'},
-    {hex: '#FFEB3B', name: 'Yellow'},
-    {hex: '#FF9800', name: 'Orange'},
-    {hex: '#795548', name: 'Brown'},
-  ];
+  documents: UploadedDocument[];
 
   constructor(private service: OfferService) {
   }
 
   ngOnInit() {
+    this.service.loadDocuments(this.type)
+      .subscribe(docs => this.documents = docs);
   }
 
 
@@ -71,6 +65,7 @@ export class FilePickerComponent implements OnInit, AfterViewInit, ControlValueA
   }
 
   onClick(index: number) {
+    // FIXME: selectedDocument
     this.keyKeyManager.setActiveItem(index);
   }
 

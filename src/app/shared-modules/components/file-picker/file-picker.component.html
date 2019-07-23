@@ -3,19 +3,20 @@
   <file-uploader (onFileSelect)="onSelectFilesForUpload($event)">
     <div class="upload-btn">UPLOUD NEW DOC</div>
   </file-uploader>
+<!--       cdkTrapFocus-->
+<!--       cdkTrapFocusAutoCapture-->
   <div role="listbox" tabindex="0" aria-label="Select a color"
-       cdkTrapFocus
-       cdkTrapFocusAutoCapture
        (keydown)="keyDownHandler($event)">
-    <div *ngFor="let color of colors; index as i"
+    <div *ngFor="let item of documents; index as i"
          role="option"
-         [attr.aria-label]="color.name"
-         [attr.aria-selected]="color.hex == selectedColor"
+         [attr.aria-label]="item.title"
+         [attr.aria-selected]="item === selectedDocument"
          (keydown.enter)="onClick(i)"
-         (click)="onClick(i)">
+         (click)="onClick(i)"
+         [title]="item.title">
       <!--  FIXME: DOC  -->
       <img src="assets/images/icons/pdf.svg" height="64">
-      <div class="filename">Proof of Funds</div>
+      <div class="filename">{{ item.title }}</div>
     </div>
   </div>
 </div>

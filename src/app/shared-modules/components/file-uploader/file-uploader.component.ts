@@ -101,7 +101,7 @@ export class FileUploaderComponent {
     const files = Array.from(fileList);
 
     const config = {duration: 7000, panelClass: 'error-bar'};
-    if (this.fileTypes !== '*' && !this.isSupportedExtensions(files)) {
+    if (!this.isSupportedExtensions(files)) {
       this.snackBar.open('Unsupported file extension', 'OK', config);
     } else if (this.calculateTotalSize(files) > this.maxFileSize * 1024 * 1024) {
       this.snackBar.open(`File exceeds size limit (100Mb)`, 'OK', config);
@@ -113,7 +113,14 @@ export class FileUploaderComponent {
   }
 
   isSupportedExtensions(files: File[]): boolean {
-    return _.every(files,file => this.fileTypes.includes(file.name.split('.').pop()));
+    if (this.fileTypes === '*') {
+      return  true;
+    }
+    return _.every(files,({name}) => this.fileTypes.includes(this.getExtension(name)));
+  }
+
+  private getExtension(filename: string): string {
+    return filename.split('.').pop();
   }
 
   private calculateTotalSize(files: File[]): number {
