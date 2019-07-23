@@ -1,5 +1,5 @@
 <div class="file-picker" role="dialog" aria-label="Color picker">
-  <h3>Add Pre-approval Letter</h3>
+  <h3>{{ title }}</h3>
   <file-uploader (onFileSelect)="onSelectFilesForUpload($event)">
     <div class="upload-btn">UPLOUD NEW DOC</div>
   </file-uploader>
@@ -7,6 +7,9 @@
 <!--       cdkTrapFocusAutoCapture-->
   <div role="listbox" tabindex="0" aria-label="Select a color"
        (keydown)="keyDownHandler($event)">
+
+    <h3 *ngIf="documents?.length">Or choose existing document</h3>
+
     <div *ngFor="let item of documents; index as i"
          role="option"
          [attr.aria-label]="item.title"

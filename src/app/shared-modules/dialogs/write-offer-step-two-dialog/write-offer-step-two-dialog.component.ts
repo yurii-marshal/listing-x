@@ -5,7 +5,7 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
 import { Loan, Offer } from '../../../core-modules/models/offer';
 import * as _ from 'lodash';
 import { LoanType } from '../../../core-modules/enums/loan-type';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CustomValidators } from '../../../core-modules/validators/custom-validators';
 
 
@@ -27,6 +27,7 @@ export class WriteOfferStepTwoDialogComponent implements OnInit {
               private service: OfferService,
               private snackbar: MatSnackBar,
               private router: Router,
+              public route: ActivatedRoute,
               public dialogRef: MatDialogRef<WriteOfferStepTwoDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: { model: Offer, isEdit: boolean, verbose: boolean }) {
 
@@ -89,9 +90,4 @@ export class WriteOfferStepTwoDialogComponent implements OnInit {
         this.router.navigate(['/portal/upload/'], {queryParams: {offerId: model.id}});
       })
   }
-
-  onCancel() {
-    this.router.navigate(['/portal/step-1/'], {queryParams: {offerId: this.data.model.id}});
-  }
-
 }

@@ -22,7 +22,6 @@ import { ConfirmationBarComponent } from './components/confirmation-bar/confirma
 import { CopyToClipboard } from './directives/copy-to-clipboard';
 import { AddressesService } from '../core-modules/core-services/addresses.service';
 import { WriteOfferDialogComponent } from './dialogs/write-offer-dialog/write-offer-dialog.component';
-import { OfferService } from '../core-modules/core-services/offer.service';
 import { DialogsWrapperComponent } from './components/dialogs-wrapper/dialogs-wrapper.component';
 import { WriteOfferStepTwoDialogComponent } from './dialogs/write-offer-step-two-dialog/write-offer-step-two-dialog.component';
 import { WriteOfferUploadDocumentsDialogComponent } from './dialogs/write-offer-upload-documents-dialog/write-offer-upload-documents-dialog.component';
@@ -31,6 +30,8 @@ import { TooltipContentComponent } from './components/tooltip-content/tooltip-co
 import { FileOption, FilePickerComponent } from './components/file-picker/file-picker.component';
 import { A11yModule } from '@angular/cdk/a11y';
 import { FileUploaderComponent } from './components/file-uploader/file-uploader.component';
+import { WriteOfferSummaryComponent } from './dialogs/write-offer-summary/write-offer-summary.component';
+import { OfferService } from '../core-modules/core-services/offer.service';
 
 const materialModules = [
   MatDialogModule,
@@ -50,6 +51,7 @@ const dialogs = [
   WriteOfferDialogComponent,
   WriteOfferStepTwoDialogComponent,
   WriteOfferUploadDocumentsDialogComponent,
+  WriteOfferSummaryComponent,
   TooltipContentComponent,
 ];
 

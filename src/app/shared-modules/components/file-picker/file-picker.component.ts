@@ -5,7 +5,6 @@ import { OfferService } from '../../../core-modules/core-services/offer.service'
 import { UploadDocumentType } from '../../../core-modules/enums/upload-document-type';
 import { ENTER } from '@angular/cdk/keycodes';
 import { UploadedDocument } from '../../../core-modules/models/uploaded-document';
-import { tap } from 'rxjs/operators';
 
 @Directive({
   selector: '[role="option"]',
@@ -14,9 +13,11 @@ import { tap } from 'rxjs/operators';
   }
 })
 export class FileOption implements Highlightable {
-  isActive = false;
+  isActive: boolean;
 
-  setActiveStyles(): void { // press down
+  isChecked: boolean; // TODO:
+
+  setActiveStyles(): void {
     this.isActive = true;
   }
 
@@ -43,12 +44,14 @@ export class FilePickerComponent implements OnInit, AfterViewInit, ControlValueA
 
   documents: UploadedDocument[];
 
+  title: string;
+
   constructor(private service: OfferService) {
   }
 
   ngOnInit() {
-    this.service.loadDocuments(this.type)
-      .subscribe(docs => this.documents = docs);
+    this.title = this._title;
+    this.reloadFilesList();
   }
 
 
@@ -91,6 +94,19 @@ export class FilePickerComponent implements OnInit, AfterViewInit, ControlValueA
 
 
   private reloadFilesList() {
-    // TODO:
+    this.service.loadDocuments(this.type)
+      .subscribe(docs => this.documents = docs);
+
+  }
+
+  private get _title(): string {
+    switch (this.type) {
+      case UploadDocumentType.PreApproval:
+        return 'Add Pre-approval Letter';
+      case UploadDocumentType.FundsProof:
+        return 'Add Proof of Funds';
+      case UploadDocumentType.CoverLetter:
+        return 'Add Cover Letter';
+    }
   }
 }

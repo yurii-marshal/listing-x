@@ -7,6 +7,7 @@ import { WriteOfferDialogComponent } from '../../shared-modules/dialogs/write-of
 import { OfferResolver } from '../../core-modules/resolvers/offer.resolver';
 import { WriteOfferStepTwoDialogComponent } from '../../shared-modules/dialogs/write-offer-step-two-dialog/write-offer-step-two-dialog.component';
 import { WriteOfferUploadDocumentsDialogComponent } from '../../shared-modules/dialogs/write-offer-upload-documents-dialog/write-offer-upload-documents-dialog.component';
+import { WriteOfferSummaryComponent } from '../../shared-modules/dialogs/write-offer-summary/write-offer-summary.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,10 @@ const routes: Routes = [
         path: 'upload',
         component: DialogsWrapperComponent,
         data: { component: WriteOfferUploadDocumentsDialogComponent},
+      }, {
+        path: 'summary',
+        component: DialogsWrapperComponent,
+        data: { component: WriteOfferSummaryComponent},
       }
     ]
   }
