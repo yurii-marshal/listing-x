@@ -31,7 +31,6 @@ export class WriteOfferUploadDocumentsDialogComponent implements OnInit {
 
     if (this.data.model) {
       const model = _.pick(this.data.model, Object.keys(this.form.controls));
-      debugger;
       this.form.setValue(model);
     }
   }

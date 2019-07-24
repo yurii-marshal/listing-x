@@ -12,7 +12,7 @@
   }
 }
 
-[role="option"] {
+[role="checkbox"] {
   display: inline-block;
   margin: 10px;
   padding: 4px;
@@ -20,7 +20,8 @@
 }
 
 .active-option,
-[role="option"]:hover {
+[aria-checked=true],
+[role="checkbox"]:hover {
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.5);
   border-radius: 4px;
   background-color: rgba(0, 0, 0, 0.02);

@@ -8,14 +8,15 @@
   <div role="listbox" tabindex="0" aria-label="Select a color"
        (keydown)="keyDownHandler($event)">
 
-    <h3 *ngIf="documents?.length">Or choose existing document</h3>
+    <h3 *ngIf="dataSource?.length">Or choose existing document</h3>
 
-    <div *ngFor="let item of documents; index as i"
-         role="option"
+    <div *ngFor="let item of dataSource; index as i"
+         role="checkbox"
+         [id]="item.id"
          [attr.aria-label]="item.title"
-         [attr.aria-selected]="item === selectedDocument"
-         (keydown.enter)="onClick(i)"
-         (click)="onClick(i)"
+         [attr.aria-checked]="item.checked"
+         (keydown.enter)="onClick(item)"
+         (click)="onClick(item)"
          [title]="item.title">
       <!--  FIXME: DOC  -->
       <img src="assets/images/icons/pdf.svg" height="64">

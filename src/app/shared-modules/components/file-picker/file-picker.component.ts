@@ -10,15 +10,13 @@ import { FileUploaderComponent } from '../file-uploader/file-uploader.component'
 
 
 @Directive({
-  selector: '[role="option"]',
+  selector: '[role="checkbox"]',
   host: {
-    '[class.active-option]' : 'isActive'
+    '[class.active-option]': 'isActive'
   }
 })
 export class FileOption implements Highlightable {
   isActive: boolean;
-
-  isChecked: boolean; // TODO:
 
   setActiveStyles(): void {
     this.isActive = true;
@@ -46,21 +44,26 @@ export class FilePickerComponent implements OnInit, AfterViewInit, ControlValueA
   @Input()
   type: UploadDocumentType;
 
-  @ViewChildren(FileOption) options: QueryList<FileOption>;
+  @ViewChildren(FileOption)
+  options: QueryList<FileOption>;
 
   keyKeyManager: ActiveDescendantKeyManager<FileOption>;
 
   selectedDocument: Document;
 
-  documents: Document[];
+  dataSource: Document[];
 
   title: string;
 
   isDisabled: boolean;
 
-  protected onModelChange = (value: any) => {};
+  selectedItems: number[];
 
-  protected onTouch = () => {};
+  protected onModelChange = (value: any) => {
+  };
+
+  protected onTouch = () => {
+  };
 
   constructor(private service: DocumentLinkingService) {
   }
@@ -83,14 +86,15 @@ export class FilePickerComponent implements OnInit, AfterViewInit, ControlValueA
     }
   }
 
-  onClick(index: number) {
-    // FIXME: selectedDocument
-    this.keyKeyManager.setActiveItem(index);
+  onClick(item: Document) {
+    item.checked = !item.checked;
+    this.onModelChange(this.dataSource.filter(item => item.checked).map(item => item.id));
+
   }
 
   onSelectFilesForUpload(files: File[]) {
     this.service.upload(files, this.type)
-      .subscribe(() =>  this.reloadFilesList()); // reload list
+      .subscribe(() => this.reloadFilesList()); // reload list
   }
 
   /**
@@ -108,16 +112,25 @@ export class FilePickerComponent implements OnInit, AfterViewInit, ControlValueA
     this.isDisabled = isDisabled;
   }
 
-  writeValue(obj: any): void {
-    console.log('Value', obj);
-    // TODO: go though viewchildren
+  writeValue(items: number[]): void {
+    this.selectedItems = items;
+    this.preselect();
   }
 
 
   private reloadFilesList() {
     this.service.loadListDocumentsByType(this.type)
-      .subscribe(docs => this.documents = docs);
+      .subscribe(docs => {
+        this.dataSource = docs;
+        this.preselect();
+      });
 
+  }
+
+  private preselect() {
+    _.forEach(this.dataSource, (item: Document) => {
+      item.checked = _.includes(this.selectedItems, item.id);
+    });
   }
 
   private get _title(): string {

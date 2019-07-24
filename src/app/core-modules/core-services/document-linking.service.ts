@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { IDataService } from '../interfaces/data.service';
 import { Document } from '../models/document';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
@@ -34,9 +33,9 @@ export class DocumentLinkingService {
     if (files.length) {
       files.forEach((file: File) => formData.append('files', file));
     }
-    const params = new HttpParams();
+    let params = new HttpParams();
     if (type) {
-      params.set('type', type);
+      params = params.set('type', type);
     }
     return this.http.post(ApiEndpoint.Upload, formData, {params})
       .pipe(map((body: any) => body.results as Document[]));
