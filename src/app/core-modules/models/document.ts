@@ -4,7 +4,7 @@ export interface Document {
   id: number,
   file: string, // TODO: encoded value
   title: string,
-  type: UploadDocumentType
-  // transient
+  type: UploadDocumentType;
+  extension: string;
   checked?: boolean
 }

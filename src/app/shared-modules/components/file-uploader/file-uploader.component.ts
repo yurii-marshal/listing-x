@@ -41,7 +41,7 @@ export class FileUploaderComponent {
   maxFileSize: number = 100; // Mb
 
   @Input()
-  fileTypes = '.pdf, .doc';
+  fileTypes = '.pdf, .doc, .docx'; //application/msword,application/pdf
 
   @Output()
   onFileSelect: EventEmitter<File[]> = new EventEmitter<File[]>();
@@ -132,4 +132,3 @@ export class FileUploaderComponent {
   }
 
 }
-

@@ -117,14 +117,12 @@ export class FilePickerComponent implements OnInit, AfterViewInit, ControlValueA
     this.preselect();
   }
 
-
   private reloadFilesList() {
     this.service.loadListDocumentsByType(this.type)
       .subscribe(docs => {
         this.dataSource = docs;
         this.preselect();
       });
-
   }
 
   private preselect() {
