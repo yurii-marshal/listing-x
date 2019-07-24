@@ -32,15 +32,9 @@ export class DialogsWrapperComponent implements OnInit {
       scrollStrategy: this.overlay.scrollStrategies.noop(),
       data: {
         model,
-        isEdit: !!this.route.snapshot.queryParams.offerId
+        isEdit: !!this.route.parent.snapshot.params.id
       }
     });
-
-    dialogRef.afterClosed()
-      .pipe(
-        filter(dialogResult => !!dialogResult)
-      )
-      .subscribe();
   }
 
 }

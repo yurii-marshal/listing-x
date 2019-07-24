@@ -13,12 +13,11 @@ import { DocumentLinkingService } from '../core-services/document-linking.servic
 export class OfferDocumentsResolver implements Resolve<LinkedDocuments> {
 
   constructor(private http: HttpClient,
-              private service: DocumentLinkingService,
-              private snackBar: MatSnackBar) {
+              private service: DocumentLinkingService) {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<LinkedDocuments> | LinkedDocuments {
-    const offerId: number = Number(route.queryParams.offerId);
+    const offerId: number = Number(route.parent.params.id);
     if (isNaN(offerId)) {
       return null;
     }

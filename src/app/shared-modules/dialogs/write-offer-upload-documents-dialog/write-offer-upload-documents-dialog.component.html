@@ -12,12 +12,12 @@
 
 <div mat-dialog-actions class="fieldset button-bar">
   <div class="u-flex u-flex-justify--space-between u-flex-align-items--center" style="width: 100%;">
-    <button mat-stroked-button mat-dialog-close routerLink="/portal/step-2/" [queryParams]="route.snapshot.queryParams" color="primary">
+    <button mat-stroked-button mat-dialog-close [routerLink]="backLink"  color="primary">
       BACK
     </button>
     <button mat-flat-button appDebounceClick (debounceClick)="close()" color="primary">CONTINUE</button>
   </div>
-  <button mat-button mat-dialog-close routerLink="/portal/summary" [queryParams]="route.snapshot.queryParams" class="skip-label">
+  <button mat-button mat-dialog-close [routerLink]="nextLink" class="skip-label">
     Skip this step
   </button>
 </div>

@@ -9,6 +9,7 @@ import { WriteOfferStepTwoDialogComponent } from '../../shared-modules/dialogs/w
 import { WriteOfferUploadDocumentsDialogComponent } from '../../shared-modules/dialogs/write-offer-upload-documents-dialog/write-offer-upload-documents-dialog.component';
 import { WriteOfferSummaryComponent } from '../../shared-modules/dialogs/write-offer-summary/write-offer-summary.component';
 import { OfferDocumentsResolver } from '../../core-modules/resolvers/offer-documents.resolver';
+import { AnonymousOfferResolver } from '../../core-modules/resolvers/anonymous-offer.resolver';
 
 const routes: Routes = [
   {
@@ -18,24 +19,41 @@ const routes: Routes = [
     canActivateChild: [AuthGuardService],
     children: [
       {
-        path: 'step-1',
-        component: DialogsWrapperComponent,
-        data: { component: WriteOfferDialogComponent, next: '/portal/step-2'},
-        resolve: { model: OfferResolver }
-      }, {
-        path: 'step-2',
-        component: DialogsWrapperComponent,
-        data: { component: WriteOfferStepTwoDialogComponent},
-        resolve: { model: OfferResolver }
-      }, {
-        path: 'upload',
-        component: DialogsWrapperComponent,
-        data: { component: WriteOfferUploadDocumentsDialogComponent},
-        resolve: { model:  OfferDocumentsResolver}
-      }, {
-        path: 'summary',
-        component: DialogsWrapperComponent,
-        data: { component: WriteOfferSummaryComponent},
+        path: 'offer', //Dialogs
+        children: [
+          {
+            path: '',
+            pathMatch: 'full',
+            component: DialogsWrapperComponent,
+            data: { component: WriteOfferDialogComponent},
+            resolve: {model: AnonymousOfferResolver}
+          }, {
+            path: ':id',
+            children: [
+              {
+                path: '',
+                pathMatch: 'full',
+                component: DialogsWrapperComponent,
+                data: { component: WriteOfferDialogComponent},
+                resolve: { model: OfferResolver },
+              }, {
+                path: 'step-2',
+                component: DialogsWrapperComponent,
+                data: { component: WriteOfferStepTwoDialogComponent},
+                resolve: { model: OfferResolver }
+              }, {
+                path: 'upload',
+                component: DialogsWrapperComponent,
+                data: { component: WriteOfferUploadDocumentsDialogComponent},
+                resolve: { model:  OfferDocumentsResolver}
+              }, {
+                path: 'summary',
+                component: DialogsWrapperComponent,
+                data: { component: WriteOfferSummaryComponent},
+              }
+            ]
+          }
+        ]
       }
     ]
   }
@@ -44,6 +62,11 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [AuthGuardService, OfferResolver, OfferDocumentsResolver]
+  providers: [
+    AuthGuardService,
+    OfferResolver,
+    AnonymousOfferResolver,
+    OfferDocumentsResolver
+  ]
 })
 export class PortalRoutingModule { }

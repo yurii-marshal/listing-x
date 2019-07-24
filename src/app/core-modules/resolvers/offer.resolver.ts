@@ -20,37 +20,19 @@ export class OfferResolver implements Resolve<Offer> {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Offer> | Offer {
-    const offerId: number = Number(route.queryParams.offerId);
-    if (!isNaN(offerId)) {
-      const config = {duration: 7000, panelClass: 'error-bar'};
-      return this.offerService.loadOne(offerId)
-        .pipe(
-          catchError(err => {
-            this.router.navigate(['../']);
-            this.snackBar.open(`Cannot retrieve offer.`, 'OK', config);
-            return of(null);
-          })
-        );
+    const offerId: number = Number(route.parent.params.id);
+    if (isNaN(offerId)) {
+      return null;
     }
 
-    const data = this.offerService.anonymousOfferData; // LS data
-    if (data) {
-      return this.overwriteFirstBuyer(data.offer);
+    const config = {duration: 7000, panelClass: 'error-bar'};
+    return this.offerService.loadOne(offerId)
+      .pipe(
+        catchError(err => {
+          this.router.navigate(['../']);
+          this.snackBar.open(`Cannot retrieve offer.`, 'OK', config);
+          return of(null);
+        })
+      );
     }
-
-    return null;
-  }
-
-  /*
-  * Overwrite first bayes with user's profile credentials
-  * */
-  private overwriteFirstBuyer(offer: Offer) {
-    const buyer: Person = _.pick(this.authService.currentUser, ['firstName', 'lastName', 'email']);
-    if (_.isEmpty(offer.buyers)) {
-      offer.buyers = [buyer];
-    } else {
-      offer.buyers[0] = buyer;
-    }
-    return offer;
-  }
 }

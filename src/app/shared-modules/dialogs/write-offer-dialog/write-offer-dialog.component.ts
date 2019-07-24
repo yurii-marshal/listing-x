@@ -10,8 +10,8 @@ import { switchMap, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 enum Type {
-  Buyers  = 'buyers',
-  Sellers  = 'sellers'
+  Buyers = 'buyers',
+  Sellers = 'sellers'
 }
 
 
@@ -32,12 +32,12 @@ export class WriteOfferDialogComponent implements OnInit {
     return this.form.get('sellers') as FormArray;
   }
 
-  constructor( private formBuilder: FormBuilder,
-               private service: OfferService,
-               private snackbar: MatSnackBar,
-               private router: Router,
-               public dialogRef: MatDialogRef<WriteOfferDialogComponent>,
-               @Inject(MAT_DIALOG_DATA) public data: {model: Offer, isAnonymous: boolean, isEdit: boolean, verbose: boolean}) {
+  constructor(private formBuilder: FormBuilder,
+              private service: OfferService,
+              private snackbar: MatSnackBar,
+              private router: Router,
+              public dialogRef: MatDialogRef<WriteOfferDialogComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: { model: Offer, isAnonymous: boolean, isEdit: boolean, verbose: boolean }) {
   }
 
   ngOnInit() {
@@ -133,8 +133,7 @@ export class WriteOfferDialogComponent implements OnInit {
       )
       .subscribe(({id}) => {
         this.dialogRef.close(model);
-        this.router.navigate(['/portal/step-2/'], {queryParams: {offerId: id}});
+        this.router.navigate(['/portal/offer', id, 'step-2']);
       });
   }
-
 }

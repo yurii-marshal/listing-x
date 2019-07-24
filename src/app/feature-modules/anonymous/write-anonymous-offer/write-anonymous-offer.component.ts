@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { WriteOfferDialogComponent } from '../../../shared-modules/dialogs/write-offer-dialog/write-offer-dialog.component';
-import { filter, tap } from 'rxjs/operators';
-import { MatDialog } from '@angular/material';
+import { filter, map, tap } from 'rxjs/operators';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { Offer } from '../../../core-modules/models/offer';
 import { OfferService } from '../../../core-modules/core-services/offer.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,6 +17,7 @@ export class WriteAnonymousOfferComponent implements OnInit {
   constructor(private dialog: MatDialog,
               private service: OfferService,
               private router: Router,
+              private snackbar: MatSnackBar,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -36,11 +37,12 @@ export class WriteAnonymousOfferComponent implements OnInit {
     });
 
     dialogRef.afterClosed()
-      .pipe(filter(dialogResult => !!dialogResult),)
-      .subscribe((offer: Offer) => {
-        const token = this.route.snapshot.params.token;
-        localStorage.setItem(LocalStorageKey.Offer, JSON.stringify({offer, token}));
-        this.router.navigate(['/auth/login']);
-      });
+      .pipe(
+        filter(dialogResult => !!dialogResult),
+        map((offer: Offer) => ({offer, token: this.route.snapshot.params.token})),
+        tap((data: {offer: Offer, token: string}) => localStorage.setItem(LocalStorageKey.Offer, JSON.stringify(data))),
+        tap(() => this.snackbar.open('The form information is saved and please login or register to continue.'))
+      )
+      .subscribe( () => this.router.navigate(['/auth/login']));
   }
 }

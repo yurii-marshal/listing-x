@@ -17,6 +17,14 @@ export class WriteOfferUploadDocumentsDialogComponent implements OnInit {
 
   Type = UploadDocumentType;
 
+  get backLink() {
+    return `/portal/offer/${this.data.model.offerId}/step-2/`;
+  }
+
+  get nextLink() {
+    return `/portal/offer/${this.data.model.offerId}/summary/`;
+  }
+
   constructor(public route: ActivatedRoute,
               private service: DocumentLinkingService,
               private formBuilder: FormBuilder,
@@ -47,7 +55,7 @@ export class WriteOfferUploadDocumentsDialogComponent implements OnInit {
     this.service.linkDocumentsToOffer(model)
       .subscribe(() => {
         this.dialogRef.close(model);
-        this.router.navigate(['/portal/summary/'], {queryParams: {offerId: model.offerId}});
+        this.router.navigate([this.nextLink]);
       });
   }
 }

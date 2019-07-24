@@ -23,6 +23,10 @@ export class WriteOfferStepTwoDialogComponent implements OnInit {
     return this.form.get('loans') as FormArray;
   }
 
+  get backLink() {
+    return `/portal/offer/${this.data.model.id}/`;
+  }
+
   constructor(private formBuilder: FormBuilder,
               private service: OfferService,
               private snackbar: MatSnackBar,
@@ -87,7 +91,7 @@ export class WriteOfferStepTwoDialogComponent implements OnInit {
     this.service.update(model)
       .subscribe(() => {
         this.dialogRef.close(model);
-        this.router.navigate(['/portal/upload/'], {queryParams: {offerId: model.id}});
+        this.router.navigate(['/portal/offer', model.id, 'upload']);
       })
   }
 }
