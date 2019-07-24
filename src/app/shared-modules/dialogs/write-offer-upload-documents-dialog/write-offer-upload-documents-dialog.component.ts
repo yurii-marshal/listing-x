@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { UploadDocumentType } from '../../../core-modules/enums/upload-document-type';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { LinkedDocuments } from '../../../core-modules/models/linked-documents';
 import { DocumentLinkingService } from '../../../core-modules/core-services/document-linking.service';
 import * as _ from 'lodash';
@@ -20,6 +20,8 @@ export class WriteOfferUploadDocumentsDialogComponent implements OnInit {
   constructor(public route: ActivatedRoute,
               private service: DocumentLinkingService,
               private formBuilder: FormBuilder,
+              private router: Router,
+              public dialogRef: MatDialogRef<WriteOfferUploadDocumentsDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: { model: LinkedDocuments, isEdit: boolean }) { }
 
   ngOnInit() {
@@ -43,6 +45,9 @@ export class WriteOfferUploadDocumentsDialogComponent implements OnInit {
     const model: LinkedDocuments = this.form.value;
     model.offerId = this.data.model.offerId;
     this.service.linkDocumentsToOffer(model)
-      .subscribe(); // FIXME:
+      .subscribe(() => {
+        this.dialogRef.close(model);
+        this.router.navigate(['/portal/summary/'], {queryParams: {offerId: model.offerId}});
+      });
   }
 }
