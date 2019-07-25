@@ -97,11 +97,9 @@ export class WriteOfferDialogComponent implements OnInit {
       lastName: [{value: null, disabled}, [Validators.required, Validators.maxLength(150)]],
       email: [{value: null, disabled}, [Validators.required, Validators.email]], // CustomValidators.unique(this.)
     });
-
     if (model) {
       formGroup.patchValue(model);
     }
-
     return formGroup;
   }
 

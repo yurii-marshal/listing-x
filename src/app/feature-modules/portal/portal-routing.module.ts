@@ -50,7 +50,9 @@ const routes: Routes = [
                 path: 'summary',
                 component: DialogsWrapperComponent,
                 data: { component: WriteOfferSummaryComponent},
+                resolve: { model: OfferResolver }
               }
+              // TODO: overview
             ]
           }
         ]

@@ -6,10 +6,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./write-offer-summary.component.scss']
 })
 export class WriteOfferSummaryComponent implements OnInit {
+  get backLink(): string {
+    return 'TODO:';
+  }
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  close() {
+    // const model: LinkedDocuments = this.form.value;
+    // model.offerId = this.data.model.offerId;
+    // this.service.linkDocumentsToOffer(model)
+    //   .subscribe(() => {
+    //     this.dialogRef.close(model);
+    //     this.router.navigate([this.nextLink]);
+    //   });
   }
 
 }

@@ -1,1 +1,36 @@
-<p>write-offer-summary works!</p>
+<div mat-dialog-title class="u-flex u-flex-justify--space-between u-flex-align-items--center">
+  <div class="title">Offer Summary</div>
+  <button mat-icon-button mat-dialog-close routerLink="../">
+    <mat-icon fontSet="fa" fontIcon="fa-times"></mat-icon>
+  </button>
+</div>
+<div mat-dialog-content cdkTrapFocus class="form-container dialog-form" style="min-height: 400px">
+  <div class="row-layout"><label class="header">Offer information</label><span class="link">Edit</span></div>
+  <div class="row-layout"><label>buyer #1</label><span>Serhii Movchan | s.movchan@gmail.com</span></div>
+  <div class="row-layout"><label>seller #1</label><span>Ostap Lopushynsky | o.lopushynsky@gmail.com</span></div>
+  <div class="row-layout"><label>address</label><span>725 Bear Hill Street Brooklyn, NY 11230</span></div>
+  <div class="row-layout"><label>offer info</label><span>$70,000 | 30 Days to close escrow</span></div>
+
+  <div class="row-layout"><label class="header">payment information</label><span class="link">Edit</span></div>
+  <div class="row-layout"><label>Initial deposit</label><span>$30,000</span></div>
+  <div class="row-layout"><label>loan amount</label><span>$40,000</span></div>
+  <div class="row-layout"><label>interest rate</label><span>5</span></div>
+  <div class="row-layout"><label>points</label><span>9</span></div>
+  <div class="row-layout"><label>interest rate</label><span clas="bold">FHA loan</span></div>
+  <div class="row-layout"><label>down payment</label><span>$30,000</span></div>
+  <div class="row-layout"><label>special financing terms</label><span>Without any special financinjg terms</span></div>
+
+  <div class="row-layout"><label class="header">Supporting docs</label><span class="link">Edit</span></div>
+  <div class="row-layout"><label>Add Pre-approval Letter</label><div class="doc-preview">...</div></div>
+  <div class="row-layout"><label>Add Proof of Funds</label><div class="doc-preview">...</div></div>
+  <div class="row-layout"><label>Add Cover Letter</label><div class="doc-preview">...</div></div>
+</div>
+
+<div mat-dialog-actions class="fieldset button-bar">
+  <div class="u-flex u-flex-justify--space-between u-flex-align-items--center" style="width: 100%;">
+    <button mat-stroked-button mat-dialog-close [routerLink]="backLink"  color="primary">
+      BACK
+    </button>
+    <button mat-flat-button appDebounceClick (debounceClick)="close()" color="primary">CONTINUE</button>
+  </div>
+</div>
