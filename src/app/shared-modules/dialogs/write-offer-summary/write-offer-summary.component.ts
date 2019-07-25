@@ -21,6 +21,14 @@ export class WriteOfferSummaryComponent implements OnInit {
     return `/portal/offer/${this.data.model.id}/upload/`;
   }
 
+  get stepOneLink(): string {
+    return `/portal/offer/${this.data.model.id}/`;
+  }
+
+  get stepTwoLink(): string {
+    return `/portal/offer/${this.data.model.id}/step-2`;
+  }
+
   constructor(private formBuilder: FormBuilder,
               private service: OfferService,
               private linkingService: DocumentLinkingService,
@@ -42,6 +50,9 @@ export class WriteOfferSummaryComponent implements OnInit {
 
   }
 
+  hide() {
+    this.dialogRef.close();
+  }
 
   close() {
     // const model: LinkedDocuments = this.form.value;

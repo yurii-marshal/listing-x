@@ -6,13 +6,13 @@
 </div>
 <div mat-dialog-content cdkTrapFocus class="form-container dialog-form" style="min-height: 400px">
   <ng-container *ngIf="data.model">
-    <div class="row-layout"><label class="header">Offer information</label><span ro class="link">Edit</span></div>
+    <div class="row-layout"><label class="header">Offer information</label><span [routerLink]="stepOneLink" (click)="hide()" class="link">Edit</span></div>
     <div class="row-layout" *ngFor="let item of data.model.buyers; let i = index"><label>buyer #{{ i + 1 }}</label><span>{{ item.firstName }} {{ item.lastName }} | {{ item.email }}</span></div>
     <div class="row-layout" *ngFor="let item of data.model.sellers; let i = index"><label>seller #{{ i + 1 }}</label><span>{{ item.firstName }} {{ item.lastName }} | {{ item.email }}</span></div>
     <div class="row-layout"><label>address</label><span>{{ data.model.streetName }}, {{ data.model.city }}, {{ data.model.state }} {{ data.model.zip }}</span></div>
     <div class="row-layout"><label>offer info</label><span>${{ data.model.price | number }} | {{ data.model.closeEscrowDays }} Days to close escrow</span></div>
 
-    <div class="row-layout"><label class="header">payment information</label><span class="link">Edit</span></div>
+    <div class="row-layout"><label class="header">payment information</label><span [routerLink]="stepTwoLink" (click)="hide()" class="link">Edit</span></div>
     <ng-container *ngFor="let item of data.model.loans; let i = index">
       <div class="row-layout"><label>Initial deposit</label><span>${{ item.initialDeposit | number }}</span></div>
       <div class="row-layout"><label>loan amount</label><span>${{ item.loanAmount | number }}</span></div>
@@ -23,7 +23,7 @@
     <div class="row-layout"><label>down payment</label><span>${{ data.model.downPayment | number }}</span></div>
     <div class="row-layout"><label>special financing terms</label><span>{{ data.model.anySpecialFinancialTerms }}</span></div>
 
-    <div class="row-layout"><label class="header">Supporting docs</label><span class="link">Edit</span></div>
+    <div class="row-layout"><label class="header">Supporting docs</label><span [routerLink]="backLink" (click)="hide()" class="link">Edit</span></div>
     <div class="row-layout"><label>Add Pre-approval Letter</label>
       <div class="doc-preview"><img *ngFor="let img of preApproval" src="assets/images/icons/{{ img.extension }}.svg" [title]="img.title" height="20"></div>
     </div>
