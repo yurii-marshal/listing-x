@@ -49,8 +49,6 @@ export class FilePickerComponent implements OnInit, AfterViewInit, ControlValueA
 
   keyKeyManager: ActiveDescendantKeyManager<FileOption>;
 
-  selectedDocument: Document;
-
   dataSource: Document[];
 
   title: string;
@@ -87,9 +85,10 @@ export class FilePickerComponent implements OnInit, AfterViewInit, ControlValueA
   }
 
   onClick(item: Document) {
-    item.checked = !item.checked;
-    this.onModelChange(this.dataSource.filter(item => item.checked).map(item => item.id));
-
+    if (!this.isDisabled) {
+      item.checked = !item.checked;
+      this.onModelChange(this.dataSource.filter(item => item.checked).map(item => item.id));
+    }
   }
 
   onSelectFilesForUpload(files: File[]) {

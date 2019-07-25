@@ -14,7 +14,6 @@ import { Overlay } from '@angular/cdk/overlay';
 export class DialogsWrapperComponent implements OnInit {
 
   constructor(private dialog: MatDialog,
-              private router: Router,
               private route: ActivatedRoute,
               private overlay: Overlay) { }
 
@@ -23,14 +22,13 @@ export class DialogsWrapperComponent implements OnInit {
   }
 
   openDialog() {
-    const model = this.route.snapshot.data.model;
     const provider = this.route.snapshot.data.component as Type<Component>;
     const dialogRef = this.dialog.open(provider, {
       width: '600px',
       disableClose: true,
       scrollStrategy: this.overlay.scrollStrategies.noop(),
       data: {
-        model,
+        ...this.route.snapshot.data,
         isEdit: !!this.route.parent.snapshot.params.id
       }
     });

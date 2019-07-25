@@ -56,7 +56,12 @@ const routes: Routes = [
             ]
           }
         ]
+      }, {
+        path: 'upload',
+        component: DialogsWrapperComponent,
+        data: { component: WriteOfferUploadDocumentsDialogComponent, readonly: true},
       }
+
     ]
   }
 ];

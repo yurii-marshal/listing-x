@@ -18,11 +18,15 @@ export class WriteOfferUploadDocumentsDialogComponent implements OnInit {
   Type = UploadDocumentType;
 
   get backLink() {
-    return `/portal/offer/${this.data.model.offerId}/step-2/`;
+    return this.data.readonly
+      ? ''
+      : `/portal/offer/${this.data.model.offerId}/step-2/`;
   }
 
   get nextLink() {
-    return `/portal/offer/${this.data.model.offerId}/summary/`;
+    return this.data.readonly
+      ? ''
+      : `/portal/offer/${this.data.model.offerId}/summary/`;
   }
 
   constructor(public route: ActivatedRoute,
@@ -30,13 +34,14 @@ export class WriteOfferUploadDocumentsDialogComponent implements OnInit {
               private formBuilder: FormBuilder,
               private router: Router,
               public dialogRef: MatDialogRef<WriteOfferUploadDocumentsDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: { model: LinkedDocuments, isEdit: boolean }) { }
+              @Inject(MAT_DIALOG_DATA) public data: { model: LinkedDocuments, readonly: boolean }) { }
 
   ngOnInit() {
+    const disabled: boolean = this.data.readonly;
     this.form = this.formBuilder.group({
-      preApproval: [[]],
-      proofOfFunds: [[]],
-      coverLetter: [[]],
+      preApproval: [{value: [], disabled}],
+      proofOfFunds: [{value: [], disabled}],
+      coverLetter: [{value: [], disabled}],
     });
 
     if (this.data.model) {
