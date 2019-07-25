@@ -7,7 +7,7 @@
 @include mat-core();
 
 // Copy the palettes from your selected theme (usually theme.scss).
-$app-primary: mat-palette($mat-green); // 66ad58
+$app-primary: mat-palette($mat-green, 600);
 $app-accent: mat-palette($mat-light-blue);
 $app-warn: mat-palette($mat-red);
 
