@@ -55,13 +55,9 @@ export class WriteOfferSummaryComponent implements OnInit {
   }
 
   close() {
-    // const model: LinkedDocuments = this.form.value;
-    // model.offerId = this.data.model.offerId;
-    // this.service.linkDocumentsToOffer(model)
-    //   .subscribe(() => {
-    //     this.dialogRef.close(model);
-    //     this.router.navigate([this.nextLink]);
-    //   });
+    this.router.navigate(['/portal']);
+    this.snackbar.open('Successfully created offer', 'OK');
+    this.hide();
   }
 
 }
