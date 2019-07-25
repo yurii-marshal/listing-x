@@ -1,5 +1,4 @@
 import { Component, OnInit, Type } from '@angular/core';
-import { filter, tap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Overlay } from '@angular/cdk/overlay';
@@ -20,10 +19,10 @@ export class DialogsWrapperComponent implements OnInit {
               private overlay: Overlay) { }
 
   ngOnInit() {
-    this.openWriteOfferDialog();
+    this.openDialog();
   }
 
-  openWriteOfferDialog() {
+  openDialog() {
     const model = this.route.snapshot.data.model;
     const provider = this.route.snapshot.data.component as Type<Component>;
     const dialogRef = this.dialog.open(provider, {

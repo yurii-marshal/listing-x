@@ -1,5 +1,5 @@
 export enum UploadDocumentType {
-  PreApproval = 'pre_approval',
-  FundsProof = 'proof_of_funds',
-  CoverLetter  = 'cover_letter'
+  preApproval = 'pre_approval',
+  proofOfFunds = 'proof_of_funds',
+  coverLetter  = 'cover_letter'
 }

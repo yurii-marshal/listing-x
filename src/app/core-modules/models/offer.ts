@@ -12,10 +12,10 @@ export interface Offer {
   price: number;
   closeEscrowDays: number;
 
-  loans?: Loan[],
+  loans?: Loan[];
   loanType?: LoanType;  // CONVENTIONAL LOAN,
-  downPayment?: string,
-  anySpecialFinancialTerms?: string
+  downPayment?: number;
+  anySpecialFinancialTerms?: string;
 }
 
 export interface Person {

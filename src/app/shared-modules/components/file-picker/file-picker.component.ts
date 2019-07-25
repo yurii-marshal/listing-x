@@ -133,11 +133,11 @@ export class FilePickerComponent implements OnInit, AfterViewInit, ControlValueA
 
   private get _title(): string {
     switch (this.type) {
-      case UploadDocumentType.PreApproval:
+      case UploadDocumentType.preApproval:
         return 'Add Pre-approval Letter';
-      case UploadDocumentType.FundsProof:
+      case UploadDocumentType.proofOfFunds:
         return 'Add Proof of Funds';
-      case UploadDocumentType.CoverLetter:
+      case UploadDocumentType.coverLetter:
         return 'Add Cover Letter';
     }
   }
