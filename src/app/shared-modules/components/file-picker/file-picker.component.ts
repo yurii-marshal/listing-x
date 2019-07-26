@@ -87,13 +87,14 @@ export class FilePickerComponent implements OnInit, AfterViewInit, ControlValueA
   onClick(item: Document) {
     if (!this.isDisabled) {
       item.checked = !item.checked;
-      this.onModelChange(this.dataSource.filter(item => item.checked).map(item => item.id));
+      this.invalidateModel();
     }
   }
 
+
   onSelectFilesForUpload(files: File[]) {
     this.service.upload(files, this.type)
-      .subscribe(() => this.reloadFilesList()); // reload list
+      .subscribe((items: Document[]) => this.mergeNewFiles(items));
   }
 
   /**
@@ -115,6 +116,24 @@ export class FilePickerComponent implements OnInit, AfterViewInit, ControlValueA
     this.selectedItems = items;
     this.preselect();
   }
+
+  private invalidateModel() {
+    const ids: number[] = _.chain(this.dataSource)
+      .filter('checked')
+      .map('id')
+      .value();
+
+    this.onModelChange(ids);
+  }
+
+  private mergeNewFiles(items: Document[]) {
+    if (!this.isDisabled) {
+      items.forEach(file => file.checked = true);
+    }
+    this.dataSource = [...items, ...this.dataSource];
+    this.invalidateModel();
+  }
+
 
   private reloadFilesList() {
     this.service.loadListDocumentsByType(this.type)
