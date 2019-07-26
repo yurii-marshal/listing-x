@@ -28,7 +28,7 @@ export class OfferService implements IDataService <Offer> {
 
   getAnonymousOffer(token): Observable<Offer> {
     const url = detailUrl(ApiEndpoint.AnonymousOffer, token);
-    return this.http.get<Offer>(url)
+    return this.http.get<Offer>(url);
   }
 
   delete(id: number): Observable<void> {
@@ -49,7 +49,7 @@ export class OfferService implements IDataService <Offer> {
     return this.http.put<Offer>(url, model);
   }
 
-  get anonymousOfferData(): {offer: Offer, token: string} {
+  get anonymousOfferData(): { offer: Offer, token: string } {
     const raw: string = localStorage.getItem(LocalStorageKey.Offer);
     if (!raw) {
       return null;

@@ -57,6 +57,7 @@ export class WriteOfferUploadDocumentsDialogComponent implements OnInit {
   close() {
     const model: LinkedDocuments = this.form.value;
     model.offerId = this.data.model.offerId;
+    //TODO: only do http request in case: form.dirty
     this.service.linkDocumentsToOffer(model)
       .subscribe(() => {
         this.dialogRef.close(model);

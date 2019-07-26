@@ -120,6 +120,7 @@ export class WriteOfferDialogComponent implements OnInit {
       return; // Exit
     }
 
+    //TODO: only do http request in case: form.dirty
     const message = `Successfully ${this.data.isEdit ? 'updated' : 'created new'} offer.`;
     of(model)
       .pipe(

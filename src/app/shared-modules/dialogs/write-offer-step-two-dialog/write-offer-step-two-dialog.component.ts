@@ -88,6 +88,7 @@ export class WriteOfferStepTwoDialogComponent implements OnInit {
   close(): void {
     const model: Offer = _.cloneDeep(this.data.model); // keep all fields from step 1 and extend with step 2 fields
     Object.assign(model, this.form.value);
+    //TODO: only do http request in case: form.dirty
     this.service.update(model)
       .subscribe(() => {
         this.dialogRef.close(model);

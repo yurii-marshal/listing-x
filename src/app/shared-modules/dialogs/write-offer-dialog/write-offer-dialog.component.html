@@ -116,7 +116,7 @@
   <button mat-stroked-button mat-dialog-close routerLink="../" color="primary">CANCEL</button>
   <button mat-flat-button appDebounceClick
           (debounceClick)="close()"
-          [disabled]="!form.dirty || form.invalid"
+          [disabled]="form.invalid"
           color="primary">
     {{ data.isAnonymous? 'SAVE' : 'CONTINUE'}}
   </button>
