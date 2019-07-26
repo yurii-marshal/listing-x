@@ -1,4 +1,9 @@
 import { LoanType } from '../enums/loan-type';
+import { Document } from './document';
+
+export interface OfferSummary extends Offer {
+  documents: LinkedDocuments;
+}
 
 export interface Offer {
   id: number;
@@ -30,4 +35,10 @@ export class Loan {
   loanAmount: string;
   interestRate: number;
   points: number;
+}
+
+export interface LinkedDocuments {
+  coverLetter: Document[];
+  preApproval: Document[];
+  proofOfFunds: Document[];
 }

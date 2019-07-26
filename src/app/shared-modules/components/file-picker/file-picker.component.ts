@@ -7,6 +7,8 @@ import { Document } from '../../../core-modules/models/document';
 import { DocumentLinkingService } from '../../../core-modules/core-services/document-linking.service';
 import * as _ from 'lodash';
 import { FileUploaderComponent } from '../file-uploader/file-uploader.component';
+import { MatSnackBar } from '@angular/material';
+import { tap } from 'rxjs/operators';
 
 
 @Directive({
@@ -63,7 +65,8 @@ export class FilePickerComponent implements OnInit, AfterViewInit, ControlValueA
   protected onTouch = () => {
   };
 
-  constructor(private service: DocumentLinkingService) {
+  constructor(private service: DocumentLinkingService,
+              private snakbar: MatSnackBar) {
   }
 
   ngOnInit() {

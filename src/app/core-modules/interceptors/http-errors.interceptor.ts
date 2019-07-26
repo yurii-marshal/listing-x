@@ -12,7 +12,6 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class HttpErrorsInterceptor implements HttpInterceptor {
-  private readonly excluded: AuthEndpoints[] = [];
 
   constructor(private snackBar: MatSnackBar,
               private router: Router) {
@@ -36,7 +35,7 @@ export class HttpErrorsInterceptor implements HttpInterceptor {
     let msg = '';
     if (code === HttpStatusCodes.UNAUTHORIZED) {
       msg = 'Your session has expired. Please login again to continue working.';
-      this.router.navigateByUrl('/auth/login');
+      this.router.navigate(['/auth/login']);
     } else if (code === HttpStatusCodes.INTERNAL_SERVER_ERROR) {
       msg = 'Internal server error'
     } else  {

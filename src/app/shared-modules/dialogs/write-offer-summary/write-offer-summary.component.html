@@ -25,13 +25,13 @@
 
     <div class="row-layout"><label class="header">Supporting docs</label><span [routerLink]="backLink" (click)="hide()" class="link">Edit</span></div>
     <div class="row-layout"><label>Add Pre-approval Letter</label>
-      <div class="doc-preview"><img *ngFor="let img of preApproval" src="assets/images/icons/{{ img.extension }}.svg" [title]="img.title" height="20"></div>
+      <div class="doc-preview"><img *ngFor="let img of data.model.documents?.preApproval" src="assets/images/icons/{{ img.extension }}.svg" [title]="img.title" height="20"></div>
     </div>
     <div class="row-layout"><label>Add Proof of Funds</label><div class="doc-preview">
-      <div class="doc-preview"><img *ngFor="let img of proofOfFunds" src="assets/images/icons/{{ img.extension }}.svg" [title]="img.title" height="20"></div>
+      <div class="doc-preview"><img *ngFor="let img of data.model.documents?.proofOfFunds" src="assets/images/icons/{{ img.extension }}.svg" [title]="img.title" height="20"></div>
     </div></div>
     <div class="row-layout"><label>Add Cover Letter</label><div class="doc-preview">
-      <div class="doc-preview"><img *ngFor="let img of coverLetter" src="assets/images/icons/{{ img.extension }}.svg" [title]="img.title" height="20"></div>
+      <div class="doc-preview"><img *ngFor="let img of data.model.documents?.coverLetter" src="assets/images/icons/{{ img.extension }}.svg" [title]="img.title" height="20"></div>
     </div></div>
     </ng-container>
 </div>

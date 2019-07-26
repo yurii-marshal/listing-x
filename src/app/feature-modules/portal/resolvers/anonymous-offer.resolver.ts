@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Offer, Person } from '../models/offer';
-import { AuthService } from '../core-services/auth.service';
+import { Offer, Person } from '../../../core-modules/models/offer';
+import { AuthService } from '../../../core-modules/core-services/auth.service';
 import * as _ from 'lodash';
-import { LocalStorageKey } from '../enums/local-storage-key';
+import { LocalStorageKey } from '../../../core-modules/enums/local-storage-key';
 
 @Injectable()
 export class AnonymousOfferResolver implements Resolve<Offer> {

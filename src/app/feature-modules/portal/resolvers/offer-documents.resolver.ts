@@ -1,13 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { OfferService } from '../core-services/offer.service';
-import { AuthService } from '../core-services/auth.service';
-import { MatSnackBar } from '@angular/material';
 import { Observable, of } from 'rxjs';
-import { LinkedDocuments } from '../models/linked-documents';
+import { LinkedDocuments } from '../../../core-modules/models/linked-documents';
 import { catchError, map } from 'rxjs/operators';
-import { DocumentLinkingService } from '../core-services/document-linking.service';
+import { DocumentLinkingService } from '../../../core-modules/core-services/document-linking.service';
 
 @Injectable()
 export class OfferDocumentsResolver implements Resolve<LinkedDocuments> {

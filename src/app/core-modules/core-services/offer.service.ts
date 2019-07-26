@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IDataService } from '../interfaces/data.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Offer } from '../models/offer';
+import { Offer, OfferSummary } from '../models/offer';
 import { Observable } from 'rxjs';
 import { ApiEndpoint } from '../enums/auth-endpoints';
 import { tap } from 'rxjs/operators';
@@ -42,6 +42,10 @@ export class OfferService implements IDataService <Offer> {
   loadOne(id: number): Observable<Offer> {
     const url = detailUrl(ApiEndpoint.Offer, id);
     return this.http.get<Offer>(url);
+  }
+
+  loadOfferSummary(id: number): Observable<OfferSummary> {
+    return this.http.get<OfferSummary>(`/offers/${id}/summary`);
   }
 
   update(model: Offer): Observable<Offer> {
