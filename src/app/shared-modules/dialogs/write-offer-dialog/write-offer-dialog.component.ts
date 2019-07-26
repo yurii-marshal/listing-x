@@ -57,7 +57,7 @@ export class WriteOfferDialogComponent implements OnInit {
       zip: [{value: null, disabled}, [Validators.required, CustomValidators.number, Validators.maxLength(10)]],
       apn: [{value: null, disabled}, [CustomValidators.number]],
       price: [null, [Validators.required, CustomValidators.number]],
-      closeEscrowDays: [null, [Validators.required, CustomValidators.number, Validators.max(90)]]
+      closeEscrowDays: [null, [Validators.required, CustomValidators.number, Validators.max(999)]]
     });
 
     if (this.data.model) {
