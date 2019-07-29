@@ -28,7 +28,7 @@ export class OfferSummaryResolver implements Resolve<Offer> {
     return this.offerService.loadOfferSummary(offerId)
       .pipe(
         catchError(err => {
-          this.router.navigate(['../']);
+          this.router.navigate(['/error/404']);
           this.snackBar.open(`Cannot retrieve offer.`, 'OK', {duration: 7000, panelClass: 'error-bar'});
           return of(null);
         })

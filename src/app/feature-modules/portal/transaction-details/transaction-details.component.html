@@ -21,23 +21,12 @@
     </div>
   </div>
   <div class="u-flex u-flex-justify--center">
-    <div *ngIf="offer" class="column-layout">
+    <div class="column-layout">
       <div class="row-layout"><label class="header">Offer information</label></div>
       <div class="row-layout" *ngFor="let item of offer.buyers; let i = index"><label>buyer #{{ i + 1 }}</label><span>{{ item.firstName }} {{ item.lastName }} | {{ item.email }}</span></div>
       <div class="row-layout" *ngFor="let item of offer.sellers; let i = index"><label>seller #{{ i + 1 }}</label><span>{{ item.firstName }} {{ item.lastName }} | {{ item.email }}</span></div>
       <div class="row-layout"><label>address</label><span>{{ offer.streetName }}, {{ offer.city }}, {{ offer.state }} {{ offer.zip }}</span></div>
       <div class="row-layout"><label>offer info</label><span>${{ offer.price | number }} | {{ offer.closeEscrowDays }} Days to close escrow</span></div>
-
-      <div style="display: none;" class="row-layout"><label class="header">payment information</label></div>
-      <ng-container *ngFor="let item of offer.loans; let i = index">
-        <div class="row-layout"><label>Initial deposit</label><span>${{ item.initialDeposit | number }}</span></div>
-        <div class="row-layout"><label>loan amount</label><span>${{ item.loanAmount | number }}</span></div>
-        <div class="row-layout"><label>interest rate</label><span>{{ item.interestRate | number }}</span></div>
-        <div class="row-layout"><label>points</label><span>{{ item.points | number }}</span></div>
-      </ng-container>
-      <div class="row-layout"><label>variation</label><span clas="bold">{{ offer.loanType }}</span></div>
-      <div class="row-layout"><label>down payment</label><span>${{ offer.downPayment | number }}</span></div>
-      <div class="row-layout"><label>special financing terms</label><span>{{ offer.anySpecialFinancialTerms }}</span></div>
 
       <div class="row-layout"><label class="header">Supporting docs</label></div>
       <div class="row-layout"><label>Add Pre-approval Letter</label>
@@ -52,12 +41,16 @@
     </div>
     <div class="column-layout">
       <div class="row-layout"><label class="header">last activity</label></div>
-      <div class="row-layout"><label>09/06/19 4:30 PM</label><span>Edited by Ostap Ostap Lopushynsky</span></div>
-      <div class="row-layout"><label>09/06/19 4:30 PM</label><span>Edited by Ostap Serhii Movchan</span></div>
+      <div class="row-layout"><label>09/06/19 4:30 PM</label><span>Edited by Ostap Lopushynsky</span></div>
+      <div class="row-layout"><label>09/06/19 4:30 PM</label><span>Edited by Serhii Movchan</span></div>
       <div class="row-layout"><label class="header">offer</label></div>
       <div class="row-layout"><label></label><span>Signed by buyer 1 Ostap Lopushynsky</span></div>
       <div class="row-layout"><label></label><span>Signed by seller 1 Ostap Serhii Movchan</span></div>
       <div class="row-layout"><label></label><span>Hasn’t been signed by all buyers</span></div>
+      <div class="row-layout u-flex-justify--start">
+        <button mat-flat-button color="accent" style="margin: 0 15px 0 220px">DENY</button>
+        <button mat-flat-button color="primary">SIGN</button>
+      </div>
     </div>
   </div>
 </app-base-template>
