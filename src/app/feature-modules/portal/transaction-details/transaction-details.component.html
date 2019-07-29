@@ -9,7 +9,7 @@
       <div class="description"> Offer created: 09/06/19 4:30 PM (25 days until  close escrow)</div>
       <div class="control-bar">
         <div class="u-flex-1">
-          <button mat-icon-button color="accent" (click)="onEdit()">
+          <button mat-icon-button color="accent" routerLink="/portal/offer/{{offerId}}">
             <mat-icon fontSet="fa" fontIcon="fa-edit" class="icon"></mat-icon>
           </button>
           <button mat-icon-button disabled="true" color="accent" (click)="onDelete()">
@@ -44,8 +44,8 @@
       <div class="row-layout"><label>09/06/19 4:30 PM</label><span>Edited by Ostap Lopushynsky</span></div>
       <div class="row-layout"><label>09/06/19 4:30 PM</label><span>Edited by Serhii Movchan</span></div>
       <div class="row-layout"><label class="header">offer</label></div>
-      <div class="row-layout"><label></label><span>Signed by buyer 1 Ostap Lopushynsky</span></div>
-      <div class="row-layout"><label></label><span>Signed by seller 1 Ostap Serhii Movchan</span></div>
+      <div class="row-layout"><label></label><span>Signed by buyer 1 Lopushynsky</span></div>
+      <div class="row-layout"><label></label><span>Signed by seller 1 Serhii Movchan</span></div>
       <div class="row-layout"><label></label><span>Hasn’t been signed by all buyers</span></div>
       <div class="row-layout u-flex-justify--start">
         <button mat-flat-button color="accent" style="margin: 0 15px 0 220px">DENY</button>

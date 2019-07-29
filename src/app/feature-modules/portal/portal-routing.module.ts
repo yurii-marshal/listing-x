@@ -16,7 +16,6 @@ import { TransactionDetailsComponent } from './transaction-details/transaction-d
 const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
     component: TransactionsComponent,
     canActivate: [AuthGuardService],
     canActivateChild: [AuthGuardService],

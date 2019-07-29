@@ -8,7 +8,9 @@ import { OfferSummary } from '../../../core-modules/models/offer';
   styleUrls: ['./transaction-details.component.scss']
 })
 export class TransactionDetailsComponent implements OnInit {
-  offer: OfferSummary;
+  offer: OfferSummary; //
+
+  offerId: number = 43;
 
   constructor(private route: ActivatedRoute) { }
 
