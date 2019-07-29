@@ -4,7 +4,7 @@
       <div class="back-btn" routerLink="/portal"><mat-icon fontSet="fa" fontIcon="fa-chevron-left"></mat-icon>Back</div>
       <div class="u-flex u-flex-align-items--center u-flex-justify--space-between">
         <div class="header">{{ offer.streetName }}, {{ offer.city }}, {{ offer.state }} {{ offer.zip }}</div>
-        <div><span class="status-label">STATUS: </span><span class="status">ALL DONE</span></div>
+        <div><span class="status-label">STATUS: </span>&nbsp;<span class="status">ALL DONE</span></div>
       </div>
       <div class="description"> Offer created: 09/06/19 4:30 PM (25 days until  close escrow)</div>
       <div class="control-bar">
@@ -12,11 +12,11 @@
           <button mat-icon-button color="accent" (click)="onEdit()">
             <mat-icon fontSet="fa" fontIcon="fa-edit" class="icon"></mat-icon>
           </button>
-          <button mat-icon-button color="accent" (click)="onDelete()">
+          <button mat-icon-button disabled="true" color="accent" (click)="onDelete()">
             <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
           </button>
         </div>
-        <button mat-stroked-button color="primary">INVITE USERS</button>
+        <button mat-flat-button disabled="true" color="primary">INVITE USERS</button>
       </div>
     </div>
   </div>
@@ -54,6 +54,10 @@
       <div class="row-layout"><label class="header">last activity</label></div>
       <div class="row-layout"><label>09/06/19 4:30 PM</label><span>Edited by Ostap Ostap Lopushynsky</span></div>
       <div class="row-layout"><label>09/06/19 4:30 PM</label><span>Edited by Ostap Serhii Movchan</span></div>
+      <div class="row-layout"><label class="header">offer</label></div>
+      <div class="row-layout"><label></label><span>Signed by buyer 1 Ostap Lopushynsky</span></div>
+      <div class="row-layout"><label></label><span>Signed by seller 1 Ostap Serhii Movchan</span></div>
+      <div class="row-layout"><label></label><span>Hasn’t been signed by all buyers</span></div>
     </div>
   </div>
 </app-base-template>
