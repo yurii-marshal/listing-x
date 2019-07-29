@@ -19,7 +19,8 @@ export class OfferSummaryResolver implements Resolve<Offer> {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<OfferSummary> | OfferSummary {
-    const offerId: number = Number(route.parent.params.id);
+    const id = route.parent.params.id || route.params.id;
+    const offerId: number = Number(id);
     if (isNaN(offerId)) {
       return null;
     }

@@ -11,10 +11,12 @@ import { WriteOfferSummaryComponent } from '../../shared-modules/dialogs/write-o
 import { OfferDocumentsResolver } from './resolvers/offer-documents.resolver';
 import { AnonymousOfferResolver } from './resolvers/anonymous-offer.resolver';
 import { OfferSummaryResolver } from './resolvers/offer-summary.resolver';
+import { TransactionDetailsComponent } from './transaction-details/transaction-details.component';
 
 const routes: Routes = [
   {
     path: '',
+    pathMatch: 'full',
     component: TransactionsComponent,
     canActivate: [AuthGuardService],
     canActivateChild: [AuthGuardService],
@@ -53,7 +55,6 @@ const routes: Routes = [
                 data: { component: WriteOfferSummaryComponent},
                 resolve: { model: OfferSummaryResolver }
               }
-              // TODO: overview
             ]
           }
         ]
@@ -62,8 +63,11 @@ const routes: Routes = [
         component: DialogsWrapperComponent,
         data: { component: WriteOfferUploadDocumentsDialogComponent, readonly: true},
       }
-
     ]
+  }, {
+    path: 'transaction/:id',
+    component: TransactionDetailsComponent,
+    resolve: { model: OfferSummaryResolver }
   }
 ];
 

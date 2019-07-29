@@ -1,1 +1,59 @@
-<p>transaction-details works!</p>
+<app-base-template>
+  <div class="toolbar">
+    <div class="toolbar-content">
+      <div class="back-btn" routerLink="/portal"><mat-icon fontSet="fa" fontIcon="fa-chevron-left"></mat-icon>Back</div>
+      <div class="u-flex u-flex-align-items--center u-flex-justify--space-between">
+        <div class="header">{{ offer.streetName }}, {{ offer.city }}, {{ offer.state }} {{ offer.zip }}</div>
+        <div><span class="status-label">STATUS: </span><span class="status">ALL DONE</span></div>
+      </div>
+      <div class="description"> Offer created: 09/06/19 4:30 PM (25 days until  close escrow)</div>
+      <div class="control-bar">
+        <div class="u-flex-1">
+          <button mat-icon-button color="accent" (click)="onEdit()">
+            <mat-icon fontSet="fa" fontIcon="fa-edit" class="icon"></mat-icon>
+          </button>
+          <button mat-icon-button color="accent" (click)="onDelete()">
+            <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
+          </button>
+        </div>
+        <button mat-stroked-button color="primary">INVITE USERS</button>
+      </div>
+    </div>
+  </div>
+  <div class="u-flex u-flex-justify--center">
+    <div *ngIf="offer" class="column-layout">
+      <div class="row-layout"><label class="header">Offer information</label></div>
+      <div class="row-layout" *ngFor="let item of offer.buyers; let i = index"><label>buyer #{{ i + 1 }}</label><span>{{ item.firstName }} {{ item.lastName }} | {{ item.email }}</span></div>
+      <div class="row-layout" *ngFor="let item of offer.sellers; let i = index"><label>seller #{{ i + 1 }}</label><span>{{ item.firstName }} {{ item.lastName }} | {{ item.email }}</span></div>
+      <div class="row-layout"><label>address</label><span>{{ offer.streetName }}, {{ offer.city }}, {{ offer.state }} {{ offer.zip }}</span></div>
+      <div class="row-layout"><label>offer info</label><span>${{ offer.price | number }} | {{ offer.closeEscrowDays }} Days to close escrow</span></div>
+
+      <div style="display: none;" class="row-layout"><label class="header">payment information</label></div>
+      <ng-container *ngFor="let item of offer.loans; let i = index">
+        <div class="row-layout"><label>Initial deposit</label><span>${{ item.initialDeposit | number }}</span></div>
+        <div class="row-layout"><label>loan amount</label><span>${{ item.loanAmount | number }}</span></div>
+        <div class="row-layout"><label>interest rate</label><span>{{ item.interestRate | number }}</span></div>
+        <div class="row-layout"><label>points</label><span>{{ item.points | number }}</span></div>
+      </ng-container>
+      <div class="row-layout"><label>variation</label><span clas="bold">{{ offer.loanType }}</span></div>
+      <div class="row-layout"><label>down payment</label><span>${{ offer.downPayment | number }}</span></div>
+      <div class="row-layout"><label>special financing terms</label><span>{{ offer.anySpecialFinancialTerms }}</span></div>
+
+      <div class="row-layout"><label class="header">Supporting docs</label></div>
+      <div class="row-layout"><label>Add Pre-approval Letter</label>
+        <div class="doc-preview"><img *ngFor="let img of offer.documents?.preApproval" src="assets/images/icons/{{ img.extension }}.svg" [title]="img.title" height="20"></div>
+      </div>
+      <div class="row-layout"><label>Add Proof of Funds</label><div class="doc-preview">
+        <div class="doc-preview"><img *ngFor="let img of offer.documents?.proofOfFunds" src="assets/images/icons/{{ img.extension }}.svg" [title]="img.title" height="20"></div>
+      </div></div>
+      <div class="row-layout"><label>Add Cover Letter</label><div class="doc-preview">
+        <div class="doc-preview"><img *ngFor="let img of offer.documents?.coverLetter" src="assets/images/icons/{{ img.extension }}.svg" [title]="img.title" height="20"></div>
+      </div></div>
+    </div>
+    <div class="column-layout">
+      <div class="row-layout"><label class="header">last activity</label></div>
+      <div class="row-layout"><label>09/06/19 4:30 PM</label><span>Edited by Ostap Ostap Lopushynsky</span></div>
+      <div class="row-layout"><label>09/06/19 4:30 PM</label><span>Edited by Ostap Serhii Movchan</span></div>
+    </div>
+  </div>
+</app-base-template>

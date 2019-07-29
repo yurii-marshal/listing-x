@@ -1,0 +1,119 @@
+@import "../../../feature-modules/auth/forms.template";
+@import "../../../shared-modules/dialogs/dialogs.template";
+@import "~src/assets/scss/mixins";
+
+.toolbar {
+  width: 100%; height: 230px; border-bottom: 1px solid rgba(213, 217, 225, 0.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .toolbar-content {
+    flex: 1000px 0 1;
+    min-height: 140px;
+    .header {
+      font-size: 36px;
+      color: #444c5d;
+      margin-top: 25px;
+    }
+    .description {
+      font-size: 13px;
+      color: #b0b7bd;
+      margin-top: 10px;
+    }
+    .back-btn {
+      cursor: pointer;
+      color: #b0b7bd;
+      font-size: 13px;
+      text-transform: uppercase;
+    }
+    .control-bar {
+      margin-top: 27px;
+      margin-left: -10px;
+      .icon {
+        font-size: 26px;
+        font-weight: normal;
+      }
+    }
+
+    .status-label {
+      font-weight: 600;
+      line-height: 24px;
+    }
+    .status {
+      color: #66ad58;
+    }
+  }
+}
+
+.column-layout {
+  width: 40%;
+
+  &:first-of-type {
+    margin-left: 10%;
+  }
+
+  &:last-of-type {
+    margin-right: 10%;
+  }
+
+  margin-top: 65px;
+}
+
+.row-layout {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-bottom: 18px;
+
+  &:first-of-type {
+    margin-top: 40px;
+  }
+
+  label {
+    width: 180px;
+    margin-right: 40px;
+    text-align: end;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.23px;
+    color: #b0b7bd;
+    text-transform: uppercase;
+
+    &.header {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.71;
+      letter-spacing: normal;
+      color: #444c5d;
+    }
+  }
+
+  .link {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.23px;
+    color: #419bdf;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  span {
+    flex: 1;
+    display: block;
+    font-size: 13px;
+    letter-spacing: 0.25px;
+    color: #444c5c;
+    @include mat-truncate-line();
+
+    &.bold {
+      font-weight: bold;
+    }
+  }
+
+  .doc-preview {
+    flex: 1;
+    overflow: hidden;
+    // TODO:
+  }
+
+}
