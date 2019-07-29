@@ -25,6 +25,9 @@ const routes: Routes = [
     path: 'address-generated-link',
     loadChildren: () => import('./feature-modules/anonymous/anonymous.module').then(m => m.AnonymousModule),
   }, {
+    path: 'digital-signature',
+    loadChildren: () => import('./feature-modules/digital-signature/digital-signature.module').then(m => m.DigitalSignatureModule),
+  }, {
     path: '**',
     redirectTo: '/error/404'
   }
