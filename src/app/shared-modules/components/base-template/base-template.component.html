@@ -1,26 +1,28 @@
 <div class="dummy-header">
   <img routerLink="/portal" src="assets/images/icons/logo.svg" width="125" class="logo">
-  <nav mat-tab-nav-bar>
-    <a mat-tab-link *ngFor="let link of navLinks"
-       [routerLink]="link.path"
-       routerLinkActive #rla="routerLinkActive"
-       [active]="rla.isActive"
-       class="top-bar">
-      {{ link.label }}
-    </a>
-  </nav>
-  <!-- FIXME: matBadge="8" matBadgeSize="small" matBadgeColor="accent" -->
-  <button mat-icon-button class="notifications">
-    <img src="assets/images/icons/alarm.png" height="22" >
-  </button>
-  <p class="username" [class.hidden]="!user?.firstName">Hi, {{ user?.firstName }}</p>
-  <button (click)="logout()" mat-icon-button>
-    <img  src="assets/images/icons/exit.png" height="22" class="trigger">
-  </button>
+  <ng-container *ngIf="isVisibleNavBar">
+    <nav mat-tab-nav-bar>
+      <a mat-tab-link *ngFor="let link of navLinks"
+         [routerLink]="link.path"
+         routerLinkActive #rla="routerLinkActive"
+         [active]="rla.isActive"
+         class="top-bar">
+        {{ link.label }}
+      </a>
+    </nav>
+    <button mat-icon-button class="notifications">
+      <img src="assets/images/icons/alarm.png" height="22">
+    </button>
+    <p class="username" [class.hidden]="!user?.firstName">Hi, {{ user?.firstName }}</p>
+    <button (click)="logout()" mat-icon-button>
+      <img src="assets/images/icons/exit.png" height="22" class="trigger">
+    </button>
+  </ng-container>
 </div>
 
 <ng-content></ng-content>
 
 <div class="app-footer">
+  <!-- FIXME: footer -->
   <img src="assets/images/icons/logo.svg" width="125" class="logo">
 </div>

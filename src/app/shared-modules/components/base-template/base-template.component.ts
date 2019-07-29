@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../../../feature-modules/auth/models';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
@@ -9,6 +9,9 @@ import { AuthService } from '../../../core-modules/core-services/auth.service';
   styleUrls: ['./base-template.component.scss']
 })
 export class BaseTemplateComponent implements OnInit{
+  @Input()
+  isVisibleNavBar: boolean = true;
+
   navLinks: { label, path }[] = [
     {label: 'Transactions', path: '/portal'},
     {label: 'Addresses', path: '/addresses'}

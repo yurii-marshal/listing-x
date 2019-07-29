@@ -45,7 +45,7 @@ export class WriteOfferDialogComponent implements OnInit {
   }
 
   private buildForm() {
-    const disabled: boolean = this.data.isAnonymous;
+    const disabled: boolean = Boolean(this.data.isAnonymous); // TODO: or statement LIS-65
 
     this.form = this.formBuilder.group({
       id: [null, []],
