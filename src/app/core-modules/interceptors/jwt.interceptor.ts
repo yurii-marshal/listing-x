@@ -49,6 +49,12 @@ export class JwtInterceptor implements HttpInterceptor {
 
 
   private getApiURL(url: string): string {
+    if (!url.startsWith('/')) {
+      url = '/' + url;
+    }
+    if (!url.endsWith('/')) {
+      url += '/';
+    }
     if (url.includes(environment.API_BASE_URL)) {
       return url;
     }
