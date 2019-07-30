@@ -5,7 +5,10 @@
         <div class="back-btn" routerLink="/portal"><mat-icon fontSet="fa" fontIcon="fa-chevron-left"></mat-icon>Back</div>
         <div class="u-flex u-flex-align-items--center u-flex-justify--space-between">
           <div class="header">{{ transaction.offer.streetName }}, {{ transaction.offer.city }}, {{ transaction.offer.state }} {{ transaction.offer.zip }}</div>
-          <div style="opacity: .5"><span class="status-label">STATUS: </span>&nbsp;<span class="status">ALL DONE</span></div>
+          <div>
+            <span class="status-label">STATUS: </span>
+            <span [ngClass]="getClassName(transaction.status)" class="status">&nbsp;{{ transaction.status }}</span>
+          </div>
         </div>
         <div class="description"> Offer created: 09/06/19 4:30 PM (25 days until  close escrow)</div>
         <div class="control-bar">

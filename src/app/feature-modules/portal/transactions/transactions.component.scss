@@ -1,10 +1,9 @@
 @import "../../../../assets/scss/mixins";
-@import '~@angular/material/theming';
 
 $green: #66ad58;
 $yellow: #f8ce5f;
 $red: #cd584a;
-$blue: mat-color($mat-light-blue, 700, 0.9);
+$blue: rgba(2, 136, 209, 0.9);
 
 .buttons-bar {
   margin-top: 85px;

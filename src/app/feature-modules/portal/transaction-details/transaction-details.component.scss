@@ -2,6 +2,11 @@
 @import "../../../shared-modules/dialogs/dialogs.template";
 @import "~src/assets/scss/mixins";
 
+$green: #66ad58;
+$yellow: #f8ce5f;
+$red: #cd584a;
+$blue: rgba(2, 136, 209, 0.9);
+
 .toolbar {
   width: 100%; height: 230px; border-bottom: 1px solid rgba(213, 217, 225, 0.28);
   display: flex;
@@ -41,9 +46,14 @@
       font-weight: 600;
       line-height: 24px;
       color: #444c5d;
+
     }
     .status {
-      color: #66ad58;
+      text-transform: uppercase;
+      color: $green;
+      &.red { color: $red; }
+      &.yellow { color: $yellow; }
+      &.blue { color: $blue; }
     }
   }
 }
