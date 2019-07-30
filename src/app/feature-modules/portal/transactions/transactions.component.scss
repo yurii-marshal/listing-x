@@ -64,7 +64,7 @@ $red: #cd584a;
   }
 }
 
-.status {
+.mat-cell.mat-column-status {
   color: $green;
   &.red { color: $red; }
   &.yellow { color: $yellow; }

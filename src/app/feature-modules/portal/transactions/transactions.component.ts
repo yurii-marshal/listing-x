@@ -14,7 +14,7 @@ import { TransactionService } from '../services/transaction.service';
   styleUrls: ['./transactions.component.scss']
 })
 export class TransactionsComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['createdAt', 'address', 'buyer', 'seller', 'status', 'lastEvents', 'actions'];
+  displayedColumns: string[] = ['createdAt', 'address', 'buyers', 'sellers', 'status', 'lastEvents', 'actions'];
 
   dataSource: BaseTableDataSource<Transaction>;
 
