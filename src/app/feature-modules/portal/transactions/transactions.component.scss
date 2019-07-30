@@ -1,8 +1,10 @@
 @import "../../../../assets/scss/mixins";
+@import '~@angular/material/theming';
 
 $green: #66ad58;
 $yellow: #f8ce5f;
 $red: #cd584a;
+$blue: mat-color($mat-light-blue, 700, 0.9);
 
 .buttons-bar {
   margin-top: 85px;
@@ -62,14 +64,34 @@ $red: #cd584a;
     border: solid 1px $yellow;
     background-color: $yellow;
   }
+  &.blue {
+    border: solid 1px $blue;
+    background-color: $blue;
+  }
 }
 
-.mat-cell.mat-column-status {
-  color: $green;
-  &.red { color: $red; }
-  &.yellow { color: $yellow; }
+.mat-cell {
+  font-size: 13px;
+  &.mat-column-createdAt {
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+    border-left: 5px solid $green;
+    &.red { border-left-color: $red; }
+    &.yellow { border-left-color: $yellow; }
+    &.blue { border-left-color: $blue; }
+  }
+
+  &.mat-column-status {
+    color: $green;
+    &.red { color: $red; }
+    &.yellow { color: $yellow; }
+    &.blue { color: $blue; }
+  }
 }
 
+.user-icon {
+  height: 14px;
+}
 
 .fa-user {
   color: #66ad58;

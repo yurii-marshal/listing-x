@@ -48,4 +48,18 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
       .pipe(filter(dialogResult => !!dialogResult),)
       .subscribe();
   }
+
+  getClassName(status: TransactionStatus): string {
+    switch (status) {
+      case TransactionStatus.Started:
+        return 'blue';
+      case TransactionStatus.InReview:
+        return 'yellow';
+      case TransactionStatus.Denied:
+        return 'red';
+      case TransactionStatus.Accepted:
+      case TransactionStatus.Completed:
+        return  'green';
+    }
+  }
 }
