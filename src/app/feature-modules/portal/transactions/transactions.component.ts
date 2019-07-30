@@ -5,7 +5,7 @@ import { filter } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { BaseTableDataSource } from '../../../core-modules/datasources/base-table-data-source';
 import { Address } from '../../../core-modules/models/address';
-import { Transaction } from '../../../core-modules/models/transaction';
+import { Transaction, TransactionStatus } from '../../../core-modules/models/transaction';
 import { TransactionService } from '../services/transaction.service';
 
 @Component({
@@ -14,9 +14,11 @@ import { TransactionService } from '../services/transaction.service';
   styleUrls: ['./transactions.component.scss']
 })
 export class TransactionsComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['createdAt', 'name', 'address', 'offersCreated', 'offersSigned', 'actions'];
+  displayedColumns: string[] = ['createdAt', 'address', 'buyer', 'seller', 'status', 'lastEvents', 'actions'];
 
   dataSource: BaseTableDataSource<Transaction>;
+
+  Status = TransactionStatus;
 
   constructor(private router: Router,
               private dialog: MatDialog,
