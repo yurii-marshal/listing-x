@@ -22,7 +22,7 @@ export class TransactionService implements IDataService <Transaction> {
   }
 
   loadList(params?: HttpParams): Observable<Transaction[]> {
-    return undefined;
+    return this.http.get<Transaction[]>(ApiEndpoint.Transactions, {params});
   }
 
   loadOne(id: number): Observable<Transaction> {
