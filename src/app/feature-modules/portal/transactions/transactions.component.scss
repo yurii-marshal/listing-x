@@ -90,8 +90,9 @@ $blue: rgba(2, 136, 209, 0.9);
 
 .user-icon {
   height: 14px;
+  color: gray;
+  &.current-user {
+    color: #66ad58;
+  }
 }
 
-.fa-user {
-  color: #66ad58;
-}

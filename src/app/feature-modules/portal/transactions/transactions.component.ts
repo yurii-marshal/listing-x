@@ -4,9 +4,10 @@ import { AddressDialogComponent } from '../../../shared-modules/dialogs/address-
 import { filter } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { BaseTableDataSource } from '../../../core-modules/datasources/base-table-data-source';
-import { Address } from '../../../core-modules/models/address';
 import { Transaction, TransactionStatus } from '../../../core-modules/models/transaction';
 import { TransactionService } from '../services/transaction.service';
+import { AuthService } from '../../../core-modules/core-services/auth.service';
+import { Person } from '../../../core-modules/models/offer';
 
 @Component({
   selector: 'app-transactions',
@@ -21,6 +22,7 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
   Status = TransactionStatus;
 
   constructor(private router: Router,
+              private authService: AuthService,
               private dialog: MatDialog,
               private service: TransactionService,
               private cdr: ChangeDetectorRef) { }
@@ -62,4 +64,14 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
         return  'green';
     }
   }
+
+  isCurrentUser(item: Person): boolean {
+    const currentUser = this.authService.currentUser;
+    if (!currentUser) {
+      return false;
+    }
+    return currentUser.firstName === item.firstName && currentUser.lastName === item.lastName;
+  }
+
+
 }
