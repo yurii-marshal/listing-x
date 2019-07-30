@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { LinkedDocuments } from '../../../core-modules/models/linked-documents';
 import { catchError, map } from 'rxjs/operators';
-import { DocumentLinkingService } from '../../../core-modules/core-services/document-linking.service';
+import { DocumentLinkingService } from '../services/document-linking.service';
 
 @Injectable()
 export class OfferDocumentsResolver implements Resolve<LinkedDocuments> {

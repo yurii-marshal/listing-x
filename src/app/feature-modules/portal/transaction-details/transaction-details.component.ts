@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { OfferSummary } from '../../../core-modules/models/offer';
+import { TransactionService } from '../services/transaction.service';
+import { Transaction } from '../../../core-modules/models/transaction';
 
 @Component({
   selector: 'app-transaction-details',
@@ -8,17 +9,16 @@ import { OfferSummary } from '../../../core-modules/models/offer';
   styleUrls: ['./transaction-details.component.scss']
 })
 export class TransactionDetailsComponent implements OnInit {
-  offer: OfferSummary; //
+  transaction: Transaction;
 
-  offerId: number = 43;
-
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute,
+              private transactionService: TransactionService) { }
 
   ngOnInit() {
-    this.offer = this.route.snapshot.data.model as OfferSummary;
+    const transactionId: number = Number(this.route.snapshot.params.id);
+    this.transactionService.loadOne(transactionId)
+      .subscribe((transaction: Transaction) => this.transaction = transaction)
   }
-
-  onEdit() {}
 
   onDelete() {}
 }

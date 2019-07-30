@@ -67,7 +67,6 @@ const routes: Routes = [
     path: 'transaction/:id',
     component: TransactionDetailsComponent,
     canActivate: [AuthGuardService],
-    resolve: { model: OfferSummaryResolver }
   }
 ];
 

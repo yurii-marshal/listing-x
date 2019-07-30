@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Document } from '../models/document';
+import { Document } from '../../../core-modules/models/document';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { UploadDocumentType } from '../enums/upload-document-type';
-import { ApiEndpoint } from '../enums/auth-endpoints';
+import { ApiEndpoint } from '../../../core-modules/enums/auth-endpoints';
 import { map, tap } from 'rxjs/operators';
-import { LinkedDocuments } from '../models/linked-documents';
+import { LinkedDocuments } from '../../../core-modules/models/linked-documents';
 import { MatSnackBar } from '@angular/material';
+import { UploadDocumentType } from '../../../core-modules/enums/upload-document-type';
 
 @Injectable()
 export class DocumentLinkingService {

@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Offer, OfferSummary } from '../../../core-modules/models/offer';
 import { catchError } from 'rxjs/operators';
-import { OfferService } from '../../../core-modules/core-services/offer.service';
+import { OfferService } from '../services/offer.service';
 import { MatSnackBar } from '@angular/material';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
 
@@ -19,8 +19,7 @@ export class OfferSummaryResolver implements Resolve<Offer> {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<OfferSummary> | OfferSummary {
-    const id = route.parent.params.id || route.params.id;
-    const offerId: number = Number(id);
+    const offerId: number = Number(route.parent.params.id);
     if (isNaN(offerId)) {
       return null;
     }

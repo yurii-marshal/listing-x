@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { LinkedDocuments } from '../../../core-modules/models/linked-documents';
-import { DocumentLinkingService } from '../../../core-modules/core-services/document-linking.service';
+import { DocumentLinkingService } from '../../../feature-modules/portal/services/document-linking.service';
 import * as _ from 'lodash';
 
 @Component({

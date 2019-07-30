@@ -1,10 +1,10 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { OfferService } from '../../../core-modules/core-services/offer.service';
+import { OfferService } from '../../../feature-modules/portal/services/offer.service';
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { OfferSummary } from '../../../core-modules/models/offer';
-import { DocumentLinkingService } from '../../../core-modules/core-services/document-linking.service';
+import { DocumentLinkingService } from '../../../feature-modules/portal/services/document-linking.service';
 
 @Component({
   selector: 'app-write-offer-summary',

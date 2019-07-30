@@ -31,8 +31,8 @@ import { FileOption, FilePickerComponent } from './components/file-picker/file-p
 import { A11yModule } from '@angular/cdk/a11y';
 import { FileUploaderComponent } from './components/file-uploader/file-uploader.component';
 import { WriteOfferSummaryComponent } from './dialogs/write-offer-summary/write-offer-summary.component';
-import { OfferService } from '../core-modules/core-services/offer.service';
-import { DocumentLinkingService } from '../core-modules/core-services/document-linking.service';
+import { OfferService } from '../feature-modules/portal/services/offer.service';
+import { DocumentLinkingService } from '../feature-modules/portal/services/document-linking.service';
 
 const materialModules = [
   MatDialogModule,

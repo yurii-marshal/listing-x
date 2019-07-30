@@ -3,7 +3,7 @@ import { WriteOfferDialogComponent } from '../../../shared-modules/dialogs/write
 import { filter, map, tap } from 'rxjs/operators';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { Offer } from '../../../core-modules/models/offer';
-import { OfferService } from '../../../core-modules/core-services/offer.service';
+import { OfferService } from '../../portal/services/offer.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageKey } from '../../../core-modules/enums/local-storage-key';
 

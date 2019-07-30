@@ -4,7 +4,7 @@ import { ActiveDescendantKeyManager, Highlightable } from '@angular/cdk/a11y';
 import { UploadDocumentType } from '../../../core-modules/enums/upload-document-type';
 import { ENTER } from '@angular/cdk/keycodes';
 import { Document } from '../../../core-modules/models/document';
-import { DocumentLinkingService } from '../../../core-modules/core-services/document-linking.service';
+import { DocumentLinkingService } from '../../../feature-modules/portal/services/document-linking.service';
 import * as _ from 'lodash';
 import { FileUploaderComponent } from '../file-uploader/file-uploader.component';
 import { MatSnackBar } from '@angular/material';

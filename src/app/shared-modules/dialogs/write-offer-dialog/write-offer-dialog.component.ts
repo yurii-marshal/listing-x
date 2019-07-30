@@ -4,7 +4,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as _ from 'lodash';
 import { CustomValidators } from '../../../core-modules/validators/custom-validators';
 import { Offer, Person } from '../../../core-modules/models/offer';
-import { OfferService } from '../../../core-modules/core-services/offer.service';
+import { OfferService } from '../../../feature-modules/portal/services/offer.service';
 import { of } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';

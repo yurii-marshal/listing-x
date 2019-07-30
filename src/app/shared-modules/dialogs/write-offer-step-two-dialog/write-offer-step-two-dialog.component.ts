@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { OfferService } from '../../../core-modules/core-services/offer.service';
+import { OfferService } from '../../../feature-modules/portal/services/offer.service';
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
 import { Loan, Offer } from '../../../core-modules/models/offer';
 import * as _ from 'lodash';

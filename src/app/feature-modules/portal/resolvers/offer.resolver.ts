@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Offer } from '../../../core-modules/models/offer';
 import { catchError } from 'rxjs/operators';
-import { OfferService } from '../../../core-modules/core-services/offer.service';
+import { OfferService } from '../services/offer.service';
 import { MatSnackBar } from '@angular/material';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
 
