@@ -70,7 +70,7 @@ $blue: rgba(2, 136, 209, 0.9);
 }
 
 .mat-cell {
-  font-size: 13px;
+  font-size: 13px!important;
   &.mat-column-createdAt {
     border-bottom-left-radius: 4px;
     border-top-left-radius: 4px;
