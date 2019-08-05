@@ -8,25 +8,28 @@ body { margin: 0; font-family: SFUIDisplay, Roboto, "Helvetica Neue", sans-serif
 button {height: 45px;}
 h2 {font-size: 36px;}
 
-.fc-toolbar.fc-header-toolbar {
-  button {
-    &.fc-button-primary {
-      font-size: 11px;
-      font-weight: 600;
-      //height: 39px;
-      color: white;
-      letter-spacing: 0.77px;
-      text-transform: uppercase;
-      text-align: center;
-      background-color: mat-color($mat-light-blue, 700, 0.9);
-      border-color: mat-color($mat-light-blue, 700, 0.9);
+.fc {
+  color: #444c5c;
+  .fc-toolbar.fc-header-toolbar {
+    button {
+      &.fc-button-primary {
+        font-size: 11px;
+        font-weight: 600;
+        padding: 0 15px;
+        color: white;
+        letter-spacing: 0.77px;
+        text-transform: uppercase;
+        text-align: center;
+        background-color: mat-color($mat-light-blue, 700, 0.9);
+        border-color: mat-color($mat-light-blue, 700, 0.9);
 
-      &:not(disabled).fc-button-active {
-        background-color: mat-color($mat-light-blue, 800, 0.9);
-        border-color: mat-color($mat-light-blue, 800, 0.9);
+        &:not(disabled).fc-button-active {
+          background-color: mat-color($mat-light-blue, 800, 0.9);
+          border-color: mat-color($mat-light-blue, 800, 0.9);
+        }
+
+        &:focus { box-shadow: none; }
       }
-
-      &:focus { box-shadow: none; }
     }
   }
 }

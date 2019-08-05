@@ -25,8 +25,8 @@
       <mat-form-field>
         <mat-label style="display: none">Status</mat-label>
         <mat-select (valueChange)="onFilter($event)" [value]="Status.All">
-          <mat-option *ngFor="let item of statuses" [value]="item.value">
-            {{ item.value }}
+          <mat-option *ngFor="let item of statuses" [value]="item">
+            {{ item }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -113,14 +113,16 @@
 
   <div class="calendar-container">
     <h2 class="u-flex u-flex-justify--center">Calendar</h2>
+    <!--     allDaySlot="false"-->
     <full-calendar #calendar
-                   defaultView="dayGridWeek"
+                   defaultView="timeGridWeek"
+                   aspectRatio="1.7"
+                   nowIndicator="true"
                    [header]="calendarHeader"
                    [events]="calendarDataSource"
                    [plugins]="calendarPlugins">
     </full-calendar>
   </div>
-
 
   <div class="dialog"><router-outlet></router-outlet></div>
 </app-base-template>

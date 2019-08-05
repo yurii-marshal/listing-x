@@ -4,13 +4,13 @@ import { AddressDialogComponent } from '../../../shared-modules/dialogs/address-
 import { filter } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { BaseTableDataSource } from '../../../core-modules/datasources/base-table-data-source';
-import { Transaction, TransactionStatus } from '../../../core-modules/models/transaction';
+import { CalendarEvent, Transaction, TransactionStatus } from '../../../core-modules/models/transaction';
 import { TransactionService } from '../services/transaction.service';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
 import { Person } from '../../../core-modules/models/offer';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
 import { FullCalendarComponent } from '@fullcalendar/angular';
-import { LoanType } from '../../../core-modules/enums/loan-type';
 
 @Component({
   selector: 'app-transactions',
@@ -24,32 +24,33 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
 
   Status = TransactionStatus;
 
-  calendarDataSource: {title: string, date: string}[] = [
-    { title: 'event 1', date: '2019-07-08' },
-    { title: 'event 2', date: '2019-07-09' }
-  ];
+  calendarDataSource: CalendarEvent[];
 
   calendarHeader = {
-    center:   'title',
-    left:  'today prev,next',
-    right: 'dayGridMonth,dayGridWeek'
+    center: 'title',
+    left: 'today prev,next',
+    right: 'dayGridMonth,timeGridWeek'
   };
 
-  calendarPlugins = [dayGridPlugin]; // important!
+  calendarPlugins = [
+    dayGridPlugin, // important!
+    timeGridPlugin
+  ];
 
-  statuses: {value: string}[];
+  statuses: string[] = Object.values(TransactionStatus);
 
   @ViewChild('calendar', {static: false})
   calendarComponent: FullCalendarComponent;
 
   constructor(private router: Router,
+              private service: TransactionService,
               private authService: AuthService,
               private dialog: MatDialog,
-              private service: TransactionService,
               private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.statuses = Object.keys(TransactionStatus).map(key => ({ value: TransactionStatus[key] }));
+    this.service.loadCalendar()
+      .subscribe(events => this.calendarDataSource = events);
   }
 
   ngAfterViewInit(): void {

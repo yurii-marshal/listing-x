@@ -4,7 +4,7 @@ export interface Transaction {
   id: number;
   offer: OfferSummary;
   status: TransactionStatus;
-  lastEvents: TransactionEvent[];
+  lastEvents: CalendarEvent[];
 }
 
 export enum TransactionStatus {
@@ -16,7 +16,7 @@ export enum TransactionStatus {
   Completed = 'Completed'
 }
 
-export interface TransactionEvent {
-  "date": Date;
-  "event": string;
+export interface CalendarEvent {
+  date: Date;
+  event: string;
 }

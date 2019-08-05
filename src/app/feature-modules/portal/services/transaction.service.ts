@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IDataService } from '../../../core-modules/interfaces/data.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Transaction } from '../../../core-modules/models/transaction';
+import { CalendarEvent, Transaction } from '../../../core-modules/models/transaction';
 import { Observable } from 'rxjs';
 import { detailUrl } from '../../../core-modules/utils/util';
 import { ApiEndpoint } from '../../../core-modules/enums/api-endpoints';
@@ -31,5 +31,16 @@ export class TransactionService implements IDataService <Transaction> {
 
   update(model: Transaction): Observable<Transaction> {
     return undefined;
+  }
+
+  loadCalendar(start?: Date, end?: Date): Observable<CalendarEvent[]> {
+    let params = new HttpParams();
+    if (start) {
+      params = params.set('start_date', start.toISOString())
+    }
+    if (end) {
+      params = params.set('end_date', end.toISOString())
+    }
+    return this.http.get<CalendarEvent[]>(ApiEndpoint.Calendar, {params});
   }
 }
