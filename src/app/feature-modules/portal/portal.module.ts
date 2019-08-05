@@ -7,6 +7,8 @@ import { SharedModule } from '../../shared-modules/shared.module';
 import { RouterModule } from '@angular/router';
 import { TransactionDetailsComponent } from './transaction-details/transaction-details.component';
 import { TransactionService } from './services/transaction.service';
+import { FullCalendarModule } from '@fullcalendar/angular';
+
 
 const MatModules = [
   MatCheckboxModule,
@@ -22,6 +24,7 @@ const MatModules = [
     RouterModule,
     PortalRoutingModule,
     SharedModule,
+    FullCalendarModule,
     ...MatModules
   ],
   declarations: [

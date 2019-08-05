@@ -99,6 +99,18 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 
+  <div style="width: 80%; height: 700px; margin: 0 10%;">
+    <h2 class="u-flex u-flex-justify--center">Calendar</h2>
+
+    <full-calendar #calendar
+                   defaultView="dayGridWeek"
+                   [header]="calendarHeader"
+                   [events]="calendarDataSource"
+                   [plugins]="calendarPlugins"
+                   >
+    </full-calendar>
+  </div>
+
 
   <div class="dialog"><router-outlet></router-outlet></div>
 </app-base-template>

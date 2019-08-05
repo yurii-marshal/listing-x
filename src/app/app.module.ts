@@ -11,6 +11,7 @@ import { HttpProgressInterceptor } from './core-modules/interceptors/http-progre
 import { AuthService } from './core-modules/core-services/auth.service';
 import { ProgressService } from './core-modules/core-services/progress.service';
 import { HttpBodyConverterInterceptor } from './core-modules/interceptors/http-body-converter.interceptor';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,7 +22,8 @@ import { HttpBodyConverterInterceptor } from './core-modules/interceptors/http-b
     AppRoutingModule,
     MatSnackBarModule,
     MatProgressBarModule,
-    MatIconModule
+    MatIconModule,
+    FullCalendarModule
   ],
   providers: [
     AuthService,

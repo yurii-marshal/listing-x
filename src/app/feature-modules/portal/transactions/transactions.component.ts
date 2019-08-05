@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AddressDialogComponent } from '../../../shared-modules/dialogs/address-dialog/address-dialog.component';
 import { filter } from 'rxjs/operators';
@@ -8,6 +8,8 @@ import { Transaction, TransactionStatus } from '../../../core-modules/models/tra
 import { TransactionService } from '../services/transaction.service';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
 import { Person } from '../../../core-modules/models/offer';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import { FullCalendarComponent } from '@fullcalendar/angular';
 
 @Component({
   selector: 'app-transactions',
@@ -20,6 +22,22 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
   dataSource: BaseTableDataSource<Transaction>;
 
   Status = TransactionStatus;
+
+  calendarDataSource: {title: string, date: string}[] = [
+    { title: 'event 1', date: '2019-07-08' },
+    { title: 'event 2', date: '2019-07-09' }
+  ];
+
+  calendarHeader = {
+    center:   'title',
+    left:  'today prev,next',
+    right: 'dayGridMonth,dayGridWeek'
+  };
+
+  calendarPlugins = [dayGridPlugin]; // important!
+
+  @ViewChild('calendar', {static: false})
+  calendarComponent: FullCalendarComponent;
 
   constructor(private router: Router,
               private authService: AuthService,
