@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { IDataService } from '../../../core-modules/interfaces/data.service';
-import { Offer } from '../../../core-modules/models/offer';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Transaction } from '../../../core-modules/models/transaction';
 import { Observable } from 'rxjs';
-import { ApiEndpoint } from '../../../core-modules/enums/auth-endpoints';
 import { detailUrl } from '../../../core-modules/utils/util';
+import { ApiEndpoint } from '../../../core-modules/enums/api-endpoints';
 
 @Injectable()
 export class TransactionService implements IDataService <Transaction> {

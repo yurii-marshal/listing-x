@@ -4,9 +4,9 @@ import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
 import { tap } from 'rxjs/operators';
 import { HttpStatusCodes } from '../enums/http-status-codes';
-import { AuthEndpoints } from '../enums/auth-endpoints';
 import * as _ from 'lodash';
 import { Router } from '@angular/router';
+import { AuthEndpoint } from '../enums/api-endpoints';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +26,7 @@ export class HttpErrorsInterceptor implements HttpInterceptor {
 
   private globalHttpErrorParser(errorResponse: HttpErrorResponse) {
     const code = errorResponse.status;
-    const authUrls: string[] = Object.values(AuthEndpoints);
+    const authUrls: string[] = Object.values(AuthEndpoint);
     const isAuthEndpoint: boolean = _.some(authUrls, (uri: string) => _.endsWith(errorResponse.url, uri));
     if (code === HttpStatusCodes.BAD_REQUEST && isAuthEndpoint) {
       return; // Ignore form's errors

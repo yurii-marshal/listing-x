@@ -1,4 +1,13 @@
-export enum AuthEndpoints {
+export enum ApiEndpoint {
+  CurrentUser = '/users/current/',
+  Addresses = '/addresses/',
+  Offer = '/offers/',
+  AnonymousOffer = '/offers/token/',
+  Upload = '/documents/upload/',
+  Transactions = '/transactions/'
+}
+
+export enum AuthEndpoint {
   Login = '/auth/login/',
   Verify = '/auth/verify/',
   Register = '/users/',
@@ -9,11 +18,3 @@ export enum AuthEndpoints {
   ResetPassword = '/users/reset-password/',
 }
 
-export enum ApiEndpoint {
-  CurrentUser = '/users/current/',
-  Addresses = '/addresses/',
-  Offer = '/offers/',
-  AnonymousOffer = '/offers/token/',
-  Upload = '/documents/upload/',
-  Transactions = '/transactions/'
-}

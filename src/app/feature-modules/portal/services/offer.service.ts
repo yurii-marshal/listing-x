@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { IDataService } from '../../../core-modules/interfaces/data.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ApiEndpoint } from '../../../core-modules/enums/auth-endpoints';
 import { tap } from 'rxjs/operators';
 import { LocalStorageKey } from '../../../core-modules/enums/local-storage-key';
 import { detailUrl } from '../../../core-modules/utils/util';
 import { Offer, OfferSummary } from '../../../core-modules/models/offer';
+import { ApiEndpoint } from '../../../core-modules/enums/api-endpoints';
 
 @Injectable()
 export class OfferService implements IDataService <Offer> {
