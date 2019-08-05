@@ -113,11 +113,11 @@
 
   <div class="calendar-container">
     <h2 class="u-flex u-flex-justify--center">Calendar</h2>
-    <!--     allDaySlot="false"-->
     <full-calendar #calendar
                    defaultView="timeGridWeek"
                    aspectRatio="1.7"
                    nowIndicator="true"
+                   [columnHeaderFormat]="columnHeaderFormat"
                    [header]="calendarHeader"
                    [events]="calendarDataSource"
                    [plugins]="calendarPlugins">

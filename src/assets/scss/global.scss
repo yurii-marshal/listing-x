@@ -24,8 +24,8 @@ h2 {font-size: 36px;}
         border-color: mat-color($mat-light-blue, 700, 0.9);
 
         &:not(disabled).fc-button-active {
-          background-color: mat-color($mat-light-blue, 800, 0.9);
-          border-color: mat-color($mat-light-blue, 800, 0.9);
+          background-color: mat-color($mat-light-blue, 800, 0.95);
+          border-color: mat-color($mat-light-blue, 800, 0.95);
         }
 
         &:focus { box-shadow: none; }

@@ -26,6 +26,8 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
 
   calendarDataSource: CalendarEvent[];
 
+  columnHeaderFormat = { weekday: 'long', day: 'numeric' };
+
   calendarHeader = {
     center: 'title',
     left: 'today prev,next',
@@ -73,6 +75,10 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
       .subscribe();
   }
 
+  formatHeader() {
+    return '<b>Friday!</b>';
+  }
+
   onFilter(status: TransactionStatus) {
     let query = `status=${status}`;
     if (status === TransactionStatus.All) {
@@ -102,6 +108,4 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
     }
     return currentUser.firstName === item.firstName && currentUser.lastName === item.lastName;
   }
-
-
 }
