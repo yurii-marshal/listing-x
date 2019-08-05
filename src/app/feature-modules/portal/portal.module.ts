@@ -25,7 +25,6 @@ const MatModules = [
     RouterModule,
     PortalRoutingModule,
     SharedModule,
-    FullCalendarModule,
     ...MatModules
   ],
   declarations: [

@@ -33,6 +33,8 @@ import { FileUploaderComponent } from './components/file-uploader/file-uploader.
 import { WriteOfferSummaryComponent } from './dialogs/write-offer-summary/write-offer-summary.component';
 import { OfferService } from '../feature-modules/portal/services/offer.service';
 import { DocumentLinkingService } from '../feature-modules/portal/services/document-linking.service';
+import { CalendarComponent } from './components/calendar/calendar.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 const materialModules = [
   MatDialogModule,
@@ -68,6 +70,7 @@ const components = [
   FilePickerComponent,
   FileOption,
   FileUploaderComponent,
+  CalendarComponent,
   ...dialogs
 ];
 
@@ -76,10 +79,11 @@ const components = [
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
+    FullCalendarModule,
     ...materialModules
   ],
   declarations: [
-    ...components,
+    ...components
   ],
   exports: [
     ...components

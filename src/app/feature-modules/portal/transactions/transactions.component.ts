@@ -24,33 +24,9 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
   dataSource: BaseTableDataSource<Transaction>;
 
   Status = TransactionStatus;
-
-  calendarDataSource: CalendarEvent[];
-
-  calendarHeader = {
-    center: 'title',
-    left: 'today prev,next',
-    right: 'dayGridMonth,timeGridWeek'
-  };
-
-  calendarPlugins = [
-    dayGridPlugin, // important!
-    timeGridPlugin
-  ];
-
-  calendarViews: {[viewId: string]: ViewOptionsInput} = {
-    dayGrid: {
-      columnHeaderFormat: { weekday: 'long' }
-    },
-    timeGrid: {
-      columnHeaderFormat: { weekday: 'long', day: 'numeric' }
-    }
-  };
-
   statuses: string[] = Object.values(TransactionStatus);
 
-  @ViewChild('calendar', {static: false})
-  calendarComponent: FullCalendarComponent;
+  calendarDataSource: CalendarEvent[];
 
   constructor(private router: Router,
               private service: TransactionService,
@@ -81,10 +57,6 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed()
       .pipe(filter(dialogResult => !!dialogResult),)
       .subscribe();
-  }
-
-  formatHeader() {
-    return '<b>Friday!</b>';
   }
 
   onFilter(status: TransactionStatus) {

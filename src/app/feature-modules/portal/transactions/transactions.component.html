@@ -113,15 +113,7 @@
 
   <div class="calendar-container">
     <h2 class="u-flex u-flex-justify--center">Calendar</h2>
-    <full-calendar #calendar
-                   defaultView="timeGridWeek"
-                   aspectRatio="1.7"
-                   nowIndicator="true"
-                   [views]="calendarViews"
-                   [header]="calendarHeader"
-                   [events]="calendarDataSource"
-                   [plugins]="calendarPlugins">
-    </full-calendar>
+    <lis-calendar [dataSource]="calendarDataSource"></lis-calendar>
   </div>
 
   <div class="dialog"><router-outlet></router-outlet></div>
