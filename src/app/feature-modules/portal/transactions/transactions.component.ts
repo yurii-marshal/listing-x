@@ -10,6 +10,7 @@ import { AuthService } from '../../../core-modules/core-services/auth.service';
 import { Person } from '../../../core-modules/models/offer';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { FullCalendarComponent } from '@fullcalendar/angular';
+import { LoanType } from '../../../core-modules/enums/loan-type';
 
 @Component({
   selector: 'app-transactions',
@@ -36,6 +37,8 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
 
   calendarPlugins = [dayGridPlugin]; // important!
 
+  statuses: {value: string}[];
+
   @ViewChild('calendar', {static: false})
   calendarComponent: FullCalendarComponent;
 
@@ -46,7 +49,7 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
               private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
-
+    this.statuses = Object.keys(TransactionStatus).map(key => ({ value: TransactionStatus[key] }));
   }
 
   ngAfterViewInit(): void {
@@ -67,6 +70,14 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed()
       .pipe(filter(dialogResult => !!dialogResult),)
       .subscribe();
+  }
+
+  onFilter(status: TransactionStatus) {
+    let query = `status=${status}`;
+    if (status === TransactionStatus.All) {
+      query = '';
+    }
+    this.dataSource.filter = query;
   }
 
   getClassName(status: TransactionStatus): string {

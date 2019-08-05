@@ -8,6 +8,7 @@ export interface Transaction {
 }
 
 export enum TransactionStatus {
+  All = 'All transactions',
   Started = 'Started',
   InReview = 'In review',
   Denied = 'Denied',

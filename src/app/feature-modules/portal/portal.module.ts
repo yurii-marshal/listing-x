@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { PortalRoutingModule } from './portal-routing.module';
-import { MatButtonModule, MatCheckboxModule, MatIconModule, MatTableModule, MatTabsModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatIconModule, MatSelectModule, MatTableModule, MatTabsModule } from '@angular/material';
 import { SharedModule } from '../../shared-modules/shared.module';
 import { RouterModule } from '@angular/router';
 import { TransactionDetailsComponent } from './transaction-details/transaction-details.component';
@@ -15,7 +15,8 @@ const MatModules = [
   MatButtonModule,
   MatTabsModule,
   MatTableModule,
-  MatIconModule
+  MatIconModule,
+  MatSelectModule
 ];
 
 @NgModule({

@@ -19,7 +19,19 @@
     </div>
   </div>
 
-  <h2 class="u-flex u-flex-justify--center">Transactions</h2>
+  <div class="u-flex u-flex-justify--center">
+    <div class="u-flex u-flex-direction--column u-flex-align-items--center">
+      <h2 style="margin: 0">Transactions</h2>
+      <mat-form-field>
+        <mat-label style="display: none">Status</mat-label>
+        <mat-select (valueChange)="onFilter($event)" [value]="Status.All">
+          <mat-option *ngFor="let item of statuses" [value]="item.value">
+            {{ item.value }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
 
   <!-- Grid   -->
   <table mat-table [dataSource]="dataSource" class="common-grid">
@@ -99,15 +111,14 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 
-  <div style="width: 80%; height: 700px; margin: 0 10%;">
+  <div style="width: 80%; height: 700px; margin: 70px 10% 0 10%;">
     <h2 class="u-flex u-flex-justify--center">Calendar</h2>
 
     <full-calendar #calendar
                    defaultView="dayGridWeek"
                    [header]="calendarHeader"
                    [events]="calendarDataSource"
-                   [plugins]="calendarPlugins"
-                   >
+                   [plugins]="calendarPlugins">
     </full-calendar>
   </div>
 
