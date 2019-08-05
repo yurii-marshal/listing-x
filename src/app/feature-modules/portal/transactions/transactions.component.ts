@@ -11,6 +11,7 @@ import { Person } from '../../../core-modules/models/offer';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { FullCalendarComponent } from '@fullcalendar/angular';
+import { ViewOptionsInput } from "@fullcalendar/core/types/input-types";
 
 @Component({
   selector: 'app-transactions',
@@ -26,8 +27,6 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
 
   calendarDataSource: CalendarEvent[];
 
-  columnHeaderFormat = { weekday: 'long', day: 'numeric' };
-
   calendarHeader = {
     center: 'title',
     left: 'today prev,next',
@@ -38,6 +37,15 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
     dayGridPlugin, // important!
     timeGridPlugin
   ];
+
+  calendarViews: {[viewId: string]: ViewOptionsInput} = {
+    dayGrid: {
+      columnHeaderFormat: { weekday: 'long' }
+    },
+    timeGrid: {
+      columnHeaderFormat: { weekday: 'long', day: 'numeric' }
+    }
+  };
 
   statuses: string[] = Object.values(TransactionStatus);
 
