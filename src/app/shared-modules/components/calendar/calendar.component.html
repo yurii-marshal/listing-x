@@ -1,7 +1,7 @@
 <full-calendar #calendar
-               defaultView="timeGridWeek"
                aspectRatio="1.7"
                nowIndicator="true"
+               [defaultView]="defaultView"
                [views]="calendarViews"
                [header]="calendarHeader"
                [events]="dataSource"

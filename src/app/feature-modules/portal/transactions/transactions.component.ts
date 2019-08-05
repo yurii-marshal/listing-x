@@ -1,17 +1,15 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AddressDialogComponent } from '../../../shared-modules/dialogs/address-dialog/address-dialog.component';
-import { filter } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { BaseTableDataSource } from '../../../core-modules/datasources/base-table-data-source';
 import { CalendarEvent, Transaction, TransactionStatus } from '../../../core-modules/models/transaction';
 import { TransactionService } from '../services/transaction.service';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
 import { Person } from '../../../core-modules/models/offer';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import { FullCalendarComponent } from '@fullcalendar/angular';
-import { ViewOptionsInput } from "@fullcalendar/core/types/input-types";
+import { wrapCalendarEvent } from '../../../shared-modules/components/calendar/calendar.component';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-transactions',
@@ -36,6 +34,9 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.service.loadCalendar()
+      .pipe(
+        map(events => _.map(events, event => wrapCalendarEvent(event)))
+      )
       .subscribe(events => this.calendarDataSource = events);
   }
 
