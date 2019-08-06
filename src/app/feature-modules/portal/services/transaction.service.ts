@@ -45,13 +45,12 @@ export class TransactionService implements IDataService <Transaction> {
   }
 
   loadCalendarByTransaction(id: number, start?: Date, end?: Date): Observable<CalendarEvent[]> {
-    let params = new HttpParams();
-    if (start) {
-      params = params.set('start_date', start.toISOString())
-    }
-    if (end) {
-      params = params.set('end_date', end.toISOString())
-    }
-    return of([]); // this.http.get<CalendarEvent[]>(ApiEndpoint.Calendar, {params});
+    // TODO:
+    return of([]);
+  }
+
+  inviteUser(email: string): Observable<void> {
+    // TODO:
+    return of(null);
   }
 }

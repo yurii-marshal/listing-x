@@ -20,7 +20,25 @@
               <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
             </button>
           </div>
-          <button mat-flat-button disabled="true" color="primary">INVITE USERS</button>
+          <button mat-flat-button
+                  cdkOverlayOrigin
+                  #trigger="cdkOverlayOrigin"
+                  (click)="isOpenInviteUserOverlay = !isOpenInviteUserOverlay"
+                  disabled="true"
+                  color="primary">
+            INVITE USERS
+          </button>
+          <ng-template cdkConnectedOverlay
+            [cdkConnectedOverlayOrigin]="trigger"
+            [cdkConnectedOverlayOffsetY]="3"
+            [cdkConnectedOverlayOpen]="isOpenInviteUserOverlay">
+              <div role="dialog" class="invite-user-dialog">
+                <input [formControl]="userEmailControl" class="u-flex-1" spellcheck="false">
+                <button mat-icon-button [disabled]="userEmailControl.invalid" (click)="inviteUser()">
+                  <mat-icon fontSet="fa" fontIcon="fa-envelope-open-text"></mat-icon>
+                </button>
+              </div>
+          </ng-template>
         </div>
       </div>
     </div>

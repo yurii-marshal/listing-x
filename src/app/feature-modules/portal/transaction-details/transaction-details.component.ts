@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TransactionService } from '../services/transaction.service';
 import { CalendarEvent, Transaction, TransactionStatus } from '../../../core-modules/models/transaction';
+import { FormControl, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-transaction-details',
@@ -13,8 +15,13 @@ export class TransactionDetailsComponent implements OnInit {
 
   calendarDataSource: CalendarEvent[];
 
+  isOpenInviteUserOverlay: boolean;
+
+  userEmailControl: FormControl;
+
   constructor(private route: ActivatedRoute,
-              private transactionService: TransactionService) { }
+              private transactionService: TransactionService,
+              private snackbar: MatSnackBar) { }
 
   ngOnInit() {
     const transactionId: number = Number(this.route.snapshot.params.id);
@@ -23,6 +30,8 @@ export class TransactionDetailsComponent implements OnInit {
 
     this.transactionService.loadCalendarByTransaction(transactionId)
       .subscribe(items => this.calendarDataSource = items);
+
+    this.userEmailControl = new FormControl(null, [Validators.required, Validators.email]);
   }
 
   onDelete() {}
@@ -39,5 +48,12 @@ export class TransactionDetailsComponent implements OnInit {
       case TransactionStatus.Completed:
         return  'green';
     }
+  }
+
+  inviteUser() {
+    this.isOpenInviteUserOverlay = true;
+    const email: string = this.userEmailControl.value;
+    this.transactionService.inviteUser(email)
+      .subscribe(() => this.snackbar.open(`Invite sent to email: ${email}`))
   }
 }

@@ -8,6 +8,8 @@ import { RouterModule } from '@angular/router';
 import { TransactionDetailsComponent } from './transaction-details/transaction-details.component';
 import { TransactionService } from './services/transaction.service';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 const MatModules = [
@@ -23,9 +25,11 @@ const MatModules = [
   imports: [
     CommonModule,
     RouterModule,
+    ReactiveFormsModule,
     PortalRoutingModule,
     SharedModule,
-    ...MatModules
+    OverlayModule,
+    ...MatModules,
   ],
   declarations: [
     TransactionsComponent,
