@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TransactionService } from '../services/transaction.service';
-import { Transaction, TransactionStatus } from '../../../core-modules/models/transaction';
+import { CalendarEvent, Transaction, TransactionStatus } from '../../../core-modules/models/transaction';
 
 @Component({
   selector: 'app-transaction-details',
@@ -11,13 +11,18 @@ import { Transaction, TransactionStatus } from '../../../core-modules/models/tra
 export class TransactionDetailsComponent implements OnInit {
   transaction: Transaction;
 
+  calendarDataSource: CalendarEvent[];
+
   constructor(private route: ActivatedRoute,
               private transactionService: TransactionService) { }
 
   ngOnInit() {
     const transactionId: number = Number(this.route.snapshot.params.id);
     this.transactionService.loadOne(transactionId)
-      .subscribe((transaction: Transaction) => this.transaction = transaction)
+      .subscribe((transaction: Transaction) => this.transaction = transaction);
+
+    this.transactionService.loadCalendarByTransaction(transactionId)
+      .subscribe(items => this.calendarDataSource = items);
   }
 
   onDelete() {}

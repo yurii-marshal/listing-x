@@ -45,9 +45,6 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
     this.cdr.detectChanges();
   }
 
-  onSubmit() {
-  }
-
   openCreateAddressDialog() {
     const dialogRef = this.dialog.open(AddressDialogComponent, {
       width: '600px',

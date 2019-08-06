@@ -24,6 +24,7 @@
         </div>
       </div>
     </div>
+
     <div class="u-flex u-flex-justify--center">
       <div class="column-layout">
         <div class="row-layout"><label class="header">Offer information</label></div>
@@ -56,6 +57,11 @@
           <button mat-flat-button color="primary">SIGN</button>
         </div>
       </div>
+    </div>
+
+    <div class="calendar-container">
+      <h2 class="u-flex u-flex-justify--center">Calendar</h2>
+      <lis-calendar [dataSource]="calendarDataSource" defaultView="dayGridMonth"></lis-calendar>
     </div>
   </ng-container>
 </app-base-template>
