@@ -47,10 +47,11 @@
       <th mat-header-cell *matHeaderCellDef>Address</th>
       <td mat-cell *matCellDef="let element">
         <div class="u-flex u-flex-align-items--center">
-          <span *ngIf="element.offer.streetName">
-            {{ element.offer.streetName }},&nbsp;</span>
+          <p>
+            <span *ngIf="element.offer.streetName">{{ element.offer.streetName }},&nbsp;</span>
             {{ element.offer.city }} {{ element.offer.state }}
             <span *ngIf="element.offer.zip">, {{ element.offer.zip }}</span>
+          </p>
         </div>
       </td>
     </ng-container>

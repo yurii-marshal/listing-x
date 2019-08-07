@@ -90,6 +90,10 @@ $blue: rgba(2, 136, 209, 0.9);
     &.yellow { color: $yellow; }
     &.blue { color: $blue; }
   }
+  &.mat-column-address {
+    max-width: 300px;
+    p {margin: 0; white-space: nowrap; overflow-x: hidden; text-overflow: ellipsis; padding-right: 10px;}
+  }
 }
 
 .user-icon {
@@ -103,3 +107,4 @@ $blue: rgba(2, 136, 209, 0.9);
 .calendar-container {
   width: 80%; margin: 70px 10% 0 10%;
 }
+

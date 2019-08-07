@@ -36,7 +36,7 @@ export class CalendarComponent implements OnInit {
   calendarHeader = {
     center: 'title',
     left: 'today prev,next',
-    right: 'dayGridMonth,timeGridWeek'
+    right: 'timeGridWeek' //'dayGridMonth,timeGridWeek'
   };
 
   calendarPlugins = [
