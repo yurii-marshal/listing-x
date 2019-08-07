@@ -13,18 +13,18 @@
         <div class="description"> Offer created: 09/06/19 4:30 PM (25 days until  close escrow)</div>
         <div class="control-bar">
           <div class="u-flex-1">
-            <button mat-icon-button color="accent" routerLink="/portal/offer/{{ transaction.offer.id }}">
+            <button *ngIf="transaction.allowEdit" mat-icon-button color="accent" routerLink="/portal/offer/{{ transaction.offer.id }}">
               <mat-icon fontSet="fa" fontIcon="fa-edit" class="icon"></mat-icon>
             </button>
-            <button mat-icon-button disabled="true" color="accent" (click)="onDelete()">
+            <button *ngIf="transaction.allowDelete" mat-icon-button disabled="true" color="accent" (click)="onDelete()">
               <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
             </button>
           </div>
           <button mat-flat-button
                   cdkOverlayOrigin
+                  [disabled]="true"
                   #trigger="cdkOverlayOrigin"
                   (click)="isOpenInviteUserOverlay = !isOpenInviteUserOverlay"
-                  disabled="true"
                   color="primary">
             INVITE USERS
           </button>
@@ -62,15 +62,14 @@
           <div class="doc-preview"><img *ngFor="let img of transaction.offer.documents?.coverLetter" src="assets/images/icons/{{ img.extension }}.svg" [title]="img.title" height="20"></div>
         </div></div>
       </div>
-      <div class="column-layout" style="opacity: .5">
+      <div class="column-layout">
         <div class="row-layout"><label class="header">last activity</label></div>
-        <div class="row-layout"><label>09/06/19 4:30 PM</label><span>Edited by Ostap Lopushynsky</span></div>
-        <div class="row-layout"><label>09/06/19 4:30 PM</label><span>Edited by Serhii Movchan</span></div>
-        <div class="row-layout"><label class="header">offer</label></div>
-        <div class="row-layout"><label></label><span>Signed by buyer 1 Lopushynsky</span></div>
-        <div class="row-layout"><label></label><span>Signed by seller 1 Serhii Movchan</span></div>
-        <div class="row-layout"><label></label><span>Hasn’t been signed by all buyers</span></div>
-        <div class="row-layout u-flex-justify--start">
+        <div class="row-layout" *ngFor="let item of transaction.lastLogs"><label>{{ item.createdAt | date: 'short' }}</label><span>{{ item.title }}</span></div>
+        <div class="row-layout" style="opacity: .5"><label class="header">offer</label></div>
+        <div class="row-layout" style="opacity: .5"><label></label><span>Signed by buyer 1 Lopushynsky</span></div>
+        <div class="row-layout" style="opacity: .5"><label></label><span>Signed by seller 1 Serhii Movchan</span></div>
+        <div class="row-layout" style="opacity: .5"><label></label><span>Hasn’t been signed by all buyers</span></div>
+        <div class="row-layout u-flex-justify--start" style="opacity: .5">
           <button mat-flat-button color="accent" style="margin: 0 15px 0 220px">DENY</button>
           <button mat-flat-button color="primary">SIGN</button>
         </div>
@@ -79,7 +78,8 @@
 
     <div class="calendar-container">
       <h2 class="u-flex u-flex-justify--center">Calendar</h2>
-      <lis-calendar [dataSource]="calendarDataSource" defaultView="dayGridMonth"></lis-calendar>
+      <!--   FIXME: defaultView="dayGridMonth"   -->
+      <lis-calendar [dataSource]="calendarDataSource"></lis-calendar>
     </div>
   </ng-container>
 </app-base-template>

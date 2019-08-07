@@ -51,7 +51,7 @@ export class TransactionDetailsComponent implements OnInit {
   }
 
   inviteUser() {
-    this.isOpenInviteUserOverlay = true;
+    this.isOpenInviteUserOverlay = false;
     const email: string = this.userEmailControl.value;
     this.transactionService.inviteUser(email)
       .subscribe(() => this.snackbar.open(`Invite sent to email: ${email}`))
