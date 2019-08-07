@@ -68,25 +68,28 @@ snack-bar-container {
 
 .common-grid {
   width: 80%;
+  max-height: 600px;
   margin: 0 10%;
-
-  .mat-header-cell {
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.7px;
-    color: #444c5c;
-    text-transform: uppercase;
-  }
-
-  .mat-row {
-    height: 76px;
-
-    .mat-cell {
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: normal;
+  overflow: auto;
+  table {
+    width: 100%;
+    .mat-header-cell {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.7px;
       color: #444c5c;
-      &:first-of-type{
+      text-transform: uppercase;
+    }
+    .mat-row {
+      height: 76px;
+
+      .mat-cell {
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: normal;
+        color: #444c5c;
+        &:first-of-type{
+        }
       }
     }
   }

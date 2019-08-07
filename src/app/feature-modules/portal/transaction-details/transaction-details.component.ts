@@ -6,7 +6,6 @@ import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { map, switchMap, tap } from 'rxjs/operators';
 import * as _ from 'lodash';
-import { wrapCalendarEvent } from '../../../shared-modules/components/calendar/calendar.component';
 import { ConfirmationBarComponent } from '../../../shared-modules/components/confirmation-bar/confirmation-bar.component';
 
 @Component({
@@ -56,7 +55,8 @@ export class TransactionDetailsComponent implements OnInit {
       )
       .subscribe(() => this.router.navigate(['/portal']));
 */
-    this.transactionService.delete(this.transaction.id).subscribe(() => this.router.navigate(['/portal']))
+    this.transactionService.delete(this.transaction.id)
+      .subscribe(() => this.router.navigate(['/portal']))
 
   }
 
