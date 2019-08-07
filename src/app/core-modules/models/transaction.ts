@@ -7,6 +7,7 @@ export interface Transaction {
   lastLogs: Log[];
   allowDelete: boolean;
   allowEdit: boolean;
+  createdAt: string;
 }
 
 export enum TransactionStatus {
@@ -26,7 +27,7 @@ export interface CalendarEvent {
 }
 
 export interface Log {
-  createdAt: Date;
+  createdAt: string;
   id: number;
   title: string;
 }

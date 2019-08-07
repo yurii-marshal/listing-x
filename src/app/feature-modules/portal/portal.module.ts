@@ -7,10 +7,8 @@ import { SharedModule } from '../../shared-modules/shared.module';
 import { RouterModule } from '@angular/router';
 import { TransactionDetailsComponent } from './transaction-details/transaction-details.component';
 import { TransactionService } from './services/transaction.service';
-import { FullCalendarModule } from '@fullcalendar/angular';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ReactiveFormsModule } from '@angular/forms';
-
 
 const MatModules = [
   MatCheckboxModule,
@@ -27,9 +25,9 @@ const MatModules = [
     RouterModule,
     ReactiveFormsModule,
     PortalRoutingModule,
-    SharedModule,
     OverlayModule,
     ...MatModules,
+    SharedModule,
   ],
   declarations: [
     TransactionsComponent,
@@ -37,6 +35,6 @@ const MatModules = [
   ],
   providers: [
     TransactionService
-  ]
+  ],
 })
 export class PortalModule { }

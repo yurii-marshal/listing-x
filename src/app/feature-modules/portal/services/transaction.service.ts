@@ -20,7 +20,8 @@ export class TransactionService implements IDataService <Transaction> {
   }
 
   delete(id: number): Observable<void> {
-    return undefined;
+    const url: string = detailUrl(ApiEndpoint.Transactions, id);
+    return this.http.delete<void>(url);
   }
 
   loadList(params?: HttpParams): Observable<Transaction[]> {

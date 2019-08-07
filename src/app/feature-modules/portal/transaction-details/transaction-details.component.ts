@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TransactionService } from '../services/transaction.service';
 import { CalendarEvent, Transaction, TransactionStatus } from '../../../core-modules/models/transaction';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
+import { map, switchMap, tap } from 'rxjs/operators';
+import * as _ from 'lodash';
+import { wrapCalendarEvent } from '../../../shared-modules/components/calendar/calendar.component';
+import { ConfirmationBarComponent } from '../../../shared-modules/components/confirmation-bar/confirmation-bar.component';
 
 @Component({
   selector: 'app-transaction-details',
@@ -21,11 +25,13 @@ export class TransactionDetailsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private transactionService: TransactionService,
-              private snackbar: MatSnackBar) { }
+              private snackbar: MatSnackBar,
+              private router: Router) { }
 
   ngOnInit() {
     const transactionId: number = Number(this.route.snapshot.params.id);
     this.transactionService.loadOne(transactionId)
+      .pipe(tap(data => console.log('data: ', data)))
       .subscribe((transaction: Transaction) => this.transaction = transaction);
 
     this.transactionService.loadCalendarByTransaction(transactionId)
@@ -34,7 +40,25 @@ export class TransactionDetailsComponent implements OnInit {
     this.userEmailControl = new FormControl(null, [Validators.required, Validators.email]);
   }
 
-  onDelete() {}
+  onDelete() {
+    // FIXME:
+/*    const config = {
+      data: {
+        message: 'Are you sure want to delete?',
+        dismiss: 'Cancel'
+      }
+    };
+    const snackBarRef = this.snackbar.openFromComponent(ConfirmationBarComponent, config);
+    snackBarRef.onAction()
+      .pipe(
+        switchMap(() => this.transactionService.delete(this.transaction.id)),
+        tap(() => this.snackbar.open('Successfully deleted item.'))
+      )
+      .subscribe(() => this.router.navigate(['/portal']));
+*/
+    this.transactionService.delete(this.transaction.id).subscribe(() => this.router.navigate(['/portal']))
+
+  }
 
   getClassName(status: TransactionStatus): string {
     switch (status) {
