@@ -7,10 +7,11 @@ import { detailUrl } from '../../../core-modules/utils/util';
 import { ApiEndpoint } from '../../../core-modules/enums/api-endpoints';
 import { map } from 'rxjs/operators';
 import * as _ from 'lodash';
-import { wrapCalendarEvent } from '../../../shared-modules/components/calendar/calendar.component';
+import * as moment from 'moment';
 
 @Injectable()
 export class TransactionService implements IDataService <Transaction> {
+  private today = moment().utcOffset(0);
 
   constructor(private http: HttpClient) {
   }
@@ -61,7 +62,21 @@ export class TransactionService implements IDataService <Transaction> {
     }
     return this.http.get<CalendarEvent[]>(url, {params})
       .pipe(
-        map(events => _.map(events, event => wrapCalendarEvent(event)))
+        map(events => _.map(events, event => this.wrapCalendarEvent(event)))
       );
+  }
+
+  private wrapCalendarEvent(event: CalendarEvent): CalendarEvent {
+    let color: string = '#66ad58';
+    if (this.today.isBefore(event.date, 'day')) {
+      color = '#cd584a'
+    } else if (this.today.isAfter(event.date, 'day')) {
+      color = '#f8ce5f'
+    }
+    return {
+      ...event,
+      backgroundColor: color,
+      borderColor: color
+    }
   }
 }
