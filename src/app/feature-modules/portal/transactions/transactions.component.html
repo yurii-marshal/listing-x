@@ -87,12 +87,12 @@
     </ng-container>
 
     <!-- Last Events -->
-    <ng-container matColumnDef="lastEvents">
+    <ng-container matColumnDef="lastLogs">
       <th mat-header-cell *matHeaderCellDef>Last Events</th>
       <td mat-cell *matCellDef="let element">
-        <div *ngFor="let item of element.offer.lastEvents">
-          <div>{{ item.date | date }}</div>
-          <div>{{ item.event }}</div>
+        <div *ngFor="let item of element.lastLogs">
+          <div>{{ item.createdAt | date: 'short' }}</div>
+          <div class="truncated" style="width: 100%">{{ item.title }}</div>
         </div>
       </td>
     </ng-container>

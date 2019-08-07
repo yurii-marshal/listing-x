@@ -4,7 +4,9 @@ export interface Transaction {
   id: number;
   offer: OfferSummary;
   status: TransactionStatus;
-  lastEvents: CalendarEvent[];
+  lastLogs: Log[];
+  allowDelete: boolean;
+  allowEdit: boolean;
 }
 
 export enum TransactionStatus {
@@ -21,4 +23,10 @@ export interface CalendarEvent {
   event: string;
   backgroundColor?: string;
   borderColor?: string;
+}
+
+export interface Log {
+  createdAt: Date;
+  id: number;
+  title: string;
 }

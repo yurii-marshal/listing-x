@@ -80,11 +80,14 @@ $blue: rgba(2, 136, 209, 0.9);
     &.blue { border-left-color: $blue; }
   }
 
-  &.mat-column-lastEvents {
-    width: 150px;
+  &.mat-column-lastLogs {
+    width: 180px;
+    padding: 0 5px;
+    color: #818896;
   }
 
   &.mat-column-status {
+    width: 90px;
     color: $green;
     &.red { color: $red; }
     &.yellow { color: $yellow; }

@@ -17,7 +17,7 @@ import * as _ from 'lodash';
   styleUrls: ['./transactions.component.scss']
 })
 export class TransactionsComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['createdAt', 'address', 'buyers', 'sellers', 'status', 'lastEvents', 'actions'];
+  displayedColumns: string[] = ['createdAt', 'address', 'buyers', 'sellers', 'status', 'lastLogs', 'actions'];
 
   dataSource: BaseTableDataSource<Transaction>;
 
@@ -34,9 +34,6 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.service.loadCalendar()
-      .pipe(
-        map(events => _.map(events, event => wrapCalendarEvent(event)))
-      )
       .subscribe(events => this.calendarDataSource = events);
   }
 

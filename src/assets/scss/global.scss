@@ -1,4 +1,5 @@
 @import '~@angular/material/theming';
+@import "mixins";
 
 
 html, body { height: 100%; }
@@ -32,4 +33,8 @@ h2 {font-size: 36px;}
       }
     }
   }
+}
+
+.truncated {
+  @include mat-truncate-line();
 }

@@ -46,7 +46,12 @@ export class HttpErrorsInterceptor implements HttpInterceptor {
   }
 
   private formatMsg(errorResponse: HttpErrorResponse) {
-    return _.chain(errorResponse.error)
+    const error = errorResponse.error;
+    if (_.isString(error)) {
+      return error;
+    }
+
+    return _.chain(error)
       .mapValues((value, key) => `${key}: ${value}`)
       .values()
       .join('\n')

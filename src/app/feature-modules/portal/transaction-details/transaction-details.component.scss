@@ -19,6 +19,8 @@ $blue: rgba(2, 136, 209, 0.9);
       font-size: 36px;
       color: #444c5d;
       margin-top: 25px;
+      max-width: 755px;
+      @include mat-truncate-line();
     }
     .description {
       font-size: 13px;
