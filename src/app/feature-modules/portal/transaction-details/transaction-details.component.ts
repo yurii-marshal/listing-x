@@ -20,7 +20,7 @@ export class TransactionDetailsComponent implements OnInit {
 
   isOpenInviteUserOverlay: boolean;
 
-  userEmailControl: FormControl;
+  userEmailControl: FormControl = new FormControl(null, [Validators.required, Validators.email]);
 
   constructor(private route: ActivatedRoute,
               private transactionService: TransactionService,
@@ -35,29 +35,26 @@ export class TransactionDetailsComponent implements OnInit {
 
     this.transactionService.loadCalendarByTransaction(transactionId)
       .subscribe(items => this.calendarDataSource = items);
-
-    this.userEmailControl = new FormControl(null, [Validators.required, Validators.email]);
   }
 
   onDelete() {
     // FIXME:
-/*    const config = {
-      data: {
-        message: 'Are you sure want to delete?',
-        dismiss: 'Cancel'
-      }
-    };
-    const snackBarRef = this.snackbar.openFromComponent(ConfirmationBarComponent, config);
-    snackBarRef.onAction()
-      .pipe(
-        switchMap(() => this.transactionService.delete(this.transaction.id)),
-        tap(() => this.snackbar.open('Successfully deleted item.'))
-      )
-      .subscribe(() => this.router.navigate(['/portal']));
-*/
+    /*    const config = {
+          data: {
+            message: 'Are you sure want to delete?',
+            dismiss: 'Cancel'
+          }
+        };
+        const snackBarRef = this.snackbar.openFromComponent(ConfirmationBarComponent, config);
+        snackBarRef.onAction()
+          .pipe(
+            switchMap(() => this.transactionService.delete(this.transaction.id)),
+            tap(() => this.snackbar.open('Successfully deleted item.'))
+          )
+          .subscribe(() => this.router.navigate(['/portal']));
+    */
     this.transactionService.delete(this.transaction.id)
       .subscribe(() => this.router.navigate(['/portal']))
-
   }
 
   getClassName(status: TransactionStatus): string {

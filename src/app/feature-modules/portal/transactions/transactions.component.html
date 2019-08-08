@@ -91,10 +91,13 @@
       <ng-container matColumnDef="lastLogs">
         <th mat-header-cell *matHeaderCellDef>Last Events</th>
         <td mat-cell *matCellDef="let element">
-          <div *ngFor="let item of element.lastLogs">
-            <div>{{ item.createdAt | date: 'short' }}</div>
-            <div class="truncated" style="width: 100%">{{ item.title }}</div>
+          <div *ngFor="let item of element.lastLogs; let i = index">
+            <ng-container *ngIf="i < 2">
+              <div>{{ item.createdAt | date: 'short' }}</div>
+              <div class="truncated" style="width: 100%">{{ item.title }}</div>
+            </ng-container>
           </div>
+          <div *ngIf="element?.lastLogs?.length > 2" style="font-style: italic; opacity: .75;"> and {{ element?.lastLogs?.length - 2 }} more ...</div>
         </td>
       </ng-container>
 
