@@ -1,4 +1,4 @@
-import { Component, ComponentRef, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ComponentRef, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { CalendarEvent } from '../../../core-modules/models/transaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -62,10 +62,15 @@ export class CalendarComponent implements OnInit {
     this.debounceSubject = new Subject();
     this.debounceSubscription = this.debounceSubject
       .pipe(
-        debounceTime(700),
-        tap(() => this.hidePopover())
+        tap(() => this.hidePopover()),
+        debounceTime(1000),
       )
       .subscribe(htmlText => this.attachOverlay(htmlText));
+  }
+
+  @HostListener('mouseleave', ['$event'])
+  onLeave( e: MouseEvent ) {
+    this.hidePopover();
   }
 
   showPopover(eventObj): void {
@@ -107,8 +112,12 @@ export class CalendarComponent implements OnInit {
   }
 
   private formatMessage(eventObj) {
-    const start = moment(eventObj.event.start).format('LLLL');
-    const title = _.get(eventObj, 'event.title', '');
-    return `<strong>${start}</b><br><br><span>${title}</span>`;
+    const date = _.get(eventObj, 'event.start');
+    const title = _.get(eventObj, 'event.title');
+    if (date && title) {
+      const start = moment(date).format('LLLL');
+      return `<strong>${start}</b><br><br><span>${title}</span>`;
+    }
+    return '';
   }
 }
