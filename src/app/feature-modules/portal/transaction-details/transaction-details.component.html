@@ -64,7 +64,12 @@
       </div>
       <div class="column-layout">
         <div class="row-layout"><label class="header">last activity</label></div>
-        <div class="row-layout" *ngFor="let item of transaction.lastLogs"><label>{{ item.createdAt | date: 'short' }}</label><span>{{ item.title }}</span></div>
+        <div class="scroll-content">
+          <div class="row-layout" *ngFor="let item of transaction.lastLogs">
+            <label>{{ item.createdAt | date: 'short' }}</label>
+            <span>{{ item.title }}</span>
+          </div>
+        </div>
         <div class="row-layout" style="opacity: .5"><label class="header">offer</label></div>
         <div class="row-layout" style="opacity: .5"><label></label><span>Signed by buyer 1 Lopushynsky</span></div>
         <div class="row-layout" style="opacity: .5"><label></label><span>Signed by seller 1 Serhii Movchan</span></div>
