@@ -12,6 +12,7 @@ import { AuthService } from './core-modules/core-services/auth.service';
 import { ProgressService } from './core-modules/core-services/progress.service';
 import { HttpBodyConverterInterceptor } from './core-modules/interceptors/http-body-converter.interceptor';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { SharedModule } from './shared-modules/shared.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,7 +24,8 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     MatSnackBarModule,
     MatProgressBarModule,
     MatIconModule,
-    FullCalendarModule
+    FullCalendarModule,
+    SharedModule.forRoot()
   ],
   providers: [
     AuthService,

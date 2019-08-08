@@ -25,9 +25,9 @@ const MatModules = [
     RouterModule,
     ReactiveFormsModule,
     PortalRoutingModule,
+    SharedModule,
     OverlayModule,
     ...MatModules,
-    SharedModule,
   ],
   declarations: [
     TransactionsComponent,

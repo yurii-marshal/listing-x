@@ -28,7 +28,8 @@ export class TransactionDetailsComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private transactionService: TransactionService,
               private snackbar: MatSnackBar,
-              private router: Router) { }
+              private router: Router) {
+  }
 
   ngOnInit() {
     const transactionId: number = Number(this.route.snapshot.params.id);
@@ -41,23 +42,20 @@ export class TransactionDetailsComponent implements OnInit {
   }
 
   onDelete() {
-    // FIXME:
-    /*    const config = {
-          data: {
-            message: 'Are you sure want to delete?',
-            dismiss: 'Cancel'
-          }
-        };
-        const snackBarRef = this.snackbar.openFromComponent(ConfirmationBarComponent, config);
-        snackBarRef.onAction()
-          .pipe(
-            switchMap(() => this.transactionService.delete(this.transaction.id)),
-            tap(() => this.snackbar.open('Successfully deleted item.'))
-          )
-          .subscribe(() => this.router.navigate(['/portal']));
-    */
-    this.transactionService.delete(this.transaction.id)
-      .subscribe(() => this.router.navigate(['/portal']))
+    // TODO: refactor to common CRUD abstract service
+    const config = {
+      data: {
+        message: 'Are you sure want to delete?',
+        dismiss: 'Cancel'
+      }
+    };
+    const snackBarRef = this.snackbar.openFromComponent(ConfirmationBarComponent, config);
+    snackBarRef.onAction()
+      .pipe(
+        switchMap(() => this.transactionService.delete(this.transaction.id)),
+        tap(() => this.snackbar.open('Successfully deleted item.'))
+      )
+      .subscribe(() => this.router.navigate(['/portal']));
   }
 
   getClassName(status: TransactionStatus): string {
@@ -70,7 +68,7 @@ export class TransactionDetailsComponent implements OnInit {
         return 'red';
       case TransactionStatus.Accepted:
       case TransactionStatus.Completed:
-        return  'green';
+        return 'green';
     }
   }
 
@@ -78,6 +76,6 @@ export class TransactionDetailsComponent implements OnInit {
     this.isOpenInviteUserOverlay = false;
     const email: string = this.userEmailControl.value;
     this.transactionService.inviteUser(email)
-      .subscribe(() => this.snackbar.open(`Invite sent to email: ${email}`))
+      .subscribe(() => this.snackbar.open(`Invite sent to email: ${email}`));
   }
 }

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormValidationErrorComponent } from './components/form-validation-error/form-validation-error.component';
 import {
@@ -98,4 +98,10 @@ const components = [
   ]
 })
 export class SharedModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: SharedModule,
+      providers: [],
+    };
+  }
 }
