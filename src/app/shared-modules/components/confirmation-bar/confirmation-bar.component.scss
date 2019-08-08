@@ -14,6 +14,10 @@ $snack-bar-button-vertical-margin:
   line-height: $snack-bar-line-height;
   opacity: 1;
 
+  .message {
+    font-size: 14px;
+  }
+
   .snackbar-action {
     flex-shrink: 0;
     margin: $snack-bar-button-vertical-margin $snack-bar-button-horizontal-margin * -1

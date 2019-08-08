@@ -51,7 +51,8 @@ export class AddressesListComponent implements OnInit, AfterViewInit {
       data: {
         message: 'Are you sure want to delete?',
         dismiss: 'Cancel'
-      }
+      },
+      duration: 0
     };
     const snackBarRef = this.snackbar.openFromComponent(ConfirmationBarComponent, config);
     snackBarRef.onAction()

@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TransactionService } from '../services/transaction.service';
 import { CalendarEvent, Transaction, TransactionStatus } from '../../../core-modules/models/transaction';
 import { FormControl, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { map, switchMap, tap } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { ConfirmationBarComponent } from '../../../shared-modules/components/confirmation-bar/confirmation-bar.component';
@@ -43,11 +43,12 @@ export class TransactionDetailsComponent implements OnInit {
 
   onDelete() {
     // TODO: refactor to common CRUD abstract service
-    const config = {
+    const config: MatSnackBarConfig = {
       data: {
         message: 'Are you sure want to delete?',
-        dismiss: 'Cancel'
-      }
+        dismiss: 'Cancel',
+      },
+      duration: 0
     };
     const snackBarRef = this.snackbar.openFromComponent(ConfirmationBarComponent, config);
     snackBarRef.onAction()
