@@ -83,8 +83,7 @@
 
     <div class="calendar-container">
       <h2 class="u-flex u-flex-justify--center">Calendar</h2>
-      <!--   FIXME: defaultView="dayGridMonth"   -->
-      <lis-calendar [dataSource]="calendarDataSource"></lis-calendar>
+      <lis-calendar [dataSource]="calendarDataSource" [defaultView]="CalendarView.Week"></lis-calendar>
     </div>
   </ng-container>
 </app-base-template>

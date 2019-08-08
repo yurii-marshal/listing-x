@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material';
 import { map, switchMap, tap } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { ConfirmationBarComponent } from '../../../shared-modules/components/confirmation-bar/confirmation-bar.component';
+import { CalendarView } from '../../../shared-modules/components/calendar/calendar.component';
 
 @Component({
   selector: 'app-transaction-details',
@@ -21,6 +22,8 @@ export class TransactionDetailsComponent implements OnInit {
   isOpenInviteUserOverlay: boolean;
 
   userEmailControl: FormControl = new FormControl(null, [Validators.required, Validators.email]);
+
+  CalendarView = CalendarView;
 
   constructor(private route: ActivatedRoute,
               private transactionService: TransactionService,

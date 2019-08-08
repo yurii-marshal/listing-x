@@ -1,4 +1,4 @@
-import { Component, ComponentRef, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ComponentRef, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CalendarEvent } from '../../../core-modules/models/transaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -22,12 +22,12 @@ export enum CalendarView {
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss']
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnInit, OnDestroy {
   @Input()
   dataSource: CalendarEvent[];
 
   @Input()
-  defaultView: CalendarView = CalendarView.Week;
+  defaultView: CalendarView = CalendarView.Month;
 
   calendarHeader = {
     center: 'title',
@@ -66,6 +66,10 @@ export class CalendarComponent implements OnInit {
         debounceTime(1000),
       )
       .subscribe(htmlText => this.attachOverlay(htmlText));
+  }
+
+  ngOnDestroy(): void {
+    this.debounceSubscription.unsubscribe();
   }
 
   @HostListener('mouseleave', ['$event'])
