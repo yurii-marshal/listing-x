@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { IDataService } from '../../../core-modules/interfaces/data.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { CalendarEvent, Transaction } from '../../../core-modules/models/transaction';
@@ -8,34 +8,28 @@ import { ApiEndpoint } from '../../../core-modules/enums/api-endpoints';
 import { map } from 'rxjs/operators';
 import * as _ from 'lodash';
 import * as moment from 'moment';
+import { BaseDataService } from '../../../core-modules/base-classes/base-data-service';
 
 @Injectable()
-export class TransactionService implements IDataService <Transaction> {
+export class TransactionService extends BaseDataService<Transaction> {
   private today = moment().utcOffset(0);
 
-  constructor(private http: HttpClient) {
+  protected crud: ApiEndpoint = ApiEndpoint.Transactions;
+
+  constructor(protected injector: Injector) {
+    super(injector);
   }
 
-  add(model: Transaction): Observable<Transaction> {
-    return undefined;
-  }
 
-  delete(id: number): Observable<void> {
-    const url: string = detailUrl(ApiEndpoint.Transactions, id);
-    return this.http.delete<void>(url);
-  }
-
+  // TODO: refactor
   loadList(params?: HttpParams): Observable<Transaction[]> {
     return this.http.get<Transaction[]>(ApiEndpoint.Transactions, {params});
   }
 
+  // TODO: refactor
   loadOne(id: number): Observable<Transaction> {
     const url: string = detailUrl(ApiEndpoint.Transactions, id);
     return this.http.get<Transaction>(url);
-  }
-
-  update(model: Transaction): Observable<Transaction> {
-    return undefined;
   }
 
   loadCalendar(start?: Date, end?: Date): Observable<CalendarEvent[]> {

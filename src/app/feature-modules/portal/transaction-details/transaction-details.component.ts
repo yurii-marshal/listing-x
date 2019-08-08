@@ -42,20 +42,7 @@ export class TransactionDetailsComponent implements OnInit {
   }
 
   onDelete() {
-    // TODO: refactor to common CRUD abstract service
-    const config: MatSnackBarConfig = {
-      data: {
-        message: 'Are you sure want to delete?',
-        dismiss: 'Cancel',
-      },
-      duration: 0
-    };
-    const snackBarRef = this.snackbar.openFromComponent(ConfirmationBarComponent, config);
-    snackBarRef.onAction()
-      .pipe(
-        switchMap(() => this.transactionService.delete(this.transaction.id)),
-        tap(() => this.snackbar.open('Successfully deleted item.'))
-      )
+    this.transactionService.delete(this.transaction.id)
       .subscribe(() => this.router.navigate(['/portal']));
   }
 
