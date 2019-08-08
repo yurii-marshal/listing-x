@@ -7,6 +7,7 @@
 
 .tooltip-container {
   background: mat-color($mat-grey, 700, 0.9);
+  max-width: 250px;
   font-size: 10px;
   color: white;
   border-radius: 4px;

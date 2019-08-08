@@ -1,4 +1,4 @@
-import { AfterViewInit, ComponentRef, Directive, ElementRef, HostListener, Input, OnInit, } from '@angular/core';
+import { ComponentRef, Directive, ElementRef, HostListener, Input, OnInit, } from '@angular/core';
 import { Overlay, OverlayPositionBuilder, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { TooltipContentComponent } from '../components/tooltip-content/tooltip-content.component';

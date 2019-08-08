@@ -11,6 +11,10 @@ h2 {font-size: 36px;}
 
 .fc {
   color: #444c5c;
+  .fc-event {
+    cursor: default;
+  }
+
   .fc-toolbar.fc-header-toolbar {
     button {
       &.fc-button-primary {
