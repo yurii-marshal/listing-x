@@ -1,17 +1,19 @@
-import { Injectable } from '@angular/core';
-import { IDataService } from '../../../core-modules/interfaces/data.service';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable, Injector } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { LocalStorageKey } from '../../../core-modules/enums/local-storage-key';
-import { detailUrl } from '../../../core-modules/utils/util';
 import { Offer, OfferSummary } from '../../../core-modules/models/offer';
 import { ApiEndpoint } from '../../../core-modules/enums/api-endpoints';
+import { BaseDataService } from '../../../core-modules/base-classes/base-data-service';
 
 @Injectable()
-export class OfferService implements IDataService <Offer> {
+export class OfferService extends BaseDataService<Offer> {
 
-  constructor(private http: HttpClient) {
+  protected crudEndpoint: ApiEndpoint = ApiEndpoint.Offer;
+
+  constructor(protected injector: Injector) {
+    super(injector);
   }
 
   add(model: Offer): Observable<Offer> {
@@ -26,32 +28,14 @@ export class OfferService implements IDataService <Offer> {
       );
   }
 
-  getAnonymousOffer(token): Observable<Offer> {
-    const url = detailUrl(ApiEndpoint.AnonymousOffer, token);
-    return this.http.get<Offer>(url);
-  }
-
-  delete(id: number): Observable<void> {
-    return undefined;
-  }
-
-  loadList(params?: HttpParams): Observable<Offer[]> {
-    return undefined;
-  }
-
-  loadOne(id: number): Observable<Offer> {
-    const url = detailUrl(ApiEndpoint.Offer, id);
-    return this.http.get<Offer>(url);
+  getAnonymousOffer(token: number): Observable<Offer> {
+    return this.http.get<Offer>(`/offers/token/${token}`);
   }
 
   loadOfferSummary(id: number): Observable<OfferSummary> {
     return this.http.get<OfferSummary>(`/offers/${id}/summary`);
   }
 
-  update(model: Offer): Observable<Offer> {
-    const url = detailUrl(ApiEndpoint.Offer, model.id);
-    return this.http.put<Offer>(url, model);
-  }
 
   get anonymousOfferData(): { offer: Offer, token: string } {
     const raw: string = localStorage.getItem(LocalStorageKey.Offer);

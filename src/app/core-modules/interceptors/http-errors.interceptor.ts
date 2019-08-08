@@ -42,7 +42,7 @@ export class HttpErrorsInterceptor implements HttpInterceptor {
       msg = this.formatMsg(errorResponse)
     }
 
-    this.snackBar.open(msg || 'Something went wrong', 'OK', {duration: 7000, panelClass: 'error-bar'});
+    this.snackBar.open(msg || 'Something went wrong', 'OK', {duration: 10 * 1000, panelClass: 'error-bar'});
   }
 
   private formatMsg(errorResponse: HttpErrorResponse) {
@@ -56,6 +56,7 @@ export class HttpErrorsInterceptor implements HttpInterceptor {
       .values()
       .join('\n')
       .truncate({length: 100})
-      .value();
+      .value()
+      .replace('non_field_errors:', '');
   }
 }

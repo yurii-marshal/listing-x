@@ -6,34 +6,45 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { ConfirmationBarComponent } from '../../shared-modules/components/confirmation-bar/confirmation-bar.component';
 import { switchMap, tap } from 'rxjs/operators';
 import { ApiEndpoint } from '../enums/api-endpoints';
-import { detailUrl } from '../utils/util';
 
-@Injectable()
-export abstract class BaseDataService<TModel> implements IDataService<TModel> {
+export abstract class BaseDataService<TModel extends {id: number}> implements IDataService<TModel> {
   protected snackbar: MatSnackBar;
   protected http: HttpClient;
+
+  protected abstract get crudEndpoint(): ApiEndpoint;
+
+  protected detailUrl(id: number): string {
+    return `${this.crudEndpoint}${id}/`
+  }
 
   constructor(protected injector: Injector) {
     this.snackbar = injector.get(MatSnackBar);
     this.http = injector.get(HttpClient);
   }
 
-  protected abstract get crud(): ApiEndpoint;
+  loadList(params?: HttpParams): Observable<TModel[]> {
+    return this.http.get<TModel[]>(this.crudEndpoint, {params});
+  }
+
+  loadOne(id: number): Observable<TModel> {
+    const url: string = this.detailUrl(id);
+    return this.http.get<TModel>(url);
+  }
 
   add(model: TModel): Observable<TModel> {
-    return undefined;
+    return this.http.post<TModel>(this.crudEndpoint, model);
   }
 
   delete(id: number): Observable<void> {
     const config: MatSnackBarConfig = {
+      duration: 0,
       data: {
         message: 'Are you sure want to delete?',
         dismiss: 'Cancel',
       },
-      duration: 0
     };
     const snackBarRef = this.snackbar.openFromComponent(ConfirmationBarComponent, config);
-    const url: string = detailUrl(this.crud, id);
+    const url: string = this.detailUrl(id);
     return snackBarRef.onAction()
       .pipe(
         switchMap(() => this.http.delete<void>(url)),
@@ -41,16 +52,9 @@ export abstract class BaseDataService<TModel> implements IDataService<TModel> {
       );
   }
 
-  loadList(params?: HttpParams): Observable<TModel[]> {
-    return undefined;
-  }
-
-  loadOne(id: number): Observable<TModel> {
-    return undefined;
-  }
-
   update(model: TModel): Observable<TModel> {
-    return undefined;
+    const url: string = `${this.crudEndpoint}${model.id}/`;
+    return this.http.put<TModel>(url, model);
   }
 
 }

@@ -1,9 +1,7 @@
 import { Injectable, Injector } from '@angular/core';
-import { IDataService } from '../../../core-modules/interfaces/data.service';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { CalendarEvent, Transaction } from '../../../core-modules/models/transaction';
 import { Observable, of } from 'rxjs';
-import { detailUrl } from '../../../core-modules/utils/util';
 import { ApiEndpoint } from '../../../core-modules/enums/api-endpoints';
 import { map } from 'rxjs/operators';
 import * as _ from 'lodash';
@@ -14,22 +12,10 @@ import { BaseDataService } from '../../../core-modules/base-classes/base-data-se
 export class TransactionService extends BaseDataService<Transaction> {
   private today = moment().utcOffset(0);
 
-  protected crud: ApiEndpoint = ApiEndpoint.Transactions;
+  protected crudEndpoint: ApiEndpoint = ApiEndpoint.Transactions;
 
   constructor(protected injector: Injector) {
     super(injector);
-  }
-
-
-  // TODO: refactor
-  loadList(params?: HttpParams): Observable<Transaction[]> {
-    return this.http.get<Transaction[]>(ApiEndpoint.Transactions, {params});
-  }
-
-  // TODO: refactor
-  loadOne(id: number): Observable<Transaction> {
-    const url: string = detailUrl(ApiEndpoint.Transactions, id);
-    return this.http.get<Transaction>(url);
   }
 
   loadCalendar(start?: Date, end?: Date): Observable<CalendarEvent[]> {

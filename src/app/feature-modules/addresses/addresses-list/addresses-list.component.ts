@@ -2,10 +2,9 @@ import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/co
 import { BaseTableDataSource } from '../../../core-modules/datasources/base-table-data-source';
 import { AddressesService } from '../../../core-modules/core-services/addresses.service';
 import { Address } from '../../../core-modules/models/address';
-import { filter, switchMap, tap } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { AddressDialogComponent } from '../../../shared-modules/dialogs/address-dialog/address-dialog.component';
-import { ConfirmationBarComponent } from '../../../shared-modules/components/confirmation-bar/confirmation-bar.component';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -45,21 +44,8 @@ export class AddressesListComponent implements OnInit, AfterViewInit {
     this.openDialog(item);
   }
 
-
   onDelete(item: Address) {
-    const config = {
-      data: {
-        message: 'Are you sure want to delete?',
-        dismiss: 'Cancel'
-      },
-      duration: 0
-    };
-    const snackBarRef = this.snackbar.openFromComponent(ConfirmationBarComponent, config);
-    snackBarRef.onAction()
-      .pipe(
-        switchMap(() => this.service.delete(item.id)),
-        tap(() => this.snackbar.open('Successfully deleted item.'))
-      )
+    this.service.delete(item.id)
       .subscribe(() => this.dataSource.reload());
   }
 
