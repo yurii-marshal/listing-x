@@ -8,7 +8,6 @@ import { CalendarEvent, Transaction, TransactionStatus } from '../../../core-mod
 import { TransactionService } from '../services/transaction.service';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
 import { Person } from '../../../core-modules/models/offer';
-import { wrapCalendarEvent } from '../../../shared-modules/components/calendar/calendar.component';
 import * as _ from 'lodash';
 
 @Component({
