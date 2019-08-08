@@ -12,7 +12,7 @@ export class DebounceClickDirective implements OnInit, OnDestroy {
   @Output()
   debounceClick = new EventEmitter();
 
-  private clicks;
+  private clicks: Subject<MouseEvent>;
   private subscription: Subscription;
 
 

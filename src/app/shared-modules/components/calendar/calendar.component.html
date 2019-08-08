@@ -1,6 +1,7 @@
 <full-calendar #calendar
                aspectRatio="1.7"
                nowIndicator="true"
+               eventLimit="true"
                (eventMouseEnter)="showPopover($event)"
                (eventMouseLeave)="hidePopover()"
                [defaultView]="defaultView"

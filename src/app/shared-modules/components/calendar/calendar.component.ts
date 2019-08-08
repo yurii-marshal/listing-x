@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, ComponentRef, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { CalendarEvent } from '../../../core-modules/models/transaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -9,6 +9,8 @@ import { Overlay, OverlayPositionBuilder, OverlayRef } from '@angular/cdk/overla
 import { TooltipContentComponent } from '../tooltip-content/tooltip-content.component';
 import { ComponentPortal } from '@angular/cdk/portal';
 import * as _ from 'lodash';
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime, tap } from 'rxjs/operators';
 
 export enum CalendarView {
   Month = 'dayGridMonth',
@@ -20,7 +22,7 @@ export enum CalendarView {
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss']
 })
-export class CalendarComponent  {
+export class CalendarComponent implements OnInit {
   @Input()
   dataSource: CalendarEvent[];
 
@@ -48,41 +50,65 @@ export class CalendarComponent  {
   calendarComponent: FullCalendarComponent;
 
   private overlayRef: OverlayRef;
+  private debounceSubject: Subject<string>;
+  private debounceSubscription: Subscription;
 
   constructor(private overlay: Overlay,
               private overlayPositionBuilder: OverlayPositionBuilder,
   ) {
   }
 
+  ngOnInit() {
+    this.debounceSubject = new Subject();
+    this.debounceSubscription = this.debounceSubject
+      .pipe(
+        debounceTime(700),
+        tap(() => this.hidePopover())
+      )
+      .subscribe(htmlText => this.attachOverlay(htmlText));
+  }
 
-  showPopover(eventObj) {
-    const elementRef: ElementRef = eventObj.el;
-    const offsetY = eventObj.view.type === CalendarView.Week ? 50 : 20;
-    const positionStrategy = this.overlayPositionBuilder.flexibleConnectedTo(elementRef).withPositions([
-      {
-        originX: 'center',
-        originY: 'top',
-        overlayX: 'center',
-        overlayY: 'top',
-        offsetY: offsetY,
-      }
-    ]);
-    this.overlayRef = this.overlay.create({positionStrategy});
+  showPopover(eventObj): void {
+    const elementRef: ElementRef = eventObj.el as ElementRef;
+    const calendarView: CalendarView = eventObj.view.type;
+    this.createOrUpdateOverlay(elementRef, calendarView);
     const htmlText = this.formatMessage(eventObj);
+    this.debounceSubject.next(htmlText);
+  }
+
+  hidePopover(): void {
+    if (this.overlayRef.hasAttached()) {
+      this.overlayRef.detach();
+    }
+  }
+
+  private attachOverlay(htmlText: string): void {
     const tooltipRef = this.overlayRef.attach(new ComponentPortal(TooltipContentComponent));
     tooltipRef.instance.text = htmlText;
+  }
 
+  private createOrUpdateOverlay(elementRef: ElementRef, calendarView: CalendarView) {
+    const offsetY = calendarView === CalendarView.Week ? 50 : 20;
+    const positionStrategy = this.overlayPositionBuilder.flexibleConnectedTo(elementRef).withPositions([
+      {
+        originX:  'center',
+        originY:  'top',
+        overlayX: 'center',
+        overlayY: 'top',
+        offsetY:   offsetY,
+      }
+    ]);
+
+    if (this.overlayRef) {
+      this.overlayRef.updatePositionStrategy(positionStrategy);
+    } else {
+      this.overlayRef = this.overlay.create({positionStrategy});
+    }
   }
 
   private formatMessage(eventObj) {
     const start = moment(eventObj.event.start).format('LLLL');
     const title = _.get(eventObj, 'event.title', '');
     return `<strong>${start}</b><br><br><span>${title}</span>`;
-  }
-
-  hidePopover() {
-    if (this.overlayRef.hasAttached()) {
-      this.overlayRef.detach();
-    }
   }
 }
