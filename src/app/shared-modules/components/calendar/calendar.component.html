@@ -2,6 +2,8 @@
                aspectRatio="1.7"
                nowIndicator="true"
                eventLimit="true"
+               [showNonCurrentDates]="false"
+               [fixedWeekCount]="false"
                [allDaySlot]="false"
                (eventMouseEnter)="showPopover($event)"
                (eventMouseLeave)="hidePopover()"
