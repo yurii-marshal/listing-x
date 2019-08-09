@@ -6,9 +6,7 @@ import { BaseDataService } from '../base-classes/base-data-service';
 @Injectable()
 export class AddressesService extends BaseDataService<Address> {
 
-  protected crudEndpoint: ApiEndpoint = ApiEndpoint.Addresses;
-
   constructor(protected injector: Injector) {
-    super(injector);
+    super(injector, ApiEndpoint.Addresses);
   }
 }

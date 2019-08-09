@@ -10,10 +10,8 @@ import { BaseDataService } from '../../../core-modules/base-classes/base-data-se
 @Injectable()
 export class OfferService extends BaseDataService<Offer> {
 
-  protected crudEndpoint: ApiEndpoint = ApiEndpoint.Offer;
-
   constructor(protected injector: Injector) {
-    super(injector);
+    super(injector, ApiEndpoint.Offer);
   }
 
   add(model: Offer): Observable<Offer> {
@@ -22,7 +20,7 @@ export class OfferService extends BaseDataService<Offer> {
     if (offerData) {
       params = params.set('token', offerData.token);
     }
-    return this.http.post<Offer>(ApiEndpoint.Offer, model, {params: params})
+    return this.http.post<Offer>(this.crudEndpoint, model, {params: params})
       .pipe(
         tap(() => offerData && localStorage.removeItem(LocalStorageKey.Offer)) // tear down
       );

@@ -12,10 +12,8 @@ import { BaseDataService } from '../../../core-modules/base-classes/base-data-se
 export class TransactionService extends BaseDataService<Transaction> {
   private today = moment().utcOffset(0);
 
-  protected crudEndpoint: ApiEndpoint = ApiEndpoint.Transactions;
-
   constructor(protected injector: Injector) {
-    super(injector);
+    super(injector, ApiEndpoint.Transactions);
   }
 
   loadCalendar(start?: Date, end?: Date): Observable<CalendarEvent[]> {

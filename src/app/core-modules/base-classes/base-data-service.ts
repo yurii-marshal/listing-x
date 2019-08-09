@@ -7,17 +7,21 @@ import { ConfirmationBarComponent } from '../../shared-modules/components/confir
 import { switchMap, tap } from 'rxjs/operators';
 import { ApiEndpoint } from '../enums/api-endpoints';
 
+/*
+* Base CRUD dataservice
+* */
 export abstract class BaseDataService<TModel extends {id: number}> implements IDataService<TModel> {
   protected snackbar: MatSnackBar;
   protected http: HttpClient;
 
-  protected abstract get crudEndpoint(): ApiEndpoint;
 
   protected detailUrl(id: number): string {
     return `${this.crudEndpoint}${id}/`
   }
 
-  constructor(protected injector: Injector) {
+  constructor(protected injector: Injector,
+              protected crudEndpoint: ApiEndpoint) {
+
     this.snackbar = injector.get(MatSnackBar);
     this.http = injector.get(HttpClient);
   }
@@ -56,5 +60,4 @@ export abstract class BaseDataService<TModel extends {id: number}> implements ID
     const url: string = `${this.crudEndpoint}${model.id}/`;
     return this.http.put<TModel>(url, model);
   }
-
 }
