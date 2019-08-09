@@ -41,7 +41,7 @@ export class WriteOfferStepTwoDialogComponent implements OnInit {
     this.form = this.formBuilder.group({
       loans: this.formBuilder.array([ this.createLoan() ]),
       loanType: [LoanType.CONVENTIONAL],
-      downPayment: [],
+      downPayment: [{value: null, disabled: true}],
       anySpecialFinancialTerms: [],
     });
 
@@ -77,7 +77,7 @@ export class WriteOfferStepTwoDialogComponent implements OnInit {
   createLoan(model?: Loan): FormGroup {
     const formGroup = this.formBuilder.group({
       initialDeposit: [null, [CustomValidators.number]],
-      loanAmount: [null, [Validators.required, CustomValidators.number]],
+      loanAmount: [null, [CustomValidators.number]],
       interestRate: [null, [CustomValidators.number, Validators.max(100)]],
       points: [null, [CustomValidators.number, Validators.max(100)]]
     });
