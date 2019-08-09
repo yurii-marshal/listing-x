@@ -24,10 +24,10 @@ const MatModules  = [
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    AnonymousRoutingModule,
     ...MatModules,
     SharedModule,
     RouterModule,
-    AnonymousRoutingModule
   ]
 })
 export class AnonymousModule { }

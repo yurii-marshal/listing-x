@@ -34,7 +34,6 @@ export class OfferService extends BaseDataService<Offer> {
     return this.http.get<OfferSummary>(`/offers/${id}/summary`);
   }
 
-
   get anonymousOfferData(): { offer: Offer, token: string } {
     const raw: string = localStorage.getItem(LocalStorageKey.Offer);
     if (!raw) {

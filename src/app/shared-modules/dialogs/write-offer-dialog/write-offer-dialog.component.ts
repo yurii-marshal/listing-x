@@ -8,6 +8,7 @@ import { OfferService } from '../../../feature-modules/portal/services/offer.ser
 import { of } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../core-modules/core-services/auth.service';
 
 enum Type {
   Buyers = 'buyers',
@@ -34,6 +35,7 @@ export class WriteOfferDialogComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private service: OfferService,
+              private authService: AuthService,
               private snackbar: MatSnackBar,
               private router: Router,
               public dialogRef: MatDialogRef<WriteOfferDialogComponent>,
@@ -45,11 +47,10 @@ export class WriteOfferDialogComponent implements OnInit {
   }
 
   private buildForm() {
-    const disabled: boolean = Boolean(this.data.isAnonymous); // TODO: or statement LIS-65
-
+    const disabled: boolean = Boolean(this.data.isAnonymous);
     this.form = this.formBuilder.group({
       id: [null, []],
-      buyers: this.formBuilder.array([this.createEntity()]),
+      buyers: this.formBuilder.array([this.predefinedBuyer]),
       sellers: this.formBuilder.array([this.createEntity()]),
       streetName: [{value: null, disabled}, [Validators.required]],
       city: [{value: null, disabled}, [Validators.required, Validators.maxLength(255)]],
@@ -65,22 +66,21 @@ export class WriteOfferDialogComponent implements OnInit {
     }
   }
 
+  private get predefinedBuyer() {
+    return (this.data.isAnonymous)
+       ? this.createEntity()
+       : this.createEntity(this.authService.currentUser, !this.data.isAnonymous);
+  }
+
   applyFormValues(model?: Offer) {
-    this.form.patchValue({
-      id: model.id,
-      streetName: model.streetName,
-      city: model.city,
-      state: model.state,
-      zip: model.zip,
-      apn: model.apn,
-      price: model.price,
-      closeEscrowDays: model.closeEscrowDays,
-    });
+    const names: string[] = Object.keys(this.form.controls);
+    const formControlNames: string[] = _.without(names, 'buyers', 'sellers');
+    const formData = _.pick(model, formControlNames);
+    this.form.patchValue(formData);
 
     // Nested forms
-
     if (!_.isEmpty(model.buyers)) {
-      const buyers = _.map(model.buyers, item => this.createEntity(item));
+      const buyers = _.map(model.buyers, (item: Person, i: number) => this.createEntity(item, i === 0));
       this.form.setControl('buyers', this.formBuilder.array(buyers));
     }
 

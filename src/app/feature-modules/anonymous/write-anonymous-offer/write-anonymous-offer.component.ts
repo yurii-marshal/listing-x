@@ -21,12 +21,8 @@ export class WriteAnonymousOfferComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    const token = this.route.snapshot.params.token;
-    this.service.getAnonymousOffer(token)
-      .pipe(
-        tap({error: err => this.router.navigateByUrl('/error/expired')})
-      )
-      .subscribe((model: Offer) => this.openDialog(model));
+    const model = this.route.snapshot.data.model as Offer;
+    this.openDialog(model);
   }
 
   private openDialog(model: Offer) {

@@ -9,7 +9,7 @@ import { WriteOfferStepTwoDialogComponent } from '../../shared-modules/dialogs/w
 import { WriteOfferUploadDocumentsDialogComponent } from '../../shared-modules/dialogs/write-offer-upload-documents-dialog/write-offer-upload-documents-dialog.component';
 import { WriteOfferSummaryComponent } from '../../shared-modules/dialogs/write-offer-summary/write-offer-summary.component';
 import { OfferDocumentsResolver } from './resolvers/offer-documents.resolver';
-import { AnonymousOfferResolver } from './resolvers/anonymous-offer.resolver';
+import { CreateOfferResolver } from './resolvers/create-offer-resolver';
 import { OfferSummaryResolver } from './resolvers/offer-summary.resolver';
 import { TransactionDetailsComponent } from './transaction-details/transaction-details.component';
 
@@ -21,14 +21,14 @@ const routes: Routes = [
     canActivateChild: [AuthGuardService],
     children: [
       {
-        path: 'offer', //Dialogs
+        path: 'offer', // Dialogs
         children: [
           {
             path: '',
             pathMatch: 'full',
             component: DialogsWrapperComponent,
             data: { component: WriteOfferDialogComponent},
-            resolve: {model: AnonymousOfferResolver}
+            resolve: {model: CreateOfferResolver}
           }, {
             path: ':id',
             children: [
@@ -76,7 +76,7 @@ const routes: Routes = [
   providers: [
     AuthGuardService,
     OfferResolver,
-    AnonymousOfferResolver,
+    CreateOfferResolver,
     OfferDocumentsResolver,
     OfferSummaryResolver
   ]

@@ -8,7 +8,7 @@ import * as _ from 'lodash';
 import { LocalStorageKey } from '../../../core-modules/enums/local-storage-key';
 
 @Injectable()
-export class AnonymousOfferResolver implements Resolve<Offer> {
+export class CreateOfferResolver implements Resolve<Offer> {
 
   constructor(private http: HttpClient,
               private authService: AuthService) {

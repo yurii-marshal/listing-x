@@ -8,7 +8,7 @@
   <form novalidate [formGroup]="form" style="width: 100%!important;">
     <div>
       <h4>Buyer information</h4>
-      <div *ngFor="let control of buyers.controls; let i = index;" [formGroup]="control">
+      <div *ngFor="let control of buyers.controls; let i = index; let first = first" [formGroup]="control">
         <h6 class="subtitle">buyer #{{ i + 1}}</h6>
         <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
           <div class="fieldset u-flex-1">
@@ -26,7 +26,7 @@
             <input formControlName="email" placeholder="Email" spellcheck="false" class="form-control">
             <app-form-validation-error [baseControl]="control.get('email')"></app-form-validation-error>
           </div>
-          <button *ngIf="buyers.controls.length > 1" mat-icon-button color="accent" (click)="remove(Type.Buyers, i)">
+          <button *ngIf="!first" mat-icon-button color="accent" (click)="remove(Type.Buyers, i)">
             <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
           </button>
         </div>
@@ -36,7 +36,7 @@
 
     <div>
       <h4 *ngIf="!data.isAnonymous">seller information</h4>
-      <div *ngFor="let control of sellers.controls; let i = index" [formGroup]="control">
+      <div *ngFor="let control of sellers.controls; let i = index; let first = first" [formGroup]="control">
         <h6 class="subtitle">seler #{{ i + 1}}</h6>
         <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
           <div class="fieldset u-flex-1">
@@ -54,7 +54,7 @@
             <input formControlName="email" placeholder="Email" spellcheck="false" class="form-control">
             <app-form-validation-error [baseControl]="control.get('email')"></app-form-validation-error>
           </div>
-          <button *ngIf="sellers.controls.length > 1" mat-icon-button color="accent" (click)="remove(Type.Sellers, i)">
+          <button *ngIf="!first" mat-icon-button color="accent" (click)="remove(Type.Sellers, i)">
             <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
           </button>
         </div>
