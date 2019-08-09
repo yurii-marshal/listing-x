@@ -41,13 +41,16 @@ export class WriteOfferStepTwoDialogComponent implements OnInit {
     this.form = this.formBuilder.group({
       loans: this.formBuilder.array([ this.createLoan() ]),
       loanType: [LoanType.CONVENTIONAL],
-      downPayment: [],
+      downPayment: [{value: null, disabled: true}],
       anySpecialFinancialTerms: [],
     });
 
     if (this.data.model) {
       this.applyFormValues();
     }
+
+    this.loans.valueChanges
+      .subscribe(() => this.recalculateDownPayment())
   }
 
   applyFormValues() {
@@ -74,7 +77,7 @@ export class WriteOfferStepTwoDialogComponent implements OnInit {
   createLoan(model?: Loan): FormGroup {
     const formGroup = this.formBuilder.group({
       initialDeposit: [null, [CustomValidators.number]],
-      loanAmount: [null, [CustomValidators.number]],
+      loanAmount: [null, [Validators.required, CustomValidators.number]],
       interestRate: [null, [CustomValidators.number, Validators.max(100)]],
       points: [null, [CustomValidators.number, Validators.max(100)]]
     });
@@ -87,12 +90,24 @@ export class WriteOfferStepTwoDialogComponent implements OnInit {
 
   close(): void {
     const model: Offer = _.cloneDeep(this.data.model); // keep all fields from step 1 and extend with step 2 fields
-    Object.assign(model, this.form.value);
+    Object.assign(model, this.form.getRawValue());
     //TODO: only do http request in case: form.dirty
     this.service.update(model)
       .subscribe(() => {
         this.dialogRef.close(model);
         this.router.navigate(['/portal/offer', model.id, 'upload']);
       })
+  }
+
+  private recalculateDownPayment() {
+    const price = Number(this.data.model.price);
+    const amount: number = _.chain(this.loans.controls)
+      .map(control => control.get('loanAmount').value)
+      .filter(amount => _.identity(amount) && !isNaN(amount))
+      .reduce((subtract: number, value: number) => subtract - Number(value), price)
+      .ceil(2)
+      .value();
+
+    this.form.get('downPayment').setValue(amount);
   }
 }
