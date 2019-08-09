@@ -39,6 +39,11 @@ export abstract class BaseDataService<TModel extends {id: number}> implements ID
     return this.http.post<TModel>(this.crudEndpoint, model);
   }
 
+  update(model: TModel): Observable<TModel> {
+    const url: string = this.detailUrl(model.id);
+    return this.http.put<TModel>(url, model);
+  }
+
   delete(id: number): Observable<void> {
     const config: MatSnackBarConfig = {
       duration: 0,
@@ -56,8 +61,4 @@ export abstract class BaseDataService<TModel extends {id: number}> implements ID
       );
   }
 
-  update(model: TModel): Observable<TModel> {
-    const url: string = `${this.crudEndpoint}${model.id}/`;
-    return this.http.put<TModel>(url, model);
-  }
 }

@@ -1,6 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { LocalStorageKey } from '../../../core-modules/enums/local-storage-key';
 import { Offer, OfferSummary } from '../../../core-modules/models/offer';
@@ -9,6 +9,7 @@ import { BaseDataService } from '../../../core-modules/base-classes/base-data-se
 
 @Injectable()
 export class OfferService extends BaseDataService<Offer> {
+  public offerChanged: Subject<void> = new Subject<void>();
 
   constructor(protected injector: Injector) {
     super(injector, ApiEndpoint.Offer);
@@ -22,8 +23,14 @@ export class OfferService extends BaseDataService<Offer> {
     }
     return this.http.post<Offer>(this.crudEndpoint, model, {params: params})
       .pipe(
+        tap(() => this.offerChanged.next()),
         tap(() => offerData && localStorage.removeItem(LocalStorageKey.Offer)) // tear down
       );
+  }
+
+  update(model: Offer): Observable<Offer> {
+    return super.update(model)
+      .pipe( tap(() => this.offerChanged.next()) );
   }
 
   getAnonymousOffer(token: number): Observable<Offer> {

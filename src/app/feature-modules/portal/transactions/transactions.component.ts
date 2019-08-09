@@ -9,6 +9,7 @@ import { TransactionService } from '../services/transaction.service';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
 import { Person } from '../../../core-modules/models/offer';
 import * as _ from 'lodash';
+import { OfferService } from '../services/offer.service';
 
 @Component({
   selector: 'app-transactions',
@@ -27,6 +28,7 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
 
   constructor(private router: Router,
               private service: TransactionService,
+              private offerService: OfferService,
               private authService: AuthService,
               private dialog: MatDialog,
               private cdr: ChangeDetectorRef) { }
@@ -34,6 +36,9 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.service.loadCalendar()
       .subscribe(events => this.calendarDataSource = events);
+
+    this.offerService.offerChanged
+      .subscribe(() => this.dataSource.reload());
   }
 
   ngAfterViewInit(): void {
