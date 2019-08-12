@@ -4,7 +4,7 @@ import { ESignatureComponent } from './e-signature/e-signature.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: ':id',
     component: ESignatureComponent
   }
 ];
