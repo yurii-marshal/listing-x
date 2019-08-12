@@ -18,6 +18,8 @@ export interface Offer {
   price: number;
   closeEscrowDays: number;
 
+  // Second step
+  initialDeposit: string;
   loans?: Loan[];
   loanType?: LoanType;  // CONVENTIONAL LOAN,
   downPayment?: number;
@@ -32,7 +34,6 @@ export interface Person {
 }
 
 export class Loan {
-  initialDeposit: string;
   loanAmount: string;
   interestRate: number;
   points: number;

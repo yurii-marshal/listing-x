@@ -8,14 +8,14 @@
   <form novalidate [formGroup]="form" style="width: 100%!important;">
     <div>
       <h4>Payment information</h4>
+      <div class="fieldset">
+        <label>Initial deposit</label>
+        <input formControlName="initialDeposit" placeholder="Deposit" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="form.get('initialDeposit')"></app-form-validation-error>
+      </div>
       <div *ngFor="let control of loans.controls; let i = index;" [formGroup]="control">
         <h6 *ngIf="loans.controls.length > 1" class="subtitle">loan #{{ i + 1}}</h6>
         <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
-          <div class="fieldset u-flex-1">
-            <label>Initial deposit</label>
-            <input formControlName="initialDeposit" placeholder="Deposit" spellcheck="false" class="form-control">
-            <app-form-validation-error [baseControl]="control.get('initialDeposit')"></app-form-validation-error>
-          </div>
           <div class="fieldset u-flex-1">
             <label>loan amount</label>
             <input formControlName="loanAmount" placeholder="Amount" spellcheck="false" class="form-control">

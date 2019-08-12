@@ -39,6 +39,7 @@ export class WriteOfferStepTwoDialogComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
+      initialDeposit: [null, [CustomValidators.number]],
       loans: this.formBuilder.array([ this.createLoan() ]),
       loanType: [LoanType.CONVENTIONAL],
       downPayment: [{value: null, disabled: true}],
