@@ -69,6 +69,6 @@ export class TransactionDetailsComponent implements OnInit {
 
   goToESign() {
     this.transactionService.lockOffer(this.transaction.id)
-    // routerLink="/e-sign/{{ transaction.id }}"
+      .subscribe(() => this.router.navigate(['/e-sign', this.transaction.id]))
   }
 }

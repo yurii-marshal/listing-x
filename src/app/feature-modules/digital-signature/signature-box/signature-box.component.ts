@@ -1,9 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 export enum SignMode {
-  Initials,
-  Sign,
-  UnSign
+  Sign = 1,
+  UnSign = -1
 }
 
 
@@ -14,17 +13,28 @@ export enum SignMode {
 })
 export class SignatureBoxComponent implements OnInit {
   @Input()
-  mode: SignMode = SignMode.Initials;
+  isInitialsMode: boolean = true;
+
+  mode: SignMode = SignMode.Sign;
+
+  SignMode = SignMode;
 
   @Output()
-  sign: EventEmitter<void> = new EventEmitter<void>();
-
-  @Output()
-  unsign: EventEmitter<void> = new EventEmitter<void>();
+  sign: EventEmitter<SignMode> = new EventEmitter<SignMode>();
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  process() {
+    this.sign.emit(this.mode);
+    // Toggle
+    if (this.mode === SignMode.Sign) {
+      this.mode = SignMode.UnSign;
+    } else {
+      this.mode = SignMode.Sign;
+    }
   }
 
 }

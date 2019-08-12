@@ -1,4 +1,6 @@
-<div class="arrow_box">
+<div [class.un-sign]="mode === SignMode.UnSign" (click)="process()" class="arrow_box">
   <mat-icon fontSet="fa" fontIcon="fa-signature" class="icon"></mat-icon>
-  <div class="text">Sign</div>
+  <div class="text">{{ this.mode === SignMode.UnSign ? 'Unsign' : this.isInitialsMode ? 'Initials' : 'Sign' }}</div>
 </div>
+
+(<div style="width: 80px; height:20px;border: none;border-bottom: solid 1px black;"></div>)
