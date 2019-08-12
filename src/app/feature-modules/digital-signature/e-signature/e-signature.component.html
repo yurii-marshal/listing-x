@@ -368,9 +368,10 @@
       <div class="clearfix">
         <div class="col-left-initials">
           <label>Buyer's Initials</label>
-          (<input  disabled type="text" name="" id="Buyer-1">) &nbsp;
+          (<app-signature-box></app-signature-box>)
+<!--          (<input  disabled type="text" name="" id="Buyer-1">) &nbsp;-->
           (<input  disabled type="text" name="" id="Buyer-2">)
-          <div>&#169; 1991-2018, California Association of REALTORS &#174;, Inc.</div>
+          <div>&#169; 1991-{{ currentYear }}, California Association of REALTORS &#174;, Inc.</div>
         </div>
 
         <div class="col-right-initials">
@@ -414,10 +415,10 @@
 						Bret Pfeifer
 					</span>
           &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
-          <span>
+          <!--span>
 						Produced with zipForm &#174; by zipLogix 18070 Fifteen Mile Road, Fraser, Michigan 48026 <a
             href="www.zipLogix.com">www.zipLogix.com</a>
-					</span>
+					</span-->
         </div>
       </div>
     </footer>
@@ -682,7 +683,7 @@
 
       <br>
       <div class="California-Association ml-4">
-        &#169;1991- 2018, California Association of REALTORS&#174;, Inc. United States copyright law (Title 17 U.S. Code)
+        &#169;1991- {{ currentYear }}, California Association of REALTORS&#174;, Inc. United States copyright law (Title 17 U.S. Code)
         forbids the unauthorized distribution, display and reproduction of this
         form, or any portion thereof, by photocopy machine or any other means, including facsimile or computerized
         formats.
@@ -720,18 +721,14 @@
         </div>
         <img src="assets/pdf2html/housing.png" width="70" height="60" class="housing">
       </div>
-
       <div class="font-weight-bold font-size-22">RPA-CA REVISED 12/18 (PAGE 10 of 10)</div>
       <div class="font-weight-bold text-center font-size-22">CALIFORNIA RESIDENTIAL PURCHASE AGREEMENT (RPA-CA PAGE 10 OF
         10)
       </div>
-
       <div style="display: none;" class="font-size-16 text-center ml-4">
         <span class="font-size-12"> Produced with zipForm&#174; by zipLogix 18070 Fifteen Mile Road, Fraser, Michigan 48026 www.zipLogix.com</span>
         David West
       </div>
-
-
     </form>
   </div>
 </app-base-template>

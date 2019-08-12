@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./e-signature.component.scss']
 })
 export class ESignatureComponent implements OnInit {
+  currentYear: number = new Date().getFullYear();
 
   constructor() { }
 

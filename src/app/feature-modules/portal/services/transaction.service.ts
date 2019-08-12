@@ -30,6 +30,11 @@ export class TransactionService extends BaseDataService<Transaction> {
     return of(null);
   }
 
+  lockOffer(transactionId: number): Observable<void> {
+    // TODO:
+    return of(null);
+  }
+
   private fetchCalendarData(url: string, start: Date, end: Date) {
     let params = new HttpParams();
     if (start) {

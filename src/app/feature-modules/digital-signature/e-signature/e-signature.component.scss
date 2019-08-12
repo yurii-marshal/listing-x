@@ -1,8 +1,3 @@
-body {
-  font-size: 18px;
-  font-family: sans-serif;
-}
-
 input {
   border:none;
   border-bottom: solid 1px black;
@@ -21,18 +16,13 @@ a {
   float: left;
 }
 
-header {
-  /*height: 0px;*/
-}
 
 .box {
-  /*margin-top: 10px;*/
   height: 100px;
   width: 900px;
   float: right;
   text-align: center;
   font-weight: bold;
-  /*font-size: 20px;*/
   margin-right: 50px;
 }
 

@@ -66,4 +66,9 @@ export class TransactionDetailsComponent implements OnInit {
     this.transactionService.inviteUser(email)
       .subscribe(() => this.snackbar.open(`Invite sent to email: ${email}`));
   }
+
+  goToESign() {
+    this.transactionService.lockOffer(this.transaction.id)
+    // routerLink="/e-sign/{{ transaction.id }}"
+  }
 }
