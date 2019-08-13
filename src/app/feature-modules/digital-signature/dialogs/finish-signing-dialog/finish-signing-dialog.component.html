@@ -1,0 +1,24 @@
+<div mat-dialog-title class="u-flex u-flex-justify--space-between u-flex-align-items--center">
+  <div class="title">Last Step</div>
+  <button mat-icon-button mat-dialog-close>
+    <mat-icon fontSet="fa" fontIcon="fa-times"></mat-icon>
+  </button>
+</div>
+
+<div mat-dialog-content class="form-container dialog-form" style="min-height: 400px">
+
+  <p>Finished signing?</p>
+    <div>
+    Almost done! If you’re finished with this document(s), tap <b>Finish</b> below to confirm your signatures and other
+    entries on this document(s). If you want to spend more time reviewing the document(s), select <b>Stay Here</b>.
+    You’ll see the documents again, and can click <b>Finish Signing</b> at the bottom of the screen when you’re done
+    reviewing the document.
+  </div>
+</div>
+
+<div mat-dialog-actions class="fieldset u-flex u-flex-justify--space-between u-flex-align-items--center button-bar">
+  <button mat-stroked-button mat-dialog-close color="primary">STAY HERE</button>
+  <button mat-flat-button appDebounceClick
+          (debounceClick)="sign()"
+          color="primary">FINISH</button>
+</div>

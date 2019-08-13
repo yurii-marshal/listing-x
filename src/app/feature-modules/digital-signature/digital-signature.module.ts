@@ -3,16 +3,22 @@ import { CommonModule } from '@angular/common';
 import { DigitalSignatureRoutingModule } from './digital-signature-routing.module';
 import { ESignatureComponent } from './e-signature/e-signature.component';
 import { SharedModule } from '../../shared-modules/shared.module';
-import { MatIconModule } from '@angular/material';
-import { SignatureBoxComponent } from './signature-box/signature-box.component';
+import { MatButtonModule, MatIconModule, MatProgressBarModule } from '@angular/material';
+import { SignatureBoxComponent } from './components/signature-box/signature-box.component';
+import { FinishSigningDialogComponent } from './dialogs/finish-signing-dialog/finish-signing-dialog.component';
 
 @NgModule({
-  declarations: [ESignatureComponent, SignatureBoxComponent],
+  declarations: [ESignatureComponent, SignatureBoxComponent, FinishSigningDialogComponent],
   imports: [
     CommonModule,
     SharedModule,
     DigitalSignatureRoutingModule,
-    MatIconModule
+    MatIconModule,
+    MatButtonModule,
+    MatProgressBarModule
+  ],
+  entryComponents: [
+    FinishSigningDialogComponent
   ]
 })
 export class DigitalSignatureModule { }

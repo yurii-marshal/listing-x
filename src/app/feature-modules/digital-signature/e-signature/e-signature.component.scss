@@ -1,3 +1,7 @@
+:host {
+  color: rgba(0, 0, 0, 0.87);
+}
+
 input {
   border:none;
   border-bottom: solid 1px black;
@@ -351,4 +355,9 @@ form {
 
 .font-size-22 {
   font-size: 22px;
+}
+
+
+.mat-progress-bar {
+  height: 25px;
 }

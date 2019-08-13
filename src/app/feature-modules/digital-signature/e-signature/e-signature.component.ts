@@ -1,9 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { SignatureBoxComponent, SignMode } from '../signature-box/signature-box.component';
-import { map, mapTo, scan } from 'rxjs/operators';
-import { combineLatest, merge } from 'rxjs';
-import * as _ from 'lodash';
-import { ProgressBarState } from '../../../core-modules/core-services/progress.service';
+import { SignatureBoxComponent, SignMode } from '../components/signature-box/signature-box.component';
+import { map, scan, tap } from 'rxjs/operators';
+import { merge } from 'rxjs';
 
 @Component({
   selector: 'app-e-signature',
@@ -12,6 +10,10 @@ import { ProgressBarState } from '../../../core-modules/core-services/progress.s
 })
 export class ESignatureComponent implements OnInit, AfterViewInit {
   currentYear: number = new Date().getFullYear();
+
+  signEnabled: boolean;
+
+  progress: number;
 
   @ViewChildren(SignatureBoxComponent)
   private signatures: QueryList<SignatureBoxComponent>;
@@ -24,12 +26,20 @@ export class ESignatureComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     const signSteams = this.signatures.map(component => component.sign);
 
-    const signDone = merge(...signSteams)
+    const count = this.signatures.length;
+    merge(...signSteams)
       .pipe(
-        scan((total: number, state: SignMode) => total - state, this.signatures.length),
+        scan((total: number, state: SignMode) => total - state, count),
+        tap((value: number) => this.progress = Math.ceil(100 * (count - value) / count)),
         map((diff: number) => diff === 0),
+        tap(done => this.signEnabled = done)
       )
       .subscribe(done => console.log('Done', done));
+  }
+
+
+  signAnAgreement() {
+
   }
 
 }

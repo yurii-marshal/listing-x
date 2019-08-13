@@ -6,7 +6,7 @@ import {
   MatButtonModule,
   MatCheckboxModule,
   MatDialogModule,
-  MatIconModule,
+  MatIconModule, MatProgressSpinnerModule,
   MatRadioModule,
   MatTabsModule
 } from '@angular/material';
@@ -46,6 +46,7 @@ const materialModules = [
   MatBadgeModule,
   MatRadioModule,
   A11yModule,
+  MatProgressSpinnerModule
 ];
 
 const dialogs = [
