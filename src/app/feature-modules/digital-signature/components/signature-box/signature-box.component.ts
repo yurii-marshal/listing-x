@@ -1,12 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AuthService } from '../../../../core-modules/core-services/auth.service';
 import { User } from '../../../auth/models';
+import { ActivatedRoute } from '@angular/router';
+import { Person } from '../../../../core-modules/models/offer';
 
 export enum SignMode {
   Sign = 1,
   UnSign = -1
 }
-
 
 @Component({
   selector: 'app-signature-box',
@@ -15,18 +16,22 @@ export enum SignMode {
 })
 export class SignatureBoxComponent implements OnInit {
   @Input()
+  user: Person;
+
+  @Input()
   signWithInitials: boolean = true;
+
+  @Output()
+  sign: EventEmitter<SignMode> = new EventEmitter<SignMode>();
 
   mode: SignMode = SignMode.Sign;
 
   currentUser: User;
 
-  @Output()
-  sign: EventEmitter<SignMode> = new EventEmitter<SignMode>();
-
   SignMode = SignMode;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.currentUser = this.authService.currentUser;

@@ -34,7 +34,6 @@ export class TransactionDetailsComponent implements OnInit {
   ngOnInit() {
     const transactionId: number = Number(this.route.snapshot.params.id);
     this.transactionService.loadOne(transactionId)
-      .pipe(tap(data => console.log('data: ', data)))
       .subscribe((transaction: Transaction) => this.transaction = transaction);
 
     this.transactionService.loadCalendarByTransaction(transactionId)

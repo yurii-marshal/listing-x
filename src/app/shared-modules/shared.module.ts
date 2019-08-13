@@ -6,7 +6,8 @@ import {
   MatButtonModule,
   MatCheckboxModule,
   MatDialogModule,
-  MatIconModule, MatProgressSpinnerModule,
+  MatIconModule,
+  MatProgressSpinnerModule,
   MatRadioModule,
   MatTabsModule
 } from '@angular/material';
@@ -35,6 +36,7 @@ import { OfferService } from '../feature-modules/portal/services/offer.service';
 import { DocumentLinkingService } from '../feature-modules/portal/services/document-linking.service';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { FirstLetterPipe } from './pipes/first-letter.pipe';
 
 const materialModules = [
   MatDialogModule,
@@ -72,6 +74,7 @@ const components = [
   FileOption,
   FileUploaderComponent,
   CalendarComponent,
+  FirstLetterPipe,
   ...dialogs
 ];
 
@@ -84,7 +87,7 @@ const components = [
     ...materialModules
   ],
   declarations: [
-    ...components
+    ...components,
   ],
   exports: [
     ...components

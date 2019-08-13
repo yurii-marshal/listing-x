@@ -5,6 +5,8 @@ import { merge, Observable } from 'rxjs';
 import { FinishSigningDialogComponent } from '../dialogs/finish-signing-dialog/finish-signing-dialog.component';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
+import { Transaction } from '../../../core-modules/models/transaction';
+import { TransactionService } from '../../portal/services/transaction.service';
 
 @Component({
   selector: 'app-e-signature',
@@ -16,16 +18,22 @@ export class ESignatureComponent implements OnInit, AfterViewInit {
 
   signEnabled: boolean;
 
-  progress: number;
+  progress: number; // %
+
+  transaction: Transaction;
 
   @ViewChildren(SignatureBoxComponent)
   private signatures: QueryList<SignatureBoxComponent>;
 
   constructor(private cdr: ChangeDetectorRef,
               private dialog: MatDialog,
+              private transactionService: TransactionService,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
+    const transactionId: number = Number(this.route.snapshot.params.id);
+    this.transactionService.loadOne(transactionId)
+      .subscribe((transaction: Transaction) => this.transaction = transaction);
   }
 
   ngAfterViewInit(): void {
