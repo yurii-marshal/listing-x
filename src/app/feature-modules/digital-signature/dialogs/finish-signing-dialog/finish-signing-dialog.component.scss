@@ -1,3 +1,21 @@
 @import "../../../../feature-modules/auth/forms.template";
 
 @import "../../../../shared-modules/dialogs/dialogs.template";
+
+.header {
+  align-self: start;
+  margin: 45px 0 7px 0;
+  font-family: SFUIDisplay;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.71;
+  color: #444c5d;
+  text-transform: uppercase;
+}
+
+.description {
+  font-family: SFUIDisplay;
+  font-size: 15px;
+  color: #5b6375;
+  margin-bottom: 33px;
+}

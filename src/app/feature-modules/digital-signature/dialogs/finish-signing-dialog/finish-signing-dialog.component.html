@@ -5,9 +5,9 @@
   </button>
 </div>
 
-<div mat-dialog-content class="form-container dialog-form" style="min-height: 400px">
-  <p>Finished signing?</p>
-    <div>
+<div mat-dialog-content class="form-container dialog-form">
+  <p class="header">Finished signing?</p>
+  <div class="description">
     Almost done! If you’re finished with this document(s), tap <b>Finish</b> below to confirm your signatures and other
     entries on this document(s). If you want to spend more time reviewing the document(s), select <b>Stay Here</b>.
     You’ll see the documents again, and can click <b>Finish Signing</b> at the bottom of the screen when you’re done
@@ -16,8 +16,6 @@
 </div>
 
 <div mat-dialog-actions class="fieldset u-flex u-flex-justify--space-between u-flex-align-items--center button-bar">
-  <button mat-stroked-button mat-dialog-close color="primary">STAY HERE</button>
-  <button mat-flat-button appDebounceClick
-          (debounceClick)="sign()"
-          color="primary">FINISH</button>
+  <button mat-stroked-button mat-dialog-close color="primary" style="margin-left: 12px;">STAY HERE</button>
+  <button mat-flat-button appDebounceClick (debounceClick)="sign()" color="primary">FINISH</button>
 </div>

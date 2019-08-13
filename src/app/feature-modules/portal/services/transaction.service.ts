@@ -35,6 +35,11 @@ export class TransactionService extends BaseDataService<Transaction> {
     return of(null);
   }
 
+  sign(transactionId: number) {
+    const url = `${ApiEndpoint.Sign}${transactionId}`;
+    return this.http.post(url, {});
+  }
+
   private fetchCalendarData(url: string, start: Date, end: Date) {
     let params = new HttpParams();
     if (start) {

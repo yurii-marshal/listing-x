@@ -397,18 +397,24 @@
           <div class="col-left-initials">
             <div class="u-flex u-flex-align-items--center">
               <label>Buyer's Initials</label>
-              <ng-container *ngFor="let buyer of transaction.offer.buyers; let last = last">
-                <app-signature-box [user]="buyer"></app-signature-box>
-                <ng-container *ngIf="!last">,&nbsp;</ng-container>
+              <ng-container *ngFor="let user of transaction?.offer?.buyers; let last = last">
+                <app-signature-box [user]="user"></app-signature-box>
+                <ng-container *ngIf="!last">,&nbsp;&nbsp;</ng-container>
               </ng-container>
             </div>
             <div>&#169; 1991-{{ currentYear }}, California Association of REALTORS &#174;, Inc.</div>
           </div>
 
           <div class="col-right-initials">
-            <label>Seller's Initials</label>
-            <app-signature-box></app-signature-box>
-            (<input disabled type="text" name="" id="Seller-2">)
+            <div class="u-flex u-flex-align-items--center">
+              <label>Seller's Initials</label>
+              <ng-container *ngFor="let user of transaction?.offer?.sellers; let last = last">
+                <app-signature-box [user]="user"></app-signature-box>
+                <ng-container *ngIf="!last">,&nbsp;&nbsp;</ng-container>
+              </ng-container>
+            </div>
+            <div>&#169; 1991-{{ currentYear }}, California Association of REALTORS &#174;, Inc.</div>
+
             <img src="assets/pdf2html/housing.png" width="70" height="60" class="image-left">
           </div>
         </div>

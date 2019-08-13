@@ -5,7 +5,8 @@ export enum ApiEndpoint {
   AnonymousOffer = '/offers/token/',
   Upload = '/documents/upload/',
   Transactions = '/transactions/',
-  Calendar = '/transactions/calendar/'
+  Calendar = '/transactions/calendar/',
+  Sign = '/e-document/'
 }
 
 export enum AuthEndpoint {
