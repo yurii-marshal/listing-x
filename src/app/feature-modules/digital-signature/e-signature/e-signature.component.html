@@ -42,11 +42,12 @@
             <label>
               <span class="font-weight-bold"> B. THE REAL PROPERTY </span> &nbsp; to be acquired is
             </label>
-            <input disabled type="text" name="" class="large-input-8">
+            <div class="input large-input-8">{{ transaction.offer.streetName }}</div>
 
             <label> , situated in </label>
             &nbsp; &nbsp;&nbsp;
-            <input disabled type="text" name="">
+            <!--    FIXME:        -->
+            <input disabled type="text" name="" [value]="transaction.offer.city">
             <label> (City),</label>
 
             <input disabled type="text" name="">
