@@ -9,7 +9,7 @@
       style="margin-right: 20px;">
     </mat-progress-bar>
   </div>
-  <div style="height: calc(100% - 75px); overflow-y: auto;">
+  <div *ngIf="transaction" style="height: calc(100% - 75px); overflow-y: auto;">
 
     <div class="container">
       <header class="clearfix">
@@ -24,12 +24,18 @@
 
       <form>
         <label class="font-weight-bold">Date Prepared:</label>
-        <input disabled type="date" name="">
+        <div class="input" style="width: 140px; display: inline-flex;">{{ transaction.createdAt | date: 'MMMM d, y' }}</div>
 
         <div class="font-weight-bold">1. &nbsp; OFFER:</div>
         <div class="ml-4">
           <label class="font-weight-bold">A. THIS IS AN OFFER FROM</label>
-          <input disabled type="text" name="" class="large-input-1">
+          <div class="input large-input-1">
+            <ng-container *ngFor="let item of transaction.offer.buyers; let last = last">
+              {{ item.firstName }}&nbsp;
+              {{ item.lastName }}
+              <ng-container *ngIf="!last">,&nbsp;</ng-container>
+            </ng-container>
+          </div>
           <span> ( &#8220;Buyer&#8221;).</span>
 
           <div>

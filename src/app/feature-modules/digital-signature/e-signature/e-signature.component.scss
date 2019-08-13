@@ -2,10 +2,15 @@
   color: rgba(0, 0, 0, 0.87);
 }
 
-input {
+input,
+.input {
+  padding-left: 20px;
   border:none;
   border-bottom: solid 1px black;
+  font-weight: bold;
 }
+
+
 
 .container {
   width:1300px;
