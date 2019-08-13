@@ -1,18 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-finish-signing-dialog',
   templateUrl: './finish-signing-dialog.component.html',
   styleUrls: ['./finish-signing-dialog.component.scss']
 })
-export class FinishSigningDialogComponent implements OnInit {
+export class FinishSigningDialogComponent {
 
-  constructor() { }
-
-  ngOnInit() {
-  }
+  constructor(public dialogRef: MatDialogRef<FinishSigningDialogComponent>) { }
 
   sign() {
-    // TODO:
+    this.dialogRef.close(true);
   }
 }

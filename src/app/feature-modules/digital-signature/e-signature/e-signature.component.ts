@@ -1,7 +1,10 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { SignatureBoxComponent, SignMode } from '../components/signature-box/signature-box.component';
-import { map, scan, tap } from 'rxjs/operators';
-import { merge } from 'rxjs';
+import { filter, map, scan, tap } from 'rxjs/operators';
+import { merge, Observable } from 'rxjs';
+import { FinishSigningDialogComponent } from '../dialogs/finish-signing-dialog/finish-signing-dialog.component';
+import { MatDialog } from '@angular/material';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-e-signature',
@@ -18,7 +21,9 @@ export class ESignatureComponent implements OnInit, AfterViewInit {
   @ViewChildren(SignatureBoxComponent)
   private signatures: QueryList<SignatureBoxComponent>;
 
-  constructor(private cdr: ChangeDetectorRef) { }
+  constructor(private cdr: ChangeDetectorRef,
+              private dialog: MatDialog,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
   }
@@ -39,7 +44,15 @@ export class ESignatureComponent implements OnInit, AfterViewInit {
 
 
   signAnAgreement() {
+    this.openDialog()
+      // TODO: switch map with service
+      .subscribe(() => console.log('Sign: completelly done'))
+  }
 
+  openDialog(): Observable<void> {
+    const dialogRef = this.dialog.open(FinishSigningDialogComponent, {width: '600px'});
+    return dialogRef.afterClosed()
+      .pipe(filter(dialogResult => !!dialogResult))
   }
 
 }
