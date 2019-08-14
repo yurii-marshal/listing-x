@@ -5,6 +5,7 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { OfferSummary } from '../../../core-modules/models/offer';
 import { DocumentLinkingService } from '../../../feature-modules/portal/services/document-linking.service';
+import { TransactionService } from '../../../feature-modules/portal/services/transaction.service';
 
 @Component({
   selector: 'app-write-offer-summary',
@@ -27,6 +28,7 @@ export class WriteOfferSummaryComponent {
 
   constructor(private formBuilder: FormBuilder,
               private service: OfferService,
+              private transactionService: TransactionService,
               private linkingService: DocumentLinkingService,
               private snackbar: MatSnackBar,
               private router: Router,
@@ -38,9 +40,13 @@ export class WriteOfferSummaryComponent {
     this.dialogRef.close();
   }
 
-  close() {
-    this.router.navigate(['/portal']);
-    this.snackbar.open('Successfully created offer', 'OK');
-    this.hide();
+  goToESign() {
+    const transactionId: number = this.data.model.transaction;
+    this.transactionService.lockOffer(transactionId)
+      .subscribe(() => {
+        this.snackbar.open('Successfully created offer', 'OK');
+        this.dialogRef.close();
+        this.router.navigate(['/e-sign', transactionId])
+      })
   }
 }

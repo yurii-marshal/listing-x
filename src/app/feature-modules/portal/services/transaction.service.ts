@@ -31,8 +31,7 @@ export class TransactionService extends BaseDataService<Transaction> {
   }
 
   lockOffer(transactionId: number): Observable<void> {
-    // TODO:
-    return of(null);
+    return this.http.post<void>(`/transactions/${transactionId}/esignature/`, {});
   }
 
   sign(transactionId: number) {
