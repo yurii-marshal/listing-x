@@ -8,6 +8,7 @@ import { map, switchMap, tap } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { ConfirmationBarComponent } from '../../../shared-modules/components/confirmation-bar/confirmation-bar.component';
 import { CalendarView } from '../../../shared-modules/components/calendar/calendar.component';
+import { Document } from '../../../core-modules/models/document';
 
 @Component({
   selector: 'app-transaction-details',
@@ -72,10 +73,15 @@ export class TransactionDetailsComponent implements OnInit {
       .subscribe(() => this.router.navigate(['/e-sign', this.transaction.id]))
   }
 
-  private triggerDownloadFile(data: any) {
+  private triggerDownloadFile(file: string | Document) {
     const trigger: HTMLAnchorElement = document.createElement('a');
-    trigger.href = data.url;
-    trigger.download = data.name;
+    if (typeof file  === 'string') {
+      trigger.href = trigger.download = file;
+    } else {
+      trigger.href = file.file;
+      trigger.download = file.title;
+    }
+    trigger.target = '_blank';
     trigger.click();
   }
 }

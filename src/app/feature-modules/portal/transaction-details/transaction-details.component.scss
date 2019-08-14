@@ -128,7 +128,9 @@ $blue: rgba(2, 136, 209, 0.9);
   .doc-preview {
     flex: 1;
     overflow: hidden;
-    // TODO:
+    img {
+      cursor: pointer;
+    }
   }
 }
 
@@ -163,4 +165,11 @@ $blue: rgba(2, 136, 209, 0.9);
 .calendar-container {
   width: 80%;
   margin: 0 10%;
+}
+
+.e-document {
+  position: absolute;
+  top: 44px;
+  left: 105px;
+  cursor: pointer;
 }

@@ -53,13 +53,26 @@
 
         <div class="row-layout"><label class="header">Supporting docs</label></div>
         <div class="row-layout"><label>Add Pre-approval Letter</label>
-          <div class="doc-preview"><img *ngFor="let img of transaction.offer.documents?.preApproval" src="assets/images/icons/{{ img.extension }}.svg" [title]="img.title" height="20"></div>
+          <div class="doc-preview">
+            <img *ngFor="let img of transaction.offer.documents?.preApproval"
+               src="assets/images/icons/{{ img.extension }}.svg"
+               [title]="img.title"
+               (click)="triggerDownloadFile(img)"
+               height="20">
+          </div>
         </div>
         <div class="row-layout"><label>Add Proof of Funds</label><div class="doc-preview">
-          <div class="doc-preview"><img *ngFor="let img of transaction.offer.documents?.proofOfFunds" src="assets/images/icons/{{ img.extension }}.svg" [title]="img.title" height="20"></div>
+          <div class="doc-preview"><img *ngFor="let img of transaction.offer.documents?.proofOfFunds"
+                                        src="assets/images/icons/{{ img.extension }}.svg"
+                                        (click)="triggerDownloadFile(img)"
+                                        [title]="img.title" height="20"></div>
         </div></div>
         <div class="row-layout"><label>Add Cover Letter</label><div class="doc-preview">
-          <div class="doc-preview"><img *ngFor="let img of transaction.offer.documents?.coverLetter" src="assets/images/icons/{{ img.extension }}.svg" [title]="img.title" height="20"></div>
+          <div class="doc-preview"><img *ngFor="let img of transaction.offer.documents?.coverLetter"
+                                        src="assets/images/icons/{{ img.extension }}.svg"
+                                        (click)="triggerDownloadFile(img)"
+                                        [title]="img.title"
+                                        height="20"></div>
         </div></div>
       </div>
       <div class="column-layout">
@@ -70,7 +83,14 @@
             <span>{{ item.title }}</span>
           </div>
         </div>
-        <div class="row-layout" style="opacity: .5"><label class="header">offer</label></div>
+        <div class="row-layout" style="position: relative;"><label class="header">offer</label>
+          <img *ngIf="transaction.urlDocument"
+            src="assets/images/icons/pdf.svg"
+            (click)="triggerDownloadFile(transaction.urlDocument)"
+            [title]="transaction.urlDocument"
+            height="80"
+            class="e-document">
+        </div>
         <div class="row-layout" style="opacity: .5"><label></label><span>Signed by buyer 1 Lopushynsky</span></div>
         <div class="row-layout" style="opacity: .5"><label></label><span>Signed by seller 1 Serhii Movchan</span></div>
         <div class="row-layout" style="opacity: .5"><label></label><span>Hasn’t been signed by all buyers</span></div>
