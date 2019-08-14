@@ -61,22 +61,17 @@
 
           <div>
             <label><span class="font-weight-bold"> C. THE PURCHASE PRICE </span>offered is</label>
-            <input disabled type="text" name="" class="large-input-4">
-            &nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-            <input disabled type="text" name="" class="large-input-4">
-
+            <div class="input large-input-number">{{ transaction.offer.price }}</div>
             <label>Dollars $ </label>
-            <input disabled type="text" name="">
-            <span>.</span>
           </div>
 
           <div>
             <label><span class="font-weight-bold">D. CLOSE OF ESCROW</span> shall occur on</label>
             <input disabled type="checkbox">
-            <input disabled type="date" name="">
+            <input disabled type="text" name="">
             <label>(date)( or</label>
-            <input disabled type="checkbox">
-            <input disabled type="number" name="" class="large-input-number">
+            <input disabled type="checkbox" checked>
+            <div class="input large-input-number">{{ transaction.offer.closeEscrowDays }}</div>
             <label><span class="font-weight-bold"> Days</span>&nbsp; After Acceptance).</label>
           </div>
 
@@ -206,9 +201,9 @@
               log.)
             </div>
 
-            <div class="col-right">
-              $
-              <input disabled type="text" class="large-input-7">
+            <div class="col-right u-flex u-flex-align-items">
+              <div>$</div>
+              <div class="input large-input-7">{{ transaction.offer.initialDeposit }}</div>
             </div>
 
           </div>
