@@ -20,10 +20,9 @@
               <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
             </button>
           </div>
-          <!--  TODO: transaction.allowInvite   -->
           <button mat-flat-button
                   cdkOverlayOrigin
-                  [disabled]="true"
+                  [disabled]="!transaction.allowInvite"
                   #trigger="cdkOverlayOrigin"
                   (click)="isOpenInviteUserOverlay = !isOpenInviteUserOverlay"
                   color="primary">

@@ -74,7 +74,9 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   @HostListener('mouseleave', ['$event'])
   onLeave( e: MouseEvent ) {
-    this.hidePopover();
+    if (this.overlayRef) {
+      this.hidePopover();
+    }
   }
 
   showPopover(eventObj): void {

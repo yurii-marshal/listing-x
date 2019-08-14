@@ -46,19 +46,17 @@
 
             <label> , situated in </label>
             &nbsp; &nbsp;&nbsp;
-            <!--    FIXME:        -->
-            <input disabled type="text" name="" [value]="transaction.offer.city">
+            <div class="input">{{ transaction.offer.city }}</div>
             <label> (City),</label>
 
-            <input disabled type="text" name="">
-            <label>(County), California,</label>
+            <div class="input">{{ transaction.offer.state }}</div>
+            <label> (State),</label>
 
-            <input disabled type="text" name="">
+            <div class="input">{{ transaction.offer.zip }}</div>
             <label>(Zip Code), Assessor's Parcel No.</label>
 
-            <input disabled type="text" name="">
+            <div class="input">{{ transaction.offer.apn }}</div>
             ( &#8220;Property&#8221;).
-
           </div>
 
           <div>

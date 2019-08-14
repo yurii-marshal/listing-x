@@ -41,7 +41,7 @@ export class WriteOfferSummaryComponent {
   }
 
   goToESign() {
-    const transactionId: number = this.data.model.transaction;
+    const transactionId: number = Number(this.data.model.transaction);
     this.transactionService.lockOffer(transactionId)
       .subscribe(() => {
         this.snackbar.open('Successfully created offer', 'OK');

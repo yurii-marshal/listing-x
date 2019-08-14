@@ -62,12 +62,20 @@ export class TransactionDetailsComponent implements OnInit {
   inviteUser() {
     this.isOpenInviteUserOverlay = false;
     const email: string = this.userEmailControl.value;
-    this.transactionService.inviteUser(email)
+    const transactionId: number = Number(this.route.snapshot.params.id);
+    this.transactionService.inviteUser(transactionId, email)
       .subscribe(() => this.snackbar.open(`Invite sent to email: ${email}`));
   }
 
   goToESign() {
     this.transactionService.lockOffer(this.transaction.id)
       .subscribe(() => this.router.navigate(['/e-sign', this.transaction.id]))
+  }
+
+  private triggerDownloadFile(data: any) {
+    const trigger: HTMLAnchorElement = document.createElement('a');
+    trigger.href = data.url;
+    trigger.download = data.name;
+    trigger.click();
   }
 }

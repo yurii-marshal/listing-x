@@ -14,9 +14,12 @@ export abstract class BaseDataService<TModel extends {id: number}> implements ID
   protected snackbar: MatSnackBar;
   protected http: HttpClient;
 
-
   protected detailUrl(id: number): string {
     return `${this.crudEndpoint}${id}/`
+  }
+
+  protected transformEndpoint(endpoint: ApiEndpoint, id: any): string {
+    return endpoint.replace('{id}', id);
   }
 
   constructor(protected injector: Injector,

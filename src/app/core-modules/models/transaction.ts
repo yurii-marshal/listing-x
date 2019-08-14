@@ -6,11 +6,12 @@ export interface Transaction {
   offer: OfferSummary;
   status: TransactionStatus;
   lastLogs: Log[];
+  urlDocument: string
   allowDelete: boolean;
   allowEdit: boolean;
   allowSign: boolean;
   allowDeny: boolean;
-  allowInvite: boolean
+  allowInvite: boolean;
 }
 
 export enum TransactionStatus {

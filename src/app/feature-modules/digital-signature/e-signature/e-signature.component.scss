@@ -8,9 +8,12 @@ input,
   border:none;
   border-bottom: solid 1px black;
   font-weight: bold;
+  width: 125px;
 }
 
-
+.input {
+  display: inline-block;
+}
 
 .container {
   width:1300px;

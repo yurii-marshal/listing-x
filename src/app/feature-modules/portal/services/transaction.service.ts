@@ -21,17 +21,18 @@ export class TransactionService extends BaseDataService<Transaction> {
   }
 
   loadCalendarByTransaction(id: number, start?: Date, end?: Date): Observable<CalendarEvent[]> {
-    const url = `/transactions/${id}/calendar/`;
+    const url = super.transformEndpoint(ApiEndpoint.TransactionCalendar, id);
     return this.fetchCalendarData(url, start, end);
   }
 
-  inviteUser(email: string): Observable<void> {
-    // TODO:
-    return of(null);
+  inviteUser(transactionId: number, email: string): Observable<void> {
+    const url = super.transformEndpoint(ApiEndpoint.InviteUser, transactionId);
+    return this.http.post<void>(url, {email});
   }
 
   lockOffer(transactionId: number): Observable<void> {
-    return this.http.post<void>(`/transactions/${transactionId}/esignature/`, {});
+    const url = super.transformEndpoint(ApiEndpoint.LockOffer, transactionId);
+    return this.http.post<void>(url, {});
   }
 
   sign(transactionId: number) {
