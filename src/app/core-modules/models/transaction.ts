@@ -2,12 +2,14 @@ import { OfferSummary } from './offer';
 
 export interface Transaction {
   id: number;
+  createdAt: string;
   offer: OfferSummary;
   status: TransactionStatus;
   lastLogs: Log[];
   allowDelete: boolean;
   allowEdit: boolean;
-  createdAt: string;
+  allowSign: boolean;
+  allowDeny: boolean;
 }
 
 export enum TransactionStatus {

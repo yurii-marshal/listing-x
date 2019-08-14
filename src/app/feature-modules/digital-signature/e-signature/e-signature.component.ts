@@ -38,7 +38,7 @@ export class ESignatureComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.signatures.changes // handle amount of components
+    this.signatures.changes // handle change amount of components
       .pipe(
         switchMap(() =>  this.handleEachSubSignatureChanges())
       )

@@ -75,8 +75,8 @@
         <div class="row-layout" style="opacity: .5"><label></label><span>Signed by seller 1 Serhii Movchan</span></div>
         <div class="row-layout" style="opacity: .5"><label></label><span>Hasn’t been signed by all buyers</span></div>
         <div class="row-layout u-flex-justify--start">
-          <button mat-flat-button disabled color="accent" style="margin: 0 15px 0 220px">DENY</button>
-          <button mat-flat-button (click)="goToESign()" color="primary">SIGN</button>
+          <button *ngIf="transaction.allowDeny" mat-flat-button disabled color="accent" style="margin: 0 15px 0 220px">DENY</button>
+          <button *ngIf="transaction.allowSign" mat-flat-button (click)="goToESign()" color="primary">SIGN</button>
         </div>
       </div>
     </div>
