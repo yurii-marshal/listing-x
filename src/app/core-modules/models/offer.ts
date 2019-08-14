@@ -4,6 +4,7 @@ import { Document } from './document';
 export interface OfferSummary extends Offer {
   documents: LinkedDocuments;
   remainingDaysCloseEscrow: number;
+  transaction: number;
 }
 
 export interface Offer {
