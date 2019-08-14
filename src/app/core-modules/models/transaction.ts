@@ -10,6 +10,7 @@ export interface Transaction {
   allowEdit: boolean;
   allowSign: boolean;
   allowDeny: boolean;
+  allowInvite: boolean
 }
 
 export enum TransactionStatus {

@@ -20,6 +20,7 @@
               <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
             </button>
           </div>
+          <!--  TODO: transaction.allowInvite   -->
           <button mat-flat-button
                   cdkOverlayOrigin
                   [disabled]="true"
@@ -75,8 +76,8 @@
         <div class="row-layout" style="opacity: .5"><label></label><span>Signed by seller 1 Serhii Movchan</span></div>
         <div class="row-layout" style="opacity: .5"><label></label><span>Hasn’t been signed by all buyers</span></div>
         <div class="row-layout u-flex-justify--start">
-          <button *ngIf="transaction.allowDeny" mat-flat-button disabled color="accent" style="margin: 0 15px 0 220px">DENY</button>
-          <button *ngIf="transaction.allowSign" mat-flat-button (click)="goToESign()" color="primary">SIGN</button>
+          <button  mat-flat-button [disabled]="!transaction.allowDeny" color="accent" style="margin: 0 15px 0 220px">DENY</button>
+          <button  mat-flat-button [disabled]="!transaction.allowSign" (click)="goToESign()" color="primary">SIGN</button>
         </div>
       </div>
     </div>
