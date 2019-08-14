@@ -404,7 +404,7 @@
           <div class="col-left-initials">
             <div class="u-flex u-flex-align-items--center">
               <label>Buyer's Initials</label>
-              <ng-container *ngFor="let user of transaction?.offer?.buyers; let last = last">
+              <ng-container *ngFor="let user of transaction.offer.buyers; let last = last">
                 <app-signature-box [user]="user"></app-signature-box>
                 <ng-container *ngIf="!last">,&nbsp;&nbsp;</ng-container>
               </ng-container>
@@ -754,14 +754,15 @@
         <div class="clearfix">
           <img src="assets/pdf2html/rebs-inc.png" width="70" height="90" class="rebs-inc">
           <div class="Published">
-            <span class="font-size-16"> Published and Distributed by: </span>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span class="font-size-16">Buyer Acknowledges that page 10 is part of this Agreement</span>
-            &nbsp;&nbsp;
-            (<input disabled type="text" name="" class="large-input-100">)
-            &nbsp;&nbsp;
-            (<input disabled type="text" name="" class="large-input-100">)
+            <div class="u-flex u-flex-align-items--center">
+              <span class="font-size-16" style="display: block; margin-right: auto;">Published and Distributed by: </span>
+              <span class="font-size-16" style="display: block">Buyer Acknowledges that page 10 is part of this Agreement</span>
+              &nbsp;&nbsp;
+              <ng-container *ngFor="let user of transaction.offer.buyers; let last = last">
+                <app-signature-box [user]="user"></app-signature-box>
+                <ng-container *ngIf="!last">,&nbsp;&nbsp;</ng-container>
+              </ng-container>
+            </div>
             REAL ESTATE BUSINESS SERVICES, INC.
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
