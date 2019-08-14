@@ -1,4 +1,5 @@
-(
+<span *ngIf="signWithInitials">(</span>
+
 <div class="placeholder" [class.full-name]="!signWithInitials">
   <div class="trigger" (click)="process()" >
     <div class="arrow_box" [class.un-sign]="mode === SignMode.UnSign" >
@@ -9,7 +10,8 @@
 
   <ng-container *ngIf="mode === SignMode.UnSign">
     <span *ngIf="signWithInitials" class="signature">{{ user.firstName | letter }} {{ user.lastName | letter }}</span>
-    <span *ngIf="!signWithInitials" class="signature">{{ user.firstName | letter }} {{ user.lastName | letter }}</span>
+    <span *ngIf="!signWithInitials" class="signature">{{ user.firstName }} {{ user.lastName }}</span>
   </ng-container>
 </div>
-&nbsp;)
+
+<span *ngIf="signWithInitials">&nbsp;)</span>

@@ -461,10 +461,6 @@
               Bret Pfeifer
             </span>
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
-            <!--span>
-              Produced with zipForm &#174; by zipLogix 18070 Fifteen Mile Road, Fraser, Michigan 48026 <a
-              href="www.zipLogix.com">www.zipLogix.com</a>
-            </span-->
           </div>
         </div>
       </footer>
@@ -495,31 +491,32 @@
           </p>
           <input disabled type="text" name="" id="input-42">.
         </div>
-        <label for="input-43">Date</label>
-        <input disabled type="date" name="" id="input-43">
-        <label for="input-44">Seller</label>
-        <input disabled type="text" name="" id="input-44" class="large-input-44">
-        <br>
-        <label class="font-weight-bold" for="input-45">(Print name)</label>
-        <input disabled type="text" name="" id="input-45" class="large-input-45">
 
-        <label for="input-46">Date</label>
+        <ng-container *ngFor="let user of transaction.offer.sellers; let i = index;">
+          <label for="input-43">Date</label>
+          <input disabled type="date" name="" id="input-43">
+          <label for="input-44">Seller #{{i + 1}}</label>
+          <app-signature-box [user]="user" [signWithInitials]="false" class="large-input-44"></app-signature-box>
+          <br>
+        </ng-container>
+
+        <!--label for="input-46">Date</label>
         <input disabled type="date" name="" id="input-46">
         <label for="input-47">Seller</label>
         <input disabled type="text" name="" id="input-47" class="large-input-44">
         <br>
         <label class="font-weight-bold" for="input-48">(Print name)</label>
-        <input disabled type="text" name="" id="input-48" class="large-input-45">
+        <input disabled type="text" name="" id="input-48" class="large-input-45"-->
 
-        <div>
+        <div style="margin-top: 10px;">
           <input disabled type="checkbox" name="" id="input-49">
           <label for="input-49">Additional Signature Addendum attached (C.A.R. Form ASA).</label>
         </div>
 
         <div class="clearfix">
           <div class="col-left-page-10">
-            (<input disabled type="text" name="" class="large-input-50">/<input disabled type="text" name=""
-                                                                                class="large-input-50">)
+            (<input disabled type="text" name="" class="large-input-50">/
+             <input disabled type="text" name="" class="large-input-50">)
             &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; (Initials)
           </div>
 
