@@ -90,14 +90,21 @@ export class WriteOfferStepTwoDialogComponent implements OnInit {
   }
 
   close(): void {
-    const model: Offer = _.cloneDeep(this.data.model); // keep all fields from step 1 and extend with step 2 fields
+    const model: Offer = _.cloneDeep(this.data.model);
+    if (!this.form.dirty) {
+      return this.closeAndRedirect(model); // Exit
+    }
+
+    // keep all fields from step 1 and extend with step 2 fields
     Object.assign(model, this.form.getRawValue());
-    //TODO: only do http request in case: form.dirty
     this.service.update(model)
-      .subscribe(() => {
-        this.dialogRef.close(model);
-        this.router.navigate(['/portal/offer', model.id, 'upload']);
-      })
+      .subscribe(() => this.closeAndRedirect(model))
+  }
+
+
+  private closeAndRedirect(model: Offer) {
+    this.dialogRef.close(model);
+    this.router.navigate(['/portal/offer', model.id, 'upload']);
   }
 
   private recalculateDownPayment() {

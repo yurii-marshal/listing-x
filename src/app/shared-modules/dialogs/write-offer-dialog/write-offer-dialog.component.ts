@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import { CustomValidators } from '../../../core-modules/validators/custom-validators';
 import { Offer, Person } from '../../../core-modules/models/offer';
 import { OfferService } from '../../../feature-modules/portal/services/offer.service';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
@@ -124,15 +124,22 @@ export class WriteOfferDialogComponent implements OnInit {
     const message = `Successfully ${this.data.isEdit ? 'updated' : 'created new'} offer.`;
     of(model)
       .pipe(
-        switchMap((item: Offer) => this.data.isEdit
-          ? this.service.update(item)
-          : this.service.add(item)
-        ),
+        switchMap((item: Offer) => this.storeFormData(item)),
         tap(() => this.data.verbose && this.snackbar.open(message))
       )
       .subscribe(({id}) => {
         this.dialogRef.close(model);
         this.router.navigate(['/portal/offer', id, 'step-2']);
       });
+  }
+
+  private storeFormData(item: Offer): Observable<Offer> {
+    if (this.form.dirty) {
+      return this.data.isEdit
+        ? this.service.update(item)
+        : this.service.add(item);
+    }  else { // Prevent redundant call to api in case form didn't touch
+      return of(item);
+    }
   }
 }
