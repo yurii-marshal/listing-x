@@ -32,6 +32,7 @@ export interface Person {
   firstName: string;
   lastName: string;
   email: string;
+  signed?: boolean;
 }
 
 export class Loan {

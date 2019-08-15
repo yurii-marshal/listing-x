@@ -1,7 +1,7 @@
 import { Injectable, Injector } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { CalendarEvent, Transaction } from '../../../core-modules/models/transaction';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ApiEndpoint } from '../../../core-modules/enums/api-endpoints';
 import { map } from 'rxjs/operators';
 import * as _ from 'lodash';
@@ -14,6 +14,11 @@ export class TransactionService extends BaseDataService<Transaction> {
 
   constructor(protected injector: Injector) {
     super(injector, ApiEndpoint.Transactions);
+  }
+
+  loadSignDocument(transactionId: number): Observable<Transaction> {
+    const url: string = this.transformEndpoint(ApiEndpoint.ESignature, transactionId);
+    return this.http.get<Transaction>(url);
   }
 
   loadCalendar(start?: Date, end?: Date): Observable<CalendarEvent[]> {

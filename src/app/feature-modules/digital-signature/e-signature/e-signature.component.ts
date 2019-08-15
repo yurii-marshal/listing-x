@@ -7,6 +7,7 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Transaction } from '../../../core-modules/models/transaction';
 import { TransactionService } from '../../portal/services/transaction.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-e-signature',
@@ -33,6 +34,7 @@ export class ESignatureComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     const transactionId: number = Number(this.route.snapshot.params.id);
+    //FIXME: this.transactionService.loadSignDocument(transactionId)
     this.transactionService.loadOne(transactionId)
       .subscribe((transaction: Transaction) => this.transaction = transaction);
   }
@@ -40,7 +42,8 @@ export class ESignatureComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.signatures.changes // handle change amount of components
       .pipe(
-        switchMap(() =>  this.handleEachSubSignatureChanges())
+        // FIXME: autosign  or fill empty controls (of another users)
+        switchMap(() =>  this.handleCurrentUserSignatureChanges())
       )
       .subscribe(() => this.signAnAgreement());
   }
@@ -55,10 +58,14 @@ export class ESignatureComponent implements OnInit, AfterViewInit {
       .subscribe(() => this.router.navigate(['/portal/transaction/', transactionId]))
   }
 
-  private handleEachSubSignatureChanges() {
-    const count: number = this.signatures.length;
-    const signSteams = this.signatures.map(component => component.sign);
-    return merge(...signSteams)
+  private handleCurrentUserSignatureChanges() {
+    const signControlsSteams = _.chain(this.signatures.toArray())
+      .filter('isCurrentUser')
+      .map((component: SignatureBoxComponent) => component.sign)
+      .value();
+
+    const count: number = signControlsSteams.length;
+    return merge(...signControlsSteams)
       .pipe(
         scan((total: number, state: SignMode) => total - state, count),
         tap((value: number) => this.progress = Math.ceil(100 * (count - value) / count)),

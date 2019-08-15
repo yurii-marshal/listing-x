@@ -8,8 +8,9 @@ export enum ApiEndpoint {
   Calendar = '/transactions/calendar/',
   TransactionCalendar = '/transactions/{id}/calendar/',
   Sign = '/e-document/',
-  LockOffer = '/transactions/{id}/esignature/',
-  InviteUser =  '/transactions/{id}/invite/'
+  LockOffer = '/transactions/{id}/esignatures/',
+  InviteUser =  '/transactions/{id}/invite/',
+  ESignature = '/transactions/{id}/esignatures/'
 }
 
 export enum AuthEndpoint {

@@ -26,15 +26,19 @@ export class SignatureBoxComponent implements OnInit {
 
   mode: SignMode = SignMode.Sign;
 
-  currentUser: User;
-
   SignMode = SignMode;
+
+  get isCurrentUser(): boolean {
+    const curUser: User = this.authService.currentUser;
+    return curUser.lastName === this.user.lastName
+      && curUser.firstName === this.user.firstName
+      && curUser.email === this.user.email;
+  }
 
   constructor(private authService: AuthService,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.currentUser = this.authService.currentUser;
   }
 
   process() {

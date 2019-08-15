@@ -2,10 +2,10 @@ import { OfferSummary } from './offer';
 
 export interface Transaction {
   id: number;
-  createdAt: string;
   offer: OfferSummary;
   status: TransactionStatus;
   lastLogs: Log[];
+  createdAt: string;
   urlDocument: string
   allowDelete: boolean;
   allowEdit: boolean;
