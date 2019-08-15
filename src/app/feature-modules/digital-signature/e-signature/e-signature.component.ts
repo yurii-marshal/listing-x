@@ -42,7 +42,6 @@ export class ESignatureComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.signatures.changes // handle change amount of components
       .pipe(
-        // FIXME: autosign  or fill empty controls (of another users)
         switchMap(() =>  this.handleCurrentUserSignatureChanges())
       )
       .subscribe(() => this.signAnAgreement());

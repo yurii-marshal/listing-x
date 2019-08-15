@@ -26,6 +26,8 @@ export class SignatureBoxComponent implements OnInit {
 
   mode: SignMode = SignMode.Sign;
 
+  isReadonly: boolean;
+
   SignMode = SignMode;
 
   get isCurrentUser(): boolean {
@@ -39,6 +41,9 @@ export class SignatureBoxComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
+    if (!this.isCurrentUser) {
+      this.autoSign();
+    }
   }
 
   process() {
@@ -48,6 +53,13 @@ export class SignatureBoxComponent implements OnInit {
       this.mode = SignMode.UnSign;
     } else {
       this.mode = SignMode.Sign;
+    }
+  }
+
+  autoSign() {
+    this.isReadonly = true;
+    if (this.user.signed) {
+      this.mode = SignMode.UnSign;
     }
   }
 }

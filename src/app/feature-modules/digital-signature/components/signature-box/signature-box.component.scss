@@ -58,6 +58,9 @@ $border: 4px;
       opacity: .15;
       &:hover {opacity: 1;}
     }
+    &.readonly-mode {
+      opacity: 0;
+    }
 
     &:after,
     &:before {
