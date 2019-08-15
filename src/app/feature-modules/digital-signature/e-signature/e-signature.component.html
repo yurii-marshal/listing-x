@@ -231,7 +231,7 @@
               </div>
               <div>
                 <span class="font-weight-bold">C.</span>
-                <input disabled type="checkbox" [attr.checked]="transaction.offer.loanType === LoanType.ALL_CACHE">
+                <input disabled type="checkbox" [checked]="transaction.offer.loanType === LoanType.ALL_CACHE">
                 <label class="font-weight-bold">ALL CASH OFFER:</label>
                 <span> No loan is needed to purchase the Property. This offer is NOT contingent on Buyer obtaining a loan.</span>
                 <div class="ml-4">
@@ -265,9 +265,9 @@
 
                 <div class="ml-4  ">
                   This loan will be conventional financing <span class="font-weight-bold"> OR</span>
-                  <input disabled type="checkbox" [attr.checked]="transaction.offer.loanType === LoanType.FHA">
+                  <input disabled type="checkbox" [checked]="transaction.offer.loanType === LoanType.FHA">
                   <label>FHA,</label>
-                  <input disabled type="checkbox" [attr.checked]="transaction.offer.loanType === LoanType.VA" >
+                  <input disabled type="checkbox" [checked]="transaction.offer.loanType === LoanType.VA" >
                   <label>VA,</label>
                   <input disabled type="checkbox" id="checkbox-11">
                   <label for="checkbox-11">Seller financing (C.A.R. Form SFA),</label>
@@ -304,7 +304,7 @@
               <div class="ml-4">
                 <div>
                   <label class="font-weight-bold">(2)</label>
-                  <input disabled type="checkbox" id="checkbox-15" [attr.checked]="transaction.offer.loans.length>1">
+                  <input disabled type="checkbox" id="checkbox-15" [checked]="transaction.offer.loans.length>1">
                   <label class="font-weight-bold" for="checkbox-15"> SECOND LOAN</label>
                   <label for="input-11"> in the amount of . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
                     . .
