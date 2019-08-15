@@ -34,8 +34,7 @@ export class ESignatureComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     const transactionId: number = Number(this.route.snapshot.params.id);
-    //FIXME: this.transactionService.loadSignDocument(transactionId)
-    this.transactionService.loadOne(transactionId)
+    this.transactionService.loadSignDocument(transactionId)
       .subscribe((transaction: Transaction) => this.transaction = transaction);
   }
 
