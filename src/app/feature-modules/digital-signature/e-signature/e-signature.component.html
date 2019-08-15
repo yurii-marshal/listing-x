@@ -231,7 +231,7 @@
               </div>
               <div>
                 <span class="font-weight-bold">C.</span>
-                <input disabled type="checkbox">
+                <input disabled type="checkbox" [attr.checked]="transaction.offer.loanType === LoanType.ALL_CACHE">
                 <label class="font-weight-bold">ALL CASH OFFER:</label>
                 <span> No loan is needed to purchase the Property. This offer is NOT contingent on Buyer obtaining a loan.</span>
                 <div class="ml-4">
@@ -265,9 +265,9 @@
 
                 <div class="ml-4  ">
                   This loan will be conventional financing <span class="font-weight-bold"> OR</span>
-                  <input disabled type="checkbox">
+                  <input disabled type="checkbox" [attr.checked]="transaction.offer.loanType === LoanType.FHA">
                   <label>FHA,</label>
-                  <input disabled type="checkbox">
+                  <input disabled type="checkbox" [attr.checked]="transaction.offer.loanType === LoanType.VA" >
                   <label>VA,</label>
                   <input disabled type="checkbox" id="checkbox-11">
                   <label for="checkbox-11">Seller financing (C.A.R. Form SFA),</label>
@@ -278,7 +278,7 @@
                   <input disabled type="text" name="">.
                   <span> This loan shall be at</span>
                   <label for="input-8"> a fixed rate not to exceed</label>
-                  <input disabled type="text" name="" id="input-8" class="large-input-number">
+                  <div class="input large-input-number">{{ transaction.offer.loans[0]?.interestRate }}</div>
                   <label for="input-8"> % or,</label>
                   <input disabled type="checkbox" id="checkbox-14">
                   <label for="checkbox-14"> an adjustable rate loan with initial rate</label>
@@ -286,16 +286,16 @@
                   <input disabled type="text" name="" class="large-input-number">
                   <label for="input-9">%.</label>
                   <label for="input-10">Regardless of the type of loan, Buyer shall pay points not to exceed</label>
-                  <input disabled type="text" name="" id="input-10" class="large-input-number">
+                  <div class="input large-input-number">{{ transaction.offer.loans[0]?.points }}</div>
                   <label for="input-10">% of the </label>
                   <span> loan amount.</span>
 
                 </div>
               </div>
             </div>
-            <div class="col-right">
-              $
-              <input disabled type="text" class="large-input-7">
+            <div class="col-right u-flex u-flex-align-items">
+              <div>$</div>
+              <div class="input large-input-7">{{ transaction.offer.loans[0].loanAmount }}</div>
             </div>
           </div>
 
@@ -304,7 +304,7 @@
               <div class="ml-4">
                 <div>
                   <label class="font-weight-bold">(2)</label>
-                  <input disabled type="checkbox" id="checkbox-15">
+                  <input disabled type="checkbox" id="checkbox-15" [attr.checked]="transaction.offer.loans.length>1">
                   <label class="font-weight-bold" for="checkbox-15"> SECOND LOAN</label>
                   <label for="input-11"> in the amount of . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
                     . .
@@ -323,7 +323,8 @@
                   <label for="checkbox-18"> Other </label>
                   <input disabled type="text" name="">.
                   <label for="input-12">&nbsp; This loan shall be at a fixed rate not to exceed</label>
-                  <input disabled type="text" name="" id="input-12" class="large-input-number">
+<!--                  <input disabled type="text" name="" id="input-12" class="large-input-number">-->
+                  <div class="input large-input-number">{{ transaction.offer.loans[1]?.interestRate }}</div>
                   <label for="input-12">% or,</label>
                   <input disabled type="checkbox" id="checkbox-19">
                   <label for="checkbox-19"> an adjustable rate loan with initial rate not to exceed</label>
@@ -331,7 +332,7 @@
                   <label for="input-13">%.</label>
                   <label for="input-14">&nbsp; Regardless of the type of loan, Buyer shall pay points not to
                     exceed</label>
-                  <input disabled type="text" name="" id="input-14" class="large-input-number">
+                  <div class="input large-input-number">{{ transaction.offer.loans[1]?.points }}</div>
                   <label for="input-14">% of the loan amount.</label>
                 </div>
                 <div>
@@ -350,9 +351,9 @@
                 </div>
               </div>
             </div>
-            <div class="col-right">
-              $
-              <input disabled type="text" id="input-11" class="large-input-7">
+            <div class="col-right u-flex u-flex-align-items">
+              <div>$</div>
+              <div class="input large-input-7">{{ transaction.offer.loans[1].loanAmount }}</div>
             </div>
           </div>
 

@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Transaction } from '../../../core-modules/models/transaction';
 import { TransactionService } from '../../portal/services/transaction.service';
 import * as _ from 'lodash';
+import { LoanType } from '../../../core-modules/enums/loan-type';
 
 @Component({
   selector: 'app-e-signature',
@@ -22,6 +23,8 @@ export class ESignatureComponent implements OnInit, AfterViewInit {
   progress: number; // %
 
   transaction: Transaction;
+
+  LoanType = LoanType;
 
   @ViewChildren(SignatureBoxComponent)
   private signatures: QueryList<SignatureBoxComponent>;
