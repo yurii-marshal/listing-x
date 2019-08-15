@@ -56,7 +56,7 @@ export class SignatureBoxComponent implements OnInit {
     }
   }
 
-  autoSign() {
+  private autoSign() {
     this.isReadonly = true;
     if (this.user.signed) {
       this.mode = SignMode.UnSign;
