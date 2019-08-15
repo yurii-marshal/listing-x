@@ -36,7 +36,7 @@
           </button>
         </div>
       </div>
-      <div *ngIf="loans.controls.length < 3" (click)="addLoan()" class="link">add Loan</div>
+      <div *ngIf="loans.controls.length < 2" (click)="addLoan()" class="link">add Loan</div>
     </div>
 
     <mat-radio-group formControlName="loanType" aria-label="Select an option">
