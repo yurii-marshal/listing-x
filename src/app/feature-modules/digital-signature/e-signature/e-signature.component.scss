@@ -24,6 +24,10 @@ a {
   color: black;
 }
 
+input[type=checkbox][disabled]{
+  outline:1px solid gray; // or whatever
+}
+
 .image {
   float: left;
 }

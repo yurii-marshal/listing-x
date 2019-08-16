@@ -7,6 +7,7 @@ import { JwtResponse } from '../interfaces/jwt-response';
 import { LocalStorageKey } from '../enums/local-storage-key';
 import { AuthService } from '../core-services/auth.service';
 import { AuthEndpoint } from '../enums/api-endpoints';
+import * as _ from 'lodash';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
@@ -18,8 +19,7 @@ export class JwtInterceptor implements HttpInterceptor {
     AuthEndpoint.Register,
     AuthEndpoint.RefreshToken,
     AuthEndpoint.ForgotPassword,
-    AuthEndpoint.ResetPassword,
-    AuthEndpoint.ActivateAccount
+    AuthEndpoint.ResetPassword
   ];
 
   constructor(private authService: AuthService) {
@@ -28,7 +28,7 @@ export class JwtInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     req = req.clone({url: this.getApiURL(req.url)});
 
-    if (this.excluded.some((endpoint: AuthEndpoint) => req.url.endsWith(endpoint))) {
+    if (this.isExcludedEndpoint(req.url)) {
       return next.handle(req); // Exit
     }
 
@@ -40,6 +40,13 @@ export class JwtInterceptor implements HttpInterceptor {
     return next.handle(req);
   }
 
+
+  private isExcludedEndpoint(url: string) {
+    if (url.includes(AuthEndpoint.ActivateAccount)) {
+      return true;
+    }
+    return _.some(this.excluded, (endpoint: AuthEndpoint) => url.endsWith(endpoint));
+  }
 
   private addToken(req: HttpRequest<any>, token: string): HttpRequest<any> {
     return req.clone({

@@ -31,10 +31,10 @@ export class SignatureBoxComponent implements OnInit {
   SignMode = SignMode;
 
   get isCurrentUser(): boolean {
-    const curUser: User = this.authService.currentUser;
-    return curUser.lastName === this.user.lastName
-      && curUser.firstName === this.user.firstName
-      && curUser.email === this.user.email;
+    const currentUser: User = this.authService.currentUser;
+    return currentUser.lastName === this.user.lastName
+      && currentUser.firstName === this.user.firstName
+      && currentUser.email === this.user.email;
   }
 
   constructor(private authService: AuthService,
