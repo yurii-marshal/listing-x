@@ -10,7 +10,8 @@ export enum ApiEndpoint {
   Sign = '/e-document/',
   LockOffer = '/transactions/{id}/esignatures/',
   InviteUser =  '/transactions/{id}/invite/',
-  ESignature = '/transactions/{id}/esignatures/'
+  ESignature = '/transactions/{id}/esignatures/',
+  Deny = '/transactions/{id}/deny/'
 }
 
 export enum AuthEndpoint {

@@ -73,6 +73,12 @@ export class TransactionDetailsComponent implements OnInit {
       .subscribe(() => this.router.navigate(['/e-sign', this.transaction.id]))
   }
 
+  deny() {
+    const id: number = Number(this.route.snapshot.params.id);
+    this.transactionService.deny(id)
+      .subscribe(() => this.snackbar.open(`Denied.`))
+  }
+
   private triggerDownloadFile(file: string | Document) {
     const trigger: HTMLAnchorElement = document.createElement('a');
     if (typeof file  === 'string') {
