@@ -13,7 +13,11 @@
     <button mat-icon-button class="notifications">
       <img src="assets/images/icons/alarm.png" height="22">
     </button>
-    <p class="username" [class.hidden]="!user?.firstName">Hi, {{ user?.firstName }}</p>
+    <p class="username"
+       [title]="user.email"
+       [class.hidden]="!user?.firstName">
+      Hi, {{ user?.firstName }}
+    </p>
     <button (click)="logout()" mat-icon-button>
       <img src="assets/images/icons/exit.png" height="22" class="trigger">
     </button>
