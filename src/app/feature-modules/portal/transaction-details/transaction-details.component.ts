@@ -76,7 +76,10 @@ export class TransactionDetailsComponent implements OnInit {
   deny() {
     const id: number = Number(this.route.snapshot.params.id);
     this.transactionService.deny(id)
-      .subscribe(() => this.snackbar.open(`Denied.`))
+      .subscribe(() => {
+        this.transaction.allowDeny = false;
+        this.snackbar.open(`Denied.`)
+      })
   }
 
   private triggerDownloadFile(file: string | Document) {
