@@ -20,7 +20,7 @@ export interface Offer {
   closeEscrowDays: number;
 
   // Second step
-  initialDeposit: string;
+  initialDeposit?: string;
   loans?: Loan[];
   loanType?: LoanType;  // CONVENTIONAL LOAN,
   downPayment?: number;

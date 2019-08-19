@@ -27,7 +27,7 @@ const routes: Routes = [
             path: '',
             pathMatch: 'full',
             component: DialogsWrapperComponent,
-            data: { component: WriteOfferDialogComponent},
+            data: { component: WriteOfferDialogComponent, isAnonymousCreation: true},
             resolve: {model: CreateOfferResolver}
           }, {
             path: ':id',

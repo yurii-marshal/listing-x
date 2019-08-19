@@ -33,21 +33,30 @@ export class WriteOfferDialogComponent implements OnInit {
     return this.form.get('sellers') as FormArray;
   }
 
+  // This flag means that user create new offer from anonymous data stored before
+  get isAnonymousCreation(): boolean {
+    return this.data.isAnonymousCreation && this.data.model !== null;
+  }
+
   constructor(private formBuilder: FormBuilder,
               private service: OfferService,
               private authService: AuthService,
               private snackbar: MatSnackBar,
               private router: Router,
               public dialogRef: MatDialogRef<WriteOfferDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: { model: Offer, isAnonymous: boolean, isEdit: boolean, verbose: boolean }) {
+              @Inject(MAT_DIALOG_DATA) public data: { model: Offer, isAnonymous: boolean, isAnonymousCreation: boolean, isEdit: boolean}) {// TODO: refactor isAnonymous using enum
   }
 
   ngOnInit() {
     this.buildForm();
+
+    if (this.isAnonymousCreation) {
+      this.form.markAsDirty(); // Allow to save immediately even user did't touch any field
+    }
   }
 
   private buildForm() {
-    const disabled: boolean = Boolean(this.data.isAnonymous);
+    const disabled: boolean = this.data.isAnonymous || this.isAnonymousCreation;
     this.form = this.formBuilder.group({
       id: [null, []],
       buyers: this.formBuilder.array([this.predefinedBuyer]),
@@ -87,6 +96,9 @@ export class WriteOfferDialogComponent implements OnInit {
     if (!_.isEmpty(model.sellers)) {
       const sellers = _.map(model.sellers, item => this.createEntity(item, this.data.isAnonymous));
       this.form.setControl('sellers', this.formBuilder.array(sellers));
+      if (this.isAnonymousCreation) {
+        this.form.get('sellers').disable();
+      }
     }
   }
 
@@ -120,12 +132,11 @@ export class WriteOfferDialogComponent implements OnInit {
       return; // Exit
     }
 
-    //TODO: only do http request in case: form.dirty
     const message = `Successfully ${this.data.isEdit ? 'updated' : 'created new'} offer.`;
     of(model)
       .pipe(
         switchMap((item: Offer) => this.storeFormData(item)),
-        tap(() => this.data.verbose && this.snackbar.open(message))
+        // tap(() => this.data.verbose && this.snackbar.open(message))
       )
       .subscribe(({id}) => {
         this.dialogRef.close(model);
@@ -133,12 +144,13 @@ export class WriteOfferDialogComponent implements OnInit {
       });
   }
 
+  // Prevent redundant call to api in case form didn't touch
   private storeFormData(item: Offer): Observable<Offer> {
     if (this.form.dirty) {
       return this.data.isEdit
         ? this.service.update(item)
         : this.service.add(item);
-    }  else { // Prevent redundant call to api in case form didn't touch
+    }  else {
       return of(item);
     }
   }
