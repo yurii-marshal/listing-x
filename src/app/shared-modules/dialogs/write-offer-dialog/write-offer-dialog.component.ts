@@ -15,6 +15,13 @@ enum Type {
   Sellers = 'sellers'
 }
 
+enum OfferMode {
+  AddAnonymous,
+  CreateFromAnonymous,
+  CreateFromScratch,
+  Update
+}
+
 
 @Component({
   selector: 'app-write-offer-dialog',
