@@ -10,6 +10,7 @@ import { switchMap, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
 import { ProgressService } from '../../../core-modules/core-services/progress.service';
+import { LocalStorageKey } from '../../../core-modules/enums/local-storage-key';
 
 enum Type {
   Buyers = 'buyers',
@@ -138,7 +139,7 @@ export class WriteOfferDialogComponent implements OnInit {
     control.removeAt(index);
   }
 
-  close(): void {
+  submit(): void {
     const model: Offer = this.form.getRawValue(); // to include 'state'
     if (this.data.isAnonymous) {
       this.dialogRef.close(model);
@@ -155,6 +156,12 @@ export class WriteOfferDialogComponent implements OnInit {
         this.dialogRef.close(model);
         this.router.navigate(['/portal/offer', id, 'step-2']);
       });
+  }
+
+  onClose() {
+    this.dialogRef.close();
+    // clear the local storage when canceling
+    localStorage.removeItem(LocalStorageKey.Offer);
   }
 
   // Prevent redundant call to api in case form didn't touch
