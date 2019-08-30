@@ -9,6 +9,7 @@ import { Observable, of } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
+import { ProgressService } from '../../../core-modules/core-services/progress.service';
 
 enum Type {
   Buyers = 'buyers',
@@ -32,6 +33,8 @@ export class WriteOfferDialogComponent implements OnInit {
   form: FormGroup;
   Type = Type;
 
+  isLoading: Observable<boolean>;
+
   get buyers(): FormArray {
     return this.form.get('buyers') as FormArray;
   }
@@ -50,11 +53,14 @@ export class WriteOfferDialogComponent implements OnInit {
               private authService: AuthService,
               private snackbar: MatSnackBar,
               private router: Router,
+              private progressService: ProgressService,
               public dialogRef: MatDialogRef<WriteOfferDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: { model: Offer, isAnonymous: boolean, isAnonymousCreation: boolean, isEdit: boolean}) {// TODO: refactor isAnonymous using enum
   }
 
   ngOnInit() {
+    this.isLoading = this.progressService.processingStream;
+
     this.buildForm();
 
     if (this.isAnonymousCreation) {
