@@ -50,6 +50,11 @@ export class TransactionService extends BaseDataService<Transaction> {
     return this.http.post(url, {});
   }
 
+  toggleState(transactionId: number) {
+    const url = super.transformEndpoint(ApiEndpoint.ToggleState, transactionId);
+    return this.http.post(url, {});
+  }
+
   private fetchCalendarData(url: string, start: Date, end: Date) {
     let params = new HttpParams();
     if (start) {

@@ -86,7 +86,7 @@
         <div class="row-layout" style="position: relative;"><label class="header">offer</label>
           <img *ngIf="transaction.urlDocument"
             src="assets/images/icons/pdf.svg"
-            (click)="triggerDownloadFile(transaction.urlDocument)"
+            (click)="downloadAndToggleState(transaction.urlDocument)"
             [title]="transaction.urlDocument"
             height="80"
             class="e-document">

@@ -82,7 +82,13 @@ export class TransactionDetailsComponent implements OnInit {
       })
   }
 
-  private triggerDownloadFile(file: string | Document) {
+  downloadAndToggleState(file: string | Document) {
+    const id: number = Number(this.route.snapshot.params.id);
+    this.transactionService.toggleState(id).subscribe();
+    this.triggerDownloadFile(file);
+  }
+
+  triggerDownloadFile(file: string | Document) {
     const trigger: HTMLAnchorElement = document.createElement('a');
     if (typeof file  === 'string') {
       trigger.href = trigger.download = file;
@@ -92,5 +98,6 @@ export class TransactionDetailsComponent implements OnInit {
     }
     trigger.target = '_blank';
     trigger.click();
+
   }
 }
