@@ -73,6 +73,7 @@ export class WriteOfferStepTwoDialogComponent implements OnInit {
 
   remove(i: number): void {
     this.loans.removeAt(i);
+    this.form.markAsDirty();
   }
 
   createLoan(model?: Loan): FormGroup {
