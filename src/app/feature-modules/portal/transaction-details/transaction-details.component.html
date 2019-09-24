@@ -10,7 +10,9 @@
             <span [ngClass]="getClassName(transaction.status)" class="status">&nbsp;{{ transaction.status }}</span>
           </div>
         </div>
-        <div class="description"> Offer created: {{ transaction.createdAt | date : 'short' }} ({{ transaction.offer.remainingDaysCloseEscrow }} days until  close escrow)</div>
+        <div class="description"> Offer created: {{ transaction.createdAt | date : 'short' }}
+          <span *ngIf="transaction.offer.remainingDaysCloseEscrow">({{ transaction.offer.remainingDaysCloseEscrow }} days until  close escrow)</span>
+        </div>
         <div class="control-bar">
           <div class="u-flex-1">
             <button *ngIf="transaction.allowEdit" mat-icon-button color="accent" routerLink="/portal/offer/{{ transaction.offer.id }}">
@@ -49,7 +51,11 @@
         <div class="row-layout" *ngFor="let item of transaction.offer.buyers; let i = index"><label>buyer #{{ i + 1 }}</label><span>{{ item.firstName }} {{ item.lastName }} | {{ item.email }}</span></div>
         <div class="row-layout" *ngFor="let item of transaction.offer.sellers; let i = index"><label>seller #{{ i + 1 }}</label><span>{{ item.firstName }} {{ item.lastName }} | {{ item.email }}</span></div>
         <div class="row-layout"><label>address</label><span>{{ transaction.offer.streetName }}, {{ transaction.offer.city }}, {{ transaction.offer.state }} {{ transaction.offer.zip }}</span></div>
-        <div class="row-layout"><label>offer info</label><span>${{ transaction.offer.price | number }} | {{ transaction.offer.closeEscrowDays }} Days to close escrow</span></div>
+        <div class="row-layout"><label>offer info</label>
+          <span>${{ transaction.offer.price | number }}
+            <ng-container *ngIf="transaction.offer.closeEscrowDays">&nbsp;|&nbsp;{{ transaction.offer.closeEscrowDays }} Days to close escrow</ng-container>
+          </span>
+        </div>
 
         <div class="row-layout"><label class="header">Supporting docs</label></div>
         <div class="row-layout"><label>Add Pre-approval Letter</label>
