@@ -35,6 +35,7 @@ export class AddressDialogComponent implements OnInit {
       id: [null, []],
       firstName: [{value: firstName, disabled: true}, [Validators.required, Validators.maxLength(30)]],
       lastName: [{value: lastName, disabled: true}, [Validators.required, Validators.maxLength(150)]],
+      moderators: this.formBuilder.array([this.buildModerators()]),
       streetName: [null, [Validators.required]],
       city: [null, [Validators.required, Validators.maxLength(255)]],
       state: [{value: 'California', disabled: true}, [Validators.required, Validators.maxLength(150)]],
@@ -45,6 +46,21 @@ export class AddressDialogComponent implements OnInit {
     if (this.data.model) {
       this.patchFromValues();
     }
+  }
+
+  private buildModerators(model?: Address): FormGroup {
+    const fg: FormGroup = this.formBuilder.group({
+      id: [null, []],
+      firstName: [null, Validators.required],
+      lastName: [null, Validators.required],
+      email: [null, [Validators.required, Validators.email]]
+    });
+
+    if (model) {
+      console.log(model);
+    }
+
+    return fg;
   }
 
   patchFromValues() {
