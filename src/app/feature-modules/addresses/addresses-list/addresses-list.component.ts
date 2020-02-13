@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BaseTableDataSource } from '../../../core-modules/datasources/base-table-data-source';
 import { AddressesService } from '../../../core-modules/core-services/addresses.service';
 import { Address } from '../../../core-modules/models/address';
@@ -12,13 +12,12 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './addresses-list.component.html',
   styleUrls: ['./addresses-list.component.scss']
 })
-export class AddressesListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['createdAt', 'name', 'address', 'offersCreated', 'offersSigned', 'actions'];
+export class AddressesListComponent implements OnInit {
+  displayedColumns: string[] = ['createdAt', 'name', 'sellers', 'address', 'offersCreated', 'offersSigned', 'actions'];
 
   dataSource: BaseTableDataSource<Address>;
 
-  constructor(private cdr: ChangeDetectorRef,
-              private service: AddressesService,
+  constructor(private service: AddressesService,
               private dialog: MatDialog,
               private snackbar: MatSnackBar,
               private route: ActivatedRoute) {
@@ -29,27 +28,24 @@ export class AddressesListComponent implements OnInit, AfterViewInit {
     if (isSelling) {
       this.openDialog();
     }
-  }
 
-  ngAfterViewInit(): void {
     this.dataSource = new BaseTableDataSource(this.service, null, null);
-    this.cdr.detectChanges();
   }
 
-  onCreate() {
+  onCreate(): void {
     this.openDialog();
   }
 
-  onEdit(item: Address) {
+  onEdit(item: Address): void {
     this.openDialog(item);
   }
 
-  onDelete(item: Address) {
+  onDelete(item: Address): void {
     this.service.delete(item.id)
       .subscribe(() => this.dataSource.reload());
   }
 
-  private openDialog(model?: Address) {
+  private openDialog(model?: Address): void {
     const dialogRef = this.dialog.open(AddressDialogComponent, {
       width: '600px',
       disableClose: true,

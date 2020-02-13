@@ -19,21 +19,31 @@
         <app-form-validation-error [baseControl]="form.get('lastName')"></app-form-validation-error>
       </div>
     </div>
-    <h4 style="margin-bottom: 5px">Moderators</h4>
-    <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
-      <div class="fieldset">
-        <label>First Name</label>
-        <input type="text" class="form-control">
-      </div>
-      <div class="fieldset">
-        <label>Last Name</label>
-        <input type="text" class="form-control">
-      </div>
-      <div class="fieldset">
-        <label>Email</label>
-        <input type="text" class="form-control">
+    <h4 style="margin-top: 5px;">Sellers</h4>
+    <div *ngFor="let row of sellers.controls; let i = index; let first = first" [formGroup]="row">
+      <h6 class="subtitle">seller #{{ i + 1 }}</h6>
+      <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
+        <div class="fieldset">
+          <label>First Name</label>
+          <input formControlName="firstName" placeholder="First name" spellcheck="false" type="text" class="form-control">
+          <app-form-validation-error [baseControl]="row.get('firstName')"></app-form-validation-error>
+        </div>
+        <div class="fieldset">
+          <label>Last Name</label>
+          <input formControlName="lastName" placeholder="Last name" spellcheck="false" type="text" class="form-control">
+          <app-form-validation-error [baseControl]="row.get('lastName')"></app-form-validation-error>
+        </div>
+        <div class="fieldset">
+          <label>Email</label>
+          <input formControlName="email" placeholder="Email" spellcheck="false" type="text" class="form-control">
+          <app-form-validation-error [baseControl]="row.get('email')"></app-form-validation-error>
+        </div>
+        <button *ngIf="!first" mat-icon-button color="accent" (click)="removeRow(i)">
+          <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
+        </button>
       </div>
     </div>
+    <div (click)="addModerator()" class="link">add seller</div>
     <h4 style="margin-top: 5px;">Address</h4>
     <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
       <div class="fieldset u-flex-1">

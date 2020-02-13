@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
 import { Address } from '../../../core-modules/models/address';
 import * as _ from 'lodash';
@@ -18,6 +18,10 @@ export class AddressDialogComponent implements OnInit {
   form: FormGroup;
   isEdit: boolean;
 
+  get sellers(): FormArray {
+    return this.form.get('sellers') as FormArray;
+  }
+
   constructor(private service: AddressesService,
               private authService: AuthService,
               private formBuilder: FormBuilder,
@@ -35,7 +39,7 @@ export class AddressDialogComponent implements OnInit {
       id: [null, []],
       firstName: [{value: firstName, disabled: true}, [Validators.required, Validators.maxLength(30)]],
       lastName: [{value: lastName, disabled: true}, [Validators.required, Validators.maxLength(150)]],
-      moderators: this.formBuilder.array([this.buildModerators()]),
+      sellers: this.formBuilder.array([this.buildSellers()]),
       streetName: [null, [Validators.required]],
       city: [null, [Validators.required, Validators.maxLength(255)]],
       state: [{value: 'California', disabled: true}, [Validators.required, Validators.maxLength(150)]],
@@ -48,25 +52,29 @@ export class AddressDialogComponent implements OnInit {
     }
   }
 
-  private buildModerators(model?: Address): FormGroup {
-    const fg: FormGroup = this.formBuilder.group({
-      id: [null, []],
-      firstName: [null, Validators.required],
-      lastName: [null, Validators.required],
-      email: [null, [Validators.required, Validators.email]]
+  /* TODO: check model */
+  private buildSellers(model?: any): FormGroup {
+    return this.formBuilder.group({
+      id: [{value: model ? model.id : null, disabled: true}, []],
+      firstName: [model ? model.firstName : null, Validators.required],
+      lastName: [model ? model.lastName : null, Validators.required],
+      email: [model ? model.email : null, [Validators.required, Validators.email]]
     });
-
-    if (model) {
-      console.log(model);
-    }
-
-    return fg;
   }
 
   patchFromValues() {
     const formControlNames: string[] = Object.keys(this.form.controls);
     const formData = _.pick(this.data.model, formControlNames);
-    this.form.setValue(formData);
+
+    let {sellers} = formData;
+    formData.sellers = [];
+
+    this.form.patchValue(formData);
+
+    sellers = sellers.map((row) => this.buildSellers(row));
+
+    this.form.setControl('sellers', this.formBuilder.array(sellers));
+    this.form.markAsDirty();
   }
 
   close(): void {
@@ -82,5 +90,13 @@ export class AddressDialogComponent implements OnInit {
         tap(() => this.data.verbose && this.snackbar.open(message))
       )
       .subscribe(() => this.dialogRef.close(model));
+  }
+
+  removeRow(i: number): void {
+    this.sellers.removeAt(i);
+  }
+
+  addModerator(): void {
+    this.sellers.push(this.buildSellers());
   }
 }

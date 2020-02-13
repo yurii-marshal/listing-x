@@ -1,3 +1,8 @@
 @import "../../../feature-modules/auth/forms.template";
 
 @import "../dialogs.template";
+
+h6.subtitle {
+  text-transform: uppercase;
+  margin: 0 0 13px 0;
+}

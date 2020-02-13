@@ -3,11 +3,28 @@
   max-width: 150px;
 }
 
-.mat-column-name .user-icon {
+.mat-column-name .user-icon,
+.mat-column-sellers .user-icon {
   width: 13px;
   height: 13px;
   margin-right: 10px;
   color:  #66ad58;
+}
+
+.mat-column-sellers {
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  li {
+    white-space: nowrap;
+
+    & + li {
+      margin-top: 3px;
+    }
+  }
 }
 
 .mat-column-address {
