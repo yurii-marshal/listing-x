@@ -40,7 +40,6 @@ export class TransactionsComponent implements OnDestroy, OnInit, AfterViewInit {
     this.service.loadCalendar()
       .subscribe(events => this.calendarDataSource = events);
 
-    /* TODO: waiting for endpoint */
     this.dataSource = new BaseTableDataSource(this.service, null, null);
   }
 

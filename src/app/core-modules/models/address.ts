@@ -1,8 +1,10 @@
+import {Person} from './offer';
+
 export interface Address {
   id: number;
   firstName: string;
   lastName: string;
-  sellers: any[]; // TODO: check model
+  sellers: Person[];
   streetName: string;
   city: string;
   state: string;

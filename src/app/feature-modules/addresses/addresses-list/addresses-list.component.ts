@@ -13,8 +13,8 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./addresses-list.component.scss']
 })
 export class AddressesListComponent implements OnInit {
-  displayedColumns: string[] = ['createdAt', 'name', 'sellers', 'address', 'offersCreated', 'offersSigned', 'actions'];
-
+  displayedColumns: string[] = ['createdAt', 'name', 'sellers', 'address', 'totalOffers', 'offersSigned', 'actions'];
+  /* TODO: check address model depending addresses list response */
   dataSource: BaseTableDataSource<Address>;
 
   constructor(private service: AddressesService,
