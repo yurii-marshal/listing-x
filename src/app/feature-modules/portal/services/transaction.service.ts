@@ -1,7 +1,7 @@
 import { Injectable, Injector } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { CalendarEvent, Transaction } from '../../../core-modules/models/transaction';
-import { Observable } from 'rxjs';
+import {Observable, of} from 'rxjs';
 import { ApiEndpoint } from '../../../core-modules/enums/api-endpoints';
 import { map } from 'rxjs/operators';
 import * as _ from 'lodash';

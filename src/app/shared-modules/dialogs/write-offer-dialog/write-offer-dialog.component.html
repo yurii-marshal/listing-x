@@ -6,62 +6,34 @@
 </div>
 <div mat-dialog-content class="form-container dialog-form" style="min-height: 400px">
   <form novalidate [formGroup]="form" style="width: 100%!important;">
-    <div>
-      <h4>Buyer information</h4>
-      <div *ngFor="let control of buyers.controls; let i = index; let first = first" [formGroup]="control">
-        <h6 class="subtitle">buyer #{{ i + 1}}</h6>
-        <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
-          <div class="fieldset u-flex-1">
-            <label>First name</label>
-            <input formControlName="firstName" placeholder="First name" spellcheck="false" class="form-control">
-            <app-form-validation-error [baseControl]="control.get('firstName')"></app-form-validation-error>
-          </div>
-          <div class="fieldset u-flex-1">
-            <label>Last name</label>
-            <input formControlName="lastName" placeholder="Last name" spellcheck="false" class="form-control">
-            <app-form-validation-error [baseControl]="control.get('lastName')"></app-form-validation-error>
-          </div>
-          <div class="fieldset u-flex-1">
-            <label>Email</label>
-            <input formControlName="email" placeholder="Email" spellcheck="false" class="form-control">
-            <app-form-validation-error [baseControl]="control.get('email')"></app-form-validation-error>
-          </div>
-          <button *ngIf="!first" mat-icon-button color="accent" (click)="remove(Type.Buyers, i)">
-            <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
-          </button>
-        </div>
-      </div>
-      <div (click)="add()" class="link">add more buyer</div>
-    </div>
+    <!-- Block order for anonymous flow -->
+    <ng-container *ngIf="data.isAnonymous">
+      <!-- Invitee buyers section -->
+      <div *ngTemplateOutlet="moderatorBuyersTpl"></div>
 
-    <div>
-      <h4 *ngIf="!data.isAnonymous">seller information</h4>
-      <div *ngFor="let control of sellers.controls; let i = index; let first = first" [formGroup]="control">
-        <h6 class="subtitle">seler #{{ i + 1}}</h6>
-        <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
-          <div class="fieldset u-flex-1">
-            <label>First name</label>
-            <input formControlName="firstName" placeholder="First name" spellcheck="false" class="form-control">
-            <app-form-validation-error [baseControl]="control.get('firstName')"></app-form-validation-error>
-          </div>
-          <div class="fieldset u-flex-1">
-            <label>Last name</label>
-            <input formControlName="lastName" placeholder="Last name" spellcheck="false" class="form-control">
-            <app-form-validation-error [baseControl]="control.get('lastName')"></app-form-validation-error>
-          </div>
-          <div class="fieldset u-flex-1">
-            <label>Email</label>
-            <input formControlName="email" placeholder="Email" spellcheck="false" class="form-control">
-            <app-form-validation-error [baseControl]="control.get('email')"></app-form-validation-error>
-          </div>
-          <button *ngIf="!first" mat-icon-button color="accent" (click)="remove(Type.Sellers, i)">
-            <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
-          </button>
-        </div>
-      </div>
-      <div *ngIf="!data.isAnonymous" (click)="add(Type.Sellers)" class="link">add more seller</div>
-    </div>
+      <!-- Moderator sellers section -->
+      <div *ngTemplateOutlet="moderatorSellersTpl"></div>
 
+      <!-- Invitee sellers section -->
+      <div *ngTemplateOutlet="sellersTpl"></div>
+    </ng-container>
+
+    <!-- Block order for authenticated flow -->
+    <ng-container *ngIf="!data.isAnonymous">
+      <!-- Moderator buyers section -->
+      <div *ngTemplateOutlet="moderatorBuyersTpl"></div>
+
+      <!-- Moderator sellers section -->
+      <div *ngTemplateOutlet="moderatorSellersTpl"></div>
+
+      <!-- Invitee buyers section -->
+      <div *ngTemplateOutlet="buyersTpl"></div>
+
+      <!-- Invitee sellers section -->
+      <div *ngTemplateOutlet="sellersTpl"></div>
+    </ng-container>
+
+    <!-- Address section -->
     <h4 style="margin-top: 5px;">Address</h4>
     <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
       <div class="fieldset u-flex-1">
@@ -121,3 +93,115 @@
     {{ data.isAnonymous? 'SAVE' : 'CONTINUE'}}
   </button>
 </div>
+
+<ng-template #buyersTpl>
+  <h4>Buyer information</h4>
+  <div *ngFor="let control of buyers.controls; let i = index; let first = first" [formGroup]="control">
+    <h6 class="subtitle" *ngIf="!data.isAnonymous">buyer #{{ i + 1}}</h6>
+    <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
+      <div class="fieldset u-flex-1">
+        <label>First name</label>
+        <input formControlName="firstName" placeholder="First name" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="control.get('firstName')"></app-form-validation-error>
+      </div>
+      <div class="fieldset u-flex-1">
+        <label>Last name</label>
+        <input formControlName="lastName" placeholder="Last name" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="control.get('lastName')"></app-form-validation-error>
+      </div>
+      <div class="fieldset u-flex-1">
+        <label>Email</label>
+        <input formControlName="email" placeholder="Email" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="control.get('email')"></app-form-validation-error>
+      </div>
+      <button *ngIf="!first" mat-icon-button color="accent" (click)="remove(Type.Buyers, i)">
+        <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
+      </button>
+    </div>
+  </div>
+  <div *ngIf="!data.isAnonymous" (click)="add(Type.Buyers)" class="link">add more buyer</div>
+</ng-template>
+
+<ng-template #sellersTpl>
+  <h4 *ngIf="!data.isAnonymous">seller information</h4>
+  <div *ngFor="let control of sellers.controls; let i = index; let first = first" [formGroup]="control">
+    <h6 class="subtitle">seler #{{ i + 1}}</h6>
+    <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
+      <div class="fieldset u-flex-1">
+        <label>First name</label>
+        <input formControlName="firstName" placeholder="First name" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="control.get('firstName')"></app-form-validation-error>
+      </div>
+      <div class="fieldset u-flex-1">
+        <label>Last name</label>
+        <input formControlName="lastName" placeholder="Last name" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="control.get('lastName')"></app-form-validation-error>
+      </div>
+      <div class="fieldset u-flex-1">
+        <label>Email</label>
+        <input formControlName="email" placeholder="Email" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="control.get('email')"></app-form-validation-error>
+      </div>
+      <button *ngIf="!first && !data.isAnonymous && control.enabled" mat-icon-button color="accent" (click)="remove(Type.Sellers, i)">
+        <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
+      </button>
+    </div>
+  </div>
+  <div *ngIf="!data.isAnonymous" (click)="add(Type.Sellers)" class="link">add more seller</div>
+</ng-template>
+
+<ng-template #moderatorBuyersTpl>
+  <h4>Moderator Buyer information</h4>
+  <div *ngFor="let control of moderatorBuyers.controls; let i = index; let first = first" [formGroup]="control">
+    <h6 class="subtitle">moderator buyer #{{ i + 1}}</h6>
+    <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
+      <div class="fieldset u-flex-1">
+        <label>First name</label>
+        <input formControlName="firstName" placeholder="First name" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="control.get('firstName')"></app-form-validation-error>
+      </div>
+      <div class="fieldset u-flex-1">
+        <label>Last name</label>
+        <input formControlName="lastName" placeholder="Last name" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="control.get('lastName')"></app-form-validation-error>
+      </div>
+      <div class="fieldset u-flex-1">
+        <label>Email</label>
+        <input formControlName="email" placeholder="Email" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="control.get('email')"></app-form-validation-error>
+      </div>
+      <button *ngIf="!first && !data.isAnonymous" mat-icon-button color="accent" (click)="remove(Type.ModeratorBuyers, i)">
+        <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
+      </button>
+    </div>
+  </div>
+  <div *ngIf="!data.isAnonymous" (click)="add(Type.ModeratorBuyers)" class="link">add more moderator buyer</div>
+</ng-template>
+
+<ng-template #moderatorSellersTpl>
+  <h4 *ngIf="!data.isAnonymous">moderator seller information</h4>
+  <div *ngFor="let control of moderatorSellers.controls; let i = index; let first = first" [formGroup]="control">
+    <h6 class="subtitle">moderator seler #{{ i + 1}}</h6>
+    <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
+      <div class="fieldset u-flex-1">
+        <label>First name</label>
+        <input formControlName="firstName" placeholder="First name" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="control.get('firstName')"></app-form-validation-error>
+      </div>
+      <div class="fieldset u-flex-1">
+        <label>Last name</label>
+        <input formControlName="lastName" placeholder="Last name" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="control.get('lastName')"></app-form-validation-error>
+      </div>
+      <div class="fieldset u-flex-1">
+        <label>Email</label>
+        <input formControlName="email" placeholder="Email" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="control.get('email')"></app-form-validation-error>
+      </div>
+      <button *ngIf="!first && !data.isAnonymous" mat-icon-button color="accent" (click)="remove(Type.ModeratorSellers, i)">
+        <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
+      </button>
+    </div>
+  </div>
+  <div *ngIf="!data.isAnonymous" (click)="add(Type.ModeratorSellers)" class="link">add more moderator seller</div>
+</ng-template>

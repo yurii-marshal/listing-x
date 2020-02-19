@@ -1,7 +1,7 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { AddressDialogComponent } from '../../../shared-modules/dialogs/address-dialog/address-dialog.component';
-import { filter, map } from 'rxjs/operators';
+import {filter, map, takeUntil} from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { BaseTableDataSource } from '../../../core-modules/datasources/base-table-data-source';
 import { CalendarEvent, Transaction, TransactionStatus } from '../../../core-modules/models/transaction';
@@ -10,14 +10,18 @@ import { AuthService } from '../../../core-modules/core-services/auth.service';
 import { Person } from '../../../core-modules/models/offer';
 import * as _ from 'lodash';
 import { OfferService } from '../services/offer.service';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-transactions',
   templateUrl: './transactions.component.html',
   styleUrls: ['./transactions.component.scss']
 })
-export class TransactionsComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['createdAt', 'address', 'buyers', 'sellers', 'status', 'lastLogs', 'actions'];
+export class TransactionsComponent implements OnDestroy, OnInit, AfterViewInit {
+  private onDestroyed$: Subject<void> = new Subject<void>();
+  /* TODO: add 'lastLogs' column, when api will be ready */
+  displayedColumns: string[] = ['createdAt', 'address', 'moderatorBuyers', 'moderatorSellers',
+                                'buyers', 'sellers', 'status', 'actions'];
 
   dataSource: BaseTableDataSource<Transaction>;
 
@@ -30,20 +34,22 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
               private service: TransactionService,
               private offerService: OfferService,
               private authService: AuthService,
-              private dialog: MatDialog,
-              private cdr: ChangeDetectorRef) { }
+              private dialog: MatDialog) { }
 
   ngOnInit() {
     this.service.loadCalendar()
       .subscribe(events => this.calendarDataSource = events);
 
-    this.offerService.offerChanged
-      .subscribe(() => this.dataSource.reload());
+    /* TODO: waiting for endpoint */
+    this.dataSource = new BaseTableDataSource(this.service, null, null);
   }
 
   ngAfterViewInit(): void {
-    this.dataSource = new BaseTableDataSource(this.service, null, null);
-    this.cdr.detectChanges();
+    this.offerService.offerChanged.pipe(
+      takeUntil(this.onDestroyed$)
+    ).subscribe(() => {
+      this.dataSource.reload();
+    });
   }
 
   openCreateAddressDialog() {
@@ -86,5 +92,10 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
       return false;
     }
     return currentUser.firstName === item.firstName && currentUser.lastName === item.lastName;
+  }
+
+  ngOnDestroy(): void {
+    this.onDestroyed$.next();
+    this.onDestroyed$.complete();
   }
 }

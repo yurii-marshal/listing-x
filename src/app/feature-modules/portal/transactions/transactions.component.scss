@@ -4,6 +4,7 @@ $green: #66ad58;
 $yellow: #f8ce5f;
 $red: #cd584a;
 $blue: rgba(2, 136, 209, 0.9);
+$grey: rgba(0, 0, 0, .12);
 
 .buttons-bar {
   margin-top: 85px;
@@ -66,6 +67,11 @@ $blue: rgba(2, 136, 209, 0.9);
   &.blue {
     border: solid 1px $blue;
     background-color: $blue;
+  }
+  &:disabled {
+    background-color: $grey;
+    border: 0;
+    cursor: not-allowed;
   }
 }
 

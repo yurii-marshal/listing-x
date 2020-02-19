@@ -1,7 +1,7 @@
 import { IDataService } from '../interfaces/data.service';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable, Injector } from '@angular/core';
+import { Injector } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { ConfirmationBarComponent } from '../../shared-modules/components/confirmation-bar/confirmation-bar.component';
 import { switchMap, tap } from 'rxjs/operators';
@@ -15,7 +15,7 @@ export abstract class BaseDataService<TModel extends {id: number}> implements ID
   protected http: HttpClient;
 
   protected detailUrl(id: number): string {
-    return `${this.crudEndpoint}${id}/`
+    return `${this.crudEndpoint}${id}/`;
   }
 
   protected transformEndpoint(endpoint: ApiEndpoint, id: any): string {

@@ -11,6 +11,8 @@ export interface Offer {
   id: number;
   buyers: Person[];
   sellers: Person[];
+  moderatorBuyers: Person[];
+  moderatorSellers: Person[];
   streetName: string;
   city: string;
   state: string;

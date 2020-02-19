@@ -7,6 +7,8 @@
 <div mat-dialog-content cdkTrapFocus class="form-container dialog-form" style="min-height: 400px">
   <ng-container *ngIf="data.model">
     <div class="row-layout"><label class="header">Offer information</label><span [routerLink]="stepOneLink" (click)="hide()" class="link">Edit</span></div>
+    <div class="row-layout" *ngFor="let item of data.model.moderatorBuyers; let i = index"><label>moderator buyer #{{ i + 1 }}</label><span>{{ item.firstName }} {{ item.lastName }} | {{ item.email }}</span></div>
+    <div class="row-layout" *ngFor="let item of data.model.moderatorSellers; let i = index"><label>moderator seller #{{ i + 1 }}</label><span>{{ item.firstName }} {{ item.lastName }} | {{ item.email }}</span></div>
     <div class="row-layout" *ngFor="let item of data.model.buyers; let i = index"><label>buyer #{{ i + 1 }}</label><span>{{ item.firstName }} {{ item.lastName }} | {{ item.email }}</span></div>
     <div class="row-layout" *ngFor="let item of data.model.sellers; let i = index"><label>seller #{{ i + 1 }}</label><span>{{ item.firstName }} {{ item.lastName }} | {{ item.email }}</span></div>
     <div class="row-layout"><label>address</label><span>{{ data.model.streetName }}, {{ data.model.city }}, {{ data.model.state }} {{ data.model.zip }}</span></div>
@@ -41,6 +43,8 @@
     <button mat-stroked-button mat-dialog-close [routerLink]="backLink"  color="primary">
       BACK
     </button>
-    <button mat-flat-button appDebounceClick (debounceClick)="goToESign()" color="primary">CREATE OFFER</button>
+    <!-- TODO: change when api will be finished -->
+    <!--<button mat-flat-button appDebounceClick (debounceClick)="goToESign()" color="primary">CREATE OFFER</button>-->
+    <button mat-flat-button mat-dialog-close (click)="goToList()" color="primary">CREATE OFFER</button>
   </div>
 </div>

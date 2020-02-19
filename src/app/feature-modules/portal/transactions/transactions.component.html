@@ -57,6 +57,28 @@
         </td>
       </ng-container>
 
+      <!-- Moderator buyer column -->
+      <ng-container matColumnDef="moderatorBuyers">
+        <th mat-header-cell *matHeaderCellDef>Moderator Buyers</th>
+        <td mat-cell *matCellDef="let element">
+          <div *ngFor="let item of element.offer.moderatorBuyers">
+            <mat-icon fontSet="fa" fontIcon="fa-user" class="user-icon" [class.current-user]="isCurrentUser(item)"></mat-icon>
+            {{ item.firstName }} {{ item.lastName }}
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Moderator seller column -->
+      <ng-container matColumnDef="moderatorSellers">
+        <th mat-header-cell *matHeaderCellDef>Moderator Sellers</th>
+        <td mat-cell *matCellDef="let element">
+          <div *ngFor="let item of element.offer.moderatorBuyers">
+            <mat-icon fontSet="fa" fontIcon="fa-user" class="user-icon" [class.current-user]="isCurrentUser(item)"></mat-icon>
+            {{ item.firstName }} {{ item.lastName }}
+          </div>
+        </td>
+      </ng-container>
+
       <!-- Buyer Column -->
       <ng-container matColumnDef="buyers">
         <th mat-header-cell *matHeaderCellDef>Buyer</th>
@@ -87,8 +109,8 @@
         </td>
       </ng-container>
 
-      <!-- Last Events -->
-      <ng-container matColumnDef="lastLogs">
+      <!-- Last Events TODO: check when api will be ready -->
+     <!-- <ng-container matColumnDef="lastLogs">
         <th mat-header-cell *matHeaderCellDef>Last Events</th>
         <td mat-cell *matCellDef="let element">
           <div *ngFor="let item of element.lastLogs; let i = index">
@@ -99,15 +121,17 @@
           </div>
           <div *ngIf="element?.lastLogs?.length > 2" style="font-style: italic; opacity: .75;"> and {{ element?.lastLogs?.length - 2 }} more ...</div>
         </td>
-      </ng-container>
+      </ng-container>-->
 
       <!-- Actions Column -->
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let element">
-          <div routerLink="/portal/transaction/{{ element.id }}" class="detail-btn" [ngClass]="getClassName(element.status)">
+          <!-- TODO: change when api will be ready -->
+          <!--<div routerLink="/portal/transaction/{{ element.id }}" class="detail-btn" [ngClass]="getClassName(element.status)">
             More Details
-          </div>
+          </div>-->
+          <button type="button" class="detail-btn" disabled>More Details</button>
         </td>
       </ng-container>
 

@@ -6,15 +6,17 @@ import { CustomValidators } from '../../../core-modules/validators/custom-valida
 import { Offer, Person } from '../../../core-modules/models/offer';
 import { OfferService } from '../../../feature-modules/portal/services/offer.service';
 import { Observable, of } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
 import { ProgressService } from '../../../core-modules/core-services/progress.service';
 import { LocalStorageKey } from '../../../core-modules/enums/local-storage-key';
 
 enum Type {
+  ModeratorSellers = 'moderatorSellers',
+  ModeratorBuyers = 'moderatorBuyers',
   Buyers = 'buyers',
-  Sellers = 'sellers'
+  Sellers = 'sellers',
 }
 
 enum OfferMode {
@@ -30,7 +32,7 @@ enum OfferMode {
   templateUrl: './write-offer-dialog.component.html',
   styleUrls: ['./write-offer-dialog.component.scss']
 })
-export class WriteOfferDialogComponent implements OnInit {
+export class  WriteOfferDialogComponent implements OnInit {
   form: FormGroup;
   Type = Type;
 
@@ -42,6 +44,14 @@ export class WriteOfferDialogComponent implements OnInit {
 
   get sellers(): FormArray {
     return this.form.get('sellers') as FormArray;
+  }
+
+  get moderatorBuyers(): FormArray {
+    return this.form.get('moderatorBuyers') as FormArray;
+  }
+
+  get moderatorSellers(): FormArray {
+    return this.form.get('moderatorSellers') as FormArray;
   }
 
   // This flag means that user create new offer from anonymous data stored before
@@ -69,11 +79,13 @@ export class WriteOfferDialogComponent implements OnInit {
     }
   }
 
-  private buildForm() {
+  private buildForm(): void {
     const disabled: boolean = this.data.isAnonymous || this.isAnonymousCreation;
     this.form = this.formBuilder.group({
       id: [null, []],
-      buyers: this.formBuilder.array([this.predefinedBuyer]),
+      moderatorBuyers: this.formBuilder.array([this.predefinedBuyer]),
+      moderatorSellers: this.formBuilder.array([this.createEntity()]),
+      buyers: this.data.isAnonymous ? [[]] : this.formBuilder.array([this.createEntity()]),
       sellers: this.formBuilder.array([this.createEntity()]),
       streetName: [{value: null, disabled}, [Validators.required]],
       city: [{value: null, disabled}, [Validators.required, Validators.maxLength(255)]],
@@ -95,7 +107,7 @@ export class WriteOfferDialogComponent implements OnInit {
        : this.createEntity(this.authService.currentUser, !this.data.isAnonymous);
   }
 
-  applyFormValues(model?: Offer) {
+  applyFormValues(model?: Offer): void {
     const names: string[] = Object.keys(this.form.controls);
     const formControlNames: string[] = _.without(names, 'buyers', 'sellers');
     const formData = _.pick(model, formControlNames);
@@ -103,22 +115,35 @@ export class WriteOfferDialogComponent implements OnInit {
 
     // Nested forms
     if (!_.isEmpty(model.buyers)) {
-      const buyers = _.map(model.buyers, (item: Person, i: number) => this.createEntity(item, i === 0));
+      const buyers = _.map(model.buyers, (item: Person, i: number) => this.createEntity(item, true));
       this.form.setControl('buyers', this.formBuilder.array(buyers));
     }
 
     if (!_.isEmpty(model.sellers)) {
-      const sellers = _.map(model.sellers, item => this.createEntity(item, this.data.isAnonymous));
+      const sellers = _.map(model.sellers, item => this.createEntity(item, true));
       this.form.setControl('sellers', this.formBuilder.array(sellers));
-      if (this.isAnonymousCreation) {
-        this.form.get('sellers').disable();
-      }
+    }
+
+    if (model.moderatorBuyers.length) {
+      const mb = model.moderatorBuyers.map((p) => this.createEntity(p, true));
+      this.form.setControl('moderatorBuyers', this.formBuilder.array(mb));
+    }
+
+    if (model.moderatorSellers.length) {
+      const ms = model.moderatorSellers.map((p) => this.createEntity(p, true));
+      this.form.setControl('moderatorSellers', this.formBuilder.array(ms));
+    }
+
+    if (this.data.model && this.data.isAnonymous) {
+      this.form.get('sellers').disable();
+      this.form.get('buyers').disable();
+      this.form.get('moderatorSellers').disable();
     }
   }
 
   createEntity(model?: Person, disabled: boolean = false): FormGroup {
     const formGroup = this.formBuilder.group({
-      id: [null, []],
+      // id: [null, []],
       firstName: [{value: null, disabled}, [Validators.required, Validators.maxLength(30)]],
       lastName: [{value: null, disabled}, [Validators.required, Validators.maxLength(150)]],
       email: [{value: null, disabled}, [Validators.required, Validators.email]], // CustomValidators.unique(this.)
@@ -129,12 +154,12 @@ export class WriteOfferDialogComponent implements OnInit {
     return formGroup;
   }
 
-  add(type: Type = Type.Buyers) {
+  add(type: Type): void {
     const control = this.form.get(type) as FormArray;
     control.push(this.createEntity());
   }
 
-  remove(type: Type, index: number) {
+  remove(type: Type, index: number): void {
     const control = this.form.get(type) as FormArray;
     control.removeAt(index);
   }

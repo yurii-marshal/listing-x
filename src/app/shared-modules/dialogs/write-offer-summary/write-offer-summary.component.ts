@@ -40,13 +40,17 @@ export class WriteOfferSummaryComponent {
     this.dialogRef.close();
   }
 
+  goToList(): void {
+    this.router.navigate(['/portal']);
+  }
+
   goToESign() {
     const transactionId: number = Number(this.data.model.transaction);
     this.transactionService.lockOffer(transactionId)
       .subscribe(() => {
         this.snackbar.open('Successfully created offer', 'OK');
         this.dialogRef.close();
-        this.router.navigate(['/e-sign', transactionId])
-      })
+        this.router.navigate(['/e-sign', transactionId]);
+      });
   }
 }
