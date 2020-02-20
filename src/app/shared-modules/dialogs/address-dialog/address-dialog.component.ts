@@ -8,6 +8,7 @@ import { AddressesService } from '../../../core-modules/core-services/addresses.
 import { switchMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
+import {Person} from '../../../core-modules/models/offer';
 
 @Component({
   selector: 'app-address-dialog',
@@ -52,8 +53,7 @@ export class AddressDialogComponent implements OnInit {
     }
   }
 
-  /* TODO: check model */
-  private buildSellers(model?: any): FormGroup {
+  private buildSellers(model?: Person): FormGroup {
     return this.formBuilder.group({
       id: [{value: model ? model.id : null, disabled: true}, []],
       firstName: [model ? model.firstName : null, Validators.required],
@@ -66,14 +66,14 @@ export class AddressDialogComponent implements OnInit {
     const formControlNames: string[] = Object.keys(this.form.controls);
     const formData = _.pick(this.data.model, formControlNames);
 
-    let {sellers} = formData;
+    const {sellers} = formData;
     formData.sellers = [];
 
     this.form.patchValue(formData);
 
-    sellers = sellers.map((row) => this.buildSellers(row));
+    const sellersFg: FormGroup[] = sellers.map((row) => this.buildSellers(row));
 
-    this.form.setControl('sellers', this.formBuilder.array(sellers));
+    this.form.setControl('sellers', this.formBuilder.array(sellersFg));
     this.form.markAsDirty();
   }
 
