@@ -6,7 +6,7 @@ export interface Transaction {
   status: TransactionStatus;
   lastLogs: Log[];
   createdAt: string;
-  urlDocument: string
+  urlDocument: string;
   allowDelete: boolean;
   allowEdit: boolean;
   allowSign: boolean;
@@ -15,12 +15,10 @@ export interface Transaction {
 }
 
 export enum TransactionStatus {
-  All = 'All transactions',
-  Started = 'Started',
-  InReview = 'Delivered',
-  Denied = 'Denied',
-  Accepted = 'Accepted',
-  Completed = 'Completed'
+  All = 'all_transactions',
+  New = 'new',
+  InProgress = 'in_progress',
+  Finished = 'finished'
 }
 
 export interface CalendarEvent {

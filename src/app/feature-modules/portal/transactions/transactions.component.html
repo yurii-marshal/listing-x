@@ -26,7 +26,7 @@
         <mat-label style="display: none">Status</mat-label>
         <mat-select (valueChange)="onFilter($event)" [value]="Status.All">
           <mat-option *ngFor="let item of statuses" [value]="item">
-            {{ item }}
+            {{ statusLabels[item] }}
           </mat-option>
         </mat-select>
       </mat-form-field>

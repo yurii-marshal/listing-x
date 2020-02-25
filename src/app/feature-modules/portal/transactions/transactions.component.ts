@@ -1,15 +1,14 @@
-import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import { Router } from '@angular/router';
-import { AddressDialogComponent } from '../../../shared-modules/dialogs/address-dialog/address-dialog.component';
-import {filter, map, takeUntil} from 'rxjs/operators';
-import { MatDialog } from '@angular/material';
-import { BaseTableDataSource } from '../../../core-modules/datasources/base-table-data-source';
-import { CalendarEvent, Transaction, TransactionStatus } from '../../../core-modules/models/transaction';
-import { TransactionService } from '../services/transaction.service';
-import { AuthService } from '../../../core-modules/core-services/auth.service';
-import { Person } from '../../../core-modules/models/offer';
-import * as _ from 'lodash';
-import { OfferService } from '../services/offer.service';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {AddressDialogComponent} from '../../../shared-modules/dialogs/address-dialog/address-dialog.component';
+import {filter, takeUntil} from 'rxjs/operators';
+import {MatDialog} from '@angular/material';
+import {BaseTableDataSource} from '../../../core-modules/datasources/base-table-data-source';
+import {CalendarEvent, Transaction, TransactionStatus} from '../../../core-modules/models/transaction';
+import {TransactionService} from '../services/transaction.service';
+import {AuthService} from '../../../core-modules/core-services/auth.service';
+import {Person} from '../../../core-modules/models/offer';
+import {OfferService} from '../services/offer.service';
 import {Subject} from 'rxjs';
 
 @Component({
@@ -25,10 +24,19 @@ export class TransactionsComponent implements OnDestroy, OnInit, AfterViewInit {
 
   dataSource: BaseTableDataSource<Transaction>;
 
-  Status = TransactionStatus;
   statuses: string[] = Object.values(TransactionStatus);
 
   calendarDataSource: CalendarEvent[];
+  readonly statusLabels: {[key: string]: string} = {
+    [TransactionStatus.All]: 'All transactions',
+    [TransactionStatus.New]: 'New',
+    [TransactionStatus.InProgress]: 'In progress',
+    [TransactionStatus.Finished]: 'Finished'
+  };
+
+  get Status() {
+    return TransactionStatus;
+  }
 
   constructor(private router: Router,
               private service: TransactionService,
@@ -73,15 +81,12 @@ export class TransactionsComponent implements OnDestroy, OnInit, AfterViewInit {
 
   getClassName(status: TransactionStatus): string {
     switch (status) {
-      case TransactionStatus.Started:
+      case TransactionStatus.New:
         return 'blue';
-      case TransactionStatus.InReview:
+      case TransactionStatus.InProgress:
         return 'yellow';
-      case TransactionStatus.Denied:
-        return 'red';
-      case TransactionStatus.Accepted:
-      case TransactionStatus.Completed:
-        return  'green';
+      case TransactionStatus.Finished:
+        return 'green';
     }
   }
 

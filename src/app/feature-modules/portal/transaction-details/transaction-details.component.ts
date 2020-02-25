@@ -48,7 +48,7 @@ export class TransactionDetailsComponent implements OnInit {
 
   getClassName(status: TransactionStatus): string {
     switch (status) {
-      case TransactionStatus.Started:
+      /*case TransactionStatus.Started:
         return 'blue';
       case TransactionStatus.InReview:
         return 'yellow';
@@ -56,6 +56,13 @@ export class TransactionDetailsComponent implements OnInit {
         return 'red';
       case TransactionStatus.Accepted:
       case TransactionStatus.Completed:
+        return 'green';*/
+
+      case TransactionStatus.New:
+        return 'blue';
+      case TransactionStatus.InProgress:
+        return 'yellow';
+      case TransactionStatus.Finished:
         return 'green';
     }
   }
@@ -70,7 +77,7 @@ export class TransactionDetailsComponent implements OnInit {
 
   goToESign() {
     this.transactionService.lockOffer(this.transaction.id)
-      .subscribe(() => this.router.navigate(['/e-sign', this.transaction.id]))
+      .subscribe(() => this.router.navigate(['/e-sign', this.transaction.id]));
   }
 
   deny() {
