@@ -1,6 +1,6 @@
 <div mat-dialog-title class="u-flex u-flex-justify--space-between u-flex-align-items--center">
   <div class="title">Write Offer - Supporting Docs</div>
-  <button mat-icon-button mat-dialog-close routerLink="../">
+  <button mat-icon-button mat-dialog-close [routerLink]="closeLink">
     <mat-icon fontSet="fa" fontIcon="fa-times"></mat-icon>
   </button>
 </div>
@@ -11,14 +11,14 @@
 </div>
 
 <div mat-dialog-actions class="fieldset button-bar">
-  <ng-container *ngIf="!data.readonly">
+  <ng-container *ngIf="data.modalType === ModalTypes.OfferCreation">
     <div class="u-flex u-flex-justify--space-between u-flex-align-items--center" style="width: 100%;">
-      <button mat-stroked-button mat-dialog-close [routerLink]="backLink"  color="primary">
+      <button mat-stroked-button mat-dialog-close [routerLink]="['/portal/offer', data.model.offerId, 'step-2']"  color="primary">
         BACK
       </button>
-      <button mat-flat-button appDebounceClick (debounceClick)="close()" color="primary">CONTINUE</button>
+      <button mat-flat-button appDebounceClick (debounceClick)="continue()" color="primary">CONTINUE</button>
     </div>
-    <button mat-button mat-dialog-close [routerLink]="nextLink" class="skip-label">
+    <button mat-button mat-dialog-close [routerLink]="['/portal/offer', data.model.offerId, 'summary']" class="skip-label">
       Skip this step
     </button>
   </ng-container>

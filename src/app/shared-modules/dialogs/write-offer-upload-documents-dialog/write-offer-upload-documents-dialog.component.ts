@@ -1,11 +1,12 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { UploadDocumentType } from '../../../core-modules/enums/upload-document-type';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { LinkedDocuments } from '../../../core-modules/models/linked-documents';
-import { DocumentLinkingService } from '../../../feature-modules/portal/services/document-linking.service';
+import {Component, Inject, OnInit} from '@angular/core';
+import {UploadDocumentType} from '../../../core-modules/enums/upload-document-type';
+import {ActivatedRoute, Router} from '@angular/router';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {LinkedDocuments} from '../../../core-modules/models/linked-documents';
+import {DocumentLinkingService} from '../../../feature-modules/portal/services/document-linking.service';
 import * as _ from 'lodash';
+import {UploadDocsModalType} from '../../../core-modules/enums/upload-docs-modal-type';
 
 @Component({
   selector: 'app-write-offer-upload-documents-dialog',
@@ -17,16 +18,13 @@ export class WriteOfferUploadDocumentsDialogComponent implements OnInit {
 
   Type = UploadDocumentType;
 
-  get backLink() {
-    return this.data.readonly
-      ? ''
-      : `/portal/offer/${this.data.model.offerId}/step-2/`;
+  get ModalTypes() {
+    return UploadDocsModalType;
   }
 
-  get nextLink() {
-    return this.data.readonly
-      ? ''
-      : `/portal/offer/${this.data.model.offerId}/summary/`;
+  get closeLink() {
+    return this.data.modalType === UploadDocsModalType.OfferUpdating ?
+      `/portal/transaction/${this.data.model.offerId}` : '../';
   }
 
   constructor(public route: ActivatedRoute,
@@ -34,10 +32,10 @@ export class WriteOfferUploadDocumentsDialogComponent implements OnInit {
               private formBuilder: FormBuilder,
               private router: Router,
               public dialogRef: MatDialogRef<WriteOfferUploadDocumentsDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: { model: LinkedDocuments, readonly: boolean }) { }
+              @Inject(MAT_DIALOG_DATA) public data: {model: LinkedDocuments, modalType: UploadDocsModalType}) { }
 
   ngOnInit() {
-    const disabled: boolean = this.data.readonly;
+    const disabled = this.data.modalType === UploadDocsModalType.Upload;
     this.form = this.formBuilder.group({
       preApproval: [{value: [], disabled}],
       proofOfFunds: [{value: [], disabled}],
@@ -50,18 +48,14 @@ export class WriteOfferUploadDocumentsDialogComponent implements OnInit {
     }
   }
 
-  goToNext() {
-    // TODO: summary page
-  }
-
-  close() {
+  continue(): void {
     const model: LinkedDocuments = this.form.value;
     model.offerId = this.data.model.offerId;
-    //TODO: only do http request in case: form.dirty
+    // TODO: only do http request in case: form.dirty
     this.service.linkDocumentsToOffer(model)
       .subscribe(() => {
         this.dialogRef.close(model);
-        this.router.navigate([this.nextLink]);
+        this.router.navigate(['/portal/offer', this.data.model.offerId, 'summary']);
       });
   }
 }

@@ -8,7 +8,6 @@ import { DocumentLinkingService } from '../services/document-linking.service';
 
 @Injectable()
 export class OfferDocumentsResolver implements Resolve<LinkedDocuments> {
-
   constructor(private http: HttpClient,
               private service: DocumentLinkingService) {
   }

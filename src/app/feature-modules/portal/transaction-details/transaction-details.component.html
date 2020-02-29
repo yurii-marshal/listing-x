@@ -1,4 +1,5 @@
 <app-base-template>
+  <router-outlet></router-outlet>
   <ng-container *ngIf="transaction">
     <div class="toolbar">
       <div class="toolbar-content">
@@ -114,6 +115,13 @@
           <button  mat-flat-button [disabled]="!transaction.allowSign" (click)="goToESign()" color="primary">SIGN</button>
         </div>-->
       </div>
+    </div>
+
+    <div class="upload-container">
+      <h4>Add new files</h4>
+
+      <button mat-flat-button color="accent" [routerLink]="['upload']">Upload new doc</button>
+      <small>Maximum upload file size: 3MB. Download format: .doc .pdf</small>
     </div>
 
     <div class="calendar-container">

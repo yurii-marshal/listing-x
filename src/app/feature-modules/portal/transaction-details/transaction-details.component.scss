@@ -181,3 +181,34 @@ $blue: rgba(2, 136, 209, 0.9);
   left: 105px;
   cursor: pointer;
 }
+
+.upload-container {
+  border-top: 1px solid rgba(213, 217, 225, 0.28);
+  margin-top: 50px;
+  padding: 50px 20px;
+  text-align: center;
+
+  h4 {
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 42px;
+    font-size: 14px;
+    line-height: 24px;
+    color: #444C5D;
+  }
+
+  button {
+    text-transform: uppercase;
+    background-color: #419BDF;
+    height: 45px;
+    width: 318px;
+  }
+
+  small {
+    display: block;
+    font-size: 12px;
+    line-height: 20px;
+    color: #8E96A7;
+    padding-top: 24px;
+  }
+}
