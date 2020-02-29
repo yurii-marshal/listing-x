@@ -84,6 +84,10 @@ $blue: rgba(2, 136, 209, 0.9);
     margin-top: 40px;
   }
 
+  &.new-section {
+    margin-top: 40px;
+  }
+
   label {
     width: 180px;
     margin-right: 40px;
@@ -101,6 +105,10 @@ $blue: rgba(2, 136, 209, 0.9);
       letter-spacing: normal;
       color: #444c5d;
     }
+  }
+
+  b {
+    font-weight: bold;
   }
 
   .link {

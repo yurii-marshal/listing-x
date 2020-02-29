@@ -24,7 +24,7 @@ export class DocumentLinkingService {
   }
 
   loadListDocumentsByType(type: UploadDocumentType): Observable<Document[]> {
-    return this.http.get<any>(ApiEndpoint.Upload, {params: new HttpParams().set('type', type)})
+    return this.http.get<any>(ApiEndpoint.Upload, {params: new HttpParams().set('document_type', type)})
       .pipe(map((body: any) => body.results as Document[]));
   }
 

@@ -18,9 +18,8 @@ import {Subject} from 'rxjs';
 })
 export class TransactionsComponent implements OnDestroy, OnInit, AfterViewInit {
   private onDestroyed$: Subject<void> = new Subject<void>();
-  /* TODO: add 'lastLogs' column, when api will be ready */
   displayedColumns: string[] = ['createdAt', 'address', 'moderatorBuyers', 'moderatorSellers',
-                                'buyers', 'sellers', 'status', 'actions'];
+                                'buyers', 'sellers', 'status', 'lastLogs', 'actions'];
 
   dataSource: BaseTableDataSource<Transaction>;
 

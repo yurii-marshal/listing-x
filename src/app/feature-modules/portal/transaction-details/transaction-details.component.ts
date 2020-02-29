@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { ConfirmationBarComponent } from '../../../shared-modules/components/confirmation-bar/confirmation-bar.component';
 import { CalendarView } from '../../../shared-modules/components/calendar/calendar.component';
 import { Document } from '../../../core-modules/models/document';
+import {AuthService} from "../../../core-modules/core-services/auth.service";
 
 @Component({
   selector: 'app-transaction-details',
@@ -26,7 +27,10 @@ export class TransactionDetailsComponent implements OnInit {
 
   CalendarView = CalendarView;
 
-  constructor(private route: ActivatedRoute,
+  isModerator: boolean = false;
+
+  constructor(private authService: AuthService,
+              private route: ActivatedRoute,
               private transactionService: TransactionService,
               private snackbar: MatSnackBar,
               private router: Router) {
@@ -35,7 +39,11 @@ export class TransactionDetailsComponent implements OnInit {
   ngOnInit() {
     const transactionId: number = Number(this.route.snapshot.params.id);
     this.transactionService.loadOne(transactionId)
-      .subscribe((transaction: Transaction) => this.transaction = transaction);
+      .subscribe((transaction: Transaction) => {
+        this.transaction = transaction;
+        const {moderatorBuyers, moderatorSellers} = this.transaction.offer;
+        this.isModerator = [...moderatorSellers, ...moderatorBuyers].some(({email}) => email === this.authService.currentUser.email);
+      });
 
     this.transactionService.loadCalendarByTransaction(transactionId)
       .subscribe(items => this.calendarDataSource = items);
@@ -48,16 +56,6 @@ export class TransactionDetailsComponent implements OnInit {
 
   getClassName(status: TransactionStatus): string {
     switch (status) {
-      /*case TransactionStatus.Started:
-        return 'blue';
-      case TransactionStatus.InReview:
-        return 'yellow';
-      case TransactionStatus.Denied:
-        return 'red';
-      case TransactionStatus.Accepted:
-      case TransactionStatus.Completed:
-        return 'green';*/
-
       case TransactionStatus.New:
         return 'blue';
       case TransactionStatus.InProgress:
@@ -85,8 +83,8 @@ export class TransactionDetailsComponent implements OnInit {
     this.transactionService.deny(id)
       .subscribe(() => {
         this.transaction.allowDeny = false;
-        this.snackbar.open(`Denied.`)
-      })
+        this.snackbar.open(`Denied.`);
+      });
   }
 
   downloadAndToggleState(file: string | Document) {
@@ -105,6 +103,5 @@ export class TransactionDetailsComponent implements OnInit {
     }
     trigger.target = '_blank';
     trigger.click();
-
   }
 }

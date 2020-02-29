@@ -13,7 +13,7 @@
         <div class="description"> Offer created: {{ transaction.createdAt | date : 'short' }}
           <span *ngIf="transaction.offer.remainingDaysCloseEscrow">({{ transaction.offer.remainingDaysCloseEscrow }} days until  close escrow)</span>
         </div>
-        <div class="control-bar">
+        <div class="control-bar" *ngIf="isModerator">
           <div class="u-flex-1">
             <button *ngIf="transaction.allowEdit" mat-icon-button color="accent" routerLink="/portal/offer/{{ transaction.offer.id }}">
               <mat-icon fontSet="fa" fontIcon="fa-edit" class="icon"></mat-icon>
@@ -48,8 +48,10 @@
     <div class="u-flex u-flex-justify--center">
       <div class="column-layout">
         <div class="row-layout"><label class="header">Offer information</label></div>
-        <div class="row-layout" *ngFor="let item of transaction.offer.buyers; let i = index"><label>buyer #{{ i + 1 }}</label><span>{{ item.firstName }} {{ item.lastName }} | {{ item.email }}</span></div>
-        <div class="row-layout" *ngFor="let item of transaction.offer.sellers; let i = index"><label>seller #{{ i + 1 }}</label><span>{{ item.firstName }} {{ item.lastName }} | {{ item.email }}</span></div>
+        <div class="row-layout" *ngFor="let item of transaction.offer.moderatorBuyers; let i = index"><label>moderator buyer #{{ i + 1 }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span></div>
+        <div class="row-layout" *ngFor="let item of transaction.offer.moderatorSellers; let i = index"><label>moderator seller #{{ i + 1 }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span></div>
+        <div class="row-layout" *ngFor="let item of transaction.offer.buyers; let i = index"><label>buyer #{{ i + 1 }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span></div>
+        <div class="row-layout" *ngFor="let item of transaction.offer.sellers; let i = index"><label>seller #{{ i + 1 }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span></div>
         <div class="row-layout"><label>address</label><span>{{ transaction.offer.streetName }}, {{ transaction.offer.city }}, {{ transaction.offer.state }} {{ transaction.offer.zip }}</span></div>
         <div class="row-layout"><label>offer info</label>
           <span>${{ transaction.offer.price | number }}
@@ -57,7 +59,14 @@
           </span>
         </div>
 
-        <div class="row-layout"><label class="header">Supporting docs</label></div>
+        <div class="row-layout new-section"><label class="header">Completed documents</label></div>
+
+        <div class="row-layout new-section">
+          <label class="header">Completed documents</label>
+          <button *ngIf="isModerator" mat-flat-button type="button" color="primary" disabled>Add document</button>
+        </div>
+
+        <div class="row-layout new-section"><label class="header">Attached docs</label></div>
         <div class="row-layout"><label>Add Pre-approval Letter</label>
           <div class="doc-preview">
             <img *ngFor="let img of transaction.offer.documents?.preApproval"
@@ -89,7 +98,7 @@
             <span>{{ item.title }}</span>
           </div>
         </div>
-        <div class="row-layout" style="position: relative;"><label class="header">offer</label>
+       <!-- <div class="row-layout" style="position: relative;"><label class="header">offer</label>
           <img *ngIf="transaction.urlDocument"
             src="assets/images/icons/pdf.svg"
             (click)="downloadAndToggleState(transaction.urlDocument)"
@@ -100,10 +109,10 @@
         <div class="row-layout" style="opacity: .0"><label></label><span>Signed by buyer 1 Lopushynsky</span></div>
         <div class="row-layout" style="opacity: .0"><label></label><span>Signed by seller 1 Serhii Movchan</span></div>
         <div class="row-layout" style="opacity: .0"><label></label><span>Hasn’t been signed by all buyers</span></div>
-        <div class="row-layout u-flex-justify--start">
+        <div class="row-layout u-flex-justify&#45;&#45;start">
           <button  mat-flat-button [disabled]="!transaction.allowDeny" (click)="deny()" color="accent" style="margin: 0 15px 0 220px">DENY</button>
           <button  mat-flat-button [disabled]="!transaction.allowSign" (click)="goToESign()" color="primary">SIGN</button>
-        </div>
+        </div>-->
       </div>
     </div>
 
