@@ -1,22 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TransactionService } from '../services/transaction.service';
 import { CalendarEvent, Transaction, TransactionStatus } from '../../../core-modules/models/transaction';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
-import { map, switchMap, tap } from 'rxjs/operators';
+import {flatMap, map, switchMap, takeUntil, tap} from 'rxjs/operators';
 import * as _ from 'lodash';
 import { ConfirmationBarComponent } from '../../../shared-modules/components/confirmation-bar/confirmation-bar.component';
 import { CalendarView } from '../../../shared-modules/components/calendar/calendar.component';
 import { Document } from '../../../core-modules/models/document';
-import {AuthService} from "../../../core-modules/core-services/auth.service";
+import { AuthService } from '../../../core-modules/core-services/auth.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-transaction-details',
   templateUrl: './transaction-details.component.html',
   styleUrls: ['./transaction-details.component.scss']
 })
-export class TransactionDetailsComponent implements OnInit {
+export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, OnInit {
+  private onDestroyed$: Subject<void> = new Subject<void>();
   transaction: Transaction;
 
   calendarDataSource: CalendarEvent[];
@@ -47,6 +49,18 @@ export class TransactionDetailsComponent implements OnInit {
 
     this.transactionService.loadCalendarByTransaction(transactionId)
       .subscribe(items => this.calendarDataSource = items);
+  }
+
+  ngAfterViewInit(): void {
+    this.transactionService.transactionChanged.pipe(
+      takeUntil(this.onDestroyed$),
+      flatMap(() => {
+        const transactionId: number = Number(this.route.snapshot.params.id);
+        return this.transactionService.loadOne(transactionId);
+      })
+    ).subscribe((transaction) => {
+      this.transaction = transaction;
+    });
   }
 
   onDelete() {
@@ -94,6 +108,10 @@ export class TransactionDetailsComponent implements OnInit {
   }
 
   triggerDownloadFile(file: string | Document) {
+    /* TODO: UPDATE REQUEST DATA */
+    const transactionId: number = Number(this.route.snapshot.params.id);
+    this.transactionService.documentOpenedEvent(transactionId).subscribe();
+
     const trigger: HTMLAnchorElement = document.createElement('a');
     if (typeof file  === 'string') {
       trigger.href = trigger.download = file;
@@ -103,5 +121,10 @@ export class TransactionDetailsComponent implements OnInit {
     }
     trigger.target = '_blank';
     trigger.click();
+  }
+
+  ngOnDestroy(): void {
+    this.onDestroyed$.next();
+    this.onDestroyed$.complete();
   }
 }

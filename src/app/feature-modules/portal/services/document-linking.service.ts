@@ -7,12 +7,14 @@ import { LinkedDocuments } from '../../../core-modules/models/linked-documents';
 import { MatSnackBar } from '@angular/material';
 import { UploadDocumentType } from '../../../core-modules/enums/upload-document-type';
 import { ApiEndpoint } from '../../../core-modules/enums/api-endpoints';
+import { TransactionService } from './transaction.service';
 
 @Injectable()
 export class DocumentLinkingService {
 
   constructor(private http: HttpClient,
-              private snackbar: MatSnackBar) {
+              private snackbar: MatSnackBar,
+              private transactionService: TransactionService) {
   }
 
   loadOfferDocuments(offerId: number): Observable<LinkedDocuments> {
@@ -21,6 +23,12 @@ export class DocumentLinkingService {
 
   linkDocumentsToOffer(model: LinkedDocuments): Observable<LinkedDocuments> {
     return this.http.post<LinkedDocuments>(`/offers/${model.offerId}/documents/`, model);
+  }
+
+  updateOfferDocuments(model: LinkedDocuments): Observable<LinkedDocuments> {
+    return this.http.put<LinkedDocuments>(`/offers/${model.offerId}/documents/`, model).pipe(
+      tap(() => this.transactionService.transactionChanged.next())
+    );
   }
 
   loadListDocumentsByType(type: UploadDocumentType): Observable<Document[]> {

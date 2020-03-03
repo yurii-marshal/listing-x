@@ -8,41 +8,41 @@ import { LoginGuardService } from '../../core-modules/guards/login-guard.service
 import { ActivationResolver } from '../../core-modules/resolvers/activation.resolver';
 import { EmptyPageComponent } from '../../shared-modules/components/empty-page/empty-page.component';
 
-const routes: Routes = [
-  {
-    path: '',
-    pathMatch: 'full',
-    redirectTo: 'login'
-  }, {
-    path: 'login',
-    component: LoginComponent,
-  }, {
-    path: 'register',
-    component: RegisterComponent
-  }, {
-    path: 'reset',
-    children: [
-      {
-        path: '',
-        pathMatch: 'full',
-        component: ResetPasswordComponent
-      },
-      {
-        path: ':token',
-        component: NewPasswordComponent
-      }
-    ]
-  }, {
-    path: 'activation/:token',
-    resolve: { activated: ActivationResolver},
-    component: EmptyPageComponent
-  }
-];
+  const routes: Routes = [
+    {
+      path: '',
+      pathMatch: 'full',
+      redirectTo: 'login'
+    }, {
+      path: 'login',
+      component: LoginComponent,
+    }, {
+      path: 'register',
+      component: RegisterComponent
+    }, {
+      path: 'reset',
+      children: [
+        {
+          path: '',
+          pathMatch: 'full',
+          component: ResetPasswordComponent
+        },
+        {
+          path: ':token',
+          component: NewPasswordComponent
+        }
+      ]
+    }, {
+      path: 'activation/:token',
+      resolve: { activated: ActivationResolver},
+      component: EmptyPageComponent
+    }
+  ];
 
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-  providers: []
-})
-export class AuthRoutingModule {
-}
+  @NgModule({
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule],
+    providers: []
+  })
+  export class AuthRoutingModule {
+  }

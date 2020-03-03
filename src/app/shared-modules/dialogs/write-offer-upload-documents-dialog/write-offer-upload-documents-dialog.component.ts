@@ -34,7 +34,7 @@ export class WriteOfferUploadDocumentsDialogComponent implements OnInit {
               public dialogRef: MatDialogRef<WriteOfferUploadDocumentsDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: {model: LinkedDocuments, modalType: UploadDocsModalType}) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     const disabled = this.data.modalType === UploadDocsModalType.Upload;
     this.form = this.formBuilder.group({
       preApproval: [{value: [], disabled}],
@@ -48,14 +48,28 @@ export class WriteOfferUploadDocumentsDialogComponent implements OnInit {
     }
   }
 
+  getRequestValue(): LinkedDocuments {
+    return {
+      ...this.form.value,
+      offerId: this.data.model.offerId
+    };
+  }
+
   continue(): void {
-    const model: LinkedDocuments = this.form.value;
-    model.offerId = this.data.model.offerId;
+    const model: LinkedDocuments = this.getRequestValue();
     // TODO: only do http request in case: form.dirty
     this.service.linkDocumentsToOffer(model)
       .subscribe(() => {
         this.dialogRef.close(model);
         this.router.navigate(['/portal/offer', this.data.model.offerId, 'summary']);
       });
+  }
+
+  updateDocs(): void {
+    const model: LinkedDocuments = this.getRequestValue();
+    this.service.updateOfferDocuments(model).subscribe(() => {
+      this.dialogRef.close(model);
+      this.router.navigate(['/portal/transaction', this.data.model.offerId]);
+    });
   }
 }

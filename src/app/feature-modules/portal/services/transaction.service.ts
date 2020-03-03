@@ -1,9 +1,9 @@
 import { Injectable, Injector } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { CalendarEvent, Transaction } from '../../../core-modules/models/transaction';
-import { Observable } from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import { ApiEndpoint } from '../../../core-modules/enums/api-endpoints';
-import { map } from 'rxjs/operators';
+import {map, tap} from 'rxjs/operators';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { BaseDataService } from '../../../core-modules/base-classes/base-data-service';
@@ -11,6 +11,7 @@ import { BaseDataService } from '../../../core-modules/base-classes/base-data-se
 @Injectable()
 export class TransactionService extends BaseDataService<Transaction> {
   private today = moment().utcOffset(0);
+  transactionChanged: Subject<void> = new Subject<void>();
 
   constructor(protected injector: Injector) {
     super(injector, ApiEndpoint.Transactions);
@@ -28,6 +29,11 @@ export class TransactionService extends BaseDataService<Transaction> {
   loadCalendarByTransaction(id: number, start?: Date, end?: Date): Observable<CalendarEvent[]> {
     const url = super.transformEndpoint(ApiEndpoint.TransactionCalendar, id);
     return this.fetchCalendarData(url, start, end);
+  }
+
+  documentOpenedEvent(id: number): Observable<any> {
+    const url = `${ApiEndpoint.Transactions}${id}/pdf`;
+    return this.http.post(url, null);
   }
 
   inviteUser(transactionId: number, email: string): Observable<void> {
