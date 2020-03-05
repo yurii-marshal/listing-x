@@ -85,7 +85,7 @@ export class  WriteOfferDialogComponent implements OnInit {
       id: [null, []],
       moderatorBuyers: this.formBuilder.array([this.predefinedBuyer]),
       moderatorSellers: this.formBuilder.array([this.createEntity()]),
-      buyers: this.data.isAnonymous ? [[]] : this.formBuilder.array([this.createEntity()]),
+      buyers: this.formBuilder.array([this.createEntity()]),
       sellers: this.formBuilder.array([this.createEntity()]),
       streetName: [{value: null, disabled}, [Validators.required]],
       city: [{value: null, disabled}, [Validators.required, Validators.maxLength(255)]],
@@ -135,8 +135,7 @@ export class  WriteOfferDialogComponent implements OnInit {
     }
 
     if (this.data.model && this.data.isAnonymous) {
-      this.form.get('sellers').disable();
-      this.form.get('buyers').disable();
+      this.form.get('sellers').disable()
       this.form.get('moderatorSellers').disable();
     }
   }

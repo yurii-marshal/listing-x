@@ -12,6 +12,7 @@ import { Document } from '../../../core-modules/models/document';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
 import { Subject } from 'rxjs';
 import {DocumentStatus} from '../../../core-modules/enums/document-status';
+import {Person} from '../../../core-modules/models/offer';
 
 @Component({
   selector: 'app-transaction-details',
@@ -31,6 +32,7 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
   CalendarView = CalendarView;
 
   isModerator: boolean = false;
+  isSeller: boolean = false;
 
   get pendingDocuments() {
     return this.transaction ?
@@ -50,8 +52,9 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
     this.transactionService.loadOne(transactionId)
       .subscribe((transaction: Transaction) => {
         this.transaction = transaction;
-        const {moderatorBuyers, moderatorSellers} = this.transaction.offer;
+        const {moderatorBuyers, moderatorSellers, sellers} = this.transaction.offer;
         this.isModerator = [...moderatorSellers, ...moderatorBuyers].some(({email}) => email === this.authService.currentUser.email);
+        this.isSeller = [...moderatorSellers, ...sellers].some(({email}) => email === this.authService.currentUser.email);
       });
 
     this.transactionService.loadCalendarByTransaction(transactionId)
@@ -91,7 +94,21 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
     const email: string = this.userEmailControl.value;
     const transactionId: number = Number(this.route.snapshot.params.id);
     this.transactionService.inviteUser(transactionId, email)
-      .subscribe(() => this.snackbar.open(`Invite sent to email: ${email}`));
+      .subscribe(() => {
+        this.snackbar.open(`Invite sent to email: ${email}`);
+        if (!this.isModerator) {
+          return;
+        }
+
+        const invited: Person = {
+          email,
+          firstName: '<Invited',
+          lastName: `Moderator ${this.isSeller ? 'Seller>' : 'Buyer>'}`
+        };
+
+        const updatedListKey = this.isSeller ? 'moderatorSellers' : 'moderatorBuyers';
+        this.transaction.offer[updatedListKey].push(invited);
+      });
   }
 
   goToESign() {

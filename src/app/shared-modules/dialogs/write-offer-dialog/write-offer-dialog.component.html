@@ -6,32 +6,17 @@
 </div>
 <div mat-dialog-content class="form-container dialog-form" style="min-height: 400px">
   <form novalidate [formGroup]="form" style="width: 100%!important;">
-    <!-- Block order for anonymous flow -->
-    <ng-container *ngIf="data.isAnonymous">
-      <!-- Invitee buyers section -->
-      <div *ngTemplateOutlet="moderatorBuyersTpl"></div>
+    <!-- Moderator buyers section -->
+    <div *ngTemplateOutlet="moderatorBuyersTpl"></div>
 
-      <!-- Moderator sellers section -->
-      <div *ngTemplateOutlet="moderatorSellersTpl"></div>
+    <!-- Moderator sellers section -->
+    <div *ngTemplateOutlet="moderatorSellersTpl"></div>
 
-      <!-- Invitee sellers section -->
-      <div *ngTemplateOutlet="sellersTpl"></div>
-    </ng-container>
+    <!-- Invitee buyers section -->
+    <div *ngTemplateOutlet="buyersTpl"></div>
 
-    <!-- Block order for authenticated flow -->
-    <ng-container *ngIf="!data.isAnonymous">
-      <!-- Moderator buyers section -->
-      <div *ngTemplateOutlet="moderatorBuyersTpl"></div>
-
-      <!-- Moderator sellers section -->
-      <div *ngTemplateOutlet="moderatorSellersTpl"></div>
-
-      <!-- Invitee buyers section -->
-      <div *ngTemplateOutlet="buyersTpl"></div>
-
-      <!-- Invitee sellers section -->
-      <div *ngTemplateOutlet="sellersTpl"></div>
-    </ng-container>
+    <!-- Invitee sellers section -->
+    <div *ngTemplateOutlet="sellersTpl"></div>
 
     <!-- Address section -->
     <h4 style="margin-top: 5px;">Address</h4>
@@ -97,7 +82,7 @@
 <ng-template #buyersTpl>
   <h4>Buyer information</h4>
   <div *ngFor="let control of buyers.controls; let i = index; let first = first" [formGroup]="control">
-    <h6 class="subtitle" *ngIf="!data.isAnonymous">buyer #{{ i + 1}}</h6>
+    <h6 class="subtitle">buyer #{{ i + 1}}</h6>
     <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
       <div class="fieldset u-flex-1">
         <label>First name</label>
@@ -119,7 +104,7 @@
       </button>
     </div>
   </div>
-  <div *ngIf="!data.isAnonymous" (click)="add(Type.Buyers)" class="link">add more buyer</div>
+  <div (click)="add(Type.Buyers)" class="link">add more buyer</div>
 </ng-template>
 
 <ng-template #sellersTpl>

@@ -38,7 +38,7 @@ export class DocumentLinkingService {
 
   /**
    * Multiple file upload
-   * */
+   */
   upload(files: File[], type?: UploadDocumentType): Observable<Document[]> {
     const formData: FormData = new FormData();
     if (files.length) {
