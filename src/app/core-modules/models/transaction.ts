@@ -1,14 +1,17 @@
 import { OfferSummary } from './offer';
+import { GeneratedDocument } from './document';
 
 export interface Transaction {
   id: number;
-  offer: OfferSummary;
+  createdAt: string;
   status: TransactionStatus;
   lastLogs: Log[];
-  createdAt: string;
+  offer: OfferSummary;
+  documents: GeneratedDocument[];
+  /** @deprecated **/
   urlDocument: string;
-  allowDelete: boolean;
   allowEdit: boolean;
+  allowDelete: boolean;
   allowSign: boolean;
   allowDeny: boolean;
   allowInvite: boolean;

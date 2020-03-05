@@ -29,7 +29,7 @@
                   #trigger="cdkOverlayOrigin"
                   (click)="isOpenInviteUserOverlay = !isOpenInviteUserOverlay"
                   color="primary">
-            INVITE USERS
+            INVITE MODERATORS
           </button>
           <ng-template cdkConnectedOverlay
             [cdkConnectedOverlayOrigin]="trigger"
@@ -59,37 +59,6 @@
             <ng-container *ngIf="transaction.offer.closeEscrowDays">&nbsp;|&nbsp;{{ transaction.offer.closeEscrowDays }} Days to close escrow</ng-container>
           </span>
         </div>
-
-        <div class="row-layout new-section"><label class="header">Completed documents</label></div>
-
-        <div class="row-layout new-section">
-          <label class="header">Documents pending approval</label>
-          <button *ngIf="isModerator" mat-flat-button type="button" color="primary" disabled class="button-sm">ADD DOCUMENT</button>
-        </div>
-
-        <div class="row-layout new-section"><label class="header">Attached docs</label></div>
-        <div class="row-layout"><label>Add Pre-approval Letter</label>
-          <div class="doc-preview">
-            <img *ngFor="let img of transaction.offer.documents?.preApproval"
-               src="assets/images/icons/{{ img.extension }}.svg"
-               [title]="img.title"
-               (click)="triggerDownloadFile(img)"
-               height="20">
-          </div>
-        </div>
-        <div class="row-layout"><label>Add Proof of Funds</label><div class="doc-preview">
-          <div class="doc-preview"><img *ngFor="let img of transaction.offer.documents?.proofOfFunds"
-                                        src="assets/images/icons/{{ img.extension }}.svg"
-                                        (click)="triggerDownloadFile(img)"
-                                        [title]="img.title" height="20"></div>
-        </div></div>
-        <div class="row-layout"><label>Add Cover Letter</label><div class="doc-preview">
-          <div class="doc-preview"><img *ngFor="let img of transaction.offer.documents?.coverLetter"
-                                        src="assets/images/icons/{{ img.extension }}.svg"
-                                        (click)="triggerDownloadFile(img)"
-                                        [title]="img.title"
-                                        height="20"></div>
-        </div></div>
       </div>
       <div class="column-layout">
         <div class="row-layout"><label class="header">last activity</label></div>
@@ -116,6 +85,64 @@
         </div>-->
       </div>
     </div>
+
+
+    <div class="u-flex u-flex-justify--start">
+      <div class="column-layout fullwidth">
+        <div class="row-layout new-section"><label class="header">Completed documents</label></div>
+
+        <div class="row-layout new-section">
+          <label class="header">Documents pending approval</label>
+          <button *ngIf="isModerator" mat-flat-button type="button" color="primary" disabled class="button-sm">ADD DOCUMENT</button>
+        </div>
+
+        <div class="row-layout doc-item" *ngFor="let doc of pendingDocuments; let i = index;">
+          <label>document #{{i + 1}}</label>
+          <div class="doc-title"><img src="assets/images/icons/{{ doc.extension }}.svg" [title]="doc.title" height="20"> {{doc.title}}.{{doc.extension}}</div>
+          <div class="doc-events"></div>
+          <div class="doc-status">Status: <strong [ngClass]="doc.status">{{doc.status}}</strong></div>
+          <div class="doc-actions">Actions:
+            <button class="button-xs" type="button" mat-flat-button color="primary" disabled>SIGN</button>
+            <svg class="menu-trigger" [matMenuTriggerFor]="menu" width="22" height="6" viewBox="0 0 22 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2.61905 0.380951C1.1749 0.380951 0 1.55586 0 3C0 4.44414 1.1749 5.61905 2.61905 5.61905C4.06319 5.61905 5.2381 4.44414 5.2381 3C5.2381 1.55586 4.06319 0.380951 2.61905 0.380951Z" fill="#419BDF"/>
+              <path d="M10.9999 0.380951C9.55576 0.380951 8.38086 1.55586 8.38086 3C8.38086 4.44414 9.55576 5.61905 10.9999 5.61905C12.444 5.61905 13.619 4.44414 13.619 3C13.619 1.55586 12.444 0.380951 10.9999 0.380951Z" fill="#419BDF"/>
+              <path d="M19.3808 0.380951C17.9366 0.380951 16.7617 1.55586 16.7617 3C16.7617 4.44414 17.9366 5.61905 19.3808 5.61905C20.8249 5.61905 21.9998 4.44414 21.9998 3C21.9998 1.55586 20.8249 0.380951 19.3808 0.380951Z" fill="#419BDF"/>
+            </svg>
+
+            <mat-menu #menu="matMenu" xPosition="before">
+              <button mat-menu-item (click)="triggerDownloadFile(doc.file)">View</button>
+              <button mat-menu-item (click)="triggerDownloadFile(doc.file)">Download</button>
+              <button mat-menu-item disabled>Deny</button>
+            </mat-menu>
+          </div>
+        </div>
+
+        <div class="row-layout new-section"><label class="header">Attached docs</label></div>
+        <div class="row-layout"><label>Add Pre-approval Letter</label>
+          <div class="doc-preview">
+            <img *ngFor="let img of transaction.offer.documents?.preApproval"
+                 src="assets/images/icons/{{ img.extension }}.svg"
+                 [title]="img.title"
+                 (click)="triggerDownloadFile(img)"
+                 height="20">
+          </div>
+        </div>
+        <div class="row-layout"><label>Add Proof of Funds</label><div class="doc-preview">
+          <div class="doc-preview"><img *ngFor="let img of transaction.offer.documents?.proofOfFunds"
+                                        src="assets/images/icons/{{ img.extension }}.svg"
+                                        (click)="triggerDownloadFile(img)"
+                                        [title]="img.title" height="20"></div>
+        </div></div>
+        <div class="row-layout"><label>Add Cover Letter</label><div class="doc-preview">
+          <div class="doc-preview"><img *ngFor="let img of transaction.offer.documents?.coverLetter"
+                                        src="assets/images/icons/{{ img.extension }}.svg"
+                                        (click)="triggerDownloadFile(img)"
+                                        [title]="img.title"
+                                        height="20"></div>
+        </div></div>
+      </div>
+    </div>
+
 
     <div class="upload-container">
       <h4>Add new files</h4>

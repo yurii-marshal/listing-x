@@ -63,6 +63,10 @@ $blue: rgba(2, 136, 209, 0.9);
 .column-layout {
   width: 40%;
 
+  &.fullwidth {
+    width: 100%;
+  }
+
   &:first-of-type {
     margin-left: 10%;
   }
@@ -89,7 +93,7 @@ $blue: rgba(2, 136, 209, 0.9);
   }
 
   label {
-    width: 180px;
+    width: 240px;
     margin-right: 40px;
     text-align: end;
     font-size: 11px;
@@ -144,6 +148,49 @@ $blue: rgba(2, 136, 209, 0.9);
     img {
       cursor: pointer;
     }
+  }
+}
+
+.doc-item {
+  align-items: center;
+  font-size: 13px;
+  line-height: 16px;
+  color: #444C5C;
+
+  .menu-trigger {
+    cursor: pointer;
+    padding: 5px 0;
+  }
+
+  .doc-title {
+    display: flex;
+    align-items: center;
+
+    img {
+      margin-right: 5px;
+    }
+  }
+
+  & > div:not(:last-child) {
+    flex-grow: 1;
+  }
+
+  .doc-actions {
+    display: flex;
+    align-items: center;
+    button {
+      margin: 0 22px 0 17px;
+    }
+  }
+
+  .button-xs {
+    height: 22px;
+    line-height: 23px;
+    font-size: 11px;
+  }
+
+  .started {
+    color: #66AD58;
   }
 }
 

@@ -11,6 +11,7 @@ import { CalendarView } from '../../../shared-modules/components/calendar/calend
 import { Document } from '../../../core-modules/models/document';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
 import { Subject } from 'rxjs';
+import {DocumentStatus} from '../../../core-modules/enums/document-status';
 
 @Component({
   selector: 'app-transaction-details',
@@ -30,6 +31,12 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
   CalendarView = CalendarView;
 
   isModerator: boolean = false;
+
+  get pendingDocuments() {
+    return this.transaction ?
+      this.transaction.documents.filter((d) => d.status !== DocumentStatus.Delivered) :
+      [];
+  }
 
   constructor(private authService: AuthService,
               private route: ActivatedRoute,

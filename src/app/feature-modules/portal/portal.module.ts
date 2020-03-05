@@ -9,6 +9,7 @@ import { TransactionDetailsComponent } from './transaction-details/transaction-d
 import { TransactionService } from './services/transaction.service';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ReactiveFormsModule } from '@angular/forms';
+import {MatMenuModule} from '@angular/material/menu';
 
 const MatModules = [
   MatCheckboxModule,
@@ -20,15 +21,16 @@ const MatModules = [
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule,
-    ReactiveFormsModule,
-    PortalRoutingModule,
-    SharedModule,
-    OverlayModule,
-    ...MatModules,
-  ],
+    imports: [
+        CommonModule,
+        RouterModule,
+        ReactiveFormsModule,
+        PortalRoutingModule,
+        SharedModule,
+        OverlayModule,
+        ...MatModules,
+        MatMenuModule,
+    ],
   declarations: [
     TransactionsComponent,
     TransactionDetailsComponent,
