@@ -21,10 +21,10 @@ build-app-prod:
 	$(call build_app,production)
 
 deploy-app-dev:
-	$(call build_app,dev-app.accuflip.com,E239UGHPURELBL)
+	$(call deploy_app,dev-app.accuflip.com,E239UGHPURELBL)
 
 deploy-app-prod:
-	$(call build_app,app.accuflip.com,E12NR4MI2HGSRQ)
+	$(call deploy_app,app.accuflip.com,E12NR4MI2HGSRQ)
 	
 
 BITBUCKET_BRANCH:=develop
