@@ -1,0 +1,56 @@
+pipelines:
+ branches:
+  develop:
+   - step:
+       caches:
+         - node
+       name: Build app develop
+       image: node:12.2.0
+       script:
+         - make build-app-dev
+       artifacts:
+         - dist/**
+   - step:
+        name: Auto-deploy to develop
+        deployment: test
+        image: python:3.6
+        caches:
+          - pip
+        script:
+          - pip install awscli --upgrade
+          # deploy app to dev and notify to slack
+          - if make deploy-app-dev; then
+            #make slack-notification-success;
+            make echo "ok";
+            else
+            #make slack-notification-fail;
+            make echo "fail";
+            exit 1;
+            fi
+  master:
+   - step:
+       caches:
+         - node
+       name: Build app prod
+       image: node:12.2.0
+       script:
+         - make build-app-prod
+       artifacts:
+         - dist/**
+   - step:
+        name: Auto-deploy to production
+        deployment: production
+        image: python:3.6
+        caches:
+          - pip
+        script:
+          - pip install awscli --upgrade
+          # deploy app to prod and notify to slack
+          - if make deploy-app-prod; then
+            #make slack-notification-success BITBUCKET_BRANCH=master AWS_BUCKET=app.kuailiandp.com;
+            make echo "ok";
+            else
+            #make slack-notification-fail BITBUCKET_BRANCH=master AWS_BUCKET=app.kuailiandp.com;
+            make echo "fail";
+            exit 1;
+            fi
