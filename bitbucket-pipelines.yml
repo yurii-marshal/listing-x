@@ -19,14 +19,7 @@ pipelines:
         script:
           - pip install awscli --upgrade
           # deploy app to dev and notify to slack
-          - if make deploy-app-dev; then
-            #make slack-notification-success;
-            make echo "ok";
-            else
-            #make slack-notification-fail;
-            make echo "fail";
-            exit 1;
-            fi
+          - make deploy-app-dev
   master:
    - step:
        caches:
@@ -46,11 +39,4 @@ pipelines:
         script:
           - pip install awscli --upgrade
           # deploy app to prod and notify to slack
-          - if make deploy-app-prod; then
-            #make slack-notification-success BITBUCKET_BRANCH=master AWS_BUCKET=app.kuailiandp.com;
-            make echo "ok";
-            else
-            #make slack-notification-fail BITBUCKET_BRANCH=master AWS_BUCKET=app.kuailiandp.com;
-            make echo "fail";
-            exit 1;
-            fi
+          - make deploy-app-prod
