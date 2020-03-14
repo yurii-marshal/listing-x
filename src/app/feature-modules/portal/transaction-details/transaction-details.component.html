@@ -107,12 +107,18 @@
           </div>
         </div>
 
-
         <div class="row-layout new-section">
           <label class="header">Documents pending approval</label>
 
           <!-- TODO: enable, when residential agreement becomes completed -->
-          <button *ngIf="isModerator" mat-flat-button type="button" color="primary" class="button-sm" [matMenuTriggerFor]="docs">ADD DOCUMENT</button>
+          <button
+            mat-flat-button
+            type="button"
+            color="primary"
+            class="button-sm"
+            [matMenuTriggerFor]="docs"
+            [disabled]="!isResidentialAgreementCompleted"
+          >ADD DOCUMENT</button>
           <mat-menu #docs="matMenu" xPosition="before">
             <button mat-menu-item (click)="addendum()">Addendum</button>
           </mat-menu>

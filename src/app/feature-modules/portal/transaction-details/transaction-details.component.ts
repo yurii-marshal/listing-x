@@ -11,6 +11,7 @@ import {AuthService} from '../../../core-modules/core-services/auth.service';
 import {Observable, of, Subject} from 'rxjs';
 import {DocumentStatus} from '../../../core-modules/enums/document-status';
 import {Person} from '../../../core-modules/models/offer';
+import {GeneratedDocumentType} from '../../../core-modules/enums/upload-document-type';
 
 @Component({
   selector: 'app-transaction-details',
@@ -24,6 +25,7 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
   calendarDataSource: CalendarEvent[];
 
   isOpenInviteUserOverlay: boolean;
+  isResidentialAgreementCompleted: boolean = false;
 
   userEmailControl: FormControl = new FormControl(null, [Validators.required, Validators.email]);
 
@@ -55,9 +57,14 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
     this.transactionService.loadOne(transactionId)
       .subscribe((transaction: Transaction) => {
         this.transaction = transaction;
-        const {moderatorBuyers, moderatorSellers, sellers} = this.transaction.offer;
+
+        const {moderatorBuyers, moderatorSellers, sellers} = transaction.offer;
         this.isModerator = [...moderatorSellers, ...moderatorBuyers].some(({email}) => email === this.authService.currentUser.email);
         this.isSeller = [...moderatorSellers, ...sellers].some(({email}) => email === this.authService.currentUser.email);
+
+        const residentialAgreement = transaction.documents.find(doc => doc.documentType === GeneratedDocumentType.Contract);
+        this.isResidentialAgreementCompleted = residentialAgreement && residentialAgreement.status === DocumentStatus.Completed;
+
         this.filterDocumentList(transaction.documents);
       });
 
