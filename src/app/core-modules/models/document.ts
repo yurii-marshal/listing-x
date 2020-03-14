@@ -1,4 +1,4 @@
-import { UploadDocumentType } from '../enums/upload-document-type';
+import {GeneratedDocumentType, UploadDocumentType} from '../enums/upload-document-type';
 import {DocumentStatus} from '../enums/document-status';
 
 export interface Document {
@@ -11,13 +11,16 @@ export interface Document {
   url?: string;
 }
 
-export class GeneratedDocument implements Document {
-  status: DocumentStatus;
-  checked: boolean;
-  documentType: UploadDocumentType;
-  extension: string;
-  file: string;
+export interface GeneratedDocument {
   id: number;
+  documentType: GeneratedDocumentType;
+  status: DocumentStatus;
+  file: string;
   title: string;
+  extension: string;
   url: string;
+  allowSign: boolean;
+  transaction: number;
+  /** @deprecated */
+  checked: boolean;
 }

@@ -26,6 +26,7 @@ export class TransactionsComponent implements OnDestroy, OnInit, AfterViewInit {
   statuses: string[] = Object.values(TransactionStatus);
 
   calendarDataSource: CalendarEvent[];
+  /* TODO: Refactor */
   readonly statusLabels: {[key: string]: string} = {
     [TransactionStatus.All]: 'All transactions',
     [TransactionStatus.New]: 'New',

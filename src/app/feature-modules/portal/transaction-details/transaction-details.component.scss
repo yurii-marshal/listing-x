@@ -113,7 +113,8 @@ $blue: rgba(2, 136, 209, 0.9);
 
   .button-sm {
     height: 26px;
-    line-height: 26px;
+    line-height: 27px;
+    font-size: 11px
   }
 
   b {
@@ -181,6 +182,11 @@ $blue: rgba(2, 136, 209, 0.9);
     button {
       margin: 0 22px 0 17px;
     }
+
+    .action-icon {
+      margin-left: 17px;
+      cursor: pointer;
+    }
   }
 
   .button-xs {
@@ -189,7 +195,13 @@ $blue: rgba(2, 136, 209, 0.9);
     font-size: 11px;
   }
 
-  .started {
+  .doc-status {
+    text-transform: capitalize;
+  }
+
+  .started,
+  .delivered,
+  .completed {
     color: #66AD58;
   }
 }

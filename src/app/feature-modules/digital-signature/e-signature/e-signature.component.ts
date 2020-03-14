@@ -9,6 +9,7 @@ import { Transaction } from '../../../core-modules/models/transaction';
 import { TransactionService } from '../../portal/services/transaction.service';
 import * as _ from 'lodash';
 import { LoanType } from '../../../core-modules/enums/loan-type';
+import {GeneratedDocument} from "../../../core-modules/models/document";
 
 @Component({
   selector: 'app-e-signature',
@@ -23,6 +24,7 @@ export class ESignatureComponent implements OnInit, AfterViewInit {
   progress: number; // %
 
   transaction: Transaction;
+  doc: GeneratedDocument;
 
   LoanType = LoanType;
 
@@ -36,9 +38,11 @@ export class ESignatureComponent implements OnInit, AfterViewInit {
               private snackbar: MatSnackBar) { }
 
   ngOnInit() {
-    const transactionId: number = Number(this.route.snapshot.params.id);
-    this.transactionService.loadSignDocument(transactionId)
-      .subscribe((transaction: Transaction) => this.transaction = transaction);
+    const docId: number = Number(this.route.snapshot.params.id);
+    this.transactionService.loadSignDocument(docId).pipe(
+      tap((doc: GeneratedDocument) => this.doc = doc),
+      switchMap((doc: GeneratedDocument) => this.transactionService.loadOne(doc.transaction))
+    ).subscribe((transaction: Transaction) => this.transaction = transaction);
   }
 
   ngAfterViewInit(): void {
@@ -53,10 +57,10 @@ export class ESignatureComponent implements OnInit, AfterViewInit {
     const transactionId = this.transaction.id;
     this.openDialog()
       .pipe(
-        switchMap(() => this.transactionService.sign(transactionId)),
+        switchMap(() => this.transactionService.sign(this.doc)),
         tap(() => this.snackbar.open('Successfully signed document', 'OK'))
       )
-      .subscribe(() => this.router.navigate(['/portal/transaction/', transactionId]))
+      .subscribe(() => this.router.navigate(['/portal/transaction/', transactionId]));
   }
 
   private handleCurrentUserSignatureChanges() {
@@ -73,12 +77,12 @@ export class ESignatureComponent implements OnInit, AfterViewInit {
         map((diff: number) => diff === 0),
         tap(done => this.signEnabled = done),
         filter((done: boolean) => !!done)
-      )
+      );
   }
 
   private openDialog(): Observable<void> {
     const dialogRef = this.dialog.open(FinishSigningDialogComponent, {width: '600px'});
     return dialogRef.afterClosed()
-      .pipe(filter(dialogResult => !!dialogResult))
+      .pipe(filter(dialogResult => !!dialogResult));
   }
 }

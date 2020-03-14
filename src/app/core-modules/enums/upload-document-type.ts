@@ -3,3 +3,9 @@ export enum UploadDocumentType {
   proofOfFunds = 'proof_of_funds',
   coverLetter  = 'cover_letter'
 }
+
+export enum GeneratedDocumentType {
+  Contract = 'contract',
+  Addendum = 'addendum',
+  Spq = 'spq'
+}

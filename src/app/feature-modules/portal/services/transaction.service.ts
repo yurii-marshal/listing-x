@@ -1,12 +1,13 @@
-import { Injectable, Injector } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
-import { CalendarEvent, Transaction } from '../../../core-modules/models/transaction';
+import {Injectable, Injector} from '@angular/core';
+import {HttpParams} from '@angular/common/http';
+import {CalendarEvent, Transaction} from '../../../core-modules/models/transaction';
 import {Observable, Subject} from 'rxjs';
-import { ApiEndpoint } from '../../../core-modules/enums/api-endpoints';
-import {map, tap} from 'rxjs/operators';
+import {ApiEndpoint} from '../../../core-modules/enums/api-endpoints';
+import {map} from 'rxjs/operators';
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import { BaseDataService } from '../../../core-modules/base-classes/base-data-service';
+import {BaseDataService} from '../../../core-modules/base-classes/base-data-service';
+import {GeneratedDocument} from '../../../core-modules/models/document';
 
 @Injectable()
 export class TransactionService extends BaseDataService<Transaction> {
@@ -17,9 +18,10 @@ export class TransactionService extends BaseDataService<Transaction> {
     super(injector, ApiEndpoint.Transactions);
   }
 
-  loadSignDocument(transactionId: number): Observable<Transaction> {
+  // loadSignDocument(transactionId: number): Observable<Transaction> {
+  loadSignDocument(transactionId: number): Observable<GeneratedDocument> {
     const url: string = this.transformEndpoint(ApiEndpoint.ESignature, transactionId);
-    return this.http.get<Transaction>(url);
+    return this.http.get<GeneratedDocument>(url);
   }
 
   loadCalendar(start?: Date, end?: Date): Observable<CalendarEvent[]> {
@@ -46,9 +48,14 @@ export class TransactionService extends BaseDataService<Transaction> {
     return this.http.post<void>(url, {});
   }
 
-  sign(transactionId: number) {
-    const url = `${ApiEndpoint.Sign}${transactionId}`;
-    return this.http.post(url, {});
+  // sign(transactionId: number) {
+  //   const url = `${ApiEndpoint.Sign}${transactionId}`;
+  //   return this.http.post(url, {});
+  // }
+
+  sign(doc: GeneratedDocument): Observable<any> {
+    const url = super.transformEndpoint(ApiEndpoint.ESignature, doc.id);
+    return this.http.post(url, doc);
   }
 
   deny(transactionId: number) {

@@ -1,16 +1,14 @@
 import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { TransactionService } from '../services/transaction.service';
-import { CalendarEvent, Transaction, TransactionStatus } from '../../../core-modules/models/transaction';
-import { FormControl, Validators } from '@angular/forms';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
-import {flatMap, map, switchMap, takeUntil, tap} from 'rxjs/operators';
-import * as _ from 'lodash';
-import { ConfirmationBarComponent } from '../../../shared-modules/components/confirmation-bar/confirmation-bar.component';
-import { CalendarView } from '../../../shared-modules/components/calendar/calendar.component';
-import { Document } from '../../../core-modules/models/document';
-import { AuthService } from '../../../core-modules/core-services/auth.service';
-import { Subject } from 'rxjs';
+import {ActivatedRoute, Router} from '@angular/router';
+import {TransactionService} from '../services/transaction.service';
+import {CalendarEvent, Transaction, TransactionStatus} from '../../../core-modules/models/transaction';
+import {FormControl, Validators} from '@angular/forms';
+import {MatSnackBar} from '@angular/material';
+import {flatMap, map, takeUntil} from 'rxjs/operators';
+import {CalendarView} from '../../../shared-modules/components/calendar/calendar.component';
+import {Document, GeneratedDocument} from '../../../core-modules/models/document';
+import {AuthService} from '../../../core-modules/core-services/auth.service';
+import {Observable, of, Subject} from 'rxjs';
 import {DocumentStatus} from '../../../core-modules/enums/document-status';
 import {Person} from '../../../core-modules/models/offer';
 
@@ -34,11 +32,16 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
   isModerator: boolean = false;
   isSeller: boolean = false;
 
-  get pendingDocuments() {
-    return this.transaction ?
-      this.transaction.documents.filter((d) => d.status !== DocumentStatus.Delivered) :
-      [];
-  }
+  pendingDocuments: Observable<GeneratedDocument[]>;
+  completedDocuments: Observable<GeneratedDocument[]>;
+
+  /* TODO: Refactor */
+  readonly statusLabels: {[key: string]: string} = {
+    [TransactionStatus.All]: 'All transactions',
+    [TransactionStatus.New]: 'New',
+    [TransactionStatus.InProgress]: 'In progress',
+    [TransactionStatus.Finished]: 'Finished'
+  };
 
   constructor(private authService: AuthService,
               private route: ActivatedRoute,
@@ -55,6 +58,7 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
         const {moderatorBuyers, moderatorSellers, sellers} = this.transaction.offer;
         this.isModerator = [...moderatorSellers, ...moderatorBuyers].some(({email}) => email === this.authService.currentUser.email);
         this.isSeller = [...moderatorSellers, ...sellers].some(({email}) => email === this.authService.currentUser.email);
+        this.filterDocumentList(transaction.documents);
       });
 
     this.transactionService.loadCalendarByTransaction(transactionId)
@@ -111,9 +115,10 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
       });
   }
 
-  goToESign() {
-    this.transactionService.lockOffer(this.transaction.id)
-      .subscribe(() => this.router.navigate(['/e-sign', this.transaction.id]));
+  goToESign(docId: number): void {
+    this.router.navigate(['/e-sign', docId]);
+    // this.transactionService.lockOffer(this.transaction.id)
+    //   .subscribe(() => this.router.navigate(['/e-sign', this.transaction.id]));
   }
 
   deny() {
@@ -145,6 +150,32 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
     }
     trigger.target = '_blank';
     trigger.click();
+  }
+
+  addendum(): void {
+    console.log('Addendum flow');
+  }
+
+  private filterDocumentList(documents: GeneratedDocument[]): void {
+    /**
+     * contract status = STARTED
+     * if all buyers signed, contract status = DELIVERED
+     * when contract status is DELIVERED , sellers are allowed to sign.
+     * (in case are more than one seller and if not all sellers signed , contract status = ACCEPTED.
+     * after all sellers signed, contract status = COMPLETED
+     */
+
+    let pendingDocsStatuses = [DocumentStatus.Started];
+    if (this.isSeller) {
+      pendingDocsStatuses = [DocumentStatus.Delivered];
+    }
+
+    this.pendingDocuments = of(documents).pipe(
+      map((docs) => docs.filter(doc => pendingDocsStatuses.includes(doc.status)))
+    );
+    this.completedDocuments = of(documents).pipe(
+      map((docs) => docs.filter(doc => !pendingDocsStatuses.includes(doc.status)))
+    );
   }
 
   ngOnDestroy(): void {

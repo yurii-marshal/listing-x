@@ -8,13 +8,13 @@ export interface Transaction {
   lastLogs: Log[];
   offer: OfferSummary;
   documents: GeneratedDocument[];
-  /** @deprecated **/
-  urlDocument: string;
   allowEdit: boolean;
   allowDelete: boolean;
-  allowSign: boolean;
   allowDeny: boolean;
   allowInvite: boolean;
+  /** @deprecated **/
+  urlDocument: string;
+  allowSign: boolean;
 }
 
 export enum TransactionStatus {
