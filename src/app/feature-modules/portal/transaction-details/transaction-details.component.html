@@ -145,6 +145,7 @@
             </svg>
 
             <mat-menu #menu="matMenu" xPosition="before">
+              <button *ngIf="doc.documentType === 'spq'" mat-menu-item (click)="openSPQDialog(doc)">Edit</button>
               <button mat-menu-item (click)="triggerDownloadFile(doc.file)">View</button>
               <button mat-menu-item (click)="triggerDownloadFile(doc.file)">Download</button>
               <button mat-menu-item disabled>Deny</button>

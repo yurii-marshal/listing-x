@@ -12,6 +12,7 @@ export enum ApiEndpoint {
   InviteUser =  '/transactions/{id}/invite/',
   // ESignature = '/transactions/{id}/esignatures/',
   ESignature = '/e-document/{id}/',
+  ESignatureSPQ = '/e-document/spq/{id}/',
   Deny = '/transactions/{id}/deny/',
   ToggleState = '/transactions/{id}/pdf/'
 }

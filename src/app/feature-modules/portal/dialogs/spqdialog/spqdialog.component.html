@@ -1,0 +1,66 @@
+<div mat-dialog-title class="u-flex u-flex-justify--space-between u-flex-align-items--center">
+  <div class="title">SPQ</div>
+  <button mat-icon-button mat-dialog-close>
+    <mat-icon fontSet="fa" fontIcon="fa-times"></mat-icon>
+  </button>
+</div>
+
+<div mat-dialog-content class="form-container dialog-form">
+  <h4 class="header">Are you (seller) aware of</h4>
+  <form [formGroup]="form">
+    <div
+      class="question u-flex u-flex-justify--space-between u-flex-align-items--center"
+      *ngFor="let item of (questionsStream | async); let i = index;"
+      formArrayName="questions"
+    >
+      <div class="question-item">{{i+1}}. {{item.question}}</div>
+      <div class="question-answer" [formGroupName]="i">
+        <mat-radio-group
+          *ngIf="!isConfirmMode"
+          aria-label="Select an option"
+          formControlName="answer"
+        >
+          <mat-radio-button [value]="true">Yes</mat-radio-button>
+          <mat-radio-button [value]="false">No</mat-radio-button>
+        </mat-radio-group>
+
+        <span
+          class="question-answer-text"
+          *ngIf="isConfirmMode"
+        >{{answers.at(i).value.answer ? 'YES' : 'NO'}}</span>
+      </div>
+    </div>
+
+    <h5>EXPLANATION:</h5>
+    <textarea
+      *ngIf="!isConfirmMode"
+      matInput
+      formControlName="explanation"
+      placeholder="Your explanation here..."
+    ></textarea>
+
+    <div class="explanation-text" *ngIf="isConfirmMode">
+      {{form.value.explanation || 'Without explantion'}}
+    </div>
+  </form>
+</div>
+
+<div mat-dialog-actions class="fieldset u-flex u-flex-justify--end u-flex-align-items--center button-bar">
+  <button
+    *ngIf="!isConfirmMode"
+    mat-flat-button
+    appDebounceClick
+    (debounceClick)="confirm()"
+    color="primary"
+    [disabled]="form.invalid"
+  >CONTINUE</button>
+
+  <button
+    *ngIf="isConfirmMode"
+    mat-flat-button
+    appDebounceClick
+    (debounceClick)="finish()"
+    color="primary"
+    [disabled]="form.invalid"
+  >FINISH</button>
+</div>

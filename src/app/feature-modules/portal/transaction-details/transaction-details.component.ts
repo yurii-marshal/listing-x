@@ -12,6 +12,8 @@ import {Observable, of, Subject} from 'rxjs';
 import {DocumentStatus} from '../../../core-modules/enums/document-status';
 import {Person} from '../../../core-modules/models/offer';
 import {GeneratedDocumentType} from '../../../core-modules/enums/upload-document-type';
+import {MatDialog} from '@angular/material/dialog';
+import {SPQDialogComponent} from '../dialogs/spqdialog/spqdialog.component';
 
 @Component({
   selector: 'app-transaction-details',
@@ -46,6 +48,7 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
   };
 
   constructor(private authService: AuthService,
+              private dialog: MatDialog,
               private route: ActivatedRoute,
               private transactionService: TransactionService,
               private snackbar: MatSnackBar,
@@ -172,10 +175,7 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
      * after all sellers signed, contract status = COMPLETED
      */
 
-    let pendingDocsStatuses = [DocumentStatus.Started];
-    if (this.isSeller) {
-      pendingDocsStatuses = [DocumentStatus.Delivered];
-    }
+    const pendingDocsStatuses = [DocumentStatus.Started];
 
     this.pendingDocuments = of(documents).pipe(
       map((docs) => docs.filter(doc => pendingDocsStatuses.includes(doc.status)))
@@ -183,6 +183,14 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
     this.completedDocuments = of(documents).pipe(
       map((docs) => docs.filter(doc => !pendingDocsStatuses.includes(doc.status)))
     );
+  }
+
+  openSPQDialog(doc: GeneratedDocument): void {
+    const dialogRef = this.dialog.open(SPQDialogComponent, {
+      width: '600px',
+      // disableClose: true,
+      data: {questions: doc.documentData, docId: doc.id}
+    });
   }
 
   ngOnDestroy(): void {

@@ -8,6 +8,7 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 import {BaseDataService} from '../../../core-modules/base-classes/base-data-service';
 import {GeneratedDocument} from '../../../core-modules/models/document';
+import {SpqQuestion} from "../../../core-modules/models/spq-question";
 
 @Injectable()
 export class TransactionService extends BaseDataService<Transaction> {
@@ -66,6 +67,11 @@ export class TransactionService extends BaseDataService<Transaction> {
   toggleState(transactionId: number) {
     const url = super.transformEndpoint(ApiEndpoint.ToggleState, transactionId);
     return this.http.post(url, {});
+  }
+
+  updateSpq(docId: number, data: {questions: SpqQuestion[], explanation: string}): Observable<any> {
+    const url = super.transformEndpoint(ApiEndpoint.ESignatureSPQ, docId);
+    return this.http.put(url, data);
   }
 
   private fetchCalendarData(url: string, start: Date, end: Date) {

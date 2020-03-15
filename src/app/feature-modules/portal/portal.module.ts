@@ -10,14 +10,23 @@ import { TransactionService } from './services/transaction.service';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatMenuModule} from '@angular/material/menu';
+import { SPQDialogComponent } from './dialogs/spqdialog/spqdialog.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
 
 const MatModules = [
   MatCheckboxModule,
   MatButtonModule,
+  // MatFormFieldModule,
+  MatInputModule,
   MatTabsModule,
   MatTableModule,
   MatIconModule,
-  MatSelectModule
+  MatSelectModule,
+  MatDialogModule,
+  MatRadioModule
 ];
 
 @NgModule({
@@ -34,6 +43,10 @@ const MatModules = [
   declarations: [
     TransactionsComponent,
     TransactionDetailsComponent,
+    SPQDialogComponent,
+  ],
+  entryComponents: [
+    SPQDialogComponent
   ],
   providers: [
     TransactionService
