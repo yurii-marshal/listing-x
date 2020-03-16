@@ -22,7 +22,7 @@ export interface GeneratedDocument {
   url: string;
   allowSign: boolean;
   transaction: number;
-  documentData?: SpqDocumentData;
+  documentData?: SpqDocumentData | AddendumData;
   /** @deprecated */
   checked: boolean;
 }
@@ -30,4 +30,10 @@ export interface GeneratedDocument {
 export interface SpqDocumentData {
   questions: SpqQuestion[];
   explanation: string;
+}
+
+export interface AddendumData {
+  id?: number;
+  addendumName: string;
+  terms: string;
 }

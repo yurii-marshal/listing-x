@@ -1,0 +1,33 @@
+<div mat-dialog-title class="u-flex u-flex-justify--space-between u-flex-align-items--center">
+  <div class="title">Addendum</div>
+  <button mat-icon-button mat-dialog-close>
+    <mat-icon fontSet="fa" fontIcon="fa-times"></mat-icon>
+  </button>
+</div>
+
+<div mat-dialog-content class="form-container dialog-form">
+  <form [formGroup]="form">
+    <h4 class="header">Addendum information</h4>
+    <div class="fieldset u-flex-1">
+      <label>Addendum name</label>
+      <input formControlName="addendumName" placeholder="Addendum name" spellcheck="false" class="form-control">
+      <app-form-validation-error [baseControl]="form.get('addendumName')"></app-form-validation-error>
+    </div>
+
+    <div class="fieldset u-flex-1">
+      <label>Terms</label>
+      <textarea formControlName="terms" placeholder="Terms here" spellcheck="false" class="form-control"></textarea>
+      <app-form-validation-error [baseControl]="form.get('terms')"></app-form-validation-error>
+    </div>
+  </form>
+</div>
+
+<div mat-dialog-actions class="fieldset u-flex u-flex-justify--end u-flex-align-items--center button-bar">
+  <button
+    mat-flat-button
+    appDebounceClick
+    (debounceClick)="isEdit ? update() : create()"
+    color="primary"
+    [disabled]="form.invalid"
+  >{{isEdit ? 'UPDATE' : 'CREATE'}}</button>
+</div>

@@ -3,11 +3,11 @@ import {HttpParams} from '@angular/common/http';
 import {CalendarEvent, Transaction} from '../../../core-modules/models/transaction';
 import {Observable, Subject} from 'rxjs';
 import {ApiEndpoint} from '../../../core-modules/enums/api-endpoints';
-import {map} from 'rxjs/operators';
+import {map, tap} from 'rxjs/operators';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import {BaseDataService} from '../../../core-modules/base-classes/base-data-service';
-import {GeneratedDocument} from '../../../core-modules/models/document';
+import {AddendumData, GeneratedDocument} from '../../../core-modules/models/document';
 import {SpqQuestion} from '../../../core-modules/models/spq-question';
 
 @Injectable()
@@ -71,7 +71,24 @@ export class TransactionService extends BaseDataService<Transaction> {
 
   updateSpq(docId: number, data: {questions: SpqQuestion[], explanation: string}): Observable<any> {
     const url = super.transformEndpoint(ApiEndpoint.ESignatureSPQ, docId);
-    return this.http.put(url, data);
+    return this.http.put(url, data).pipe(
+      tap(() => this.transactionChanged.next())
+    );
+  }
+
+  /* TODO: MODEL */
+  createAddendum(transactionId: number, data: AddendumData): Observable<GeneratedDocument> {
+    const url = super.transformEndpoint(ApiEndpoint.CreateAddendum, transactionId);
+    return this.http.post<GeneratedDocument>(url, data).pipe(
+      tap(() => this.transactionChanged.next())
+    );
+  }
+
+  updateAddendum(data: AddendumData): Observable<GeneratedDocument> {
+    const url = super.transformEndpoint(ApiEndpoint.Addendum, data.id);
+    return this.http.put<GeneratedDocument>(url, data).pipe(
+      tap(() => this.transactionChanged.next())
+    );
   }
 
   private fetchCalendarData(url: string, start: Date, end: Date) {
@@ -91,14 +108,14 @@ export class TransactionService extends BaseDataService<Transaction> {
   private wrapCalendarEvent(event: CalendarEvent): CalendarEvent {
     let color: string = '#66ad58';
     if (this.today.isBefore(event.date, 'day')) {
-      color = '#cd584a'
+      color = '#cd584a';
     } else if (this.today.isAfter(event.date, 'day')) {
-      color = '#f8ce5f'
+      color = '#f8ce5f';
     }
     return {
       ...event,
       backgroundColor: color,
       borderColor: color
-    }
+    };
   }
 }

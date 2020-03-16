@@ -9,10 +9,10 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-spqdialog',
-  templateUrl: './spqdialog.component.html',
-  styleUrls: ['./spqdialog.component.scss']
+  templateUrl: './spq-dialog.component.html',
+  styleUrls: ['./spq-dialog.component.scss']
 })
-export class SPQDialogComponent {
+export class SpqDialogComponent {
   questionsStream: Observable<SpqQuestion[]>;
   form: FormGroup;
   isConfirmMode: boolean = false;
@@ -22,7 +22,7 @@ export class SPQDialogComponent {
   }
 
   constructor(@Inject(MAT_DIALOG_DATA) private data: {questions: SpqQuestion[], docId: number, explanation: string},
-              public dialogRef: MatDialogRef<SPQDialogComponent>,
+              public dialogRef: MatDialogRef<SpqDialogComponent>,
               private fb: FormBuilder,
               private transactionService: TransactionService,
               private snackbar: MatSnackBar) {

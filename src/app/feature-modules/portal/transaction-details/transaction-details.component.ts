@@ -6,14 +6,15 @@ import {FormControl, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material';
 import {flatMap, map, takeUntil} from 'rxjs/operators';
 import {CalendarView} from '../../../shared-modules/components/calendar/calendar.component';
-import {Document, GeneratedDocument} from '../../../core-modules/models/document';
+import {AddendumData, Document, GeneratedDocument} from '../../../core-modules/models/document';
 import {AuthService} from '../../../core-modules/core-services/auth.service';
 import {Observable, of, Subject} from 'rxjs';
 import {DocumentStatus} from '../../../core-modules/enums/document-status';
 import {Person} from '../../../core-modules/models/offer';
 import {GeneratedDocumentType} from '../../../core-modules/enums/upload-document-type';
 import {MatDialog} from '@angular/material/dialog';
-import {SPQDialogComponent} from '../dialogs/spqdialog/spqdialog.component';
+import {SpqDialogComponent} from '../dialogs/spq-dialog/spq-dialog.component';
+import {AddendumDialogComponent} from '../dialogs/addendum-dialog/addendum-dialog.component';
 
 @Component({
   selector: 'app-transaction-details',
@@ -58,18 +59,7 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
   ngOnInit() {
     const transactionId: number = Number(this.route.snapshot.params.id);
     this.transactionService.loadOne(transactionId)
-      .subscribe((transaction: Transaction) => {
-        this.transaction = transaction;
-
-        const {moderatorBuyers, moderatorSellers, sellers} = transaction.offer;
-        this.isModerator = [...moderatorSellers, ...moderatorBuyers].some(({email}) => email === this.authService.currentUser.email);
-        this.isSeller = [...moderatorSellers, ...sellers].some(({email}) => email === this.authService.currentUser.email);
-
-        const residentialAgreement = transaction.documents.find(doc => doc.documentType === GeneratedDocumentType.Contract);
-        this.isResidentialAgreementCompleted = residentialAgreement && residentialAgreement.status === DocumentStatus.Completed;
-
-        this.filterDocumentList(transaction.documents);
-      });
+      .subscribe((transaction: Transaction) => this.transactionLoaded(transaction));
 
     this.transactionService.loadCalendarByTransaction(transactionId)
       .subscribe(items => this.calendarDataSource = items);
@@ -82,9 +72,20 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
         const transactionId: number = Number(this.route.snapshot.params.id);
         return this.transactionService.loadOne(transactionId);
       })
-    ).subscribe((transaction) => {
-      this.transaction = transaction;
-    });
+    ).subscribe((transaction) => this.transactionLoaded(transaction));
+  }
+
+  transactionLoaded(transaction: Transaction): void {
+    this.transaction = transaction;
+
+    const {moderatorBuyers, moderatorSellers, sellers} = transaction.offer;
+    this.isModerator = [...moderatorSellers, ...moderatorBuyers].some(({email}) => email === this.authService.currentUser.email);
+    this.isSeller = [...moderatorSellers, ...sellers].some(({email}) => email === this.authService.currentUser.email);
+
+    const residentialAgreement = transaction.documents.find(doc => doc.documentType === GeneratedDocumentType.Contract);
+    this.isResidentialAgreementCompleted = residentialAgreement && residentialAgreement.status === DocumentStatus.Completed;
+
+    this.filterDocumentList(transaction.documents);
   }
 
   onDelete() {
@@ -162,10 +163,6 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
     trigger.click();
   }
 
-  addendum(): void {
-    console.log('Addendum flow');
-  }
-
   private filterDocumentList(documents: GeneratedDocument[]): void {
     /**
      * contract status = STARTED
@@ -186,11 +183,22 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
   }
 
   openSPQDialog(doc: GeneratedDocument): void {
-    const dialogRef = this.dialog.open(SPQDialogComponent, {
+    this.dialog.open(SpqDialogComponent, {
       width: '600px',
       data: {
         ...doc.documentData,
         docId: doc.id
+      }
+    });
+  }
+
+  openAddendumDialog(doc: GeneratedDocument = null): void {
+    this.dialog.open(AddendumDialogComponent, {
+      width: '600px',
+      data: {
+        transactionId: this.transaction.id,
+        docData: doc ? doc.documentData as AddendumData : null,
+        docId: doc ? doc.id : null
       }
     });
   }

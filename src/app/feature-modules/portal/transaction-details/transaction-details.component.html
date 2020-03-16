@@ -120,7 +120,7 @@
             [disabled]="!isResidentialAgreementCompleted"
           >ADD DOCUMENT</button>
           <mat-menu #docs="matMenu" xPosition="before">
-            <button mat-menu-item (click)="addendum()">Addendum</button>
+            <button mat-menu-item (click)="openAddendumDialog()">Addendum</button>
           </mat-menu>
         </div>
 
@@ -146,6 +146,7 @@
 
             <mat-menu #menu="matMenu" xPosition="before">
               <button *ngIf="doc.documentType === 'spq'" mat-menu-item (click)="openSPQDialog(doc)">Edit</button>
+              <button *ngIf="doc.documentType === 'addendum'" mat-menu-item (click)="openAddendumDialog(doc)">Edit</button>
               <button mat-menu-item (click)="triggerDownloadFile(doc.file)">View</button>
               <button mat-menu-item (click)="triggerDownloadFile(doc.file)">Download</button>
               <button mat-menu-item disabled>Deny</button>

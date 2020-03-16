@@ -11,21 +11,22 @@ const FILE_UPLOADER_COMPONENT_VALUE_ACCESSOR = {
 
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'file-uploader',
   template: `
-    <input #fileInput 
-           type="file" 
-           name="file" 
-           [id]="uniqueId" 
-           [attr.accept]="fileTypes" 
-           accept="image/*" 
-           multiple="true" 
+    <input #fileInput
+           type="file"
+           name="file"
+           [id]="uniqueId"
+           [attr.accept]="fileTypes"
+           accept="image/*"
+           multiple="true"
            (change)="onFilesSelect()">
-    
+
     <mat-icon fontSet="fa" fontIcon="fa-cloud-upload-alt"></mat-icon>
     <div class="title">Drag and drop Files Here to Upload</div>
     <div class="subtitle">Maximum upload file size: {{ maxFileSize }} MB. Download format: .doc .pdf</div>
-    
+
     <label [for]="uniqueId">
       <ng-content></ng-content>
     </label>
@@ -41,8 +42,9 @@ export class FileUploaderComponent {
   maxFileSize: number = 100; // Mb
 
   @Input()
-  fileTypes = '.pdf, .doc, .docx'; //application/msword,application/pdf
+  fileTypes = '.pdf, .doc, .docx'; // application/msword,application/pdf
 
+  // tslint:disable-next-line:no-output-on-prefix
   @Output()
   onFileSelect: EventEmitter<File[]> = new EventEmitter<File[]>();
 
@@ -58,16 +60,16 @@ export class FileUploaderComponent {
   constructor(private snackBar: MatSnackBar) {
   }
 
-  //Dragover listener
+  // Dragover listener
   @HostListener('dragover', ['$event'])
   onDragOver(e) {
     e.preventDefault();
     e.stopPropagation();
     this.background = '#9ecbec';
-    this.opacity = '0.8'
+    this.opacity = '0.8';
   }
 
-  //Dragleave listener
+  // Dragleave listener
   @HostListener('dragleave', ['$event'])
   onDragLeave(e) {
     e.preventDefault();
@@ -76,7 +78,7 @@ export class FileUploaderComponent {
     this.opacity = '1';
   }
 
-  //Drop listener
+  // Drop listener
   @HostListener('drop', ['$event'])
   public ondrop(e) {
     e.preventDefault();
@@ -84,7 +86,7 @@ export class FileUploaderComponent {
 
     this.background = '#f5fcff';
     this.opacity = '1';
-    let files = e.dataTransfer.files as FileList;
+    const files = e.dataTransfer.files as FileList;
     if (files.length > 0) {
       this.upload(files);
     }
@@ -116,7 +118,7 @@ export class FileUploaderComponent {
     if (this.fileTypes === '*') {
       return  true;
     }
-    return _.every(files,({name}) => this.fileTypes.includes(this.getExtension(name)));
+    return _.every(files, ({name}) => this.fileTypes.includes(this.getExtension(name)));
   }
 
   private getExtension(filename: string): string {

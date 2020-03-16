@@ -13,6 +13,8 @@ export enum ApiEndpoint {
   // ESignature = '/transactions/{id}/esignatures/',
   ESignature = '/e-document/{id}/',
   ESignatureSPQ = '/e-document/spq/{id}/',
+  CreateAddendum = '/e-document/addendum/create/{id}/',
+  Addendum = '/e-document/addendum/{id}/',
   Deny = '/transactions/{id}/deny/',
   ToggleState = '/transactions/{id}/pdf/'
 }

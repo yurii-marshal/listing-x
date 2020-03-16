@@ -63,6 +63,7 @@
         font-size: 13px;
         letter-spacing: 0.25px;
         color: #444c5c;
+        resize: none;
         &:not([disabled]):hover { border-color: #858c9c;}
 
         &[disabled] {
@@ -88,7 +89,8 @@
         left: 0;
       }
 
-      input.ng-invalid.ng-touched {
+      input.ng-invalid.ng-touched,
+      textarea.ng-invalid.ng-touched {
         border: 1px solid #c85578 !important;
       }
     }

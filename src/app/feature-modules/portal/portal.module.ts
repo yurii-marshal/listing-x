@@ -10,11 +10,12 @@ import { TransactionService } from './services/transaction.service';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatMenuModule} from '@angular/material/menu';
-import { SPQDialogComponent } from './dialogs/spqdialog/spqdialog.component';
+import { SpqDialogComponent } from './dialogs/spq-dialog/spq-dialog.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import { AddendumDialogComponent } from './dialogs/addendum-dialog/addendum-dialog.component';
 
 const MatModules = [
   MatCheckboxModule,
@@ -43,10 +44,12 @@ const MatModules = [
   declarations: [
     TransactionsComponent,
     TransactionDetailsComponent,
-    SPQDialogComponent,
+    SpqDialogComponent,
+    AddendumDialogComponent,
   ],
   entryComponents: [
-    SPQDialogComponent
+    AddendumDialogComponent,
+    SpqDialogComponent
   ],
   providers: [
     TransactionService
