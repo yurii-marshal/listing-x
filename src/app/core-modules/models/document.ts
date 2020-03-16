@@ -22,7 +22,12 @@ export interface GeneratedDocument {
   url: string;
   allowSign: boolean;
   transaction: number;
-  documentData?: SpqQuestion[];
+  documentData?: SpqDocumentData;
   /** @deprecated */
   checked: boolean;
+}
+
+export interface SpqDocumentData {
+  questions: SpqQuestion[];
+  explanation: string;
 }

@@ -3,9 +3,9 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {SpqQuestion} from '../../../../core-modules/models/spq-question';
 import {Observable, of} from 'rxjs';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {TransactionService} from "../../services/transaction.service";
-import {tap} from "rxjs/operators";
-import {MatSnackBar} from "@angular/material/snack-bar";
+import {TransactionService} from '../../services/transaction.service';
+import {tap} from 'rxjs/operators';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-spqdialog',
@@ -21,7 +21,7 @@ export class SPQDialogComponent {
     return this.form.get('questions') as FormArray;
   }
 
-  constructor(@Inject(MAT_DIALOG_DATA) private data: {questions: SpqQuestion[], docId: number},
+  constructor(@Inject(MAT_DIALOG_DATA) private data: {questions: SpqQuestion[], docId: number, explanation: string},
               public dialogRef: MatDialogRef<SPQDialogComponent>,
               private fb: FormBuilder,
               private transactionService: TransactionService,
@@ -35,7 +35,7 @@ export class SPQDialogComponent {
 
     this.form = this.fb.group({
       questions: this.fb.array(initialAnswers),
-      explanation: ['']
+      explanation: [data.explanation || '']
     });
   }
 

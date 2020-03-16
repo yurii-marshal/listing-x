@@ -188,8 +188,10 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
   openSPQDialog(doc: GeneratedDocument): void {
     const dialogRef = this.dialog.open(SPQDialogComponent, {
       width: '600px',
-      // disableClose: true,
-      data: {questions: doc.documentData, docId: doc.id}
+      data: {
+        ...doc.documentData,
+        docId: doc.id
+      }
     });
   }
 

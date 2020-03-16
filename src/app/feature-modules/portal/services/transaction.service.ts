@@ -8,7 +8,7 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 import {BaseDataService} from '../../../core-modules/base-classes/base-data-service';
 import {GeneratedDocument} from '../../../core-modules/models/document';
-import {SpqQuestion} from "../../../core-modules/models/spq-question";
+import {SpqQuestion} from '../../../core-modules/models/spq-question';
 
 @Injectable()
 export class TransactionService extends BaseDataService<Transaction> {
