@@ -6,7 +6,7 @@ AWS_CLI_PROFILE:=
 define build_app
     npm install
     npm install -g @angular/cli@8.2.1
-    ng build --output-path=dist
+    ng build --prod --output-path=dist
 endef
 
 define deploy_app
@@ -25,7 +25,7 @@ deploy-app-dev:
 
 deploy-app-prod:
 	$(call deploy_app,app.accuflip.com,ERKH4N7XHBLC3)
-	
+
 
 BITBUCKET_BRANCH:=develop
 AWS_BUCKET:=dev-app.accuflip.com
