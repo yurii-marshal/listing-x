@@ -9,7 +9,7 @@ import { Transaction } from '../../../core-modules/models/transaction';
 import { TransactionService } from '../../portal/services/transaction.service';
 import * as _ from 'lodash';
 import { LoanType } from '../../../core-modules/enums/loan-type';
-import {GeneratedDocument} from "../../../core-modules/models/document";
+import { GeneratedDocument } from '../../../core-modules/models/document';
 
 @Component({
   selector: 'app-e-signature',
@@ -46,11 +46,10 @@ export class ESignatureComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.signatures.changes // handle change amount of components
-      .pipe(
-        switchMap(() =>  this.handleCurrentUserSignatureChanges())
-      )
-      .subscribe(() => this.signAnAgreement());
+    /** Handle change amount of components */
+    this.signatures.changes.pipe(
+      switchMap(() =>  this.handleCurrentUserSignatureChanges())
+    ).subscribe(() => this.signAnAgreement());
   }
 
   signAnAgreement() {

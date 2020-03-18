@@ -126,8 +126,14 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
       });
   }
 
-  goToESign(docId: number): void {
-    this.router.navigate(['/e-sign', docId]);
+  goToESign(doc: GeneratedDocument): void {
+    const url = {
+      [GeneratedDocumentType.Contract]: '/e-sign',
+      [GeneratedDocumentType.Spq]: '/e-sign/spq',
+      [GeneratedDocumentType.Addendum]: '/e-sign/addendum'
+    }[doc.documentType];
+
+    this.router.navigate([url, doc.id]);
     // this.transactionService.lockOffer(this.transaction.id)
     //   .subscribe(() => this.router.navigate(['/e-sign', this.transaction.id]));
   }

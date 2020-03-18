@@ -1,0 +1,264 @@
+<app-base-template [isVisibleNavBar]="false">
+  <div style="position: absolute; left: 100px; top: 30px; display: flex; align-items: center; width:200px; ">
+    <div style="min-width: 95px;font-size: 15px;font-weight: 500;color: #444c5d;">My Progress</div>
+    <mat-progress-bar
+      class="example-margin"
+      mode="determinate"
+      diameter="40"
+      [value]="progress"
+      style="margin-right: 20px;">
+    </mat-progress-bar>
+  </div>
+
+  <div *ngIf="transaction" style="height: calc(100% - 75px); overflow-y: auto;">
+    <div class="container">
+      <header class="clearfix">
+        <br>
+        <img src="/assets/spq/logo1.png" width="350" height="120" class="image">
+        <div class="box">
+          <br>
+          <div class="box-div-1">SELLER PROPERTY QUESTIONNAIRE</div>
+          <div class="box-div-2">(C.A.R. Form SPQ, Revised 6/18)</div>
+        </div>
+      </header>
+      <br>
+      <form>
+        <div>
+          This form is not a substitute for the Real Estate Transfer Disclosure Statement (TDS). It is used by the Seller to provide additional
+          information when a TDS is completed. If Seller is exempt from completing a TDS, Seller should complete an Exempt Seller Disclosure
+          (C.A.R. Form ESD) or may use this form instead.
+        </div>
+        <div>
+          <span class="font-weight-bold">I.</span> &nbsp;&nbsp;&nbsp; Seller makes the following disclosures with regard to the real property or manufactured home described as
+        </div>
+        <div>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <input type="text" disabled class="input-lr-1" [value]="transaction.offer.streetName">,
+          Assessor's Parcel No.
+          <input type="text" name="" disabled class="input-lr-2" [value]="transaction.offer.apn">,
+        </div>
+        <div>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          situated in
+          <input type="text" name="" disabled class="input-lr-3">
+          , County of
+          <input type="text" name="" disabled class="input-lr-4" [value]="transaction.offer.city">
+          California (&#8220;Property&#8221;).
+        </div>
+        <div class="font-weight-bold">
+          II. &nbsp;&nbsp; The following are representations made by the Seller and are not the representations of the Agent(s), if any. This
+          disclosure
+          <div class="ml-4"> statement is not a warranty of any kind by the Seller or any agents(s) and is not a substitute for any
+            inspections or warranties the principal(s) may wish to obtain. This disclosure is not intended to be part of the contract between Buyer and Seller. Unless otherwise specified in writing, Broker and any real estate licensee or other person
+            working with or through Broker has not verified information provided by Seller. A real estate broker is qualified to advise
+            on real estate transactions. If Seller or Buyer desires legal advice, they should consult an attorney.</div>
+        </div>
+        <div>
+          <span class="font-weight-bold">III.&nbsp;&nbsp; Note to Seller:</span> PURPOSE: To tell the Buyer about <span class="underline">known material or significant items</span> affecting the value or desirability of the Property
+          &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;and help to eliminate misunderstandings about the condition of the Property.
+          <div class="ml-5">
+            <span class="font-weight-bold">&#8226;</span>&nbsp;&nbsp;&nbsp;&nbsp; Answer based on actual knowledge and recollection at this time.
+            <br>
+            <span class="font-weight-bold">&#8226;</span>&nbsp;&nbsp;&nbsp;&nbsp; Something that you do not consider material or significant may be perceived differently by a Buyer.
+            <br>
+            <span class="font-weight-bold">&#8226;</span>&nbsp;&nbsp;&nbsp;&nbsp; Think about what you would want to know if you were buying the Property today.
+            <br>
+            <span class="font-weight-bold">&#8226;</span>&nbsp;&nbsp;&nbsp;&nbsp; Read the questions carefully and take your time.
+            <br>
+            <span class="font-weight-bold">&#8226;</span>&nbsp;&nbsp;&nbsp;&nbsp; If you do not understand how to answer a question, or what to disclose or how to make a disclosure in response to a question,
+            <div class="ml-4">
+              whether on this form or a TDS, you should consult a real estate attorney in California of your choosing. A broker cannot
+              answer the questions for you or advise you on the legal sufficiency of any answers or disclosures you provide.
+            </div>
+
+          </div>
+        </div>
+        <div>
+          <span class="font-weight-bold">IV.&nbsp;&nbsp; Note to Buyer:</span> PURPOSE: To give you more information about <span class="underline">known material or significant items</span> affecting the value or desirability
+          &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; of the Property and help to eliminate misunderstandings about the condition of the Property.
+          <div class="ml-5">
+            <span class="font-weight-bold">&#8226;</span>&nbsp;&nbsp;&nbsp;&nbsp; Something that may be material or significant to you may not be perceived the same way by the Seller.
+            <br>
+            <span class="font-weight-bold">&#8226;</span>&nbsp;&nbsp;&nbsp;&nbsp; If something is important to you, be sure to put your concerns and questions in writing (C.A.R. form BMI).
+            <br>
+            <span class="font-weight-bold">&#8226;</span>&nbsp;&nbsp;&nbsp;&nbsp; Sellers can only disclose what they actually know. Seller may not know about all material or significant items.
+            <br>
+            <span class="font-weight-bold">&#8226;</span>&nbsp;&nbsp;&nbsp;&nbsp; Seller's disclosures are not a substitute for your own investigations, personal judgments or common sense.
+          </div>
+        </div>
+        <div>
+          <span  class="font-weight-bold">V.&nbsp;&nbsp; SELLER AWARENESS: For each statement below, answer the question &#8220;Are you (Seller) aware of...&#8221; by checking either
+          &#8220;Yes&#8221;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or &#8220;No.&#8221; Explain any &#8220;Yes&#8221; answers in the space provided or attach additional comments and check section VI.</span>
+          <div class="ml-4">
+            <span style="display: flex; justify-content: space-between">
+              <span style="font-weight: bold;">A.&nbsp;&nbsp;&nbsp; STATUTORILY OR CONTRACTUALLY REQUIRED OR RELATED:</span>
+              <span style="font-weight: bold;">ARE YOU (SELLER) AWARE OF...</span>
+            </span>
+            <div class="ml-4 clearfix">
+              <div class="col-left">
+                <div>
+                  <span class="font-weight-bold">1.</span>&nbsp;&nbsp;&nbsp; Within the last 3 years, the death of an occupant of the Property upon the Property . . . . . . . . . . . . . . . . . . . . . . . . &nbsp;&nbsp;
+                </div>
+                <div>
+                  <span class="font-weight-bold">2.&nbsp;&nbsp;&nbsp;</span> An Order from a government health official identifying the Property as being contaminated by<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;methamphetamine. (If yes, attach a copy of the Order.) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . &nbsp;&nbsp;&nbsp;
+                </div>
+                <div>
+                  <span class="font-weight-bold">3.&nbsp;&nbsp;&nbsp;</span> The release of an illegal controlled substance on or beneath the Property . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .&nbsp;&nbsp;
+
+                </div>
+                <div>
+                  <span class="font-weight-bold">4.&nbsp;&nbsp;&nbsp;</span> Whether the Property is located in or adjacent to an &#8220;industrial use&#8221; zone . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . &nbsp; &nbsp;
+                  <br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  (In general, a zone or district allowing manufacturing, commercial or airport uses.)
+                </div>
+                <div>
+                  <span class="font-weight-bold">5.&nbsp;&nbsp;&nbsp;</span> Whether the Property is affected by a nuisance created by an &#8220;industrial use&#8221; zone. . . . . . . . . . . . . . . . . . . . . . . . . &nbsp; &nbsp;
+
+                </div>
+                <div>
+                  <span class="font-weight-bold">6.&nbsp;&nbsp;&nbsp;</span> Whether the Property is located within 1 mile of a former federal or state ordnance location . . . . . . . . . . . . . . . . . .&nbsp; &nbsp;
+
+                  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  (In general, an area once used for military training purposes that may contain potentially explosive munitions.)
+                </div>
+                <div>
+                  <span class="font-weight-bold">7.&nbsp;&nbsp;&nbsp;</span> Whether the Property is a condominium or located in a planned unit development or other
+                  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  common interest subdivision. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . &nbsp; &nbsp;
+                </div>
+                <div>
+                  <span class="font-weight-bold">8.&nbsp;&nbsp;&nbsp;</span> Insurance claims affecting the Property within the past 5 years . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . &nbsp; &nbsp;
+
+                </div>
+                <div>
+                  <span class="font-weight-bold">9.&nbsp;&nbsp;&nbsp;</span> Matters affecting title of the Property. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . &nbsp; &nbsp;
+                </div>
+                <div>
+                  <span class="font-weight-bold">10.&nbsp;&nbsp;</span>Material facts or defects affecting the Property not otherwise disclosed to Buyer . . . . . . . . . . . . . . . . . . . . . . . . . . . &nbsp; &nbsp;
+                </div>
+                <div>
+                  <span class="font-weight-bold">11.&nbsp;&nbsp;</span>Plumbing fixtures on the Property that are non-compliant plumbing fixtures as
+                  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  defined by Civil Code Section 1101.3 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . &nbsp; &nbsp;
+                </div>
+              </div>
+              <div class="col-right">
+                <input type="checkbox" [checked]="doc.documentData.questions[0].answer" disabled name=""> Yes&nbsp;&nbsp;&nbsp;
+                <input type="checkbox" [checked]="!doc.documentData.questions[0].answer" disabled name=""> No
+                <br><br>
+                <input type="checkbox" [checked]="doc.documentData.questions[1].answer" disabled name=""> Yes&nbsp;&nbsp;&nbsp;
+                <input type="checkbox" [checked]="!doc.documentData.questions[1].answer"disabled name=""> No
+                <br>
+                <input type="checkbox" [checked]="doc.documentData.questions[2].answer" disabled name=""> Yes&nbsp;&nbsp;&nbsp;
+                <input type="checkbox" [checked]="!doc.documentData.questions[2].answer" disabled name=""> No
+                <br>
+                <input type="checkbox" [checked]="doc.documentData.questions[3].answer" disabled name=""> Yes&nbsp;&nbsp;&nbsp;
+                <input type="checkbox" [checked]="!doc.documentData.questions[3].answer"disabled name=""> No
+                <br><br>
+                <input type="checkbox" [checked]="doc.documentData.questions[4].answer" disabled name=""> Yes&nbsp;&nbsp;&nbsp;
+                <input type="checkbox" [checked]="!doc.documentData.questions[4].answer" disabled name=""> No
+                <br>
+                <input type="checkbox" [checked]="doc.documentData.questions[5].answer" disabled name=""> Yes&nbsp;&nbsp;&nbsp;
+                <input type="checkbox" [checked]="!doc.documentData.questions[5].answer" disabled name=""> No
+                <br><br><br>
+                <input type="checkbox" [checked]="doc.documentData.questions[6].answer" disabled name=""> Yes&nbsp;&nbsp;&nbsp;
+                <input type="checkbox" [checked]="!doc.documentData.questions[6].answer" disabled name=""> No
+                <br>
+                <input type="checkbox" [checked]="doc.documentData.questions[7].answer" disabled name=""> Yes&nbsp;&nbsp;&nbsp;
+                <input type="checkbox" [checked]="!doc.documentData.questions[7].answer" disabled name=""> No
+                <br>
+                <input type="checkbox" [checked]="doc.documentData.questions[8].answer" disabled name=""> Yes&nbsp;&nbsp;&nbsp;
+                <input type="checkbox" [checked]="!doc.documentData.questions[8].answer" disabled name=""> No
+                <br>
+                <input type="checkbox" [checked]="doc.documentData.questions[9].answer" disabled name=""> Yes&nbsp;&nbsp;&nbsp;
+                <input type="checkbox" [checked]="!doc.documentData.questions[9].answer" disabled name=""> No
+
+                <br><br>
+                <input type="checkbox" [checked]="doc.documentData.questions[10].answer" disabled name=""> Yes&nbsp;&nbsp;&nbsp;
+                <input type="checkbox" [checked]="!doc.documentData.questions[10].answer" disabled name=""> No
+
+              </div>
+            </div>
+          </div>
+
+          <div>
+            Explanation, or
+            <input type="checkbox" disabled name="">
+            (if checked) see attached;
+            <input type="text" disabled name="" class="input-lr-5">
+          </div>
+          <input type="text" disabled name="" class="input-lr-6">
+          <input type="text" disabled name="" class="input-lr-6">
+          <input type="text" disabled name="" class="input-lr-6">
+          <input type="text" disabled name="" class="input-lr-6">
+          <input type="text" disabled name="" class="input-lr-6">
+          <input type="text" disabled name="" class="input-lr-6">
+        </div>
+        <br>
+        <div class="clearfix">
+          <div class="col-left-initials">
+            <label>Buyer's Initials</label>
+            (<input type="text" name="" id="Buyer-1">) &nbsp;
+            (<input type="text" name="" id="Buyer-2">)
+            <br>
+            <br>
+            <br>
+            <br>
+            <div style="font-size: 18px">&#169; 2005-2018, California Association of REALTORS &#174;, Inc.</div>
+          </div>
+
+          <div class="col-right-initials">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <label>Seller's Initials</label>
+            (<input type="text" name="" id="Seller-1">) &nbsp;
+            (<input type="text" name="" id="Seller-2">)
+            <br>
+            <br>
+            <img src="/assets/spq/housing.png" width="80" height="70" class="image-left">
+          </div>
+        </div>
+      </form>
+      <footer>
+        <div class="font-weight-bold">SPQ REVISED 6/18 (PAGE 1 OF 4)</div>
+        <div class="text-center font-weight-bold">
+          CALIFORNIA RESIDENTIAL PURCHASE AGREEMENT (RPA-CA PAGE 1 OF 4)
+        </div>
+        <div class="border-dark">
+          <div>
+            <span class="font-weight-bold">
+              Bret Pfeifer 2512 Artesia Blvd ste 250G Redondo Beach, CA 90278
+            </span>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
+            <span>
+              Phone:<span class="font-weight-bold">3105250619</span>
+            </span>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            <span>
+              Fax:<span class="font-weight-bold">3108461456</span>
+            </span>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
+            <span class="font-weight-bold">
+              REO
+            </span>
+          </div>
+          <div>
+            <span class="font-weight-bold">
+              Bret Pfeifer
+            </span>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
+            <span class="font-weight-bold">
+              Produced with zipForm &#174; by zipLogix 18070 Fifteen Mile Road, Fraser, Michigan 48026 <a href="www.zipLogix.com">www.zipLogix.com</a>
+            </span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <br><br>
+  </div>
+</app-base-template>

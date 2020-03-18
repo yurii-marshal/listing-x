@@ -7,6 +7,8 @@ import { MatButtonModule, MatDialogModule, MatIconModule, MatProgressBarModule }
 import { SignatureBoxComponent } from './components/signature-box/signature-box.component';
 import { FinishSigningDialogComponent } from './dialogs/finish-signing-dialog/finish-signing-dialog.component';
 import { TransactionService } from '../portal/services/transaction.service';
+import { SpqSignatureComponent } from './spq-signature/spq-signature.component';
+import { AddendumSignatureComponent } from './addendum-signature/addendum-signature.component';
 
 const MatModules = [
   MatIconModule,
@@ -19,7 +21,9 @@ const MatModules = [
   declarations: [
     ESignatureComponent,
     SignatureBoxComponent,
-    FinishSigningDialogComponent],
+    FinishSigningDialogComponent,
+    SpqSignatureComponent,
+    AddendumSignatureComponent],
   imports: [
     CommonModule,
     SharedModule,

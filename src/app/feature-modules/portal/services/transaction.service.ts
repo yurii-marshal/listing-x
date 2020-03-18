@@ -20,8 +20,8 @@ export class TransactionService extends BaseDataService<Transaction> {
   }
 
   // loadSignDocument(transactionId: number): Observable<Transaction> {
-  loadSignDocument(transactionId: number): Observable<GeneratedDocument> {
-    const url: string = this.transformEndpoint(ApiEndpoint.ESignature, transactionId);
+  loadSignDocument(docId: number): Observable<GeneratedDocument> {
+    const url: string = this.transformEndpoint(ApiEndpoint.ESignature, docId);
     return this.http.get<GeneratedDocument>(url);
   }
 
