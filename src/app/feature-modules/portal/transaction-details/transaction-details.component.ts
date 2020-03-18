@@ -178,7 +178,10 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
      * after all sellers signed, contract status = COMPLETED
      */
 
-    const pendingDocsStatuses = [DocumentStatus.Started];
+    let pendingDocsStatuses = [DocumentStatus.Started];
+    if (this.isSeller) {
+      pendingDocsStatuses = [DocumentStatus.Started, DocumentStatus.Delivered];
+    }
 
     this.pendingDocuments = of(documents).pipe(
       map((docs) => docs.filter(doc => pendingDocsStatuses.includes(doc.status)))

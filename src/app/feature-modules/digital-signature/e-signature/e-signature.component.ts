@@ -10,6 +10,7 @@ import { TransactionService } from '../../portal/services/transaction.service';
 import * as _ from 'lodash';
 import { LoanType } from '../../../core-modules/enums/loan-type';
 import { GeneratedDocument } from '../../../core-modules/models/document';
+import {GeneratedDocumentType} from '../../../core-modules/enums/upload-document-type';
 
 @Component({
   selector: 'app-e-signature',
@@ -27,6 +28,10 @@ export class ESignatureComponent implements OnInit, AfterViewInit {
   doc: GeneratedDocument;
 
   LoanType = LoanType;
+
+  get DocType() {
+    return GeneratedDocumentType;
+  }
 
   @ViewChildren(SignatureBoxComponent)
   private signatures: QueryList<SignatureBoxComponent>;

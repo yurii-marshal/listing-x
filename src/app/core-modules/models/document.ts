@@ -1,6 +1,6 @@
 import {GeneratedDocumentType, UploadDocumentType} from '../enums/upload-document-type';
 import {DocumentStatus} from '../enums/document-status';
-import {SpqQuestion} from "./spq-question";
+import {SpqQuestion} from './spq-question';
 
 export interface Document {
   id: number;
@@ -21,6 +21,7 @@ export interface GeneratedDocument {
   extension: string;
   url: string;
   allowSign: boolean;
+  allowEdit: boolean;
   transaction: number;
   documentData?: SpqDocumentData | AddendumData;
   /** @deprecated */

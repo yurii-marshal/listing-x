@@ -40,9 +40,9 @@
         <div>
           &nbsp;&nbsp;&nbsp;&nbsp;
           situated in
-          <input type="text" name="" disabled class="input-lr-3">
+          <input type="text" name="" disabled class="input-lr-3"  [value]="transaction.offer.city">
           , County of
-          <input type="text" name="" disabled class="input-lr-4" [value]="transaction.offer.city">
+          <input type="text" name="" disabled class="input-lr-4">
           California (&#8220;Property&#8221;).
         </div>
         <div class="font-weight-bold">
@@ -147,74 +147,81 @@
               </div>
               <div class="col-right">
                 <input type="checkbox" [checked]="doc.documentData.questions[0].answer" disabled name=""> Yes&nbsp;&nbsp;&nbsp;
-                <input type="checkbox" [checked]="!doc.documentData.questions[0].answer" disabled name=""> No
+                <input type="checkbox" [checked]="doc.documentData.questions[0].answer === false" disabled name=""> No
                 <br><br>
                 <input type="checkbox" [checked]="doc.documentData.questions[1].answer" disabled name=""> Yes&nbsp;&nbsp;&nbsp;
-                <input type="checkbox" [checked]="!doc.documentData.questions[1].answer"disabled name=""> No
+                <input type="checkbox" [checked]="doc.documentData.questions[1].answer === false" disabled name=""> No
                 <br>
                 <input type="checkbox" [checked]="doc.documentData.questions[2].answer" disabled name=""> Yes&nbsp;&nbsp;&nbsp;
-                <input type="checkbox" [checked]="!doc.documentData.questions[2].answer" disabled name=""> No
+                <input type="checkbox" [checked]="doc.documentData.questions[2].answer === false" disabled name=""> No
                 <br>
                 <input type="checkbox" [checked]="doc.documentData.questions[3].answer" disabled name=""> Yes&nbsp;&nbsp;&nbsp;
-                <input type="checkbox" [checked]="!doc.documentData.questions[3].answer"disabled name=""> No
+                <input type="checkbox" [checked]="doc.documentData.questions[3].answer === false" disabled name=""> No
                 <br><br>
                 <input type="checkbox" [checked]="doc.documentData.questions[4].answer" disabled name=""> Yes&nbsp;&nbsp;&nbsp;
-                <input type="checkbox" [checked]="!doc.documentData.questions[4].answer" disabled name=""> No
+                <input type="checkbox" [checked]="doc.documentData.questions[4].answer === false" disabled name=""> No
                 <br>
                 <input type="checkbox" [checked]="doc.documentData.questions[5].answer" disabled name=""> Yes&nbsp;&nbsp;&nbsp;
-                <input type="checkbox" [checked]="!doc.documentData.questions[5].answer" disabled name=""> No
+                <input type="checkbox" [checked]="doc.documentData.questions[5].answer === false" disabled name=""> No
                 <br><br><br>
                 <input type="checkbox" [checked]="doc.documentData.questions[6].answer" disabled name=""> Yes&nbsp;&nbsp;&nbsp;
-                <input type="checkbox" [checked]="!doc.documentData.questions[6].answer" disabled name=""> No
+                <input type="checkbox" [checked]="doc.documentData.questions[6].answer === false" disabled name=""> No
                 <br>
                 <input type="checkbox" [checked]="doc.documentData.questions[7].answer" disabled name=""> Yes&nbsp;&nbsp;&nbsp;
-                <input type="checkbox" [checked]="!doc.documentData.questions[7].answer" disabled name=""> No
+                <input type="checkbox" [checked]="doc.documentData.questions[7].answer === false" disabled name=""> No
                 <br>
                 <input type="checkbox" [checked]="doc.documentData.questions[8].answer" disabled name=""> Yes&nbsp;&nbsp;&nbsp;
-                <input type="checkbox" [checked]="!doc.documentData.questions[8].answer" disabled name=""> No
+                <input type="checkbox" [checked]="doc.documentData.questions[8].answer === false" disabled name=""> No
                 <br>
                 <input type="checkbox" [checked]="doc.documentData.questions[9].answer" disabled name=""> Yes&nbsp;&nbsp;&nbsp;
-                <input type="checkbox" [checked]="!doc.documentData.questions[9].answer" disabled name=""> No
+                <input type="checkbox" [checked]="doc.documentData.questions[9].answer === false" disabled name=""> No
 
                 <br><br>
                 <input type="checkbox" [checked]="doc.documentData.questions[10].answer" disabled name=""> Yes&nbsp;&nbsp;&nbsp;
-                <input type="checkbox" [checked]="!doc.documentData.questions[10].answer" disabled name=""> No
+                <input type="checkbox" [checked]="doc.documentData.questions[10].answer === false" disabled name=""> No
 
               </div>
             </div>
           </div>
 
-          <div>
+          <div style="text-align: justify;">
             Explanation, or
-            <input type="checkbox" disabled name="">
+            <input type="checkbox" [checked]="!doc.documentData.explanation.length" disabled name="">
             (if checked) see attached;
-            <input type="text" disabled name="" class="input-lr-5">
+<!--            <input type="text" #explanation disabled name="" class="input-lr-5" [value]="doc.documentData.explanation">-->
+            <span class="fake-line">&nbsp;{{doc.documentData.explanation}}&nbsp;</span>
           </div>
-          <input type="text" disabled name="" class="input-lr-6">
-          <input type="text" disabled name="" class="input-lr-6">
-          <input type="text" disabled name="" class="input-lr-6">
-          <input type="text" disabled name="" class="input-lr-6">
-          <input type="text" disabled name="" class="input-lr-6">
-          <input type="text" disabled name="" class="input-lr-6">
+<!--          <input #explanation type="text" disabled name="" class="input-lr-6">-->
+<!--          <input #explanation type="text" disabled name="" class="input-lr-6">-->
+<!--          <input #explanation type="text" disabled name="" class="input-lr-6">-->
+<!--          <input #explanation type="text" disabled name="" class="input-lr-6">-->
+<!--          <input #explanation type="text" disabled name="" class="input-lr-6">-->
+<!--          <input #explanation type="text" disabled name="" class="input-lr-6">-->
         </div>
         <br>
         <div class="clearfix">
           <div class="col-left-initials">
             <label>Buyer's Initials</label>
-            (<input type="text" name="" id="Buyer-1">) &nbsp;
-            (<input type="text" name="" id="Buyer-2">)
+            <ng-container *ngFor="let user of transaction.offer.buyers; let last = last">
+              <app-signature-box [user]="user"></app-signature-box>
+              <ng-container *ngIf="!last">,&nbsp;&nbsp;</ng-container>
+            </ng-container>
             <br>
             <br>
             <br>
             <br>
-            <div style="font-size: 18px">&#169; 2005-2018, California Association of REALTORS &#174;, Inc.</div>
+            <div style="font-size: 18px">&#169; 2005-{{currentYear}}, California Association of REALTORS &#174;, Inc.</div>
           </div>
 
           <div class="col-right-initials">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <label>Seller's Initials</label>
-            (<input type="text" name="" id="Seller-1">) &nbsp;
-            (<input type="text" name="" id="Seller-2">)
+<!--            (<input type="text" name="" id="Seller-1">) &nbsp;-->
+<!--            (<input type="text" name="" id="Seller-2">)-->
+            <ng-container *ngFor="let user of transaction?.offer?.sellers; let last = last">
+              <app-signature-box [user]="user"></app-signature-box>
+              <ng-container *ngIf="!last">,&nbsp;&nbsp;</ng-container>
+            </ng-container>
             <br>
             <br>
             <img src="/assets/spq/housing.png" width="80" height="70" class="image-left">

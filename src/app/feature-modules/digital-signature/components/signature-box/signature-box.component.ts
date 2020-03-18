@@ -32,6 +32,10 @@ export class SignatureBoxComponent implements OnInit {
 
   get isCurrentUser(): boolean {
     const currentUser: User = this.authService.currentUser;
+    console.log(currentUser);
+    if (!currentUser) {
+      return false;
+    }
     return currentUser.lastName === this.user.lastName
       && currentUser.firstName === this.user.firstName
       && currentUser.email === this.user.email;

@@ -13,11 +13,13 @@ const routes: Routes = [
   },
   {
     path: 'spq/:id',
-    component: SpqSignatureComponent
+    component: SpqSignatureComponent,
+    canActivate: [AuthGuardService]
   },
   {
     path: 'addendum/:id',
-    component: AddendumSignatureComponent
+    component: AddendumSignatureComponent,
+    canActivate: [AuthGuardService]
   }
 ];
 

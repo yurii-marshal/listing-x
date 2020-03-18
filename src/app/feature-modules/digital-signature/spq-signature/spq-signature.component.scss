@@ -84,7 +84,7 @@ form {
   text-decoration: underline;
 }
 .input-lr-5 {
-  width: 870px;
+  width: 895px;
 }
 .input-lr-6 {
   width: 1300px;
@@ -141,4 +141,14 @@ input[type=text][disabled] {
 
 input[type=checkbox][disabled]{
   outline: 1px solid gray; // or whatever
+}
+
+.fake-line {
+  background-color: rgb(235, 235, 228);
+  border-bottom: 1px solid black;
+  font-size: 18px;
+  font-weight: bold;
+  font-style: italic;
+  color: #01245f;
+  font-stretch: expanded;
 }

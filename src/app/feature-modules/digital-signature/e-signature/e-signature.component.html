@@ -10,6 +10,11 @@
     </mat-progress-bar>
   </div>
   <div *ngIf="transaction" style="height: calc(100% - 75px); overflow-y: auto;">
+    <!--<ng-container [ngSwitch]="doc.documentType">
+      <app-contract-document *ngSwitchCase="DocType.Contract"></app-contract-document>
+      <app-spq-document *ngSwitchCase="DocType.Spq"></app-spq-document>
+      <app-addendum-document *ngSwitchCase="DocType.Addendum"></app-addendum-document>
+    </ng-container>-->
 
     <div class="container">
       <header class="clearfix">

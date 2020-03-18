@@ -45,7 +45,7 @@ export class AuthService {
   isLoggedIn(): Observable<boolean> {
     if (!this.jwtToken) {
       return of(false);
-    } else if(this.currentUser) {
+    } else if (this.currentUser) {
       return of(true);
     }
 
