@@ -188,15 +188,8 @@
             Explanation, or
             <input type="checkbox" [checked]="!doc.documentData.explanation.length" disabled name="">
             (if checked) see attached;
-<!--            <input type="text" #explanation disabled name="" class="input-lr-5" [value]="doc.documentData.explanation">-->
             <span class="fake-line">&nbsp;{{doc.documentData.explanation}}&nbsp;</span>
           </div>
-<!--          <input #explanation type="text" disabled name="" class="input-lr-6">-->
-<!--          <input #explanation type="text" disabled name="" class="input-lr-6">-->
-<!--          <input #explanation type="text" disabled name="" class="input-lr-6">-->
-<!--          <input #explanation type="text" disabled name="" class="input-lr-6">-->
-<!--          <input #explanation type="text" disabled name="" class="input-lr-6">-->
-<!--          <input #explanation type="text" disabled name="" class="input-lr-6">-->
         </div>
         <br>
         <div class="clearfix">
@@ -216,8 +209,6 @@
           <div class="col-right-initials">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <label>Seller's Initials</label>
-<!--            (<input type="text" name="" id="Seller-1">) &nbsp;-->
-<!--            (<input type="text" name="" id="Seller-2">)-->
             <ng-container *ngFor="let user of transaction?.offer?.sellers; let last = last">
               <app-signature-box [user]="user"></app-signature-box>
               <ng-container *ngIf="!last">,&nbsp;&nbsp;</ng-container>

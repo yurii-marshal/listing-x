@@ -9,9 +9,6 @@ import { FinishSigningDialogComponent } from './dialogs/finish-signing-dialog/fi
 import { TransactionService } from '../portal/services/transaction.service';
 import { SpqSignatureComponent } from './spq-signature/spq-signature.component';
 import { AddendumSignatureComponent } from './addendum-signature/addendum-signature.component';
-import { ContractDocumentComponent } from './components/contract-document/contract-document.component';
-import { SpqDocumentComponent } from './components/spq-document/spq-document.component';
-import { AddendumDocumentComponent } from './components/addendum-document/addendum-document.component';
 
 const MatModules = [
   MatIconModule,
@@ -26,10 +23,8 @@ const MatModules = [
     SignatureBoxComponent,
     FinishSigningDialogComponent,
     SpqSignatureComponent,
-    AddendumSignatureComponent,
-    ContractDocumentComponent,
-    SpqDocumentComponent,
-    AddendumDocumentComponent],
+    AddendumSignatureComponent
+  ],
   imports: [
     CommonModule,
     SharedModule,
