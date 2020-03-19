@@ -179,3 +179,25 @@ form {
 input[type=checkbox][disabled]{
   outline: 1px solid gray; // or whatever
 }
+
+input[type=text][disabled] {
+  font-size: 18px;
+  font-weight: bold;
+  font-style: italic;
+  color: #01245f;
+}
+
+.signature-box {
+  display: inline-flex;
+  margin-left: 10px;
+}
+
+.fake-line {
+  background-color: rgb(235, 235, 228);
+  border-bottom: 1px solid black;
+  font-size: 18px;
+  font-weight: bold;
+  font-style: italic;
+  color: #01245f;
+  font-stretch: expanded;
+}

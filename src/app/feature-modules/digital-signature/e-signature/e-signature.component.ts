@@ -29,10 +29,6 @@ export class ESignatureComponent implements OnInit, AfterViewInit {
 
   LoanType = LoanType;
 
-  get DocType() {
-    return GeneratedDocumentType;
-  }
-
   @ViewChildren(SignatureBoxComponent)
   private signatures: QueryList<SignatureBoxComponent>;
 

@@ -1,169 +1,171 @@
-<div class="container">
-  <header class="clearfix">
-    <br>
-    <img src="/assets/addendum/logo1.png" width="350" height="120" class="image">
-    <div class="box clearfix">
-      <div class="col-left">
-        <br><br>
-        <div class="box-div-1">ADDENDUM</div>
-        <div class="box-div-2">(C.A.R. Form ADM, Revised 12/15)</div>
-      </div>
+<app-base-template [isVisibleNavBar]="false">
+  <div style="position: absolute; left: 100px; top: 30px; display: flex; align-items: center; width:200px; ">
+    <div style="min-width: 95px;font-size: 15px;font-weight: 500;color: #444c5d;">My Progress</div>
+    <mat-progress-bar
+      class="example-margin"
+      mode="determinate"
+      diameter="40"
+      [value]="progress"
+      style="margin-right: 20px;">
+    </mat-progress-bar>
+  </div>
+  <div *ngIf="transaction" style="height: calc(100% - 75px); overflow-y: auto;">
 
-      <div class="col-right">
-        <br><br><br>
-        <span style="font-weight: bold;">No.</span>
-        <input type="text" name="" class="input-lr-1">
-      </div>
-
-    </div>
-  </header>
-
-  <form>
-    <div>
-      The following terms and conditions are hereby incorporated in and made a part of the:
-      <input type="checkbox" checked disabled name="">
-      Purchase Agreement,
-      <input type="checkbox" disabled name="">
-      Residential Lease
-    </div>
-    <div>
-      or Month-to-Month Rental Agreement,
-      <input type="checkbox" disabled name="">
-      Transfer Disclosure Statement (Note: An amendment to the TDS may give the Buyer a right
-      to rescind),
-      <input type="checkbox" disabled name="">
-      Other
-      <input type="text" disabled name="" class="input-lr-2">,
-    </div>
-    <div>
-      dated
-      <input type="text" disabled name="" class="input-lr-3">
-      , on property known as
-      <input type="text" disabled name="" class="input-lr-4">
-    </div>
-    <input type="text" disabled name="" class="input-lr-5">
-    <div>
-      in which
-      <input type="text" disabled name="" class="input-lr-6">
-      is  referred  to  as ("Buyer/Tenant")
-    </div>
-    <div>
-      and
-      <input type="text" disabled name="" class="input-lr-7">
-      is referred to as ("Seller/Landlord").
-    </div>
-
-    <input type="text" disabled name="" class="input-lr-5">
-    <input type="text" disabled name="" class="input-lr-5">
-    <input type="text" disabled name="" class="input-lr-5">
-    <input type="text" disabled name="" class="input-lr-5">
-    <input type="text" disabled name="" class="input-lr-5">
-    <input type="text" disabled name="" class="input-lr-5">
-    <input type="text" disabled name="" class="input-lr-5">
-    <input type="text" disabled name="" class="input-lr-5">
-    <input type="text" disabled name="" class="input-lr-5">
-    <input type="text" disabled name="" class="input-lr-5">
-    <input type="text" disabled name="" class="input-lr-5">
-    <input type="text" disabled name="" class="input-lr-5">
-    <input type="text" disabled name="" class="input-lr-5">
-    <input type="text" disabled name="" class="input-lr-5">
-    <input type="text" disabled name="" class="input-lr-5">
-    <input type="text" disabled name="" class="input-lr-5">
-    <input type="text" disabled name="" class="input-lr-5">
-    <input type="text" disabled name="" class="input-lr-5">
-    <input type="text" disabled name="" class="input-lr-5">
-    <input type="text" disabled name="" class="input-lr-5">
-    <input type="text" disabled name="" class="input-lr-5">
-    <input type="text" disabled name="" class="input-lr-5">
-    <input type="text" disabled name="" class="input-lr-5">
-    <input type="text" disabled name="" class="input-lr-5">
-    <input type="text" disabled name="" class="input-lr-5">
-    <input type="text" disabled name="" class="input-lr-5">
-    <input type="text" disabled name="" class="input-lr-5">
-    <input type="text" disabled name="" class="input-lr-5">
-
-    <div>
-      <br>
-      The foregoing terms and conditions are hereby agreed to, and the undersigned acknowledge receipt of a copy of this document.
-    </div>
-    <br>
-    <div style="display: flex; justify-content: space-between">
-      <div>Date <input type="text" disabled name="" style="width: 477px;"></div>
-      <div>Date <input type="text" disabled name="" style="width: 494px;">&nbsp;&nbsp;&nbsp;</div>
-    </div>
-    <br>
-    <div style="display: flex; justify-content: space-between">
-      <div>Buyer/Tenant <input type="text" disabled name="" class="input-lr-9"></div>
-      <div>Seller/Landlord <input type="text" disabled name="" class="input-lr-9">&nbsp;&nbsp;&nbsp;</div>
-    </div>
-    <br>
-    <div style="display: flex; justify-content: space-between">
-      <div>Buyer/Tenant <input type="text" disabled name="" class="input-lr-9"></div>
-      <div>Seller/Landlord <input type="text" disabled name="" class="input-lr-9">&nbsp;&nbsp;&nbsp;</div>
-    </div>
-  </form>
-
-  <br><br>
-  <footer>
-    <div class="California-Association">
-      &#169;1986- 2015, California Association of REALTORS&#174;, Inc. United States copyright law (Title 17 U.S. Code) forbids the unauthorized distribution, display and reproduction of this
-      form, or any portion thereof, by photocopy machine or any other means, including facsimile or computerized formats.
-    </div>
-    <div style="font-size: 18px;">
-      THIS FORM HAS BEEN APPROVED BY THE CALIFORNIA ASSOCIATION OF REALTORS&#174; (C.A.R.). NO REPRESENTATION IS MADE AS TO THE LEGAL VALIDITY
-      OR ACCURACY OF ANY PROVISION IN ANY SPECIFIC TRANSACTION. A REAL ESTATE BROKER IS THE PERSON QUALIFIED TO ADVISE ON REAL ESTATE
-      TRANSACTIONS. IF YOU DESIRE LEGAL OR TAX ADVICE, CONSULT AN APPROPRIATE PROFESSIONAL.
-    </div>
-    <div style="font-size: 18px;">
-      This form is made available to real estate professionals through an agreement with or purchase from the California Association of REALTORS&#174;. It is not intended to identify the user as a REALTOR&#174;. REALTOR&#174; is a registered collective membership mark which may be used only by members of the NATIONAL ASSOCIATION OF REALTORS&#174; who subscribe to its Code of Ethics.
-    </div>
-
-    <div class="clearfix">
-      <img src="/assets/addendum/rebs-inc.png" width="70" height="90" class="rebs-inc">
-      <div class="Published">
-        <span class="font-size-16"> Published and Distributed by: </span>
+    <div class="container">
+      <header class="clearfix">
         <br>
-        REAL ESTATE BUSINESS SERVICES, INC.
+        <img src="/assets/addendum/logo1.png" width="350" height="120" class="image">
+        <div class="box clearfix">
+          <div class="col-left">
+            <br><br>
+            <div class="box-div-1">ADDENDUM</div>
+            <div class="box-div-2">(C.A.R. Form ADM, Revised 12/15)</div>
+          </div>
+
+          <div class="col-right">
+            <br><br><br>
+            <span style="font-weight: bold;">No.</span>
+            <input type="text" name="" class="input-lr-1">
+          </div>
+
+        </div>
+      </header>
+
+      <form>
+        <div>
+          The following terms and conditions are hereby incorporated in and made a part of the:
+          <input type="checkbox" checked disabled name="">
+          Purchase Agreement,
+          <input type="checkbox" disabled name="">
+          Residential Lease
+        </div>
+        <div>
+          or Month-to-Month Rental Agreement,
+          <input type="checkbox" disabled name="">
+          Transfer Disclosure Statement (Note: An amendment to the TDS may give the Buyer a right
+          to rescind),
+          <input type="checkbox" disabled name="">
+          Other
+          <input type="text" disabled name="" class="input-lr-2">,
+        </div>
+        <div>
+          dated
+          <input type="text" style="text-align: center" disabled name="" class="input-lr-3" [value]="doc.createdAt | date:'MMMM d, y'">
+          , on property known as
+          <input type="text" disabled name="" style="text-align: center" class="input-lr-4" [value]="transaction.offer.streetName">
+        </div>
+        <input type="text" disabled name="" style="text-align: center" class="input-lr-5" [value]="transaction.offer.city + ', ' + transaction.offer.state + ' ' + transaction.offer.zip">
+        <div>
+          in which
+          <input type="text" disabled name="" class="input-lr-6" [value]="buyers">
+          is  referred  to  as ("Buyer/Tenant")
+        </div>
+        <div>
+          and
+          <input type="text" disabled name="" class="input-lr-7" [value]="sellers">
+          is referred to as ("Seller/Landlord").
+        </div>
+
+        <span class="fake-line">{{terms}}</span>
+
+        <div>
+          <br>
+          The foregoing terms and conditions are hereby agreed to, and the undersigned acknowledge receipt of a copy of this document.
+        </div>
         <br>
-        <div>a subsidiary of the CALIFORNIA ASSOCIATION OF REALTORS&#174;</div>
-        <div>525 South Virgil Avenue, Los Angeles, California 90020</div>
-      </div>
-      <img src="/assets/addendum/housing.png"  width="80" height="70" class="housing">
+        <div style="display: flex; justify-content: space-between">
+          <div>Date <input type="text" disabled name="" style="width: 477px;"></div>
+          <div>Date <input type="text" disabled name="" style="width: 494px;">&nbsp;&nbsp;&nbsp;</div>
+        </div>
+        <br>
+        <div style="display: flex; justify-content: space-between">
+          <div>
+            <ng-container *ngFor="let user of transaction.offer.buyers; let last = last;">
+              <div>Buyer/Tenant <app-signature-box class="signature-box" [user]="user"></app-signature-box></div>
+              <br *ngIf="!last">
+            </ng-container>
+          </div>
+          <div>
+            <ng-container *ngFor="let user of transaction.offer.sellers; let last = last;">
+              <div>Seller/Landlord <app-signature-box class="signature-box" [user]="user"></app-signature-box>&nbsp;&nbsp;&nbsp;</div>
+              <br *ngIf="!last">
+            </ng-container>
+          </div>
+        </div>
+      </form>
+
+      <br><br>
+      <footer>
+        <div class="California-Association">
+          &#169;1986- {{currentYear}}, California Association of REALTORS&#174;, Inc. United States copyright law (Title 17 U.S. Code) forbids the unauthorized distribution, display and reproduction of this
+          form, or any portion thereof, by photocopy machine or any other means, including facsimile or computerized formats.
+        </div>
+        <div style="font-size: 18px;">
+          THIS FORM HAS BEEN APPROVED BY THE CALIFORNIA ASSOCIATION OF REALTORS&#174; (C.A.R.). NO REPRESENTATION IS MADE AS TO THE LEGAL VALIDITY
+          OR ACCURACY OF ANY PROVISION IN ANY SPECIFIC TRANSACTION. A REAL ESTATE BROKER IS THE PERSON QUALIFIED TO ADVISE ON REAL ESTATE
+          TRANSACTIONS. IF YOU DESIRE LEGAL OR TAX ADVICE, CONSULT AN APPROPRIATE PROFESSIONAL.
+        </div>
+        <div style="font-size: 18px;">
+          This form is made available to real estate professionals through an agreement with or purchase from the California Association of REALTORS&#174;. It is not intended to identify the user as a REALTOR&#174;. REALTOR&#174; is a registered collective membership mark which may be used only by members of the NATIONAL ASSOCIATION OF REALTORS&#174; who subscribe to its Code of Ethics.
+        </div>
+
+        <div class="clearfix">
+          <img src="/assets/addendum/rebs-inc.png" width="70" height="90" class="rebs-inc">
+          <div class="Published">
+            <span class="font-size-16"> Published and Distributed by: </span>
+            <br>
+            REAL ESTATE BUSINESS SERVICES, INC.
+            <br>
+            <div>a subsidiary of the CALIFORNIA ASSOCIATION OF REALTORS&#174;</div>
+            <div>525 South Virgil Avenue, Los Angeles, California 90020</div>
+          </div>
+          <img src="/assets/addendum/housing.png"  width="80" height="70" class="housing">
+        </div>
+
+        <div class="font-weight-bold font-size-22">ADM REVISED 12/15 (PAGE 1 OF 1)</div>
+        <div class="font-weight-bold text-center font-size-22">ADDENDUM (ADM PAGE 1 OF 1)</div>
+
+        <div class="border-dark">
+          <div>
+            <span class="font-weight-bold">
+              Bret Pfeifer 2512 Artesia Blvd ste 250G Redondo Beach, CA 90278
+            </span>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
+            <span>
+              Phone:<span class="font-weight-bold">3105250619</span>
+            </span>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            <span>
+              Fax:<span class="font-weight-bold">3108461456</span>
+            </span>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
+            <span class="font-weight-bold">
+              REO
+            </span>
+          </div>
+          <div>
+            <span class="font-weight-bold">
+              Bret Pfeifer
+            </span>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
+            <span>
+              Produced with zipForm &#174; by zipLogix 18070 Fifteen Mile Road, Fraser, Michigan 48026 <a href="www.zipLogix.com">www.zipLogix.com</a>
+            </span>
+          </div>
+        </div>
+      </footer>
     </div>
 
-    <div class="font-weight-bold font-size-22">ADM REVISED 12/15 (PAGE 1 OF 1)</div>
-    <div class="font-weight-bold text-center font-size-22">ADDENDUM (ADM PAGE 1 OF 1)</div>
-
-    <div class="border-dark">
-      <div>
-        <span class="font-weight-bold">
-          Bret Pfeifer 2512 Artesia Blvd ste 250G Redondo Beach, CA 90278
-        </span>
-        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
-        <span>
-          Phone:<span class="font-weight-bold">3105250619</span>
-        </span>
-        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-        <span>
-          Fax:<span class="font-weight-bold">3108461456</span>
-        </span>
-        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
-        <span class="font-weight-bold">
-          REO
-        </span>
-      </div>
-      <div>
-        <span class="font-weight-bold">
-          Bret Pfeifer
-        </span>
-        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
-        <span>
-          Produced with zipForm &#174; by zipLogix 18070 Fifteen Mile Road, Fraser, Michigan 48026 <a href="www.zipLogix.com">www.zipLogix.com</a>
-        </span>
-      </div>
-    </div>
-  </footer>
-</div>
+    <button mat-flat-button
+            appDebounceClick
+            [disabled]="!this.signEnabled"
+            (debounceClick)="signAnAgreement()"
+            color="primary"
+            style="float: right; margin: 20px;">
+      SIGN
+    </button>
+  </div>
+</app-base-template>

@@ -24,6 +24,7 @@ export interface GeneratedDocument {
   allowEdit: boolean;
   transaction: number;
   documentData?: SpqDocumentData | AddendumData;
+  createdAt: string;
   /** @deprecated */
   checked: boolean;
 }
