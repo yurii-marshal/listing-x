@@ -32,7 +32,6 @@ export class SignatureBoxComponent implements OnInit {
 
   get isCurrentUser(): boolean {
     const currentUser: User = this.authService.currentUser;
-    console.log(currentUser);
     if (!currentUser) {
       return false;
     }

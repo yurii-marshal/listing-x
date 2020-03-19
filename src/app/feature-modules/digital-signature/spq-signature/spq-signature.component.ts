@@ -10,7 +10,6 @@ import {merge, Observable} from 'rxjs';
 import {FinishSigningDialogComponent} from '../dialogs/finish-signing-dialog/finish-signing-dialog.component';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatDialog} from '@angular/material/dialog';
-import {GeneratedDocumentType} from '../../../core-modules/enums/upload-document-type';
 
 @Component({
   selector: 'app-spq-signature',

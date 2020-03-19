@@ -258,5 +258,14 @@
       </footer>
     </div>
     <br><br>
+
+    <button mat-flat-button
+            appDebounceClick
+            [disabled]="!this.signEnabled"
+            (debounceClick)="signAnAgreement()"
+            color="primary"
+            style="float: right; margin: 20px;">
+      SIGN
+    </button>
   </div>
 </app-base-template>
