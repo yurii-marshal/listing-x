@@ -3,10 +3,15 @@ AWS_CLI_PROFILE:=
 # default value is empty in order to use the command from bitbucket pipeline
 # to activate preset profile use AWS_CLI_PROFILE="--profile test"
 
+# define build_app
+#     npm install
+#     npm install -g @angular/cli@8.2.1
+#     ng build --prod --output-path=dist
+# endef
+
 define build_app
-    npm install
-    npm install -g @angular/cli@8.2.1
-    ng build --prod --output-path=dist
+  npm install
+  npm run build
 endef
 
 define deploy_app

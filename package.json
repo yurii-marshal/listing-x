@@ -9,6 +9,7 @@
     "start": "node server.js",
     "serve": "ng serve --aot",
     "build": "ng build --prod",
+    "build:prod": "ng build --prod --output-path=dist",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
