@@ -160,6 +160,9 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
 
     const trigger: HTMLAnchorElement = document.createElement('a');
     if (typeof file  === 'string') {
+      if (file.startsWith('/')) {
+        file = `${window.location.origin}${file}`;
+      }
       trigger.href = trigger.download = file;
     } else {
       trigger.href = file.file;
