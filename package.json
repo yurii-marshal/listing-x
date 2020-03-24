@@ -9,7 +9,7 @@
     "start": "node server.js",
     "serve": "ng serve --aot",
     "build": "ng build --prod",
-    "build:prod": "ng build --prod --output-path=dist",
+    "build:production": "ng build --prod --output-path=dist",
     "build:develop": "ng build --prod --output-path=dist",
     "test": "ng test",
     "lint": "ng lint",
