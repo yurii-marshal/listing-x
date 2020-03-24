@@ -50,7 +50,7 @@
         </div>
         <div>
           dated
-          <input type="text" style="text-align: center" disabled name="" class="input-lr-3" [value]="doc.createdAt | date:'MMMM d, y'">
+          <input type="text" style="text-align: center" disabled name="" class="input-lr-3">
           , on property known as
           <input type="text" disabled name="" style="text-align: center" class="input-lr-4" [value]="transaction.offer.streetName">
         </div>
@@ -74,8 +74,8 @@
         </div>
         <br>
         <div style="display: flex; justify-content: space-between">
-          <div>Date <input type="text" disabled name="" style="width: 477px;"></div>
-          <div>Date <input type="text" disabled name="" style="width: 494px;">&nbsp;&nbsp;&nbsp;</div>
+          <div>Date <input type="text" disabled name="" style="width: 477px;" [value]="doc.createdAt | date:'MMMM d, y'"></div>
+          <div>Date <input type="text" disabled name="" style="width: 494px;" [value]="doc.createdAt | date:'MMMM d, y'">&nbsp;&nbsp;&nbsp;</div>
         </div>
         <br>
         <div style="display: flex; justify-content: space-between">
