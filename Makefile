@@ -11,7 +11,7 @@ AWS_CLI_PROFILE:=
 
 define build_app
   npm install
-  npm run build:build
+  npm run build:$(1)
 endef
 
 define deploy_app
