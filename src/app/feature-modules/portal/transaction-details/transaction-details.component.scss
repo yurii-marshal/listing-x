@@ -150,6 +150,11 @@ $blue: rgba(2, 136, 209, 0.9);
       cursor: pointer;
     }
   }
+
+  .doc-events {
+    width: 250px;
+    padding: 0 10px;
+  }
 }
 
 .doc-item {
@@ -166,6 +171,8 @@ $blue: rgba(2, 136, 209, 0.9);
   .doc-title {
     display: flex;
     align-items: center;
+    max-width: 260px;
+    min-width: 260px;
 
     img {
       margin-right: 5px;
@@ -179,6 +186,7 @@ $blue: rgba(2, 136, 209, 0.9);
   .doc-actions {
     display: flex;
     align-items: center;
+    min-width: 171px;
     button {
       margin: 0 22px 0 17px;
     }

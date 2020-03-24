@@ -127,7 +127,10 @@
         <div class="row-layout doc-item" *ngFor="let doc of (pendingDocuments | async); let i = index;">
           <label>document #{{i + 1}}</label>
           <div class="doc-title"><img src="assets/images/icons/{{ doc.extension }}.svg" [title]="doc.title" height="20"> {{doc.title}}.{{doc.extension}}</div>
-          <div class="doc-events"></div>
+          <div class="doc-events">
+            <label>{{ doc.lastEvent?.createdAt | date: 'short' }}</label>
+            <span>{{ doc.lastEvent?.title }}</span>
+          </div>
           <div class="doc-status">Status: <strong [ngClass]="doc.status">{{doc.status}}</strong></div>
           <div class="doc-actions">Actions:
             <button
