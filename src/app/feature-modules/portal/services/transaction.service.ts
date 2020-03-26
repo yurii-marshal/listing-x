@@ -36,7 +36,9 @@ export class TransactionService extends BaseDataService<Transaction> {
 
   documentOpenedEvent(id: number): Observable<any> {
     const url = `${ApiEndpoint.Transactions}${id}/pdf`;
-    return this.http.post(url, null);
+    return this.http.post(url, null).pipe(
+      tap(() => this.transactionChanged.next())
+    );
   }
 
   inviteUser(transactionId: number, email: string): Observable<void> {

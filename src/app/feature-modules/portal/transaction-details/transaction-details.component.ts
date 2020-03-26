@@ -4,7 +4,7 @@ import {TransactionService} from '../services/transaction.service';
 import {CalendarEvent, Transaction, TransactionStatus} from '../../../core-modules/models/transaction';
 import {FormControl, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material';
-import {flatMap, map, takeUntil} from 'rxjs/operators';
+import { flatMap, map, takeUntil, tap } from 'rxjs/operators';
 import {CalendarView} from '../../../shared-modules/components/calendar/calendar.component';
 import {AddendumData, Document, GeneratedDocument} from '../../../core-modules/models/document';
 import {AuthService} from '../../../core-modules/core-services/auth.service';
@@ -147,27 +147,29 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
       });
   }
 
-  downloadAndToggleState(file: string | Document) {
+  /*downloadAndToggleState(file: string | Document) {
     const id: number = Number(this.route.snapshot.params.id);
     this.transactionService.toggleState(id).subscribe();
     this.triggerDownloadFile(file);
-  }
+  }*/
 
-  triggerDownloadFile(file: string | Document) {
-    /* TODO: UPDATE REQUEST DATA */
-    const transactionId: number = Number(this.route.snapshot.params.id);
-    this.transactionService.documentOpenedEvent(transactionId).subscribe();
+  triggerDownloadFile(doc: GeneratedDocument | Document) {
+    this.transactionService.documentOpenedEvent(doc.id).subscribe();
+
+    let {file, title} = doc;
 
     const trigger: HTMLAnchorElement = document.createElement('a');
-    if (typeof file  === 'string') {
-      if (file.startsWith('/')) {
-        file = `${window.location.origin}${file}`;
+    if (file.startsWith('/')) {
+      let {origin} = window.location;
+
+      if (origin.includes(':4200')) {
+        origin = origin.replace(':4200', ':8000');
       }
-      trigger.href = trigger.download = file;
-    } else {
-      trigger.href = file.file;
-      trigger.download = file.title;
+
+      file = `${origin}${file}`;
     }
+    trigger.href = file;
+    trigger.download = title;
     trigger.target = '_blank';
     trigger.click();
   }

@@ -101,10 +101,10 @@
           <div class="doc-status">Status: <strong [ngClass]="doc.status">{{doc.status}}</strong></div>
           <div class="doc-actions">Actions:
 
-            <span class="action-icon" (click)="triggerDownloadFile(doc.file)">
+            <span class="action-icon" (click)="triggerDownloadFile(doc)">
               <ng-container *ngTemplateOutlet="viewIcon"></ng-container>
             </span>
-            <span class="action-icon" (click)="triggerDownloadFile(doc.file)">
+            <span class="action-icon" (click)="triggerDownloadFile(doc)">
               <ng-container *ngTemplateOutlet="downloadIcon"></ng-container>
             </span>
           </div>
@@ -162,8 +162,8 @@
                       [disabled]="!doc.allowEdit"
                       (click)="openAddendumDialog(doc)"
               >Edit</button>
-              <button mat-menu-item (click)="triggerDownloadFile(doc.file)">View</button>
-              <button mat-menu-item (click)="triggerDownloadFile(doc.file)">Download</button>
+              <button mat-menu-item (click)="triggerDownloadFile(doc)">View</button>
+              <button mat-menu-item (click)="triggerDownloadFile(doc)">Download</button>
               <button mat-menu-item disabled>Deny</button>
             </mat-menu>
           </div>
@@ -205,7 +205,7 @@
 
     <div class="calendar-container">
       <h2 class="u-flex u-flex-justify--center">Calendar</h2>
-      <lis-calendar [dataSource]="calendarDataSource" [defaultView]="CalendarView.Week"></lis-calendar>
+      <lis-calendar [dataSource]="calendarDataSource"></lis-calendar>
     </div>
   </ng-container>
 </app-base-template>
