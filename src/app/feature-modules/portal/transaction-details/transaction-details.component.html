@@ -113,18 +113,19 @@
         <div class="row-layout new-section">
           <label class="header">Documents pending approval</label>
 
-          <!-- TODO: enable, when residential agreement becomes completed -->
-          <button
-            mat-flat-button
-            type="button"
-            color="primary"
-            class="button-sm"
-            [matMenuTriggerFor]="docs"
-            [disabled]="!isResidentialAgreementCompleted"
-          >ADD DOCUMENT</button>
-          <mat-menu #docs="matMenu" xPosition="before">
-            <button mat-menu-item (click)="openAddendumDialog()">Addendum</button>
-          </mat-menu>
+          <ng-container *ngIf="isModerator">
+            <button
+              mat-flat-button
+              type="button"
+              color="primary"
+              class="button-sm"
+              [matMenuTriggerFor]="docs"
+              [disabled]="!isResidentialAgreementCompleted"
+            >ADD DOCUMENT</button>
+            <mat-menu #docs="matMenu" xPosition="before">
+              <button mat-menu-item (click)="openAddendumDialog()">Addendum</button>
+            </mat-menu>
+          </ng-container>
         </div>
 
         <div class="row-layout doc-item" *ngFor="let doc of (pendingDocuments | async); let i = index;">
@@ -157,7 +158,7 @@
                       (click)="openSPQDialog(doc)"
               >Edit</button>
 
-              <button *ngIf="doc.documentType === 'addendum'"
+              <button *ngIf="doc.documentType === 'addendum' && isModerator"
                       mat-menu-item
                       [disabled]="!doc.allowEdit"
                       (click)="openAddendumDialog(doc)"
