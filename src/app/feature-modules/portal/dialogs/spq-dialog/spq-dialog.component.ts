@@ -17,6 +17,10 @@ export class SpqDialogComponent {
   form: FormGroup;
   isConfirmMode: boolean = false;
 
+  get explanationControl() {
+    return this.form.get('explanation');
+  }
+
   get answers() {
     return this.form.get('questions') as FormArray;
   }
@@ -35,7 +39,7 @@ export class SpqDialogComponent {
 
     this.form = this.fb.group({
       questions: this.fb.array(initialAnswers),
-      explanation: [data.explanation || '']
+      explanation: [data.explanation || '', Validators.maxLength(2000)]
     });
   }
 

@@ -61,4 +61,15 @@ textarea {
   box-sizing: border-box;
   border-radius: 4px;
   padding: 15px;
+
+  &.ng-invalid {
+    border-color: #c85578;
+  }
+}
+
+.mat-hint,
+.mat-error {
+  padding-top: 5px;
+  padding-left: 10px;
+  font-size: 11px;
 }

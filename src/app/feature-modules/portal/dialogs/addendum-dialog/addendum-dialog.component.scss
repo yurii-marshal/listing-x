@@ -3,4 +3,17 @@
 
 textarea {
   height: 157px;
+
+  &.ng-invalid {
+    border-color: #c85578;
+  }
+}
+
+.mat-hint,
+.mat-error {
+  display: block;
+  margin-top: -30px;
+  padding-top: 5px;
+  padding-left: 10px;
+  font-size: 11px;
 }
