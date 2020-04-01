@@ -24,7 +24,7 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.service.requestNewPassword(this.form.get('email').value)
+    this.service.requestNewPassword(this.form.get('email').value.toLowerCase())
       .pipe(
         tap({error: err => this.form.get('email').setErrors({emailnotfound: true})})
       )
