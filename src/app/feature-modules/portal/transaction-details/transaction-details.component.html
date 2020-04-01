@@ -152,6 +152,12 @@
             </svg>
 
             <mat-menu #menu="matMenu" xPosition="before">
+              <button *ngIf="doc.documentType === 'contract' && isModerator && !isSeller"
+                      mat-menu-item
+                      [disabled]="!doc.allowEdit"
+                      routerLink="/portal/offer/{{ transaction.offer.id }}"
+              >Edit</button>
+
               <button *ngIf="doc.documentType === 'spq'"
                       mat-menu-item
                       [disabled]="!doc.allowEdit"
