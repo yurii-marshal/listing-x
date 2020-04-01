@@ -78,5 +78,5 @@
     (debounceClick)="finish()"
     color="primary"
     [disabled]="form.invalid"
-  >FINISH</button>
+  >{{data.signAfterFill ? 'SIGN' : 'FINISH'}}</button>
 </div>
