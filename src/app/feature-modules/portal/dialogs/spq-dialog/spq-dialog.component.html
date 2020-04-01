@@ -32,18 +32,22 @@
     </div>
 
     <h5>EXPLANATION:</h5>
-    <textarea
-      *ngIf="!isConfirmMode"
-      matInput
-      formControlName="explanation"
-      placeholder="Your explanation here..."
-    ></textarea>
-    <mat-hint *ngIf="!explanationControl.hasError('maxlength')">
-      Left {{2000 - explanationControl.value.length}} of 2000 symbols.
-    </mat-hint>
-    <mat-error *ngIf="explanationControl.hasError('maxlength')">
-      Max length is {{explanationControl.errors.maxlength.requiredLength}}, but you typed {{explanationControl.errors.maxlength.actualLength}} symbols.
-    </mat-error>
+    <ng-container  *ngIf="!isConfirmMode">
+      <textarea
+        matInput
+        formControlName="explanation"
+        placeholder="Your explanation here..."
+      ></textarea>
+      <mat-hint *ngIf="explanationControl.valid">
+        Left {{2000 - explanationControl.value.length}} of 2000 symbols.
+      </mat-hint>
+      <mat-error *ngIf="explanationControl.hasError('required')">
+        This field is required.
+      </mat-error>
+      <mat-error *ngIf="explanationControl.hasError('maxlength')">
+        Max length is {{explanationControl.errors.maxlength.requiredLength}}, but you typed {{explanationControl.errors.maxlength.actualLength}} symbols.
+      </mat-error>
+    </ng-container>
 
     <div class="explanation-text" *ngIf="isConfirmMode">
       {{form.value.explanation || 'Without explanation'}}

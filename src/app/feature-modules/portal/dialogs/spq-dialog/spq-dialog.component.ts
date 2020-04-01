@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import { AfterViewInit, Component, Inject } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {SpqQuestion} from '../../../../core-modules/models/spq-question';
 import {Observable, of} from 'rxjs';
@@ -12,7 +12,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   templateUrl: './spq-dialog.component.html',
   styleUrls: ['./spq-dialog.component.scss']
 })
-export class SpqDialogComponent {
+export class SpqDialogComponent implements AfterViewInit {
   questionsStream: Observable<SpqQuestion[]>;
   form: FormGroup;
   isConfirmMode: boolean = false;
@@ -40,6 +40,19 @@ export class SpqDialogComponent {
     this.form = this.fb.group({
       questions: this.fb.array(initialAnswers),
       explanation: [data.explanation || '', Validators.maxLength(2000)]
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.answers.valueChanges.subscribe((answers) => {
+      const hasYesAnswer = answers.some((a) => a.answer);
+      const validators = [Validators.maxLength(2000)];
+      if (hasYesAnswer) {
+        validators.push(Validators.required);
+      }
+
+      this.explanationControl.setValidators(validators);
+      this.explanationControl.updateValueAndValidity();
     });
   }
 
