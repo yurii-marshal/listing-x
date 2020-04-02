@@ -20,11 +20,7 @@
       <mat-hint *ngIf="termsControl.valid">
         Left {{2000 - termsControl.value.length}} of 2000 symbols.
       </mat-hint>
-
-      <mat-error *ngIf="termsControl.hasError('required')">This field is required.</mat-error>
-      <mat-error *ngIf="termsControl.hasError('maxlength')">
-        Max length is {{termsControl.errors.maxlength.requiredLength}}, but you typed {{termsControl.errors.maxlength.actualLength}} symbols.
-      </mat-error>
+      <app-form-validation-error [baseControl]="termsControl"></app-form-validation-error>
     </div>
   </form>
 </div>
