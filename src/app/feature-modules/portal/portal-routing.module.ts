@@ -66,7 +66,7 @@ const routes: Routes = [
         component: DialogsWrapperComponent,
         data: {
           component: WriteOfferUploadDocumentsDialogComponent,
-          modalType: UploadDocsModalType.Upload,
+          modalType: UploadDocsModalType.Upload
           // readonly: true
         },
       }
@@ -81,7 +81,8 @@ const routes: Routes = [
         component: DialogsWrapperComponent,
         data: {
           component: WriteOfferUploadDocumentsDialogComponent,
-          modalType: UploadDocsModalType.OfferUpdating
+          modalType: UploadDocsModalType.OfferUpdating,
+          transactionPage: true
         },
         resolve: { model:  OfferDocumentsResolver}
       }

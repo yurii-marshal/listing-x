@@ -32,7 +32,7 @@ export class WriteOfferUploadDocumentsDialogComponent implements OnInit {
               private formBuilder: FormBuilder,
               private router: Router,
               public dialogRef: MatDialogRef<WriteOfferUploadDocumentsDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: {model: LinkedDocuments, modalType: UploadDocsModalType}) { }
+              @Inject(MAT_DIALOG_DATA) public data: {model: LinkedDocuments, modalType: UploadDocsModalType, transactionPage: boolean}) {}
 
   ngOnInit(): void {
     const disabled = this.data.modalType === UploadDocsModalType.Upload;
