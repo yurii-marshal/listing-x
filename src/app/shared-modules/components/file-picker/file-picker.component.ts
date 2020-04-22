@@ -46,6 +46,9 @@ export class FilePickerComponent implements OnInit, AfterViewInit, ControlValueA
   @Input()
   type: UploadDocumentType;
 
+  @Input()
+  offerId: number = null;
+
   @ViewChildren(FileOption)
   options: QueryList<FileOption>;
 
@@ -139,7 +142,7 @@ export class FilePickerComponent implements OnInit, AfterViewInit, ControlValueA
 
 
   private reloadFilesList() {
-    this.service.loadListDocumentsByType(this.type)
+    this.service.loadListDocumentsByType(this.type, this.offerId)
       .subscribe(docs => {
         this.dataSource = docs;
         this.preselect();

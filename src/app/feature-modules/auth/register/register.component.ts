@@ -32,7 +32,10 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    const user: User = this.form.value;
+    const user: User = {
+      ...this.form.value,
+      email: this.form.value.email.toLowerCase()
+    };
     this.service.register(user)
       .pipe(
         tap({error: err => this.form.get('email').setErrors({uniqemail: true})})

@@ -32,12 +32,22 @@
     </div>
 
     <h5>EXPLANATION:</h5>
-    <textarea
-      *ngIf="!isConfirmMode"
-      matInput
-      formControlName="explanation"
-      placeholder="Your explanation here..."
-    ></textarea>
+    <ng-container  *ngIf="!isConfirmMode">
+      <textarea
+        matInput
+        formControlName="explanation"
+        placeholder="Your explanation here..."
+      ></textarea>
+      <mat-hint *ngIf="explanationControl.valid">
+        Left {{2000 - explanationControl.value.length}} of 2000 symbols.
+      </mat-hint>
+      <mat-error *ngIf="explanationControl.hasError('required')">
+        This field is required.
+      </mat-error>
+      <mat-error *ngIf="explanationControl.hasError('maxlength')">
+        Max length is {{explanationControl.errors.maxlength.requiredLength}}, but you typed {{explanationControl.errors.maxlength.actualLength}} symbols.
+      </mat-error>
+    </ng-container>
 
     <div class="explanation-text" *ngIf="isConfirmMode">
       {{form.value.explanation || 'Without explanation'}}
@@ -45,22 +55,28 @@
   </form>
 </div>
 
-<div mat-dialog-actions class="fieldset u-flex u-flex-justify--end u-flex-align-items--center button-bar">
+<div *ngIf="!isConfirmMode" mat-dialog-actions class="fieldset u-flex u-flex-justify--end u-flex-align-items--center button-bar">
   <button
-    *ngIf="!isConfirmMode"
     mat-flat-button
     appDebounceClick
     (debounceClick)="confirm()"
     color="primary"
     [disabled]="form.invalid"
   >CONTINUE</button>
+</div>
+
+<div *ngIf="isConfirmMode" mat-dialog-actions class="fieldset u-flex u-flex-justify--space-between u-flex-align-items--center button-bar">
+  <button
+    mat-stroked-button
+    color="primary"
+    (click)="isConfirmMode = false"
+  >BACK</button>
 
   <button
-    *ngIf="isConfirmMode"
     mat-flat-button
     appDebounceClick
     (debounceClick)="finish()"
     color="primary"
     [disabled]="form.invalid"
-  >FINISH</button>
+  >{{data.signAfterFill ? 'SIGN' : 'FINISH'}}</button>
 </div>

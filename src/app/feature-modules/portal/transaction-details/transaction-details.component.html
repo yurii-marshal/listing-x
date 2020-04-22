@@ -94,14 +94,17 @@
         <div class="row-layout doc-item" *ngFor="let doc of (completedDocuments | async); let i = index;">
           <label>document #{{i + 1}}</label>
           <div class="doc-title"><img src="assets/images/icons/{{ doc.extension }}.svg" [title]="doc.title" height="20"> {{doc.title}}.{{doc.extension}}</div>
-          <div class="doc-events"></div>
+          <div class="doc-events">
+            <label>{{ doc.lastEvent?.createdAt | date: 'short' }}</label>
+            <span>{{ doc.lastEvent?.title }}</span>
+          </div>
           <div class="doc-status">Status: <strong [ngClass]="doc.status">{{doc.status}}</strong></div>
           <div class="doc-actions">Actions:
 
-            <span class="action-icon" (click)="triggerDownloadFile(doc.file)">
+            <span class="action-icon" (click)="triggerDownloadFile(doc)">
               <ng-container *ngTemplateOutlet="viewIcon"></ng-container>
             </span>
-            <span class="action-icon" (click)="triggerDownloadFile(doc.file)">
+            <span class="action-icon" (click)="triggerDownloadFile(doc)">
               <ng-container *ngTemplateOutlet="downloadIcon"></ng-container>
             </span>
           </div>
@@ -110,18 +113,19 @@
         <div class="row-layout new-section">
           <label class="header">Documents pending approval</label>
 
-          <!-- TODO: enable, when residential agreement becomes completed -->
-          <button
-            mat-flat-button
-            type="button"
-            color="primary"
-            class="button-sm"
-            [matMenuTriggerFor]="docs"
-            [disabled]="!isResidentialAgreementCompleted"
-          >ADD DOCUMENT</button>
-          <mat-menu #docs="matMenu" xPosition="before">
-            <button mat-menu-item (click)="openAddendumDialog()">Addendum</button>
-          </mat-menu>
+          <ng-container *ngIf="isModerator">
+            <button
+              mat-flat-button
+              type="button"
+              color="primary"
+              class="button-sm"
+              [matMenuTriggerFor]="docs"
+              [disabled]="!isResidentialAgreementCompleted"
+            >ADD DOCUMENT</button>
+            <mat-menu #docs="matMenu" xPosition="before">
+              <button mat-menu-item (click)="openAddendumDialog()">Addendum</button>
+            </mat-menu>
+          </ng-container>
         </div>
 
         <div class="row-layout doc-item" *ngFor="let doc of (pendingDocuments | async); let i = index;">
@@ -148,10 +152,25 @@
             </svg>
 
             <mat-menu #menu="matMenu" xPosition="before">
-              <button *ngIf="doc.documentType === 'spq'" mat-menu-item [disabled]="!doc.allowEdit" (click)="openSPQDialog(doc)">Edit</button>
-              <button *ngIf="doc.documentType === 'addendum'" mat-menu-item (click)="openAddendumDialog(doc)">Edit</button>
-              <button mat-menu-item (click)="triggerDownloadFile(doc.file)">View</button>
-              <button mat-menu-item (click)="triggerDownloadFile(doc.file)">Download</button>
+              <button *ngIf="doc.documentType === 'contract' && isModerator && !isSeller"
+                      mat-menu-item
+                      [disabled]="!doc.allowEdit"
+                      routerLink="/portal/offer/{{ transaction.offer.id }}"
+              >Edit</button>
+
+              <button *ngIf="doc.documentType === 'spq'"
+                      mat-menu-item
+                      [disabled]="!doc.allowEdit"
+                      (click)="openSPQDialog(doc)"
+              >Edit</button>
+
+              <button *ngIf="doc.documentType === 'addendum' && isModerator"
+                      mat-menu-item
+                      [disabled]="!doc.allowEdit"
+                      (click)="openAddendumDialog(doc)"
+              >Edit</button>
+              <button mat-menu-item (click)="triggerDownloadFile(doc)">View</button>
+              <button mat-menu-item (click)="triggerDownloadFile(doc)">Download</button>
               <button mat-menu-item disabled>Deny</button>
             </mat-menu>
           </div>
@@ -193,7 +212,7 @@
 
     <div class="calendar-container">
       <h2 class="u-flex u-flex-justify--center">Calendar</h2>
-      <lis-calendar [dataSource]="calendarDataSource" [defaultView]="CalendarView.Week"></lis-calendar>
+      <lis-calendar [dataSource]="calendarDataSource"></lis-calendar>
     </div>
   </ng-container>
 </app-base-template>

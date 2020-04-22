@@ -34,7 +34,12 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     const url = this.redirectUrl;
-    this.service.login(this.form.value)
+    const data = {
+      ...this.form.value,
+      email: this.form.value.email.toLowerCase()
+    };
+
+    this.service.login(data)
       .subscribe(() => this.router.navigateByUrl(url));
   }
 

@@ -14,6 +14,10 @@ export class AddendumDialogComponent {
   form: FormGroup;
   isEdit: boolean = false;
 
+  get termsControl() {
+    return this.form.get('terms');
+  }
+
   constructor(
     private fb: FormBuilder,
     private transactionService: TransactionService,
@@ -22,8 +26,8 @@ export class AddendumDialogComponent {
   ) {
     this.isEdit = !!data.docData;
     this.form = this.fb.group({
-      addendumName: [this.isEdit ? data.docData.addendumName : '', Validators.required],
-      terms: [this.isEdit ? data.docData.terms : '', Validators.required]
+      addendumName: [this.isEdit ? data.docData.addendumName : '', [Validators.required, Validators.maxLength(255)]],
+      terms: [this.isEdit ? data.docData.terms : '', [Validators.required, Validators.maxLength(2000)]]
     });
   }
 

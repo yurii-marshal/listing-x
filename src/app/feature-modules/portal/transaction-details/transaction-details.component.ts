@@ -1,20 +1,20 @@
-import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {TransactionService} from '../services/transaction.service';
-import {CalendarEvent, Transaction, TransactionStatus} from '../../../core-modules/models/transaction';
-import {FormControl, Validators} from '@angular/forms';
-import {MatSnackBar} from '@angular/material';
-import {flatMap, map, takeUntil} from 'rxjs/operators';
-import {CalendarView} from '../../../shared-modules/components/calendar/calendar.component';
-import {AddendumData, Document, GeneratedDocument} from '../../../core-modules/models/document';
-import {AuthService} from '../../../core-modules/core-services/auth.service';
-import {Observable, of, Subject} from 'rxjs';
-import {DocumentStatus} from '../../../core-modules/enums/document-status';
-import {Person} from '../../../core-modules/models/offer';
-import {GeneratedDocumentType} from '../../../core-modules/enums/upload-document-type';
-import {MatDialog} from '@angular/material/dialog';
-import {SpqDialogComponent} from '../dialogs/spq-dialog/spq-dialog.component';
-import {AddendumDialogComponent} from '../dialogs/addendum-dialog/addendum-dialog.component';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TransactionService } from '../services/transaction.service';
+import { CalendarEvent, Transaction, TransactionStatus } from '../../../core-modules/models/transaction';
+import { FormControl, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
+import { flatMap, map, takeUntil } from 'rxjs/operators';
+import { CalendarView } from '../../../shared-modules/components/calendar/calendar.component';
+import { AddendumData, Document, GeneratedDocument } from '../../../core-modules/models/document';
+import { AuthService } from '../../../core-modules/core-services/auth.service';
+import { Observable, of, Subject } from 'rxjs';
+import { DocumentStatus } from '../../../core-modules/enums/document-status';
+import { Person } from '../../../core-modules/models/offer';
+import { GeneratedDocumentType } from '../../../core-modules/enums/upload-document-type';
+import { MatDialog } from '@angular/material/dialog';
+import { SpqDialogComponent } from '../dialogs/spq-dialog/spq-dialog.component';
+import { AddendumDialogComponent } from '../dialogs/addendum-dialog/addendum-dialog.component';
 
 @Component({
   selector: 'app-transaction-details',
@@ -31,8 +31,6 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
   isResidentialAgreementCompleted: boolean = false;
 
   userEmailControl: FormControl = new FormControl(null, [Validators.required, Validators.email]);
-
-  CalendarView = CalendarView;
 
   isModerator: boolean = false;
   isSeller: boolean = false;
@@ -133,6 +131,11 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
       [GeneratedDocumentType.Addendum]: '/e-sign/addendum'
     }[doc.documentType];
 
+    if (doc.documentType === GeneratedDocumentType.Spq && !this.isModerator && this.isSeller) {
+      this.openSPQDialog(doc, true);
+      return;
+    }
+
     this.router.navigate([url, doc.id]);
     // this.transactionService.lockOffer(this.transaction.id)
     //   .subscribe(() => this.router.navigate(['/e-sign', this.transaction.id]));
@@ -147,27 +150,29 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
       });
   }
 
-  downloadAndToggleState(file: string | Document) {
+  /*downloadAndToggleState(file: string | Document) {
     const id: number = Number(this.route.snapshot.params.id);
     this.transactionService.toggleState(id).subscribe();
     this.triggerDownloadFile(file);
-  }
+  }*/
 
-  triggerDownloadFile(file: string | Document) {
-    /* TODO: UPDATE REQUEST DATA */
-    const transactionId: number = Number(this.route.snapshot.params.id);
-    this.transactionService.documentOpenedEvent(transactionId).subscribe();
+  triggerDownloadFile(doc: GeneratedDocument | Document) {
+    this.transactionService.documentOpenedEvent(doc.id).subscribe();
+
+    let {file, title} = doc;
 
     const trigger: HTMLAnchorElement = document.createElement('a');
-    if (typeof file  === 'string') {
-      if (file.startsWith('/')) {
-        file = `${window.location.origin}${file}`;
+    if (file.startsWith('/')) {
+      let {origin} = window.location;
+
+      if (origin.includes(':4200')) {
+        origin = origin.replace(':4200', ':8000');
       }
-      trigger.href = trigger.download = file;
-    } else {
-      trigger.href = file.file;
-      trigger.download = file.title;
+
+      file = `${origin}${file}`;
     }
+    trigger.href = file;
+    trigger.download = title;
     trigger.target = '_blank';
     trigger.click();
   }
@@ -191,12 +196,13 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
     );
   }
 
-  openSPQDialog(doc: GeneratedDocument): void {
+  openSPQDialog(doc: GeneratedDocument, signAfterFill: boolean = false): void {
     this.dialog.open(SpqDialogComponent, {
       width: '600px',
       data: {
         ...doc.documentData,
-        docId: doc.id
+        docId: doc.id,
+        signAfterFill
       }
     });
   }

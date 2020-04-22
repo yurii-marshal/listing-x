@@ -17,7 +17,10 @@
     <div class="fieldset u-flex-1">
       <label>Terms</label>
       <textarea formControlName="terms" placeholder="Terms here" spellcheck="false" class="form-control"></textarea>
-      <app-form-validation-error [baseControl]="form.get('terms')"></app-form-validation-error>
+      <mat-hint *ngIf="termsControl.valid">
+        Left {{2000 - termsControl.value.length}} of 2000 symbols.
+      </mat-hint>
+      <app-form-validation-error [baseControl]="termsControl"></app-form-validation-error>
     </div>
   </form>
 </div>
