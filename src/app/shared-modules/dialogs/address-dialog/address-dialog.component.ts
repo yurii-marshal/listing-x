@@ -48,6 +48,8 @@ export class AddressDialogComponent implements OnInit {
       apn: [null, [CustomValidators.number]],
     });
 
+    this.form.valueChanges.subscribe(v => console.log(v));
+
     if (this.data.model) {
       this.patchFromValues();
     }
@@ -78,7 +80,11 @@ export class AddressDialogComponent implements OnInit {
   }
 
   close(): void {
-    const model: Address = this.form.getRawValue(); // include disabled control
+    /* FIXME */
+    const model: Address = {
+      ...this.form.getRawValue(),
+      sellers: this.form.value.sellers.map(r => ({...r, email: r.email.toLowerCase()}))
+    }; // include disabled control
     const message = `Successfully ${this.isEdit ? 'updated' : 'created new'} address.`;
     of(model)
       .pipe(
