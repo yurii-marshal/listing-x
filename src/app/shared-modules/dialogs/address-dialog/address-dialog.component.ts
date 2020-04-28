@@ -48,8 +48,6 @@ export class AddressDialogComponent implements OnInit {
       apn: [null, [CustomValidators.number]],
     });
 
-    this.form.valueChanges.subscribe(v => console.log(v));
-
     if (this.data.model) {
       this.patchFromValues();
     }

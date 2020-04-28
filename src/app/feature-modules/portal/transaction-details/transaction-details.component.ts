@@ -104,7 +104,7 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
 
   inviteUser() {
     this.isOpenInviteUserOverlay = false;
-    const email: string = this.userEmailControl.value;
+    const email: string = this.userEmailControl.value.toLowerCase();
     const transactionId: number = Number(this.route.snapshot.params.id);
     this.transactionService.inviteUser(transactionId, email)
       .subscribe(() => {
@@ -121,6 +121,7 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
 
         const updatedListKey = this.isSeller ? 'moderatorSellers' : 'moderatorBuyers';
         this.transaction.offer[updatedListKey].push(invited);
+        this.userEmailControl.setValue(null);
       });
   }
 
