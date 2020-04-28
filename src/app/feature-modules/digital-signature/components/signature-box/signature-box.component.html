@@ -10,7 +10,9 @@
   </div>
 
   <ng-container *ngIf="mode === SignMode.UnSign">
-    <span *ngIf="signWithInitials" class="signature">{{ user.firstName | letter }} {{ user.lastName | letter }}</span>
+    <!--<span *ngIf="signWithInitials" class="signature">{{ user.firstName | letter }} {{ user.lastName | letter }}</span>
+    <span *ngIf="!signWithInitials" class="signature">{{ user.firstName }} {{ user.lastName }}</span>-->
+    <span *ngIf="signWithInitials" class="signature">{{ signature.signature }}</span>
     <span *ngIf="!signWithInitials" class="signature">{{ user.firstName }} {{ user.lastName }}</span>
   </ng-container>
 </div>

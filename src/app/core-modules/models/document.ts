@@ -27,8 +27,19 @@ export interface GeneratedDocument {
   transaction: number;
   documentData?: SpqDocumentData | AddendumData;
   createdAt: string;
+  signatures: Signatures;
   /** @deprecated */
   checked: boolean;
+}
+
+export interface Signatures {
+  buyers: Signature[];
+  sellers: Signature[];
+}
+
+export interface Signature {
+  email: string;
+  signature: string;
 }
 
 export interface SpqDocumentData {
