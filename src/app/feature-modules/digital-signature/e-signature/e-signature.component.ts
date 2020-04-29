@@ -85,4 +85,8 @@ export class ESignatureComponent implements OnInit, AfterViewInit {
     return dialogRef.afterClosed()
       .pipe(filter(dialogResult => !!dialogResult));
   }
+
+  getUser(email: string, userType: 'sellers' | 'buyers' = 'sellers') {
+    return this.transaction.offer[userType].find(i => i.email === email);
+  }
 }

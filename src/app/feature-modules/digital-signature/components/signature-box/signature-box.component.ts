@@ -3,6 +3,7 @@ import { AuthService } from '../../../../core-modules/core-services/auth.service
 import { User } from '../../../auth/models';
 import { ActivatedRoute } from '@angular/router';
 import { Person } from '../../../../core-modules/models/offer';
+import { Signature } from '../../../../core-modules/models/document';
 
 export enum SignMode {
   Sign = 1,
@@ -15,8 +16,12 @@ export enum SignMode {
   styleUrls: ['./signature-box.component.scss']
 })
 export class SignatureBoxComponent implements OnInit {
+  /** @deprecated */
   @Input()
   user: Person;
+
+  @Input()
+  signature: Signature;
 
   @Input()
   signWithInitials: boolean = true;
@@ -35,9 +40,10 @@ export class SignatureBoxComponent implements OnInit {
     if (!currentUser) {
       return false;
     }
-    return currentUser.lastName === this.user.lastName
+    /*return currentUser.lastName === this.user.lastName
       && currentUser.firstName === this.user.firstName
-      && currentUser.email === this.user.email;
+      && currentUser.email === this.user.email;*/
+    return currentUser.email === this.signature.email;
   }
 
   constructor(private authService: AuthService,
@@ -61,7 +67,7 @@ export class SignatureBoxComponent implements OnInit {
 
   private autoSign() {
     this.isReadonly = true;
-    if (this.user.signed) {
+    if (this.signature.signature) {
       this.mode = SignMode.UnSign;
     }
   }

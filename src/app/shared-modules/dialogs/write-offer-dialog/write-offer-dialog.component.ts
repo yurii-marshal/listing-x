@@ -164,7 +164,14 @@ export class  WriteOfferDialogComponent implements OnInit {
   }
 
   submit(): void {
-    const model: Offer = this.form.getRawValue(); // to include 'state'
+    /* FIXME */
+    const model: Offer = {
+      ...this.form.getRawValue(),
+      moderatorBuyers: this.moderatorBuyers.getRawValue().map(i => ({...i, email: i.email.toLowerCase()})),
+      moderatorSellers: this.moderatorSellers.getRawValue().map(i => ({...i, email: i.email.toLowerCase()})),
+      sellers: this.sellers.getRawValue().map(i => ({...i, email: i.email.toLowerCase()})),
+      buyers: this.buyers.getRawValue().map(i => ({...i, email: i.email.toLowerCase()}))
+    }; // to include 'state'
     if (this.data.isAnonymous) {
       this.dialogRef.close(model);
       return; // Exit

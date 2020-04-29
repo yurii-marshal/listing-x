@@ -397,8 +397,11 @@
           <div class="col-left-initials">
             <div class="u-flex u-flex-align-items--center">
               <label>Buyer's Initials</label>
-              <ng-container *ngFor="let user of transaction.offer.buyers; let last = last">
-                <app-signature-box [user]="user"></app-signature-box>
+<!--              <ng-container *ngFor="let user of transaction.offer.buyers; let last = last; index as i">-->
+              <ng-container *ngFor="let item of doc.signatures.buyers; let last = last;">
+                <app-signature-box
+                  [signature]="item"
+                ></app-signature-box>
                 <ng-container *ngIf="!last">,&nbsp;&nbsp;</ng-container>
               </ng-container>
             </div>
@@ -408,8 +411,10 @@
           <div class="col-right-initials">
             <div class="u-flex u-flex-align-items--center">
               <label>Seller's Initials</label>
-              <ng-container *ngFor="let user of transaction?.offer?.sellers; let last = last">
-                <app-signature-box [user]="user"></app-signature-box>
+              <ng-container *ngFor="let item of doc.signatures.sellers; let last = last">
+                <app-signature-box
+                  [signature]="item"
+                ></app-signature-box>
                 <ng-container *ngIf="!last">,&nbsp;&nbsp;</ng-container>
               </ng-container>
             </div>
@@ -485,11 +490,17 @@
           <input disabled type="text" name="" id="input-42">.
         </div>
 
-        <ng-container *ngFor="let user of transaction.offer.sellers; let i = index;">
+        <ng-container *ngFor="let item of doc.signatures.sellers; let i = index;">
           <label for="input-43">Date</label>
           <input disabled type="date" name="" id="input-43">
           <label for="input-44">Seller #{{i + 1}}</label>
-          <app-signature-box [user]="user" [signWithInitials]="false" class="large-input-44"></app-signature-box>
+          <!-- TODO: refactor - user first/last name in signatures -->
+          <app-signature-box
+            [user]="getUser(item.email)"
+            [signature]="item"
+            [signWithInitials]="false"
+            class="large-input-44"
+          ></app-signature-box>
           <br>
         </ng-container>
 
@@ -751,8 +762,10 @@
               <span class="font-size-16" style="display: block; margin-right: auto;">Published and Distributed by: </span>
               <span class="font-size-16" style="display: block">Buyer Acknowledges that page 10 is part of this Agreement</span>
               &nbsp;&nbsp;
-              <ng-container *ngFor="let user of transaction.offer.buyers; let last = last">
-                <app-signature-box [user]="user"></app-signature-box>
+              <ng-container *ngFor="let item of doc.signatures.buyers; let last = last">
+                <app-signature-box
+                  [signature]="item"
+                ></app-signature-box>
                 <ng-container *ngIf="!last">,&nbsp;&nbsp;</ng-container>
               </ng-container>
             </div>
