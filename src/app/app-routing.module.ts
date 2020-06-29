@@ -13,6 +13,9 @@ const routes: Routes = [
     loadChildren: () => import('./feature-modules/auth/auth.module').then(m => m.AuthModule),
     canActivate: [LoginGuardService]
   }, {
+    path: 'profile',
+    loadChildren: () => import('./feature-modules/profile/profile.module').then(m => m.ProfileModule),
+  }, {
     path: 'portal',
     loadChildren: () => import('./feature-modules/portal/portal.module').then(m => m.PortalModule),
   }, {

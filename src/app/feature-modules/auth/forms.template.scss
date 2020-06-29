@@ -46,6 +46,10 @@
       width: 100%;
       position: relative;
 
+      &:first-child {
+        margin-top: 45px;
+      }
+
       label {
         text-transform: uppercase;
         letter-spacing: 0.84px;

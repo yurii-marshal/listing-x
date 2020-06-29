@@ -8,26 +8,31 @@ import { AuthService } from '../../../core-modules/core-services/auth.service';
   templateUrl: './base-template.component.html',
   styleUrls: ['./base-template.component.scss']
 })
-export class BaseTemplateComponent implements OnInit{
+export class BaseTemplateComponent implements OnInit {
   @Input()
   isVisibleNavBar: boolean = true;
 
-  navLinks: { label, path }[] = [
-    {label: 'Transactions', path: '/portal'},
-    {label: 'Addresses', path: '/addresses'}
-  ];
+  public user: User;
 
-  user: User;
+  public navLinks: { label, path, disabled }[] = [
+    {label: 'Transactions', path: '/portal', disabled: !this.isUserAllowed},
+    {label: 'Addresses', path: '/addresses', disabled: !this.isUserAllowed},
+    {label: 'Profile', path: '/profile', disabled: false},
+  ];
 
   constructor(private authService: AuthService,
               private router: Router) {
+  }
+
+  private get isUserAllowed(): boolean {
+    return this.user && this.user.role === 'agent' ? this.user.registration_finished : true;
   }
 
   ngOnInit(): void {
     this.user = this.authService.currentUser;
   }
 
-  logout() {
+  public logout(): void {
     this.authService.logout();
     this.router.navigateByUrl('/auth/login');
   }
