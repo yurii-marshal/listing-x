@@ -69,3 +69,10 @@ $ease-out-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1) !default;
     }
   }
 }
+
+@mixin placeholder() {
+  font-size: 15px;
+  line-height: normal;
+  color: #c7ccd6;
+  font-family: 'SFUIDisplay' !important;
+}

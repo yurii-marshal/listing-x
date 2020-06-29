@@ -5,6 +5,7 @@ import { User } from '../models';
 import { tap } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
+import { UserRole } from '../../../core-modules/enums/user-role';
 
 @Component({
   selector: 'app-register',
@@ -13,16 +14,20 @@ import { AuthService } from '../../../core-modules/core-services/auth.service';
 })
 export class RegisterComponent implements OnInit {
 
-  form: FormGroup;
+  public form: FormGroup;
 
-  isActivated: boolean;
+  public userRoles: string[] = Object.keys(UserRole).map((role) => role.toLowerCase());
+
+  public isActivated: boolean;
 
   constructor(private formBuilder: FormBuilder,
               private service: AuthService,
-              private snackBar: MatSnackBar) { }
+              private snackBar: MatSnackBar) {
+  }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
+      role: [null, [Validators.required]],
       firstName: [null, [Validators.required]],
       lastName: [null, [Validators.required]],
       email: [null, [Validators.required, Validators.email]],
@@ -31,11 +36,16 @@ export class RegisterComponent implements OnInit {
     }, {validator: CustomValidators.passwordMatch});
   }
 
-  onSubmit() {
-    const user: User = {
+  public selectRole(role): void {
+    this.form.controls.role.setValue(role);
+  }
+
+  public onSubmit(): void {
+    const user = {
       ...this.form.value,
       email: this.form.value.email.toLowerCase()
-    };
+    } as User;
+
     this.service.register(user)
       .pipe(
         tap({error: err => this.form.get('email').setErrors({uniqemail: true})})
@@ -43,10 +53,15 @@ export class RegisterComponent implements OnInit {
       .subscribe(() => this.isActivated = true);
   }
 
-  onResendEmail() {
+  public onResendEmail(): void {
     const user: User = this.form.value;
     this.service.resendActivation(user.email)
-      .subscribe(() => this.snackBar.open('Activation link re-sent to your email', 'OK', {duration: 5000}));
+      .subscribe(() =>
+        this.snackBar.open(
+          'Activation link re-sent to your email',
+          'OK',
+          {duration: 5000})
+      );
   }
 
 }

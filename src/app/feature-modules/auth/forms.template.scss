@@ -1,3 +1,5 @@
+@import "../../../assets/scss/mixins";
+
 .main-container {
   display: flex;
 
@@ -15,7 +17,7 @@
       background: url(/assets/images/icons/logo-white.svg) 0 0/185px 48px no-repeat;
       padding-left: 185px;
       height: 48px;
-      color: white!important;
+      color: white !important;
     }
   }
 }
@@ -40,7 +42,6 @@
     width: 555px;
     margin-bottom: 25px;
 
-
     .fieldset {
       width: 100%;
       position: relative;
@@ -64,14 +65,16 @@
         letter-spacing: 0.25px;
         color: #444c5c;
         resize: none;
-        &:not([disabled]):hover { border-color: #858c9c;}
+        &:not([disabled]):hover {
+          border-color: #858c9c;
+        }
 
         &[disabled] {
           border-color: #bcc7dd;
           background-color: rgba(0, 0, 0, 0.03);
           color: rgba(68, 76, 92, 0.83);
           cursor: initial;
-        };
+        }
       }
 
       button {
@@ -90,6 +93,7 @@
       }
 
       input.ng-invalid.ng-touched,
+      mat-select.ng-invalid.ng-touched,
       textarea.ng-invalid.ng-touched {
         border: 1px solid #c85578 !important;
       }
@@ -100,5 +104,48 @@
     text-decoration: underline;
     outline: none;
     cursor: pointer;
+  }
+}
+
+::ng-deep .mat-select {
+  .mat-select-value-text {
+    text-transform: capitalize;
+  }
+
+  .mat-select-placeholder {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-60%);
+
+    @include placeholder();
+  }
+
+  .mat-select-trigger {
+    height: 15px;
+  }
+}
+
+::ng-deep .mat-select-panel-wrap {
+  transform: translate(-3px, 32px);
+
+  .mat-select-panel {
+    min-width: calc(100% + 37px) !important;
+
+    mat-option {
+      height: 50px;
+
+      &.mat-active {
+        background: transparent;
+      }
+
+      &.mat-selected:not(.mat-option-disabled),
+      &:hover:not(.mat-option-disabled) {
+        background: rgba(65, 155, 223, 0.13);
+      }
+
+      .mat-option-text {
+        text-transform: capitalize;
+      }
+    }
   }
 }

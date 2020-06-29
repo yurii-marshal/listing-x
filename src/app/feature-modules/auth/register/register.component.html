@@ -6,9 +6,27 @@
     <form novalidate [formGroup]="form" *ngIf="!isActivated">
       <h2>Get started with new ListingX account.</h2>
       <h5>Already have an account? Please&nbsp;<span routerLink="../login" class="router-link">Sign in</span></h5>
+
+      <div class="fieldset">
+        <label>Your Role</label>
+        <mat-select
+          formControlName="role"
+          disableOptionCentering
+          placeholder="Select your role"
+          (valueChange)="selectRole($event)"
+          spellcheck="false"
+          class="form-control"
+        >
+          <mat-option *ngFor="let item of userRoles" [value]="item">
+            {{ item }}
+          </mat-option>
+        </mat-select>
+        <app-form-validation-error [baseControl]="form.get('role')"></app-form-validation-error>
+      </div>
+
       <div class="fieldset">
         <label>First Name</label>
-        <input formControlName="firstName"  placeholder="Your first name" spellcheck="false" class="form-control">
+        <input formControlName="firstName" placeholder="Your first name" spellcheck="false" class="form-control">
         <app-form-validation-error [baseControl]="form.get('firstName')"></app-form-validation-error>
       </div>
 
@@ -26,13 +44,15 @@
 
       <div class="fieldset">
         <label>Password</label>
-        <input formControlName="password" type="password" placeholder="****************" spellcheck="false" class="form-control">
+        <input formControlName="password" type="password" placeholder="****************" spellcheck="false"
+               class="form-control">
         <app-form-validation-error [baseControl]="form.get('password')"></app-form-validation-error>
       </div>
 
       <div class="fieldset">
         <label>Confirm Password</label>
-        <input formControlName="confirmPassword" type="password" placeholder="****************" spellcheck="false" class="form-control">
+        <input formControlName="confirmPassword" type="password" placeholder="****************" spellcheck="false"
+               class="form-control">
         <app-form-validation-error [baseControl]="form.get('confirmPassword')"></app-form-validation-error>
         <app-form-validation-error [baseControl]="form"></app-form-validation-error>
       </div>
