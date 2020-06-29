@@ -5,14 +5,15 @@ import { RegisterComponent } from './register/register.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { AuthRoutingModule } from './auth-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatCheckboxModule, MatTabsModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatSelectModule, MatTabsModule } from '@angular/material';
 import { SharedModule } from '../../shared-modules/shared.module';
 import { NewPasswordComponent } from './new-password/new-password.component';
 
 const MatModules = [
   MatCheckboxModule,
   MatButtonModule,
-  MatTabsModule
+  MatTabsModule,
+  MatSelectModule
 ];
 
 @NgModule({
