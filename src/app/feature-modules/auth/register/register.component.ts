@@ -27,7 +27,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      role: [null, [Validators.required]],
+      account_type: [null, [Validators.required]],
       firstName: [null, [Validators.required]],
       lastName: [null, [Validators.required]],
       email: [null, [Validators.required, Validators.email]],
@@ -37,7 +37,7 @@ export class RegisterComponent implements OnInit {
   }
 
   public selectRole(role): void {
-    this.form.controls.role.setValue(role);
+    this.form.controls.account_type.setValue(role);
   }
 
   public onSubmit(): void {

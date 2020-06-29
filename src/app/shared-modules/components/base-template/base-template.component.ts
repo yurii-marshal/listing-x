@@ -25,7 +25,7 @@ export class BaseTemplateComponent implements OnInit {
   }
 
   private get isUserAllowed(): boolean {
-    return this.user && this.user.role === 'agent' ? this.user.registration_finished : true;
+    return this.user && this.user.account_type === 'agent' ? this.user.registration_finished : true;
   }
 
   ngOnInit(): void {

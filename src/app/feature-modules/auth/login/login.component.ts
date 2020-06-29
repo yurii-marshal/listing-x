@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
       uri = '/portal/offer';
     }
 
-    if (this.authService.currentUser.role === 'agent' && !this.authService.currentUser.registration_finished) {
+    if (this.authService.currentUser.account_type === 'agent' && !this.authService.currentUser.registration_finished) {
       uri = '/profile';
     }
 

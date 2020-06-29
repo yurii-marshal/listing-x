@@ -5,6 +5,6 @@ export interface User {
   lastName: string;
   email: string;
   password: string;
-  role: string;
+  account_type: string;
   registration_finished: boolean;
 }

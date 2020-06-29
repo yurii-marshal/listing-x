@@ -11,6 +11,6 @@ export class AgentAllowedGuardService implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
     const user = this.authService.currentUser;
-    return of(user.role === 'agent' ? user.registration_finished : true);
+    return of(user.account_type === 'agent' ? user.registration_finished : true);
   }
 }
