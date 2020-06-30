@@ -7,21 +7,43 @@
   justify-content: center;
   height: 74px;
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+
   .logo {
     margin-right: 68px;
     cursor: pointer;
   }
+
   .notifications {
     margin-left: 220px;
   }
+
   .username {
     font-size: 15px;
     font-weight: 500;
     color: #444c5d;
   }
+
   p {
     margin: 0 15px;
     &.hidden { opacity: 0; }
+  }
+
+  .mat-tab-nav-bar {
+    padding-left: 160px;
+    border-bottom: none;
+
+    a {
+      height: 73px;
+      width: 150px;
+      min-width: 150px;
+    }
+
+    .mat-tab-link.mat-tab-disabled span {
+      background: url("/assets/images/icons/lock.svg") no-repeat;
+      margin-left: 9px;
+      width: 11px;
+      height: 16px;
+    }
   }
 }
 

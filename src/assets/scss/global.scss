@@ -42,3 +42,9 @@ h2 {font-size: 36px;}
 .truncated {
   @include mat-truncate-line();
 }
+
+.mat-ink-bar {
+  height: 3px !important;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+}

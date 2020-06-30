@@ -1,0 +1,9 @@
+<div class="notification-bar u-flex u-flex-align-items--center" [ngClass]="type">
+  <div class="icon u-flex-align-items--center">
+    <img *ngIf="type === noteTypes.Notice" src="/assets/images/icons/notification-notice.svg" alt="notice">
+    <img *ngIf="type === noteTypes.Warning" src="/assets/images/icons/notification-warning.svg" alt="warning">
+  </div>
+  <div class="content u-flex-align-items--center">
+    <ng-content></ng-content>
+  </div>
+</div>

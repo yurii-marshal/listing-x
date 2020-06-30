@@ -3,6 +3,12 @@ import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 export class CustomValidators {
 
+  static unique = (collection: any[]): ValidatorFn => {
+    return (control: AbstractControl): { [key: string]: any } => {
+      return collection.includes(control.value) ? {unique: true} : null;
+    };
+  }
+
   static passwordMatch(control: AbstractControl): ValidationErrors | null {
     const password = control.get('password');
     const confirmPassword = control.get('confirmPassword');
@@ -17,12 +23,6 @@ export class CustomValidators {
       return null;  // don't validate empty values to allow optional controls
     }
     const value = Number(control.value);
-    return isNaN(value) ? {'number': true} : null;
-  };
-
-  static unique = (collection: any[]): ValidatorFn => {
-    return (control: AbstractControl): { [key: string]: any } => {
-      return collection.includes(control.value) ? { unique: true } : null;
-    };
-  };
+    return isNaN(value) ? {number: true} : null;
+  }
 }

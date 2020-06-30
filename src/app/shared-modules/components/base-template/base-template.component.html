@@ -15,8 +15,10 @@
          [routerLink]="link.path"
          routerLinkActive #rla="routerLinkActive"
          [active]="rla.isActive"
+         [disabled]="link.disabled"
          class="top-bar">
         {{ link.label }}
+        <span *ngIf="link.disabled"></span>
       </a>
     </nav>
     <button mat-icon-button class="notifications">
