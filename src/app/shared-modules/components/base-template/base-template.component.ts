@@ -22,11 +22,11 @@ export class BaseTemplateComponent implements OnInit {
     {label: 'Profile', path: '/profile', disabled: false},
   ];
 
-  purchaseNavLinks: { label, path }[] = [
-    {label: 'Step 1', path: '/portal'},
-    {label: 'Step 2', path: '/addresses'},
-    {label: 'Step 3', path: '/addresses'},
-    {label: 'Summary', path: '/addresses'},
+  purchaseNavLinks: { label, path, disabled }[] = [
+    {label: 'Step 1', path: ['./../step-one'], disabled: false},
+    {label: 'Step 2', path: ['./../step-two'], disabled: false},
+    {label: 'Step 3', path: ['./../step-three'], disabled: false},
+    {label: 'Summary', path: ['./../summary'], disabled: false},
   ];
 
   user: User;

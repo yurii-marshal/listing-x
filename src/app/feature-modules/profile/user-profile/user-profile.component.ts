@@ -44,7 +44,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    this.profileService.updateProfile(this.form.value)
+    this.profileService.update(this.form.value)
       .subscribe(() => this.snackBar.open(
         'Profile has been updated',
         'OK',

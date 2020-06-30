@@ -18,6 +18,10 @@ import { OfferSummaryResolver } from './resolvers/offer-summary.resolver';
 import { TransactionDetailsComponent } from './transaction-details/transaction-details.component';
 import { UploadDocsModalType } from '../../core-modules/enums/upload-docs-modal-type';
 import { ProfileCompletedGuardService } from '../../core-modules/guards/profile-completed-guard.service';
+import { StepOneComponent } from './purchase-agreement/step-one/step-one.component';
+import { StepTwoComponent } from './purchase-agreement/step-two/step-two.component';
+import { StepThreeComponent } from './purchase-agreement/step-three/step-three.component';
+import { SummaryComponent } from './purchase-agreement/summary/summary.component';
 
 const routes: Routes = [
   {
@@ -74,7 +78,31 @@ const routes: Routes = [
           modalType: UploadDocsModalType.Upload
           // readonly: true
         },
-      }
+      },
+    ]
+  }, {
+    path: 'purchase-agreement',
+    children: [
+      {
+        path: 'step-one',
+        pathMatch: 'full',
+        component: StepOneComponent
+      },
+      {
+        path: 'step-two',
+        pathMatch: 'full',
+        component: StepTwoComponent
+      },
+      {
+        path: 'step-three',
+        pathMatch: 'full',
+        component: StepThreeComponent
+      },
+      {
+        path: 'summary',
+        pathMatch: 'full',
+        component: SummaryComponent
+      },
     ]
   }, {
     path: 'transaction/:id',

@@ -13,14 +13,16 @@ import {MatMenuModule} from '@angular/material/menu';
 import { SpqDialogComponent } from './dialogs/spq-dialog/spq-dialog.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatRadioModule} from '@angular/material/radio';
-import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import { AddendumDialogComponent } from './dialogs/addendum-dialog/addendum-dialog.component';
+import { StepOneComponent } from './purchase-agreement/step-one/step-one.component';
+import { StepTwoComponent } from './purchase-agreement/step-two/step-two.component';
+import { StepThreeComponent } from './purchase-agreement/step-three/step-three.component';
+import { SummaryComponent } from './purchase-agreement/summary/summary.component';
 
 const MatModules = [
   MatCheckboxModule,
   MatButtonModule,
-  // MatFormFieldModule,
   MatInputModule,
   MatTabsModule,
   MatTableModule,
@@ -46,6 +48,10 @@ const MatModules = [
     TransactionDetailsComponent,
     SpqDialogComponent,
     AddendumDialogComponent,
+    StepOneComponent,
+    StepTwoComponent,
+    StepThreeComponent,
+    SummaryComponent,
   ],
   entryComponents: [
     AddendumDialogComponent,

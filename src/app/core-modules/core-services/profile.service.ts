@@ -9,16 +9,14 @@ import { BaseDataService } from '../base-classes/base-data-service';
   providedIn: 'root'
 })
 export class ProfileService extends BaseDataService<User> {
-  private user: User;
+  isProfileCompleted: boolean = true;
 
   constructor(private authService: AuthService,
               protected injector: Injector) {
     super(injector, ApiEndpoint.CompleteRegistration);
-    this.user = this.authService.currentUser;
-  }
-
-  get isProfileCompleted() {
-    return this.user.accountType === 'agent' ? this.user.registrationFinished : true;
+    // this.authService.getUser().subscribe((user: User) => {
+    //   this.isProfileCompleted = user.accountType === 'agent' ? user.registrationFinished : true;
+    // });
   }
 
   update(model: User): Observable<User> {
