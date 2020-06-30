@@ -15,9 +15,16 @@ export class BaseTemplateComponent implements OnInit {
   @Input()
   state: string = 'portal';
 
-  navLinks: { label, path }[] = [
+  portalNavLinks: { label, path }[] = [
     {label: 'Transactions', path: '/portal'},
     {label: 'Addresses', path: '/addresses'}
+  ];
+
+  purchaseNavLinks: { label, path }[] = [
+    {label: 'Step 1', path: '/portal'},
+    {label: 'Step 2', path: '/addresses'},
+    {label: 'Step 3', path: '/addresses'},
+    {label: 'Summary', path: '/addresses'},
   ];
 
   user: User;
