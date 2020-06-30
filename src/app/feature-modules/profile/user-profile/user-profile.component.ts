@@ -29,17 +29,17 @@ export class UserProfileComponent implements OnInit {
     this.user = this.authService.currentUser;
 
     this.form = this.formBuilder.group({
-      company_name: [this.profileService.isProfileCompleted && this.user.company_name, [Validators.required]],
-      license_number: [
-        this.profileService.isProfileCompleted && this.user.license_number,
+      companyName: [this.profileService.isProfileCompleted && this.user.companyName, [Validators.required]],
+      licenseNumber: [
+        this.profileService.isProfileCompleted && this.user.licenseNumber,
         [Validators.required, CustomValidators.number, Validators.maxLength(9)]
       ],
-      broker_number: [
-        this.profileService.isProfileCompleted && this.user.broker_number,
+      brokerNumber: [
+        this.profileService.isProfileCompleted && this.user.brokerNumber,
         [Validators.required, CustomValidators.number, Validators.maxLength(8)]
       ],
       address: [this.profileService.isProfileCompleted && this.user.address, [Validators.required]],
-      phone_number: [this.profileService.isProfileCompleted && this.user.phone_number, [Validators.required]],
+      phoneNumber: [this.profileService.isProfileCompleted && this.user.phoneNumber, [Validators.required]],
     });
   }
 

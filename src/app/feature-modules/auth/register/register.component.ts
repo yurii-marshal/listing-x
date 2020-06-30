@@ -27,17 +27,13 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      account_type: [null, [Validators.required]],
+      accountType: [null, [Validators.required]],
       firstName: [null, [Validators.required]],
       lastName: [null, [Validators.required]],
       email: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required]],
       confirmPassword: [null, [Validators.required]]
     }, {validator: CustomValidators.passwordMatch});
-  }
-
-  public selectRole(role): void {
-    this.form.controls.account_type.setValue(role);
   }
 
   public onSubmit(): void {

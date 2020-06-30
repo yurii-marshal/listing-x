@@ -5,12 +5,12 @@ export interface User {
   lastName: string;
   email: string;
   password: string;
-  account_type: string;
-  registration_finished: boolean;
+  accountType: string;
+  registrationFinished: boolean;
 
-  company_name: string;
-  license_number: string;
-  broker_number: string;
+  companyName: string;
+  licenseNumber: number;
+  brokerNumber: number;
   address: string;
-  phone_number: string;
+  phoneNumber: string;
 }
