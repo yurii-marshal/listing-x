@@ -25,7 +25,9 @@ import { AddressesService } from '../core-modules/core-services/addresses.servic
 import { WriteOfferDialogComponent } from './dialogs/write-offer-dialog/write-offer-dialog.component';
 import { DialogsWrapperComponent } from './components/dialogs-wrapper/dialogs-wrapper.component';
 import { WriteOfferStepTwoDialogComponent } from './dialogs/write-offer-step-two-dialog/write-offer-step-two-dialog.component';
-import { WriteOfferUploadDocumentsDialogComponent } from './dialogs/write-offer-upload-documents-dialog/write-offer-upload-documents-dialog.component';
+import {
+  WriteOfferUploadDocumentsDialogComponent
+} from './dialogs/write-offer-upload-documents-dialog/write-offer-upload-documents-dialog.component';
 import { TooltipDirective } from './directives/tooltip.directive';
 import { TooltipContentComponent } from './components/tooltip-content/tooltip-content.component';
 import { FileOption, FilePickerComponent } from './components/file-picker/file-picker.component';
@@ -37,6 +39,7 @@ import { DocumentLinkingService } from '../feature-modules/portal/services/docum
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { FirstLetterPipe } from './pipes/first-letter.pipe';
+import { NotificationBarComponent } from './components/notification-bar/notification-bar.component';
 
 const materialModules = [
   MatDialogModule,
@@ -48,7 +51,7 @@ const materialModules = [
   MatBadgeModule,
   MatRadioModule,
   A11yModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
 ];
 
 const dialogs = [
@@ -74,8 +77,9 @@ const components = [
   FileOption,
   FileUploaderComponent,
   CalendarComponent,
+  NotificationBarComponent,
   FirstLetterPipe,
-  ...dialogs
+  ...dialogs,
 ];
 
 @NgModule({
@@ -84,21 +88,21 @@ const components = [
     RouterModule,
     ReactiveFormsModule,
     FullCalendarModule,
-    ...materialModules
+    ...materialModules,
   ],
   declarations: [
     ...components,
   ],
   exports: [
-    ...components
+    ...components,
   ],
   entryComponents: [
-    ...dialogs
+    ...dialogs,
   ],
   providers: [
     AddressesService,
     OfferService,
-    DocumentLinkingService
+    DocumentLinkingService,
   ]
 })
 export class SharedModule {

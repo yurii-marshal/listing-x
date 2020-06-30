@@ -10,10 +10,9 @@
       <div class="fieldset">
         <label>Your Role</label>
         <mat-select
-          formControlName="role"
+          formControlName="accountType"
           disableOptionCentering
           placeholder="Select your role"
-          (valueChange)="selectRole($event)"
           spellcheck="false"
           class="form-control"
         >
@@ -21,7 +20,7 @@
             {{ item }}
           </mat-option>
         </mat-select>
-        <app-form-validation-error [baseControl]="form.get('role')"></app-form-validation-error>
+        <app-form-validation-error [baseControl]="form.get('accountType')"></app-form-validation-error>
       </div>
 
       <div class="fieldset">

@@ -16,7 +16,8 @@ export enum ApiEndpoint {
   CreateAddendum = '/e-document/addendum/create/{id}/',
   Addendum = '/e-document/addendum/{id}/',
   Deny = '/transactions/{id}/deny/',
-  ToggleState = '/transactions/{id}/pdf/'
+  ToggleState = '/transactions/{id}/pdf/',
+  CompleteRegistration = '/user/complete-registration/',
 }
 
 export enum AuthEndpoint {
@@ -29,4 +30,3 @@ export enum AuthEndpoint {
   ForgotPassword = '/users/forgot-password/',
   ResetPassword = '/users/reset-password/',
 }
-
