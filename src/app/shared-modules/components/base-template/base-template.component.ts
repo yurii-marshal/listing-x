@@ -8,9 +8,12 @@ import { AuthService } from '../../../core-modules/core-services/auth.service';
   templateUrl: './base-template.component.html',
   styleUrls: ['./base-template.component.scss']
 })
-export class BaseTemplateComponent implements OnInit{
+export class BaseTemplateComponent implements OnInit {
   @Input()
   isVisibleNavBar: boolean = true;
+
+  @Input()
+  state: string = 'portal';
 
   navLinks: { label, path }[] = [
     {label: 'Transactions', path: '/portal'},
