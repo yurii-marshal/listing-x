@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../../../feature-modules/auth/models';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
+import { ProfileService } from '../../../core-modules/core-services/profile.service';
 
 @Component({
   selector: 'app-base-template',
@@ -15,17 +16,14 @@ export class BaseTemplateComponent implements OnInit {
   public user: User;
 
   public navLinks: { label, path, disabled }[] = [
-    {label: 'Transactions', path: '/portal', disabled: !this.isUserAllowed},
-    {label: 'Addresses', path: '/addresses', disabled: !this.isUserAllowed},
+    {label: 'Transactions', path: '/portal', disabled: !this.profileService.isProfileCompleted},
+    {label: 'Addresses', path: '/addresses', disabled: !this.profileService.isProfileCompleted},
     {label: 'Profile', path: '/profile', disabled: false},
   ];
 
   constructor(private authService: AuthService,
+              private profileService: ProfileService,
               private router: Router) {
-  }
-
-  private get isUserAllowed(): boolean {
-    return this.user && this.user.account_type === 'agent' ? this.user.registration_finished : true;
   }
 
   ngOnInit(): void {

@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { AuthService } from '../core-services/auth.service';
+import { ProfileService } from '../core-services/profile.service';
 
 @Injectable()
-export class AgentAllowedGuardService implements CanActivate {
+export class ProfileCompletedGuardService implements CanActivate {
 
-  constructor(private authService: AuthService) {
+  constructor(private profileService: ProfileService) {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
-    const user = this.authService.currentUser;
-    return of(user.account_type === 'agent' ? user.registration_finished : true);
+    return of(this.profileService.isProfileCompleted);
   }
 }

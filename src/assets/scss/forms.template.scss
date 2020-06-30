@@ -29,6 +29,12 @@
   align-items: center;
   // justify-content: center;
 
+  h1 {
+    font-size: 34px;
+    text-align: center;
+    margin: 0;
+  }
+
   h2 {
     font-size: 30px;
     color: #444c5d;
@@ -79,6 +85,18 @@
           color: rgba(68, 76, 92, 0.83);
           cursor: initial;
         }
+      }
+
+      /* Chrome, Safari, Edge, Opera */
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      /* Firefox */
+      input[type=number] {
+        -moz-appearance: textfield;
       }
 
       button {

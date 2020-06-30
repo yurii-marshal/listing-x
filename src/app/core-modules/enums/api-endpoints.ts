@@ -30,3 +30,7 @@ export enum AuthEndpoint {
   ResetPassword = '/users/reset-password/',
 }
 
+export enum ProfileEndpoint {
+  Update = '/user/complete-registration/',
+}
+

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
 import { User } from '../../feature-modules/auth/models';
-import { catchError, map, shareReplay, switchMap, tap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { LocalStorageKey } from '../enums/local-storage-key';
 import { Observable, of } from 'rxjs';
 import { JwtResponse } from '../interfaces/jwt-response';

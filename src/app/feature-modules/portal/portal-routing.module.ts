@@ -17,13 +17,13 @@ import { CreateOfferResolver } from './resolvers/create-offer-resolver';
 import { OfferSummaryResolver } from './resolvers/offer-summary.resolver';
 import { TransactionDetailsComponent } from './transaction-details/transaction-details.component';
 import { UploadDocsModalType } from '../../core-modules/enums/upload-docs-modal-type';
-import { AgentAllowedGuardService } from '../../core-modules/guards/agent-allowed-guard.service';
+import { ProfileCompletedGuardService } from '../../core-modules/guards/profile-completed-guard.service';
 
 const routes: Routes = [
   {
     path: '',
     component: TransactionsComponent,
-    canActivate: [AuthGuardService, AgentAllowedGuardService],
+    canActivate: [AuthGuardService, ProfileCompletedGuardService],
     canActivateChild: [AuthGuardService],
     children: [
       {
@@ -100,7 +100,7 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [
     AuthGuardService,
-    AgentAllowedGuardService,
+    ProfileCompletedGuardService,
     OfferResolver,
     CreateOfferResolver,
     OfferDocumentsResolver,
