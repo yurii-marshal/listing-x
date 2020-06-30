@@ -9,14 +9,15 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ProfileService {
+  private user: User;
 
   constructor(private authService: AuthService,
               private http: HttpClient) {
+    this.user = this.authService.currentUser;
   }
 
   get isProfileCompleted() {
-    return this.authService.currentUser.account_type === 'agent' ?
-      this.authService.currentUser.registration_finished : true;
+    return this.user.account_type === 'agent' ? this.user.registration_finished : true;
   }
 
   public updateProfile(profile: User): Observable<User> {

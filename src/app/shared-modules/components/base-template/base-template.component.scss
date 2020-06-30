@@ -29,6 +29,15 @@
   }
 
   .mat-tab-nav-bar {
+    padding-left: 160px;
+    border-bottom: none;
+
+    a {
+      height: 73px;
+      width: 150px;
+      min-width: 150px;
+    }
+
     .mat-tab-link.mat-tab-disabled span {
       background: url("/assets/images/icons/lock.svg") no-repeat;
       margin-left: 9px;
