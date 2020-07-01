@@ -13,13 +13,14 @@ export class BaseTemplateComponent implements OnInit {
   @Input()
   isVisibleNavBar: boolean = true;
 
-  public user: User;
+  @Input()
+  state: string = 'portal';
 
-  public navLinks: { label, path, disabled }[] = [
-    {label: 'Transactions', path: '/portal', disabled: !this.profileService.isProfileCompleted},
-    {label: 'Addresses', path: '/addresses', disabled: !this.profileService.isProfileCompleted},
-    {label: 'Profile', path: '/profile', disabled: false},
-  ];
+  user: User;
+
+  portalNavLinks: { label, path, disabled, hidden }[] = [];
+
+  purchaseNavLinks: { label, path, disabled }[] = [];
 
   constructor(private authService: AuthService,
               private profileService: ProfileService,
@@ -28,6 +29,19 @@ export class BaseTemplateComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.authService.currentUser;
+
+    this.portalNavLinks = [
+      {label: 'Transactions', path: '/portal', disabled: !this.user.registrationCompleted, hidden: false},
+      {label: 'Addresses', path: '/addresses', disabled: !this.user.registrationCompleted, hidden: false},
+      {label: 'Profile', path: '/profile', disabled: false, hidden: this.user.accountType === 'customer'},
+    ];
+
+    this.purchaseNavLinks = [
+      {label: 'Step 1', path: ['./../step-one'], disabled: false},
+      {label: 'Step 2', path: ['./../step-two'], disabled: false},
+      {label: 'Step 3', path: ['./../step-three'], disabled: false},
+      {label: 'Summary', path: ['./../summary'], disabled: false},
+    ];
   }
 
   public logout(): void {

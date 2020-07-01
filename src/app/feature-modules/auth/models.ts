@@ -6,7 +6,7 @@ export interface User {
   email: string;
   password: string;
   accountType: string;
-  registrationFinished: boolean;
+  registrationCompleted: boolean;
 
   companyName: string;
   licenseNumber: number;

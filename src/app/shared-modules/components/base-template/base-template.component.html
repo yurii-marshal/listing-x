@@ -1,8 +1,19 @@
 <div class="dummy-header">
   <img routerLink="/portal" src="assets/images/icons/logo.svg" width="125" class="logo">
   <ng-container *ngIf="isVisibleNavBar">
-    <nav mat-tab-nav-bar>
-      <a mat-tab-link *ngFor="let link of navLinks"
+    <nav [class]="state" *ngIf="state === 'portal'" mat-tab-nav-bar>
+      <a mat-tab-link *ngFor="let link of portalNavLinks"
+         [routerLink]="link.path"
+         routerLinkActive #rla="routerLinkActive"
+         [active]="rla.isActive"
+         [disabled]="link.disabled"
+         [hidden]="link.hidden"
+         class="top-bar">
+        {{ link.label }}
+      </a>
+    </nav>
+    <nav [class]="state" *ngIf="state === 'purchase'" mat-tab-nav-bar>
+      <a mat-tab-link *ngFor="let link of purchaseNavLinks"
          [routerLink]="link.path"
          routerLinkActive #rla="routerLinkActive"
          [active]="rla.isActive"
@@ -11,12 +22,16 @@
         {{ link.label }}
         <span *ngIf="link.disabled"></span>
       </a>
+      <button mat-stroked-button routerLink="/portal" color="primary">
+        <img src="assets/images/icons/close-btn-icon.svg" alt="close-btn-icon">
+        CLOSE
+      </button>
     </nav>
     <button mat-icon-button class="notifications">
       <img src="assets/images/icons/alarm.png" height="22">
     </button>
     <p class="username"
-       [title]="user.email"
+       [title]="user?.email"
        [class.hidden]="!user?.firstName">
       Hi, {{ user?.firstName }}
     </p>

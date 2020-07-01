@@ -6,10 +6,11 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { SharedModule } from '../../shared-modules/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthRoutingModule } from '../auth/auth-routing.module';
-import { MatButtonModule } from '@angular/material';
+import { MatButtonModule, MatSnackBarModule } from '@angular/material';
 
 const MatModules = [
   MatButtonModule,
+  MatSnackBarModule,
 ];
 
 @NgModule({

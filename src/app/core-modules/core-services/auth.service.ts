@@ -41,6 +41,10 @@ export class AuthService {
     return localStorage.getItem(LocalStorageKey.Token);
   }
 
+  getUser(): Observable<User> {
+    return this.http.get<User>(ApiEndpoint.CurrentUser);
+  }
+
   // TODO: return moment().isBefore(this.expirationTime);
   isLoggedIn(): Observable<boolean> {
     if (!this.jwtToken) {

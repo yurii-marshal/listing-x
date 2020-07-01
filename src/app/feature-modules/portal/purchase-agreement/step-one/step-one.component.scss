@@ -1,0 +1,80 @@
+@import "./../../../../../assets/scss/theming";
+@import "./../../../../../assets/scss/forms.template";
+
+.form-container {
+  width: 30%;
+  padding: 88px 0;
+
+  .title {
+    font-family: SFUIDisplay;
+    font-size: 36px;
+    line-height: 43px;
+    text-align: center;
+    color: $primary-text;
+  }
+
+  .subtitle {
+    text-transform: uppercase;
+    margin: 0 0 13px 0;
+  }
+
+  .question {
+    font-size: 13px;
+    letter-spacing: 0.25px;
+    color: #444c5c;
+    margin: 0 10px 20px 10px;
+  }
+
+  .hidden {
+    opacity: 0;
+  }
+
+  form {
+    padding-top: 50px;
+
+    .fieldset {
+      width: initial;
+    }
+    .link {
+      outline: none;
+      cursor: pointer;
+      text-decoration: underline;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.23px;
+      color: #419bdf;
+      text-transform: uppercase;
+      margin: 0 0 36px 0;
+    }
+  }
+
+  h4 {
+    margin-top: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.71;
+    color: $primary-text;
+    text-transform: uppercase;
+  }
+
+  h6 {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.23px;
+    color: #b0b7bd;
+  }
+
+  .multi-column {
+    .fieldset:not(:first-of-type) {
+      margin-left: 13px;
+    }
+  }
+}
+
+.button-bar {
+  padding-top: 30px;
+
+  button {
+    width: 100%;
+  }
+}

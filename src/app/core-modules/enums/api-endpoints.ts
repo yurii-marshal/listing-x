@@ -18,6 +18,7 @@ export enum ApiEndpoint {
   Deny = '/transactions/{id}/deny/',
   ToggleState = '/transactions/{id}/pdf/',
   CompleteRegistration = '/user/complete-registration/',
+  AgentProfile = '/users/agent-profile',
 }
 
 export enum AuthEndpoint {

@@ -45,8 +45,8 @@ export class TransactionsComponent implements OnDestroy, OnInit, AfterViewInit {
               private dialog: MatDialog) { }
 
   ngOnInit() {
-    this.service.loadCalendar()
-      .subscribe(events => this.calendarDataSource = events);
+    // this.service.loadCalendar()
+    //   .subscribe(events => this.calendarDataSource = events);
 
     this.dataSource = new BaseTableDataSource(this.service, null, null);
   }
