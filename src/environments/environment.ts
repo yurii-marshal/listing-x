@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  API_BASE_URL: '/api'
+  API_BASE_URL: 'https://dev-app-back.accuflip.com/api'
 };
 
 /*

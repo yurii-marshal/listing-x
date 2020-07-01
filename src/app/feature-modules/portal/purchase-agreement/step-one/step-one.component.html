@@ -1,195 +1,174 @@
 <app-base-template [state]="'purchase'">
-  <div class="u-flex u-flex-justify--space-between u-flex-align-items--center">
-    <div class="title">Write Offer - Step 1</div>
-    <button mat-icon-button (click)="onClose()" routerLink="../">
-      <mat-icon fontSet="fa" fontIcon="fa-times"></mat-icon>
-    </button>
-  </div>
-  <div class="form-container dialog-form" style="min-height: 400px">
-    <form novalidate [formGroup]="form" style="width: 100%!important;">
-      <!-- Moderator buyers section -->
-      <div *ngTemplateOutlet="moderatorBuyersTpl"></div>
+  <div class="u-flex u-flex-justify--center">
+    <div class="form-container dialog-form">
 
-      <!-- Moderator sellers section -->
-      <div *ngTemplateOutlet="moderatorSellersTpl"></div>
+      <h1 class="title">Write Offer</h1>
 
-      <!-- Invitee buyers section -->
-      <div *ngTemplateOutlet="buyersTpl"></div>
+      <form novalidate [formGroup]="form">
 
-      <!-- Invitee sellers section -->
-      <div *ngTemplateOutlet="sellersTpl"></div>
+        <h4>find existing offer or creat new one</h4>
 
-      <!-- Address section -->
-      <h4 style="margin-top: 5px;">Address</h4>
-      <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
-        <div class="fieldset u-flex-1">
-          <label>Street</label>
-          <input formControlName="streetName" placeholder="Street" spellcheck="false" class="form-control">
-          <app-form-validation-error [baseControl]="form.get('streetName')"></app-form-validation-error>
-        </div>
-        <div class="fieldset">
-          <label>City</label>
-          <input formControlName="city" placeholder="City" spellcheck="false" class="form-control">
-          <app-form-validation-error [baseControl]="form.get('city')"></app-form-validation-error>
-        </div>
-      </div>
-      <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
-        <div class="fieldset">
-          <label>State</label>
-          <input formControlName="state" placeholder="State" spellcheck="false" class="form-control">
-          <app-form-validation-error [baseControl]="form.get('state')"></app-form-validation-error>
-        </div>
-        <div class="fieldset">
-          <label>Zip</label>
-          <input formControlName="zip" placeholder="Zip" spellcheck="false" class="form-control">
-          <app-form-validation-error [baseControl]="form.get('zip')"></app-form-validation-error>
-        </div>
-        <div class="fieldset">
-          <label>APN</label>
-          <input formControlName="apn" placeholder="Apn" spellcheck="false" class="form-control">
-          <app-form-validation-error [baseControl]="form.get('apn')"></app-form-validation-error>
-        </div>
-      </div>
-
-      <h4 style="margin-top: 5px;">OFFER INFORMATION</h4>
-      <div class="fieldset">
-        <label>Offer price</label>
-        <div class="u-flex u-flex-align-items--center u-flex-justify--space-between">
-          <div style="position: relative;">
-            <input formControlName="price" placeholder="Price" spellcheck="false" class="form-control">
-            <app-form-validation-error [baseControl]="form.get('price')"></app-form-validation-error>
+        <h4>Buyer information</h4>
+        <div *ngFor="let control of buyers.controls; let i = index; let first = first" [formGroup]="control">
+          <h6 class="subtitle">buyer #{{ i + 1}}</h6>
+          <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
+            <div class="fieldset u-flex-1">
+              <label>First name</label>
+              <input formControlName="firstName" placeholder="First name" spellcheck="false" class="form-control">
+              <app-form-validation-error [baseControl]="control.get('firstName')"></app-form-validation-error>
+            </div>
+            <div class="fieldset u-flex-1">
+              <label>Last name</label>
+              <input formControlName="lastName" placeholder="Last name" spellcheck="false" class="form-control">
+              <app-form-validation-error [baseControl]="control.get('lastName')"></app-form-validation-error>
+            </div>
+            <div class="fieldset u-flex-1">
+              <label>Email</label>
+              <input formControlName="email" placeholder="Email" spellcheck="false" class="form-control">
+              <app-form-validation-error [baseControl]="control.get('email')"></app-form-validation-error>
+            </div>
+            <button *ngIf="!first" mat-icon-button color="accent" (click)="remove(Type.Buyers, i)">
+              <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
+            </button>
           </div>
-          <div class="question">How long do you need to close escrow?</div>
-          <div style="position: relative;">
-            <input formControlName="closeEscrowDays" placeholder="Days" spellcheck="false" class="form-control" style="width: 48px;">
-            <app-form-validation-error [baseControl]="form.get('closeEscrowDays')"></app-form-validation-error>
+        </div>
+        <div (click)="add(Type.Buyers)" class="link">add more buyer</div>
+
+        <h4>seller information</h4>
+        <div *ngFor="let control of moderatorSellers.controls; let i = index; let first = first" [formGroup]="control">
+          <h6 class="subtitle">moderator seler #{{ i + 1}}</h6>
+          <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
+            <div class="fieldset u-flex-1">
+              <label>First name</label>
+              <input formControlName="firstName" placeholder="First name" spellcheck="false" class="form-control">
+              <app-form-validation-error [baseControl]="control.get('firstName')"></app-form-validation-error>
+            </div>
+            <div class="fieldset u-flex-1">
+              <label>Last name</label>
+              <input formControlName="lastName" placeholder="Last name" spellcheck="false" class="form-control">
+              <app-form-validation-error [baseControl]="control.get('lastName')"></app-form-validation-error>
+            </div>
+            <div class="fieldset u-flex-1">
+              <label>Email</label>
+              <input formControlName="email" placeholder="Email" spellcheck="false" class="form-control">
+              <app-form-validation-error [baseControl]="control.get('email')"></app-form-validation-error>
+            </div>
+            <button *ngIf="!first" mat-icon-button color="accent" (click)="remove(Type.ModeratorSellers, i)">
+              <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
+            </button>
           </div>
-          <div class="question">Days</div>
         </div>
-      </div>
-    </form>
+        <div (click)="add(Type.ModeratorSellers)" class="link">add more moderator seller</div>
+
+        <div *ngFor="let control of sellers.controls; let i = index; let first = first" [formGroup]="control">
+          <h6 class="subtitle">seller #{{ i + 1}}</h6>
+          <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
+            <div class="fieldset u-flex-1">
+              <label>First name</label>
+              <input formControlName="firstName" placeholder="First name" spellcheck="false" class="form-control">
+              <app-form-validation-error [baseControl]="control.get('firstName')"></app-form-validation-error>
+            </div>
+            <div class="fieldset u-flex-1">
+              <label>Last name</label>
+              <input formControlName="lastName" placeholder="Last name" spellcheck="false" class="form-control">
+              <app-form-validation-error [baseControl]="control.get('lastName')"></app-form-validation-error>
+            </div>
+            <div class="fieldset u-flex-1">
+              <label>Email</label>
+              <input formControlName="email" placeholder="Email" spellcheck="false" class="form-control">
+              <app-form-validation-error [baseControl]="control.get('email')"></app-form-validation-error>
+            </div>
+            <button *ngIf="!first && control.enabled" mat-icon-button color="accent" (click)="remove(Type.Sellers, i)">
+              <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
+            </button>
+          </div>
+        </div>
+        <div (click)="add(Type.Sellers)" class="link">add more seller</div>
+
+        <h4>Moderator</h4>
+        <div *ngFor="let control of moderatorBuyers.controls; let i = index; let first = first" [formGroup]="control">
+          <h6 class="subtitle">moderator buyer #{{ i + 1}}</h6>
+          <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
+            <div class="fieldset u-flex-1">
+              <label>First name</label>
+              <input formControlName="firstName" placeholder="First name" spellcheck="false" class="form-control">
+              <app-form-validation-error [baseControl]="control.get('firstName')"></app-form-validation-error>
+            </div>
+            <div class="fieldset u-flex-1">
+              <label>Last name</label>
+              <input formControlName="lastName" placeholder="Last name" spellcheck="false" class="form-control">
+              <app-form-validation-error [baseControl]="control.get('lastName')"></app-form-validation-error>
+            </div>
+            <div class="fieldset u-flex-1">
+              <label>Email</label>
+              <input formControlName="email" placeholder="Email" spellcheck="false" class="form-control">
+              <app-form-validation-error [baseControl]="control.get('email')"></app-form-validation-error>
+            </div>
+            <button *ngIf="!first" mat-icon-button color="accent" (click)="remove(Type.ModeratorBuyers, i)">
+              <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
+            </button>
+          </div>
+        </div>
+        <div (click)="add(Type.ModeratorBuyers)" class="link">add more moderator buyer</div>
+
+        <h4>Address</h4>
+        <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
+          <div class="fieldset u-flex-1">
+            <label>Street</label>
+            <input formControlName="streetName" placeholder="Street" spellcheck="false" class="form-control">
+            <app-form-validation-error [baseControl]="form.get('streetName')"></app-form-validation-error>
+          </div>
+          <div class="fieldset">
+            <label>City</label>
+            <input formControlName="city" placeholder="City" spellcheck="false" class="form-control">
+            <app-form-validation-error [baseControl]="form.get('city')"></app-form-validation-error>
+          </div>
+        </div>
+        <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
+          <div class="fieldset">
+            <label>State</label>
+            <input formControlName="state" placeholder="State" spellcheck="false" class="form-control">
+            <app-form-validation-error [baseControl]="form.get('state')"></app-form-validation-error>
+          </div>
+          <div class="fieldset">
+            <label>Zip</label>
+            <input formControlName="zip" placeholder="Zip" spellcheck="false" class="form-control">
+            <app-form-validation-error [baseControl]="form.get('zip')"></app-form-validation-error>
+          </div>
+          <div class="fieldset">
+            <label>APN</label>
+            <input formControlName="apn" placeholder="Apn" spellcheck="false" class="form-control">
+            <app-form-validation-error [baseControl]="form.get('apn')"></app-form-validation-error>
+          </div>
+        </div>
+
+        <h4 style="margin-top: 5px;">OFFER INFORMATION</h4>
+        <div class="fieldset">
+          <label>Offer price</label>
+          <div class="u-flex u-flex-align-items--center u-flex-justify--space-between">
+            <div style="position: relative;">
+              <input formControlName="price" placeholder="Price" spellcheck="false" class="form-control">
+              <app-form-validation-error [baseControl]="form.get('price')"></app-form-validation-error>
+            </div>
+            <div class="question">How long do you need to close escrow?</div>
+            <div style="position: relative;">
+              <input formControlName="closeEscrowDays" placeholder="Days" spellcheck="false" class="form-control" style="width: 48px;">
+              <app-form-validation-error [baseControl]="form.get('closeEscrowDays')"></app-form-validation-error>
+            </div>
+            <div class="question">Days</div>
+          </div>
+        </div>
+
+        <div class="u-flex button-bar">
+          <button mat-flat-button appDebounceClick
+                  (debounceClick)="submit()"
+                  [disabled]="form.invalid || (isLoading | async)"
+                  color="primary">
+            {{'CONTINUE'}}
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
-
-  <div class="fieldset u-flex u-flex-justify--space-between u-flex-align-items--center button-bar">
-    <button mat-stroked-button (click)="onClose()" routerLink="../" color="primary">CANCEL</button>
-    <button mat-flat-button appDebounceClick
-            (debounceClick)="submit()"
-            [disabled]="form.invalid || (isLoading | async)"
-            color="primary">
-      {{'CONTINUE'}}
-    </button>
-  </div>
-
-  <ng-template #buyersTpl>
-    <h4>Buyer information</h4>
-    <div *ngFor="let control of buyers.controls; let i = index; let first = first" [formGroup]="control">
-      <h6 class="subtitle">buyer #{{ i + 1}}</h6>
-      <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
-        <div class="fieldset u-flex-1">
-          <label>First name</label>
-          <input formControlName="firstName" placeholder="First name" spellcheck="false" class="form-control">
-          <app-form-validation-error [baseControl]="control.get('firstName')"></app-form-validation-error>
-        </div>
-        <div class="fieldset u-flex-1">
-          <label>Last name</label>
-          <input formControlName="lastName" placeholder="Last name" spellcheck="false" class="form-control">
-          <app-form-validation-error [baseControl]="control.get('lastName')"></app-form-validation-error>
-        </div>
-        <div class="fieldset u-flex-1">
-          <label>Email</label>
-          <input formControlName="email" placeholder="Email" spellcheck="false" class="form-control">
-          <app-form-validation-error [baseControl]="control.get('email')"></app-form-validation-error>
-        </div>
-        <button *ngIf="!first" mat-icon-button color="accent" (click)="remove(Type.Buyers, i)">
-          <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
-        </button>
-      </div>
-    </div>
-    <div (click)="add(Type.Buyers)" class="link">add more buyer</div>
-  </ng-template>
-
-  <ng-template #sellersTpl>
-    <h4>seller information</h4>
-    <div *ngFor="let control of sellers.controls; let i = index; let first = first" [formGroup]="control">
-      <h6 class="subtitle">seler #{{ i + 1}}</h6>
-      <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
-        <div class="fieldset u-flex-1">
-          <label>First name</label>
-          <input formControlName="firstName" placeholder="First name" spellcheck="false" class="form-control">
-          <app-form-validation-error [baseControl]="control.get('firstName')"></app-form-validation-error>
-        </div>
-        <div class="fieldset u-flex-1">
-          <label>Last name</label>
-          <input formControlName="lastName" placeholder="Last name" spellcheck="false" class="form-control">
-          <app-form-validation-error [baseControl]="control.get('lastName')"></app-form-validation-error>
-        </div>
-        <div class="fieldset u-flex-1">
-          <label>Email</label>
-          <input formControlName="email" placeholder="Email" spellcheck="false" class="form-control">
-          <app-form-validation-error [baseControl]="control.get('email')"></app-form-validation-error>
-        </div>
-        <button *ngIf="!first && control.enabled" mat-icon-button color="accent" (click)="remove(Type.Sellers, i)">
-          <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
-        </button>
-      </div>
-    </div>
-    <div (click)="add(Type.Sellers)" class="link">add more seller</div>
-  </ng-template>
-
-  <ng-template #moderatorBuyersTpl>
-    <h4>Moderator Buyer information</h4>
-    <div *ngFor="let control of moderatorBuyers.controls; let i = index; let first = first" [formGroup]="control">
-      <h6 class="subtitle">moderator buyer #{{ i + 1}}</h6>
-      <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
-        <div class="fieldset u-flex-1">
-          <label>First name</label>
-          <input formControlName="firstName" placeholder="First name" spellcheck="false" class="form-control">
-          <app-form-validation-error [baseControl]="control.get('firstName')"></app-form-validation-error>
-        </div>
-        <div class="fieldset u-flex-1">
-          <label>Last name</label>
-          <input formControlName="lastName" placeholder="Last name" spellcheck="false" class="form-control">
-          <app-form-validation-error [baseControl]="control.get('lastName')"></app-form-validation-error>
-        </div>
-        <div class="fieldset u-flex-1">
-          <label>Email</label>
-          <input formControlName="email" placeholder="Email" spellcheck="false" class="form-control">
-          <app-form-validation-error [baseControl]="control.get('email')"></app-form-validation-error>
-        </div>
-        <button *ngIf="!first" mat-icon-button color="accent" (click)="remove(Type.ModeratorBuyers, i)">
-          <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
-        </button>
-      </div>
-    </div>
-    <div (click)="add(Type.ModeratorBuyers)" class="link">add more moderator buyer</div>
-  </ng-template>
-
-  <ng-template #moderatorSellersTpl>
-    <h4>moderator seller information</h4>
-    <div *ngFor="let control of moderatorSellers.controls; let i = index; let first = first" [formGroup]="control">
-      <h6 class="subtitle">moderator seler #{{ i + 1}}</h6>
-      <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
-        <div class="fieldset u-flex-1">
-          <label>First name</label>
-          <input formControlName="firstName" placeholder="First name" spellcheck="false" class="form-control">
-          <app-form-validation-error [baseControl]="control.get('firstName')"></app-form-validation-error>
-        </div>
-        <div class="fieldset u-flex-1">
-          <label>Last name</label>
-          <input formControlName="lastName" placeholder="Last name" spellcheck="false" class="form-control">
-          <app-form-validation-error [baseControl]="control.get('lastName')"></app-form-validation-error>
-        </div>
-        <div class="fieldset u-flex-1">
-          <label>Email</label>
-          <input formControlName="email" placeholder="Email" spellcheck="false" class="form-control">
-          <app-form-validation-error [baseControl]="control.get('email')"></app-form-validation-error>
-        </div>
-        <button *ngIf="!first" mat-icon-button color="accent" (click)="remove(Type.ModeratorSellers, i)">
-          <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
-        </button>
-      </div>
-    </div>
-    <div (click)="add(Type.ModeratorSellers)" class="link">add more moderator seller</div>
-  </ng-template>
 
 </app-base-template>

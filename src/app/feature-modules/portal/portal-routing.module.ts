@@ -17,7 +17,6 @@ import { CreateOfferResolver } from './resolvers/create-offer-resolver';
 import { OfferSummaryResolver } from './resolvers/offer-summary.resolver';
 import { TransactionDetailsComponent } from './transaction-details/transaction-details.component';
 import { UploadDocsModalType } from '../../core-modules/enums/upload-docs-modal-type';
-import { ProfileCompletedGuardService } from '../../core-modules/guards/profile-completed-guard.service';
 import { StepOneComponent } from './purchase-agreement/step-one/step-one.component';
 import { StepTwoComponent } from './purchase-agreement/step-two/step-two.component';
 import { StepThreeComponent } from './purchase-agreement/step-three/step-three.component';
@@ -27,7 +26,7 @@ const routes: Routes = [
   {
     path: '',
     component: TransactionsComponent,
-    canActivate: [AuthGuardService, ProfileCompletedGuardService],
+    canActivate: [AuthGuardService],
     canActivateChild: [AuthGuardService],
     children: [
       {
@@ -82,6 +81,8 @@ const routes: Routes = [
     ]
   }, {
     path: 'purchase-agreement',
+    canActivate: [AuthGuardService],
+    canActivateChild: [AuthGuardService],
     children: [
       {
         path: 'step-one',
@@ -128,7 +129,6 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [
     AuthGuardService,
-    ProfileCompletedGuardService,
     OfferResolver,
     CreateOfferResolver,
     OfferDocumentsResolver,

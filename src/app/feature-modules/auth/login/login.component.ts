@@ -28,10 +28,6 @@ export class LoginComponent implements OnInit {
       uri = '/portal/offer';
     }
 
-    if (this.authService.currentUser.accountType === 'agent' && !this.authService.currentUser.registrationFinished) {
-      uri = '/profile';
-    }
-
     return uri;
   }
 

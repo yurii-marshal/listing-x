@@ -1,25 +1,25 @@
 import { Injectable, Injector } from '@angular/core';
-import { User } from '../../feature-modules/auth/models';
-import { AuthService } from './auth.service';
-import { Observable } from 'rxjs';
 import { ApiEndpoint } from '../enums/api-endpoints';
 import { BaseDataService } from '../base-classes/base-data-service';
+import { Agent } from '../models/agent';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProfileService extends BaseDataService<User> {
-  isProfileCompleted: boolean = true;
+export class ProfileService extends BaseDataService<Agent> {
 
-  constructor(private authService: AuthService,
-              protected injector: Injector) {
-    super(injector, ApiEndpoint.CompleteRegistration);
-    // this.authService.getUser().subscribe((user: User) => {
-    //   this.isProfileCompleted = user.accountType === 'agent' ? user.registrationFinished : true;
-    // });
+  constructor(protected injector: Injector, protected http: HttpClient) {
+    super(injector, ApiEndpoint.AgentProfile);
   }
 
-  update(model: User): Observable<User> {
-    return super.update(model);
+  updateAgent(model: Agent): Observable<Agent> {
+    return this.http.put(ApiEndpoint.AgentProfile, model) as Observable<Agent>;
   }
+
+  getAgent(): Observable<Agent> {
+    return this.http.get(ApiEndpoint.AgentProfile) as Observable<Agent>;
+  }
+
 }

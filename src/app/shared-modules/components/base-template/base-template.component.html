@@ -6,6 +6,8 @@
          [routerLink]="link.path"
          routerLinkActive #rla="routerLinkActive"
          [active]="rla.isActive"
+         [disabled]="link.disabled"
+         [hidden]="link.hidden"
          class="top-bar">
         {{ link.label }}
       </a>

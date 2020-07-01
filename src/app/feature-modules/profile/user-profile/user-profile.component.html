@@ -5,13 +5,13 @@
         <h1>Profile</h1>
 
         <app-notification-bar
-          [type]="user?.registrationFinished ? noteTypes.Notice : noteTypes.Warning"
+          [type]="user?.registrationCompleted ? noteTypes.Notice : noteTypes.Warning"
         >
-          <span class="note-text warning" *ngIf="!user?.registrationFinished">
+          <span class="note-text warning" *ngIf="!user?.registrationCompleted">
             You have Limited Agent permissions. <br />
             Fill the fields below to get full access to the platform.
           </span>
-          <span class="note-text notice" *ngIf="user?.registrationFinished">
+          <span class="note-text notice" *ngIf="user?.registrationCompleted">
             You have Full Agent’s permissions
           </span>
         </app-notification-bar>
@@ -20,41 +20,41 @@
           <label>Company/Broker name</label>
           <input formControlName="companyName" placeholder="Your company/broker name" spellcheck="false"
                  class="form-control">
-          <app-form-validation-error [baseControl]="form.get('companyName')"></app-form-validation-error>
+          <app-form-validation-error [baseControl]="form?.get('companyName')"></app-form-validation-error>
         </div>
 
         <div class="fieldset">
           <label>License number</label>
-          <input formControlName="licenseNumber" type="text" maxlength="9" placeholder="ex. 201446383" spellcheck="false" class="form-control">
-          <app-form-validation-error [baseControl]="form.get('licenseNumber')"></app-form-validation-error>
+          <input formControlName="companyLicense" type="text" maxlength="9" placeholder="ex. 201446383" spellcheck="false" class="form-control">
+          <app-form-validation-error [baseControl]="form?.get('companyLicense')"></app-form-validation-error>
         </div>
 
         <div class="fieldset">
           <label>Broker’s License Number</label>
-          <input formControlName="brokerNumber" type="text" maxlength="8" placeholder="ex. 01446383" spellcheck="false" class="form-control">
-          <app-form-validation-error [baseControl]="form.get('brokerNumber')"></app-form-validation-error>
+          <input formControlName="licenseCode" type="text" maxlength="8" placeholder="ex. 01446383" spellcheck="false" class="form-control">
+          <app-form-validation-error [baseControl]="form?.get('licenseCode')"></app-form-validation-error>
         </div>
 
         <div class="fieldset">
           <label>Address</label>
-          <input formControlName="address" placeholder="Your address" spellcheck="false" class="form-control">
-          <app-form-validation-error [baseControl]="form.get('address')"></app-form-validation-error>
+          <input formControlName="physicalAddress" placeholder="Your address" spellcheck="false" class="form-control">
+          <app-form-validation-error [baseControl]="form?.get('physicalAddress')"></app-form-validation-error>
         </div>
 
         <div class="fieldset">
           <label>Phone number</label>
           <input formControlName="phoneNumber" placeholder="+1" spellcheck="false" class="form-control">
-          <app-form-validation-error [baseControl]="form.get('phoneNumber')"></app-form-validation-error>
+          <app-form-validation-error [baseControl]="form?.get('phoneNumber')"></app-form-validation-error>
         </div>
 
         <div class="u-flex" style="margin-top: 48px">
           <button mat-flat-button
                   class="submit-btn"
-                  [disabled]="!form.dirty || form.invalid"
+                  [disabled]="!form?.dirty || form?.invalid"
                   (click)="onSubmit()"
                   color="primary">
-            <span *ngIf="!user.registrationFinished">PROCEED</span>
-            <span *ngIf="user.registrationFinished">CHANGE AND SAVE</span>
+            <span *ngIf="!user.registrationCompleted">PROCEED</span>
+            <span *ngIf="user.registrationCompleted">CHANGE AND SAVE</span>
           </button>
         </div>
       </form>

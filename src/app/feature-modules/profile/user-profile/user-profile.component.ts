@@ -6,6 +6,8 @@ import { User } from '../../auth/models';
 import { ProfileService } from '../../../core-modules/core-services/profile.service';
 import { NotificationType } from '../../../core-modules/enums/notification-type';
 import { CustomValidators } from '../../../core-modules/validators/custom-validators';
+import { Agent } from '../../../core-modules/models/agent';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-user-profile',
@@ -14,37 +16,40 @@ import { CustomValidators } from '../../../core-modules/validators/custom-valida
 })
 export class UserProfileComponent implements OnInit {
   public user: User;
+  public agent: Agent;
 
-  public form: FormGroup;
+  public form: FormGroup = this.formBuilder.group({});
 
   public noteTypes = NotificationType;
 
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
+              private route: ActivatedRoute,
               private profileService: ProfileService,
               private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
     this.user = this.authService.currentUser;
+    this.agent = this.route.snapshot.data.model as Agent;
 
     this.form = this.formBuilder.group({
-      companyName: [this.profileService.isProfileCompleted && this.user.companyName, [Validators.required]],
-      licenseNumber: [
-        this.profileService.isProfileCompleted && this.user.licenseNumber,
+      companyName: [this.agent.companyName, [Validators.required]],
+      companyLicense: [
+        this.agent.companyLicense,
         [Validators.required, CustomValidators.number, Validators.maxLength(9)]
       ],
-      brokerNumber: [
-        this.profileService.isProfileCompleted && this.user.brokerNumber,
+      licenseCode: [
+        this.agent.licenseCode,
         [Validators.required, CustomValidators.number, Validators.maxLength(8)]
       ],
-      address: [this.profileService.isProfileCompleted && this.user.address, [Validators.required]],
-      phoneNumber: [this.profileService.isProfileCompleted && this.user.phoneNumber, [Validators.required]],
+      physicalAddress: [this.agent.physicalAddress, [Validators.required]],
+      phoneNumber: [this.agent.phoneNumber, [Validators.required]],
     });
   }
 
   public onSubmit(): void {
-    this.profileService.update(this.form.value)
+    this.profileService.updateAgent(this.form.value)
       .subscribe(() => this.snackBar.open(
         'Profile has been updated',
         'OK',

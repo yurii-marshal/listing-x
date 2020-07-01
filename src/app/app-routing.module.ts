@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginGuardService } from './core-modules/guards/login-guard.service';
 import { ActivationResolver } from './core-modules/resolvers/activation.resolver';
+import { ProfileGuardService } from './core-modules/guards/profile-guard.service';
 
 const routes: Routes = [
   {
@@ -11,7 +12,6 @@ const routes: Routes = [
   }, {
     path: 'auth',
     loadChildren: () => import('./feature-modules/auth/auth.module').then(m => m.AuthModule),
-    canActivate: [LoginGuardService]
   }, {
     path: 'profile',
     loadChildren: () => import('./feature-modules/profile/profile.module').then(m => m.ProfileModule),
@@ -41,6 +41,7 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [
     LoginGuardService,
+    ProfileGuardService,
     ActivationResolver
   ]
 })
