@@ -76,7 +76,7 @@
         color: #444c5c;
         resize: none;
         &:not([disabled]):hover {
-          border-color: #858c9c;
+          //border-color: #858c9c;
         }
 
         &[disabled] {
@@ -84,6 +84,10 @@
           background-color: rgba(0, 0, 0, 0.03);
           color: rgba(68, 76, 92, 0.83);
           cursor: initial;
+        }
+
+        &::placeholder {
+          font-size: 13px;
         }
       }
 

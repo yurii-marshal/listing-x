@@ -23,6 +23,29 @@
     color: #444c5d;
   }
 
+  .close-btn {
+    margin-left: 15vw;
+
+    width: 90px;
+    height: 38px;
+
+    border: 1px solid #D5D9E1;
+    border-radius: 4px;
+
+    font-weight: 600;
+    font-size: 11px;
+    line-height: 13px;
+    text-align: center;
+
+    color: #B0B7BD;
+
+    img {
+      width: 17px;
+      padding-bottom: 2px;
+      padding-right: 3px;
+    }
+  }
+
   p {
     margin: 0 15px;
     &.hidden { opacity: 0; }

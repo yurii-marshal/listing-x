@@ -18,6 +18,36 @@
     margin: 0 0 13px 0;
   }
 
+  .existing-offers {
+    padding-top: 10px;
+    padding-bottom: 30px;
+
+    .find-btn {
+      width: 127px;
+      height: 40px;
+      background: #66AD58;
+      border: 1px solid #66AD58;
+      box-sizing: border-box;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 11px;
+      line-height: 13px;
+      text-align: center;
+      letter-spacing: 0.07em;
+
+      color: #FFFFFF;
+
+    }
+
+    .label {
+      padding-left: 30px;
+      font-size: 13px;
+      line-height: 16px;
+      letter-spacing: 0.25px;
+      color: #C7CCD6;
+    }
+  }
+
   .question {
     font-size: 13px;
     letter-spacing: 0.25px;
@@ -34,7 +64,16 @@
 
     .fieldset {
       width: initial;
+
+      .form-control, .form-control:disabled {
+        border: 1px solid #D5D9E1;
+
+        &:focus, &:not([disabled]):hover {
+          border: 1px solid #419BDF;
+        }
+      }
     }
+
     .link {
       outline: none;
       cursor: pointer;
@@ -44,12 +83,13 @@
       letter-spacing: 0.23px;
       color: #419bdf;
       text-transform: uppercase;
-      margin: 0 0 36px 0;
+      margin: 0 0 13px 0;
+      display: inline-block;
     }
   }
 
   h4 {
-    margin-top: 5px;
+    margin-top: 20px;
     font-size: 14px;
     font-weight: 600;
     line-height: 1.71;
@@ -64,6 +104,12 @@
     color: #b0b7bd;
   }
 
+  .sub-header {
+    .link {
+      padding-left: 15px;
+    }
+  }
+
   .multi-column {
     .fieldset:not(:first-of-type) {
       margin-left: 13px;
@@ -76,5 +122,14 @@
 
   button {
     width: 100%;
+
+    span {
+      font-size: 12px;
+      line-height: 14px;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+
+      color: #FFFFFF;
+    }
   }
 }

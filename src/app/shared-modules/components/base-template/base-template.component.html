@@ -22,22 +22,26 @@
         {{ link.label }}
         <span *ngIf="link.disabled"></span>
       </a>
-      <button mat-stroked-button routerLink="/portal" color="primary">
-        <img src="assets/images/icons/close-btn-icon.svg" alt="close-btn-icon">
-        CLOSE
-      </button>
     </nav>
-    <button mat-icon-button class="notifications">
-      <img src="assets/images/icons/alarm.png" height="22">
+
+    <button class="close-btn" *ngIf="state === 'purchase'" mat-stroked-button routerLink="/portal" color="primary">
+      <img src="assets/images/icons/close-btn-icon.svg" alt="close-btn-icon">
+      CLOSE
     </button>
-    <p class="username"
-       [title]="user?.email"
-       [class.hidden]="!user?.firstName">
-      Hi, {{ user?.firstName }}
-    </p>
-    <button (click)="logout()" mat-icon-button>
-      <img src="assets/images/icons/exit.png" height="22" class="trigger">
-    </button>
+
+    <div *ngIf="state === 'portal'">
+      <button mat-icon-button class="notifications">
+        <img src="assets/images/icons/alarm.png" height="22">
+      </button>
+      <p class="username"
+         [title]="user?.email"
+         [class.hidden]="!user?.firstName">
+        Hi, {{ user?.firstName }}
+      </p>
+      <button (click)="logout()" mat-icon-button>
+        <img src="assets/images/icons/exit.png" height="22" class="trigger">
+      </button>
+    </div>
   </ng-container>
 </div>
 

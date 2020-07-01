@@ -87,22 +87,32 @@ const routes: Routes = [
       {
         path: 'step-one',
         pathMatch: 'full',
-        component: StepOneComponent
+        component: StepOneComponent,
       },
       {
-        path: 'step-two',
-        pathMatch: 'full',
-        component: StepTwoComponent
-      },
-      {
-        path: 'step-three',
-        pathMatch: 'full',
-        component: StepThreeComponent
-      },
-      {
-        path: 'summary',
-        pathMatch: 'full',
-        component: SummaryComponent
+        path: ':id',
+        children: [
+          {
+            path: 'step-one',
+            pathMatch: 'full',
+            component: StepOneComponent
+          },
+          {
+            path: 'step-two',
+            pathMatch: 'full',
+            component: StepTwoComponent
+          },
+          {
+            path: 'step-three',
+            pathMatch: 'full',
+            component: StepThreeComponent
+          },
+          {
+            path: 'summary',
+            pathMatch: 'full',
+            component: SummaryComponent
+          },
+        ]
       },
     ]
   }, {
