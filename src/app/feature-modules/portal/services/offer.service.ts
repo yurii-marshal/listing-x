@@ -1,6 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { LocalStorageKey } from '../../../core-modules/enums/local-storage-key';
 import { Offer, OfferSummary } from '../../../core-modules/models/offer';
@@ -12,6 +12,8 @@ export class OfferService extends BaseDataService<Offer> {
   public offerProgress: number;
   public offerChanged: Subject<void> = new Subject<void>();
 
+  public currentOffer: Offer;
+
   constructor(protected injector: Injector) {
     super(injector, ApiEndpoint.Offer);
   }
@@ -22,6 +24,14 @@ export class OfferService extends BaseDataService<Offer> {
       return null;
     }
     return JSON.parse(raw); // from generation link
+  }
+
+  getOfferById(id: number) {
+    if (this.currentOffer && id === this.currentOffer.id) {
+      return of(this.currentOffer);
+    }
+
+    return super.loadOne(id);
   }
 
   add(model: Offer): Observable<Offer> {
@@ -38,6 +48,8 @@ export class OfferService extends BaseDataService<Offer> {
   }
 
   update(model: Offer): Observable<Offer> {
+    this.currentOffer = model;
+
     return super.update(model)
       .pipe(tap(() => this.offerChanged.next()));
   }

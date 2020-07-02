@@ -33,6 +33,7 @@ export class BaseTemplateComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    const offer = this.offerService.currentOffer;
     this.user = this.authService.currentUser;
 
     this.portalNavLinks = [
@@ -42,10 +43,15 @@ export class BaseTemplateComponent implements OnInit, OnDestroy {
     ];
 
     this.purchaseNavLinks = [
-      {label: 'Step 1', path: ['./../step-one'], progress: 1, disabled: false},
-      {label: 'Step 2', path: ['./../step-two'], progress: 2, disabled: false},
-      {label: 'Step 3', path: ['./../step-three'], progress: 3, disabled: false},
-      {label: 'Summary', path: ['./../summary'], progress: 4, disabled: false},
+      {
+        label: 'Step 1',
+        path: [offer ? `./../../${offer.id}/step-one` : './../step-one'],
+        progress: 1,
+        disabled: false,
+      },
+      {label: 'Step 2', path: [`./../../${offer && offer.id}/step-two`], progress: 2, disabled: false},
+      {label: 'Step 3', path: [`./../../${offer && offer.id}/step-three`], progress: 3, disabled: false},
+      {label: 'Summary', path: [`./../../${offer && offer.id}/summary`], progress: 4, disabled: false},
     ];
 
     this.purchaseNavLinks.forEach((link) => {

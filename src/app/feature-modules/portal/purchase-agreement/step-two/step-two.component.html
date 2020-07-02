@@ -1,3 +1,48 @@
 <app-base-template [state]="'purchase'">
+  <div class="u-flex viewer-container">
+    <div class="u-flex viewer">
+      <div class="pdf-container">
+        <p *ngFor="let item of arr">PDF FILE</p>
+      </div>
+    </div>
 
+    <div class="side-bar u-flex-direction--column u-flex-justify--space-between" [class.open]="isSideBarOpen">
+      <div class="offer-information u-flex-1" *ngIf="isSideBarOpen">
+        <h2>Offer information</h2>
+
+        <div class="buyers" *ngFor="let buyer of offer.buyers"></div>
+        <div class="sellers" *ngFor="let seller of offer.sellers"></div>
+        <div class="moderators" *ngFor="let moderator of offer.moderators"></div>
+        <div class="address">
+          {{offer.city}} {{offer.streetName}}
+        </div>
+
+        <button (click)="editOffer()">
+          Edit
+        </button>
+      </div>
+      <div class="open-control" *ngIf="!isSideBarOpen">
+        <button class="open-btn" (click)="isSideBarOpen = !isSideBarOpen">
+          Edit
+        </button>
+      </div>
+
+      <div class="controls u-flex-1" *ngIf="isSideBarOpen">
+        <div class="labels">
+
+        </div>
+        <div class="progress-bar">
+
+        </div>
+        <button (click)="acceptOfferPDF()">
+          Continue
+        </button>
+      </div>
+      <div class="controls u-flex-1" *ngIf="!isSideBarOpen">
+        <button (click)="acceptOfferPDF()">
+          >>
+        </button>
+      </div>
+    </div>
+  </div>
 </app-base-template>

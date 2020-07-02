@@ -40,6 +40,8 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { FirstLetterPipe } from './pipes/first-letter.pipe';
 import { NotificationBarComponent } from './components/notification-bar/notification-bar.component';
+import { WriteOfferTemplateComponent } from './components/write-offer-template/write-offer-template.component';
+import { EditOfferDialogComponent } from './dialogs/edit-offer-dialog/edit-offer-dialog.component';
 
 const materialModules = [
   MatDialogModule,
@@ -69,6 +71,8 @@ const components = [
   ArrayPipe,
   DebounceClickDirective,
   BaseTemplateComponent,
+  WriteOfferTemplateComponent,
+  EditOfferDialogComponent,
   EmptyPageComponent,
   CopyToClipboard,
   DialogsWrapperComponent,

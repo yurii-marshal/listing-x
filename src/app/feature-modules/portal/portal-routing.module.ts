@@ -88,7 +88,7 @@ const routes: Routes = [
         path: 'step-one',
         pathMatch: 'full',
         component: StepOneComponent,
-        resolve: {model: CreateOfferResolver}
+        resolve: {anonymousOffer: CreateOfferResolver}
       },
       {
         path: ':id',
