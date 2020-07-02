@@ -1,15 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../../feature-modules/auth/models';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
 import { ProfileService } from '../../../core-modules/core-services/profile.service';
+import { OfferService } from '../../../feature-modules/portal/services/offer.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-base-template',
   templateUrl: './base-template.component.html',
   styleUrls: ['./base-template.component.scss']
 })
-export class BaseTemplateComponent implements OnInit {
+export class BaseTemplateComponent implements OnInit, OnDestroy {
   @Input()
   isVisibleNavBar: boolean = true;
 
@@ -17,13 +19,16 @@ export class BaseTemplateComponent implements OnInit {
   state: string = 'portal';
 
   user: User;
+  changedUser: Subscription;
 
   portalNavLinks: { label, path, disabled, hidden }[] = [];
 
-  purchaseNavLinks: { label, path, disabled }[] = [];
+  purchaseNavLinks: { label, path, progress, disabled }[] = [];
 
   constructor(private authService: AuthService,
+              public offerService: OfferService,
               private profileService: ProfileService,
+              private route: ActivatedRoute,
               private router: Router) {
   }
 
@@ -37,11 +42,23 @@ export class BaseTemplateComponent implements OnInit {
     ];
 
     this.purchaseNavLinks = [
-      {label: 'Step 1', path: ['./../step-one'], disabled: false},
-      {label: 'Step 2', path: ['./../step-two'], disabled: false},
-      {label: 'Step 3', path: ['./../step-three'], disabled: false},
-      {label: 'Summary', path: ['./../summary'], disabled: false},
+      {label: 'Step 1', path: ['./../step-one'], progress: 1, disabled: false},
+      {label: 'Step 2', path: ['./../step-two'], progress: 2, disabled: false},
+      {label: 'Step 3', path: ['./../step-three'], progress: 3, disabled: false},
+      {label: 'Summary', path: ['./../summary'], progress: 4, disabled: false},
     ];
+
+    this.purchaseNavLinks.forEach((link) => {
+      link.disabled = this.offerService.offerProgress < link.progress;
+    });
+
+    this.changedUser = this.authService.changedUser$.subscribe(() => {
+      this.portalNavLinks.forEach((links) => links.disabled = !this.user.registrationCompleted);
+    });
+  }
+
+  ngOnDestroy() {
+    this.changedUser.unsubscribe();
   }
 
   public logout(): void {

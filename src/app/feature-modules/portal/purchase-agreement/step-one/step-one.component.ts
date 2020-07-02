@@ -41,6 +41,7 @@ export class StepOneComponent implements OnInit {
               private route: ActivatedRoute,
               private progressService: ProgressService,
   ) {
+
   }
 
   get buyers(): FormArray {
@@ -57,17 +58,19 @@ export class StepOneComponent implements OnInit {
 
   // This flag means that user create new offer from anonymous data stored before
   get isAnonymousCreation(): boolean {
-    return !this.offerId && this.model !== null;
+    return false;
+    // return !!this.offerService.anonymousOfferData;
   }
 
   private get predefinedBuyer() {
     return this.createEntity();
-    // return (this.isEdit)
+    // return (!this.offerId)
     //   ? this.createEntity()
     //   : this.createEntity(this.authService.currentUser, !this.offerId);
   }
 
   ngOnInit() {
+    this.offerService.offerProgress = 1;
     this.isLoading = this.progressService.processingStream;
 
     this.offerId = +this.route.snapshot.paramMap.get('id');
@@ -115,9 +118,9 @@ export class StepOneComponent implements OnInit {
 
   createEntity(model?: Person, disabled: boolean = false): FormGroup {
     const formGroup = this.formBuilder.group({
-      firstName: [{value: null, disabled}, [Validators.required, Validators.maxLength(30)]],
-      lastName: [{value: null, disabled}, [Validators.required, Validators.maxLength(150)]],
-      email: [{value: null, disabled}, [Validators.required, Validators.email]], // CustomValidators.unique(this.)
+      firstName: [{value: model && model.firstName, disabled}, [Validators.required, Validators.maxLength(30)]],
+      lastName: [{value: model && model.lastName, disabled}, [Validators.required, Validators.maxLength(150)]],
+      email: [{value: model && model.email, disabled}, [Validators.required, Validators.email]], // CustomValidators.unique(this.)
     });
 
     if (model) {
@@ -141,7 +144,7 @@ export class StepOneComponent implements OnInit {
     /* FIXME */
     const model: Offer = {
       ...this.form.getRawValue(),
-      moderatorBuyers: this.moderators.getRawValue().map(i => ({...i, email: i.email.toLowerCase()})),
+      moderators: this.moderators.getRawValue().map(i => ({...i, email: i.email.toLowerCase()})),
       sellers: this.sellers.getRawValue().map(i => ({...i, email: i.email.toLowerCase()})),
       buyers: this.buyers.getRawValue().map(i => ({...i, email: i.email.toLowerCase()}))
     } as Offer; // to include 'state'
@@ -159,18 +162,26 @@ export class StepOneComponent implements OnInit {
   }
 
   private buildForm(): void {
-    const disabled: boolean = !this.offerId || this.isAnonymousCreation;
+    let anonymousOffer;
+    const disabled: boolean = this.isAnonymousCreation;
+
+    if (disabled) {
+      anonymousOffer = this.offerService.anonymousOfferData;
+    }
 
     this.form = this.formBuilder.group({
       id: [null, []],
       moderators: this.formBuilder.array([this.createEntity()]),
       buyers: this.formBuilder.array([this.predefinedBuyer]),
       sellers: this.formBuilder.array([this.createEntity()]),
-      streetName: [{value: null, disabled}, [Validators.required]],
-      city: [{value: null, disabled}, [Validators.required, Validators.maxLength(255)]],
+      streetName: [{value: disabled ? anonymousOffer.offer.streetName : '', disabled}, [Validators.required]],
+      city: [{value: disabled ? anonymousOffer.offer.city : '', disabled}, [Validators.required, Validators.maxLength(255)]],
       state: [{value: 'California', disabled: true}, [Validators.required, Validators.maxLength(150)]],
-      zip: [{value: null, disabled}, [Validators.required, CustomValidators.number, Validators.maxLength(10)]],
-      apn: [{value: null, disabled}, [CustomValidators.number]],
+      zip: [
+        {value: disabled ? anonymousOffer.offer.zip : '', disabled},
+        [Validators.required, CustomValidators.number, Validators.maxLength(10)]
+      ],
+      apn: [{value: disabled ? anonymousOffer.offer.apn : '', disabled}, [CustomValidators.number]],
     });
 
     if (this.model) {

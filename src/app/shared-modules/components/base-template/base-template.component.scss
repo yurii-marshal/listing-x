@@ -13,14 +13,19 @@
     cursor: pointer;
   }
 
-  .notifications {
-    margin-left: 220px;
-  }
+  .user-controls {
+    display: flex;
+    align-items: center;
 
-  .username {
-    font-size: 15px;
-    font-weight: 500;
-    color: #444c5d;
+    .notifications {
+      margin-left: 220px;
+    }
+
+    .username {
+      font-size: 15px;
+      font-weight: 500;
+      color: #444c5d;
+    }
   }
 
   .close-btn {
@@ -57,15 +62,56 @@
 
     .mat-tab-link {
       height: 73px;
-      width: 150px;
+      width: 160px;
       min-width: 150px;
     }
 
-    .mat-tab-link.mat-tab-disabled span {
-      background: url("/assets/images/icons/lock.svg") no-repeat;
-      margin-left: 9px;
-      width: 11px;
-      height: 16px;
+    .top-bar {
+      font-size: 15px;
+      line-height: 18px;
+      opacity: 1;
+    }
+
+    &.portal {
+      .mat-tab-link.mat-tab-disabled span {
+        background: url("/assets/images/icons/lock.svg") no-repeat;
+        margin-left: 9px;
+        width: 11px;
+        height: 16px;
+      }
+    }
+
+    &.purchase {
+      .top-bar {
+        width: 78px;
+        min-width: 78px;
+        margin: 0 20px;
+
+        &.completed {
+          color: #66AD58;
+
+          &:before {
+            content: '';
+            width: 21px;
+            height: 21px;
+            padding-right: 32px;
+            padding-bottom: 3px;
+            background: url("/assets/images/icons/checkmark.svg") no-repeat;
+          }
+        }
+      }
+
+      .mat-tab-link span {
+        background: url("/assets/images/icons/lock.svg") no-repeat;
+        margin-left: 9px;
+        width: 11px;
+        height: 16px;
+      }
+
+      .mat-ink-bar {
+        border-top-right-radius: 0;
+        border-top-left-radius: 0;
+      }
     }
   }
 }

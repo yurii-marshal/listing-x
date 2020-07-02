@@ -10,6 +10,7 @@
          [hidden]="link.hidden"
          class="top-bar">
         {{ link.label }}
+        <span *ngIf="link.disabled"></span>
       </a>
     </nav>
     <nav [class]="state" *ngIf="state === 'purchase'" mat-tab-nav-bar>
@@ -18,9 +19,9 @@
          routerLinkActive #rla="routerLinkActive"
          [active]="rla.isActive"
          [disabled]="link.disabled"
+         [class.completed]="offerService.offerProgress > link.progress"
          class="top-bar">
         {{ link.label }}
-        <span *ngIf="link.disabled"></span>
       </a>
     </nav>
 
@@ -29,7 +30,7 @@
       CLOSE
     </button>
 
-    <div *ngIf="state === 'portal'">
+    <div class="user-controls" *ngIf="state === 'portal'">
       <button mat-icon-button class="notifications">
         <img src="assets/images/icons/alarm.png" height="22">
       </button>

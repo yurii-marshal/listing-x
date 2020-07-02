@@ -4,14 +4,24 @@ import { BaseDataService } from '../base-classes/base-data-service';
 import { Agent } from '../models/agent';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfileService extends BaseDataService<Agent> {
+  currentAgent: Agent;
 
-  constructor(protected injector: Injector, protected http: HttpClient) {
+  constructor(
+    protected injector: Injector,
+    protected http: HttpClient,
+    private authService: AuthService,
+    ) {
     super(injector, ApiEndpoint.AgentProfile);
+  }
+
+  changeUserProps(props) {
+    this.authService.changeUser(props);
   }
 
   updateAgent(model: Agent): Observable<Agent> {
