@@ -30,8 +30,7 @@ export class StepOneComponent implements OnInit {
   isLoading: Observable<boolean>;
 
   offerId: number;
-  // TODO: stored offer fields?
-  model = null;
+  anonymousOffer: Offer;
 
   constructor(private formBuilder: FormBuilder,
               private offerService: OfferService,
@@ -41,7 +40,6 @@ export class StepOneComponent implements OnInit {
               private route: ActivatedRoute,
               private progressService: ProgressService,
   ) {
-
   }
 
   get buyers(): FormArray {
@@ -56,17 +54,10 @@ export class StepOneComponent implements OnInit {
     return this.form.get('moderators') as FormArray;
   }
 
-  // This flag means that user create new offer from anonymous data stored before
-  get isAnonymousCreation(): boolean {
-    return false;
-    // return !!this.offerService.anonymousOfferData;
-  }
-
-  private get predefinedBuyer() {
-    return this.createEntity();
-    // return (!this.offerId)
-    //   ? this.createEntity()
-    //   : this.createEntity(this.authService.currentUser, !this.offerId);
+  private get predefinedUser() {
+    return (this.authService.currentUser)
+      ? this.createEntity(this.authService.currentUser, true)
+      : this.createEntity();
   }
 
   ngOnInit() {
@@ -74,10 +65,11 @@ export class StepOneComponent implements OnInit {
     this.isLoading = this.progressService.processingStream;
 
     this.offerId = +this.route.snapshot.paramMap.get('id');
+    this.anonymousOffer = this.route.snapshot.data.model as Offer;
 
     this.buildForm();
 
-    if (this.isAnonymousCreation) {
+    if (this.anonymousOffer && !this.offerId) {
       this.form.markAsDirty(); // Allow to save immediately even user did't touch any field
     }
   }
@@ -105,14 +97,13 @@ export class StepOneComponent implements OnInit {
       this.form.setControl('sellers', this.formBuilder.array(sellers));
     }
 
-    if (model.moderators.length) {
+    if (model.moderators && model.moderators.length) {
       const mb = model.moderators.map((item) => this.createEntity(item, true));
       this.form.setControl('moderators', this.formBuilder.array(mb));
     }
 
-    if (this.model && !this.offerId) {
+    if (this.anonymousOffer && !this.offerId) {
       this.form.get('sellers').disable();
-      this.form.get('moderatorSellers').disable();
     }
   }
 
@@ -141,7 +132,6 @@ export class StepOneComponent implements OnInit {
   }
 
   submit(): void {
-    /* FIXME */
     const model: Offer = {
       ...this.form.getRawValue(),
       moderators: this.moderators.getRawValue().map(i => ({...i, email: i.email.toLowerCase()})),
@@ -157,35 +147,31 @@ export class StepOneComponent implements OnInit {
         tap(() => this.snackbar.open(message))
       )
       .subscribe(({id}) => {
-        this.router.navigate(['/purchase-agreement/step-two']);
+        console.log(id);
+        // this.router.navigate([`/purchase-agreement/${id}/step-two`]);
       });
   }
 
   private buildForm(): void {
-    let anonymousOffer;
-    const disabled: boolean = this.isAnonymousCreation;
-
-    if (disabled) {
-      anonymousOffer = this.offerService.anonymousOfferData;
-    }
+    const disabled: boolean = !!this.anonymousOffer;
 
     this.form = this.formBuilder.group({
-      id: [null, []],
-      moderators: this.formBuilder.array([this.createEntity()]),
-      buyers: this.formBuilder.array([this.predefinedBuyer]),
+      id: [this.offerId || null, []],
+      moderators: this.formBuilder.array([this.predefinedUser]),
+      buyers: this.formBuilder.array([this.createEntity()]),
       sellers: this.formBuilder.array([this.createEntity()]),
-      streetName: [{value: disabled ? anonymousOffer.offer.streetName : '', disabled}, [Validators.required]],
-      city: [{value: disabled ? anonymousOffer.offer.city : '', disabled}, [Validators.required, Validators.maxLength(255)]],
+      streetName: [{value: disabled && this.anonymousOffer.streetName, disabled}, [Validators.required]],
+      city: [{value: disabled && this.anonymousOffer.city, disabled}, [Validators.required, Validators.maxLength(255)]],
       state: [{value: 'California', disabled: true}, [Validators.required, Validators.maxLength(150)]],
       zip: [
-        {value: disabled ? anonymousOffer.offer.zip : '', disabled},
+        {value: disabled && this.anonymousOffer.zip, disabled},
         [Validators.required, CustomValidators.number, Validators.maxLength(10)]
       ],
-      apn: [{value: disabled ? anonymousOffer.offer.apn : '', disabled}, [CustomValidators.number]],
+      apn: [{value: disabled && this.anonymousOffer.apn, disabled}, [CustomValidators.number]],
     });
 
-    if (this.model) {
-      this.applyFormValues(this.model);
+    if (this.anonymousOffer) {
+      this.applyFormValues(this.anonymousOffer);
     }
   }
 
