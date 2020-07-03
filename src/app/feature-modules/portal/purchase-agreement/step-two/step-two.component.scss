@@ -1,11 +1,207 @@
-.viewer-container {
-  .viewer {
-    .pdf-container {
+@import "./../../../../../assets/agreement/css/LX-RPA-Short.css";
+@import "./../../../../../assets/agreement/css/pdf-media.css";
+@import "./../../../../../assets/scss/theming";
+@import "./../../../../../assets/scss/mixins";
 
+.viewer-container {
+  position: relative;
+  height: calc(100% - #{$header-height});
+  overflow-y: auto;
+
+  .viewer {
+    overflow: auto;
+
+    .doc-container {
+      padding: 64px 144px 64px 84px;
+      overflow-y: auto;
+
+      form {
+        .container {
+          padding-bottom: 184px;
+          transform: scale(0.8);
+          margin: -200px -100px;
+        }
+      }
     }
   }
 
   .side-bar {
+    width: 73px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-left: 1px solid #E2DFDF;
+    background-color: #ffffff;
+    z-index: 1;
 
+    @include animate-property(width);
+
+    &.open {
+      width: 237px;
+      padding: 23px 33px 0;
+    }
+
+    .offer-information {
+      position: relative;
+
+      .close-icon {
+        position: absolute;
+        cursor: pointer;
+        top: 22px;
+        right: 0;
+      }
+
+      h4 {
+        margin: 15px 0;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 24px;
+        text-transform: uppercase;
+        width: 100%;
+        text-align: left;
+        color: #444C5D;
+      }
+
+      .edit-btn {
+        margin-top: 42px;
+        width: 95px;
+        min-width: 95px;
+        height: 40px;
+        border: 1px solid #419BDF;
+        box-sizing: border-box;
+        border-radius: 4px;
+
+        font-family: 'SFUIDisplay', Roboto, "Helvetica Neue", sans-serif;
+        font-size: 12px;
+        text-align: center;
+        letter-spacing: 0.07em;
+        text-decoration-line: underline;
+        text-transform: uppercase;
+
+        color: #419BDF;
+
+        .text {
+          font-weight: bold;
+          letter-spacing: 0.07em;
+        }
+      }
+    }
+
+    .open-control {
+      padding-top: 20px;
+
+      .open-btn {
+        border: 1px solid #E2DFDF;
+        box-sizing: border-box;
+        border-radius: 4px;
+        width: 50px;
+        min-width: 50px;
+        height: 50px;
+        padding: 0;
+
+        img {
+          width: 24px;
+          height: 16px;
+        }
+      }
+    }
+
+    .controls {
+      padding-bottom: 20px;
+
+      .labels {
+        padding-bottom: 8px;
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 2px;
+        position: relative;
+        background: rgba(176, 183, 189, 0.4);
+        border-radius: 2px;
+        margin: 10px 0 30px;
+
+        .progress-line {
+          position: absolute;
+          height: 2px;
+          left: 0;
+          border-radius: 2px;
+          background: #66AD58;
+        }
+
+      }
+
+      .continue-btn {
+        background: #66AD58;
+        border-radius: 4px;
+        width: 50px;
+        min-width: 50px;
+        height: 50px;
+        display: flex;
+
+        img {
+          display: inline-block;
+          width: 30px;
+          padding-left: 2px;
+        }
+
+        span {
+          display: none;
+        }
+
+        &.wide {
+          width: 100%;
+          font-family: 'SFUIDisplay';
+          font-weight: bold;
+          font-size: 12px;
+          line-height: 14px;
+
+          text-align: center;
+          letter-spacing: 0.25px;
+
+          color: #FFFFFF;
+
+          img {
+            display: none;
+          }
+
+          span {
+            opacity: 0.5;
+            text-transform: uppercase;
+            display: inline-block;
+          }
+        }
+      }
+    }
+
+    h6 {
+      margin: 20px 0 5px;
+      font-weight: 600;
+      font-size: 11px;
+      line-height: 13px;
+
+      letter-spacing: 0.232143px;
+      text-transform: uppercase;
+      width: 100%;
+      text-align: left;
+
+      color: #B0B7BD;
+    }
+
+    h6.pages {
+      margin: 0;
+    }
+
+    .item, .progress {
+      font-size: 13px;
+      line-height: 16px;
+      width: 100%;
+      text-align: left;
+      letter-spacing: 0.25px;
+      display: inline;
+
+      color: #444C5C;
+    }
   }
 }

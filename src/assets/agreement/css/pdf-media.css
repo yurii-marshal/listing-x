@@ -1,0 +1,138 @@
+/* https://wkhtmltopdf.org/usage/wkhtmltopdf.txt */
+
+/* https://github.com/wkhtmltopdf/wkhtmltopdf/issues/3399 */
+
+@media (max-width: 1300px) {
+    body{
+        overflow-x: auto;
+    }
+    .container {
+        width: 1250px;
+        margin: 0px auto;
+        font-size: 0.9em !important;
+    }
+    .i-lr__5 {
+        width: 50px;
+    }
+    .i-lr-1 {
+        width: 80px;
+    }
+    .i-lr-1__5 {
+        width: 120px;
+    }
+    .i-lr-2 {
+        width: 170px;
+    }
+    .i-lr-2__5 {
+        width: 250px;
+    }
+    .i-lr-3 {
+        width: 280px;
+    }
+    .i-lr-3__5 {
+        width: 350px;
+    }
+    .i-lr-4 {
+        width: 350px;
+    }
+    .i-lr-4__5 {
+        width: 450px;
+    }
+    .i-lr-5 {
+        width: 420px;
+    }
+    .i-lr-5__5 {
+        width: 500px;
+    }
+    .i-lr-6 {
+        width: 500px;
+    }
+    .i-lr-7 {
+        width: 580px;
+    }
+    .i-lr-7__5 {
+        width: 650px;
+    }
+    .i-lr-8 {
+        width: 700px;
+    }
+    .i-lr-8__5 {
+        width: 750px;
+    }
+    .i-lr-9 {
+        width: 750px;
+    }
+    .i-lr-9__5 {
+        width: 850px;
+    }
+    .i-lr-10 {
+        width: 850px;
+    }
+    .i-lr-10__5 {
+        width: 900px;
+    }
+    .i-lr-11 {
+        width: 1000px;
+    }
+    .i-lr-11__5 {
+        width: 1000px;
+    }
+    .i-lr-12 {
+        width: 1040px;
+    }
+    .i-lr-12__45 {
+        width: 1100px;
+    }
+    .i-lr-13 {
+        width: 1150px;
+    }
+    .i-lr-14 {
+        width: 1400px;
+    }
+    textarea {
+        width: 98% !important;
+        /*background: url(./../../../assets/agreement/images/line.png) left top content-box repeat;*/
+        background-size: 503px;
+        font-size: 18px;
+        line-height: 29px;
+        overflow-y: hidden;
+    }
+    .box {
+        margin-top: -100px;
+    }
+    .text-justify{
+        padding-right: 5px;
+    }
+}
+
+/* @media (max-width: 900px) {
+    .container {
+        width: 1000px;
+        margin: 0px auto;
+        font-size: 1.6em !important;
+    }
+    textarea {
+        width: 1000px !important;
+        font-size: 1em;
+        line-height: 31px;
+    }
+    .box{
+        height: auto;
+        margin-top: -35px;
+        width: 500px;
+        margin-right: 100px;
+
+    }
+    .main-title{
+        font-size: 1em;
+        text-align: right;
+    }
+    .main-subtitle{
+        font-size: .9em
+    }
+    .main-subtitle>form{
+        float: none;
+        margin-left: 0;
+        margin-right: 50px;
+    }
+} */

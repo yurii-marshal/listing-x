@@ -37,9 +37,9 @@ export class HttpErrorsInterceptor implements HttpInterceptor {
       msg = 'Your session has expired. Please login again to continue working.';
       this.router.navigate(['/auth/login']);
     } else if (code === HttpStatusCodes.INTERNAL_SERVER_ERROR) {
-      msg = 'Internal server error'
-    } else  {
-      msg = this.formatMsg(errorResponse)
+      msg = 'Internal server error';
+    } else {
+      msg = this.formatMsg(errorResponse);
     }
 
     this.snackBar.open(msg || 'Something went wrong', 'OK', {duration: 10 * 1000, panelClass: 'error-bar'});
@@ -52,7 +52,7 @@ export class HttpErrorsInterceptor implements HttpInterceptor {
     }
 
     return _.chain(error)
-      .mapValues((value, key) => `${key}: ${value}`)
+      .mapValues((value, key) => `${_.startCase(key.toString())}: ${value}`)
       .values()
       .join('\n')
       .truncate({length: 100})

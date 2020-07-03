@@ -1,0 +1,383 @@
+body {
+    font-size: 20px;
+    font-family: Arial, Verdana, sans-serif;
+    overflow-x: hidden;
+}
+
+input {
+    border: none;
+    border-bottom: solid 1px black;
+}
+
+input[type=text] {
+    height: 1em;
+    font-size: 1em;
+}
+
+.container {
+    width: 1400px;
+    margin: 0px auto;
+}
+
+.v-b {
+    border: 1px solid red;
+    height: 2030px;
+}
+
+.m-auto {
+    margin: 0 auto;
+}
+
+a {
+    color: black;
+}
+
+.image {
+    float: left;
+}
+
+ol {
+    margin: 0;
+}
+
+ol>li {
+    padding-left: 10px;
+}
+
+.clearfix:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.box {
+    height: 100px;
+    width: 900px;
+    float: right;
+    text-align: center;
+    font-weight: bold;
+    margin-right: 50px;
+}
+
+.main-title {
+    padding: 2px;
+    font-size: 1.4em;
+}
+
+.fs-bt {
+    font-size: 1.2em;
+}
+
+.main-subtitle {
+    font-size: 1em;
+}
+
+.col-right-initials {
+    width: 515px;
+    float: right;
+}
+
+.col-left-initials {
+    width: 515px;
+    float: left;
+}
+
+.image-left {
+    float: left;
+}
+
+.image-right {
+    float: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-justify {
+    text-align: justify;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.border-dark {
+    border: solid 2px black;
+    padding: 6px;
+    margin: 7px 0;
+}
+
+.border-dark__fs {
+    font-size: 14px;
+}
+
+.col-left {
+    width: 1160px;
+    float: left;
+}
+
+.col-right {
+    width: 200px;
+    float: right;
+}
+
+.col-right>input {
+    width: 170px;
+}
+
+.form {
+    margin-top: 20px;
+}
+
+.ml-3 {
+    margin-left: 30px;
+}
+
+.ml-4 {
+    margin-left: 40px;
+}
+
+.ml-5 {
+    margin-left: 80px;
+}
+
+.ml-6 {
+    margin-left: 160px;
+}
+
+.mr-6 {
+    margin-right: 160px;
+}
+
+.ml-7 {
+    margin-left: 320px;
+}
+
+.fw-bold {
+    font-weight: bold;
+}
+
+.fw-normal {
+    font-weight: normal;
+}
+
+.fs-italic {
+    font-style: italic;
+}
+
+.fs-small {
+    font-size: 0.85em;
+}
+
+.i-lr__5 {
+    width: 50px;
+}
+
+.i-lr-1 {
+    width: 100px;
+}
+
+.i-lr-1__5 {
+    width: 150px;
+}
+
+.i-lr-2 {
+    width: 200px;
+}
+
+.i-lr-2__5 {
+    width: 250px;
+}
+
+.i-lr-3 {
+    width: 300px;
+}
+
+.i-lr-3__5 {
+    width: 350px;
+}
+
+.i-lr-4 {
+    width: 400px;
+}
+
+.i-lr-4__5 {
+    width: 450px;
+}
+
+.i-lr-5 {
+    width: 500px;
+}
+
+.i-lr-5__5 {
+    width: 550px;
+}
+
+.i-lr-6 {
+    width: 600px;
+}
+
+.i-lr-7 {
+    width: 680px;
+}
+
+.i-lr-7__5 {
+    width: 750px;
+}
+
+.i-lr-8 {
+    width: 800px;
+}
+
+.i-lr-8__5 {
+    width: 850px;
+}
+
+.i-lr-9 {
+    width: 900px;
+}
+
+.i-lr-9__5 {
+    width: 950px;
+}
+
+.i-lr-10 {
+    width: 1000px;
+}
+
+.i-lr-10__5 {
+    width: 1050px;
+}
+
+.i-lr-11 {
+    width: 1100px;
+}
+
+.i-lr-11__5 {
+    width: 1150px;
+}
+
+.i-lr-12 {
+    width: 1190px;
+}
+
+.i-lr-12__45 {
+    width: 1245px;
+}
+
+.i-lr-13 {
+    width: 1300px;
+}
+
+.i-lr-zip {
+    width: 190px;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.pb-20 {
+    padding-bottom: 20px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+.mt-25 {
+    margin-top: 25px;
+}
+
+/* my style */
+
+.item-pl-3 {
+    padding-left: 30px;
+}
+
+.item-pl-35 {
+    padding-left: 35px;
+}
+
+.item-pl-4 {
+    padding-left: 40px;
+}
+
+.w-a {
+    width: 100%;
+}
+
+.item-d1 {
+    margin-top: 25px;
+}
+
+.item-d2 {
+    margin-top: 95px;
+}
+
+.f-r {
+    float: right;
+}
+
+.f-l {
+    float: left;
+}
+
+.contact>span {
+    margin-right: 90px;
+}
+
+.contact>span:last-child {
+    margin-right: 0px;
+}
+
+.footer-link {
+    margin-right: 250px;
+}
+
+/* page 2 */
+
+.Initial-style {
+    width: 250px;
+}
+
+.Initial-style::after {
+    content: "(Initials)";
+    display: block;
+    text-align: center;
+}
+
+.p-relative {
+    position: relative;
+}
+
+.initial {
+    position: absolute;
+    top: 28px;
+    font-size: 0.7em;
+    font-weight: 300;
+    width: 100%;
+}
+
+.initial__ml69 {
+    margin-left: 69px;
+}
+
+.image-right__mt-20 {
+    margin-top: -20px;
+}
+
+.f-size-1 {
+    font-size: 1em;
+}
+
+/* 
+<span class="fw-bold">69 (or <input type="text" class="i-lr-1"> ) Days</span> 
+<span class="fw-bold">(ii)</span>
+
+*/

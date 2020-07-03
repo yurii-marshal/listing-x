@@ -11,7 +11,6 @@ import { Subject } from 'rxjs';
   styleUrls: ['./edit-offer-dialog.component.scss']
 })
 export class EditOfferDialogComponent implements OnInit, OnDestroy {
-  offer: Offer;
   private onDestroyed$: Subject<void> = new Subject<void>();
 
   constructor(
@@ -22,7 +21,6 @@ export class EditOfferDialogComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.offer = this.data.offer;
   }
 
   ngOnDestroy(): void {
@@ -30,11 +28,11 @@ export class EditOfferDialogComponent implements OnInit, OnDestroy {
     this.onDestroyed$.complete();
   }
 
-  close(save: boolean) {
+  close(save?: boolean) {
     if (save) {
-      this.offerService.update(this.offer)
+      this.offerService.update(this.data.offer)
         .pipe(takeUntil(this.onDestroyed$))
-        .subscribe(() => this.dialogRef.close(this.offer));
+        .subscribe(() => this.dialogRef.close(this.data.offer));
     } else {
       this.dialogRef.close();
     }

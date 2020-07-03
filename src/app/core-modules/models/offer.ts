@@ -13,7 +13,7 @@ export interface Offer {
   sellers: Person[];
   moderatorBuyers: Person[];
   moderatorSellers: Person[];
-  moderators: Person[];
+  agents: Person[];
   streetName: string;
   city: string;
   state: string;

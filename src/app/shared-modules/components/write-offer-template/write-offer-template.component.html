@@ -56,8 +56,8 @@
   </div>
   <div (click)="add(Type.Sellers)" class="link">add more seller</div>
 
-  <h4>Moderator</h4>
-  <div *ngFor="let control of moderators.controls; let i = index; let first = first" [formGroup]="control">
+  <h4>Agent</h4>
+  <div *ngFor="let control of agents.controls; let i = index; let first = first" [formGroup]="control">
     <h6 class="subtitle">moderator #{{ i + 1}}</h6>
     <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
       <div class="fieldset u-flex-03">
@@ -75,12 +75,12 @@
         <input formControlName="email" placeholder="example@maill.com" spellcheck="false" class="form-control">
         <app-form-validation-error [baseControl]="control.get('email')"></app-form-validation-error>
       </div>
-      <button *ngIf="!first" mat-icon-button color="accent" (click)="remove(Type.Moderators, i)">
+      <button *ngIf="!first" mat-icon-button color="accent" (click)="remove(Type.Agents, i)">
         <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
       </button>
     </div>
   </div>
-  <div (click)="add(Type.Moderators)" class="link">add more moderator</div>
+  <div (click)="add(Type.Agents)" class="link">add more agent</div>
 
   <h4>Address</h4>
   <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column" style="margin-bottom: -10px;">

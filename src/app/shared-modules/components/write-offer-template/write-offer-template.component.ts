@@ -11,7 +11,7 @@ import { switchMap, tap } from 'rxjs/operators';
 import { CustomValidators } from '../../../core-modules/validators/custom-validators';
 
 enum Type {
-  Moderators = 'moderators',
+  Agents = 'agents',
   Buyers = 'buyers',
   Sellers = 'sellers',
 }
@@ -48,8 +48,8 @@ export class WriteOfferTemplateComponent implements OnInit {
     return this.form.get('sellers') as FormArray;
   }
 
-  get moderators(): FormArray {
-    return this.form.get('moderators') as FormArray;
+  get agents(): FormArray {
+    return this.form.get('agents') as FormArray;
   }
 
   private get predefinedUser() {
@@ -59,6 +59,7 @@ export class WriteOfferTemplateComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.offer);
     this.isLoading = this.progressService.processingStream;
 
     this.buildForm();
@@ -88,9 +89,9 @@ export class WriteOfferTemplateComponent implements OnInit {
       this.form.setControl('sellers', this.formBuilder.array(sellers));
     }
 
-    if (model.moderators && model.moderators.length) {
-      const mb = model.moderators.map((item) => this.createEntity(item, true));
-      this.form.setControl('moderators', this.formBuilder.array(mb));
+    if (model.agents && model.agents.length) {
+      const mb = model.agents.map((item) => this.createEntity(item, true));
+      this.form.setControl('agents', this.formBuilder.array(mb));
     }
 
     if (this.anonymousOffer && !this.offer) {
@@ -125,7 +126,7 @@ export class WriteOfferTemplateComponent implements OnInit {
   submit(): void {
     const model: Offer = {
       ...this.form.getRawValue(),
-      moderators: this.moderators.getRawValue().map(i => ({...i, email: i.email.toLowerCase()})),
+      agents: this.agents.getRawValue().map(i => ({...i, email: i.email.toLowerCase()})),
       sellers: this.sellers.getRawValue().map(i => ({...i, email: i.email.toLowerCase()})),
       buyers: this.buyers.getRawValue().map(i => ({...i, email: i.email.toLowerCase()}))
     } as Offer; // to include 'state'
@@ -148,7 +149,7 @@ export class WriteOfferTemplateComponent implements OnInit {
 
     this.form = this.formBuilder.group({
       id: [this.offer && this.offer.id || null, []],
-      moderators: this.formBuilder.array([this.predefinedUser]),
+      agents: this.formBuilder.array([this.predefinedUser]),
       buyers: this.formBuilder.array([this.createEntity()]),
       sellers: this.formBuilder.array([this.createEntity()]),
       streetName: [{value: disabled ? this.anonymousOffer.streetName : null, disabled}, [Validators.required]],

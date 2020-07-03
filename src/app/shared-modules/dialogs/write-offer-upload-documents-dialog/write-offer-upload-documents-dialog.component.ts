@@ -24,7 +24,7 @@ export class WriteOfferUploadDocumentsDialogComponent implements OnInit {
 
   get closeLink() {
     return this.data.modalType === UploadDocsModalType.OfferUpdating ?
-      `/portal/transaction/${this.data.model.offerId}` : '../';
+      `/portal/transaction/${this.data.model.offerId}` : '/portal';
   }
 
   constructor(public route: ActivatedRoute,
