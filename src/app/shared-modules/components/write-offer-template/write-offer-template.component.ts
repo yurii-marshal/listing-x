@@ -59,12 +59,11 @@ export class WriteOfferTemplateComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.offer);
     this.isLoading = this.progressService.processingStream;
 
     this.buildForm();
 
-    if (this.anonymousOffer && !this.offer) {
+    if (this.anonymousOffer || this.offer) {
       this.form.markAsDirty(); // Allow to save immediately even user did't touch any field
     }
   }
@@ -80,17 +79,17 @@ export class WriteOfferTemplateComponent implements OnInit {
 
     // Nested forms
     if (!_.isEmpty(model.buyers)) {
-      const buyers = _.map(model.buyers, (item: Person, i: number) => this.createEntity(item, true));
+      const buyers = _.map(model.buyers, (item: Person, i: number) => this.createEntity(item, !!this.anonymousOffer));
       this.form.setControl('buyers', this.formBuilder.array(buyers));
     }
 
     if (!_.isEmpty(model.sellers)) {
-      const sellers = _.map(model.sellers, item => this.createEntity(item, true));
+      const sellers = _.map(model.sellers, item => this.createEntity(item, !!this.anonymousOffer));
       this.form.setControl('sellers', this.formBuilder.array(sellers));
     }
 
     if (model.agents && model.agents.length) {
-      const mb = model.agents.map((item) => this.createEntity(item, true));
+      const mb = model.agents.map((item) => this.createEntity(item, !!this.anonymousOffer));
       this.form.setControl('agents', this.formBuilder.array(mb));
     }
 
@@ -145,25 +144,26 @@ export class WriteOfferTemplateComponent implements OnInit {
   }
 
   private buildForm(): void {
+    const offerValues = this.anonymousOffer || this.offer;
     const disabled: boolean = !!this.anonymousOffer;
 
     this.form = this.formBuilder.group({
-      id: [this.offer && this.offer.id || null, []],
+      id: [offerValues && offerValues.id || null, []],
       agents: this.formBuilder.array([this.predefinedUser]),
       buyers: this.formBuilder.array([this.createEntity()]),
       sellers: this.formBuilder.array([this.createEntity()]),
-      streetName: [{value: disabled ? this.anonymousOffer.streetName : null, disabled}, [Validators.required]],
-      city: [{value: disabled ? this.anonymousOffer.city : null, disabled}, [Validators.required, Validators.maxLength(255)]],
+      streetName: [{value: offerValues ? offerValues.streetName : null, disabled}, [Validators.required]],
+      city: [{value: offerValues ? offerValues.city : null, disabled}, [Validators.required, Validators.maxLength(255)]],
       state: [{value: 'California', disabled: true}, [Validators.required, Validators.maxLength(150)]],
       zip: [
-        {value: disabled ? this.anonymousOffer.zip : null, disabled},
+        {value: offerValues ? offerValues.zip : null, disabled},
         [Validators.required, CustomValidators.number, Validators.maxLength(10)]
       ],
-      apn: [{value: disabled ? this.anonymousOffer.apn : null, disabled}, [CustomValidators.number]],
+      apn: [{value: offerValues ? offerValues.apn : null, disabled}, [CustomValidators.number]],
     });
 
-    if (this.anonymousOffer) {
-      this.applyFormValues(this.anonymousOffer);
+    if (offerValues) {
+      this.applyFormValues(offerValues);
     }
   }
 
