@@ -1,0 +1,74 @@
+@import "./../../../../assets/scss/theming";
+@import "./../../../../assets/scss/forms.template";
+
+.subtitle {
+  text-transform: uppercase;
+  margin: 0 0 13px 0;
+}
+
+.question {
+  font-size: 13px;
+  letter-spacing: 0.25px;
+  color: #444c5c;
+  margin: 0 10px 20px 10px;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+form {
+  .fieldset {
+    width: initial;
+
+    .form-control, .form-control:disabled {
+      border: 1px solid #D5D9E1;
+
+      &:focus, &:not([disabled]):hover {
+        border: 1px solid #419BDF;
+      }
+    }
+  }
+
+  .link {
+    outline: none;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.23px;
+    color: #419bdf;
+    text-transform: uppercase;
+    margin: 0 0 13px 0;
+    display: inline-block;
+  }
+}
+
+.sub-header {
+  .link {
+    padding-left: 15px;
+  }
+}
+
+.multi-column {
+  .fieldset:not(:first-of-type) {
+    margin-left: 13px;
+  }
+}
+
+.button-bar {
+  padding-top: 30px;
+
+  button {
+    width: 100%;
+
+    span {
+      font-size: 12px;
+      line-height: 14px;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+
+      color: #FFFFFF;
+    }
+  }
+}

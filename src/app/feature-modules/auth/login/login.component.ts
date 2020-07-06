@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
     let uri = this.route.snapshot.queryParams.redirectUrl || '/portal';
 
     if (this.hasOfferData) {
-      uri = '/portal/offer';
+      uri = '/portal/purchase-agreement/step-one';
     }
 
     return uri;

@@ -8,6 +8,7 @@ import { NotificationType } from '../../../core-modules/enums/notification-type'
 import { CustomValidators } from '../../../core-modules/validators/custom-validators';
 import { Agent } from '../../../core-modules/models/agent';
 import { ActivatedRoute } from '@angular/router';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-user-profile',
@@ -49,11 +50,16 @@ export class UserProfileComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    this.profileService.updateAgent(this.form.value)
-      .subscribe(() => this.snackBar.open(
-        'Profile has been updated',
-        'OK',
-        {duration: 5000}));
+    if (!_.isEqual(this.form.value, this.profileService.currentAgent)) {
+      this.profileService.updateAgent(this.form.value)
+        .subscribe(() => {
+          this.snackBar.open(
+            'Profile has been updated',
+            'OK',
+            {duration: 5000});
+          this.profileService.changeUserProps({registrationCompleted: true});
+        });
+    }
   }
 
 }

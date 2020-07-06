@@ -4,7 +4,7 @@ import * as moment from 'moment';
 import { User } from '../../feature-modules/auth/models';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { LocalStorageKey } from '../enums/local-storage-key';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { JwtResponse } from '../interfaces/jwt-response';
 import * as _ from 'lodash';
 import { ApiEndpoint, AuthEndpoint } from '../enums/api-endpoints';
@@ -14,6 +14,7 @@ import { ApiEndpoint, AuthEndpoint } from '../enums/api-endpoints';
 })
 export class AuthService {
   currentUser: User;
+  changedUser$: Subject<User> = new Subject<User>();
 
   constructor(private http: HttpClient) {
   }
@@ -60,6 +61,12 @@ export class AuthService {
         map(data => !!data),
         catchError(() => of(false)),
       );
+  }
+
+  // rewrite user properties after profile changes
+  updateUser(props) {
+    this.currentUser = Object.assign(this.currentUser, props);
+    this.changedUser$.next(this.currentUser);
   }
 
   login(user: User): Observable<JwtResponse> {

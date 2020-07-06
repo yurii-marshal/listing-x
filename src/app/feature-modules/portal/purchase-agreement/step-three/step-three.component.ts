@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { OfferService } from '../../services/offer.service';
 
 @Component({
   selector: 'app-step-three',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StepThreeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private offerService: OfferService) { }
 
   ngOnInit() {
+    this.offerService.offerProgress = 3;
   }
 
 }

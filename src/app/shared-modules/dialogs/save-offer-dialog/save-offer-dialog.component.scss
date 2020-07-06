@@ -1,0 +1,68 @@
+@import "../dialogs.template";
+
+.mat-dialog-title {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+}
+
+.close-btn {
+  position: absolute;
+  top: -20px;
+  right: -15px;
+
+  .mat-icon {
+    color: #A4AAB3;
+  }
+}
+
+.title {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  color: #444C5D;
+
+}
+
+.subtitle {
+  font-size: 15px;
+  line-height: 20px;
+  padding: 20px 0 40px;
+
+  color: #8E96A7;
+}
+
+.controls {
+  padding-bottom: 25px;
+  display: flex;
+  justify-content: space-between;
+
+  .btn {
+    width: 178px;
+    border-radius: 4px;
+
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 14px;
+    text-transform: uppercase;
+
+    color: #FFFFFF;
+
+
+    &.save {
+      background: #66AD58;
+    }
+
+    &.discard {
+      background: #CD584A;
+    }
+
+    &.cancel {
+      color: #5B6375;
+      font-weight: normal;
+      background: #FFFFFF;
+      border: 1px solid #D5D9E1;
+    }
+  }
+}

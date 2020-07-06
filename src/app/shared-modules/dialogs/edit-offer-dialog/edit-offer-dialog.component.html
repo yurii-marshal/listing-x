@@ -1,0 +1,12 @@
+<div mat-dialog-title class="u-flex u-flex-justify--space-between u-flex-align-items--center">
+  <div class="title">Edit Offer Information</div>
+  <button mat-icon-button mat-dialog-close (click)="close()">
+    <mat-icon fontSet="fa" fontIcon="fa-times"></mat-icon>
+  </button>
+</div>
+<div mat-dialog-content class="form-container dialog-form" style="min-height: 400px">
+  <app-write-offer-template
+    [offer]="offer"
+    (offerSent)="close(data)"
+  ></app-write-offer-template>
+</div>

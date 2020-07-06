@@ -1,15 +1,15 @@
-import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {AddressDialogComponent} from '../../../shared-modules/dialogs/address-dialog/address-dialog.component';
-import {filter, takeUntil} from 'rxjs/operators';
-import {MatDialog} from '@angular/material';
-import {BaseTableDataSource} from '../../../core-modules/datasources/base-table-data-source';
-import {CalendarEvent, Transaction, TransactionStatus} from '../../../core-modules/models/transaction';
-import {TransactionService} from '../services/transaction.service';
-import {AuthService} from '../../../core-modules/core-services/auth.service';
-import {Person} from '../../../core-modules/models/offer';
-import {OfferService} from '../services/offer.service';
-import {Subject} from 'rxjs';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AddressDialogComponent } from '../../../shared-modules/dialogs/address-dialog/address-dialog.component';
+import { filter, takeUntil } from 'rxjs/operators';
+import { MatDialog } from '@angular/material';
+import { BaseTableDataSource } from '../../../core-modules/datasources/base-table-data-source';
+import { CalendarEvent, Transaction, TransactionStatus } from '../../../core-modules/models/transaction';
+import { TransactionService } from '../services/transaction.service';
+import { AuthService } from '../../../core-modules/core-services/auth.service';
+import { Person } from '../../../core-modules/models/offer';
+import { OfferService } from '../services/offer.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-transactions',
@@ -17,32 +17,30 @@ import {Subject} from 'rxjs';
   styleUrls: ['./transactions.component.scss']
 })
 export class TransactionsComponent implements OnDestroy, OnInit, AfterViewInit {
-  private onDestroyed$: Subject<void> = new Subject<void>();
   displayedColumns: string[] = ['createdAt', 'address', 'moderatorBuyers', 'moderatorSellers',
-                                'buyers', 'sellers', 'status', 'lastLogs', 'actions'];
-
+    'buyers', 'sellers', 'status', 'lastLogs', 'actions'];
   dataSource: BaseTableDataSource<Transaction>;
-
   statuses: string[] = Object.values(TransactionStatus);
-
   calendarDataSource: CalendarEvent[];
   /* TODO: Refactor */
-  readonly statusLabels: {[key: string]: string} = {
+  readonly statusLabels: { [key: string]: string } = {
     [TransactionStatus.All]: 'All transactions',
     [TransactionStatus.New]: 'New',
     [TransactionStatus.InProgress]: 'In progress',
     [TransactionStatus.Finished]: 'Finished'
   };
-
-  get Status() {
-    return TransactionStatus;
-  }
+  private onDestroyed$: Subject<void> = new Subject<void>();
 
   constructor(private router: Router,
               private service: TransactionService,
               private offerService: OfferService,
               private authService: AuthService,
-              private dialog: MatDialog) { }
+              private dialog: MatDialog) {
+  }
+
+  get Status() {
+    return TransactionStatus;
+  }
 
   ngOnInit() {
     // this.service.loadCalendar()
@@ -57,6 +55,11 @@ export class TransactionsComponent implements OnDestroy, OnInit, AfterViewInit {
     ).subscribe(() => {
       this.dataSource.reload();
     });
+  }
+
+  openOfferFlow() {
+    this.offerService.currentOffer = null;
+    this.router.navigate(['/portal/purchase-agreement/step-one']);
   }
 
   openCreateAddressDialog() {

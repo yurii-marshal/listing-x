@@ -1,26 +1,60 @@
+@import "../../../../assets/scss/theming";
 @import "../../../../assets/scss/mixins";
 
 .dummy-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #ffffff;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 74px;
+  height: $header-height;
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+  z-index: 9;
 
   .logo {
     margin-right: 68px;
     cursor: pointer;
   }
 
-  .notifications {
-    margin-left: 220px;
+  .user-controls {
+    display: flex;
+    align-items: center;
+
+    .notifications {
+      margin-left: 220px;
+    }
+
+    .username {
+      font-size: 15px;
+      font-weight: 500;
+      color: #444c5d;
+    }
   }
 
-  .username {
-    font-size: 15px;
-    font-weight: 500;
-    color: #444c5d;
+  .close-btn {
+    margin-left: 15vw;
+
+    width: 90px;
+    height: 38px;
+
+    border: 1px solid #D5D9E1;
+    border-radius: 4px;
+
+    font-weight: 600;
+    font-size: 11px;
+    line-height: 13px;
+    text-align: center;
+
+    color: #B0B7BD;
+
+    img {
+      width: 17px;
+      padding-bottom: 2px;
+      padding-right: 3px;
+    }
   }
 
   p {
@@ -34,17 +68,63 @@
 
     .mat-tab-link {
       height: 73px;
-      width: 150px;
+      width: 160px;
       min-width: 150px;
     }
 
-    .mat-tab-link.mat-tab-disabled span {
-      background: url("/assets/images/icons/lock.svg") no-repeat;
-      margin-left: 9px;
-      width: 11px;
-      height: 16px;
+    .top-bar {
+      font-size: 15px;
+      line-height: 18px;
+      opacity: 1;
+    }
+
+    &.portal {
+      .mat-tab-link.mat-tab-disabled span {
+        background: url("/assets/images/icons/lock.svg") no-repeat;
+        margin-left: 9px;
+        width: 11px;
+        height: 16px;
+      }
+    }
+
+    &.purchase {
+      .top-bar {
+        width: 95px;
+        min-width: 95px;
+        margin: 0 20px;
+
+        &.completed {
+          color: #66AD58;
+
+          &:before {
+            content: '';
+            width: 21px;
+            height: 21px;
+            padding-right: 32px;
+            padding-bottom: 3px;
+            background: url("/assets/images/icons/checkmark.svg") no-repeat;
+          }
+        }
+      }
+
+      .mat-tab-link span {
+        background: url("/assets/images/icons/lock.svg") no-repeat;
+        margin-left: 9px;
+        width: 11px;
+        height: 16px;
+      }
+
+      .mat-ink-bar {
+        border-top-right-radius: 0;
+        border-top-left-radius: 0;
+      }
     }
   }
+}
+
+.offset {
+  height: $header-height;
+  width: 100%;
 }
 
 .app-footer {

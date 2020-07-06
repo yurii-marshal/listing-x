@@ -11,70 +11,41 @@
     line-height: 43px;
     text-align: center;
     color: $primary-text;
+    padding-bottom: 50px;
   }
 
-  .subtitle {
-    text-transform: uppercase;
-    margin: 0 0 13px 0;
+  .find-existing {
+    width: 555px;
   }
 
-  .question {
-    font-size: 13px;
-    letter-spacing: 0.25px;
-    color: #444c5c;
-    margin: 0 10px 20px 10px;
-  }
+  .existing-offers {
+    padding-top: 10px;
+    padding-bottom: 30px;
 
-  .hidden {
-    opacity: 0;
-  }
-
-  form {
-    padding-top: 50px;
-
-    .fieldset {
-      width: initial;
-    }
-    .link {
-      outline: none;
-      cursor: pointer;
-      text-decoration: underline;
-      font-size: 11px;
+    .find-btn {
+      width: 127px;
+      height: 40px;
+      background: #66AD58;
+      border: 1px solid #66AD58;
+      box-sizing: border-box;
+      border-radius: 4px;
       font-weight: 600;
-      letter-spacing: 0.23px;
-      color: #419bdf;
-      text-transform: uppercase;
-      margin: 0 0 36px 0;
+      font-size: 11px;
+      line-height: 13px;
+      text-align: center;
+      letter-spacing: 0.07em;
+
+      color: #FFFFFF;
+
+    }
+
+    .label {
+      padding-left: 30px;
+      font-size: 13px;
+      line-height: 16px;
+      letter-spacing: 0.25px;
+      color: #C7CCD6;
     }
   }
 
-  h4 {
-    margin-top: 5px;
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 1.71;
-    color: $primary-text;
-    text-transform: uppercase;
-  }
-
-  h6 {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.23px;
-    color: #b0b7bd;
-  }
-
-  .multi-column {
-    .fieldset:not(:first-of-type) {
-      margin-left: 13px;
-    }
-  }
-}
-
-.button-bar {
-  padding-top: 30px;
-
-  button {
-    width: 100%;
-  }
 }
