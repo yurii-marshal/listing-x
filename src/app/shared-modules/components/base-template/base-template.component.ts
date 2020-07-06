@@ -4,7 +4,8 @@ import { User } from '../../../feature-modules/auth/models';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
 import { ProfileService } from '../../../core-modules/core-services/profile.service';
 import { OfferService } from '../../../feature-modules/portal/services/offer.service';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-base-template',
@@ -19,11 +20,12 @@ export class BaseTemplateComponent implements OnInit, OnDestroy {
   state: string = 'portal';
 
   user: User;
-  changedUser: Subscription;
 
   portalNavLinks: { label, path, disabled, hidden }[] = [];
 
   purchaseNavLinks: { label, path, progress, disabled }[] = [];
+
+  private onDestroyed$: Subject<void> = new Subject<void>();
 
   constructor(private authService: AuthService,
               public offerService: OfferService,
@@ -58,13 +60,16 @@ export class BaseTemplateComponent implements OnInit, OnDestroy {
       link.disabled = this.offerService.offerProgress < link.progress;
     });
 
-    this.changedUser = this.authService.changedUser$.subscribe(() => {
+    this.authService.changedUser$
+      .pipe(takeUntil(this.onDestroyed$))
+      .subscribe(() => {
       this.portalNavLinks.forEach((links) => links.disabled = !this.user.registrationCompleted);
     });
   }
 
   ngOnDestroy() {
-    this.changedUser.unsubscribe();
+    this.onDestroyed$.next();
+    this.onDestroyed$.complete();
   }
 
   public logout(): void {

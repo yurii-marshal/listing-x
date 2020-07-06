@@ -22,7 +22,6 @@ export class AgentDataResolver implements Resolve<Agent> {
 
     return this.profileService.getAgent()
       .pipe(
-        tap((agent: Agent) => this.profileService.currentAgent = agent),
         catchError(err => {
           this.snackBar.open(`Cannot retrieve agent.`, 'OK', config);
           return of(null);

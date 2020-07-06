@@ -63,7 +63,8 @@ export class AuthService {
       );
   }
 
-  changeUser(props) {
+  // rewrite user properties after profile changes
+  updateUser(props) {
     this.currentUser = Object.assign(this.currentUser, props);
     this.changedUser$.next(this.currentUser);
   }
