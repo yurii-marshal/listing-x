@@ -15,10 +15,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class StepTwoComponent implements OnInit, OnDestroy {
   documentForm: FormGroup;
+  currentPage: number = 0;
+  completedFieldsCount: number = 0;
+  allFieldsCount: number = 0;
   isSideBarOpen: boolean;
   offerId: number;
   offer: Offer;
-  documentPDF = {
+  documentPA = {
     pages: [
       {
         fields: []

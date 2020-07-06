@@ -26,17 +26,11 @@ export class StepOneComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.offerId = +this.route.snapshot.params.id;
-    this.anonymousOffer = this.route.snapshot.data.anonymousOffer as Offer;
 
-    if (this.offerId) {
-      this.offerService.getOfferById(this.offerId)
-        .pipe(
-          takeUntil(this.onDestroyed$)
-        )
-        .subscribe((offer: Offer) => {
-          this.offer = offer;
-        });
-    }
+    this.offerId ?
+      this.offerService.getOfferById(this.offerId).pipe(takeUntil(this.onDestroyed$))
+        .subscribe((offer: Offer) => this.offer = offer)
+      : this.anonymousOffer = this.route.snapshot.data.anonymousOffer as Offer;
   }
 
   ngOnDestroy(): void {

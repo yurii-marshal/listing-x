@@ -7,7 +7,7 @@
          routerLinkActive #rla="routerLinkActive"
          [active]="rla.isActive"
          [disabled]="link.disabled"
-         [hidden]="link.hidden"
+         [style.display]="link.hidden ? 'none' : 'flex'"
          class="top-bar">
         {{ link.label }}
         <span *ngIf="link.disabled"></span>

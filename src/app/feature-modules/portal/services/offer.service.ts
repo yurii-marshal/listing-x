@@ -27,11 +27,14 @@ export class OfferService extends BaseDataService<Offer> {
   }
 
   getOfferById(id: number) {
-    if (this.currentOffer && id === this.currentOffer.id) {
+    if (this.currentOffer && (this.currentOffer.id === id)) {
       return of(this.currentOffer);
     }
 
-    return super.loadOne(id);
+    return this.http.get<Offer>(`/offers/${id}`)
+      .pipe(
+        tap((offer: Offer) => this.currentOffer = offer),
+      );
   }
 
   add(model: Offer): Observable<Offer> {
