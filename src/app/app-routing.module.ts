@@ -31,6 +31,9 @@ const routes: Routes = [
     path: 'e-sign',
     loadChildren: () => import('./feature-modules/digital-signature/digital-signature.module').then(m => m.DigitalSignatureModule),
   }, {
+    path: 'ui-kit',
+    loadChildren: () => import('./feature-modules/ui-kit/ui-kit.module').then(m => m.UiKitModule),
+  }, {
     path: '**',
     redirectTo: '/error/404'
   }
