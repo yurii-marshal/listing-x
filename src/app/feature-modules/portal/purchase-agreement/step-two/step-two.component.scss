@@ -6,20 +6,32 @@
 .viewer-container {
   position: relative;
   height: calc(100% - #{$header-height});
-  overflow-y: auto;
 
   .viewer {
-    overflow: auto;
+    overflow: hidden;
 
     .doc-container {
-      padding: 64px 144px 64px 84px;
       overflow-y: auto;
+      min-height: 100%;
+      height: auto;
+      margin: -200px -100px;
+      padding: 64px 144px 64px 84px;
 
       form {
+        overflow-y: auto;
+
         .container {
           padding-bottom: 184px;
           transform: scale(0.8);
-          margin: -200px -100px;
+        }
+
+        .page-breaker {
+          text-align: center;
+          margin: -230px 0 -130px;
+
+          &:last-child {
+            margin: -300px 0 300px;
+          }
         }
       }
     }

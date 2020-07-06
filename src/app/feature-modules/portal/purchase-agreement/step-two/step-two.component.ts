@@ -1,11 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { OfferService } from '../../services/offer.service';
 import { Offer } from '../../../../core-modules/models/offer';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { EditOfferDialogComponent } from '../../../../shared-modules/dialogs/edit-offer-dialog/edit-offer-dialog.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { debounceTime, takeUntil } from 'rxjs/operators';
+import { fromEvent, Subject } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -28,8 +28,10 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       }
     ],
   };
-  progressState$: Subject<number> = new Subject();
   private onDestroyed$: Subject<void> = new Subject<void>();
+
+  private pageBreakersOffsetTop: number[];
+  private documentFormEl: EventTarget;
 
   constructor(
     private offerService: OfferService,
@@ -38,6 +40,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private snackbar: MatSnackBar,
     private fb: FormBuilder,
+    private elRef: ElementRef
   ) {
   }
 
@@ -471,11 +474,38 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       .subscribe((offer: Offer) => {
         this.offer = offer;
       });
+
+    this.pageBreakersOffsetTop = Array.from(this.elRef.nativeElement.querySelectorAll('.page-breaker'))
+      .map((item: any) => item.offsetTop);
+
+    this.documentFormEl = this.elRef.nativeElement.getElementsByClassName('doc-container')[0];
+
+    fromEvent(this.documentFormEl, 'scroll')
+      .pipe(
+        debounceTime(300),
+        takeUntil(this.onDestroyed$)
+      )
+      .subscribe((event: any) => {
+        this.detectPageChange(event.target.scrollTop);
+      });
   }
 
   ngOnDestroy(): void {
     this.onDestroyed$.next();
     this.onDestroyed$.complete();
+  }
+
+  detectPageChange(currentScrollPosition: number) {
+    for (let i = 0; i < this.pageBreakersOffsetTop.length; i++) {
+      if (this.pageBreakersOffsetTop[i + 1]) {
+        if (currentScrollPosition >= this.pageBreakersOffsetTop[i] && currentScrollPosition < this.pageBreakersOffsetTop[i + 1]) {
+          this.currentPage = i;
+          break;
+        }
+      }
+
+      this.currentPage = i;
+    }
   }
 
   editOffer() {

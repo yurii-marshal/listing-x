@@ -42,6 +42,7 @@ import { FirstLetterPipe } from './pipes/first-letter.pipe';
 import { NotificationBarComponent } from './components/notification-bar/notification-bar.component';
 import { WriteOfferTemplateComponent } from './components/write-offer-template/write-offer-template.component';
 import { EditOfferDialogComponent } from './dialogs/edit-offer-dialog/edit-offer-dialog.component';
+import { OnlyNumbersDirective } from './directives/only-numbers.directive';
 
 const materialModules = [
   MatDialogModule,
@@ -77,6 +78,7 @@ const components = [
   CopyToClipboard,
   DialogsWrapperComponent,
   TooltipDirective,
+  OnlyNumbersDirective,
   FilePickerComponent,
   FileOption,
   FileUploaderComponent,
