@@ -1,16 +1,17 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy } from '@angular/core';
 import { Offer } from '../../../core-modules/models/offer';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { OfferService } from '../../../feature-modules/portal/services/offer.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-edit-offer-dialog',
   templateUrl: './edit-offer-dialog.component.html',
   styleUrls: ['./edit-offer-dialog.component.scss']
 })
-export class EditOfferDialogComponent implements OnInit, OnDestroy {
+export class EditOfferDialogComponent implements OnDestroy {
   private onDestroyed$: Subject<void> = new Subject<void>();
 
   constructor(
@@ -20,21 +21,20 @@ export class EditOfferDialogComponent implements OnInit, OnDestroy {
   ) {
   }
 
-  ngOnInit() {
-  }
-
   ngOnDestroy(): void {
     this.onDestroyed$.next();
     this.onDestroyed$.complete();
   }
 
-  close(save?: boolean) {
-    if (save) {
-      this.offerService.update(this.data.offer)
+  close(data?: Offer) {
+    if (data) {
+      this.offerService.update(data)
         .pipe(takeUntil(this.onDestroyed$))
-        .subscribe(() => this.dialogRef.close(this.data.offer));
+        .subscribe(() => this.dialogRef.close({saved: true}));
     } else {
-      this.dialogRef.close();
+      // TODO: compare current offer with userChanges not the offer
+      const changes = !_.isEqual(this.offerService.currentOffer, this.offerService.changedOfferModel);
+      this.dialogRef.close({requestToSave: changes, changedOfferModel: this.offerService.changedOfferModel});
     }
   }
 

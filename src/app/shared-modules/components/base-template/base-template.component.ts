@@ -4,7 +4,7 @@ import { User } from '../../../feature-modules/auth/models';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
 import { ProfileService } from '../../../core-modules/core-services/profile.service';
 import { OfferService } from '../../../feature-modules/portal/services/offer.service';
-import { Subject, Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({

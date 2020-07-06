@@ -4,9 +4,10 @@ import { Offer } from '../../../../core-modules/models/offer';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { EditOfferDialogComponent } from '../../../../shared-modules/dialogs/edit-offer-dialog/edit-offer-dialog.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { debounceTime, takeUntil } from 'rxjs/operators';
-import { fromEvent, Subject } from 'rxjs';
+import { debounceTime, take, takeUntil } from 'rxjs/operators';
+import { fromEvent, Observable, Subject } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SaveOfferDialogComponent } from '../../../../shared-modules/dialogs/save-offer-dialog/save-offer-dialog.component';
 
 @Component({
   selector: 'app-step-two',
@@ -508,19 +509,55 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     }
   }
 
-  editOffer() {
+  editOffer(offerChangedModel?: Offer) {
     const dialogRef = this.dialog.open(EditOfferDialogComponent, {
       width: '600px',
       disableClose: true,
-      data: {offer: this.offer}
+      data: {offer: offerChangedModel || this.offer}
     });
 
     dialogRef.afterClosed()
-      .subscribe((offer: Offer) => {
-        if (offer) {
+      .pipe(takeUntil(this.onDestroyed$))
+      .subscribe((data: any) => {
+        if (data.saved) {
           this.snackbar.open('Offer is updated');
         }
+        if (data.requestToSave) {
+          this.openSaveOfferDialog(data.changedOfferModel);
+        }
       });
+  }
+
+  openSaveOfferDialog(changedOfferModel: Offer) {
+    const dialogRef = this.dialog.open(SaveOfferDialogComponent, {
+      width: '600px',
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed()
+      .pipe(takeUntil(this.onDestroyed$))
+      .subscribe((data: any) => {
+        if (data) {
+          if (data.saveAndClose) {
+            this.saveOffer(changedOfferModel)
+              .pipe(takeUntil(this.onDestroyed$))
+              .subscribe((model: Offer) => {
+                this.offer = model;
+                this.snackbar.open('Offer is updated');
+              });
+          }
+          if (data.discard) {
+            this.offer = this.offerService.currentOffer;
+          }
+          if (data.reopen) {
+            this.editOffer(changedOfferModel);
+          }
+        }
+      });
+  }
+
+  saveOffer(model: Offer): Observable<Offer> {
+    return this.offerService.update(model);
   }
 
   acceptOfferPDF() {

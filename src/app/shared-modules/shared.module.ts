@@ -43,6 +43,7 @@ import { NotificationBarComponent } from './components/notification-bar/notifica
 import { WriteOfferTemplateComponent } from './components/write-offer-template/write-offer-template.component';
 import { EditOfferDialogComponent } from './dialogs/edit-offer-dialog/edit-offer-dialog.component';
 import { OnlyNumbersDirective } from './directives/only-numbers.directive';
+import { SaveOfferDialogComponent } from './dialogs/save-offer-dialog/save-offer-dialog.component';
 
 const materialModules = [
   MatDialogModule,
@@ -74,6 +75,7 @@ const components = [
   BaseTemplateComponent,
   WriteOfferTemplateComponent,
   EditOfferDialogComponent,
+  SaveOfferDialogComponent,
   EmptyPageComponent,
   CopyToClipboard,
   DialogsWrapperComponent,

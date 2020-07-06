@@ -1,0 +1,26 @@
+<div mat-dialog-title class="u-flex u-flex-justify--space-between u-flex-align-items--center">
+  <button class="close-btn" mat-icon-button mat-dialog-close (click)="close({reopen: true})">
+    <mat-icon fontSet="fa" fontIcon="fa-times"></mat-icon>
+  </button>
+</div>
+<div mat-dialog-content class="form-container dialog-form">
+  <div class="title">
+    Do you want to save the offer?
+  </div>
+
+  <div class="subtitle">
+    Your changes will be lost if you don't save them.
+  </div>
+
+  <div class="controls">
+    <button class="btn save" mat-flat-button (click)="close({saveAndClose: true})">
+      save & close
+    </button>
+    <button class="btn discard" mat-flat-button (click)="close({discard: true})">
+      discard
+    </button>
+    <button class="btn cancel" mat-flat-button (click)="close({reopen: true})">
+      cancel
+    </button>
+  </div>
+</div>

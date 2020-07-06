@@ -13,6 +13,7 @@ export class OfferService extends BaseDataService<Offer> {
   public offerChanged: Subject<void> = new Subject<void>();
 
   public currentOffer: Offer;
+  public changedOfferModel: Offer;
 
   constructor(protected injector: Injector) {
     super(injector, ApiEndpoint.Offer);
@@ -52,6 +53,7 @@ export class OfferService extends BaseDataService<Offer> {
 
   update(model: Offer): Observable<Offer> {
     this.currentOffer = model;
+    this.changedOfferModel = null;
 
     return super.update(model)
       .pipe(tap(() => this.offerChanged.next()));

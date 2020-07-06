@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { Offer, Person } from '../../../core-modules/models/offer';
@@ -21,8 +21,9 @@ enum Type {
   templateUrl: './write-offer-template.component.html',
   styleUrls: ['./write-offer-template.component.scss']
 })
-export class WriteOfferTemplateComponent implements OnInit {
+export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
   @Input() offer: Offer;
+
   @Input() anonymousOffer: Offer;
 
   @Output() offerSent: EventEmitter<Offer> = new EventEmitter();
@@ -66,6 +67,10 @@ export class WriteOfferTemplateComponent implements OnInit {
     if (this.anonymousOffer || this.offer) {
       this.form.markAsDirty(); // Allow to save immediately even user did't touch any field
     }
+  }
+
+  ngOnDestroy() {
+    this.offerService.changedOfferModel = this.form.value as Offer;
   }
 
   setBuyerAsEntity() {
@@ -138,7 +143,6 @@ export class WriteOfferTemplateComponent implements OnInit {
         tap(() => this.snackbar.open(message))
       )
       .subscribe((offer: Offer) => {
-        this.offerService.currentOffer = offer;
         this.offerSent.emit(offer);
       });
   }
