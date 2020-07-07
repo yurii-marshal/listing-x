@@ -11,6 +11,7 @@ export interface Document {
   extension: string;
   checked?: boolean;
   url?: string;
+  custom?: boolean;
 }
 
 export interface GeneratedDocument {

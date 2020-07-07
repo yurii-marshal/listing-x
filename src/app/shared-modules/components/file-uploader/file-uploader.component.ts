@@ -14,22 +14,25 @@ const FILE_UPLOADER_COMPONENT_VALUE_ACCESSOR = {
   // tslint:disable-next-line:component-selector
   selector: 'file-uploader',
   template: `
-    <input #fileInput
-           type="file"
-           name="file"
-           [id]="uniqueId"
-           [attr.accept]="fileTypes"
-           accept="image/*"
-           multiple="true"
-           (change)="onFilesSelect()">
+    <div [class.shortened]="shortened" class="uploader-container u-flex u-flex-direction--column u-flex-align-items--center">
+      <input #fileInput
+             type="file"
+             name="file"
+             [id]="uniqueId"
+             [attr.accept]="fileTypes"
+             accept="image/*"
+             multiple="true"
+             (change)="onFilesSelect()">
 
-    <mat-icon fontSet="fa" fontIcon="fa-cloud-upload-alt"></mat-icon>
-    <div class="title">Drag and drop Files Here to Upload</div>
-    <div class="subtitle">Maximum upload file size: {{ maxFileSize }} MB. Download format: .doc .pdf</div>
+      <img class="upload-icon" src="../../../../assets/images/icons/{{iconName}}.svg" alt="upload-file-icon">
+      <div class="title">Drag and drop Files Here to Upload</div>
+      <div *ngIf="shortened" class="plain-text">or</div>
+      <div *ngIf="!shortened" class="subtitle">Maximum upload file size: {{ maxFileSize }} MB. Download format: .doc .pdf</div>
 
-    <label [for]="uniqueId">
-      <ng-content></ng-content>
-    </label>
+      <label [for]="uniqueId">
+        <ng-content></ng-content>
+      </label>
+    </div>
   `,
   styleUrls: ['./file-uploader.component.scss']
   // providers: [FILE_UPLOADER_COMPONENT_VALUE_ACCESSOR]
@@ -39,10 +42,13 @@ export class FileUploaderComponent {
   uniqueId = _.uniqueId('file_');
 
   @Input()
-  maxFileSize: number = 100; // Mb
+  maxFileSize: number = 3; // Mb
 
   @Input()
   fileTypes = '.pdf, .doc, .docx'; // application/msword,application/pdf
+
+  @Input()
+  shortened = false;
 
   // tslint:disable-next-line:no-output-on-prefix
   @Output()
@@ -52,10 +58,12 @@ export class FileUploaderComponent {
   fileInput: any;
 
   @HostBinding('style.background-color')
-  private background = '#f5fcff';
+  private background = '#ffffff';
 
   @HostBinding('style.opacity')
   private opacity = '1';
+
+  iconName: string = 'upload-file-icon';
 
   constructor(private snackBar: MatSnackBar) {
   }
@@ -67,6 +75,7 @@ export class FileUploaderComponent {
     e.stopPropagation();
     this.background = '#9ecbec';
     this.opacity = '0.8';
+    this.iconName = 'upload-file-icon-active';
   }
 
   // Dragleave listener
@@ -74,8 +83,9 @@ export class FileUploaderComponent {
   onDragLeave(e) {
     e.preventDefault();
     e.stopPropagation();
-    this.background = '#f5fcff';
+    this.background = '#ffffff';
     this.opacity = '1';
+    this.iconName = 'upload-file-icon';
   }
 
   // Drop listener
@@ -84,8 +94,9 @@ export class FileUploaderComponent {
     e.preventDefault();
     e.stopPropagation();
 
-    this.background = '#f5fcff';
+    this.background = '#ffffff';
     this.opacity = '1';
+    this.iconName = 'upload-file-icon-active';
     const files = e.dataTransfer.files as FileList;
     if (files.length > 0) {
       this.upload(files);
@@ -106,7 +117,7 @@ export class FileUploaderComponent {
     if (!this.isSupportedExtensions(files)) {
       this.snackBar.open('Unsupported file extension', 'OK', config);
     } else if (this.calculateTotalSize(files) > this.maxFileSize * 1024 * 1024) {
-      this.snackBar.open(`File exceeds size limit (100Mb)`, 'OK', config);
+      this.snackBar.open(`File exceeds size limit (${this.maxFileSize}Mb)`, 'OK', config);
     } else {
       this.onFileSelect.emit(files);
     }

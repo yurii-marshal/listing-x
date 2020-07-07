@@ -44,6 +44,7 @@ import { WriteOfferTemplateComponent } from './components/write-offer-template/w
 import { EditOfferDialogComponent } from './dialogs/edit-offer-dialog/edit-offer-dialog.component';
 import { OnlyNumbersDirective } from './directives/only-numbers.directive';
 import { SaveOfferDialogComponent } from './dialogs/save-offer-dialog/save-offer-dialog.component';
+import { SelectedFileItemComponent } from './components/selected-file-item/selected-file-item.component';
 
 const materialModules = [
   MatDialogModule,
@@ -86,6 +87,7 @@ const components = [
   FileUploaderComponent,
   CalendarComponent,
   NotificationBarComponent,
+  SelectedFileItemComponent,
   FirstLetterPipe,
   ...dialogs,
 ];

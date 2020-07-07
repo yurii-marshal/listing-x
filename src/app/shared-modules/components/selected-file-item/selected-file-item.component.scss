@@ -1,0 +1,37 @@
+@import "./../../../../assets/scss/theming";
+
+:host {
+  margin-top: 15px;
+  border: 1px solid #D5D9E1;
+  box-sizing: border-box;
+  border-radius: 4px;
+  padding: 15px 25px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.file-item {
+  img {
+    width: 24px;
+  }
+
+  .title {
+    padding-left: 15px;
+    padding-top: 2px;
+    font-size: 13px;
+    line-height: 1.54;
+
+    color: $primary-text;
+  }
+}
+
+.remove-btn {
+  margin-right: -10px;
+
+  .remove-icon {
+    width: 20px;
+    height: 20px;
+  }
+}

@@ -1,0 +1,39 @@
+@import "./../../../../../assets/scss/theming";
+@import "../../../../../assets/scss/forms.template";
+
+.title {
+  font-size: 36px;
+  line-height: 43px;
+  text-align: center;
+  padding: 85px 0 40px;
+
+  color: $primary-text;
+}
+
+.form-container {
+  width: 550px;
+  margin: 0 auto;
+  padding-bottom: 177px;
+}
+
+.continue-btn {
+  width: 100%;
+  height: 50px;
+  background: #66AD58;
+  border-radius: 4px;
+  margin-top: 35px;
+  text-transform: uppercase;
+
+  color: #FFFFFF;
+
+  ::ng-deep .mat-button-wrapper {
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 14px;
+    letter-spacing: 0.07em;
+  }
+}
+
+app-file-picker {
+  width: 100%;
+}

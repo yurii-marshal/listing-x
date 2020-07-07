@@ -1,3 +1,40 @@
 <app-base-template [state]="'purchase'">
-  
+
+  <div class="supporting-docs">
+
+    <div class="title">Supporting Docs</div>
+
+    <div [formGroup]="form"
+         cdkTrapFocus
+         class="form-container">
+
+      <app-file-picker
+        formControlName="preApproval"
+        [type]="Type.preApproval"
+        [offerId]="offer?.id"
+      ></app-file-picker>
+
+      <app-file-picker
+        formControlName="proofOfFunds"
+        [type]="Type.proofOfFunds"
+        [offerId]="offer?.id"
+      ></app-file-picker>
+
+      <app-file-picker
+        formControlName="coverLetter"
+        [type]="Type.coverLetter"
+        [offerId]="offer?.id"
+      ></app-file-picker>
+
+      <button mat-flat-button appDebounceClick
+              (debounceClick)="continue()"
+              [disabled]="form.invalid"
+              class="continue-btn">
+        CONTINUE
+      </button>
+
+    </div>
+
+  </div>
+
 </app-base-template>
