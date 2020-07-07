@@ -6,7 +6,7 @@
 </div>
 <div mat-dialog-content class="form-container dialog-form" style="min-height: 400px">
   <app-write-offer-template
-    [offer]="offer"
-    (offerSent)="close(data)"
+    [offer]="data.offer"
+    (offerSent)="close(data.offer)"
   ></app-write-offer-template>
 </div>
