@@ -1,0 +1,104 @@
+@import "./../../../../../assets/scss/theming";
+@import "~src/assets/scss/mixins";
+
+.summary {
+  padding-bottom: 94px;
+  width: 75%;
+  margin: 0 auto;
+
+  .title {
+    font-size: 36px;
+    line-height: 43px;
+    text-align: center;
+    padding: 85px 0 40px;
+
+    color: $primary-text;
+  }
+
+  .final-information {
+
+    .block {
+      width: 50%;
+    }
+
+    .offer-information {
+
+    }
+    .supporting-docs {
+
+    }
+    .payment-information {
+
+    }
+  }
+
+  .save-btn {
+    width: 340px;
+    height: 50px;
+    background: #66AD58;
+    border-radius: 4px;
+    margin-top: 35px;
+    text-transform: uppercase;
+
+    color: #FFFFFF;
+
+    ::ng-deep .mat-button-wrapper {
+      font-weight: bold;
+      font-size: 12px;
+      line-height: 14px;
+      letter-spacing: 0.07em;
+    }
+  }
+
+  .row-layout {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px;
+
+    &:first-of-type { margin-top: 40px; }
+
+    > label {
+      width: 180px;
+      margin-right: 40px;
+      text-align: end;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.23px;
+      color: #b0b7bd;
+      text-transform: uppercase;
+
+      &.header {
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1.71;
+        letter-spacing: normal;
+        color: #444c5d;
+      }
+    }
+    .link {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.23px;
+      color: #419bdf;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    > span {
+      flex: 1;
+      display: block;
+      font-size: 13px;
+      letter-spacing: 0.25px;
+      color: #444c5c;
+      @include mat-truncate-line();
+      &.bold { font-weight: bold; }
+    }
+
+    .doc-preview {
+      flex: 1;
+      overflow: hidden;
+    }
+
+  }
+
+}
