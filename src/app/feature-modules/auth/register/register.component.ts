@@ -6,6 +6,7 @@ import { tap } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
 import { UserRole } from '../../../core-modules/enums/user-role';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -21,19 +22,20 @@ export class RegisterComponent implements OnInit {
   public isActivated: boolean;
 
   constructor(private formBuilder: FormBuilder,
+              private route: ActivatedRoute,
               private service: AuthService,
               private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
-    // TODO: retrieve label from external link of inviting
-    const disabled = false;
+    const role = this.route.snapshot.queryParamMap.get('role');
+    const email = this.route.snapshot.queryParamMap.get('email');
 
     this.form = this.formBuilder.group({
-      accountType: [[{value: null}, disabled], [Validators.required]],
+      accountType: [[{value: role || null}, !!role], [Validators.required]],
       firstName: [null, [Validators.required]],
       lastName: [null, [Validators.required]],
-      email: [null, [Validators.required, Validators.email]],
+      email: [[{value: email || ''}, !!email], [Validators.required, Validators.email]],
       password: [null, [Validators.required]],
       confirmPassword: [null, [Validators.required]]
     }, {validator: CustomValidators.passwordMatch});
