@@ -59,7 +59,7 @@ export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
   }
 
   private get predefinedUser() {
-    return (this.authService.currentUser)
+    return this.authService.currentUser
       ? this.createEntity(this.authService.currentUser, true)
       : this.createEntity();
   }
@@ -118,17 +118,11 @@ export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
   }
 
   createEntity(model?: Person, disabled: boolean = false): FormGroup {
-    const formGroup = this.formBuilder.group({
+    return this.formBuilder.group({
       firstName: [{value: model && model.firstName, disabled}, [Validators.required, Validators.maxLength(30)]],
       lastName: [{value: model && model.lastName, disabled}, [Validators.required, Validators.maxLength(150)]],
       email: [{value: model && model.email, disabled}, [Validators.required, Validators.email, CustomValidators.uniqueOfferEmail]],
     });
-
-    if (model) {
-      formGroup.patchValue(model);
-    }
-
-    return formGroup;
   }
 
   add(type: Type): void {
