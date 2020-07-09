@@ -1,3 +1,103 @@
 <app-base-template [state]="'purchase'">
+  <div class="summary u-flex u-flex-direction--column u-flex-align-items--center">
 
+    <div class="title">Offer Summary</div>
+
+    <div class="final-information u-flex u-flex-justify--space-between">
+      <div class="block offer-information">
+        <div class="row-layout header-section">
+          <label class="header">Offer information</label>
+          <span routerLink="/portal/purchase-agreement/{{offerSummary?.id}}/step-one" class="link">Edit</span>
+        </div>
+        <div class="row-layout" *ngFor="let item of offerSummary?.buyers; let i = index">
+          <label>buyer #{{ i + 1 }}</label>
+          <span>{{ item.firstName }} {{ item.lastName }} | {{ item.email }}</span>
+        </div>
+        <div class="row-layout" *ngFor="let item of offerSummary?.sellers; let i = index">
+          <label>seller #{{ i + 1 }}</label>
+          <span>{{ item.firstName }} {{ item.lastName }} | {{ item.email }}</span>
+        </div>
+        <div class="row-layout">
+          <label>address</label>
+          <span>{{ offerSummary?.streetName }}, {{ offerSummary?.city }}, {{ offerSummary?.state }} {{ offerSummary?.zip }}</span>
+        </div>
+        <div class="row-layout">
+          <label>offer info</label>
+          <span>${{ offerSummary?.price | number }} | {{ offerSummary?.closeEscrowDays }} Days to close escrow</span>
+        </div>
+      </div>
+      <div class="block supporting-docs">
+        <div class="row-layout header-section">
+          <label class="header" style="min-width: 190px;">Supporting docs</label>
+          <span routerLink="/portal/purchase-agreement/{{offerSummary?.id}}/step-three" class="link">Edit</span>
+        </div>
+        <div class="row-layout"><label>Add Pre-approval Letter</label>
+          <div class="doc-preview">
+            <img *ngFor="let img of offerSummary?.documents?.preApproval"
+                 src="assets/images/icons/{{ img.extension }}.svg"
+                 [title]="img.title" height="20">
+          </div>
+        </div>
+        <div class="row-layout"><label>Add Proof of Funds</label>
+          <div class="doc-preview">
+            <div class="doc-preview">
+              <img *ngFor="let img of offerSummary?.documents?.proofOfFunds"
+                   src="assets/images/icons/{{ img.extension }}.svg"
+                   [title]="img.title" height="20">
+            </div>
+          </div>
+        </div>
+        <div class="row-layout"><label>Add Cover Letter</label>
+          <div class="doc-preview">
+            <div class="doc-preview">
+              <img *ngFor="let img of offerSummary?.documents?.coverLetter"
+                   src="assets/images/icons/{{ img.extension }}.svg"
+                   [title]="img.title" height="20">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="block payment-information">
+        <div class="row-layout header-section">
+          <label class="header">payment information</label>
+          <span routerLink="/portal/purchase-agreement/{{offerSummary?.id}}/step-two" class="link">Edit</span>
+        </div>
+        <div class="row-layout">
+          <label>Initial deposit</label>
+          <span>${{ offerSummary?.initialDeposit | number }}</span>
+        </div>
+        <ng-container *ngFor="let item of offerSummary?.loans; let i = index">
+          <div class="row-layout">
+            <label>
+              <span style="margin-right: 20px; font-weight: bold;">loan #{{ i+1 }}</span>
+              loan amount
+            </label>
+            <span>${{ item.loanAmount | number }}</span>
+          </div>
+          <div class="row-layout">
+            <label>interest rate</label><span>{{ item.interestRate | number }}</span>
+          </div>
+          <div class="row-layout">
+            <label>points</label><span>{{ item.points | number }}</span>
+          </div>
+        </ng-container>
+        <div class="row-layout">
+          <label>variation</label><span class="bold">{{ offerSummary?.loanType }}</span>
+        </div>
+        <div class="row-layout">
+          <label>down payment</label><span>${{ offerSummary?.downPayment | number }}</span>
+        </div>
+        <div class="row-layout">
+          <label>special financing terms</label><span>{{ offerSummary?.anySpecialFinancialTerms }}</span>
+        </div>
+      </div>
+    </div>
+
+    <button mat-flat-button appDebounceClick
+            (debounceClick)="saveOffer()"
+            class="save-btn">
+      DONE
+    </button>
+
+  </div>
 </app-base-template>

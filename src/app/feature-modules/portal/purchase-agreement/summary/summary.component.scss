@@ -1,0 +1,127 @@
+@import "./../../../../../assets/scss/theming";
+@import "~src/assets/scss/mixins";
+
+.summary {
+  padding-bottom: 94px;
+  width: 75%;
+  margin: 0 auto;
+
+  .title {
+    font-size: 36px;
+    line-height: 43px;
+    text-align: center;
+    padding: 85px 0 40px;
+
+    color: $primary-text;
+  }
+
+  .final-information {
+    flex-wrap: wrap;
+
+    .block {
+      padding-bottom: 55px;
+    }
+
+    .offer-information {
+      width: 70%;
+
+      label:not(.header) {
+        min-width: 65px;
+      }
+    }
+    .supporting-docs {
+      width: 30%;
+
+      label:not(.header) {
+        min-width: 172px;
+      }
+    }
+    .payment-information {
+      width: 70%;
+
+      label:not(.header) {
+        min-width: 155px;
+      }
+    }
+  }
+
+  .save-btn {
+    width: 340px;
+    height: 50px;
+    background: #66AD58;
+    border-radius: 4px;
+    text-transform: uppercase;
+
+    color: #FFFFFF;
+
+    ::ng-deep .mat-button-wrapper {
+      font-weight: bold;
+      font-size: 12px;
+      line-height: 14px;
+      letter-spacing: 0.07em;
+    }
+  }
+
+  .row-layout {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+
+    &:first-of-type {
+      margin-top: 15px;
+    }
+
+    &.header-section {
+      margin-bottom: 25px;
+    }
+
+    > label {
+      margin-right: 40px;
+      text-align: start;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.23px;
+      color: #b0b7bd;
+      text-transform: uppercase;
+
+      &.header {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1.71;
+        letter-spacing: normal;
+        color: #444c5d;
+      }
+    }
+
+    .link {
+      margin-left: 20px;
+      font-weight: 600;
+      text-decoration: underline;
+      cursor: pointer;
+      font-size: 13px;
+      line-height: 16px;
+      letter-spacing: 0.232px;
+      text-transform: uppercase;
+
+      color: #419BDF;
+    }
+    > span {
+      flex: 1;
+      display: block;
+      font-size: 13px;
+      letter-spacing: 0.25px;
+      color: #444c5c;
+      @include mat-truncate-line();
+      &.bold { font-weight: bold; }
+    }
+
+    .doc-preview {
+      flex: 1;
+      overflow: hidden;
+    }
+
+  }
+
+}
