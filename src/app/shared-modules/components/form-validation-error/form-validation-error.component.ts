@@ -11,6 +11,7 @@ import { AbstractControl } from '@angular/forms';
         <div *ngIf="control.errors.max"><small>Max {{ control.errors.max.max }} allowed</small></div>
         <div *ngIf="control.errors.email"><small>Invalid email</small></div>
         <div *ngIf="control.errors.uniqemail"><small>User with this email address already exists.</small></div>
+        <div *ngIf="control.errors.emailduplicate"><small>This email is already used.</small></div>
         <div *ngIf="control.errors.emailnotfound"><small>Email address not found.</small></div>
         <div *ngIf="control.errors.number"><small>Should be a number.</small></div>
         <div *ngIf="control.errors.passwordused"><small>This password was already used, please choose a new one.</small></div>

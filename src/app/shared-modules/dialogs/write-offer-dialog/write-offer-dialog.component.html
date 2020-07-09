@@ -6,11 +6,11 @@
 </div>
 <div mat-dialog-content class="form-container dialog-form" style="min-height: 400px">
   <form novalidate [formGroup]="form" style="width: 100%!important;">
-    <!-- Moderator buyers section -->
-    <div *ngTemplateOutlet="moderatorBuyersTpl"></div>
+    <!-- Agent buyers section -->
+    <div *ngTemplateOutlet="agentBuyersTpl"></div>
 
-    <!-- Moderator sellers section -->
-    <div *ngTemplateOutlet="moderatorSellersTpl"></div>
+    <!-- Agent sellers section -->
+    <div *ngTemplateOutlet="agentSellersTpl"></div>
 
     <!-- Invitee buyers section -->
     <div *ngTemplateOutlet="buyersTpl"></div>
@@ -50,22 +50,22 @@
       </div>
     </div>
 
-    <h4 style="margin-top: 5px;">OFFER INFORMATION</h4>
-      <div class="fieldset">
-        <label>Offer price</label>
-        <div class="u-flex u-flex-align-items--center u-flex-justify--space-between">
-          <div style="position: relative;">
-            <input formControlName="price" placeholder="Price" spellcheck="false" class="form-control">
-            <app-form-validation-error [baseControl]="form.get('price')"></app-form-validation-error>
-          </div>
-          <div class="question">How long do you need to close escrow?</div>
-          <div style="position: relative;">
-            <input formControlName="closeEscrowDays" placeholder="Days" spellcheck="false" class="form-control" style="width: 48px;">
-            <app-form-validation-error [baseControl]="form.get('closeEscrowDays')"></app-form-validation-error>
-          </div>
-          <div class="question">Days</div>
-        </div>
-      </div>
+    <!--<h4 style="margin-top: 5px;">OFFER INFORMATION</h4>-->
+      <!--<div class="fieldset">-->
+        <!--<label>Offer price</label>-->
+        <!--<div class="u-flex u-flex-align-items&#45;&#45;center u-flex-justify&#45;&#45;space-between">-->
+          <!--<div style="position: relative;">-->
+            <!--<input formControlName="price" placeholder="Price" spellcheck="false" class="form-control">-->
+            <!--<app-form-validation-error [baseControl]="form.get('price')"></app-form-validation-error>-->
+          <!--</div>-->
+          <!--<div class="question">How long do you need to close escrow?</div>-->
+          <!--<div style="position: relative;">-->
+            <!--<input formControlName="closeEscrowDays" placeholder="Days" spellcheck="false" class="form-control" style="width: 48px;">-->
+            <!--<app-form-validation-error [baseControl]="form.get('closeEscrowDays')"></app-form-validation-error>-->
+          <!--</div>-->
+          <!--<div class="question">Days</div>-->
+        <!--</div>-->
+      <!--</div>-->
   </form>
 </div>
 
@@ -135,10 +135,10 @@
   <div *ngIf="!data.isAnonymous" (click)="add(Type.Sellers)" class="link">add more seller</div>
 </ng-template>
 
-<ng-template #moderatorBuyersTpl>
-  <h4>Moderator Buyer information</h4>
-  <div *ngFor="let control of moderatorBuyers.controls; let i = index; let first = first" [formGroup]="control">
-    <h6 class="subtitle">moderator buyer #{{ i + 1}}</h6>
+<ng-template #agentBuyersTpl>
+  <h4>Agent Buyer information</h4>
+  <div *ngFor="let control of agentBuyers.controls; let i = index; let first = first" [formGroup]="control">
+    <h6 class="subtitle">agent buyer #{{ i + 1}}</h6>
     <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
       <div class="fieldset u-flex-1">
         <label>First name</label>
@@ -155,18 +155,18 @@
         <input formControlName="email" placeholder="Email" spellcheck="false" class="form-control">
         <app-form-validation-error [baseControl]="control.get('email')"></app-form-validation-error>
       </div>
-      <button *ngIf="!first && !data.isAnonymous" mat-icon-button color="accent" (click)="remove(Type.ModeratorBuyers, i)">
+      <button *ngIf="!first && !data.isAnonymous" mat-icon-button color="accent" (click)="remove(Type.AgentBuyers, i)">
         <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
       </button>
     </div>
   </div>
-  <div *ngIf="!data.isAnonymous" (click)="add(Type.ModeratorBuyers)" class="link">add more moderator buyer</div>
+  <div *ngIf="!data.isAnonymous" (click)="add(Type.AgentBuyers)" class="link">add more agent buyer</div>
 </ng-template>
 
-<ng-template #moderatorSellersTpl>
-  <h4 *ngIf="!data.isAnonymous">moderator seller information</h4>
-  <div *ngFor="let control of moderatorSellers.controls; let i = index; let first = first" [formGroup]="control">
-    <h6 class="subtitle">moderator seler #{{ i + 1}}</h6>
+<ng-template #agentSellersTpl>
+  <h4 *ngIf="!data.isAnonymous">agent seller information</h4>
+  <div *ngFor="let control of agentSellers.controls; let i = index; let first = first" [formGroup]="control">
+    <h6 class="subtitle">agent seler #{{ i + 1}}</h6>
     <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
       <div class="fieldset u-flex-1">
         <label>First name</label>
@@ -183,10 +183,10 @@
         <input formControlName="email" placeholder="Email" spellcheck="false" class="form-control">
         <app-form-validation-error [baseControl]="control.get('email')"></app-form-validation-error>
       </div>
-      <button *ngIf="!first && !data.isAnonymous" mat-icon-button color="accent" (click)="remove(Type.ModeratorSellers, i)">
+      <button *ngIf="!first && !data.isAnonymous" mat-icon-button color="accent" (click)="remove(Type.AgentSellers, i)">
         <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
       </button>
     </div>
   </div>
-  <div *ngIf="!data.isAnonymous" (click)="add(Type.ModeratorSellers)" class="link">add more moderator seller</div>
+  <div *ngIf="!data.isAnonymous" (click)="add(Type.AgentSellers)" class="link">add more agent seller</div>
 </ng-template>

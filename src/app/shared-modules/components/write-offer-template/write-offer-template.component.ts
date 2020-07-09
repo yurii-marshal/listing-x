@@ -11,7 +11,8 @@ import { switchMap, tap } from 'rxjs/operators';
 import { CustomValidators } from '../../../core-modules/validators/custom-validators';
 
 enum Type {
-  Agents = 'agents',
+  AgentBuyers = 'agentBuyers',
+  AgentSellers = 'agentSellers',
   Buyers = 'buyers',
   Sellers = 'sellers',
 }
@@ -49,8 +50,12 @@ export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
     return this.form.get('sellers') as FormArray;
   }
 
-  get agents(): FormArray {
-    return this.form.get('agents') as FormArray;
+  get agentBuyers(): FormArray {
+    return this.form.get('agentBuyers') as FormArray;
+  }
+
+  get agentSellers(): FormArray {
+    return this.form.get('agentSellers') as FormArray;
   }
 
   private get predefinedUser() {
@@ -83,8 +88,8 @@ export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
     this.form.patchValue(formData);
 
     // Nested forms
-    if (!_.isEmpty(model.buyers)) {
-      const buyers = _.map(model.buyers, (item: Person, i: number) => this.createEntity(item, !!this.anonymousOffer));
+    if (!_.isEmpty(model.buyers) && !this.anonymousOffer) {
+      const buyers = _.map(model.buyers, (item: Person, i: number) => this.createEntity(item, false));
       this.form.setControl('buyers', this.formBuilder.array(buyers));
     }
 
@@ -93,9 +98,18 @@ export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
       this.form.setControl('sellers', this.formBuilder.array(sellers));
     }
 
-    if (model.agents && model.agents.length) {
-      const mb = model.agents.map((item) => this.createEntity(item, !!this.anonymousOffer));
-      this.form.setControl('agents', this.formBuilder.array(mb));
+    if (model.agentBuyers && model.agentBuyers.length) {
+      const mb = model.agentBuyers.map((item, index) => {
+        return (index === 0 && !!this.anonymousOffer)
+          ? this.predefinedUser
+          : this.createEntity(item, !!this.anonymousOffer);
+      });
+      this.form.setControl('agentBuyers', this.formBuilder.array(mb));
+    }
+
+    if (model.agentSellers && model.agentSellers.length) {
+      const mb = model.agentSellers.map((item) => this.createEntity(item, !!this.anonymousOffer));
+      this.form.setControl('agentSellers', this.formBuilder.array(mb));
     }
 
     if (this.anonymousOffer && !this.offer) {
@@ -107,7 +121,7 @@ export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
     const formGroup = this.formBuilder.group({
       firstName: [{value: model && model.firstName, disabled}, [Validators.required, Validators.maxLength(30)]],
       lastName: [{value: model && model.lastName, disabled}, [Validators.required, Validators.maxLength(150)]],
-      email: [{value: model && model.email, disabled}, [Validators.required, Validators.email]], // CustomValidators.unique(this.)
+      email: [{value: model && model.email, disabled}, [Validators.required, Validators.email, CustomValidators.uniqueOfferEmail]],
     });
 
     if (model) {
@@ -130,7 +144,8 @@ export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
   submit(): void {
     const model: Offer = {
       ...this.form.getRawValue(),
-      agents: this.agents.getRawValue().map(i => ({...i, email: i.email.toLowerCase()})),
+      agentBuyers: this.agentBuyers.getRawValue().map(i => ({...i, email: i.email.toLowerCase()})),
+      agentSellers: this.agentSellers.getRawValue().map(i => ({...i, email: i.email.toLowerCase()})),
       sellers: this.sellers.getRawValue().map(i => ({...i, email: i.email.toLowerCase()})),
       buyers: this.buyers.getRawValue().map(i => ({...i, email: i.email.toLowerCase()}))
     } as Offer; // to include 'state'
@@ -153,7 +168,8 @@ export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
 
     this.form = this.formBuilder.group({
       id: [offerValues && offerValues.id || null, []],
-      agents: this.formBuilder.array([this.predefinedUser]),
+      agentBuyers: this.formBuilder.array([this.predefinedUser]),
+      agentSellers: this.formBuilder.array([this.createEntity()]),
       buyers: this.formBuilder.array([this.createEntity()]),
       sellers: this.formBuilder.array([this.createEntity()]),
       streetName: [{value: offerValues ? offerValues.streetName : null, disabled}, [Validators.required]],

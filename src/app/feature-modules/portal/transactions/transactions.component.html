@@ -57,22 +57,22 @@
         </td>
       </ng-container>
 
-      <!-- Moderator buyer column -->
-      <ng-container matColumnDef="moderatorBuyers">
-        <th mat-header-cell *matHeaderCellDef>Moderator Buyers</th>
+      <!-- Agent buyer column -->
+      <ng-container matColumnDef="agentBuyers">
+        <th mat-header-cell *matHeaderCellDef>Agent Buyers</th>
         <td mat-cell *matCellDef="let element">
-          <div *ngFor="let item of element.offer.moderatorBuyers">
+          <div *ngFor="let item of element.offer.agentBuyers">
             <mat-icon fontSet="fa" fontIcon="fa-user" class="user-icon" [class.current-user]="isCurrentUser(item)"></mat-icon>
             {{ item.firstName }} {{ item.lastName }}
           </div>
         </td>
       </ng-container>
 
-      <!-- Moderator seller column -->
-      <ng-container matColumnDef="moderatorSellers">
-        <th mat-header-cell *matHeaderCellDef>Moderator Sellers</th>
+      <!-- Agent seller column -->
+      <ng-container matColumnDef="agentSellers">
+        <th mat-header-cell *matHeaderCellDef>Agent Sellers</th>
         <td mat-cell *matCellDef="let element">
-          <div *ngFor="let item of element.offer.moderatorSellers">
+          <div *ngFor="let item of element.offer.agentSellers">
             <mat-icon fontSet="fa" fontIcon="fa-user" class="user-icon" [class.current-user]="isCurrentUser(item)"></mat-icon>
             {{ item.firstName }} {{ item.lastName }}
           </div>

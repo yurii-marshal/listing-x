@@ -13,8 +13,8 @@ import { ProgressService } from '../../../core-modules/core-services/progress.se
 import { LocalStorageKey } from '../../../core-modules/enums/local-storage-key';
 
 enum Type {
-  ModeratorSellers = 'moderatorSellers',
-  ModeratorBuyers = 'moderatorBuyers',
+  AgentSellers = 'agentSellers',
+  AgentBuyers = 'agentBuyers',
   Buyers = 'buyers',
   Sellers = 'sellers',
 }
@@ -46,12 +46,12 @@ export class  WriteOfferDialogComponent implements OnInit {
     return this.form.get('sellers') as FormArray;
   }
 
-  get moderatorBuyers(): FormArray {
-    return this.form.get('moderatorBuyers') as FormArray;
+  get agentBuyers(): FormArray {
+    return this.form.get('agentBuyers') as FormArray;
   }
 
-  get moderatorSellers(): FormArray {
-    return this.form.get('moderatorSellers') as FormArray;
+  get agentSellers(): FormArray {
+    return this.form.get('agentSellers') as FormArray;
   }
 
   // This flag means that user create new offer from anonymous data stored before
@@ -83,8 +83,8 @@ export class  WriteOfferDialogComponent implements OnInit {
     const disabled: boolean = this.data.isAnonymous || this.isAnonymousCreation;
     this.form = this.formBuilder.group({
       id: [null, []],
-      moderatorBuyers: this.formBuilder.array([this.predefinedBuyer]),
-      moderatorSellers: this.formBuilder.array([this.createEntity()]),
+      agentBuyers: this.formBuilder.array([this.predefinedBuyer]),
+      agentSellers: this.formBuilder.array([this.createEntity()]),
       buyers: this.formBuilder.array([this.createEntity()]),
       sellers: this.formBuilder.array([this.createEntity()]),
       streetName: [{value: null, disabled}, [Validators.required]],
@@ -124,19 +124,19 @@ export class  WriteOfferDialogComponent implements OnInit {
       this.form.setControl('sellers', this.formBuilder.array(sellers));
     }
 
-    if (model.moderatorBuyers.length) {
-      const mb = model.moderatorBuyers.map((p) => this.createEntity(p, true));
-      this.form.setControl('moderatorBuyers', this.formBuilder.array(mb));
+    if (model.agentBuyers.length) {
+      const mb = model.agentBuyers.map((p) => this.createEntity(p, true));
+      this.form.setControl('agentBuyers', this.formBuilder.array(mb));
     }
 
-    if (model.moderatorSellers.length) {
-      const ms = model.moderatorSellers.map((p) => this.createEntity(p, true));
-      this.form.setControl('moderatorSellers', this.formBuilder.array(ms));
+    if (model.agentSellers.length) {
+      const ms = model.agentSellers.map((p) => this.createEntity(p, true));
+      this.form.setControl('agentSellers', this.formBuilder.array(ms));
     }
 
     if (this.data.model && this.data.isAnonymous) {
       this.form.get('sellers').disable()
-      this.form.get('moderatorSellers').disable();
+      this.form.get('agentSellers').disable();
     }
   }
 
@@ -167,8 +167,8 @@ export class  WriteOfferDialogComponent implements OnInit {
     /* FIXME */
     const model: Offer = {
       ...this.form.getRawValue(),
-      moderatorBuyers: this.moderatorBuyers.getRawValue().map(i => ({...i, email: i.email.toLowerCase()})),
-      moderatorSellers: this.moderatorSellers.getRawValue().map(i => ({...i, email: i.email.toLowerCase()})),
+      agentBuyers: this.agentBuyers.getRawValue().map(i => ({...i, email: i.email.toLowerCase()})),
+      agentSellers: this.agentSellers.getRawValue().map(i => ({...i, email: i.email.toLowerCase()})),
       sellers: this.sellers.getRawValue().map(i => ({...i, email: i.email.toLowerCase()})),
       buyers: this.buyers.getRawValue().map(i => ({...i, email: i.email.toLowerCase()}))
     }; // to include 'state'

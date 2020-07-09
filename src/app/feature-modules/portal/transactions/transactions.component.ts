@@ -17,7 +17,7 @@ import { Subject } from 'rxjs';
   styleUrls: ['./transactions.component.scss']
 })
 export class TransactionsComponent implements OnDestroy, OnInit, AfterViewInit {
-  displayedColumns: string[] = ['createdAt', 'address', 'moderatorBuyers', 'moderatorSellers',
+  displayedColumns: string[] = ['createdAt', 'address', 'agentBuyers', 'agentSellers',
     'buyers', 'sellers', 'status', 'lastLogs', 'actions'];
   dataSource: BaseTableDataSource<Transaction>;
   statuses: string[] = Object.values(TransactionStatus);

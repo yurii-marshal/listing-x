@@ -9,6 +9,10 @@ export class CustomValidators {
     };
   }
 
+  static uniqueOfferEmail(control: AbstractControl): ValidationErrors | null {
+    return null;
+  }
+
   static passwordMatch(control: AbstractControl): ValidationErrors | null {
     const password = control.get('password');
     const confirmPassword = control.get('confirmPassword');

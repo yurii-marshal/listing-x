@@ -37,10 +37,10 @@ export class CreateOfferResolver implements Resolve<Offer> {
   * */
   private overwriteFirstBuyer(offer: Offer) {
     const buyer: Person = _.pick(this.authService.currentUser, ['firstName', 'lastName', 'email']);
-    if (_.isEmpty(offer.moderatorBuyers)) {
-      offer.moderatorBuyers = [buyer];
+    if (_.isEmpty(offer.agentBuyers)) {
+      offer.agentBuyers = [buyer];
     } else {
-      offer.moderatorBuyers[0] = buyer;
+      offer.agentBuyers[0] = buyer;
     }
     return offer;
   }
