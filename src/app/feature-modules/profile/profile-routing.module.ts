@@ -9,7 +9,7 @@ const routes: Routes = [
     path: '',
     component: UserProfileComponent,
     canActivate: [AuthGuardService],
-    resolve: {model: AgentDataResolver}
+    // resolve: {model: AgentDataResolver}
   }
 ];
 

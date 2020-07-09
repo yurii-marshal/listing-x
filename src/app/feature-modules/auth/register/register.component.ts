@@ -43,13 +43,22 @@ export class RegisterComponent implements OnInit {
 
   public onSubmit(): void {
     const user = {
-      ...this.form.value,
-      email: this.form.value.email.toLowerCase()
+      ...this.form.getRawValue(),
+      email: this.form.getRawValue().email.toLowerCase()
     } as User;
 
     this.service.register(user)
       .pipe(
-        tap({error: err => this.form.get('email').setErrors({uniqemail: true})})
+        tap({
+          error: res => {
+            if (res.error && res.error.email) {
+              this.snackBar.open(res.error.email[0], 'OK');
+              this.form.get('email').setErrors({uniqemail: true});
+            } else if (res.error && res.error.non_field_errors) {
+              this.snackBar.open(res.error.non_field_errors[0], 'OK', {duration: 10000});
+            }
+          }
+        })
       )
       .subscribe(() => this.isActivated = true);
   }
