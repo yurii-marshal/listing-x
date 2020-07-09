@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
 import { MatSnackBar } from '@angular/material';
@@ -9,19 +9,22 @@ import { CustomValidators } from '../../../core-modules/validators/custom-valida
 import { Agent } from '../../../core-modules/models/agent';
 import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
+import { catchError, takeUntil } from 'rxjs/operators';
+import { of, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.scss']
 })
-export class UserProfileComponent implements OnInit {
+export class UserProfileComponent implements OnInit, OnDestroy {
   public user: User;
-  public agent: Agent;
 
   public form: FormGroup = this.formBuilder.group({});
 
   public noteTypes = NotificationType;
+
+  private onDestroyed$: Subject<void> = new Subject<void>();
 
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
@@ -32,21 +35,33 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.authService.currentUser;
-    this.agent = this.route.snapshot.data.model as Agent;
+
+    this.profileService.getAgent()
+      .pipe(
+        takeUntil(this.onDestroyed$),
+        catchError(err => {
+          this.snackBar.open(`Cannot retrieve agent.`, 'OK');
+          return of(null);
+        })
+      )
+      .subscribe((data: Agent) => {
+        const names: string[] = Object.keys(this.form.controls);
+        const formData = _.pick(data, names);
+        this.form.patchValue(formData);
+      });
 
     this.form = this.formBuilder.group({
-      companyName: [this.agent.companyName, [Validators.required]],
-      companyLicense: [
-        this.agent.companyLicense,
-        [Validators.required, CustomValidators.number, Validators.maxLength(9)]
-      ],
-      licenseCode: [
-        this.agent.licenseCode,
-        [Validators.required, CustomValidators.number, Validators.maxLength(8)]
-      ],
-      physicalAddress: [this.agent.physicalAddress, [Validators.required]],
-      phoneNumber: [this.agent.phoneNumber, [Validators.required]],
+      companyName: ['', [Validators.required]],
+      companyLicense: ['', [Validators.required, CustomValidators.number, Validators.maxLength(9)]],
+      licenseCode: ['', [Validators.required, CustomValidators.number, Validators.maxLength(8)]],
+      physicalAddress: ['', [Validators.required]],
+      phoneNumber: ['', [Validators.required]],
     });
+  }
+
+  ngOnDestroy(): void {
+    this.onDestroyed$.next();
+    this.onDestroyed$.complete();
   }
 
   public onSubmit(): void {
