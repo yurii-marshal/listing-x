@@ -7,16 +7,51 @@
     letter-spacing: normal;
     color: #444c5c;
     margin-top: 0;
-    max-width: 64px;
+    max-width: 72px;
     @include mat-truncate-line();
+  }
+}
+
+[role="listbox"] {
+  .title {
+    padding: 14px 0 0;
   }
 }
 
 [role="checkbox"] {
   display: inline-block;
-  margin: 10px;
+  margin: 10px 12px 10px 0;
   padding: 4px;
   cursor: pointer;
+
+  &.custom {
+    vertical-align: top;
+    margin-top: 18px;
+    margin-left: 20px;
+    padding: 8px 10px;
+    width: 180px;
+    border: 1px solid #D5D9E1;
+    box-sizing: border-box;
+    border-radius: 4px;
+
+    img {
+      width: 30px;
+      height: 30px;
+    }
+
+    .filename {
+      vertical-align: super;
+      display: inline-block;
+      padding: 0 0 0 15px;
+      width: 100%;
+      font-size: 12px;
+      line-height: 14px;
+      min-width: 100px;
+      text-align: right;
+
+      color: #5B6375;
+    }
+  }
 }
 
 .active-option,
@@ -36,9 +71,16 @@
   background-color: #419bdf;
   font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.77px;
   color: #ffffff;
   text-align: center;
+
+  ::ng-deep .mat-button-wrapper {
+     letter-spacing: 0.07em;
+   }
+
+  &.shortened {
+    width: 100px;
+  }
 }
 
 

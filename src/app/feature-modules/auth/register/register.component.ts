@@ -26,8 +26,11 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
+    // TODO: retrieve label from external link of inviting
+    const disabled = false;
+
     this.form = this.formBuilder.group({
-      accountType: [null, [Validators.required]],
+      accountType: [[{value: null}, disabled], [Validators.required]],
       firstName: [null, [Validators.required]],
       lastName: [null, [Validators.required]],
       email: [null, [Validators.required, Validators.email]],

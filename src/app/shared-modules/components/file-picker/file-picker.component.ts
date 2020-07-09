@@ -6,10 +6,7 @@ import { ENTER } from '@angular/cdk/keycodes';
 import { Document } from '../../../core-modules/models/document';
 import { DocumentLinkingService } from '../../../feature-modules/portal/services/document-linking.service';
 import * as _ from 'lodash';
-import { FileUploaderComponent } from '../file-uploader/file-uploader.component';
 import { MatSnackBar } from '@angular/material';
-import { tap } from 'rxjs/operators';
-
 
 @Directive({
   selector: '[role="checkbox"]',
@@ -54,7 +51,7 @@ export class FilePickerComponent implements OnInit, AfterViewInit, ControlValueA
 
   keyKeyManager: ActiveDescendantKeyManager<FileOption>;
 
-  dataSource: Document[];
+  dataSource: Document[] = [];
 
   title: string;
 
@@ -72,11 +69,21 @@ export class FilePickerComponent implements OnInit, AfterViewInit, ControlValueA
               private snakbar: MatSnackBar) {
   }
 
+  private get _title(): string {
+    switch (this.type) {
+      case UploadDocumentType.preApproval:
+        return 'Add Pre-approval Letter';
+      case UploadDocumentType.proofOfFunds:
+        return 'Add Proof of Funds';
+      case UploadDocumentType.coverLetter:
+        return 'Add Cover Letter';
+    }
+  }
+
   ngOnInit() {
     this.title = this._title;
     this.reloadFilesList();
   }
-
 
   ngAfterViewInit(): void {
     this.keyKeyManager = new ActiveDescendantKeyManager(this.options).withWrap();
@@ -97,10 +104,13 @@ export class FilePickerComponent implements OnInit, AfterViewInit, ControlValueA
     }
   }
 
-
   onSelectFilesForUpload(files: File[]) {
     this.service.upload(files, this.type)
       .subscribe((items: Document[]) => this.mergeNewFiles(items));
+  }
+
+  removeSelectedItem(i: number) {
+    this.selectedItems.splice(i, 1);
   }
 
   /**
@@ -140,7 +150,6 @@ export class FilePickerComponent implements OnInit, AfterViewInit, ControlValueA
     this.invalidateModel();
   }
 
-
   private reloadFilesList() {
     this.service.loadListDocumentsByType(this.type, this.offerId)
       .subscribe(docs => {
@@ -153,16 +162,5 @@ export class FilePickerComponent implements OnInit, AfterViewInit, ControlValueA
     _.forEach(this.dataSource, (item: Document) => {
       item.checked = _.includes(this.selectedItems, item.id);
     });
-  }
-
-  private get _title(): string {
-    switch (this.type) {
-      case UploadDocumentType.preApproval:
-        return 'Add Pre-approval Letter';
-      case UploadDocumentType.proofOfFunds:
-        return 'Add Proof of Funds';
-      case UploadDocumentType.coverLetter:
-        return 'Add Cover Letter';
-    }
   }
 }
