@@ -1,7 +1,7 @@
 <app-base-template>
 
   <div class="buttons-bar u-flex u-flex-justify--center u-flex-align-items--center">
-    <div (click)="openOfferFlow()" class="custom-btn">
+    <div (click)="openOfferFlow()" class="custom-btn" *ngIf="user.accountType === 'agent'">
       <img src="assets/images/icons/write_offer.svg">
       <span>Write Offer</span>
     </div>

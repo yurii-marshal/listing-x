@@ -43,7 +43,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
   }
 
   proceedToNextStep({id}) {
-    this.router.navigate([`/purchase-agreement/${id}/step-two`]);
+    this.router.navigate([`./../../purchase-agreement/${id}/step-two`]);
   }
 
 }

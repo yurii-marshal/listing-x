@@ -10,6 +10,7 @@ import { AuthService } from '../../../core-modules/core-services/auth.service';
 import { Person } from '../../../core-modules/models/offer';
 import { OfferService } from '../services/offer.service';
 import { Subject } from 'rxjs';
+import { User } from '../../auth/models';
 
 @Component({
   selector: 'app-transactions',
@@ -22,6 +23,7 @@ export class TransactionsComponent implements OnDestroy, OnInit, AfterViewInit {
   dataSource: BaseTableDataSource<Transaction>;
   statuses: string[] = Object.values(TransactionStatus);
   calendarDataSource: CalendarEvent[];
+  user: User;
   /* TODO: Refactor */
   readonly statusLabels: { [key: string]: string } = {
     [TransactionStatus.All]: 'All transactions',
@@ -45,7 +47,7 @@ export class TransactionsComponent implements OnDestroy, OnInit, AfterViewInit {
   ngOnInit() {
     // this.service.loadCalendar()
     //   .subscribe(events => this.calendarDataSource = events);
-
+    this.user = this.authService.currentUser;
     this.dataSource = new BaseTableDataSource(this.service, null, null);
   }
 
