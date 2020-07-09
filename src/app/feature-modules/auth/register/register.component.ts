@@ -32,10 +32,10 @@ export class RegisterComponent implements OnInit {
     const email = this.route.snapshot.queryParamMap.get('email');
 
     this.form = this.formBuilder.group({
-      accountType: [[{value: role || null}, !!role], [Validators.required]],
+      accountType: [{value: role || null, disabled: !!role}, [Validators.required]],
       firstName: [null, [Validators.required]],
       lastName: [null, [Validators.required]],
-      email: [[{value: email || ''}, !!email], [Validators.required, Validators.email]],
+      email: [{value: email || '', disabled: !!email}, [Validators.required, Validators.email]],
       password: [null, [Validators.required]],
       confirmPassword: [null, [Validators.required]]
     }, {validator: CustomValidators.passwordMatch});

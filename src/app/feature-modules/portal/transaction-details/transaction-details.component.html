@@ -14,7 +14,7 @@
         <div class="description"> Offer created: {{ transaction.createdAt | date : 'short' }}
           <span *ngIf="transaction.offer.remainingDaysCloseEscrow">({{ transaction.offer.remainingDaysCloseEscrow }} days until  close escrow)</span>
         </div>
-        <div class="control-bar" *ngIf="isModerator">
+        <div class="control-bar" *ngIf="isAgent">
           <div class="u-flex-1">
             <button *ngIf="transaction.allowEdit" mat-icon-button color="accent" routerLink="/portal/offer/{{ transaction.offer.id }}">
               <mat-icon fontSet="fa" fontIcon="fa-edit" class="icon"></mat-icon>
@@ -49,8 +49,8 @@
     <div class="u-flex u-flex-justify--center">
       <div class="column-layout">
         <div class="row-layout"><label class="header">Offer information</label></div>
-        <div class="row-layout" *ngFor="let item of transaction.offer.moderatorBuyers; let i = index"><label>moderator buyer #{{ i + 1 }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span></div>
-        <div class="row-layout" *ngFor="let item of transaction.offer.moderatorSellers; let i = index"><label>moderator seller #{{ i + 1 }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span></div>
+        <div class="row-layout" *ngFor="let item of transaction.offer.agentBuyers; let i = index"><label>agent buyer #{{ i + 1 }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span></div>
+        <div class="row-layout" *ngFor="let item of transaction.offer.agentSellers; let i = index"><label>agent seller #{{ i + 1 }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span></div>
         <div class="row-layout" *ngFor="let item of transaction.offer.buyers; let i = index"><label>buyer #{{ i + 1 }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span></div>
         <div class="row-layout" *ngFor="let item of transaction.offer.sellers; let i = index"><label>seller #{{ i + 1 }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span></div>
         <div class="row-layout"><label>address</label><span>{{ transaction.offer.streetName }}, {{ transaction.offer.city }}, {{ transaction.offer.state }} {{ transaction.offer.zip }}</span></div>
@@ -113,7 +113,7 @@
         <div class="row-layout new-section">
           <label class="header">Documents pending approval</label>
 
-          <ng-container *ngIf="isModerator">
+          <ng-container *ngIf="isAgent">
             <button
               mat-flat-button
               type="button"
@@ -152,7 +152,7 @@
             </svg>
 
             <mat-menu #menu="matMenu" xPosition="before">
-              <button *ngIf="doc.documentType === 'contract' && isModerator && !isSeller"
+              <button *ngIf="doc.documentType === 'contract' && isAgent && !isSeller"
                       mat-menu-item
                       [disabled]="!doc.allowEdit"
                       routerLink="/portal/offer/{{ transaction.offer.id }}"
@@ -164,7 +164,7 @@
                       (click)="openSPQDialog(doc)"
               >Edit</button>
 
-              <button *ngIf="doc.documentType === 'addendum' && isModerator"
+              <button *ngIf="doc.documentType === 'addendum' && isAgent"
                       mat-menu-item
                       [disabled]="!doc.allowEdit"
                       (click)="openAddendumDialog(doc)"

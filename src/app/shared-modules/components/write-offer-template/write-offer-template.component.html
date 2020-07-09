@@ -56,9 +56,9 @@
   </div>
   <div *ngIf="sellers.controls.length <= 2" (click)="add(Type.Sellers)" class="link">add more seller</div>
 
-  <h4>Agent</h4>
-  <div *ngFor="let control of agents.controls; let i = index; let first = first" [formGroup]="control">
-    <h6 class="subtitle">agent #{{ i + 1}}</h6>
+  <h4>Agent Buyer</h4>
+  <div *ngFor="let control of agentBuyers.controls; let i = index; let first = first" [formGroup]="control">
+    <h6 class="subtitle">agent buyer #{{ i + 1}}</h6>
     <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
       <div class="fieldset u-flex-03">
         <label>First name</label>
@@ -75,12 +75,38 @@
         <input formControlName="email" placeholder="example@maill.com" spellcheck="false" class="form-control">
         <app-form-validation-error [baseControl]="control.get('email')"></app-form-validation-error>
       </div>
-      <button *ngIf="!first" mat-icon-button color="accent" (click)="remove(Type.Agents, i)">
+      <button *ngIf="!first" mat-icon-button color="accent" (click)="remove(Type.AgentBuyers, i)">
         <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
       </button>
     </div>
   </div>
-  <div *ngIf="agents.controls.length <= 2" (click)="add(Type.Agents)" class="link">add more agent</div>
+  <div *ngIf="agentBuyers.controls.length <= 2" (click)="add(Type.AgentBuyers)" class="link">add more agent</div>
+
+  <h4>Agent Seller</h4>
+  <div *ngFor="let control of agentSellers.controls; let i = index; let first = first" [formGroup]="control">
+    <h6 class="subtitle">agent seller #{{ i + 1}}</h6>
+    <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
+      <div class="fieldset u-flex-03">
+        <label>First name</label>
+        <input formControlName="firstName" placeholder="First name" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="control.get('firstName')"></app-form-validation-error>
+      </div>
+      <div class="fieldset u-flex-03">
+        <label>Second name</label>
+        <input formControlName="lastName" placeholder="Second name" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="control.get('lastName')"></app-form-validation-error>
+      </div>
+      <div class="fieldset u-flex-04">
+        <label>Email</label>
+        <input formControlName="email" placeholder="example@maill.com" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="control.get('email')"></app-form-validation-error>
+      </div>
+      <button *ngIf="!first" mat-icon-button color="accent" (click)="remove(Type.AgentSellers, i)">
+        <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
+      </button>
+    </div>
+  </div>
+  <div *ngIf="agentSellers.controls.length <= 2" (click)="add(Type.AgentSellers)" class="link">add more agent</div>
 
   <h4>Address</h4>
   <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column" style="margin-bottom: -10px;">

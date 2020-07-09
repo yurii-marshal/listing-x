@@ -32,7 +32,7 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
 
   userEmailControl: FormControl = new FormControl(null, [Validators.required, Validators.email]);
 
-  isModerator: boolean = false;
+  isAgent: boolean = false;
   isSeller: boolean = false;
 
   pendingDocuments: Observable<GeneratedDocument[]>;
@@ -76,9 +76,9 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
   transactionLoaded(transaction: Transaction): void {
     this.transaction = transaction;
 
-    const {moderatorBuyers, moderatorSellers, sellers} = transaction.offer;
-    this.isModerator = [...moderatorSellers, ...moderatorBuyers].some(({email}) => email === this.authService.currentUser.email);
-    this.isSeller = [...moderatorSellers, ...sellers].some(({email}) => email === this.authService.currentUser.email);
+    const {agentBuyers, agentSellers, sellers} = transaction.offer;
+    this.isAgent = [...agentSellers, ...agentBuyers].some(({email}) => email === this.authService.currentUser.email);
+    this.isSeller = [...agentSellers, ...sellers].some(({email}) => email === this.authService.currentUser.email);
 
     const residentialAgreement = transaction.documents.find(doc => doc.documentType === GeneratedDocumentType.Contract);
     this.isResidentialAgreementCompleted = residentialAgreement && residentialAgreement.status === DocumentStatus.Completed;
@@ -109,17 +109,17 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
     this.transactionService.inviteUser(transactionId, email)
       .subscribe(() => {
         this.snackbar.open(`Invite sent to email: ${email}`);
-        if (!this.isModerator) {
+        if (!this.isAgent) {
           return;
         }
 
         const invited: Person = {
           email,
           firstName: '<Invited',
-          lastName: `Moderator ${this.isSeller ? 'Seller>' : 'Buyer>'}`
+          lastName: `Agent ${this.isSeller ? 'Seller>' : 'Buyer>'}`
         };
 
-        const updatedListKey = this.isSeller ? 'moderatorSellers' : 'moderatorBuyers';
+        const updatedListKey = this.isSeller ? 'agentSellers' : 'agentBuyers';
         this.transaction.offer[updatedListKey].push(invited);
         this.userEmailControl.setValue(null);
       });
@@ -132,7 +132,7 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
       [GeneratedDocumentType.Addendum]: '/e-sign/addendum'
     }[doc.documentType];
 
-    if (doc.documentType === GeneratedDocumentType.Spq && !this.isModerator && this.isSeller) {
+    if (doc.documentType === GeneratedDocumentType.Spq && !this.isAgent && this.isSeller) {
       this.openSPQDialog(doc, true);
       return;
     }

@@ -100,7 +100,7 @@ export class AddressDialogComponent implements OnInit {
     this.sellers.removeAt(i);
   }
 
-  addModerator(): void {
+  addAgent(): void {
     this.sellers.push(this.buildSellers());
   }
 }
