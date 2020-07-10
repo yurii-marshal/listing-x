@@ -36,6 +36,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.user = this.authService.currentUser;
 
+    this.buildForm();
+
     this.profileService.getAgent()
       .pipe(
         takeUntil(this.onDestroyed$),
@@ -45,11 +47,18 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe((data: Agent) => {
-        const names: string[] = Object.keys(this.form.controls);
+        const names: string[] = Object.keys(this.form.getRawValue());
         const formData = _.pick(data, names);
         this.form.patchValue(formData);
       });
+  }
 
+  ngOnDestroy(): void {
+    this.onDestroyed$.next();
+    this.onDestroyed$.complete();
+  }
+
+  buildForm() {
     this.form = this.formBuilder.group({
       companyName: ['', [Validators.required]],
       companyLicense: ['', [Validators.required, CustomValidators.number, Validators.maxLength(9)]],
@@ -57,11 +66,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       physicalAddress: ['', [Validators.required]],
       phoneNumber: ['', [Validators.required]],
     });
-  }
-
-  ngOnDestroy(): void {
-    this.onDestroyed$.next();
-    this.onDestroyed$.complete();
   }
 
   public onSubmit(): void {
