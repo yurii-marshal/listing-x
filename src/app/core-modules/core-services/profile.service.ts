@@ -29,7 +29,8 @@ export class ProfileService extends BaseDataService<Agent> {
   }
 
   getAgent(): Observable<Agent> {
-      return this.http.get(ApiEndpoint.AgentProfile) as Observable<Agent>;
+    return this.currentAgent ? of(this.currentAgent) :
+      this.http.get(ApiEndpoint.AgentProfile) as Observable<Agent>;
   }
 
 }

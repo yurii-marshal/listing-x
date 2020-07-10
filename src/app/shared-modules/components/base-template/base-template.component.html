@@ -1,55 +1,57 @@
-<div class="dummy-header">
-  <img routerLink="/portal" src="assets/images/icons/logo.svg" width="125" class="logo">
-  <ng-container *ngIf="isVisibleNavBar">
-    <nav [class]="state" *ngIf="state === 'portal'" mat-tab-nav-bar>
-      <a mat-tab-link *ngFor="let link of portalNavLinks"
-         [routerLink]="link.path"
-         routerLinkActive #rla="routerLinkActive"
-         [active]="rla.isActive"
-         [disabled]="link.disabled"
-         [style.display]="link.hidden ? 'none' : 'flex'"
-         class="top-bar">
-        {{ link.label }}
-        <span *ngIf="link.disabled"></span>
-      </a>
-    </nav>
-    <nav [class]="state" *ngIf="state === 'purchase'" mat-tab-nav-bar>
-      <a mat-tab-link *ngFor="let link of purchaseNavLinks"
-         [routerLink]="link.path"
-         routerLinkActive #rla="routerLinkActive"
-         [active]="rla.isActive"
-         [disabled]="link.disabled"
-         [class.completed]="offerService.offerProgress > link.progress"
-         class="top-bar">
-        {{ link.label }}
-      </a>
-    </nav>
+<div class="base-header">
+  <div class="wrapper u-flex u-flex-justify--space-between u-flex-align-items--center">
+    <img routerLink="/portal" src="assets/images/icons/logo.svg" width="125" class="logo">
+    <ng-container *ngIf="isVisibleNavBar">
+      <nav [class]="state" *ngIf="state === 'portal'" mat-tab-nav-bar>
+        <a mat-tab-link *ngFor="let link of portalNavLinks"
+           [routerLink]="link.path"
+           routerLinkActive #rla="routerLinkActive"
+           [active]="rla.isActive"
+           [disabled]="link.disabled"
+           [style.display]="link.hidden ? 'none' : 'flex'"
+           class="top-bar">
+          {{ link.label }}
+          <span *ngIf="link.disabled"></span>
+        </a>
+      </nav>
+      <nav [class]="state" *ngIf="state === 'purchase'" mat-tab-nav-bar>
+        <a mat-tab-link *ngFor="let link of purchaseNavLinks"
+           [routerLink]="link.path"
+           routerLinkActive #rla="routerLinkActive"
+           [active]="rla.isActive"
+           [disabled]="link.disabled"
+           [class.completed]="offerService.offerProgress > link.progress"
+           class="top-bar">
+          {{ link.label }}
+        </a>
+      </nav>
 
-    <button class="close-btn" *ngIf="state === 'purchase'" mat-stroked-button routerLink="/portal" color="primary">
-      <img src="assets/images/icons/close-btn-icon.svg" alt="close-btn-icon">
-      CLOSE
-    </button>
+      <button class="close-btn" *ngIf="state === 'purchase'" mat-stroked-button routerLink="/portal" color="primary">
+        <img src="assets/images/icons/close-btn-icon.svg" alt="close-btn-icon">
+        CLOSE
+      </button>
 
-    <div class="user-controls" *ngIf="state === 'portal'">
-      <button mat-icon-button class="notifications">
-        <img src="assets/images/icons/alarm.png" height="22">
-      </button>
-      <p class="username"
-         [title]="user?.email"
-         [class.hidden]="!user?.firstName">
-        Hi, {{ user?.firstName }}
-      </p>
-      <button (click)="logout()" mat-icon-button>
-        <img src="assets/images/icons/exit.png" height="22" class="trigger">
-      </button>
-    </div>
-  </ng-container>
+      <div class="user-controls" *ngIf="state === 'portal'">
+        <button mat-icon-button class="notifications">
+          <img src="assets/images/icons/alarm.png" height="22">
+        </button>
+        <p class="username"
+           [title]="user?.email"
+           [class.hidden]="!user?.firstName">
+          Hi, {{ user?.firstName }}
+        </p>
+        <button (click)="logout()" mat-icon-button>
+          <img src="assets/images/icons/exit.png" height="22" class="trigger">
+        </button>
+      </div>
+    </ng-container>
+  </div>
 </div>
 <div class="offset"></div>
 
 <ng-content></ng-content>
 
-<div class="app-footer">
-  <!-- FIXME: footer -->
-  <img src="assets/images/icons/logo.svg" width="125" class="logo">
-</div>
+<!--<div class="app-footer">-->
+  <!--&lt;!&ndash; FIXME: footer &ndash;&gt;-->
+  <!--<img src="assets/images/icons/logo.svg" width="125" class="logo">-->
+<!--</div>-->
