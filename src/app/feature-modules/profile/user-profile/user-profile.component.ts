@@ -7,7 +7,7 @@ import { ProfileService } from '../../../core-modules/core-services/profile.serv
 import { NotificationType } from '../../../core-modules/enums/notification-type';
 import { CustomValidators } from '../../../core-modules/validators/custom-validators';
 import { Agent } from '../../../core-modules/models/agent';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as _ from 'lodash';
 import { catchError, takeUntil } from 'rxjs/operators';
 import { of, Subject } from 'rxjs';
@@ -29,6 +29,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
               private route: ActivatedRoute,
+              private router: Router,
               private profileService: ProfileService,
               private snackBar: MatSnackBar) {
   }
@@ -77,6 +78,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
             'OK',
             {duration: 5000});
           this.profileService.changeUserProps({registrationCompleted: true});
+          this.router.navigateByUrl('/portal');
         });
     }
   }

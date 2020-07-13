@@ -4214,8 +4214,14 @@
             {{item.firstName}} {{item.lastName}} | {{item.email}}
           </div>
         </div>
-        <div class="offer-actors agents" *ngFor="let item of offer.agents; let i = index">
-          <h6>Agent #{{i+1}}</h6>
+        <div class="offer-actors agents" *ngFor="let item of offer.agentBuyers; let i = index">
+          <h6>Buyer's Agent #{{i+1}}</h6>
+          <div class="item">
+            {{item.firstName}} {{item.lastName}} | {{item.email}}
+          </div>
+        </div>
+        <div class="offer-actors agents" *ngFor="let item of offer.agentSellers; let i = index">
+          <h6>Listing Agent #{{i+1}}</h6>
           <div class="item">
             {{item.firstName}} {{item.lastName}} | {{item.email}}
           </div>

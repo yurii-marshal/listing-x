@@ -41,6 +41,10 @@
           <app-form-validation-error [baseControl]="form?.get('physicalAddress')"></app-form-validation-error>
         </div>
 
+        <!--TODO: the phone number should be in a 10 digit format. Here are the acceptable imputs:-->
+        <!--3105250619-->
+        <!--310-525-0619-->
+        <!--(310) 525-0619-->
         <div class="fieldset">
           <label>Phone number</label>
           <input formControlName="phoneNumber" placeholder="+1" spellcheck="false" class="form-control">

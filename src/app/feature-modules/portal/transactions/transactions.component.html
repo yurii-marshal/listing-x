@@ -59,7 +59,7 @@
 
       <!-- Agent buyer column -->
       <ng-container matColumnDef="agentBuyers">
-        <th mat-header-cell *matHeaderCellDef>Agent Buyers</th>
+        <th mat-header-cell *matHeaderCellDef>Buyer's Agents</th>
         <td mat-cell *matCellDef="let element">
           <div *ngFor="let item of element.offer.agentBuyers">
             <mat-icon fontSet="fa" fontIcon="fa-user" class="user-icon" [class.current-user]="isCurrentUser(item)"></mat-icon>
@@ -70,7 +70,7 @@
 
       <!-- Agent seller column -->
       <ng-container matColumnDef="agentSellers">
-        <th mat-header-cell *matHeaderCellDef>Agent Sellers</th>
+        <th mat-header-cell *matHeaderCellDef>Listing Agents</th>
         <td mat-cell *matCellDef="let element">
           <div *ngFor="let item of element.offer.agentSellers">
             <mat-icon fontSet="fa" fontIcon="fa-user" class="user-icon" [class.current-user]="isCurrentUser(item)"></mat-icon>

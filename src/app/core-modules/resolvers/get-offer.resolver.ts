@@ -26,7 +26,7 @@ export class GetOfferResolver implements Resolve<Offer> {
             }
             return offer;
           },
-          error: err => this.router.navigateByUrl('/portal/transactions')
+          error: err => this.router.navigateByUrl('/portal')
         }),
         first()
       );
