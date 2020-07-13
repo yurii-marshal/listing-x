@@ -164,9 +164,11 @@
                 <input formControlName="check_disclosure_landlord_1" type="checkbox"> Landlord
                 <input formControlName="check_disclosure_tenant_1" type="checkbox"> Tenant
                 <input formControlName="text_disclosure_role_name_1" type="text" class="i-lr-6"> Date
-                <input matInput (click)="date_disclosure_1.open()" [matDatepicker]="date_disclosure_1" formControlName="date_disclosure_1" type="text"
-                       class="i-lr-3">
-                <mat-datepicker #date_disclosure_1></mat-datepicker>
+                <mat-form-field>
+                  <input matInput (click)="date_disclosure_1.open()" [matDatepicker]="date_disclosure_1" formControlName="date_disclosure_1" type="text"
+                         class="i-lr-3">
+                  <mat-datepicker #date_disclosure_1></mat-datepicker>
+                </mat-form-field>
               </div>
               <div>
                 <input formControlName="check_disclosure_buyer_2" type="checkbox"> Buyer

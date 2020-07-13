@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { OfferService } from '../../services/offer.service';
 import { Offer } from '../../../../core-modules/models/offer';
 import { MatDialog, MatSnackBar } from '@angular/material';
@@ -14,7 +14,7 @@ import { SaveOfferDialogComponent } from '../../../../shared-modules/dialogs/sav
   templateUrl: './step-two.component.html',
   styleUrls: ['./step-two.component.scss']
 })
-export class StepTwoComponent implements OnInit, OnDestroy {
+export class StepTwoComponent implements OnInit, OnDestroy, OnChanges {
   documentForm: FormGroup;
   currentPage: number = 0;
   completedFieldsCount: number = 0;
@@ -494,6 +494,10 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
     this.initPageBreakers();
     this.subscribeToFormChanges();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
   }
 
   ngOnDestroy(): void {
