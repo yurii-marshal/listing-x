@@ -50,6 +50,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.onDestroyed$))
       .subscribe((offer: Offer) => {
         this.offer = offer;
+        this.offer.progress = this.offer.progress < this.offerService.offerProgress && this.offerService.offerProgress;
 
         const model = _.pick(this.offer, Object.keys(this.form.controls));
         this.form.patchValue(model);

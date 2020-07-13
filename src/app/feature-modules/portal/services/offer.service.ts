@@ -67,8 +67,10 @@ export class OfferService extends BaseDataService<Offer> {
     return this.http.get(`/offers/${id}/agreement-doc`);
   }
 
-  updateOfferDocumentField(offerId: number, model: object) {
-    return this.http.patch(`/offers/${offerId}/agreement-doc`, model);
+  updateOfferDocumentField(query, model: object) {
+    let params = new HttpParams();
+    params = params.set('page', query.page);
+    return this.http.patch(`/offers/${query.offerId}/agreement-doc`, model, {params});
   }
 
   loadOfferSummary(id: number): Observable<OfferSummary> {

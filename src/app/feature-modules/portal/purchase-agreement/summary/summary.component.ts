@@ -30,6 +30,7 @@ export class SummaryComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.onDestroyed$))
       .subscribe((data: OfferSummary) => {
         this.offerSummary = data;
+        this.offerSummary.progress = this.offerSummary.progress < this.offerService.offerProgress && this.offerService.offerProgress;
       });
   }
 

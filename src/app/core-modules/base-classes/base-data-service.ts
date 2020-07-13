@@ -44,7 +44,7 @@ export abstract class BaseDataService<TModel extends {id: number}> implements ID
 
   update(model: TModel): Observable<TModel> {
     const url: string = this.detailUrl(model.id);
-    return this.http.put<TModel>(url, model);
+    return this.http.post<TModel>(url, model);
   }
 
   delete(id: number): Observable<void> {

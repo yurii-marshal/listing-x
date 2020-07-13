@@ -28,8 +28,12 @@ export class StepOneComponent implements OnInit, OnDestroy {
     this.offerId = +this.route.snapshot.params.id;
 
     this.offerId ?
-      this.offerService.getOfferById(this.offerId).pipe(takeUntil(this.onDestroyed$))
-        .subscribe((offer: Offer) => this.offer = offer)
+      this.offerService.getOfferById(this.offerId)
+        .pipe(takeUntil(this.onDestroyed$))
+        .subscribe((offer: Offer) => {
+          this.offer = offer;
+          this.offer.progress = this.offer.progress < this.offerService.offerProgress && this.offerService.offerProgress;
+        })
       : this.anonymousOffer = this.route.snapshot.data.anonymousOffer as Offer;
   }
 
@@ -38,11 +42,11 @@ export class StepOneComponent implements OnInit, OnDestroy {
     this.onDestroyed$.complete();
   }
 
-  findOffers() {
-    this.offer = null;
-  }
+  // findOffers() {
+  //   this.offer = null;
+  // }
 
-  proceedToNextStep(offer) {
+  nextStep(offer) {
     this.router.navigateByUrl(`/portal/purchase-agreement/${offer.id}/step-two`);
   }
 

@@ -131,6 +131,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       )
       .subscribe(([offer, doc]) => {
         this.offer = offer;
+        this.offer.progress = this.offer.progress < this.offerService.offerProgress && this.offerService.offerProgress;
 
         this.documentForm.patchValue(doc);
       });
@@ -170,7 +171,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   documentInputChanged(formValues) {
-    this.offerService.updateOfferDocumentField(this.offerId, formValues)
+    this.offerService.updateOfferDocumentField({offerId: this.offerId, page: this.currentPage + 1}, formValues)
       .pipe(
         takeUntil(this.onDestroyed$)
       )
