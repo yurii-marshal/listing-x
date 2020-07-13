@@ -67,8 +67,8 @@ export class OfferService extends BaseDataService<Offer> {
     return this.http.get(`/offers/${id}/agreement-doc`);
   }
 
-  updateOfferDocument(offerId, formValue) {
-    return this.http.put(`/offers/${offerId}/agreement-doc`, formValue);
+  updateOfferDocumentField(offerId: number, model: object) {
+    return this.http.patch(`/offers/${offerId}/agreement-doc`, model);
   }
 
   loadOfferSummary(id: number): Observable<OfferSummary> {

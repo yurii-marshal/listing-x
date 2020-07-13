@@ -1,20 +1,22 @@
-import { Component, ElementRef, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { OfferService } from '../../services/offer.service';
 import { Offer } from '../../../../core-modules/models/offer';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { EditOfferDialogComponent } from '../../../../shared-modules/dialogs/edit-offer-dialog/edit-offer-dialog.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { debounceTime, skip, takeUntil } from 'rxjs/operators';
-import { forkJoin, fromEvent, Observable, Subject } from 'rxjs';
+import { debounceTime, skip, switchMap, takeUntil } from 'rxjs/operators';
+import { forkJoin, fromEvent, Observable, of, Subject } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SaveOfferDialogComponent } from '../../../../shared-modules/dialogs/save-offer-dialog/save-offer-dialog.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-step-two',
   templateUrl: './step-two.component.html',
-  styleUrls: ['./step-two.component.scss']
+  styleUrls: ['./step-two.component.scss'],
+  providers: [DatePipe]
 })
-export class StepTwoComponent implements OnInit, OnDestroy, OnChanges {
+export class StepTwoComponent implements OnInit, OnDestroy {
   documentForm: FormGroup;
   currentPage: number = 0;
   completedFieldsCount: number = 0;
@@ -35,7 +37,8 @@ export class StepTwoComponent implements OnInit, OnDestroy, OnChanges {
     private route: ActivatedRoute,
     private snackbar: MatSnackBar,
     private fb: FormBuilder,
-    private elRef: ElementRef
+    private elRef: ElementRef,
+    private datePipe: DatePipe,
   ) {
   }
 
@@ -477,7 +480,7 @@ export class StepTwoComponent implements OnInit, OnDestroy, OnChanges {
       // input413: ['', []],
       // input414: ['', []],
       // input415: ['', []],
-    });
+    }, {updateOn: 'blur'});
 
     forkJoin(
       this.offerService.getOfferById(this.offerId),
@@ -494,10 +497,6 @@ export class StepTwoComponent implements OnInit, OnDestroy, OnChanges {
 
     this.initPageBreakers();
     this.subscribeToFormChanges();
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
   }
 
   ngOnDestroy(): void {
@@ -521,12 +520,22 @@ export class StepTwoComponent implements OnInit, OnDestroy, OnChanges {
   subscribeToFormChanges() {
     this.documentForm.valueChanges
       .pipe(
-        skip(1),
-        debounceTime(300),
         takeUntil(this.onDestroyed$),
+        skip(1),
+        switchMap(() => of(this.getDirtyFields(this.documentForm)))
       )
-      .subscribe((formValue) => {
-        this.saveDocument(formValue);
+      .subscribe((formValues) => {
+        this.documentInputChanged(formValues);
+      });
+  }
+
+  documentInputChanged(formValues) {
+    this.offerService.updateOfferDocumentField(this.offerId, formValues)
+      .pipe(
+        takeUntil(this.onDestroyed$)
+      )
+      .subscribe((res) => {
+        console.log(res);
       });
   }
 
@@ -543,16 +552,6 @@ export class StepTwoComponent implements OnInit, OnDestroy, OnChanges {
       )
       .subscribe((event: any) => {
         this.detectPageChange(event.target.scrollTop);
-      });
-  }
-
-  saveDocument(formValue) {
-    this.offerService.updateOfferDocument(this.offerId, formValue)
-      .pipe(
-        takeUntil(this.onDestroyed$)
-      )
-      .subscribe((res) => {
-        // console.log(res);
       });
   }
 
@@ -574,6 +573,16 @@ export class StepTwoComponent implements OnInit, OnDestroy, OnChanges {
         }
       });
   }
+
+  // saveDocument(formValue) {
+  //   this.offerService.updateOfferDocument(this.offerId, formValue)
+  //     .pipe(
+  //       takeUntil(this.onDestroyed$)
+  //     )
+  //     .subscribe((res) => {
+  //       // console.log(res);
+  //     });
+  // }
 
   openSaveOfferDialog(changedOfferModel: Offer) {
     const dialogRef = this.dialog.open(SaveOfferDialogComponent, {
@@ -606,6 +615,33 @@ export class StepTwoComponent implements OnInit, OnDestroy, OnChanges {
 
   acceptOfferPDF() {
     this.router.navigate([`portal/purchase-agreement/${this.offer.id}/step-three`]);
+  }
+
+  private getDirtyFields(group: FormGroup) {
+    let changedProperties = {};
+
+    Object.keys(group.controls).forEach((name) => {
+      const currentControl = group.controls[name];
+
+      if (currentControl.dirty) {
+        changedProperties = currentControl instanceof FormGroup
+          ? this.getDirtyFields(currentControl)
+          : {
+            ...changedProperties,
+            ...{
+              [name]: (currentControl.value instanceof Date
+                ? this.transformDate(currentControl.value)
+                : currentControl.value)
+            }
+          };
+      }
+    });
+
+    return changedProperties;
+  }
+
+  private transformDate(date) {
+    return this.datePipe.transform(date, 'yyyy-MM-dd');
   }
 
 }
