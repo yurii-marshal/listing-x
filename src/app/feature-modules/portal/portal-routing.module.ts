@@ -22,6 +22,7 @@ import { StepTwoComponent } from './purchase-agreement/step-two/step-two.compone
 import { StepThreeComponent } from './purchase-agreement/step-three/step-three.component';
 import { SummaryComponent } from './purchase-agreement/summary/summary.component';
 import { CreateOfferGuardService } from '../../core-modules/guards/create-offer-guard.service';
+import { GetOfferResolver } from '../../core-modules/resolvers/get-offer.resolver';
 
 const routes: Routes = [
   {
@@ -98,25 +99,33 @@ const routes: Routes = [
             path: 'step-one',
             pathMatch: 'full',
             component: StepOneComponent,
-            canActivate: [CreateOfferGuardService]
+            canActivate: [CreateOfferGuardService],
+            data: {progress: 1},
+            resolve: {offer: GetOfferResolver}
           },
           {
             path: 'step-two',
             pathMatch: 'full',
             component: StepTwoComponent,
-            canActivate: [CreateOfferGuardService]
+            canActivate: [CreateOfferGuardService],
+            data: {progress: 2},
+            resolve: {offer: GetOfferResolver}
           },
           {
             path: 'step-three',
             pathMatch: 'full',
             component: StepThreeComponent,
-            canActivate: [CreateOfferGuardService]
+            canActivate: [CreateOfferGuardService],
+            data: {progress: 3},
+            resolve: {offer: GetOfferResolver}
           },
           {
             path: 'summary',
             pathMatch: 'full',
             component: SummaryComponent,
-            canActivate: [CreateOfferGuardService]
+            canActivate: [CreateOfferGuardService],
+            data: {progress: 4},
+            resolve: {offer: GetOfferResolver}
           },
         ]
       },
@@ -148,6 +157,7 @@ const routes: Routes = [
     CreateOfferGuardService,
     OfferResolver,
     CreateOfferResolver,
+    GetOfferResolver,
     OfferDocumentsResolver,
     OfferSummaryResolver
   ]

@@ -17,7 +17,7 @@ export class ActivationResolver implements Resolve<boolean> {
     return this.service.activate(token)
       .pipe(
         tap({
-          next: () => this.router.navigate(['/auth/login'], { queryParams: {activated: true}}),
+          next: () => this.router.navigate(['/auth/login'], {queryParams: {activated: true}}),
           error: err => this.router.navigate(['/error/expired'])
         }),
         first()
@@ -25,6 +25,6 @@ export class ActivationResolver implements Resolve<boolean> {
 
     // Router waits for the observable to close.
     // We ensure it gets closed after the first value is emitted, by using the first() operator.
-}
+  }
 
 }

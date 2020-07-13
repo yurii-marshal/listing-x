@@ -28,6 +28,7 @@ export interface Offer {
   loanType?: LoanType;  // CONVENTIONAL LOAN,
   downPayment?: number;
   anySpecialFinancialTerms?: string;
+  progress?: number;
 }
 
 export interface Person {
