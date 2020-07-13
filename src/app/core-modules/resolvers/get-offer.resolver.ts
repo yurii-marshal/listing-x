@@ -6,7 +6,7 @@ import { OfferService } from '../../feature-modules/portal/services/offer.servic
 import { Offer } from '../models/offer';
 
 @Injectable()
-export class GetOfferResolver implements Resolve<boolean> {
+export class GetOfferResolver implements Resolve<Offer> {
 
   constructor(private offerService: OfferService,
               private router: Router) {
