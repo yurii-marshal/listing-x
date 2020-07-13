@@ -21,19 +21,14 @@ export class StepOneComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
   ) {
-    this.offerService.offerProgress = 1;
   }
 
   ngOnInit() {
     this.offerId = +this.route.snapshot.params.id;
+    this.offer = this.route.snapshot.data.offer;
 
-    this.offerId ?
-      this.offerService.getOfferById(this.offerId)
-        .pipe(takeUntil(this.onDestroyed$))
-        .subscribe((offer: Offer) => {
-          this.offer = offer;
-          this.offer.progress = this.offer.progress < this.offerService.offerProgress && this.offerService.offerProgress;
-        })
+    this.offerId
+      ? this.offer = this.route.snapshot.data.offer
       : this.anonymousOffer = this.route.snapshot.data.anonymousOffer as Offer;
   }
 

@@ -39,6 +39,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.offerService.offerProgress = 3;
+    this.offer = this.route.snapshot.data.offer;
 
     this.form = this.formBuilder.group({
       preApproval: [[]],
@@ -46,15 +47,8 @@ export class StepThreeComponent implements OnInit, OnDestroy {
       coverLetter: [[]],
     });
 
-    this.offerService.getOfferById(+this.route.snapshot.params.id)
-      .pipe(takeUntil(this.onDestroyed$))
-      .subscribe((offer: Offer) => {
-        this.offer = offer;
-        this.offer.progress = this.offer.progress < this.offerService.offerProgress && this.offerService.offerProgress;
-
-        const model = _.pick(this.offer, Object.keys(this.form.controls));
-        this.form.patchValue(model);
-      });
+    const model = _.pick(this.offer, Object.keys(this.form.controls));
+    this.form.patchValue(model);
   }
 
   ngOnDestroy() {

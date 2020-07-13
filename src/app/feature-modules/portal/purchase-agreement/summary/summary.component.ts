@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { OfferService } from '../../services/offer.service';
-import { OfferSummary } from '../../../../core-modules/models/offer';
+import { Offer, OfferSummary } from '../../../../core-modules/models/offer';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
@@ -12,6 +12,7 @@ import { MatSnackBar } from '@angular/material';
   styleUrls: ['./summary.component.scss']
 })
 export class SummaryComponent implements OnInit, OnDestroy {
+  offer: Offer;
   offerSummary: OfferSummary;
 
   private onDestroyed$: Subject<void> = new Subject<void>();
@@ -24,13 +25,12 @@ export class SummaryComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.offerService.offerProgress = 4;
+    this.offer = this.route.snapshot.data.offer;
 
     this.offerService.loadOfferSummary(+this.route.snapshot.params.id)
       .pipe(takeUntil(this.onDestroyed$))
       .subscribe((data: OfferSummary) => {
         this.offerSummary = data;
-        this.offerSummary.progress = this.offerSummary.progress < this.offerService.offerProgress && this.offerService.offerProgress;
       });
   }
 

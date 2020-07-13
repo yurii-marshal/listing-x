@@ -5,7 +5,7 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 import { EditOfferDialogComponent } from '../../../../shared-modules/dialogs/edit-offer-dialog/edit-offer-dialog.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { debounceTime, skip, switchMap, takeUntil } from 'rxjs/operators';
-import { forkJoin, fromEvent, Observable, of, Subject } from 'rxjs';
+import { fromEvent, Observable, of, Subject } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SaveOfferDialogComponent } from '../../../../shared-modules/dialogs/save-offer-dialog/save-offer-dialog.component';
 import { DatePipe } from '@angular/common';
@@ -43,8 +43,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.offerService.offerProgress = 2;
     this.offerId = +this.route.snapshot.params.id;
+    this.offer = this.route.snapshot.data.offer;
 
     this.documentForm = this.fb.group({
       page_1: this.fb.group({
@@ -122,17 +122,11 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       page_16: this.fb.group({}),
     }, {updateOn: 'blur'});
 
-    forkJoin(
-      this.offerService.getOfferById(this.offerId),
-      this.offerService.getOfferDocument(this.offerId)
-    )
+    this.offerService.getOfferDocument(this.offerId)
       .pipe(
         takeUntil(this.onDestroyed$)
       )
-      .subscribe(([offer, doc]) => {
-        this.offer = offer;
-        this.offer.progress = this.offer.progress < this.offerService.offerProgress && this.offerService.offerProgress;
-
+      .subscribe((doc) => {
         this.documentForm.patchValue(doc);
       });
 
