@@ -44,7 +44,7 @@ export class OfferService extends BaseDataService<Offer> {
     if (offerData) {
       params = params.set('token', offerData.token);
     }
-    return this.http.post<Offer>(this.crudEndpoint, model, {params: params})
+    return this.http.post<Offer>(this.crudEndpoint, model, {params})
       .pipe(
         tap(() => this.offerChanged.next()),
         tap(() => offerData && localStorage.removeItem(LocalStorageKey.Offer)) // tear down
@@ -61,6 +61,14 @@ export class OfferService extends BaseDataService<Offer> {
 
   getAnonymousOffer(token: number): Observable<Offer> {
     return this.http.get<Offer>(`/offers/token/${token}`);
+  }
+
+  getOfferDocument(id: number): Observable<any> {
+    return this.http.get(`/offers/${id}/agreement-doc`);
+  }
+
+  updateOfferDocumentField(offerId: number, model: object) {
+    return this.http.patch(`/offers/${offerId}/agreement-doc`, model);
   }
 
   loadOfferSummary(id: number): Observable<OfferSummary> {
