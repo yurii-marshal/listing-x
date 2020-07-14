@@ -13,17 +13,22 @@ export class GetOfferResolver implements Resolve<Offer> {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Offer> {
-    if (route.data && route.data.progress) {
-      this.offerService.offerProgress = route.data.progress;
-    }
-
     return this.offerService.getOfferById(+route.params.id)
       .pipe(
         tap({
           next: (offer) => {
-            if (offer.progress < this.offerService.offerProgress) {
-              offer.progress = this.offerService.offerProgress;
+            if (route.data && route.data.progress) {
+              this.offerService.offerProgress = route.data.progress;
+
+              if (offer.progress > this.offerService.offerProgress) {
+                // TODO: throw out of the offer flow
+                // this.router.navigateByUrl('/portal')
+              }
+              if (offer.progress < this.offerService.offerProgress) {
+                offer.progress = this.offerService.offerProgress;
+              }
             }
+
             return offer;
           },
           error: err => this.router.navigateByUrl('/portal')

@@ -59,6 +59,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.onDestroyed$.complete();
   }
 
+  phoneNumberChanged(ev) {
+    this.form.get('phoneNumber').patchValue(ev);
+  }
+
   buildForm() {
     this.form = this.formBuilder.group({
       companyName: ['', [Validators.required]],
