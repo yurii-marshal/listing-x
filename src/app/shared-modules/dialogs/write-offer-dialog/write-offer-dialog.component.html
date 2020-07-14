@@ -6,7 +6,7 @@
 </div>
 <div mat-dialog-content class="form-container dialog-form" style="min-height: 400px">
   <form novalidate [formGroup]="form" style="width: 100%!important;">
-    <!-- Agent buyers section -->
+    <!-- Buyer's Agent section -->
     <div *ngTemplateOutlet="agentBuyersTpl"></div>
 
     <!-- Agent sellers section -->
@@ -136,9 +136,9 @@
 </ng-template>
 
 <ng-template #agentBuyersTpl>
-  <h4>Agent Buyer information</h4>
+  <h4>Buyer's Agent information</h4>
   <div *ngFor="let control of agentBuyers.controls; let i = index; let first = first" [formGroup]="control">
-    <h6 class="subtitle">agent buyer #{{ i + 1}}</h6>
+    <h6 class="subtitle">Buyer's Agent #{{ i + 1}}</h6>
     <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
       <div class="fieldset u-flex-1">
         <label>First name</label>
@@ -160,13 +160,13 @@
       </button>
     </div>
   </div>
-  <div *ngIf="!data.isAnonymous" (click)="add(Type.AgentBuyers)" class="link">add more agent buyer</div>
+  <div *ngIf="!data.isAnonymous" (click)="add(Type.AgentBuyers)" class="link">add more Buyer's Agent</div>
 </ng-template>
 
 <ng-template #agentSellersTpl>
-  <h4 *ngIf="!data.isAnonymous">agent seller information</h4>
+  <h4 *ngIf="!data.isAnonymous">Listing Agent information</h4>
   <div *ngFor="let control of agentSellers.controls; let i = index; let first = first" [formGroup]="control">
-    <h6 class="subtitle">agent seler #{{ i + 1}}</h6>
+    <h6 class="subtitle">Listing Agent #{{ i + 1}}</h6>
     <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
       <div class="fieldset u-flex-1">
         <label>First name</label>
@@ -188,5 +188,5 @@
       </button>
     </div>
   </div>
-  <div *ngIf="!data.isAnonymous" (click)="add(Type.AgentSellers)" class="link">add more agent seller</div>
+  <div *ngIf="!data.isAnonymous" (click)="add(Type.AgentSellers)" class="link">add more Listing Agents</div>
 </ng-template>

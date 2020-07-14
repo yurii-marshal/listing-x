@@ -49,8 +49,8 @@
     <div class="u-flex u-flex-justify--center">
       <div class="column-layout">
         <div class="row-layout"><label class="header">Offer information</label></div>
-        <div class="row-layout" *ngFor="let item of transaction.offer.agentBuyers; let i = index"><label>agent buyer #{{ i + 1 }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span></div>
-        <div class="row-layout" *ngFor="let item of transaction.offer.agentSellers; let i = index"><label>agent seller #{{ i + 1 }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span></div>
+        <div class="row-layout" *ngFor="let item of transaction.offer.agentBuyers; let i = index"><label>Buyer's Agent #{{ i + 1 }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span></div>
+        <div class="row-layout" *ngFor="let item of transaction.offer.agentSellers; let i = index"><label>Listing Agent #{{ i + 1 }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span></div>
         <div class="row-layout" *ngFor="let item of transaction.offer.buyers; let i = index"><label>buyer #{{ i + 1 }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span></div>
         <div class="row-layout" *ngFor="let item of transaction.offer.sellers; let i = index"><label>seller #{{ i + 1 }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span></div>
         <div class="row-layout"><label>address</label><span>{{ transaction.offer.streetName }}, {{ transaction.offer.city }}, {{ transaction.offer.state }} {{ transaction.offer.zip }}</span></div>

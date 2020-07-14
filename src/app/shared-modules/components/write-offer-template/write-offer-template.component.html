@@ -56,7 +56,7 @@
   </div>
   <div *ngIf="sellers.controls.length <= 2" (click)="add(Type.Sellers)" class="link">add more seller</div>
 
-  <h4>Agent Buyer</h4>
+  <h4>Buyer's Agent</h4>
   <div *ngFor="let control of agentBuyers.controls; let i = index; let first = first" [formGroup]="control">
     <h6 class="subtitle">agent buyer #{{ i + 1}}</h6>
     <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
@@ -80,9 +80,9 @@
       </button>
     </div>
   </div>
-  <div *ngIf="agentBuyers.controls.length <= 2" (click)="add(Type.AgentBuyers)" class="link">add more agent buyer</div>
+  <div *ngIf="agentBuyers.controls.length <= 2" (click)="add(Type.AgentBuyers)" class="link">Buyer's Agent</div>
 
-  <h4>Agent Seller</h4>
+  <h4>Listing Agent</h4>
   <div *ngFor="let control of agentSellers.controls; let i = index; let first = first" [formGroup]="control">
     <h6 class="subtitle">agent seller #{{ i + 1}}</h6>
     <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
@@ -106,7 +106,7 @@
       </button>
     </div>
   </div>
-  <div *ngIf="agentSellers.controls.length <= 2" (click)="add(Type.AgentSellers)" class="link">add more agent seller</div>
+  <div *ngIf="agentSellers.controls.length <= 2" (click)="add(Type.AgentSellers)" class="link">add more Listing Agent</div>
 
   <h4>Address</h4>
   <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column" style="margin-bottom: -10px;">
