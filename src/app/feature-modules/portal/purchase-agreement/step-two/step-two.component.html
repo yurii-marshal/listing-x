@@ -738,7 +738,8 @@
             </header>
             <br>
             <div class="form">
-              Property Address: &nbsp; <input formControlName="text_property_address" type="text" class="i-lr-10"> &nbsp;
+              Property Address: &nbsp; <input formControlName="text_property_address" type="text" class="i-lr-10">
+              &nbsp;
               (“Property”).
             </div>
             <div class="fw-bold">WIRE FRAUD AND ELECTRONIC FUNDS TRANSFERS ADVISORY:</div>
@@ -829,14 +830,16 @@
               </div>
               <div>
                 Seller/Landlord <input formControlName="text_seller_landlord_1" type="text" class="i-lr-9">
-                Date <input matInput (click)="date_seller_landlord_1.open()" [matDatepicker]="date_seller_landlord_1" formControlName="date_seller_landlord_1"
+                Date <input matInput (click)="date_seller_landlord_1.open()" [matDatepicker]="date_seller_landlord_1"
+                            formControlName="date_seller_landlord_1"
                             type="text"
                             class="i-lr-2__5">
                 <mat-datepicker #date_seller_landlord_1></mat-datepicker>
               </div>
               <div>
                 Seller/Landlord <input formControlName="text_seller_landlord_2" type="text" class="i-lr-9">
-                Date <input matInput (click)="date_seller_landlord_2.open()" [matDatepicker]="date_seller_landlord_2" formControlName="date_seller_landlord_2"
+                Date <input matInput (click)="date_seller_landlord_2.open()" [matDatepicker]="date_seller_landlord_2"
+                            formControlName="date_seller_landlord_2"
                             type="text"
                             class="i-lr-2__5">
                 <mat-datepicker #date_seller_landlord_2></mat-datepicker>
@@ -887,389 +890,389 @@
 
           <div class="page-breaker" id="page-4">4</div>
 
-          <!--<div formGroupName="page_5" class="container" style="font-size: 21px; line-height: 1.2;">-->
-          <!--<header class="clearfix">-->
-          <!--<img src="assets/agreement/images/logo1.png" width="350" height="120" class="image">-->
-          <!--<div class="box">-->
-          <!--<br>-->
-          <!--<div class="main-title">CALIFORNIA-->
-          <!--RESIDENTIAL PURCHASE AGREEMENT-->
-          <!--AND JOINT ESCROW INSTRUCTIONS-->
-          <!--</div>-->
-          <!--<div class="main-subtitle">(C.A.R. Form RPA-CA, Revised 12/18)</div>-->
-          <!--</div>-->
-          <!--</header>-->
-          <!--<br>-->
-          <!--<div class="form">-->
-          <!--<div class="fw-bold">-->
-          <!--Date Prepared:-->
-          <!--<input matInput (click)="picker64.open()" [matDatepicker]="picker64" formControlName="input64"-->
-          <!--type="text"-->
-          <!--class="i-lr-2">-->
-          <!--<mat-datepicker #picker64></mat-datepicker>-->
-          <!--</div>-->
-          <!--<div class="fw-bold">-->
-          <!--1. &nbsp;OFFER:-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<div class="fw-bold">-->
-          <!--A. &nbsp;THIS IS AN OFFER FROM-->
-          <!--<input formControlName="input65" type="text" name="" class="i-lr-9__5">-->
-          <!--<span class="fw-normal">(“Buyer”).</span>-->
-          <!--</div>-->
-          <!--<div>-->
-          <!--<span class="fw-bold">B. &nbsp;THE REAL PROPERTY</span> to be acquired is-->
-          <!--<input formControlName="input66" type="text" name="" class="i-lr-8">,-->
-          <!--situated in-->
-          <!--<div class="item-pl-35">-->
-          <!--<span class="fs-small">-->
-          <!--<input formControlName="input67" type="text" class="i-lr-2__5">-->
-          <!--&nbsp;(City),&nbsp;-->
-          <!--<input formControlName="input68" type="text" class="i-lr-2">-->
-          <!--&nbsp;(County), California,&nbsp;-->
-          <!--<input formControlName="input69" type="text" class="i-lr-1">-->
-          <!--&nbsp;(Zip Code), Assessor's Parcel No.&nbsp;-->
-          <!--<input formControlName="input70" type="text" class="i-lr-1">-->
-          <!--&nbsp;(“Property”).&nbsp;-->
-          <!--</span>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div>-->
-          <!--<span class="fw-bold">C. &nbsp;THE PURCHASE PRICE</span> offered is-->
-          <!--<input formControlName="input71" type="text" class="i-lr-10">-->
-          <!--<div class="item-pl-35">-->
-          <!--<input formControlName="input72" type="text" class="i-lr-9">-->
-          <!--Dollars $-->
-          <!--<input formControlName="input73" type="text" class="i-lr-3">.-->
-          <!--</div>-->
+          <div formGroupName="page_5" class="container" style="font-size: 21px; line-height: 1.2;">
+            <header class="clearfix">
+              <img src="assets/agreement/images/logo1.png" width="350" height="120" class="image">
+              <div class="box">
+                <br>
+                <div class="main-title">CALIFORNIA
+                  RESIDENTIAL PURCHASE AGREEMENT
+                  AND JOINT ESCROW INSTRUCTIONS
+                </div>
+                <div class="main-subtitle">(C.A.R. Form RPA-CA, Revised 12/18)</div>
+              </div>
+            </header>
+            <br>
+            <div class="form">
+              <div class="fw-bold">
+                Date Prepared:
+                <input matInput (click)="date_date_prepared.open()" [matDatepicker]="date_date_prepared" formControlName="date_date_prepared"
+                       type="text"
+                       class="i-lr-2">
+                <mat-datepicker #date_date_prepared></mat-datepicker>
+              </div>
+              <div class="fw-bold">
+                1. &nbsp;OFFER:
+              </div>
+              <div class="item-pl-3">
+                <div class="fw-bold">
+                  A. &nbsp;THIS IS AN OFFER FROM
+                  <input formControlName="text_offer_buyer_customer" type="text" name="" class="i-lr-9__5">
+                  <span class="fw-normal">(“Buyer”).</span>
+                </div>
+                <div>
+                  <span class="fw-bold">B. &nbsp;THE REAL PROPERTY</span> to be acquired is
+                  <input formControlName="text_offer_street_name" type="text" name="" class="i-lr-8">,
+                  situated in
+                  <div class="item-pl-35">
+          <span class="fs-small">
+          <input formControlName="text_offer_city" type="text" class="i-lr-2__5">
+          &nbsp;(City),&nbsp;
+          <input formControlName="text_offer_country" type="text" class="i-lr-2">
+          &nbsp;(County), California,&nbsp;
+          <input formControlName="text_offer_zip_code" type="text" class="i-lr-1">
+          &nbsp;(Zip Code), Assessor's Parcel No.&nbsp;
+          <input formControlName="text_offer_apn" type="text" class="i-lr-1">
+          &nbsp;(“Property”).&nbsp;
+          </span>
+                  </div>
+                </div>
+                <div>
+                  <span class="fw-bold">C. &nbsp;THE PURCHASE PRICE</span> offered is
+                  <!--<input formControlName="" type="text" class="i-lr-10">-->
+                  <div class="item-pl-35">
+                    <input formControlName="text_offer_price_text" type="text" class="i-lr-9">
+                    Dollars $
+                    <input formControlName="text_offer_price_digits" type="text" class="i-lr-3">.
+                  </div>
 
-          <!--</div>-->
-          <!--<div>-->
-          <!--<span class="fw-bold">D. &nbsp;CLOSE OF ESCROW</span> shall occur on-->
-          <!--<input formControlName="input74" type="checkbox">-->
-          <!--<input formControlName="input75" type="text" class="i-lr-5 ">-->
-          <!--(date)(or-->
-          <!--<input formControlName="input76" type="checkbox">-->
-          <!--<input formControlName="input77" type="text" class="i-lr-1">-->
-          <!--<span class="fw-bold">Days </span>-->
-          <!--After Acceptance).-->
-          <!--</div>-->
-          <!--<div>-->
-          <!--<span class="fw-bold">E.&nbsp;</span>-->
-          <!--Buyer and Seller are referred to herein as the “Parties.” Brokers are not Parties to this Agreement.-->
-          <!--</div>-->
-          <!--</div>-->
+                </div>
+                <div>
+                  <span class="fw-bold">D. &nbsp;CLOSE OF ESCROW</span> shall occur on
+                  <input formControlName="check_escrow_date" type="checkbox">
+                  <input formControlName="date_escrow_date" type="text" class="i-lr-5 ">
+                  (date)(or
+                  <input formControlName="check_escrow_days" type="checkbox">
+                  <input formControlName="text_escrow_days" type="text" class="i-lr-1">
+                  <span class="fw-bold">Days </span>
+                  After Acceptance).
+                </div>
+                <div>
+                  <span class="fw-bold">E.&nbsp;</span>
+                  Buyer and Seller are referred to herein as the “Parties.” Brokers are not Parties to this Agreement.
+                </div>
+              </div>
 
-          <!--<div class="fw-bold">-->
-          <!--2. &nbsp;AGENCY:-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<div>-->
-          <!--<span class="fw-bold">A. &nbsp;DISCLOSURE:</span>-->
-          <!--The Parties each acknowledge receipt of a-->
-          <!--<input formControlName="input78" type="checkbox">-->
-          <!--“Disclosure Regarding Real Estate Agency-->
-          <!--Relationships”-->
-          <!--(C.A.R. Form AD).-->
-          <!--</div>-->
-          <!--<div>-->
-          <!--<span class="fw-bold"> B. &nbsp;CONFIRMATION:</span>-->
-          <!--The following agency relationships are confirmed for this transaction:-->
-          <!--<div class="item-pl-35">-->
-          <!--<span class="fw-bold">-->
-          <!--Seller's Brokerage Firm-->
-          <!--</span>-->
-          <!--<input formControlName="input79" type="text" class="i-lr-7">-->
-          <!--&nbsp; License Number-->
-          <!--&nbsp; <input formControlName="input80" type="text" class="i-lr-2">-->
-          <!--<br>-->
-          <!--Is the broker of (check one):-->
-          <!--<input formControlName="input81" type="checkbox">-->
-          <!--the seller; or-->
-          <!--<input formControlName="input82" type="checkbox">-->
-          <!--both the buyer and seller. (dual agent)-->
-          <!--<br>-->
-          <!--Seller's Agent-->
-          <!--<input formControlName="input83" type="text" class="i-lr-8">-->
-          <!--License Number-->
-          <!--&nbsp; <input formControlName="input84" type="text" class="i-lr-2">-->
-          <!--<br>-->
-          <!--Is (check one):-->
-          <!--<input formControlName="input85" type="checkbox">-->
-          <!--the Seller's Agent. (salesperson or broker associate)-->
-          <!--<input formControlName="input86" type="checkbox">-->
-          <!--both the Buyer's and Seller's Agent. (dual agent)-->
-          <!--<br>-->
-          <!--<span class="fw-bold">-->
-          <!--Buyer's Brokerage Firm-->
-          <!--</span>-->
-          <!--<input formControlName="input87" type="text" class="i-lr-7">-->
-          <!--&nbsp; License Number-->
-          <!--&nbsp; <input formControlName="input88" type="text" class="i-lr-2">-->
-          <!--<br>-->
-          <!--Is the broker of (check one):-->
-          <!--<input formControlName="input89" type="checkbox">-->
-          <!--the buyer; or-->
-          <!--<input formControlName="input90" type="checkbox">-->
-          <!--both the buyer and seller. (dual agent)-->
-          <!--<br>-->
-          <!--Buyer's Agent-->
-          <!--<input formControlName="input91" type="text" class="i-lr-8">-->
-          <!--License Number-->
-          <!--&nbsp; <input formControlName="input92" type="text" class="i-lr-2">-->
-          <!--<br>-->
-          <!--Is (check one):-->
-          <!--<input formControlName="input93" type="checkbox">-->
-          <!--the Buyer's Agent. (salesperson or broker associate)-->
-          <!--<input formControlName="input94" type="checkbox">-->
-          <!--both the Buyer's and Seller's Agent. (dual agent)-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div>-->
-          <!--<span class="fw-bold">-->
-          <!--C. &nbsp;POTENTIALLY COMPETING BUYERS AND SELLERS:-->
-          <!--</span>-->
-          <!--The Parties each acknowledge receipt of a-->
-          <!--<input formControlName="input95" type="checkbox">-->
-          <!--“Possible-->
-          <!--<div class="item-pl-35">-->
-          <!--Representation of More than One Buyer or Seller - Disclosure and Consent” (C.A.R. Form PRBS).-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div>-->
-          <!--<span class="fw-bold">3. &nbsp;FINANCE TERMS:</span> Buyer represents that funds will be good when-->
-          <!--deposited with Escrow Holder.-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<div class="col-left">-->
-          <!--<span class="fw-bold">-->
-          <!--A. &nbsp;INITIAL DEPOSIT:-->
-          <!--</span>-->
-          <!--Deposit shall be in the amount of. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .-->
-          <!--. . . . . . . . . . . . . . . . . . . .-->
+              <div class="fw-bold">
+                2. &nbsp;AGENCY:
+              </div>
+              <div class="item-pl-3">
+                <div>
+                  <span class="fw-bold">A. &nbsp;DISCLOSURE:</span>
+                  The Parties each acknowledge receipt of a
+                  <input formControlName="check_agency_disclosure" type="checkbox">
+                  “Disclosure Regarding Real Estate Agency
+                  Relationships”
+                  (C.A.R. Form AD).
+                </div>
+                <div>
+                  <span class="fw-bold"> B. &nbsp;CONFIRMATION:</span>
+                  The following agency relationships are confirmed for this transaction:
+                  <div class="item-pl-35">
+          <span class="fw-bold">
+          Seller's Brokerage Firm
+          </span>
+                    <input formControlName="text_agency_broker_seller_firm" type="text" class="i-lr-7">
+                    &nbsp; License Number
+                    &nbsp; <input formControlName="text_agency_broker_seller_firm_lic" type="text" class="i-lr-2">
+                    <br>
+                    Is the broker of (check one):
+                    <input formControlName="check_agency_broker_of_seller" type="checkbox">
+                    the seller; or
+                    <input formControlName="check_agency_broker_seller_both" type="checkbox">
+                    both the buyer and seller. (dual agent)
+                    <br>
+                    Seller's Agent
+                    <input formControlName="text_agency_broker_seller_agent" type="text" class="i-lr-8">
+                    License Number
+                    &nbsp; <input formControlName="text_agency_broker_seller_agent_lic" type="text" class="i-lr-2">
+                    <br>
+                    Is (check one):
+                    <input formControlName="check_agency_broker_seller_agent" type="checkbox">
+                    the Seller's Agent. (salesperson or broker associate)
+                    <input formControlName="check_agency_broker_seller_dual" type="checkbox">
+                    both the Buyer's and Seller's Agent. (dual agent)
+                    <br>
+                    <span class="fw-bold">
+          Buyer's Brokerage Firm
+          </span>
+                    <input formControlName="text_agency_broker_buyer_firm" type="text" class="i-lr-7">
+                    &nbsp; License Number
+                    &nbsp; <input formControlName="text_agency_broker_buyer_firm_lic" type="text" class="i-lr-2">
+                    <br>
+                    Is the broker of (check one):
+                    <input formControlName="check_agency_broker_of_buyer" type="checkbox">
+                    the buyer; or
+                    <input formControlName="check_agency_broker_buyer_both" type="checkbox">
+                    both the buyer and seller. (dual agent)
+                    <br>
+                    Buyer's Agent
+                    <input formControlName="text_agency_broker_buyer_agent" type="text" class="i-lr-8">
+                    License Number
+                    &nbsp; <input formControlName="text_agency_broker_buyer_agent_lic" type="text" class="i-lr-2">
+                    <br>
+                    Is (check one):
+                    <input formControlName="check_agency_broker_buyer_agent" type="checkbox">
+                    the Buyer's Agent. (salesperson or broker associate)
+                    <input formControlName="check_agency_broker_buyer_dual" type="checkbox">
+                    both the Buyer's and Seller's Agent. (dual agent)
+                  </div>
+                </div>
+                <div>
+          <span class="fw-bold">
+          C. &nbsp;POTENTIALLY COMPETING BUYERS AND SELLERS:
+          </span>
+                  The Parties each acknowledge receipt of a
+                  <input formControlName="check_agency_competing_buyers_and_sellers" type="checkbox">
+                  “Possible
+                  <div class="item-pl-35">
+                    Representation of More than One Buyer or Seller - Disclosure and Consent” (C.A.R. Form PRBS).
+                  </div>
+                </div>
+              </div>
+              <div>
+                <span class="fw-bold">3. &nbsp;FINANCE TERMS:</span> Buyer represents that funds will be good when
+                deposited with Escrow Holder.
+              </div>
+              <div class="item-pl-3">
+                <div class="col-left">
+          <span class="fw-bold">
+          A. &nbsp;INITIAL DEPOSIT:
+          </span>
+                  Deposit shall be in the amount of. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                  . . . . . . . . . . . . . . . . . . . .
 
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold">(1) </span>-->
-          <!--Buyer Direct Deposit: Buyer shall deliver deposit directly to Escrow Holder by electronic funds-->
-          <!--transfer,-->
-          <!--<input formControlName="input96" type="checkbox"> cashier's check,-->
-          <!--<input formControlName="input97" type="checkbox"> personal check,-->
-          <!--<input formControlName="input98" type="checkbox"> other-->
-          <!--<input formControlName="input99" type="text" class="i-lr-2">-->
-          <!--within 3 business days-->
-          <!--after Acceptance-->
-          <!--<div>(or<input formControlName="input100" type="text" class="i-lr-6">);</div>-->
-          <!--</div>-->
-          <!--<div>-->
-          <!--<span class="fw-bold">OR (2) </span>-->
-          <!--<input formControlName="input101" type="checkbox">-->
-          <!--Buyer Deposit with Agent: Buyer has given the deposit by personal check (or-->
-          <!--<input formControlName="input102" type="text" class="i-lr-2">-->
-          <!--)-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--to the agent submitting the offer (or to-->
-          <!--<input formControlName="input103" type="text" class="i-lr-4">-->
-          <!--), made payable to-->
-          <!--<input formControlName="input104" type="text" class="i-lr-4">.-->
-          <!--The deposit shall be held uncashed until Acceptance and then deposited with Escrow Holder within-->
-          <!--3 business days after Acceptance (or-->
-          <!--<input formControlName="input105" type="text" class="i-lr-3">-->
-          <!--). Deposit checks given to agent shall be an original signed check and not a copy.-->
-          <!--</div>-->
-          <!--<div>-->
-          <!--(Note: Initial and increased deposits checks received by agent shall be recorded in Broker's-->
-          <!--trust fund log.)-->
-          <!--</div>-->
-          <!--</div>-->
+                  <div class="item-pl-3">
+                    <span class="fw-bold">(1) </span>
+                    Buyer Direct Deposit: Buyer shall deliver deposit directly to Escrow Holder by electronic funds
+                    transfer,
+                    <input formControlName="check_finance_buyer_cashier_check" type="checkbox"> cashier's check,
+                    <input formControlName="check_finance_buyer_personal_check" type="checkbox"> personal check,
+                    <input formControlName="check_finance_buyer_other_check" type="checkbox"> other
+                    <input formControlName="text_finance_buyer_other_details" type="text" class="i-lr-2">
+                    within 3 business days
+                    after Acceptance
+                    <div>(or<input formControlName="text_finance_countdown_alternative" type="text" class="i-lr-6">);</div>
+                  </div>
+                  <div>
+                    <span class="fw-bold">OR (2) </span>
+                    <input formControlName="check_finance_buyer_deposit_agent" type="checkbox">
+                    Buyer Deposit with Agent: Buyer has given the deposit by personal check (or
+                    <input formControlName="text_finance_buyer_deposit_check" type="text" class="i-lr-2">
+                    )
+                  </div>
+                  <div class="item-pl-3">
+                    to the agent submitting the offer (or to
+                    <input formControlName="text_finance_submit_to_agent_alt" type="text" class="i-lr-4">
+                    ), made payable to
+                    <input formControlName="text_finance_payable_to" type="text" class="i-lr-4">.
+                    The deposit shall be held uncashed until Acceptance and then deposited with Escrow Holder within
+                    3 business days after Acceptance (or
+                    <input formControlName="text_finance_deposit_countdown_alt" type="text" class="i-lr-3">
+                    ). Deposit checks given to agent shall be an original signed check and not a copy.
+                  </div>
+                  <div>
+                    (Note: Initial and increased deposits checks received by agent shall be recorded in Broker's
+                    trust fund log.)
+                  </div>
+                </div>
 
-          <!--<div class="col-right">-->
-          <!--$ <input formControlName="input106" type="text">-->
-          <!--</div>-->
+                <div class="col-right">
+                  $ <input formControlName="text_finance_terms_amount" type="text">
+                </div>
 
-          <!--<div class="col-left text-justify">-->
-          <!--<span class="fw-bold">-->
-          <!--B. &nbsp;INCREASED DEPOSIT:-->
-          <!--</span>-->
-          <!--Buyer shall deposit with Escrow Holder an increased deposit in the amount of . . . . . . . . . . . .-->
-          <!--. .-->
-          <!--<div class="item-pl-3">-->
-          <!--within <span class="fw-bold"><input formControlName="input107" type="text"-->
-          <!--class="i-lr-1">Days</span> After Acceptance (or-->
-          <!--<input formControlName="input108" type="text" class="i-lr-7">-->
-          <!--).-->
-          <!--If the Parties agree to liquidated damages in this Agreement, they also agree to incorporate the-->
-          <!--increased-->
-          <!--deposit into the liquidated damages amount in a separate liquidated damages clause (C.A.R. Form-->
-          <!--RID) at the time the increased deposit is delivered to Escrow Holder.-->
-          <!--</div>-->
-          <!--</div>-->
+                <div class="col-left text-justify">
+          <span class="fw-bold">
+          B. &nbsp;INCREASED DEPOSIT:
+          </span>
+                  Buyer shall deposit with Escrow Holder an increased deposit in the amount of . . . . . . . . . . . .
+                  . .
+                  <div class="item-pl-3">
+                    within <span class="fw-bold"><input formControlName="text_finance_increase_deposit_countdown" type="text"
+                                                        class="i-lr-1">Days</span> After Acceptance (or
+                    <input formControlName="text_finance_increase_deposit_countdown_alt" type="text" class="i-lr-7">
+                    ).
+                    If the Parties agree to liquidated damages in this Agreement, they also agree to incorporate the
+                    increased
+                    deposit into the liquidated damages amount in a separate liquidated damages clause (C.A.R. Form
+                    RID) at the time the increased deposit is delivered to Escrow Holder.
+                  </div>
+                </div>
 
-          <!--<div class="col-right">-->
-          <!--$ <input formControlName="input109" type="text">-->
-          <!--</div>-->
+                <div class="col-right">
+                  $ <input formControlName="text_finance_first_loan_amount" type="text">
+                </div>
 
-          <!--<div class="col-left ">-->
-          <!--<span class="fw-bold">C.&nbsp;</span>-->
-          <!--<input formControlName="input110" type="checkbox">-->
-          <!--<span class="fw-bold">ALL CASH OFFER: </span>-->
-          <!--ALL CASH OFFER: No loan is needed to purchase the Property. This offer is NOT-->
-          <!--<div class="item-pl-3 text-justify">-->
-          <!--contingent on Buyer obtaining a loan. Written verification of sufficient funds to close this-->
-          <!--transaction IS ATTACHED-->
-          <!--to this offer or-->
-          <!--<input formControlName="input111" type="checkbox">-->
-          <!--Buyer shall, within-->
-          <!--<span class="fw-bold">3 (or </span>-->
-          <!--<input formControlName="input112" type="text" class="i-lr-1">-->
-          <!--<span class="fw-bold">) Days</span>-->
-          <!--After Acceptance, Deliver to Seller such verification.-->
-          <!--</div>-->
-          <!--</div>-->
+                <div class="col-left ">
+                  <span class="fw-bold">C.&nbsp;</span>
+                  <input formControlName="check_finance_all_cash_offer" type="checkbox">
+                  <span class="fw-bold">ALL CASH OFFER: </span>
+                  ALL CASH OFFER: No loan is needed to purchase the Property. This offer is NOT
+                  <div class="item-pl-3 text-justify">
+                    contingent on Buyer obtaining a loan. Written verification of sufficient funds to close this
+                    transaction IS ATTACHED
+                    to this offer or
+                    <input formControlName="check_finance_attach_to_buyer_shall" type="checkbox">
+                    Buyer shall, within
+                    <span class="fw-bold">3 (or </span>
+                    <input formControlName="text_finance_verification_deliver_countdown" type="text" class="i-lr-1">
+                    <span class="fw-bold">) Days</span>
+                    After Acceptance, Deliver to Seller such verification.
+                  </div>
+                </div>
 
-          <!--<div class="col-left text-justify">-->
-          <!--<span class="fw-bold">D. &nbsp;LOAN(S):</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold">(1) FIRST LOAN:</span>-->
-          <!--in the amount of . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .-->
-          <!--. . . . . . . . . . . . . . . . . . . . . . . . . . .-->
-          <!--<div class="item-pl-3 ">-->
-          <!--This loan will be conventional financing-->
-          <!--<span class="fw-bold">OR</span>-->
-          <!--<input formControlName="input113" type="checkbox">-->
-          <!--FHA,-->
-          <!--<input formControlName="input114" type="checkbox">-->
-          <!--VA,-->
-          <!--<input formControlName="input115" type="checkbox">-->
-          <!--Seller financing (C.A.R. Form SFA),-->
-          <!--<input formControlName="input116" type="checkbox">-->
-          <!--assumed financing (C.A.R. Form AFA),-->
-          <!--<input formControlName="input117" type="checkbox">-->
-          <!--Other-->
-          <!--<input formControlName="input118" type="text" class="i-lr-2">.-->
-          <!--This loan shall be at a fixed-->
-          <!--rate not to exceed-->
-          <!--<input formControlName="input119" type="text" class="i-lr-1"> % or,-->
-          <!--<input formControlName="input120" type="checkbox">-->
-          <!--an adjustable rate loan with initial rate not to exceed-->
-          <!--<input formControlName="input121" type="text" class="i-lr-1"> %.-->
-          <!--Regardless of the type of loan, Buyer shall pay points not to exceed-->
-          <!--<input formControlName="input122" type="text" class="i-lr-1"> %-->
-          <!--of the loan amount.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold">(2)-->
-          <!--<input formControlName="input123" type="checkbox">-->
-          <!--SECOND LOAN:-->
-          <!--</span>-->
-          <!--in the amount of . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .-->
-          <!--. . . . . . . . . . . . . . . . . . . . . .-->
-          <!--<div class="item-pl-3">-->
-          <!--This loan will be conventional financing-->
-          <!--<span class="fw-bold">OR</span>-->
-          <!--<input formControlName="input124" type="checkbox">-->
-          <!--Seller financing (C.A.R. Form SFA),-->
-          <!--<input formControlName="input125" type="checkbox">-->
-          <!--assumed financing (C.A.R. Form AFA),-->
-          <!--<input formControlName="input126" type="checkbox">-->
-          <!--Other-->
-          <!--<input formControlName="input127" type="text" class="i-lr-2"> .-->
-          <!--This loan shall be at a fixed rate not to exceed-->
-          <!--<input formControlName="input128" type="text" class="i-lr-1"> % or,-->
-          <!--<input formControlName="input129" type="checkbox">-->
-          <!--an adjustable rate loan with initial rate not to exceed-->
-          <!--<input formControlName="input130" type="text" class="i-lr-1"> %. Regardless of the type of loan,-->
-          <!--Buyer shall pay points-->
-          <!--not to exceed-->
-          <!--<input formControlName="input131" type="text" class="i-lr-1"> % of the loan amount.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold">(3) FHA/VA:</span>-->
-          <!--For any FHA or VA loan specified in 3D(1), Buyer has-->
-          <!--<span class="fw-bold">17 (or</span>-->
-          <!--<input formControlName="input132" type="text" class="i-lr-1">-->
-          <!--<span class="fw-bold">) Days</span>-->
-          <!--After Acceptance-->
-          <!--<div class="item-pl-3">-->
-          <!--to Deliver to Seller written notice (C.A.R. Form FVA) of any lender-required repairs or-->
-          <!--costs that Buyer requests Seller to pay for or otherwise correct. Seller has no obligation-->
-          <!--to pay or-->
-          <!--satisfy lender requirements unless agreed in writing. A FHA/VA amendatory clause (C.A.R.-->
-          <!--Form FVAC) shall-->
-          <!--be a part of this Agreement.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--</div>-->
+                <div class="col-left text-justify">
+                  <span class="fw-bold">D. &nbsp;LOAN(S):</span>
+                  <div class="item-pl-3">
+                    <span class="fw-bold">(1) FIRST LOAN:</span>
+                    in the amount of . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                    . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                    <div class="item-pl-3 ">
+                      This loan will be conventional financing
+                      <span class="fw-bold">OR</span>
+                      <input formControlName="check_finance_loan_type_fha" type="checkbox">
+                      FHA,
+                      <input formControlName="check_finance_loan_type_va" type="checkbox">
+                      VA,
+                      <input formControlName="check_finance_loan_type_seller" type="checkbox">
+                      Seller financing (C.A.R. Form SFA),
+                      <input formControlName="check_finance_loan_type_assumed" type="checkbox">
+                      assumed financing (C.A.R. Form AFA),
+                      <input formControlName="check_finance_loan_type_other" type="checkbox">
+                      Other
+                      <input formControlName="text_finance_loan_type_other_details" type="text" class="i-lr-2">.
+                      This loan shall be at a fixed
+                      rate not to exceed
+                      <input formControlName="text_finance_loan_max_percent" type="text" class="i-lr-1"> % or,
+                      <input formControlName="check_finance_first_loan_adjustable" type="checkbox">
+                      an adjustable rate loan with initial rate not to exceed
+                      <input formControlName="text_finance_loan_initial_rate" type="text" class="i-lr-1"> %.
+                      Regardless of the type of loan, Buyer shall pay points not to exceed
+                      <input formControlName="text_finance_loan_max_pay_points" type="text" class="i-lr-1"> %
+                      of the loan amount.
+                    </div>
+                  </div>
+                  <div class="item-pl-3">
+          <span class="fw-bold">(2)
+          <input formControlName="text_finance_second_loan_amount" type="checkbox">
+          SECOND LOAN:
+          </span>
+                    in the amount of . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                    . . . . . . . . . . . . . . . . . . . . . .
+                    <div class="item-pl-3">
+                      This loan will be conventional financing
+                      <span class="fw-bold">OR</span>
+                      <input formControlName="check_finance_second_loan_type_seller" type="checkbox">
+                      Seller financing (C.A.R. Form SFA),
+                      <input formControlName="check_finance_second_loan_type_assumed" type="checkbox">
+                      assumed financing (C.A.R. Form AFA),
+                      <input formControlName="check_finance_second_loan_type_other" type="checkbox">
+                      Other
+                      <input formControlName="text_finance_second_loan_type_other_details" type="text" class="i-lr-2"> .
+                      This loan shall be at a fixed rate not to exceed
+                      <input formControlName="text_finance_second_loan_max_percent" type="text" class="i-lr-1"> % or,
+                      <input formControlName="check_finance_second_loan_adjustable" type="checkbox">
+                      an adjustable rate loan with initial rate not to exceed
+                      <input formControlName="text_finance_second_loan_initial_rate" type="text" class="i-lr-1"> %. Regardless of the type of loan,
+                      Buyer shall pay points
+                      not to exceed
+                      <input formControlName="text_finance_second_loan_max_pay_points" type="text" class="i-lr-1"> % of the loan amount.
+                    </div>
+                  </div>
+                  <div class="item-pl-3">
+                    <span class="fw-bold">(3) FHA/VA:</span>
+                    For any FHA or VA loan specified in 3D(1), Buyer has
+                    <span class="fw-bold">17 (or</span>
+                    <input formControlName="text_finance_written_notice_delivery_days" type="text" class="i-lr-1">
+                    <span class="fw-bold">) Days</span>
+                    After Acceptance
+                    <div class="item-pl-3">
+                      to Deliver to Seller written notice (C.A.R. Form FVA) of any lender-required repairs or
+                      costs that Buyer requests Seller to pay for or otherwise correct. Seller has no obligation
+                      to pay or
+                      satisfy lender requirements unless agreed in writing. A FHA/VA amendatory clause (C.A.R.
+                      Form FVAC) shall
+                      be a part of this Agreement.
+                    </div>
+                  </div>
+                </div>
 
-          <!--<div class="col-right item-d1">-->
-          <!--$ <input formControlName="input133" type="text">-->
-          <!--</div>-->
+                <div class="col-right item-d1">
+                  $ <input formControlName="text_finance_first_loan_amount" type="text">
+                </div>
 
-          <!--<div class="col-right item-d2">-->
-          <!--$ <input formControlName="input134" type="text">-->
-          <!--</div>-->
+                <div class="col-right item-d2">
+                  $ <input formControlName="text_finance_second_loan_amount" type="text">
+                </div>
 
-          <!--<div class="col-left">-->
-          <!--<span class="fw-bold">E.&nbsp; ADDITIONAL FINANCING TERMS:</span>-->
-          <!--<input formControlName="input135" type="text" class="i-lr-7__5">-->
-          <!--<input formControlName="input136" type="text" class="ml-3 i-lr-11">-->
-          <!--</div>-->
+                <div class="col-left">
+                  <span class="fw-bold">E.&nbsp; ADDITIONAL FINANCING TERMS:</span>
+                  <input formControlName="text_finance_additional_terms" type="text" class="i-lr-7__5">
+                  <!--<input formControlName="text_finance_additional_terms_second" type="text" class="ml-3 i-lr-11">-->
+                </div>
 
-          <!--<div class="col-left text-justify">-->
-          <!--<span class="fw-bold">F.&nbsp; BALANCE OF DOWN PAYMENT OR PURCHASE PRICE</span>-->
-          <!--in the amount of . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .-->
-          <!--<div class="item-pl-3">to be deposited with Escrow Holder pursuant to Escrow Holder instructions.-->
-          <!--</div>-->
-          <!--</div>-->
+                <div class="col-left text-justify">
+                  <span class="fw-bold">F.&nbsp; BALANCE OF DOWN PAYMENT OR PURCHASE PRICE</span>
+                  in the amount of . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                  <div class="item-pl-3">to be deposited with Escrow Holder pursuant to Escrow Holder instructions.
+                  </div>
+                </div>
 
-          <!--<div class="col-right">-->
-          <!--$ <input formControlName="input137" type="text">-->
-          <!--</div>-->
+                <div class="col-right">
+                  $ <input formControlName="text_finance_down_payment_balance" type="text">
+                </div>
 
-          <!--<div class="col-left text-justify">-->
-          <!--<span class="fw-bold">G.&nbsp; ADDITIONAL FINANCING TERMS:</span>-->
-          <!--. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .-->
-          <!--. . . . . . . . . . . . . . . .-->
-          <!--</div>-->
+                <div class="col-left text-justify">
+                  <span class="fw-bold">G.&nbsp; ADDITIONAL FINANCING TERMS:</span>
+                  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                  . . . . . . . . . . . . . . . .
+                </div>
 
-          <!--<div class="col-right">-->
-          <!--$ <input formControlName="input138" type="text">-->
-          <!--</div>-->
-          <!--<div class="clearfix"></div>-->
-          <!--</div>-->
-          <!--<br>-->
-          <!--<br>-->
-          <!--<div class="clearfix">-->
-          <!--<div class="col-left-initials">-->
-          <!--<label>Buyer's Initials</label>-->
-          <!--(<input formControlName="input139" type="text" name="" id="Buyer-1-1" class="i-lr-1">) &nbsp;-->
-          <!--(<input formControlName="input140" type="text" name="" id="Buyer-2-1" class="i-lr-1">)-->
-          <!--<div class="fs-small">&#169; 1991-2018, California Association of REALTORS &#174;, Inc.</div>-->
-          <!--</div>-->
+                <div class="col-right">
+                  $ <input formControlName="text_finance_additional_terms_amount" type="text">
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <br>
+              <br>
+              <div class="clearfix">
+                <div class="col-left-initials">
+                  <label>Buyer's Initials</label>
+                  (<input formControlName="text_finance_buyer_initials_first" type="text" name="" id="Buyer-1-1" class="i-lr-1">) &nbsp;
+                  (<input formControlName="text_finance_buyer_initials_second" type="text" name="" id="Buyer-2-1" class="i-lr-1">)
+                  <div class="fs-small">&#169; 1991-2018, California Association of REALTORS &#174;, Inc.</div>
+                </div>
 
-          <!--<div class="col-right-initials">-->
-          <!--<label>Seller's Initials</label>-->
-          <!--(<input formControlName="input141" type="text" name="" id="Seller-1-1" class="i-lr-1">) &nbsp;-->
-          <!--(<input formControlName="input142" type="text" name="" id="Seller-2-1" class="i-lr-1">)-->
-          <!--<br>-->
-          <!--<br>-->
-          <!--<img src="assets/agreement/images/housing.png" width="80" height="70" class="image-right">-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<footer>-->
-          <!--<div class="fw-bold">RPA-CA REVISED 12/18 (PAGE 1 OF 10)</div>-->
-          <!--<div class="text-center fw-bold">-->
-          <!--CALIFORNIA RESIDENTIAL PURCHASE AGREEMENT (RPA-CA PAGE 1 OF 10)-->
-          <!--</div>-->
+                <div class="col-right-initials">
+                  <label>Seller's Initials</label>
+                  (<input formControlName="text_finance_seller_initials_first" type="text" name="" id="Seller-1-1" class="i-lr-1">) &nbsp;
+                  (<input formControlName="text_finance_seller_initials_second" type="text" name="" id="Seller-2-1" class="i-lr-1">)
+                  <br>
+                  <br>
+                  <img src="assets/agreement/images/housing.png" width="80" height="70" class="image-right">
+                </div>
+              </div>
+            </div>
+            <footer>
+              <div class="fw-bold">RPA-CA REVISED 12/18 (PAGE 1 OF 10)</div>
+              <div class="text-center fw-bold">
+                CALIFORNIA RESIDENTIAL PURCHASE AGREEMENT (RPA-CA PAGE 1 OF 10)
+              </div>
 
-          <!--</footer>-->
-          <!--</div>-->
+            </footer>
+          </div>
 
-          <!--<div class="page-breaker" id="page-5">5</div>-->
+          <div class="page-breaker" id="page-5">5</div>
 
           <!--<div formGroupName="page_6" class="container" style="font-size: 22px; line-height: 1.28;">-->
           <!--<div class="form">-->
