@@ -950,7 +950,13 @@
                 <div>
                   <span class="fw-bold">D. &nbsp;CLOSE OF ESCROW</span> shall occur on
                   <input formControlName="check_escrow_date" type="checkbox">
-                  <input formControlName="date_escrow_date" type="text" class="i-lr-5 ">
+                  <input matInput
+                         (click)="date_escrow_date.open()"
+                         [matDatepicker]="date_escrow_date"
+                         formControlName="date_escrow_date"
+                         type="text"
+                         class="i-lr-5">
+                  <mat-datepicker #date_escrow_date></mat-datepicker>
                   (date)(or
                   <input formControlName="check_escrow_days" type="checkbox">
                   <input formControlName="text_escrow_days" type="text" class="i-lr-1">
