@@ -46,7 +46,7 @@ import { OnlyNumbersDirective } from './directives/only-numbers.directive';
 import { SaveOfferDialogComponent } from './dialogs/save-offer-dialog/save-offer-dialog.component';
 import { SelectedFileItemComponent } from './components/selected-file-item/selected-file-item.component';
 import { PhoneNumberDirective } from './directives/phone-number.directive';
-import { NumberToWordsService } from '../core-modules/core-services/number-to-words.service';
+import { NumberToWordsDirective } from './directives/number-to-words.directive';
 
 const materialModules = [
   MatDialogModule,
@@ -85,6 +85,7 @@ const components = [
   TooltipDirective,
   OnlyNumbersDirective,
   PhoneNumberDirective,
+  NumberToWordsDirective,
   FilePickerComponent,
   FileOption,
   FileUploaderComponent,
@@ -116,7 +117,6 @@ const components = [
     AddressesService,
     OfferService,
     DocumentLinkingService,
-    NumberToWordsService,
   ]
 })
 export class SharedModule {

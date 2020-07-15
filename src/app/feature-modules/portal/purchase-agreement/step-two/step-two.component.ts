@@ -5,11 +5,10 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 import { EditOfferDialogComponent } from '../../../../shared-modules/dialogs/edit-offer-dialog/edit-offer-dialog.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { debounceTime, skip, switchMap, takeUntil } from 'rxjs/operators';
-import { from, fromEvent, Observable, of, Subject } from 'rxjs';
+import { fromEvent, Observable, of, Subject } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SaveOfferDialogComponent } from '../../../../shared-modules/dialogs/save-offer-dialog/save-offer-dialog.component';
 import { DatePipe } from '@angular/common';
-import { NumberToWordsService } from '../../../../core-modules/core-services/number-to-words.service';
 
 @Component({
   selector: 'app-step-two',
@@ -40,16 +39,12 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private elRef: ElementRef,
     private datePipe: DatePipe,
-    private numberToWordsService: NumberToWordsService,
   ) {
   }
 
   ngOnInit() {
     this.offerId = +this.route.snapshot.params.id;
     this.offer = this.route.snapshot.data.offer;
-
-    console.log(this.numberToWordsService.getInWords(7548));
-    console.log(this.numberToWordsService.getInWords('-34'));
 
     this.documentForm = this.fb.group({
       page_1: this.fb.group({
@@ -230,18 +225,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.onDestroyed$.next();
     this.onDestroyed$.complete();
-  }
-
-  setWordEquivalent(fromControlName: string, forControlName: string) {
-    this.documentForm.get(fromControlName).valueChanges
-      .pipe(
-        takeUntil(this.onDestroyed$),
-        debounceTime(300)
-      )
-      .subscribe((value) => {
-        const converted = this.numberToWordsService.getInWords(value);
-        this.documentForm.get(forControlName).patchValue(converted);
-      });
   }
 
   detectPageChange(currentScrollPosition: number) {

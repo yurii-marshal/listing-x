@@ -945,7 +945,9 @@
                     <input formControlName="text_offer_price_text" type="text" class="i-lr-9">
                     Dollars $
                     <input formControlName="text_offer_price_digits"
-                           (input)="setWordEquivalent('page_5.text_offer_price_digits', 'page_5.text_offer_price_text')"
+                           appNumberToWords
+                           [numToWordsForm]="documentForm"
+                           [recipientControlName]="'page_5.text_offer_price_text'"
                            type="text" class="i-lr-3">.
                   </div>
 
