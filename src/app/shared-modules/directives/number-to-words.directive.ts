@@ -2,14 +2,12 @@ import { Directive, ElementRef, Input, OnDestroy } from '@angular/core';
 import { fromEvent, Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { FormGroup } from '@angular/forms';
-import numToWords from 'num-to-words';
+import numbered from 'numbered';
 
 @Directive({
   selector: '[appNumberToWords]'
 })
 export class NumberToWordsDirective implements OnDestroy {
-  private defaultParams = {ands: true, commas: true};
-
   @Input() recipientControlName: string;
   @Input() numToWordsForm: FormGroup;
 
@@ -29,8 +27,8 @@ export class NumberToWordsDirective implements OnDestroy {
       });
   }
 
-  private getInWords(num: any, params = this.defaultParams): string {
-    return num ? (+num ? numToWords(num, params) : 'NOT A NUMBER') : '';
+  private getInWords(num: any): string {
+    return num ? (+num ? numbered.stringify(num) : 'NOT A NUMBER') : '';
   }
 
   ngOnDestroy() {
