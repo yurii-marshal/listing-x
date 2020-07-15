@@ -25,6 +25,7 @@ import { SharedModule } from './shared-modules/shared.module';
     MatProgressBarModule,
     MatIconModule,
     FullCalendarModule,
+
     SharedModule.forRoot()
   ],
   providers: [

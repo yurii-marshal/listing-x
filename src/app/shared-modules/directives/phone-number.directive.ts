@@ -1,5 +1,6 @@
 import { Directive, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges } from '@angular/core';
-import { fromEvent, Subscription } from 'rxjs';
+import { fromEvent, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Directive({
   selector: '[appPhoneNumber]'
@@ -12,14 +13,16 @@ export class PhoneNumberDirective implements OnChanges, OnDestroy {
   actualValue: string = '';
   transformedValue = '';
 
-  currentSubscription: Subscription;
+  private onDestroyed$: Subject<void> = new Subject<void>();
 
   constructor(
     private el: ElementRef,
   ) {
-    fromEvent(el.nativeElement, 'input').subscribe(({target}) => {
-      this.transformValue(target.value);
-    });
+    fromEvent(el.nativeElement, 'input')
+      .pipe(takeUntil(this.onDestroyed$))
+      .subscribe(({target}) => {
+        this.transformValue(target.value);
+      });
   }
 
   transformValue(value: string) {
@@ -54,7 +57,8 @@ export class PhoneNumberDirective implements OnChanges, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.currentSubscription.unsubscribe();
+    this.onDestroyed$.next();
+    this.onDestroyed$.complete();
   }
 
 }
