@@ -1299,7 +1299,8 @@
                 Property Address:
                 <input formControlName="text_property_address" type="text" class="i-lr-9">
                 Date:
-                <input matInput (click)="date_property_date.open()" [matDatepicker]="date_property_date" formControlName="date_property_date"
+                <input matInput (click)="date_property_date.open()" [matDatepicker]="date_property_date"
+                       formControlName="date_property_date"
                        type="text"
                        class="i-lr-2__5">
                 <mat-datepicker #date_property_date></mat-datepicker>
@@ -1316,7 +1317,8 @@
                     After Acceptance, Deliver to Seller written verification of Buyer's down payment and
                     closing costs.
                     <br>
-                    ( <input formControlName="check_closing_cost_verification_attached" type="checkbox"> Verification attached. )
+                    ( <input formControlName="check_closing_cost_verification_attached" type="checkbox"> Verification
+                    attached. )
                   </div>
                 </div>
                 <div>
@@ -1441,17 +1443,21 @@
                 <div class="item-pl-3">
                   <div style="border-bottom: rgb(122, 120, 120) 1px solid;">
                     &nbsp; <input formControlName="check_addenda_addendum" type="checkbox"> Addendum # (C.A.R. Form ADM)
-                    &nbsp; <input formControlName="check_addenda_back_up_offer" type="checkbox"> Back Up Offer Addendum (C.A.R. Form BUO)
+                    &nbsp; <input formControlName="check_addenda_back_up_offer" type="checkbox"> Back Up Offer Addendum
+                    (C.A.R. Form BUO)
                   </div>
 
                   <div style="border-bottom: rgb(122, 120, 120) 1px solid;">
-                    <input formControlName="check_addenda_court_confirmation" type="checkbox"> Court Confirmation Addendum (C.A.R. Form CCA)
-                    &nbsp; <input formControlName="check_addenda_septic" type="checkbox"> Septic, Well and Property Monument
+                    <input formControlName="check_addenda_court_confirmation" type="checkbox"> Court Confirmation
+                    Addendum (C.A.R. Form CCA)
+                    &nbsp; <input formControlName="check_addenda_septic" type="checkbox"> Septic, Well and Property
+                    Monument
                     Addendum (C.A.R. Form SWPI)
                   </div>
 
                   <div style="border-bottom: rgb(122, 120, 120) 1px solid; width: 100%;">
-                    <input formControlName="check_addenda_short_sale" type="checkbox"> Short Sale Addendum (C.A.R. Form SSA)
+                    <input formControlName="check_addenda_short_sale" type="checkbox"> Short Sale Addendum (C.A.R. Form
+                    SSA)
                     &nbsp; <input formControlName="check_addenda_other" type="checkbox"> Other
                   </div>
                 </div>
@@ -1460,20 +1466,26 @@
                 <span class="f-l"> B. &nbsp;BUYER AND SELLER ADVISORIES:</span>
                 <div class="item-pl-3">
                   <div style="border-bottom: rgb(122, 120, 120) 1px solid;">
-                    &nbsp; <input formControlName="check_advisories_buyers_inspection" type="checkbox"> Buyer's Inspection Advisory (C.A.R. Form
+                    &nbsp; <input formControlName="check_advisories_buyers_inspection" type="checkbox"> Buyer's
+                    Inspection Advisory (C.A.R. Form
                     BIA)
-                    &nbsp; <input formControlName="check_advisories_probate_advisories" type="checkbox"> Probate Advisory (C.A.R. Form PA)
+                    &nbsp; <input formControlName="check_advisories_probate_advisories" type="checkbox"> Probate
+                    Advisory (C.A.R. Form PA)
                   </div>
 
                   <div style="border-bottom: rgb(122, 120, 120) 1px solid;">
-                    <input formControlName="check_advisories_statewide_buyers" type="checkbox"> Statewide Buyer and Seller Advisory (C.A.R. Form
+                    <input formControlName="check_advisories_statewide_buyers" type="checkbox"> Statewide Buyer and
+                    Seller Advisory (C.A.R. Form
                     SBSA)
-                    &nbsp; <input formControlName="check_advisories_trust_advisory" type="checkbox"> Trust Advisory (C.A.R. Form TA)
-                    &nbsp; <input formControlName="check_advisories_reo_advisory" type="checkbox"> REO Advisory (C.A.R. Form REO)
+                    &nbsp; <input formControlName="check_advisories_trust_advisory" type="checkbox"> Trust Advisory
+                    (C.A.R. Form TA)
+                    &nbsp; <input formControlName="check_advisories_reo_advisory" type="checkbox"> REO Advisory (C.A.R.
+                    Form REO)
                   </div>
 
                   <div style="border-bottom: rgb(122, 120, 120) 1px solid;">
-                    <input formControlName="check_advisories_short_sale" type="checkbox"> Short Sale Information and Advisory (C.A.R. Form
+                    <input formControlName="check_advisories_short_sale" type="checkbox"> Short Sale Information and
+                    Advisory (C.A.R. Form
                     SSIA)
                     &nbsp; <input formControlName="check_advisories_other" type="checkbox"> Other
                   </div>
@@ -1504,7 +1516,8 @@
                     <span class="fw-bold f-l">(1)</span>
                     <div class="item-pl-3">
                       <input formControlName="check_allocation_report_buyer_first" type="checkbox"> Buyer
-                      <input formControlName="check_allocation_report_seller_first" type="checkbox"> Seller shall pay for a natural hazard zone
+                      <input formControlName="check_allocation_report_seller_first" type="checkbox"> Seller shall pay
+                      for a natural hazard zone
                       disclosure report,
                       including
                       tax
@@ -1519,7 +1532,8 @@
                     <span class="fw-bold f-l">(2)</span>
                     <div class="item-pl-3">
                       <input formControlName="check_allocation_report_buyer_second" type="checkbox"> Buyer
-                      <input formControlName="check_allocation_report_seller_second" type="checkbox"> Seller shall pay for the following Report
+                      <input formControlName="check_allocation_report_seller_second" type="checkbox"> Seller shall pay
+                      for the following Report
                       <input formControlName="text_allocation_report_following_first" type="text" class="i-lr-8">
                       prepared by
                       <input formControlName="text_allocation_report_prepared_by_first" type="text" class="i-lr-11__5">.
@@ -1529,7 +1543,8 @@
                     <span class="fw-bold f-l">(3)</span>
                     <div class="item-pl-3">
                       <input formControlName="check_allocation_report_buyer_third" type="checkbox"> Buyer
-                      <input formControlName="check_allocation_report_seller_third" type="checkbox"> Seller shall pay for the following Report
+                      <input formControlName="check_allocation_report_seller_third" type="checkbox"> Seller shall pay
+                      for the following Report
                       <input formControlName="text_allocation_report_following_second" type="text" class="i-lr-8">
                       prepared by
                       <input formControlName="text_allocation_report_prepared_by_second" type="text" class="i-lr-11__5">.
@@ -1539,7 +1554,8 @@
                 <div class="text-left">
                   <span class="fw-bold">B. &nbsp;GOVERNMENT REQUIREMENTS AND RETROFIT:</span>
                   <input formControlName="check_allocation_report_government_buyer" type="checkbox"> Buyer
-                  <input formControlName="check_allocation_report_government_seller" type="checkbox"> Seller shall pay for smoke alarm and carbon
+                  <input formControlName="check_allocation_report_government_seller" type="checkbox"> Seller shall pay
+                  for smoke alarm and carbon
                   monoxide device installation and
                   water heater bracing, if required by
                   Law. Prior to Close Of Escrow (“COE”), Seller shall provide Buyer written statement(s) of compliance
@@ -1552,15 +1568,19 @@
               <div class="clearfix">
                 <div class="col-left-initials">
                   <label>Buyer's Initials</label>
-                  (<input formControlName="text_allocation_report_buyer_initials_first" type="text" name="" id="Buyer-1-2" class="i-lr-1">) &nbsp;
-                  (<input formControlName="text_allocation_report_buyer_initials_second" type="text" name="" id="Buyer-2-2" class="i-lr-1">)
+                  (<input formControlName="text_allocation_report_buyer_initials_first" type="text" name=""
+                          id="Buyer-1-2" class="i-lr-1">) &nbsp;
+                  (<input formControlName="text_allocation_report_buyer_initials_second" type="text" name=""
+                          id="Buyer-2-2" class="i-lr-1">)
                   <div class="fs-small">&#169; 1991-2018, California Association of REALTORS &#174;, Inc.</div>
                 </div>
 
                 <div class="col-right-initials">
                   <label>Seller's Initials</label>
-                  (<input formControlName="text_allocation_report_seller_initials_first" type="text" name="" id="Seller-1-2" class="i-lr-1">) &nbsp;
-                  (<input formControlName="text_allocation_report_seller_initials_second" type="text" name="" id="Seller-2-2" class="i-lr-1">)
+                  (<input formControlName="text_allocation_report_seller_initials_first" type="text" name=""
+                          id="Seller-1-2" class="i-lr-1">) &nbsp;
+                  (<input formControlName="text_allocation_report_seller_initials_second" type="text" name=""
+                          id="Seller-2-2" class="i-lr-1">)
                   <br>
                   <br>
                   <img src="assets/agreement/images/housing.png" width="80" height="70" class="image-right">
@@ -1578,346 +1598,348 @@
 
           <div class="page-breaker" id="page-6">6</div>
 
-          <!--<div formGroupName="page_7" class="container" style="font-size: 22px; line-height: 1.22;">-->
-          <!--<div class="form">-->
-          <!--<div>-->
-          <!--Property Address:-->
-          <!--<input formControlName="input191" type="text" class="i-lr-9">-->
-          <!--Date:-->
-          <!--<input matInput (click)="picker192.open()" [matDatepicker]="picker192" formControlName="input192"-->
-          <!--type="text"-->
-          <!--class="i-lr-2__5">-->
-          <!--<mat-datepicker #picker192></mat-datepicker>-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold f-l">(2)</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold">(i)</span>-->
-          <!--<input formControlName="input193" type="checkbox"> Buyer-->
-          <!--<input formControlName="input194" type="checkbox">-->
-          <!--Seller shall pay the cost of compliance with any other minimum mandatory government inspections-->
-          <!--and-->
-          <!--reports if required as a condition of closing escrow under any Law.-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold">(ii)</span>-->
-          <!--<input formControlName="input195" type="checkbox"> Buyer-->
-          <!--<input formControlName="input196" type="checkbox">-->
-          <!--Seller shall pay the cost of compliance with any other minimum mandatory government retrofit-->
-          <!--standards required as a condition of closing escrow under any Law, whether the work is required-->
-          <!--to-->
-          <!--be completed before or after COE.-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold">(iii)</span>-->
-          <!--Buyer shall be provided, within the time specified in paragraph 14A, a copy of any required-->
-          <!--government conducted or point-of-sale inspection report prepared pursuant to this Agreement or-->
-          <!--in-->
-          <!--anticipation of this sale of the Property.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold"> C. &nbsp;ESCROW AND TITLE:</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold f-l">(1)</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--<div>-->
-          <!--(a)-->
-          <!--<input formControlName="input197" type="checkbox"> Buyer-->
-          <!--<input formControlName="input198" type="checkbox">-->
-          <!--Seller shall pay escrow fee-->
-          <!--<input formControlName="input199" type="text" class="i-lr-8__5"> .-->
-          <!--</div>-->
-          <!--<div>-->
-          <!--(b) Escrow Holder shall be-->
-          <!--<input formControlName="input200" type="text" class="i-lr-10"> .-->
-          <!--</div>-->
-          <!--<div>-->
-          <!--(c) The Parties shall, within-->
-          <!--<span class="fw-bold">-->
-          <!--5 (or <input formControlName="input201" type="text" class="i-lr-1"> ) Days-->
-          <!--</span>-->
-          <!--After receipt, sign and return Escrow Holder's general provisions.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<span class="fw-bold f-l">(2)</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--<div>-->
-          <!--(a)-->
-          <!--<input formControlName="input202" type="checkbox"> Buyer-->
-          <!--<input formControlName="input203" type="checkbox">-->
-          <!--Seller shall pay for <span class="fw-bold">owner's</span> title insurance policy specified-->
-          <!--in-->
-          <!--paragraph 13E-->
-          <!--<input formControlName="input204" type="text" class="i-lr-4"> .-->
-          <!--</div>-->
-          <!--<div>-->
-          <!--(b) Owner's title policy to be issued by-->
-          <!--&nbsp; <input formControlName="input205" type="text" class="i-lr-9"> .-->
-          <!--</div>-->
-          <!--<div>-->
-          <!--(Buyer shall pay for any title insurance policy insuring Buyer's lender, unless otherwise-->
-          <!--agreed-->
-          <!--in writing.)-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold">D. &nbsp;OTHER COSTS:</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold f-l">(1) </span>-->
-          <!--<div class="item-pl-3">-->
-          <!--<input formControlName="input206" type="checkbox"> Buyer-->
-          <!--<input formControlName="input207" type="checkbox">-->
-          <!--Seller shall pay County transfer tax or fee-->
-          <!--<input formControlName="input208" type="text" class="i-lr-7__5"> .-->
-          <!--</div>-->
-          <!--<span class="fw-bold f-l">(2) </span>-->
-          <!--<div class="item-pl-3">-->
-          <!--<input formControlName="input209" type="checkbox"> Buyer-->
-          <!--<input formControlName="input210" type="checkbox">-->
-          <!--Seller shall pay City transfer tax or fee-->
-          <!--<input formControlName="input211" type="text" class="i-lr-8"> .-->
-          <!--</div>-->
-          <!--<span class="fw-bold f-l">(3) </span>-->
-          <!--<div class="item-pl-3">-->
-          <!--<input formControlName="input212" type="checkbox"> Buyer-->
-          <!--<input formControlName="input213" type="checkbox">-->
-          <!--Seller shall pay Homeowners' Association (“HOA”) transfer fee-->
-          <!--<input formControlName="input214" type="text" class="i-lr-5__5"> .-->
-          <!--</div>-->
-          <!--<span class="fw-bold f-l">(4) </span>-->
-          <!--<div class="item-pl-3">-->
-          <!--Seller shall pay HOA fees for preparing documents required to be delivered by Civil Code §4525.-->
-          <!--</div>-->
-          <!--<span class="fw-bold f-l">(5) </span>-->
-          <!--<div class="item-pl-3">-->
-          <!--<input formControlName="input215" type="checkbox"> Buyer-->
-          <!--<input formControlName="input216" type="checkbox">-->
-          <!--Seller shall pay HOA fees for preparing all documents other than those required by Civil Code-->
-          <!--§4525.-->
-          <!--</div>-->
-          <!--<span class="fw-bold f-l">(6) </span>-->
-          <!--<div class="item-pl-3">-->
-          <!--Buyer to pay for any HOA certification fee.-->
-          <!--</div>-->
-          <!--<span class="fw-bold f-l">(7) </span>-->
-          <!--<div class="item-pl-3">-->
-          <!--<input formControlName="input217" type="checkbox"> Buyer-->
-          <!--<input formControlName="input218" type="checkbox">-->
-          <!--Seller shall pay for any private transfer fee-->
-          <!--<input formControlName="input219" type="text" class="i-lr-7__5"> .-->
-          <!--</div>-->
-          <!--<span class="fw-bold f-l">(8) </span>-->
-          <!--<div class="item-pl-3">-->
-          <!--<input formControlName="input220" type="checkbox"> Buyer-->
-          <!--<input formControlName="input221" type="checkbox">-->
-          <!--Seller shall pay for-->
-          <!--<input formControlName="input222" type="text" class="i-lr-9__5"> .-->
-          <!--</div>-->
-          <!--<span class="fw-bold f-l">(9) </span>-->
-          <!--<div class="item-pl-3">-->
-          <!--<input formControlName="input223" type="checkbox"> Buyer-->
-          <!--<input formControlName="input224" type="checkbox">-->
-          <!--Seller shall pay for-->
-          <!--<input formControlName="input225" type="text" class="i-lr-9__5"> .-->
-          <!--</div>-->
-          <!--<span class="fw-bold f-l">(10) </span>-->
-          <!--<div class="item-pl-3">-->
-          <!--<input formControlName="input226" type="checkbox"> Buyer-->
-          <!--<input formControlName="input227" type="checkbox">-->
-          <!--Seller shall pay for the cost, not to exceed $-->
-          <!--<input formControlName="input228" type="text" class="i-lr-4">-->
-          <!--, of a standard (or-->
-          <!--<input formControlName="input229" type="checkbox">-->
-          <!--upgraded) one-year home warranty plan, issued by-->
-          <!--<input formControlName="input230" type="text" class="i-lr-7">-->
-          <!--with the following optional coverages:-->
-          <!--<input formControlName="input231" type="checkbox"> Air Conditioner-->
-          <!--<input formControlName="input232" type="checkbox"> Pool/Spa-->
-          <!--<input formControlName="input233" type="checkbox"> Other:-->
-          <!--<input formControlName="input234" type="text" class="i-lr-5"> .-->
-          <!--Buyer is informed that home warranty plans have many optional coverages in addition to those-->
-          <!--listed above. Buyer is-->
-          <!--advised to investigate these coverages to determine those that may be suitable for Buyer.-->
-          <!--</div>-->
-          <!--<div class="fw-bold text-justify">-->
-          <!--OR <input formControlName="input235" type="checkbox">-->
-          <!--Buyer waives the purchase of a home warranty plan. Nothing in this paragraph precludes Buyer's-->
-          <!--purchasing-->
-          <!--a home warranty plan during the term of this Agreement.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div class="fw-bold">-->
-          <!--8. &nbsp;ITEMS INCLUDED IN AND EXCLUDED FROM SALE:-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<div>-->
-          <!--<span class="fw-bold f-l">A. &nbsp;NOTE TO BUYER AND SELLER:&nbsp;</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--Items listed as included or excluded in the MLS, flyers or marketing materials are not-->
-          <!--included in the purchase price or excluded from the sale unless specified in paragraph 8 B or C.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div>-->
-          <!--<span class="fw-bold f-l">B. &nbsp;ITEMS INCLUDED IN SALE:&nbsp;</span>-->
-          <!--Except as otherwise specified or disclosed,-->
-          <!--<div class="item-pl-3">-->
-          <!--<div>-->
-          <!--<span class="fw-bold">(1)</span>-->
-          <!--All EXISTING fixtures and fittings that are attached to the Property;-->
-          <!--</div>-->
-          <!--<div>-->
-          <!--<span class="fw-bold f-l">(2)</span>-->
-          <!--<div class="item-pl-3 text-justify">-->
-          <!--EXISTING electrical, mechanical, lighting, plumbing and heating fixtures, ceiling fans,-->
-          <!--fireplace inserts, gas logs and grates,-->
-          <!--solar power systems, built-in appliances, window and door screens, awnings, shutters,-->
-          <!--window-->
-          <!--coverings, attached floor-->
-          <!--coverings, television antennas, satellite dishes, air coolers/conditioners, pool/spa-->
-          <!--equipment, garage door openers/remote-->
-          <!--controls, mailbox, in-ground landscaping, trees/shrubs, water features and fountains,-->
-          <!--water-->
-          <!--softeners, water purifiers, security-->
-          <!--systems/alarms and the following if checked:-->
-          <!--<input formControlName="input236" type="checkbox"> all stove(s), except-->
-          <!--<input formControlName="input237" type="text" class="i-lr-3"> ;-->
-          <!--<input formControlName="input238" type="checkbox"> all refrigerator(s) except-->
-          <!--<input formControlName="input239" type="text" class="i-lr-3">;-->
-          <!--<input formControlName="input240" type="checkbox"> all washer(s) and dryer(s), except-->
-          <!--<input formControlName="input241" type="text" class="i-lr-3"> ;-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div>-->
-          <!--<span class="fw-bold f-l">(3)</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--The following additional items:-->
-          <!--<input formControlName="input242" type="text" class="i-lr-10">.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div>-->
-          <!--<span class="fw-bold f-l">(4)</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--Existing integrated phone and home automation systems, including necessary components-->
-          <!--such as intranet and Internetconnected-->
-          <!--hardware or devices, control units (other than non-dedicated mobile devices, electronics-->
-          <!--and computers) and-->
-          <!--applicable software, permissions, passwords, codes and access information, are-->
-          <!--( <input formControlName="input243" type="checkbox"> are NOT) included in the sale.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div>-->
-          <!--<span class="fw-bold f-l">(5)</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold">LEASED OR LIENED ITEMS AND SYSTEMS:</span>-->
-          <!--Seller shall, within the time specified in paragraph 14A, (i) disclose to Buyer-->
-          <!--if any item or system specified in paragraph 8B or otherwise included in the sale is-->
-          <!--leased, or not owned by Seller, or-->
-          <!--specifically subject to a lien or other encumbrance, and (ii) Deliver to Buyer all-->
-          <!--written materials (such as lease, warranty,-->
-          <!--etc.) concerning any such item. Buyer's ability to assume any such lease, or willingness-->
-          <!--to accept the Property subject to-->
-          <!--any such lien or encumbrance, is a contingency in favor of Buyer and Seller as specified-->
-          <!--in paragraph 14B and C.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div>-->
-          <!--<span class="fw-bold f-l">(6)</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--Seller represents that all items included in the purchase price, unless otherwise-->
-          <!--specified, (i) are owned by Seller and shall be-->
-          <!--transferred free and clear of liens and encumbrances, except the items and systems-->
-          <!--identified pursuant to 8B(5) and <input formControlName="input244" type="text" class="i-lr-4">,-->
-          <!--and (ii) are transferred without Seller warranty regardless of value.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div>-->
-          <!--<span class="fw-bold f-l">C. &nbsp;ITEMS EXCLUDED FROM SALE:&nbsp;</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--Unless otherwise specified, the following items are excluded from sale: (i) audio and video-->
-          <!--components (such as flat screen TVs, speakers and other items) if any such item is not itself-->
-          <!--attached to the Property, even if a-->
-          <!--bracket or other mechanism attached to the component or item is attached to the Property; (ii)-->
-          <!--furniture and other items secured-->
-          <!--to the Property for earthquake purposes; and (iii)-->
-          <!--<input formControlName="input245" type="text" class="i-lr-10">-->
-          <!--<input formControlName="input246" type="text" class="i-lr-8">.-->
-          <!--<span class="fw-bold">Brackets attached to walls, floors or ceilings for any such component,-->
-          <!--furniture or item-->
-          <!--shall remain with the Property ( <input formControlName="input247" type="checkbox"> or will be removed and holes or-->
-          <!--other damage shall be-->
-          <!--repaired, but not painted).</span>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div class="fw-bold">-->
-          <!--9. &nbsp;CLOSING AND POSSESSION:-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<div>-->
-          <!--<span class="fw-bold">A. &nbsp;</span>-->
-          <!--Buyer intends (or-->
-          <!--<input formControlName="input248" type="checkbox"> does not intend)-->
-          <!--to occupy the Property as Buyer's primary residence.-->
-          <!--</div>-->
-          <!--<div>-->
-          <!--<span class="fw-bold f-l">B. &nbsp;</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold">Seller-occupied or vacant property:</span>-->
-          <!--Possession shall be delivered to Buyer: (i) at 6 PM or (-->
-          <!--<input formControlName="input249" type="text" class="i-lr-1">-->
-          <!--<input formControlName="input250" type="checkbox"> AM/-->
-          <!--<input formControlName="input251" type="checkbox"> PM)-->
-          <!--on the date of Close Of Escrow; (ii)-->
-          <!--<input formControlName="input252" type="checkbox"> no later than-->
-          <!--<input formControlName="input253" type="text" class="i-lr__5">-->
-          <!--calendar days after Close Of Escrow; or (iii)-->
-          <!--<input formControlName="input254" type="checkbox"> at-->
-          <!--<input formControlName="input255" type="text" class="i-lr-1">-->
-          <!--<input formControlName="input256" type="checkbox"> AM/-->
-          <!--<input formControlName="input257" type="checkbox"> PM on-->
-          <!--<input formControlName="input258" type="text" class="i-lr-1__5"> .-->
+          <div formGroupName="page_7" class="container" style="font-size: 22px; line-height: 1.22;">
+            <div class="form">
+              <div>
+                Property Address:
+                <input formControlName="text_property_address" type="text" class="i-lr-9">
+                Date:
+                <input matInput (click)="date_property_address_date.open()" [matDatepicker]="date_property_address_date" formControlName="date_property_date"
+                       type="text"
+                       class="i-lr-2__5">
+                <mat-datepicker #date_property_address_date></mat-datepicker>
+              </div>
+              <div class="item-pl-3">
+                <div class="item-pl-3">
+                  <span class="fw-bold f-l">(2)</span>
+                  <div class="item-pl-3">
+                    <span class="fw-bold">(i)</span>
+                    <input formControlName="check_buyer_pay_government" type="checkbox"> Buyer
+                    <input formControlName="check_seller_pay_government" type="checkbox">
+                    Seller shall pay the cost of compliance with any other minimum mandatory government inspections
+                    and
+                    reports if required as a condition of closing escrow under any Law.
+                  </div>
+                  <div class="item-pl-3">
+                    <span class="fw-bold">(ii)</span>
+                    <input formControlName="check_buyer_pay_government_coe" type="checkbox"> Buyer
+                    <input formControlName="check_seller_pay_government_coe" type="checkbox">
+                    Seller shall pay the cost of compliance with any other minimum mandatory government retrofit
+                    standards required as a condition of closing escrow under any Law, whether the work is required
+                    to
+                    be completed before or after COE.
+                  </div>
+                  <div class="item-pl-3">
+                    <span class="fw-bold">(iii)</span>
+                    Buyer shall be provided, within the time specified in paragraph 14A, a copy of any required
+                    government conducted or point-of-sale inspection report prepared pursuant to this Agreement or
+                    in
+                    anticipation of this sale of the Property.
+                  </div>
+                </div>
+              </div>
+              <div class="item-pl-3">
+                <span class="fw-bold"> C. &nbsp;ESCROW AND TITLE:</span>
+                <div class="item-pl-3">
+                  <span class="fw-bold f-l">(1)</span>
+                  <div class="item-pl-3">
+                    <div>
+                      (a)
+                      <input formControlName="check_escrow_buyer_pay" type="checkbox"> Buyer
+                      <input formControlName="check_escrow_seller_pay" type="checkbox">
+                      Seller shall pay escrow fee
+                      <input formControlName="text_escrow_pay_amount" type="text" class="i-lr-8__5"> .
+                    </div>
+                    <div>
+                      (b) Escrow Holder shall be
+                      <input formControlName="text_escrow_holder" type="text" class="i-lr-10"> .
+                    </div>
+                    <div>
+                      (c) The Parties shall, within
+                      <span class="fw-bold">
+          5 (or <input formControlName="text_escrow_payment_days" type="text" class="i-lr-1"> ) Days
+          </span>
+                      After receipt, sign and return Escrow Holder's general provisions.
+                    </div>
+                  </div>
+                  <span class="fw-bold f-l">(2)</span>
+                  <div class="item-pl-3">
+                    <div>
+                      (a)
+                      <input formControlName="check_escrow_buyer_pay_insurance" type="checkbox"> Buyer
+                      <input formControlName="check_escrow_seller_pay_insurance" type="checkbox">
+                      Seller shall pay for <span class="fw-bold">owner's</span> title insurance policy specified
+                      in
+                      paragraph 13E
+                      <input formControlName="text_escrow_paragraph_13" type="text" class="i-lr-4"> .
+                    </div>
+                    <div>
+                      (b) Owner's title policy to be issued by
+                      &nbsp; <input formControlName="text_escrow_owner_title_issued_by" type="text" class="i-lr-9"> .
+                    </div>
+                    <div>
+                      (Buyer shall pay for any title insurance policy insuring Buyer's lender, unless otherwise
+                      agreed
+                      in writing.)
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item-pl-3">
+                <span class="fw-bold">D. &nbsp;OTHER COSTS:</span>
+                <div class="item-pl-3">
+                  <span class="fw-bold f-l">(1) </span>
+                  <div class="item-pl-3">
+                    <input formControlName="check_other_costs_buyer_country_tax" type="checkbox"> Buyer
+                    <input formControlName="check_other_costs_seller_country_tax" type="checkbox">
+                    Seller shall pay County transfer tax or fee
+                    <input formControlName="text_other_costs_country_tax_amount" type="text" class="i-lr-7__5"> .
+                  </div>
+                  <span class="fw-bold f-l">(2) </span>
+                  <div class="item-pl-3">
+                    <input formControlName="check_other_costs_buyer_city_tax" type="checkbox"> Buyer
+                    <input formControlName="check_other_costs_seller_city_tax" type="checkbox">
+                    Seller shall pay City transfer tax or fee
+                    <input formControlName="text_other_costs_country_city_amount" type="text" class="i-lr-8"> .
+                  </div>
+                  <span class="fw-bold f-l">(3) </span>
+                  <div class="item-pl-3">
+                    <input formControlName="check_other_costs_buyer_hometown_tax" type="checkbox"> Buyer
+                    <input formControlName="check_other_costs_seller_hometown_tax" type="checkbox">
+                    Seller shall pay Homeowners' Association (“HOA”) transfer fee
+                    <input formControlName="text_other_costs_country_hometown_amount" type="text" class="i-lr-5__5"> .
+                  </div>
+                  <span class="fw-bold f-l">(4) </span>
+                  <div class="item-pl-3">
+                    Seller shall pay HOA fees for preparing documents required to be delivered by Civil Code §4525.
+                  </div>
+                  <span class="fw-bold f-l">(5) </span>
+                  <div class="item-pl-3">
+                    <input formControlName="check_other_costs_buyer_hao_fee" type="checkbox"> Buyer
+                    <input formControlName="check_other_costs_seller_hao_fee" type="checkbox">
+                    Seller shall pay HOA fees for preparing all documents other than those required by Civil Code
+                    §4525.
+                  </div>
+                  <span class="fw-bold f-l">(6) </span>
+                  <div class="item-pl-3">
+                    Buyer to pay for any HOA certification fee.
+                  </div>
+                  <span class="fw-bold f-l">(7) </span>
+                  <div class="item-pl-3">
+                    <input formControlName="check_other_costs_buyer_private_fee" type="checkbox"> Buyer
+                    <input formControlName="check_other_costs_seller_private_fee" type="checkbox">
+                    Seller shall pay for any private transfer fee
+                    <input formControlName="text_other_costs_private_fee_amount" type="text" class="i-lr-7__5"> .
+                  </div>
+                  <span class="fw-bold f-l">(8) </span>
+                  <div class="item-pl-3">
+                    <input formControlName="check_other_costs_buyer_shall_pay_first" type="checkbox"> Buyer
+                    <input formControlName="check_other_costs_seller_shall_pay_first" type="checkbox">
+                    Seller shall pay for
+                    <input formControlName="text_other_costs_shall_pay_amount_first" type="text" class="i-lr-9__5"> .
+                  </div>
+                  <span class="fw-bold f-l">(9) </span>
+                  <div class="item-pl-3">
+                    <input formControlName="check_other_costs_buyer_shall_pay_second" type="checkbox"> Buyer
+                    <input formControlName="check_other_costs_seller_shall_pay_second" type="checkbox">
+                    Seller shall pay for
+                    <input formControlName="text_other_costs_shall_pay_amount_second" type="text" class="i-lr-9__5"> .
+                  </div>
+                  <span class="fw-bold f-l">(10) </span>
+                  <div class="item-pl-3">
+                    <input formControlName="check_other_costs_buyer_shall_pay_cost" type="checkbox"> Buyer
+                    <input formControlName="check_other_costs_seller_shall_pay_cost" type="checkbox">
+                    Seller shall pay for the cost, not to exceed $
+                    <input formControlName="text_other_costs_shall_pay_amount_cost" type="text" class="i-lr-4">
+                    , of a standard (or
+                    <input formControlName="check_other_costs_warranty" type="checkbox">
+                    upgraded) one-year home warranty plan, issued by
+                    <input formControlName="text_other_costs_warranty_issued_by" type="text" class="i-lr-7">
+                    with the following optional coverages:
+                    <input formControlName="check_other_costs_air_conditioner" type="checkbox"> Air Conditioner
+                    <input formControlName="check_other_costs_pool" type="checkbox"> Pool/Spa
+                    <input formControlName="check_other_costs_other" type="checkbox"> Other:
+                    <input formControlName="text_other_costs_other_details" type="text" class="i-lr-5"> .
+                    Buyer is informed that home warranty plans have many optional coverages in addition to those
+                    listed above. Buyer is
+                    advised to investigate these coverages to determine those that may be suitable for Buyer.
+                  </div>
+                  <div class="fw-bold text-justify">
+                    OR <input formControlName="check_other_costs_warranty_plan" type="checkbox">
+                    Buyer waives the purchase of a home warranty plan. Nothing in this paragraph precludes Buyer's
+                    purchasing
+                    a home warranty plan during the term of this Agreement.
+                  </div>
+                </div>
+              </div>
+              <div class="fw-bold">
+                8. &nbsp;ITEMS INCLUDED IN AND EXCLUDED FROM SALE:
+              </div>
+              <div class="item-pl-3">
+                <div>
+                  <span class="fw-bold f-l">A. &nbsp;NOTE TO BUYER AND SELLER:&nbsp;</span>
+                  <div class="item-pl-3">
+                    Items listed as included or excluded in the MLS, flyers or marketing materials are not
+                    included in the purchase price or excluded from the sale unless specified in paragraph 8 B or C.
+                  </div>
+                </div>
+                <div>
+                  <span class="fw-bold f-l">B. &nbsp;ITEMS INCLUDED IN SALE:&nbsp;</span>
+                  Except as otherwise specified or disclosed,
+                  <div class="item-pl-3">
+                    <div>
+                      <span class="fw-bold">(1)</span>
+                      All EXISTING fixtures and fittings that are attached to the Property;
+                    </div>
+                    <div>
+                      <span class="fw-bold f-l">(2)</span>
+                      <div class="item-pl-3 text-justify">
+                        EXISTING electrical, mechanical, lighting, plumbing and heating fixtures, ceiling fans,
+                        fireplace inserts, gas logs and grates,
+                        solar power systems, built-in appliances, window and door screens, awnings, shutters,
+                        window
+                        coverings, attached floor
+                        coverings, television antennas, satellite dishes, air coolers/conditioners, pool/spa
+                        equipment, garage door openers/remote
+                        controls, mailbox, in-ground landscaping, trees/shrubs, water features and fountains,
+                        water
+                        softeners, water purifiers, security
+                        systems/alarms and the following if checked:
+                        <input formControlName="check_include_items_all_stoves" type="checkbox"> all stove(s), except
+                        <input formControlName="text_include_items_all_stoves_except" type="text" class="i-lr-3"> ;
+                        <input formControlName="check_include_items_all_refrigerators" type="checkbox"> all refrigerator(s) except
+                        <input formControlName="text_include_items_all_refrigerators_except" type="text" class="i-lr-3">;
+                        <input formControlName="check_include_items_all_washers" type="checkbox"> all washer(s) and dryer(s), except
+                        <input formControlName="text_include_items_all_washers_except" type="text" class="i-lr-3"> ;
+                      </div>
+                    </div>
+                    <div>
+                      <span class="fw-bold f-l">(3)</span>
+                      <div class="item-pl-3">
+                        The following additional items:
+                        <input formControlName="text_include_items_additional" type="text" class="i-lr-10">.
+                      </div>
+                    </div>
+                    <div>
+                      <span class="fw-bold f-l">(4)</span>
+                      <div class="item-pl-3">
+                        Existing integrated phone and home automation systems, including necessary components
+                        such as intranet and Internetconnected
+                        hardware or devices, control units (other than non-dedicated mobile devices, electronics
+                        and computers) and
+                        applicable software, permissions, passwords, codes and access information, are
+                        ( <input formControlName="check_include_items_devices" type="checkbox"> are NOT) included in the sale.
+                      </div>
+                    </div>
+                    <div>
+                      <span class="fw-bold f-l">(5)</span>
+                      <div class="item-pl-3">
+                        <span class="fw-bold">LEASED OR LIENED ITEMS AND SYSTEMS:</span>
+                        Seller shall, within the time specified in paragraph 14A, (i) disclose to Buyer
+                        if any item or system specified in paragraph 8B or otherwise included in the sale is
+                        leased, or not owned by Seller, or
+                        specifically subject to a lien or other encumbrance, and (ii) Deliver to Buyer all
+                        written materials (such as lease, warranty,
+                        etc.) concerning any such item. Buyer's ability to assume any such lease, or willingness
+                        to accept the Property subject to
+                        any such lien or encumbrance, is a contingency in favor of Buyer and Seller as specified
+                        in paragraph 14B and C.
+                      </div>
+                    </div>
+                    <div>
+                      <span class="fw-bold f-l">(6)</span>
+                      <div class="item-pl-3">
+                        Seller represents that all items included in the purchase price, unless otherwise
+                        specified, (i) are owned by Seller and shall be
+                        transferred free and clear of liens and encumbrances, except the items and systems
+                        identified pursuant to 8B(5) and <input formControlName="text_include_items_without_warranty" type="text" class="i-lr-4">,
+                        and (ii) are transferred without Seller warranty regardless of value.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <span class="fw-bold f-l">C. &nbsp;ITEMS EXCLUDED FROM SALE:&nbsp;</span>
+                  <div class="item-pl-3">
+                    Unless otherwise specified, the following items are excluded from sale: (i) audio and video
+                    components (such as flat screen TVs, speakers and other items) if any such item is not itself
+                    attached to the Property, even if a
+                    bracket or other mechanism attached to the component or item is attached to the Property; (ii)
+                    furniture and other items secured
+                    to the Property for earthquake purposes; and (iii)
+                    <input formControlName="text_exclude_from_sale" type="text" class="i-lr-10">
+                    <!--<input formControlName="" type="text" class="i-lr-8">.-->
+                    <span class="fw-bold">Brackets attached to walls, floors or ceilings for any such component,
+          furniture or item
+          shall remain with the Property ( <input formControlName="check_exclude_from_sale" type="checkbox"> or will be removed and holes or
+          other damage shall be
+          repaired, but not painted).</span>
+                  </div>
+                </div>
+              </div>
+              <div class="fw-bold">
+                9. &nbsp;CLOSING AND POSSESSION:
+              </div>
+              <div class="item-pl-3">
+                <div>
+                  <span class="fw-bold">A. &nbsp;</span>
+                  Buyer intends (or
+                  <input formControlName="check_closing_buyer_intend" type="checkbox"> does not intend)
+                  to occupy the Property as Buyer's primary residence.
+                </div>
+                <div>
+                  <span class="fw-bold f-l">B. &nbsp;</span>
+                  <div class="item-pl-3">
+                    <span class="fw-bold">Seller-occupied or vacant property:</span>
+                    Possession shall be delivered to Buyer: (i) at 6 PM or (
+                    <input formControlName="text_possession_deliver_time" type="text" class="i-lr-1">
+                    <input formControlName="check_possession_deliver_time_am" type="checkbox"> AM/
+                    <input formControlName="check_possession_deliver_time_pm" type="checkbox"> PM)
+                    on the date of Close Of Escrow; (ii)
+                    <input formControlName="check_possession_deliver_no_later_than" type="checkbox"> no later than
+                    <input formControlName="text_possession_deliver_no_later_than" type="text" class="i-lr__5">
+                    calendar days after Close Of Escrow; or (iii)
+                    <input formControlName="check_possession_deliver_at" type="checkbox"> at
+                    <input formControlName="text_possession_deliver_at" type="text" class="i-lr-1">
+                    <input formControlName="check_possession_deliver_at_am" type="checkbox"> AM/
+                    <input formControlName="check_possession_deliver_at_pm" type="checkbox"> PM on
+                    <input matInput (click)="date_possession_deliver.open()" [matDatepicker]="date_possession_deliver" formControlName="date_possession_deliver"
+                           type="text"
+                           class="i-lr-1__5">
+                    <mat-datepicker #date_possession_deliver></mat-datepicker>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <br>
+              <div class="clearfix">
+                <div class="col-left-initials">
+                  <label>Buyer's Initials</label>
+                  (<input formControlName="text_possession_deliver_buyer_initials_first" type="text" name="" id="Buyer-1-3" class="i-lr-1">) &nbsp;
+                  (<input formControlName="text_possession_deliver_buyer_initials_second" type="text" name="" id="Buyer-2-3" class="i-lr-1">)
+                  <div class="fs-small">&#169; 1991-2018, California Association of REALTORS &#174;, Inc.</div>
+                </div>
 
-          <!--</div>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<br>-->
-          <!--<br>-->
-          <!--<div class="clearfix">-->
-          <!--<div class="col-left-initials">-->
-          <!--<label>Buyer's Initials</label>-->
-          <!--(<input formControlName="input259" type="text" name="" id="Buyer-1-3" class="i-lr-1">) &nbsp;-->
-          <!--(<input formControlName="input260" type="text" name="" id="Buyer-2-3" class="i-lr-1">)-->
-          <!--<div class="fs-small">&#169; 1991-2018, California Association of REALTORS &#174;, Inc.</div>-->
-          <!--</div>-->
+                <div class="col-right-initials">
+                  <label>Seller's Initials</label>
+                  (<input formControlName="text_possession_deliver_seller_initials_first" type="text" name="" id="Seller-1-3" class="i-lr-1">) &nbsp;
+                  (<input formControlName="text_possession_deliver_seller_initials_second" type="text" name="" id="Seller-2-3" class="i-lr-1">)
+                  <br>
+                  <br>
+                  <img src="assets/agreement/images/housing.png" width="80" height="70" class="image-right">
+                </div>
+              </div>
+            </div>
+            <footer>
+              <div class="fw-bold">RPA-CA REVISED 12/18 (PAGE 3 OF 10)</div>
+              <div class="text-center fw-bold">
+                CALIFORNIA RESIDENTIAL PURCHASE AGREEMENT (RPA-CA PAGE 3 OF 10)
+              </div>
 
-          <!--<div class="col-right-initials">-->
-          <!--<label>Seller's Initials</label>-->
-          <!--(<input formControlName="input261" type="text" name="" id="Seller-1-3" class="i-lr-1">) &nbsp;-->
-          <!--(<input formControlName="input262" type="text" name="" id="Seller-2-3" class="i-lr-1">)-->
-          <!--<br>-->
-          <!--<br>-->
-          <!--<img src="assets/agreement/images/housing.png" width="80" height="70" class="image-right">-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<footer>-->
-          <!--<div class="fw-bold">RPA-CA REVISED 12/18 (PAGE 3 OF 10)</div>-->
-          <!--<div class="text-center fw-bold">-->
-          <!--CALIFORNIA RESIDENTIAL PURCHASE AGREEMENT (RPA-CA PAGE 3 OF 10)-->
-          <!--</div>-->
+            </footer>
+          </div>
 
-          <!--</footer>-->
-          <!--</div>-->
-
-          <!--<div class="page-breaker" id="page-7">7</div>-->
+          <div class="page-breaker" id="page-7">7</div>
 
           <!--<div formGroupName="page_8" class="container text-justify" style="font-size: 21px; line-height: 1.24; padding-right: 5px;">-->
           <!--<div class="form">-->
