@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   private get redirectUrl(): string {
     let uri = this.route.snapshot.queryParams.redirectUrl || '/portal';
 
-    if (this.hasOfferData) {
+    if (this.hasOfferData && this.authService.currentUser.accountType === 'agent') {
       uri = '/portal/purchase-agreement/step-one';
     }
 
