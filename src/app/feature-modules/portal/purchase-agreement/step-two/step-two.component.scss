@@ -27,10 +27,10 @@
 
         .page-breaker {
           text-align: center;
-          margin: -230px 0 -130px;
+          margin: -230px 0 0;
 
           &:last-child {
-            margin: -300px 0 300px;
+            margin-bottom: 300px;
           }
         }
       }
@@ -73,6 +73,12 @@
         width: 100%;
         text-align: left;
         color: #444C5D;
+      }
+
+      .roles-list {
+        max-height: 35vh;
+        overflow: auto;
+        width: 100%;
       }
 
       .edit-btn {

@@ -1494,9 +1494,6 @@
               <div class="fw-bold">
                 6. &nbsp;OTHER TERMS:
                 &nbsp;<input formControlName="text_other_terms" type="text" class="i-lr-11__5">
-                <!--<input formControlName="input168" type="text" class="i-lr-13 ml-3">-->
-                <!--<input formControlName="input169" type="text" class="i-lr-13 ml-3">-->
-                <!--<input formControlName="input170" type="text" class="i-lr-13 ml-3">-->
               </div>
               <div class="fw-bold">
                 7. &nbsp;ALLOCATION OF COSTS
@@ -4264,34 +4261,36 @@
 
         <h4>Offer information</h4>
 
-        <div class="offer-actors sellers" *ngFor="let item of offer.sellers; let i = index">
-          <h6>Seller #{{i+1}}</h6>
-          <div class="item">
-            {{item.firstName}} {{item.lastName}} | {{item.email}}
+        <div class="roles-list">
+          <div class="sellers truncated" *ngFor="let item of offer.sellers; let i = index">
+            <h6>Seller #{{i+1}}</h6>
+            <div class="item">
+              {{item.firstName}} {{item.lastName}} | {{item.email}}
+            </div>
           </div>
-        </div>
-        <div class="offer-actors agents" *ngFor="let item of offer.agentBuyers; let i = index">
-          <h6>Buyer's Agent #{{i+1}}</h6>
-          <div class="item">
-            {{item.firstName}} {{item.lastName}} | {{item.email}}
+          <div class="agents truncated" *ngFor="let item of offer.agentBuyers; let i = index">
+            <h6>Buyer's Agent #{{i+1}}</h6>
+            <div class="item">
+              {{item.firstName}} {{item.lastName}} | {{item.email}}
+            </div>
           </div>
-        </div>
-        <div class="offer-actors agents" *ngFor="let item of offer.agentSellers; let i = index">
-          <h6>Listing Agent #{{i+1}}</h6>
-          <div class="item">
-            {{item.firstName}} {{item.lastName}} | {{item.email}}
+          <div class="agents truncated" *ngFor="let item of offer.agentSellers; let i = index">
+            <h6>Listing Agent #{{i+1}}</h6>
+            <div class="item">
+              {{item.firstName}} {{item.lastName}} | {{item.email}}
+            </div>
           </div>
-        </div>
-        <div class="offer-actors buyers" *ngFor="let item of offer.buyers; let i = index">
-          <h6>Buyer #{{i+1}}</h6>
-          <div class="item">
-            {{item.firstName}} {{item.lastName}} | {{item.email}}
+          <div class="buyers truncated" *ngFor="let item of offer.buyers; let i = index">
+            <h6>Buyer #{{i+1}}</h6>
+            <div class="item">
+              {{item.firstName}} {{item.lastName}} | {{item.email}}
+            </div>
           </div>
-        </div>
-        <div class="offer-actors address">
-          <h6>Address</h6>
-          <div class="item">
-            {{offer.streetName}}, {{offer.city}} {{offer.zip}}
+          <div class="address truncated">
+            <h6>Address</h6>
+            <div class="item">
+              {{offer.streetName}}, {{offer.city}} {{offer.zip}}
+            </div>
           </div>
         </div>
 
@@ -4320,7 +4319,7 @@
           <div class="labels u-flex u-flex-justify--space-between">
             <h6 class="pages u-flex u-flex-08">PAGE {{currentPage+1}} COMPLETED FIELDS</h6>
             <div class="progress u-flex u-flex-02">
-              {{completedFieldsCount}}/{{documentPA?.pages[currentPage]?.fields.length}}
+              {{completedPageCount}}/{{allPageCount}}
             </div>
           </div>
           <div class="labels u-flex u-flex-justify--space-between">

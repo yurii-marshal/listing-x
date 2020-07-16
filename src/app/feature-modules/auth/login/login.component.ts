@@ -49,15 +49,17 @@ export class LoginComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    const url = this.redirectUrl;
-
     const data = {
       ...this.form.value,
       email: this.form.value.email.toLowerCase()
     } as User;
 
     this.authService.login(data)
-      .subscribe(() => this.router.navigateByUrl(url));
+      .subscribe(() => {
+        const url = this.redirectUrl;
+
+        this.router.navigateByUrl(url);
+      });
   }
 
 }
