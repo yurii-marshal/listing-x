@@ -9,6 +9,7 @@ import { FormGroup } from '@angular/forms';
 export class NumberToWordsDirective implements OnInit, OnDestroy {
   @Input() recipientControlName: string;
   @Input() numToWordsForm: FormGroup;
+  @Input() toString: boolean = true;
 
   private onDestroyed$: Subject<void> = new Subject<void>();
 
@@ -82,19 +83,6 @@ export class NumberToWordsDirective implements OnInit, OnDestroy {
   };
 
   constructor(private el: ElementRef) {
-  }
-
-  ngOnInit() {
-    fromEvent(this.el.nativeElement, 'input')
-      .pipe(
-        takeUntil(this.onDestroyed$),
-        debounceTime(300)
-      )
-      .subscribe(({target}) => {
-        const converted = this.getInWords(target.value);
-        this.numToWordsForm.get(this.recipientControlName).patchValue(converted);
-      });
-
     Object.keys(this.NUMBER_MAP).forEach((num) => {
       this.WORD_MAP[this.NUMBER_MAP[num]] = isNaN(+num) ? num : +num;
     });
@@ -105,9 +93,39 @@ export class NumberToWordsDirective implements OnInit, OnDestroy {
   }
 
   /**
+   * Returns the number of significant figures for the number.
+   */
+  static intervals(num): number {
+    const match = String(num).match(/e\+(\d+)/);
+
+    if (match) {
+      return +match[1];
+    }
+
+    return String(num).length - 1;
+  }
+
+  ngOnInit() {
+    fromEvent(this.el.nativeElement, 'input')
+      .pipe(
+        takeUntil(this.onDestroyed$),
+        debounceTime(300)
+      )
+      .subscribe(({target}) => {
+        const converted = this.toString ? this.getInWords(target.value) : this.getAsNumber(target.value);
+        this.numToWordsForm.get(this.recipientControlName).patchValue(converted);
+      });
+  }
+
+  ngOnDestroy() {
+    this.onDestroyed$.next();
+    this.onDestroyed$.complete();
+  }
+
+  /**
    * Calculate the value of the current stack.
    */
-  totalStack(stack, largest) {
+  private totalStack(stack, largest): number {
     const total = stack.reduceRight((prev, num, index) => {
       if (num > stack[index + 1]) {
         return prev * num;
@@ -122,7 +140,7 @@ export class NumberToWordsDirective implements OnInit, OnDestroy {
   /**
    * Turn a number into a string representation.
    */
-  stringify(value) {
+  private stringify(value): string {
     const num = Number(value);
     const floor = Math.floor(num);
 
@@ -148,7 +166,7 @@ export class NumberToWordsDirective implements OnInit, OnDestroy {
       return words.join(' ');
     }
 
-    let interval = this.intervals(num);
+    let interval = NumberToWordsDirective.intervals(num);
 
     // It's below one hundred, but greater than nine.
     if (interval === 1) {
@@ -183,7 +201,7 @@ export class NumberToWordsDirective implements OnInit, OnDestroy {
   /**
    * Turns a string representation of a number into a number type
    */
-  parse(num) {
+  private parse(num): number {
     let modifier = 1;
     let largest = 0;
     let largestInterval = 0;
@@ -207,7 +225,7 @@ export class NumberToWordsDirective implements OnInit, OnDestroy {
         return typeof wlc === 'number';
       })
       .reduceRight((memo, numb) => {
-        const interval = this.intervals(numb);
+        const interval = NumberToWordsDirective.intervals(numb);
 
         // Check the interval is smaller than the largest one, then create a stack.
         if (typeof numb === 'number' && interval < largestInterval) {
@@ -253,7 +271,7 @@ export class NumberToWordsDirective implements OnInit, OnDestroy {
         }
 
         largest = num;
-        largestInterval = this.intervals(largest);
+        largestInterval = NumberToWordsDirective.intervals(largest);
 
         return (memo + num) * Math.pow(10, zeros);
       }, 0);
@@ -261,25 +279,11 @@ export class NumberToWordsDirective implements OnInit, OnDestroy {
     return modifier * (total + this.totalStack(stack, largest));
   }
 
-  ngOnDestroy() {
-    this.onDestroyed$.next();
-    this.onDestroyed$.complete();
-  }
-
   private getInWords(num: any): string {
     return num ? (+num ? this.stringify(num) : 'NOT A NUMBER') : '';
   }
 
-  /**
-   * Returns the number of significant figures for the number.
-   */
-  private intervals(num): number {
-    const match = String(num).match(/e\+(\d+)/);
-
-    if (match) {
-      return +match[1];
-    }
-
-    return String(num).length - 1;
+  private getAsNumber(str: string): number | string {
+    return str ? (str.toString() ? this.parse(str) : NaN) : '';
   }
 }

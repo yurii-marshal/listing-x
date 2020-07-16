@@ -4,9 +4,9 @@ import { Offer } from '../../../../core-modules/models/offer';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { EditOfferDialogComponent } from '../../../../shared-modules/dialogs/edit-offer-dialog/edit-offer-dialog.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { debounceTime, skip, switchMap, takeUntil } from 'rxjs/operators';
-import { fromEvent, Observable, of, Subject } from 'rxjs';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { debounceTime, takeUntil } from 'rxjs/operators';
+import { fromEvent, Observable, Subject } from 'rxjs';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { SaveOfferDialogComponent } from '../../../../shared-modules/dialogs/save-offer-dialog/save-offer-dialog.component';
 import { DatePipe } from '@angular/common';
 
@@ -20,7 +20,9 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   documentForm: FormGroup;
   currentPage: number = 0;
   completedFieldsCount: number = 0;
+  completedPageCount: number = 0;
   allFieldsCount: number = 0;
+  allPageCount: number = 0;
   isSideBarOpen: boolean;
   offerId: number;
   offer: Offer;
@@ -318,23 +320,30 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         text_possession_deliver_seller_initials_first: [null, []],
         text_possession_deliver_seller_initials_second: [null, []],
       }),
-      page_8: this.fb.group({}),
-      page_9: this.fb.group({}),
-      page_10: this.fb.group({}),
-      page_11: this.fb.group({}),
-      page_12: this.fb.group({}),
-      page_13: this.fb.group({}),
-      page_14: this.fb.group({}),
-      page_15: this.fb.group({}),
-      page_16: this.fb.group({}),
+      // page_8: this.fb.group({}),
+      // page_9: this.fb.group({}),
+      // page_10: this.fb.group({}),
+      // page_11: this.fb.group({}),
+      // page_12: this.fb.group({}),
+      // page_13: this.fb.group({}),
+      // page_14: this.fb.group({}),
+      // page_15: this.fb.group({}),
+      // page_16: this.fb.group({}),
     }, {updateOn: 'blur'});
 
     this.offerService.getOfferDocument(this.offerId)
       .pipe(
-        takeUntil(this.onDestroyed$)
+        takeUntil(this.onDestroyed$),
       )
-      .subscribe((doc) => {
-        this.documentForm.patchValue(doc);
+      .subscribe((model) => {
+        // TODO doesn't work
+        this.documentForm.patchValue(model);
+
+        Object.keys(model).forEach((page) => {
+          this.allFieldsCount += Object.keys(model[page]).length;
+        });
+
+        this.updatePageProgress(model, 0);
       });
 
     this.initPageBreakers();
@@ -346,51 +355,73 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.onDestroyed$.complete();
   }
 
+  updatePageProgress(formObj, pageNum) {
+    const pageObj = Object.values(formObj)[pageNum];
+
+    this.completedFieldsCount = 0;
+
+    Object.keys(formObj).forEach((pageKey) => {
+      Object.values(formObj[pageKey]).forEach((field) => {
+        if (field) {
+          this.completedFieldsCount += 1;
+        }
+      });
+    });
+
+    this.allPageCount = Object.values(pageObj).length;
+    this.completedPageCount = Object.values(pageObj).filter((val) => !!val).length;
+  }
+
   detectPageChange(currentScrollPosition: number) {
     for (let i = 0; i < this.pageBreakersOffsetTop.length; i++) {
       if (this.pageBreakersOffsetTop[i + 1]) {
         if (currentScrollPosition >= this.pageBreakersOffsetTop[i] && currentScrollPosition < this.pageBreakersOffsetTop[i + 1]) {
+          if (this.currentPage !== i) {
+            this.updatePageProgress(this.documentForm.getRawValue(), i);
+          }
           this.currentPage = i;
           break;
         }
       }
-
-      this.currentPage = i;
     }
   }
 
   subscribeToFormChanges() {
-    this.documentForm.valueChanges
-      .pipe(
-        takeUntil(this.onDestroyed$),
-        skip(1),
-        switchMap(() => of(this.getDirtyFields(this.documentForm)))
-      )
-      .subscribe((formValues) => {
-        this.documentInputChanged(formValues);
+    Object.values(this.documentForm.controls).forEach((group: FormGroup, groupIndex: number) => {
+      Object.values(group.controls).forEach((control: FormControl, controlIndex: number) => {
+        control.valueChanges.pipe(takeUntil(this.onDestroyed$))
+          .subscribe((controlValue) => {
+            this.documentInputChanged(Object.keys(group.value)[controlIndex], controlValue, group, groupIndex + 1);
+          });
       });
+    });
   }
 
-  documentInputChanged(formValues) {
-    this.offerService.updateOfferDocumentField({offerId: this.offerId, page: this.currentPage + 1}, formValues)
+  documentInputChanged(controlName: string, controlValue: any, group: FormGroup, groupIndex: number) {
+    if (controlValue instanceof Date) {
+      controlValue = this.datePipe.transform(controlValue, 'yyyy-MM-dd');
+    }
+    // TODO: show saving animation if it takes a time
+    this.offerService.updateOfferDocumentField({offerId: this.offerId, page: groupIndex + 1}, {[controlName]: controlValue})
       .pipe(
-        takeUntil(this.onDestroyed$)
+        takeUntil(this.onDestroyed$),
       )
-      .subscribe((res) => {
-        // TODO: show saving animation if it takes a time
+      .subscribe(() => {
+        this.updatePageProgress(this.documentForm.getRawValue(), this.currentPage);
       });
   }
 
   initPageBreakers() {
-    this.pageBreakersOffsetTop = Array.from(this.elRef.nativeElement.querySelectorAll('.page-breaker'))
-      .map((item: any) => item.offsetTop);
+    this.pageBreakersOffsetTop =
+      Array.from(this.elRef.nativeElement.querySelectorAll('.page-breaker'))
+        .map((item: any) => item.offsetTop);
 
     this.documentFormEl = this.elRef.nativeElement.getElementsByClassName('doc-container')[0];
 
     fromEvent(this.documentFormEl, 'scroll')
       .pipe(
-        debounceTime(300),
-        takeUntil(this.onDestroyed$)
+        debounceTime(100),
+        takeUntil(this.onDestroyed$),
       )
       .subscribe((event: any) => {
         this.detectPageChange(event.target.scrollTop);
@@ -448,32 +479,4 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   acceptOfferDocument() {
     this.router.navigate([`portal/purchase-agreement/${this.offer.id}/step-three`]);
   }
-
-  private getDirtyFields(group: FormGroup) {
-    let changedProperties = {};
-
-    Object.keys(group.controls).forEach((name) => {
-      const currentControl = group.controls[name];
-
-      if (currentControl.dirty) {
-        changedProperties = currentControl instanceof FormGroup
-          ? this.getDirtyFields(currentControl)
-          : {
-            ...changedProperties,
-            ...{
-              [name]: (currentControl.value instanceof Date
-                ? this.transformDate(currentControl.value)
-                : currentControl.value)
-            }
-          };
-      }
-    });
-
-    return changedProperties;
-  }
-
-  private transformDate(date) {
-    return this.datePipe.transform(date, 'yyyy-MM-dd');
-  }
-
 }
