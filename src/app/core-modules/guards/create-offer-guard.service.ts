@@ -10,11 +10,13 @@ import {
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { OfferService } from '../../feature-modules/portal/services/offer.service';
+import { AuthService } from '../core-services/auth.service';
 
 @Injectable()
 export class CreateOfferGuardService implements CanActivate, CanActivateChild {
 
   constructor(private offerService: OfferService,
+              private authService: AuthService,
               private router: Router) {
   }
 
@@ -22,8 +24,7 @@ export class CreateOfferGuardService implements CanActivate, CanActivateChild {
     const redirectUrl = '/portal/purchase-agreement/step-one';
     return this.offerService.getOfferById(+route.params.id)
       .pipe(
-        // TODO: check on step allowing
-        map(() => true),
+        map(() => this.authService.currentUser.accountType === 'agent'),
         catchError(() => of(this.router.parseUrl(redirectUrl)))
       );
   }
