@@ -1601,7 +1601,8 @@
                 Property Address:
                 <input formControlName="text_property_address" type="text" class="i-lr-9">
                 Date:
-                <input matInput (click)="date_property_address_date.open()" [matDatepicker]="date_property_address_date" formControlName="date_property_date"
+                <input matInput (click)="date_property_address_date.open()" [matDatepicker]="date_property_address_date"
+                       formControlName="date_property_date"
                        type="text"
                        class="i-lr-2__5">
                 <mat-datepicker #date_property_address_date></mat-datepicker>
@@ -1804,9 +1805,11 @@
                         systems/alarms and the following if checked:
                         <input formControlName="check_include_items_all_stoves" type="checkbox"> all stove(s), except
                         <input formControlName="text_include_items_all_stoves_except" type="text" class="i-lr-3"> ;
-                        <input formControlName="check_include_items_all_refrigerators" type="checkbox"> all refrigerator(s) except
+                        <input formControlName="check_include_items_all_refrigerators" type="checkbox"> all
+                        refrigerator(s) except
                         <input formControlName="text_include_items_all_refrigerators_except" type="text" class="i-lr-3">;
-                        <input formControlName="check_include_items_all_washers" type="checkbox"> all washer(s) and dryer(s), except
+                        <input formControlName="check_include_items_all_washers" type="checkbox"> all washer(s) and
+                        dryer(s), except
                         <input formControlName="text_include_items_all_washers_except" type="text" class="i-lr-3"> ;
                       </div>
                     </div>
@@ -1825,7 +1828,8 @@
                         hardware or devices, control units (other than non-dedicated mobile devices, electronics
                         and computers) and
                         applicable software, permissions, passwords, codes and access information, are
-                        ( <input formControlName="check_include_items_devices" type="checkbox"> are NOT) included in the sale.
+                        ( <input formControlName="check_include_items_devices" type="checkbox"> are NOT) included in the
+                        sale.
                       </div>
                     </div>
                     <div>
@@ -1849,7 +1853,8 @@
                         Seller represents that all items included in the purchase price, unless otherwise
                         specified, (i) are owned by Seller and shall be
                         transferred free and clear of liens and encumbrances, except the items and systems
-                        identified pursuant to 8B(5) and <input formControlName="text_include_items_without_warranty" type="text" class="i-lr-4">,
+                        identified pursuant to 8B(5) and <input formControlName="text_include_items_without_warranty"
+                                                                type="text" class="i-lr-4">,
                         and (ii) are transferred without Seller warranty regardless of value.
                       </div>
                     </div>
@@ -1900,7 +1905,8 @@
                     <input formControlName="text_possession_deliver_at" type="text" class="i-lr-1">
                     <input formControlName="check_possession_deliver_at_am" type="checkbox"> AM/
                     <input formControlName="check_possession_deliver_at_pm" type="checkbox"> PM on
-                    <input matInput (click)="date_possession_deliver.open()" [matDatepicker]="date_possession_deliver" formControlName="date_possession_deliver"
+                    <input matInput (click)="date_possession_deliver.open()" [matDatepicker]="date_possession_deliver"
+                           formControlName="date_possession_deliver"
                            type="text"
                            class="i-lr-1__5">
                     <mat-datepicker #date_possession_deliver></mat-datepicker>
@@ -1912,15 +1918,19 @@
               <div class="clearfix">
                 <div class="col-left-initials">
                   <label>Buyer's Initials</label>
-                  (<input formControlName="text_possession_deliver_buyer_initials_first" type="text" name="" id="Buyer-1-3" class="i-lr-1">) &nbsp;
-                  (<input formControlName="text_possession_deliver_buyer_initials_second" type="text" name="" id="Buyer-2-3" class="i-lr-1">)
+                  (<input formControlName="text_possession_deliver_buyer_initials_first" type="text" name=""
+                          id="Buyer-1-3" class="i-lr-1">) &nbsp;
+                  (<input formControlName="text_possession_deliver_buyer_initials_second" type="text" name=""
+                          id="Buyer-2-3" class="i-lr-1">)
                   <div class="fs-small">&#169; 1991-2018, California Association of REALTORS &#174;, Inc.</div>
                 </div>
 
                 <div class="col-right-initials">
                   <label>Seller's Initials</label>
-                  (<input formControlName="text_possession_deliver_seller_initials_first" type="text" name="" id="Seller-1-3" class="i-lr-1">) &nbsp;
-                  (<input formControlName="text_possession_deliver_seller_initials_second" type="text" name="" id="Seller-2-3" class="i-lr-1">)
+                  (<input formControlName="text_possession_deliver_seller_initials_first" type="text" name=""
+                          id="Seller-1-3" class="i-lr-1">) &nbsp;
+                  (<input formControlName="text_possession_deliver_seller_initials_second" type="text" name=""
+                          id="Seller-2-3" class="i-lr-1">)
                   <br>
                   <br>
                   <img src="assets/agreement/images/housing.png" width="80" height="70" class="image-right">
@@ -1938,289 +1948,290 @@
 
           <div class="page-breaker" id="page-7">7</div>
 
-          <!--<div formGroupName="page_8" class="container text-justify" style="font-size: 21px; line-height: 1.24; padding-right: 5px;">-->
-          <!--<div class="form">-->
-          <!--<div>-->
-          <!--Property Address:-->
-          <!--<input formControlName="input263" type="text" class="i-lr-9">-->
-          <!--Date:-->
-          <!--<input matInput (click)="picker264.open()" [matDatepicker]="picker264" formControlName="input264"-->
-          <!--type="text"-->
-          <!--class="i-lr-2__5">-->
-          <!--<mat-datepicker #picker264></mat-datepicker>-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<div>-->
-          <!--<span class="fw-bold f-l">C. &nbsp;Seller remaining in possession After Close Of-->
-          <!--Escrow:&nbsp;</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--If Seller has the right to remain in possession after Close Of Escrow, (i) the-->
-          <!--Parties are advised to sign a separate occupancy agreement such as-->
-          <!--<input formControlName="input265" type="checkbox">-->
-          <!--C.A.R. Form SIP, for Seller continued occupancy of less than 30 days,-->
-          <!--<input formControlName="input266" type="checkbox">-->
-          <!--C.A.R. Form RLAS for Seller continued occupancy of 30 days or more; and (ii) the Parties are-->
-          <!--advised to consult with their-->
-          <!--insurance and legal advisors for information about liability and damage or injury to persons and-->
-          <!--personal and real property; and (iii)-->
-          <!--Buyer is advised to consult with Buyer's lender about the impact of Seller's occupancy on-->
-          <!--Buyer's loan.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div>-->
-          <!--<span class="fw-bold f-l">D. &nbsp;Tenant-occupied property: Property shall be vacant&nbsp;</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--at least-->
-          <!--<span class="fw-bold">-->
-          <!--5 (or <input formControlName="input267" type="text" class="i-lr-1"> ) Days-->
-          <!--</span>-->
-          <!--Prior to Close Of Escrow, unless otherwise agreed in writing.-->
-          <!--<span class="fw-bold">-->
-          <!--Note to Seller: If you are unable to deliver Property vacant in accordance-->
-          <!--with rent control and other applicable Law,-->
-          <!--you may be in breach of this Agreement.-->
-          <!--</span>-->
-          <!--</div>-->
-          <!--<div class="fw-bold">-->
-          <!--OR <input formControlName="input268" type="checkbox">-->
-          <!--Tenant to remain in possession-->
-          <!--<span class="fw-normal">(C.A.R. Form TIP).</span>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div>-->
-          <!--<span class="fw-bold f-l">E. &nbsp;</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--At Close Of Escrow: Seller assigns to Buyer any assignable warranty rights for items included in-->
-          <!--the sale; and Seller shall Deliver to-->
-          <!--Buyer available Copies of any such warranties. Brokers cannot and will not determine the-->
-          <!--assignability of any warranties.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div>-->
-          <!--<span class="fw-bold f-l">F. &nbsp;</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--At Close Of Escrow, unless otherwise agreed in writing, Seller shall provide keys, passwords,-->
-          <!--codes and/or means to operate all locks,-->
-          <!--mailboxes, security systems, alarms, home automation systems and intranet and Internet-connected-->
-          <!--devices included in the purchase-->
-          <!--price, and garage door openers. If the Property is a condominium or located in a common interest-->
-          <!--subdivision, Buyer may be required-->
-          <!--to pay a deposit to the Homeowners' Association (“HOA”) to obtain keys to accessible HOA-->
-          <!--facilities.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div class="fw-bold">-->
-          <!--10. &nbsp;STATUTORY AND OTHER DISCLOSURES (INCLUDING LEAD-BASED PAINT HAZARD DISCLOSURES) AND-->
-          <!--CANCELLATION RIGHTS:-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<div>-->
-          <!--<span class="fw-bold f-l">A.&nbsp;</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold f-l">(1)</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--Seller shall, within the time specified in paragraph 14A, Deliver to Buyer: (i) if required-->
-          <!--by Law, a fully completed: Federal Lead- -->
-          <!--Based Paint Disclosures (C.A.R. Form FLD) and pamphlet (“Lead Disclosures”); and (ii) unless-->
-          <!--exempt, fully completed disclosures-->
-          <!--or notices required by sections 1102 et. seq. and 1103 et. seq. of the Civil Code-->
-          <!--(“Statutory Disclosures”). Statutory Disclosures-->
-          <!--include, but are not limited to, a Real Estate Transfer Disclosure Statement (“TDS”),-->
-          <!--Natural Hazard Disclosure Statement (“NHD”),-->
-          <!--notice or actual knowledge of release of illegal controlled substance, notice of special tax-->
-          <!--and/or assessments (or, if allowed,-->
-          <!--substantially equivalent notice regarding the Mello-Roos Community Facilities Act of 1982-->
-          <!--and Improvement Bond Act of 1915) and,-->
-          <!--if Seller has actual knowledge, of industrial use and military ordnance location (C.A.R.-->
-          <!--Form SPQ or ESD).-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold f-l">(2)</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--Any Statutory Disclosure required by this paragraph is considered fully completed if Seller-->
-          <!--has answered all questions and-->
-          <!--completed and signed the Seller section(s) and the Seller's Agent, if any, has completed and-->
-          <!--signed the Seller's Brokerage Firm-->
-          <!--section(s), or, if applicable, an Agent Visual Inspection Disclosure (C.A.R. Form AVID).-->
-          <!--Nothing stated herein relieves a Buyer's-->
-          <!--Brokerage Firm, if any, from the obligation to (i) conduct a reasonably competent and-->
-          <!--diligent visual inspection of the accessible-->
-          <!--areas of the Property and disclose, on Section IV of the TDS, or an AVID, material facts-->
-          <!--affecting the value or desirability of the-->
-          <!--Property that were or should have been revealed by such an inspection or (ii) complete any-->
-          <!--sections on all disclosures required to-->
-          <!--be completed by Buyer's Brokerage Firm.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold">(3) Note to Buyer and Seller:</span>-->
-          <!--Waiver of Statutory and Lead Disclosures is prohibited by Law.-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold f-l">(4)</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--Within the time specified in paragraph 14A, (i) Seller, unless exempt from the obligation to-->
-          <!--provide a TDS, shall, complete and-->
-          <!--provide Buyer with a Seller Property Questionnaire (C.A.R. Form SPQ); (ii) if Seller is not-->
-          <!--required to provide a TDS, Seller shall-->
-          <!--complete and provide Buyer with an Exempt Seller Disclosure (C.A.R. Form ESD).-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold f-l">(5)</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--Buyer shall, within the time specified in paragraph 14B(1), return Signed Copies of the-->
-          <!--Statutory, Lead and other disclosures to-->
-          <!--Seller.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold f-l">(6)</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--In the event Seller or Seller's Brokerage Firm, prior to Close Of Escrow, becomes aware of-->
-          <!--adverse conditions materially affecting-->
-          <!--the Property, or any material inaccuracy in disclosures, information or representations-->
-          <!--previously provided to Buyer, Seller shall-->
-          <!--promptly provide a subsequent or amended disclosure or notice, in writing, covering those-->
-          <!--items. <span class="fw-bold">However, a subsequent or-->
-          <!--amended disclosure shall not be required for conditions and material inaccuracies</span>-->
-          <!--of which Buyer is otherwise aware, or-->
-          <!--which are <span class="fw-bold">disclosed in reports provided to or obtained by Buyer or-->
-          <!--ordered and paid for by Buyer.</span>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold f-l">(7)</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--If any disclosure or notice specified in paragraph 10A(1), or subsequent or amended-->
-          <!--disclosure or notice is Delivered to Buyer after-->
-          <!--the offer is Signed, Buyer shall have the right to cancel this Agreement within <span-->
-          <!--class="fw-bold">3 Days</span> After-->
-          <!--Delivery in person, or <span class="fw-bold">5 Days</span> After-->
-          <!--Delivery by deposit in the mail, or by an electronic record satisfying the Uniform-->
-          <!--Electronic Transactions Act (UETA), by giving-->
-          <!--written notice of cancellation to Seller or Seller's agent.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div>-->
-          <!--<span class="fw-bold f-l">B.&nbsp;</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold f-l">NATURAL AND ENVIRONMENTAL HAZARD DISCLOSURES AND OTHER-->
-          <!--BOOKLETS:&nbsp;</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--Within the time specified in paragraph 14A,-->
-          <!--Seller shall, if required by Law: <span class="fw-bold">(i)</span> Deliver to Buyer-->
-          <!--earthquake guide(s) (and questionnaire), environmental hazards booklet, and home-->
-          <!--energy rating pamphlet; <span class="fw-bold">(ii)</span> disclose if the Property is-->
-          <!--located in a Special Flood Hazard Area; Potential Flooding (Inundation) Area;-->
-          <!--Very High Fire Hazard Zone; State Fire Responsibility Area; Earthquake Fault Zone; and-->
-          <!--Seismic Hazard Zone; and <span class="fw-bold">(iii)</span> disclose any-->
-          <!--other zone as required by Law and provide any other information required for those zones.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div>-->
-          <!--<span class="fw-bold f-l">C.&nbsp;</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold f-l">WITHHOLDING TAXES:&nbsp;</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--Within the time specified in paragraph 14A, to avoid required withholding, Seller shall-->
-          <!--Deliver to Buyer or-->
-          <!--qualified substitute, an affidavit sufficient to comply with federal (FIRPTA) and California-->
-          <!--withholding Law (C.A.R. Form AS or QS).-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div>-->
-          <!--<span class="fw-bold f-l">D.&nbsp;</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold f-l">MEGAN'S LAW DATABASE DISCLOSURE:&nbsp;</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--Notice: Pursuant to Section 290.46 of the Penal Code, information about specified-->
-          <!--registered sex offenders is made available to the public via an Internet Web site maintained-->
-          <!--by the Department of Justice at-->
-          <!--<a href="https://www.meganslaw.ca.gov/" class="fw-bold">www.meganslaw.ca.gov</a>. Depending-->
-          <!--on an offender's criminal history, this information will-->
-          <!--include either the address at which the-->
-          <!--offender resides or the community of residence and ZIP Code in which he or she resides.-->
-          <!--(Neither Seller nor Brokers are required to-->
-          <!--check this website. If Buyer wants further information, Broker recommends that Buyer obtain-->
-          <!--information from this website during-->
-          <!--Buyer's inspection contingency period. Brokers do not have expertise in this area.)-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div>-->
-          <!--<span class="fw-bold f-l">E.&nbsp;</span>-->
-          <!--<div class="item-pl-3 text-left">-->
-          <!--<span class="fw-bold f-l">NOTICE REGARDING GAS AND HAZARDOUS LIQUID TRANSMISSION-->
-          <!--PIPELINES:&nbsp;</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--This notice is being provided simply to inform-->
-          <!--you that information about the general location of gas and hazardous liquid transmission-->
-          <!--pipelines is available to the public via the-->
-          <!--National Pipeline Mapping System (NPMS) Internet Web site maintained by the United States-->
-          <!--Department of Transportation at-->
-          <!--<a href="http://www.npms.phmsa.dot.gov/" class="fw-bold">http://www.npms.phmsa.dot.gov/</a>.-->
-          <!--To seek further information about possible transmission pipelines near the Property, you may-->
-          <!--contact your local gas utility or other pipeline operators in the area. Contact information-->
-          <!--for pipeline operators is searchable by ZIP-->
-          <!--Code and county on the NPMS Internet Web site.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div>-->
-          <!--<span class="fw-bold">F. &nbsp;CONDOMINIUM/PLANNED DEVELOPMENT DISCLOSURES:&nbsp;</span>-->
-          <!--<div class="item-pl-3 text-left">-->
-          <!--<div>-->
-          <!--<span class="fw-bold f-l">(1)</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold">-->
-          <!--SELLER HAS: 7 (or-->
-          <!--<input formControlName="input269" type="text" class="i-lr-1">-->
-          <!--) Days-->
-          <!--</span>-->
-          <!--After Acceptance to disclose to Buyer if the Property is a condominium, or is located in-->
-          <!--a-->
-          <!--planned development or other common interest subdivision (C.A.R. Form SPQ or ESD).-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<br>-->
-          <!--<br>-->
-          <!--<div class="clearfix">-->
-          <!--<div class="col-left-initials">-->
-          <!--<label>Buyer's Initials</label>-->
-          <!--(<input formControlName="input270" type="text" name="" id="Buyer-1-4" class="i-lr-1">) &nbsp;-->
-          <!--(<input formControlName="input271" type="text" name="" id="Buyer-2-4" class="i-lr-1">)-->
-          <!--<div class="fs-small">&#169; 1991-2018, California Association of REALTORS &#174;, Inc.</div>-->
-          <!--</div>-->
+          <div formGroupName="page_8" class="container text-justify"
+               style="font-size: 21px; line-height: 1.24; padding-right: 5px;">
+            <div class="form">
+              <div>
+                Property Address:
+                <input formControlName="text_property_address" type="text" class="i-lr-9">
+                Date:
+                <input matInput (click)="date_property_date_p8.open()" [matDatepicker]="date_property_date_p8" formControlName="date_property_date"
+                       type="text"
+                       class="i-lr-2__5">
+                <mat-datepicker #date_property_date_p8></mat-datepicker>
+              </div>
+              <div class="item-pl-3">
+                <div>
+          <span class="fw-bold f-l">C. &nbsp;Seller remaining in possession After Close Of
+          Escrow:&nbsp;</span>
+                  <div class="item-pl-3">
+                    If Seller has the right to remain in possession after Close Of Escrow, (i) the
+                    Parties are advised to sign a separate occupancy agreement such as
+                    <input formControlName="check_occupancy_agreement_car_form_sip" type="checkbox">
+                    C.A.R. Form SIP, for Seller continued occupancy of less than 30 days,
+                    <input formControlName="check_occupancy_agreement_car_form_rlap" type="checkbox">
+                    C.A.R. Form RLAS for Seller continued occupancy of 30 days or more; and (ii) the Parties are
+                    advised to consult with their
+                    insurance and legal advisors for information about liability and damage or injury to persons and
+                    personal and real property; and (iii)
+                    Buyer is advised to consult with Buyer's lender about the impact of Seller's occupancy on
+                    Buyer's loan.
+                  </div>
+                </div>
+                <div>
+                  <span class="fw-bold f-l">D. &nbsp;Tenant-occupied property: Property shall be vacant&nbsp;</span>
+                  <div class="item-pl-3">
+                    at least
+                    <span class="fw-bold">
+          5 (or <input formControlName="text_property_vacant_days" type="text" class="i-lr-1"> ) Days
+          </span>
+                    Prior to Close Of Escrow, unless otherwise agreed in writing.
+                    <span class="fw-bold">
+          Note to Seller: If you are unable to deliver Property vacant in accordance
+          with rent control and other applicable Law,
+          you may be in breach of this Agreement.
+          </span>
+                  </div>
+                  <div class="fw-bold">
+                    OR <input formControlName="check_tenant_to_remain" type="checkbox">
+                    Tenant to remain in possession
+                    <span class="fw-normal">(C.A.R. Form TIP).</span>
+                  </div>
+                </div>
+                <div>
+                  <span class="fw-bold f-l">E. &nbsp;</span>
+                  <div class="item-pl-3">
+                    At Close Of Escrow: Seller assigns to Buyer any assignable warranty rights for items included in
+                    the sale; and Seller shall Deliver to
+                    Buyer available Copies of any such warranties. Brokers cannot and will not determine the
+                    assignability of any warranties.
+                  </div>
+                </div>
+                <div>
+                  <span class="fw-bold f-l">F. &nbsp;</span>
+                  <div class="item-pl-3">
+                    At Close Of Escrow, unless otherwise agreed in writing, Seller shall provide keys, passwords,
+                    codes and/or means to operate all locks,
+                    mailboxes, security systems, alarms, home automation systems and intranet and Internet-connected
+                    devices included in the purchase
+                    price, and garage door openers. If the Property is a condominium or located in a common interest
+                    subdivision, Buyer may be required
+                    to pay a deposit to the Homeowners' Association (“HOA”) to obtain keys to accessible HOA
+                    facilities.
+                  </div>
+                </div>
+              </div>
+              <div class="fw-bold">
+                10. &nbsp;STATUTORY AND OTHER DISCLOSURES (INCLUDING LEAD-BASED PAINT HAZARD DISCLOSURES) AND
+                CANCELLATION RIGHTS:
+              </div>
+              <div class="item-pl-3">
+                <div>
+                  <span class="fw-bold f-l">A.&nbsp;</span>
+                  <div class="item-pl-3">
+                    <span class="fw-bold f-l">(1)</span>
+                    <div class="item-pl-3">
+                      Seller shall, within the time specified in paragraph 14A, Deliver to Buyer: (i) if required
+                      by Law, a fully completed: Federal Lead-
+                      Based Paint Disclosures (C.A.R. Form FLD) and pamphlet (“Lead Disclosures”); and (ii) unless
+                      exempt, fully completed disclosures
+                      or notices required by sections 1102 et. seq. and 1103 et. seq. of the Civil Code
+                      (“Statutory Disclosures”). Statutory Disclosures
+                      include, but are not limited to, a Real Estate Transfer Disclosure Statement (“TDS”),
+                      Natural Hazard Disclosure Statement (“NHD”),
+                      notice or actual knowledge of release of illegal controlled substance, notice of special tax
+                      and/or assessments (or, if allowed,
+                      substantially equivalent notice regarding the Mello-Roos Community Facilities Act of 1982
+                      and Improvement Bond Act of 1915) and,
+                      if Seller has actual knowledge, of industrial use and military ordnance location (C.A.R.
+                      Form SPQ or ESD).
+                    </div>
+                  </div>
+                  <div class="item-pl-3">
+                    <span class="fw-bold f-l">(2)</span>
+                    <div class="item-pl-3">
+                      Any Statutory Disclosure required by this paragraph is considered fully completed if Seller
+                      has answered all questions and
+                      completed and signed the Seller section(s) and the Seller's Agent, if any, has completed and
+                      signed the Seller's Brokerage Firm
+                      section(s), or, if applicable, an Agent Visual Inspection Disclosure (C.A.R. Form AVID).
+                      Nothing stated herein relieves a Buyer's
+                      Brokerage Firm, if any, from the obligation to (i) conduct a reasonably competent and
+                      diligent visual inspection of the accessible
+                      areas of the Property and disclose, on Section IV of the TDS, or an AVID, material facts
+                      affecting the value or desirability of the
+                      Property that were or should have been revealed by such an inspection or (ii) complete any
+                      sections on all disclosures required to
+                      be completed by Buyer's Brokerage Firm.
+                    </div>
+                  </div>
+                  <div class="item-pl-3">
+                    <span class="fw-bold">(3) Note to Buyer and Seller:</span>
+                    Waiver of Statutory and Lead Disclosures is prohibited by Law.
+                  </div>
+                  <div class="item-pl-3">
+                    <span class="fw-bold f-l">(4)</span>
+                    <div class="item-pl-3">
+                      Within the time specified in paragraph 14A, (i) Seller, unless exempt from the obligation to
+                      provide a TDS, shall, complete and
+                      provide Buyer with a Seller Property Questionnaire (C.A.R. Form SPQ); (ii) if Seller is not
+                      required to provide a TDS, Seller shall
+                      complete and provide Buyer with an Exempt Seller Disclosure (C.A.R. Form ESD).
+                    </div>
+                  </div>
+                  <div class="item-pl-3">
+                    <span class="fw-bold f-l">(5)</span>
+                    <div class="item-pl-3">
+                      Buyer shall, within the time specified in paragraph 14B(1), return Signed Copies of the
+                      Statutory, Lead and other disclosures to
+                      Seller.
+                    </div>
+                  </div>
+                  <div class="item-pl-3">
+                    <span class="fw-bold f-l">(6)</span>
+                    <div class="item-pl-3">
+                      In the event Seller or Seller's Brokerage Firm, prior to Close Of Escrow, becomes aware of
+                      adverse conditions materially affecting
+                      the Property, or any material inaccuracy in disclosures, information or representations
+                      previously provided to Buyer, Seller shall
+                      promptly provide a subsequent or amended disclosure or notice, in writing, covering those
+                      items. <span class="fw-bold">However, a subsequent or
+          amended disclosure shall not be required for conditions and material inaccuracies</span>
+                      of which Buyer is otherwise aware, or
+                      which are <span class="fw-bold">disclosed in reports provided to or obtained by Buyer or
+          ordered and paid for by Buyer.</span>
+                    </div>
+                  </div>
+                  <div class="item-pl-3">
+                    <span class="fw-bold f-l">(7)</span>
+                    <div class="item-pl-3">
+                      If any disclosure or notice specified in paragraph 10A(1), or subsequent or amended
+                      disclosure or notice is Delivered to Buyer after
+                      the offer is Signed, Buyer shall have the right to cancel this Agreement within <span
+                      class="fw-bold">3 Days</span> After
+                      Delivery in person, or <span class="fw-bold">5 Days</span> After
+                      Delivery by deposit in the mail, or by an electronic record satisfying the Uniform
+                      Electronic Transactions Act (UETA), by giving
+                      written notice of cancellation to Seller or Seller's agent.
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <span class="fw-bold f-l">B.&nbsp;</span>
+                  <div class="item-pl-3">
+          <span class="fw-bold f-l">NATURAL AND ENVIRONMENTAL HAZARD DISCLOSURES AND OTHER
+          BOOKLETS:&nbsp;</span>
+                    <div class="item-pl-3">
+                      Within the time specified in paragraph 14A,
+                      Seller shall, if required by Law: <span class="fw-bold">(i)</span> Deliver to Buyer
+                      earthquake guide(s) (and questionnaire), environmental hazards booklet, and home
+                      energy rating pamphlet; <span class="fw-bold">(ii)</span> disclose if the Property is
+                      located in a Special Flood Hazard Area; Potential Flooding (Inundation) Area;
+                      Very High Fire Hazard Zone; State Fire Responsibility Area; Earthquake Fault Zone; and
+                      Seismic Hazard Zone; and <span class="fw-bold">(iii)</span> disclose any
+                      other zone as required by Law and provide any other information required for those zones.
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <span class="fw-bold f-l">C.&nbsp;</span>
+                  <div class="item-pl-3">
+                    <span class="fw-bold f-l">WITHHOLDING TAXES:&nbsp;</span>
+                    <div class="item-pl-3">
+                      Within the time specified in paragraph 14A, to avoid required withholding, Seller shall
+                      Deliver to Buyer or
+                      qualified substitute, an affidavit sufficient to comply with federal (FIRPTA) and California
+                      withholding Law (C.A.R. Form AS or QS).
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <span class="fw-bold f-l">D.&nbsp;</span>
+                  <div class="item-pl-3">
+                    <span class="fw-bold f-l">MEGAN'S LAW DATABASE DISCLOSURE:&nbsp;</span>
+                    <div class="item-pl-3">
+                      Notice: Pursuant to Section 290.46 of the Penal Code, information about specified
+                      registered sex offenders is made available to the public via an Internet Web site maintained
+                      by the Department of Justice at
+                      <a href="https://www.meganslaw.ca.gov/" class="fw-bold">www.meganslaw.ca.gov</a>. Depending
+                      on an offender's criminal history, this information will
+                      include either the address at which the
+                      offender resides or the community of residence and ZIP Code in which he or she resides.
+                      (Neither Seller nor Brokers are required to
+                      check this website. If Buyer wants further information, Broker recommends that Buyer obtain
+                      information from this website during
+                      Buyer's inspection contingency period. Brokers do not have expertise in this area.)
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <span class="fw-bold f-l">E.&nbsp;</span>
+                  <div class="item-pl-3 text-left">
+          <span class="fw-bold f-l">NOTICE REGARDING GAS AND HAZARDOUS LIQUID TRANSMISSION
+          PIPELINES:&nbsp;</span>
+                    <div class="item-pl-3">
+                      This notice is being provided simply to inform
+                      you that information about the general location of gas and hazardous liquid transmission
+                      pipelines is available to the public via the
+                      National Pipeline Mapping System (NPMS) Internet Web site maintained by the United States
+                      Department of Transportation at
+                      <a href="http://www.npms.phmsa.dot.gov/" class="fw-bold">http://www.npms.phmsa.dot.gov/</a>.
+                      To seek further information about possible transmission pipelines near the Property, you may
+                      contact your local gas utility or other pipeline operators in the area. Contact information
+                      for pipeline operators is searchable by ZIP
+                      Code and county on the NPMS Internet Web site.
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <span class="fw-bold">F. &nbsp;CONDOMINIUM/PLANNED DEVELOPMENT DISCLOSURES:&nbsp;</span>
+                  <div class="item-pl-3 text-left">
+                    <div>
+                      <span class="fw-bold f-l">(1)</span>
+                      <div class="item-pl-3">
+          <span class="fw-bold">
+          SELLER HAS: 7 (or
+          <input formControlName="text_seller_disclosure_days" type="text" class="i-lr-1">
+          ) Days
+          </span>
+                        After Acceptance to disclose to Buyer if the Property is a condominium, or is located in
+                        a
+                        planned development or other common interest subdivision (C.A.R. Form SPQ or ESD).
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <br>
+              <div class="clearfix">
+                <div class="col-left-initials">
+                  <label>Buyer's Initials</label>
+                  (<input formControlName="text_buyer_initials_first" type="text" name="" id="Buyer-1-4" class="i-lr-1">) &nbsp;
+                  (<input formControlName="text_buyer_initials_second" type="text" name="" id="Buyer-2-4" class="i-lr-1">)
+                  <div class="fs-small">&#169; 1991-2018, California Association of REALTORS &#174;, Inc.</div>
+                </div>
 
-          <!--<div class="col-right-initials">-->
-          <!--<label>Seller's Initials</label>-->
-          <!--(<input formControlName="input272" type="text" name="" id="Seller-1-4" class="i-lr-1">) &nbsp;-->
-          <!--(<input formControlName="input273" type="text" name="" id="Seller-2-4" class="i-lr-1">)-->
-          <!--<br>-->
-          <!--<br>-->
-          <!--<img src="assets/agreement/images/housing.png" width="80" height="70" class="image-right">-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<footer>-->
-          <!--<div class="fw-bold">RPA-CA REVISED 12/18 (PAGE 4 OF 10)</div>-->
-          <!--<div class="text-center fw-bold">-->
-          <!--CALIFORNIA RESIDENTIAL PURCHASE AGREEMENT (RPA-CA PAGE 4 OF 10)-->
-          <!--</div>-->
+                <div class="col-right-initials">
+                  <label>Seller's Initials</label>
+                  (<input formControlName="text_seller_initials_first" type="text" name="" id="Seller-1-4" class="i-lr-1">) &nbsp;
+                  (<input formControlName="text_seller_initials_second" type="text" name="" id="Seller-2-4" class="i-lr-1">)
+                  <br>
+                  <br>
+                  <img src="assets/agreement/images/housing.png" width="80" height="70" class="image-right">
+                </div>
+              </div>
+            </div>
+            <footer>
+              <div class="fw-bold">RPA-CA REVISED 12/18 (PAGE 4 OF 10)</div>
+              <div class="text-center fw-bold">
+                CALIFORNIA RESIDENTIAL PURCHASE AGREEMENT (RPA-CA PAGE 4 OF 10)
+              </div>
 
-          <!--</footer>-->
-          <!--</div>-->
+            </footer>
+          </div>
 
-          <!--<div class="page-breaker" id="page-8">8</div>-->
+          <div class="page-breaker" id="page-8">8</div>
 
           <!--<div formGroupName="page_9" class="container text-justify" style="font-size: 21px; line-height: 1.21; padding-right: 5px;">-->
           <!--<div class="form">-->

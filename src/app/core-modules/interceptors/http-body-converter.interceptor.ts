@@ -11,22 +11,21 @@ export class HttpBodyConverterInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (!(req.body instanceof FormData)) {
-      let pythonObject = this.toPythonCaseKeys(req.body);
+      const pythonObject = this.toPythonCaseKeys(req.body);
       req = req.clone({body: pythonObject});
     }
 
     return next.handle(req)
       .pipe(
         map((event: HttpEvent<any>) => {
-        if (event instanceof HttpResponse) {
-          const camelCaseObject = this.toCamelCaseKeys(event.body);
-          return event.clone({ body: camelCaseObject });
-        }
-        return event;
-      })
-    );
+          if (event instanceof HttpResponse) {
+            const camelCaseObject = this.toCamelCaseKeys(event.body);
+            return event.clone({body: camelCaseObject});
+          }
+          return event;
+        })
+      );
   }
-
 
   // Convert Python into Angular / Typescript compatible format
   private toCamelCaseKeys(o: any): any {
@@ -35,21 +34,18 @@ export class HttpBodyConverterInterceptor implements HttpInterceptor {
 
   // Convert  Angular / Typescript into Python compatible format
   private toPythonCaseKeys(o: any): any {
-    return  this.mapKeysDeep(o, (v, k) => _.snakeCase(k));
+    return this.mapKeysDeep(o, (v, k) => _.snakeCase(k));
   }
 
   private mapKeysDeep(obj, cb) {
     if (_.isArray(obj)) {
       return obj.map(innerObj => this.mapKeysDeep(innerObj, cb)); // recursion
-    }
-    else if (_.isObject(obj)) {
+    } else if (_.isObject(obj)) {
       return _.mapValues(
         _.mapKeys(obj, cb), val => this.mapKeysDeep(val, cb), // recursion
-      )
+      );
     } else {
       return obj;
     }
   }
-
-
 }
