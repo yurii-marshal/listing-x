@@ -387,6 +387,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   patchForm(model) {
+    // TODO: refactor this scope
     Object.entries(model).forEach(([key, value]) => {
       Object.keys(this.documentForm.controls).forEach((groupName) => {
 
@@ -452,7 +453,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       Object.values(group.controls).forEach((control: FormControl, controlIndex: number) => {
         control.valueChanges.pipe(takeUntil(this.onDestroyed$))
           .subscribe((controlValue) => {
-            this.documentInputChanged(Object.keys(group.value)[controlIndex], controlValue, group, groupIndex + 1);
+            this.documentInputChanged(Object.keys(group.value)[controlIndex], controlValue, group, groupIndex);
           });
       });
     });
