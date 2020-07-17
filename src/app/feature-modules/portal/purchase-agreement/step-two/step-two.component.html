@@ -2802,7 +2802,8 @@
                 Property Address:
                 <input formControlName="text_property_address" type="text" class="i-lr-9">
                 Date:
-                <input matInput (click)="date_property_date_p11.open()" [matDatepicker]="date_property_date_p11" formControlName="date_property_date"
+                <input matInput (click)="date_property_date_p11.open()" [matDatepicker]="date_property_date_p11"
+                       formControlName="date_property_date"
                        type="text"
                        class="i-lr-2__5">
                 <mat-datepicker #date_property_date_p11></mat-datepicker>
@@ -2812,7 +2813,8 @@
                 <div class="item-pl-3 text-left">
                   <span class="fw-bold">FINAL VERIFICATION OF CONDITION:</span>
                   Buyer shall have the right to make a final verification of the Property within <span
-                  class="fw-bold">5 (or <input formControlName="text_property_verification_days" type="text" class="i-lr-1"> ) Days</span>
+                  class="fw-bold">5 (or <input formControlName="text_property_verification_days" type="text"
+                                               class="i-lr-1"> ) Days</span>
                   Prior
                   to Close Of Escrow, NOT AS A CONTINGENCY OF THE SALE, but solely to confirm: <span
                   class="fw-bold">(i)</span>
@@ -2977,7 +2979,8 @@
                     A Copy of this Agreement including any counter offer(s) and addenda shall be delivered to Escrow
                     Holder within <span class="fw-bold">3 Days</span> After
                     Acceptance
-                    (or <input formControlName="text_agreement_copy_deliver_days" type="text" class="i-lr-3"> ). Buyer and Seller authorize
+                    (or <input formControlName="text_agreement_copy_deliver_days" type="text" class="i-lr-3"> ). Buyer
+                    and Seller authorize
                     Escrow
                     Holder to accept and rely on Copies and Signatures as defined in this Agreement as originals, to
                     open escrow and for other
@@ -2996,15 +2999,19 @@
               <div class="clearfix">
                 <div class="col-left-initials">
                   <label>Buyer's Initials</label>
-                  (<input formControlName="text_buyer_initials_first" type="text" name="" id="Buyer-1-7" class="i-lr-1">) &nbsp;
-                  (<input formControlName="text_buyer_initials_second" type="text" name="" id="Buyer-2-7" class="i-lr-1">)
+                  (<input formControlName="text_buyer_initials_first" type="text" name="" id="Buyer-1-7" class="i-lr-1">)
+                  &nbsp;
+                  (<input formControlName="text_buyer_initials_second" type="text" name="" id="Buyer-2-7"
+                          class="i-lr-1">)
                   <div class="fs-small">&#169; 1991-2018, California Association of REALTORS &#174;, Inc.</div>
                 </div>
 
                 <div class="col-right-initials">
                   <label>Seller's Initials</label>
-                  (<input formControlName="text_seller_initials_first" type="text" name="" id="Seller-1-7" class="i-lr-1">) &nbsp;
-                  (<input formControlName="text_seller_initials_second" type="text" name="" id="Seller-2-7" class="i-lr-1">)
+                  (<input formControlName="text_seller_initials_first" type="text" name="" id="Seller-1-7"
+                          class="i-lr-1">) &nbsp;
+                  (<input formControlName="text_seller_initials_second" type="text" name="" id="Seller-2-7"
+                          class="i-lr-1">)
                   <br>
                   <br>
                   <img src="assets/agreement/images/housing.png" width="80" height="70" class="image-right">
@@ -3022,232 +3029,232 @@
 
           <div class="page-breaker" id="page-11">11</div>
 
-          <!--<div formGroupName="page_12" class="container" style="font-size: 21px; line-height: 1.4; padding-right: 5px;">-->
-          <!--<div class="form">-->
-          <!--<div>-->
-          <!--Property Address:-->
-          <!--<input formControlName="input303" type="text" class="i-lr-9">-->
-          <!--Date:-->
-          <!--<input matInput (click)="picker304.open()" [matDatepicker]="picker304" formControlName="input304"-->
-          <!--type="text"-->
-          <!--class="i-lr-2__5">-->
-          <!--<mat-datepicker #picker304></mat-datepicker>-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold f-l">C.&nbsp;</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--Brokers are a party to the escrow for the sole purpose of compensation pursuant to paragraph 18A and-->
-          <!--paragraph D of the-->
-          <!--section titled Real Estate Brokers on page 10. Buyer and Seller irrevocably assign to Brokers-->
-          <!--compensation specified in-->
-          <!--paragraph 18A, and irrevocably instruct Escrow Holder to disburse those funds to Brokers at Close Of-->
-          <!--Escrow or pursuant to any-->
-          <!--other mutually executed cancellation agreement. Compensation instructions can be amended or revoked-->
-          <!--only with the written-->
-          <!--consent of Brokers. Buyer and Seller shall release and hold harmless Escrow Holder from any-->
-          <!--liability resulting from Escrow-->
-          <!--Holder's payment to Broker(s) of compensation pursuant to this Agreement.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold f-l">D.&nbsp;</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--Upon receipt, Escrow Holder shall provide Seller and Seller's Broker verification of Buyer's deposit-->
-          <!--of funds pursuant to-->
-          <!--paragraph 3A and 3B. Once Escrow Holder becomes aware of any of the following, Escrow Holder shall-->
-          <!--immediately notify all-->
-          <!--Brokers: <span class="fw-bold">(i)</span> if Buyer's initial or any additional deposit or down-->
-          <!--payment is not made pursuant to this Agreement, or is not good at-->
-          <!--time of deposit with Escrow Holder; or <span class="fw-bold">(ii)</span> if Buyer and Seller-->
-          <!--instruct Escrow Holder to cancel escrow.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold f-l">E.&nbsp;</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--A Copy of any amendment that affects any paragraph of this Agreement for which Escrow Holder is-->
-          <!--responsible shall be-->
-          <!--delivered to Escrow Holder within <span class="fw-bold">3 Days</span> after mutual execution of the-->
-          <!--amendment.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div>-->
-          <!--<span class="fw-bold">21. REMEDIES FOR BUYER'S BREACH OF CONTRACT:</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold f-l">A.&nbsp;</span>-->
-          <!--<div class="item-pl-3 fw-bold">-->
-          <!--Any clause added by the Parties specifying a remedy (such as release or forfeiture of deposit or-->
-          <!--making a-->
-          <!--deposit non-refundable) for failure of Buyer to complete the purchase in violation of this-->
-          <!--Agreement shall-->
-          <!--be deemed invalid unless the clause independently satisfies the statutory liquidated damages-->
-          <!--requirements set forth in the Civil Code.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold f-l">B.&nbsp;</span>-->
-          <!--<div class="item-pl-3 fw-bold ">-->
-          <!--LIQUIDATED DAMAGES: If Buyer fails to complete this purchase because of Buyer's default, Seller-->
-          <!--shall-->
-          <!--retain, as liquidated damages, the deposit actually paid. If the Property is a dwelling with no-->
-          <!--more than-->
-          <!--four units, one of which Buyer intends to occupy, then the amount retained shall be no more than-->
-          <!--3% of the-->
-          <!--purchase price. Any excess shall be returned to Buyer. Except as provided in paragraph 14H,-->
-          <!--release of-->
-          <!--funds will require mutual, Signed release instructions from both Buyer and Seller, judicial-->
-          <!--decision or-->
-          <!--arbitration award. AT THE TIME OF ANY INCREASED DEPOSIT BUYER AND SELLER SHALL SIGN A-->
-          <!--SEPARATE LIQUIDATED DAMAGES PROVISION INCORPORATING THE INCREASED DEPOSIT AS-->
-          <!--LIQUIDATED DAMAGES (C.A.R. FORM RID).-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div class="clearfix mt-20 mb-20">-->
-          <!--<div class="col-left-initials ml-6">-->
-          <!--<label>Buyer's Initials</label>-->
-          <!--(<input formControlName="input305" type="text" name="" id="Buyer-1-8" class="i-lr-1">) &nbsp;-->
-          <!--(<input formControlName="input306" type="text" name="" id="Buyer-2-8" class="i-lr-1">)-->
-          <!--</div>-->
+          <div formGroupName="page_12" class="container" style="font-size: 21px; line-height: 1.4; padding-right: 5px;">
+            <div class="form">
+              <div>
+                Property Address:
+                <input formControlName="text_property_address" type="text" class="i-lr-9">
+                Date:
+                <input matInput (click)="date_property_date_p12.open()" [matDatepicker]="date_property_date_p12" formControlName="date_property_date"
+                       type="text"
+                       class="i-lr-2__5">
+                <mat-datepicker #date_property_date_p12></mat-datepicker>
+              </div>
+              <div class="item-pl-3">
+                <span class="fw-bold f-l">C.&nbsp;</span>
+                <div class="item-pl-3">
+                  Brokers are a party to the escrow for the sole purpose of compensation pursuant to paragraph 18A and
+                  paragraph D of the
+                  section titled Real Estate Brokers on page 10. Buyer and Seller irrevocably assign to Brokers
+                  compensation specified in
+                  paragraph 18A, and irrevocably instruct Escrow Holder to disburse those funds to Brokers at Close Of
+                  Escrow or pursuant to any
+                  other mutually executed cancellation agreement. Compensation instructions can be amended or revoked
+                  only with the written
+                  consent of Brokers. Buyer and Seller shall release and hold harmless Escrow Holder from any
+                  liability resulting from Escrow
+                  Holder's payment to Broker(s) of compensation pursuant to this Agreement.
+                </div>
+              </div>
+              <div class="item-pl-3">
+                <span class="fw-bold f-l">D.&nbsp;</span>
+                <div class="item-pl-3">
+                  Upon receipt, Escrow Holder shall provide Seller and Seller's Broker verification of Buyer's deposit
+                  of funds pursuant to
+                  paragraph 3A and 3B. Once Escrow Holder becomes aware of any of the following, Escrow Holder shall
+                  immediately notify all
+                  Brokers: <span class="fw-bold">(i)</span> if Buyer's initial or any additional deposit or down
+                  payment is not made pursuant to this Agreement, or is not good at
+                  time of deposit with Escrow Holder; or <span class="fw-bold">(ii)</span> if Buyer and Seller
+                  instruct Escrow Holder to cancel escrow.
+                </div>
+              </div>
+              <div class="item-pl-3">
+                <span class="fw-bold f-l">E.&nbsp;</span>
+                <div class="item-pl-3">
+                  A Copy of any amendment that affects any paragraph of this Agreement for which Escrow Holder is
+                  responsible shall be
+                  delivered to Escrow Holder within <span class="fw-bold">3 Days</span> after mutual execution of the
+                  amendment.
+                </div>
+              </div>
+              <div>
+                <span class="fw-bold">21. REMEDIES FOR BUYER'S BREACH OF CONTRACT:</span>
+                <div class="item-pl-3">
+                  <span class="fw-bold f-l">A.&nbsp;</span>
+                  <div class="item-pl-3 fw-bold">
+                    Any clause added by the Parties specifying a remedy (such as release or forfeiture of deposit or
+                    making a
+                    deposit non-refundable) for failure of Buyer to complete the purchase in violation of this
+                    Agreement shall
+                    be deemed invalid unless the clause independently satisfies the statutory liquidated damages
+                    requirements set forth in the Civil Code.
+                  </div>
+                </div>
+                <div class="item-pl-3">
+                  <span class="fw-bold f-l">B.&nbsp;</span>
+                  <div class="item-pl-3 fw-bold ">
+                    LIQUIDATED DAMAGES: If Buyer fails to complete this purchase because of Buyer's default, Seller
+                    shall
+                    retain, as liquidated damages, the deposit actually paid. If the Property is a dwelling with no
+                    more than
+                    four units, one of which Buyer intends to occupy, then the amount retained shall be no more than
+                    3% of the
+                    purchase price. Any excess shall be returned to Buyer. Except as provided in paragraph 14H,
+                    release of
+                    funds will require mutual, Signed release instructions from both Buyer and Seller, judicial
+                    decision or
+                    arbitration award. AT THE TIME OF ANY INCREASED DEPOSIT BUYER AND SELLER SHALL SIGN A
+                    SEPARATE LIQUIDATED DAMAGES PROVISION INCORPORATING THE INCREASED DEPOSIT AS
+                    LIQUIDATED DAMAGES (C.A.R. FORM RID).
+                  </div>
+                </div>
+                <div class="clearfix mt-20 mb-20">
+                  <div class="col-left-initials ml-6">
+                    <label>Buyer's Initials</label>
+                    (<input formControlName="text_first_buyer_initials_first" type="text" name="" id="Buyer-1-8" class="i-lr-1">) &nbsp;
+                    (<input formControlName="text_first_buyer_initials_second" type="text" name="" id="Buyer-2-8" class="i-lr-1">)
+                  </div>
 
-          <!--<div class="col-right-initials">-->
-          <!--<label>Seller's Initials</label>-->
-          <!--(<input formControlName="input307" type="text" name="" id="Seller-1-8" class="i-lr-1">) &nbsp;-->
-          <!--(<input formControlName="input308" type="text" name="" id="Seller-2-8" class="i-lr-1">)-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div>-->
-          <!--<span class="fw-bold">22. DISPUTE RESOLUTION:</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold f-l">A.&nbsp;</span>-->
-          <!--<div class="item-pl-3 ">-->
-          <!--<span class="fw-bold f-l">MEDIATION:&nbsp;</span>-->
-          <!--The Parties agree to mediate any dispute or claim arising between them out of this Agreement, or-->
-          <!--any resulting-->
-          <!--transaction, before resorting to arbitration or court action through the C.A.R. Real Estate-->
-          <!--Mediation Center for Consumers-->
-          <!--(<a href="https://www.car.org/mediation/" class="fw-bold">www.consumermediation.org</a>) or-->
-          <!--through any other mediation provider or service mutually agreed to by the Parties. The Parties-->
-          <!--<span class="fw-bold">-->
-          <!--also agree to mediate any disputes or claims with Broker(s), who, in writing, agree to such-->
-          <!--mediation prior to, or within a-->
-          <!--reasonable time after, the dispute or claim is presented to the Broker.-->
-          <!--</span> Mediation fees, if any, shall be divided equally among the-->
-          <!--Parties involved. If, for any dispute or claim to which this paragraph applies, any Party <span-->
-          <!--class="fw-bold">(i)</span>-->
-          <!--commences an action without first attempting-->
-          <!--to resolve the matter through mediation, or <span class="fw-bold">(ii)</span> before-->
-          <!--commencement of an action, refuses to-->
-          <!--mediate after a request has been made,-->
-          <!--then that Party shall not be entitled to recover attorney fees, even if they would otherwise be-->
-          <!--available to that Party in any such action.-->
-          <!--THIS MEDIATION PROVISION APPLIES WHETHER OR NOT THE ARBITRATION PROVISION IS INITIALED.-->
-          <!--Exclusions from this-->
-          <!--mediation agreement are specified in paragraph 22C.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold f-l">B. ARBITRATION OF DISPUTES:</span>-->
-          <!--<div class="item-pl-3 fw-bold ">-->
-          <!--The Parties agree that any dispute or claim in Law or equity arising between them out of this-->
-          <!--Agreement or-->
-          <!--any resulting transaction, which is not settled through mediation, shall be decided by neutral,-->
-          <!--binding-->
-          <!--arbitration. The Parties also agree to arbitrate any disputes or claims with Broker(s), who, in-->
-          <!--writing, agree-->
-          <!--to such arbitration prior to, or within a reasonable time after, the dispute or claim is-->
-          <!--presented to the-->
-          <!--Broker. The arbitrator shall be a retired judge or justice, or an attorney with at least 5 years-->
-          <!--of residential-->
-          <!--real estate Law experience, unless the parties mutually agree to a different arbitrator. The-->
-          <!--Parties shall-->
-          <!--have the right to discovery in accordance with Code of Civil Procedure §1283.05. In all other-->
-          <!--respects, the-->
-          <!--arbitration shall be conducted in accordance with Title 9 of Part 3 of the Code of Civil-->
-          <!--Procedure. Judgment-->
-          <!--upon the award of the arbitrator(s) may be entered into any court having jurisdiction.-->
-          <!--Enforcement of this-->
-          <!--agreement to arbitrate shall be governed by the Federal Arbitration Act. Exclusions from this-->
-          <!--arbitration-->
-          <!--agreement are specified in paragraph 22C.-->
-          <!--<br>-->
-          <!--&nbsp; &nbsp;“NOTICE: BY INITIALING IN THE SPACE BELOW YOU ARE AGREEING TO HAVE ANY DISPUTE-->
-          <!--ARISING OUT OF THE MATTERS INCLUDED IN THE 'ARBITRATION OF DISPUTES' PROVISION DECIDED-->
-          <!--BY NEUTRAL ARBITRATION AS PROVIDED BY CALIFORNIA LAW AND YOU ARE GIVING UP ANY RIGHTS-->
-          <!--YOU MIGHT POSSESS TO HAVE THE DISPUTE LITIGATED IN A COURT OR JURY TRIAL. BY INITIALING IN-->
-          <!--THE SPACE BELOW YOU ARE GIVING UP YOUR JUDICIAL RIGHTS TO DISCOVERY AND APPEAL,-->
-          <!--UNLESS THOSE RIGHTS ARE SPECIFICALLY INCLUDED IN THE 'ARBITRATION OF DISPUTES'-->
-          <!--PROVISION. IF YOU REFUSE TO SUBMIT TO ARBITRATION AFTER AGREEING TO THIS PROVISION, YOU-->
-          <!--MAY BE COMPELLED TO ARBITRATE UNDER THE AUTHORITY OF THE CALIFORNIA CODE OF CIVIL-->
-          <!--PROCEDURE. YOUR AGREEMENT TO THIS ARBITRATION PROVISION IS VOLUNTARY.”-->
-          <!--<br>-->
-          <!--&nbsp; &nbsp;“WE HAVE READ AND UNDERSTAND THE FOREGOING AND AGREE TO SUBMIT DISPUTES ARISING-->
-          <!--OUT OF THE MATTERS INCLUDED IN THE 'ARBITRATION OF DISPUTES' PROVISION TO NEUTRAL-->
-          <!--ARBITRATION.”-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div class="clearfix mt-20 mb-20">-->
-          <!--<div class="col-left-initials ml-6">-->
-          <!--<label>Buyer's Initials</label>-->
-          <!--(<input formControlName="input309" type="text" name="" id="Buyer-1-9" class="i-lr-1">) &nbsp;-->
-          <!--(<input formControlName="input310" type="text" name="" id="Buyer-2-9" class="i-lr-1">)-->
-          <!--</div>-->
+                  <div class="col-right-initials">
+                    <label>Seller's Initials</label>
+                    (<input formControlName="text_first_seller_initials_first" type="text" name="" id="Seller-1-8" class="i-lr-1">) &nbsp;
+                    (<input formControlName="text_first_seller_initials_second" type="text" name="" id="Seller-2-8" class="i-lr-1">)
+                  </div>
+                </div>
+              </div>
+              <div>
+                <span class="fw-bold">22. DISPUTE RESOLUTION:</span>
+                <div class="item-pl-3">
+                  <span class="fw-bold f-l">A.&nbsp;</span>
+                  <div class="item-pl-3 ">
+                    <span class="fw-bold f-l">MEDIATION:&nbsp;</span>
+                    The Parties agree to mediate any dispute or claim arising between them out of this Agreement, or
+                    any resulting
+                    transaction, before resorting to arbitration or court action through the C.A.R. Real Estate
+                    Mediation Center for Consumers
+                    (<a href="https://www.car.org/mediation/" class="fw-bold">www.consumermediation.org</a>) or
+                    through any other mediation provider or service mutually agreed to by the Parties. The Parties
+                    <span class="fw-bold">
+          also agree to mediate any disputes or claims with Broker(s), who, in writing, agree to such
+          mediation prior to, or within a
+          reasonable time after, the dispute or claim is presented to the Broker.
+          </span> Mediation fees, if any, shall be divided equally among the
+                    Parties involved. If, for any dispute or claim to which this paragraph applies, any Party <span
+                    class="fw-bold">(i)</span>
+                    commences an action without first attempting
+                    to resolve the matter through mediation, or <span class="fw-bold">(ii)</span> before
+                    commencement of an action, refuses to
+                    mediate after a request has been made,
+                    then that Party shall not be entitled to recover attorney fees, even if they would otherwise be
+                    available to that Party in any such action.
+                    THIS MEDIATION PROVISION APPLIES WHETHER OR NOT THE ARBITRATION PROVISION IS INITIALED.
+                    Exclusions from this
+                    mediation agreement are specified in paragraph 22C.
+                  </div>
+                </div>
+                <div class="item-pl-3">
+                  <span class="fw-bold f-l">B. ARBITRATION OF DISPUTES:</span>
+                  <div class="item-pl-3 fw-bold ">
+                    The Parties agree that any dispute or claim in Law or equity arising between them out of this
+                    Agreement or
+                    any resulting transaction, which is not settled through mediation, shall be decided by neutral,
+                    binding
+                    arbitration. The Parties also agree to arbitrate any disputes or claims with Broker(s), who, in
+                    writing, agree
+                    to such arbitration prior to, or within a reasonable time after, the dispute or claim is
+                    presented to the
+                    Broker. The arbitrator shall be a retired judge or justice, or an attorney with at least 5 years
+                    of residential
+                    real estate Law experience, unless the parties mutually agree to a different arbitrator. The
+                    Parties shall
+                    have the right to discovery in accordance with Code of Civil Procedure §1283.05. In all other
+                    respects, the
+                    arbitration shall be conducted in accordance with Title 9 of Part 3 of the Code of Civil
+                    Procedure. Judgment
+                    upon the award of the arbitrator(s) may be entered into any court having jurisdiction.
+                    Enforcement of this
+                    agreement to arbitrate shall be governed by the Federal Arbitration Act. Exclusions from this
+                    arbitration
+                    agreement are specified in paragraph 22C.
+                    <br>
+                    &nbsp; &nbsp;“NOTICE: BY INITIALING IN THE SPACE BELOW YOU ARE AGREEING TO HAVE ANY DISPUTE
+                    ARISING OUT OF THE MATTERS INCLUDED IN THE 'ARBITRATION OF DISPUTES' PROVISION DECIDED
+                    BY NEUTRAL ARBITRATION AS PROVIDED BY CALIFORNIA LAW AND YOU ARE GIVING UP ANY RIGHTS
+                    YOU MIGHT POSSESS TO HAVE THE DISPUTE LITIGATED IN A COURT OR JURY TRIAL. BY INITIALING IN
+                    THE SPACE BELOW YOU ARE GIVING UP YOUR JUDICIAL RIGHTS TO DISCOVERY AND APPEAL,
+                    UNLESS THOSE RIGHTS ARE SPECIFICALLY INCLUDED IN THE 'ARBITRATION OF DISPUTES'
+                    PROVISION. IF YOU REFUSE TO SUBMIT TO ARBITRATION AFTER AGREEING TO THIS PROVISION, YOU
+                    MAY BE COMPELLED TO ARBITRATE UNDER THE AUTHORITY OF THE CALIFORNIA CODE OF CIVIL
+                    PROCEDURE. YOUR AGREEMENT TO THIS ARBITRATION PROVISION IS VOLUNTARY.”
+                    <br>
+                    &nbsp; &nbsp;“WE HAVE READ AND UNDERSTAND THE FOREGOING AND AGREE TO SUBMIT DISPUTES ARISING
+                    OUT OF THE MATTERS INCLUDED IN THE 'ARBITRATION OF DISPUTES' PROVISION TO NEUTRAL
+                    ARBITRATION.”
+                  </div>
+                </div>
+                <div class="clearfix mt-20 mb-20">
+                  <div class="col-left-initials ml-6">
+                    <label>Buyer's Initials</label>
+                    (<input formControlName="text_second_buyer_initials_first" type="text" name="" id="Buyer-1-9" class="i-lr-1">) &nbsp;
+                    (<input formControlName="text_second_buyer_initials_second" type="text" name="" id="Buyer-2-9" class="i-lr-1">)
+                  </div>
 
-          <!--<div class="col-right-initials">-->
-          <!--<label>Seller's Initials</label>-->
-          <!--(<input formControlName="input311" type="text" name="" id="Seller-1-9" class="i-lr-1">) &nbsp;-->
-          <!--(<input formControlName="input312" type="text" name="" id="Seller-2-9" class="i-lr-1">)-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold f-l">C.&nbsp;</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold">ADDITIONAL MEDIATION AND ARBITRATION TERMS:&nbsp;</span>-->
-          <!--<div class="fw-bold">-->
-          <!--<span class="f-l">(1)</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--EXCLUSIONS: The following matters are excluded from mediation and arbitration: (i) a-->
-          <!--judicial or non-judicial foreclosure-->
-          <!--or other action or proceeding to enforce a deed of trust, mortgage or installment land-->
-          <!--sale contract as defined in Civil-->
-          <!--Code §2985; (ii) an unlawful detainer action; and (iii) any matter that is within the-->
-          <!--jurisdiction of a probate, small claims or-->
-          <!--bankruptcy court.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<br>-->
-          <!--<br>-->
-          <!--<div class="clearfix">-->
-          <!--<div class="col-left-initials">-->
-          <!--<label>Buyer's Initials</label>-->
-          <!--(<input formControlName="input313" type="text" name="" id="Buyer-1-10" class="i-lr-1">) &nbsp;-->
-          <!--(<input formControlName="input314" type="text" name="" id="Buyer-2-10" class="i-lr-1">)-->
-          <!--<div class="fs-small">&#169; 1991-2018, California Association of REALTORS &#174;, Inc.</div>-->
-          <!--</div>-->
+                  <div class="col-right-initials">
+                    <label>Seller's Initials</label>
+                    (<input formControlName="text_second_seller_initials_first" type="text" name="" id="Seller-1-9" class="i-lr-1">) &nbsp;
+                    (<input formControlName="text_second_seller_initials_second" type="text" name="" id="Seller-2-9" class="i-lr-1">)
+                  </div>
+                </div>
+                <div class="item-pl-3">
+                  <span class="fw-bold f-l">C.&nbsp;</span>
+                  <div class="item-pl-3">
+                    <span class="fw-bold">ADDITIONAL MEDIATION AND ARBITRATION TERMS:&nbsp;</span>
+                    <div class="fw-bold">
+                      <span class="f-l">(1)</span>
+                      <div class="item-pl-3">
+                        EXCLUSIONS: The following matters are excluded from mediation and arbitration: (i) a
+                        judicial or non-judicial foreclosure
+                        or other action or proceeding to enforce a deed of trust, mortgage or installment land
+                        sale contract as defined in Civil
+                        Code §2985; (ii) an unlawful detainer action; and (iii) any matter that is within the
+                        jurisdiction of a probate, small claims or
+                        bankruptcy court.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <br>
+              <div class="clearfix">
+                <div class="col-left-initials">
+                  <label>Buyer's Initials</label>
+                  (<input formControlName="text_third_buyer_initials_first" type="text" name="" id="Buyer-1-10" class="i-lr-1">) &nbsp;
+                  (<input formControlName="text_third_buyer_initials_second" type="text" name="" id="Buyer-2-10" class="i-lr-1">)
+                  <div class="fs-small">&#169; 1991-2018, California Association of REALTORS &#174;, Inc.</div>
+                </div>
 
-          <!--<div class="col-right-initials">-->
-          <!--<label>Seller's Initials</label>-->
-          <!--(<input formControlName="input315" type="text" name="" id="Seller-1-10" class="i-lr-1">) &nbsp;-->
-          <!--(<input formControlName="input316" type="text" name="" id="Seller-2-10" class="i-lr-1">)-->
-          <!--<br>-->
-          <!--<br>-->
-          <!--<img src="assets/agreement/images/housing.png" width="80" height="70" class="image-right">-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<footer>-->
-          <!--<div class="fw-bold">RPA-CA REVISED 12/18 (PAGE 8 OF 10)</div>-->
-          <!--<div class="text-center fw-bold">-->
-          <!--CALIFORNIA RESIDENTIAL PURCHASE AGREEMENT (RPA-CA PAGE 8 OF 10)-->
-          <!--</div>-->
+                <div class="col-right-initials">
+                  <label>Seller's Initials</label>
+                  (<input formControlName="text_third_seller_initials_first" type="text" name="" id="Seller-1-10" class="i-lr-1">) &nbsp;
+                  (<input formControlName="text_third_seller_initials_second" type="text" name="" id="Seller-2-10" class="i-lr-1">)
+                  <br>
+                  <br>
+                  <img src="assets/agreement/images/housing.png" width="80" height="70" class="image-right">
+                </div>
+              </div>
+            </div>
+            <footer>
+              <div class="fw-bold">RPA-CA REVISED 12/18 (PAGE 8 OF 10)</div>
+              <div class="text-center fw-bold">
+                CALIFORNIA RESIDENTIAL PURCHASE AGREEMENT (RPA-CA PAGE 8 OF 10)
+              </div>
 
-          <!--</footer>-->
-          <!--</div>-->
+            </footer>
+          </div>
 
-          <!--<div class="page-breaker" id="page-12">12</div>-->
+          <div class="page-breaker" id="page-12">12</div>
 
           <!--<div formGroupName="page_13" class="container text-justify" style="font-size: 21px; line-height: 1.24; padding-right: 5px;">-->
           <!--<div class="form">-->
