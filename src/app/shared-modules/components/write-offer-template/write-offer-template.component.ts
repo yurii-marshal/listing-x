@@ -25,7 +25,7 @@ enum Type {
 export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
   @Input() offer: Offer;
 
-  @Input() anonymousOffer: Offer;
+  @Input() anonymousOffer;
 
   @Output() offerSent: EventEmitter<Offer> = new EventEmitter();
 
@@ -79,6 +79,7 @@ export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
   }
 
   setBuyerAsEntity() {
+    // TODO: set role as entity
   }
 
   applyFormValues(model?: Offer): void {
@@ -149,7 +150,7 @@ export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
     of(model)
       .pipe(
         switchMap((item: Offer) => this.storeFormData(item)),
-        tap(() => this.snackbar.open(message))
+        tap(() => this.offer && this.snackbar.open(message))
       )
       .subscribe((offer: Offer) => {
         this.offerSent.emit(offer);
@@ -157,7 +158,7 @@ export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
   }
 
   private buildForm(): void {
-    const offerValues = this.anonymousOffer || this.offer;
+    const offerValues = this.anonymousOffer && this.anonymousOffer.model || this.offer;
     const disabled: boolean = !!this.anonymousOffer;
 
     this.form = this.formBuilder.group({
