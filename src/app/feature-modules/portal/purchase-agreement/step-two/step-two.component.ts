@@ -343,7 +343,22 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         text_seller_initials_first: [null, []],
         text_seller_initials_second: [null, []],
       }),
-      // page_10: this.fb.group({}),
+      page_10: this.fb.group({
+        text_property_address: [null, []],
+        date_property_date: [null, []],
+        text_seller_deliver_reports_days: [null, []],
+        text_seller_days_after_acceptance: [null, []],
+        text_buyer_days_after_delivery: [null, []],
+        text_buyer_investigate_property_days: [null, []],
+        check_remove_all_contingencies: [null, []],
+        text_notice_buyer_or_seller_to_perform: [null, []],
+        text_days_to_close_escrow: [null, []],
+
+        text_buyer_initials_first: [null, []],
+        text_buyer_initials_second: [null, []],
+        text_seller_initials_first: [null, []],
+        text_seller_initials_second: [null, []],
+      }),
       // page_11: this.fb.group({}),
       // page_12: this.fb.group({}),
       // page_13: this.fb.group({}),
@@ -358,11 +373,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       )
       .subscribe((model) => {
         this.patchForm(model);
-
-        Object.keys(model).forEach((page) => {
-          this.allFieldsCount += Object.keys(model[page]).length;
-        });
-
+        this.getAllFieldsCount(model);
         this.updatePageProgress(model, 0);
       });
 
@@ -386,9 +397,9 @@ export class StepTwoComponent implements OnInit, OnDestroy {
           Object.entries(value).forEach(([field, data]) => {
             formControlNames.forEach((controlName) => {
 
-              if (field === controlName) {
+              if (field === controlName && data) {
                 const group = this.documentForm.controls[groupName] as FormGroup;
-                group.get(_.snakeCase(field)).patchValue(data);
+                group.get(_.snakeCase(field)).patchValue(data, {emitEvent: false, onlySelf: true});
               }
 
             });
@@ -396,6 +407,12 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         }
 
       });
+    });
+  }
+
+  getAllFieldsCount(model) {
+    Object.keys(model).forEach((page) => {
+      this.allFieldsCount += Object.keys(model[page]).length;
     });
   }
 
