@@ -9,6 +9,7 @@ import { fromEvent, Observable, Subject } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { SaveOfferDialogComponent } from '../../../../shared-modules/dialogs/save-offer-dialog/save-offer-dialog.component';
 import { DatePipe } from '@angular/common';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-step-two',
@@ -320,7 +321,19 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         text_possession_deliver_seller_initials_first: [null, []],
         text_possession_deliver_seller_initials_second: [null, []],
       }),
-      // page_8: this.fb.group({}),
+      page_8: this.fb.group({
+        text_property_address: [null, []],
+        date_property_date: [null, []],
+        check_occupancy_agreement_car_form_sip: [null, []],
+        check_occupancy_agreement_car_form_rlap: [null, []],
+        text_property_vacant_days: [null, []],
+        text_seller_disclosure_days: [null, []],
+        check_tenant_to_remain: [null, []],
+        text_buyer_initials_first: [null, []],
+        text_buyer_initials_second: [null, []],
+        text_seller_initials_first: [null, []],
+        text_seller_initials_second: [null, []],
+      }),
       // page_9: this.fb.group({}),
       // page_10: this.fb.group({}),
       // page_11: this.fb.group({}),
@@ -336,8 +349,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         takeUntil(this.onDestroyed$),
       )
       .subscribe((model) => {
-        // TODO doesn't work
-        this.documentForm.patchValue(model);
+        this.patchForm(model);
 
         Object.keys(model).forEach((page) => {
           this.allFieldsCount += Object.keys(model[page]).length;
@@ -353,6 +365,30 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.onDestroyed$.next();
     this.onDestroyed$.complete();
+  }
+
+  patchForm(model) {
+    Object.entries(model).forEach(([key, value]) => {
+      Object.keys(this.documentForm.controls).forEach((groupName) => {
+
+        if (_.camelCase(groupName) === key) {
+
+          const formControlNames: string[] = Object.keys(value);
+
+          Object.entries(value).forEach(([field, data]) => {
+            formControlNames.forEach((controlName) => {
+
+              if (field === controlName) {
+                const group = this.documentForm.controls[groupName] as FormGroup;
+                group.get(_.snakeCase(field)).patchValue(data);
+              }
+
+            });
+          });
+        }
+
+      });
+    });
   }
 
   updatePageProgress(formObj, pageNum) {
