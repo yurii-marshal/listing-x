@@ -359,7 +359,17 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         text_seller_initials_first: [null, []],
         text_seller_initials_second: [null, []],
       }),
-      // page_11: this.fb.group({}),
+      page_11: this.fb.group({
+        text_property_address: [null, []],
+        date_property_date: [null, []],
+        text_property_verification_days: [null, []],
+        text_escrow_holder_pay_days: [null, []],
+        text_agreement_copy_deliver_days: [null, []],
+        text_buyer_initials_first: [null, []],
+        text_buyer_initials_second: [null, []],
+        text_seller_initials_first: [null, []],
+        text_seller_initials_second: [null, []],
+      }),
       // page_12: this.fb.group({}),
       // page_13: this.fb.group({}),
       // page_14: this.fb.group({}),
@@ -393,14 +403,12 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
         if (_.camelCase(groupName) === key) {
 
-          const formControlNames: string[] = Object.keys(value);
-
           Object.entries(value).forEach(([field, data]) => {
-            formControlNames.forEach((controlName) => {
+            Object.keys(value).forEach((controlName) => {
 
               if (field === controlName && data) {
-                const group = this.documentForm.controls[groupName] as FormGroup;
-                group.get(_.snakeCase(field)).patchValue(data, {emitEvent: false, onlySelf: true});
+                this.documentForm.get(`${groupName}.${_.snakeCase(field)}`)
+                  .patchValue(data, {emitEvent: false, onlySelf: true});
               }
 
             });
