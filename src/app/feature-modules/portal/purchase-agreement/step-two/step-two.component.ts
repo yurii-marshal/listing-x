@@ -480,8 +480,17 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         text_rejection_offer_buyer_initial_first: [null, []],
         text_rejection_offer_buyer_initial_second: [null, []],
       }),
-      // page_15: this.fb.group({}),
-      // page_16: this.fb.group({}),
+      page_15: this.fb.group({
+        text_property_address: [null, []],
+        text_buyer_signature_first: [null, []],
+        text_buyer_signature_second: [null, []],
+      }),
+      page_16: this.fb.group({
+        text_privacy_act_advisory_first: [null, []],
+        date_privacy_act_advisory_first: [null, []],
+        text_privacy_act_advisory_second: [null, []],
+        date_privacy_act_advisory_second: [null, []],
+      }),
     }, {updateOn: 'blur'});
 
     this.offerService.getOfferDocument(this.offerId)

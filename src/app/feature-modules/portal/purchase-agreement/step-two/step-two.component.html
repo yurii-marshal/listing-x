@@ -3605,7 +3605,8 @@
                 Property Address:
                 <input formControlName="text_property_address" type="text" name="" class="i-lr-9">
                 Date:
-                <input matInput (click)="date_property_date_p14.open()" [matDatepicker]="date_property_date_p14" formControlName="date_property_date"
+                <input matInput (click)="date_property_date_p14.open()" [matDatepicker]="date_property_date_p14"
+                       formControlName="date_property_date"
                        type="text"
                        class="i-lr-2__5">
                 <mat-datepicker #date_property_date_p14></mat-datepicker>
@@ -3634,7 +3635,8 @@
               </div>
               <div>
                 Date
-                <input matInput (click)="date_seller_first.open()" [matDatepicker]="date_seller_first" formControlName="date_seller_first"
+                <input matInput (click)="date_seller_first.open()" [matDatepicker]="date_seller_first"
+                       formControlName="date_seller_first"
                        type="text" class="i-lr-2">
                 <mat-datepicker #date_seller_first></mat-datepicker>
                 SELLER
@@ -3646,7 +3648,8 @@
               </div>
               <div>
                 Date
-                <input matInput (click)="date_seller_second.open()" [matDatepicker]="date_seller_second" formControlName="date_seller_second"
+                <input matInput (click)="date_seller_second.open()" [matDatepicker]="date_seller_second"
+                       formControlName="date_seller_second"
                        type="text" class="i-lr-2">
                 <mat-datepicker #date_seller_second></mat-datepicker>
                 SELLER
@@ -3860,7 +3863,8 @@
                   By
                   &nbsp; <input formControlName="text_escrow_by" type="text" class="i-lr-9">
                   &nbsp; Date
-                  <input matInput (click)="date_escrow_by_date.open()" [matDatepicker]="date_escrow_by_date" formControlName="date_escrow_by_date"
+                  <input matInput (click)="date_escrow_by_date.open()" [matDatepicker]="date_escrow_by_date"
+                         formControlName="date_escrow_by_date"
                          type="text"
                          class="i-lr-3__5">
                   <mat-datepicker #date_escrow_by_date></mat-datepicker>
@@ -3894,10 +3898,10 @@
           </span>
                   &nbsp; Seller's Broker presented this offer to Seller on
                   &nbsp;<input matInput (click)="date_presentation_of_offer.open()"
-                         [matDatepicker]="date_presentation_of_offer"
-                         formControlName="date_presentation_of_offer"
-                         type="text"
-                         class="i-lr-3__5">
+                               [matDatepicker]="date_presentation_of_offer"
+                               formControlName="date_presentation_of_offer"
+                               type="text"
+                               class="i-lr-3__5">
                   <mat-datepicker #date_presentation_of_offer></mat-datepicker>
                   &nbsp;(date).
                 </div>
@@ -3965,374 +3969,379 @@
 
           <div class="page-breaker" id="page-14">14</div>
 
-          <!--<div formGroupName="page_15" class="container text-justify" style="font-size: 21px; line-height: 1.35; padding-right: 5px;">-->
-          <!--<header class="clearfix">-->
-          <!--<img src="assets/agreement/images/logo1.png" width="350" height="120" class="image">-->
-          <!--<div class="box">-->
-          <!--<br>-->
-          <!--<div class="main-title">BUYER'S INSPECTION ADVISORY</div>-->
-          <!--<div class="main-subtitle">(C.A.R. Form BIA, Revised 11/14)</div>-->
-          <!--</div>-->
-          <!--</header>-->
-          <!--<br>-->
-          <!--<div class="form">-->
-          <!--<div>-->
-          <!--Property Address:-->
-          <!--<input formControlName="input409" type="text" name="" class="i-lr-12">-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div>-->
-          <!--<span class="fw-bold f-l">1.&nbsp; IMPORTANCE OF PROPERTY INVESTIGATION:&nbsp;</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--The physical condition of the land and improvements being purchased is not-->
-          <!--guaranteed by either Seller or Brokers. You have an affirmative duty to exercise reasonable care to-->
-          <!--protect yourself, including discovery-->
-          <!--of the legal, practical and technical implications of disclosed facts, and the investigation and-->
-          <!--verification of information and facts that you-->
-          <!--know or that are within your diligent attention and observation. A general physical inspection typically-->
-          <!--does not cover all aspects of the-->
-          <!--Property nor items affecting the Property that are not physically located on the Property. If the-->
-          <!--professionals recommend further-->
-          <!--investigations, including a recommendation by a pest control operator to inspect inaccessible areas of-->
-          <!--the Property, you should contact-->
-          <!--qualified experts to conduct such additional investigations.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div>-->
-          <!--<span class="fw-bold f-l">2.&nbsp; BROKER OBLIGATIONS:&nbsp;</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--Brokers do not have expertise in all areas and therefore cannot advise you on many items, such as-->
-          <!--those listed below. If Broker gives you referrals to professionals, Broker does not guarantee their-->
-          <!--performance.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div>-->
-          <!--<span class="fw-bold text-left f-l">3.&nbsp; YOU ARE STRONGLY ADVISED TO INVESTIGATE THE CONDITION AND SUITABILITY OF-->
-          <!--ALL ASPECTS OF THE PROPERTY,-->
-          <!--INCLUDING BUT NOT LIMITED TO THE FOLLOWING. IF YOU DO NOT DO SO, YOU ARE ACTING AGAINST THE ADVICE OF-->
-          <!--BROKERS.&nbsp;</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold f-l">A.&nbsp; GENERAL CONDITION OF THE PROPERTY, ITS SYSTEMS AND-->
-          <!--COMPONENTS:&nbsp;</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--Foundation, roof (condition, age, leaks,-->
-          <!--useful life), plumbing, heating, air conditioning, electrical, mechanical, security, pool/spa-->
-          <!--(cracks, leaks, operation), other-->
-          <!--structural and nonstructural systems and components, fixtures, built-in appliances, any personal-->
-          <!--property included in the sale,-->
-          <!--and energy efficiency of the Property.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold f-l">B.&nbsp; SQUARE FOOTAGE, AGE, BOUNDARIES:&nbsp;</span>-->
-          <!--<div class="item-pl-3 text-left">-->
-          <!--Square footage, room dimensions, lot size, age of improvements and boundaries.-->
-          <!--Any numerical statements regarding these items are APPROXIMATIONS ONLY and have not been verified by-->
-          <!--Seller and-->
-          <!--cannot be verified by Brokers. Fences, hedges, walls, retaining walls and other barriers or markers-->
-          <!--do not necessarily identify-->
-          <!--true Property boundaries.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold f-l">C.&nbsp; WOOD DESTROYING PESTS:&nbsp;</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--Presence of, or conditions likely to lead to the presence of wood destroying pests and organisms.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold f-l">D.&nbsp; SOIL STABILITY:&nbsp;</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--Existence of fill or compacted soil, expansive or contracting soil, susceptibility to slippage,-->
-          <!--settling or-->
-          <!--movement, and the adequacy of drainage.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold f-l">E.&nbsp; WATER AND UTILITIES; WELL SYSTEMS AND COMPONENTS; WASTE-->
-          <!--DISPOSAL:&nbsp;</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--Water and utility availability, use-->
-          <!--restrictions and costs. Water quality, adequacy, condition, and performance of well systems and-->
-          <!--components. The type, size,-->
-          <!--adequacy, capacity and condition of sewer and septic systems and components, connection to sewer,-->
-          <!--and applicable fees.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold f-l">F.&nbsp; ENVIRONMENTAL HAZARDS:&nbsp;</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--Potential environmental hazards, including, but not limited to, asbestos, lead-based paint and-->
-          <!--other lead contamination, radon, methane, other gases, fuel oil or chemical storage tanks,-->
-          <!--contaminated soil or water,-->
-          <!--hazardous waste, waste disposal sites, electromagnetic fields, nuclear sources, and other-->
-          <!--substances, materials, products, or-->
-          <!--conditions (including mold (airborne, toxic or otherwise), fungus or similar contaminants).-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold f-l">G.&nbsp; EARTHQUAKES AND FLOODING:&nbsp;</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--Susceptibility of the Property to earthquake/seismic hazards and propensity of the Property to-->
-          <!--flood.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold f-l">H.&nbsp; FIRE, HAZARD AND OTHER INSURANCE:&nbsp;</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--The availability and cost of necessary or desired insurance may vary. The location of-->
-          <!--the Property in a seismic, flood or fire hazard zone, and other conditions, such as the age of the-->
-          <!--Property and the claims history of-->
-          <!--the Property and Buyer, may affect the availability and need for certain types of insurance. Buyer-->
-          <!--should explore insurance options-->
-          <!--early as this information may affect other decisions, including the removal of loan and inspection-->
-          <!--contingencies.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold f-l">I.&nbsp; BUILDING PERMITS, ZONING AND GOVERNMENTAL REQUIREMENTS:&nbsp;</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--Permits, inspections, certificates, zoning, other-->
-          <!--governmental limitations, restrictions, and requirements affecting the current or future use of the-->
-          <!--Property, its development or size.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold f-l">J.&nbsp; RENTAL PROPERTY RESTRICTIONS:&nbsp;</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--Some cities and counties impose restrictions that limit the amount of rent that can be charged,-->
-          <!--the maximum number of occupants, and the right of a landlord to terminate a tenancy. Deadbolt or-->
-          <!--other locks and security systems for-->
-          <!--doors and windows, including window bars, should be examined to determine whether they satisfy legal-->
-          <!--requirements.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold f-l">K.&nbsp; SECURITY AND SAFETY:&nbsp;</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--State and local Law may require the installation of barriers, access alarms, self-latching-->
-          <!--mechanisms-->
-          <!--and/or other measures to decrease the risk to children and other persons of existing swimming pools-->
-          <!--and hot tubs, as well as-->
-          <!--various fire safety and other measures concerning other features of the Property.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div class="item-pl-3">-->
-          <!--<span class="fw-bold f-l">L.&nbsp; NEIGHBORHOOD, AREA, SUBDIVISION CONDITIONS; PERSONAL-->
-          <!--FACTORS:&nbsp;</span>-->
-          <!--<div class="item-pl-3">-->
-          <!--Neighborhood or area conditions, including-->
-          <!--schools, law enforcement, crime statistics, registered felons or offenders, fire protection, other-->
-          <!--government services, availability,-->
-          <!--adequacy and cost of internet connections or other technology services and installations,-->
-          <!--commercial, industrial or agricultural-->
-          <!--activities, existing and proposed transportation, construction and development that may affect-->
-          <!--noise, view, or traffic, airport-->
-          <!--noise, noise or odor from any source, wild and domestic animals, other nuisances, hazards, or-->
-          <!--circumstances, protected-->
-          <!--species, wetland properties, botanical diseases, historic or other governmentally protected sites or-->
-          <!--improvements, cemeteries,-->
-          <!--facilities and condition of common areas of common interest subdivisions, and possible lack of-->
-          <!--compliance with any governing-->
-          <!--documents or Homeowners' Association requirements, conditions and influences of significance to-->
-          <!--certain cultures and/or-->
-          <!--religions, and personal needs, requirements and preferences of Buyer.-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div class="fw-bold">-->
-          <!--By signing below, Buyers acknowledge that they have read, understand, accept and have received a Copy of-->
-          <!--this Advisory.-->
-          <!--Buyers are encouraged to read it carefully.-->
-          <!--</div>-->
+          <div formGroupName="page_15" class="container text-justify"
+               style="font-size: 21px; line-height: 1.35; padding-right: 5px;">
+            <header class="clearfix">
+              <img src="assets/agreement/images/logo1.png" width="350" height="120" class="image">
+              <div class="box">
+                <br>
+                <div class="main-title">BUYER'S INSPECTION ADVISORY</div>
+                <div class="main-subtitle">(C.A.R. Form BIA, Revised 11/14)</div>
+              </div>
+            </header>
+            <br>
+            <div class="form">
+              <div>
+                Property Address:
+                <input formControlName="text_property_address" type="text" name="" class="i-lr-12">
+              </div>
+            </div>
+            <div>
+              <span class="fw-bold f-l">1.&nbsp; IMPORTANCE OF PROPERTY INVESTIGATION:&nbsp;</span>
+              <div class="item-pl-3">
+                The physical condition of the land and improvements being purchased is not
+                guaranteed by either Seller or Brokers. You have an affirmative duty to exercise reasonable care to
+                protect yourself, including discovery
+                of the legal, practical and technical implications of disclosed facts, and the investigation and
+                verification of information and facts that you
+                know or that are within your diligent attention and observation. A general physical inspection typically
+                does not cover all aspects of the
+                Property nor items affecting the Property that are not physically located on the Property. If the
+                professionals recommend further
+                investigations, including a recommendation by a pest control operator to inspect inaccessible areas of
+                the Property, you should contact
+                qualified experts to conduct such additional investigations.
+              </div>
+            </div>
+            <div>
+              <span class="fw-bold f-l">2.&nbsp; BROKER OBLIGATIONS:&nbsp;</span>
+              <div class="item-pl-3">
+                Brokers do not have expertise in all areas and therefore cannot advise you on many items, such as
+                those listed below. If Broker gives you referrals to professionals, Broker does not guarantee their
+                performance.
+              </div>
+            </div>
+            <div>
+          <span class="fw-bold text-left f-l">3.&nbsp; YOU ARE STRONGLY ADVISED TO INVESTIGATE THE CONDITION AND SUITABILITY OF
+          ALL ASPECTS OF THE PROPERTY,
+          INCLUDING BUT NOT LIMITED TO THE FOLLOWING. IF YOU DO NOT DO SO, YOU ARE ACTING AGAINST THE ADVICE OF
+          BROKERS.&nbsp;</span>
+              <div class="item-pl-3">
+          <span class="fw-bold f-l">A.&nbsp; GENERAL CONDITION OF THE PROPERTY, ITS SYSTEMS AND
+          COMPONENTS:&nbsp;</span>
+                <div class="item-pl-3">
+                  Foundation, roof (condition, age, leaks,
+                  useful life), plumbing, heating, air conditioning, electrical, mechanical, security, pool/spa
+                  (cracks, leaks, operation), other
+                  structural and nonstructural systems and components, fixtures, built-in appliances, any personal
+                  property included in the sale,
+                  and energy efficiency of the Property.
+                </div>
+              </div>
+              <div class="item-pl-3">
+                <span class="fw-bold f-l">B.&nbsp; SQUARE FOOTAGE, AGE, BOUNDARIES:&nbsp;</span>
+                <div class="item-pl-3 text-left">
+                  Square footage, room dimensions, lot size, age of improvements and boundaries.
+                  Any numerical statements regarding these items are APPROXIMATIONS ONLY and have not been verified by
+                  Seller and
+                  cannot be verified by Brokers. Fences, hedges, walls, retaining walls and other barriers or markers
+                  do not necessarily identify
+                  true Property boundaries.
+                </div>
+              </div>
+              <div class="item-pl-3">
+                <span class="fw-bold f-l">C.&nbsp; WOOD DESTROYING PESTS:&nbsp;</span>
+                <div class="item-pl-3">
+                  Presence of, or conditions likely to lead to the presence of wood destroying pests and organisms.
+                </div>
+              </div>
+              <div class="item-pl-3">
+                <span class="fw-bold f-l">D.&nbsp; SOIL STABILITY:&nbsp;</span>
+                <div class="item-pl-3">
+                  Existence of fill or compacted soil, expansive or contracting soil, susceptibility to slippage,
+                  settling or
+                  movement, and the adequacy of drainage.
+                </div>
+              </div>
+              <div class="item-pl-3">
+          <span class="fw-bold f-l">E.&nbsp; WATER AND UTILITIES; WELL SYSTEMS AND COMPONENTS; WASTE
+          DISPOSAL:&nbsp;</span>
+                <div class="item-pl-3">
+                  Water and utility availability, use
+                  restrictions and costs. Water quality, adequacy, condition, and performance of well systems and
+                  components. The type, size,
+                  adequacy, capacity and condition of sewer and septic systems and components, connection to sewer,
+                  and applicable fees.
+                </div>
+              </div>
+              <div class="item-pl-3">
+                <span class="fw-bold f-l">F.&nbsp; ENVIRONMENTAL HAZARDS:&nbsp;</span>
+                <div class="item-pl-3">
+                  Potential environmental hazards, including, but not limited to, asbestos, lead-based paint and
+                  other lead contamination, radon, methane, other gases, fuel oil or chemical storage tanks,
+                  contaminated soil or water,
+                  hazardous waste, waste disposal sites, electromagnetic fields, nuclear sources, and other
+                  substances, materials, products, or
+                  conditions (including mold (airborne, toxic or otherwise), fungus or similar contaminants).
+                </div>
+              </div>
+              <div class="item-pl-3">
+                <span class="fw-bold f-l">G.&nbsp; EARTHQUAKES AND FLOODING:&nbsp;</span>
+                <div class="item-pl-3">
+                  Susceptibility of the Property to earthquake/seismic hazards and propensity of the Property to
+                  flood.
+                </div>
+              </div>
+              <div class="item-pl-3">
+                <span class="fw-bold f-l">H.&nbsp; FIRE, HAZARD AND OTHER INSURANCE:&nbsp;</span>
+                <div class="item-pl-3">
+                  The availability and cost of necessary or desired insurance may vary. The location of
+                  the Property in a seismic, flood or fire hazard zone, and other conditions, such as the age of the
+                  Property and the claims history of
+                  the Property and Buyer, may affect the availability and need for certain types of insurance. Buyer
+                  should explore insurance options
+                  early as this information may affect other decisions, including the removal of loan and inspection
+                  contingencies.
+                </div>
+              </div>
+              <div class="item-pl-3">
+                <span class="fw-bold f-l">I.&nbsp; BUILDING PERMITS, ZONING AND GOVERNMENTAL REQUIREMENTS:&nbsp;</span>
+                <div class="item-pl-3">
+                  Permits, inspections, certificates, zoning, other
+                  governmental limitations, restrictions, and requirements affecting the current or future use of the
+                  Property, its development or size.
+                </div>
+              </div>
+              <div class="item-pl-3">
+                <span class="fw-bold f-l">J.&nbsp; RENTAL PROPERTY RESTRICTIONS:&nbsp;</span>
+                <div class="item-pl-3">
+                  Some cities and counties impose restrictions that limit the amount of rent that can be charged,
+                  the maximum number of occupants, and the right of a landlord to terminate a tenancy. Deadbolt or
+                  other locks and security systems for
+                  doors and windows, including window bars, should be examined to determine whether they satisfy legal
+                  requirements.
+                </div>
+              </div>
+              <div class="item-pl-3">
+                <span class="fw-bold f-l">K.&nbsp; SECURITY AND SAFETY:&nbsp;</span>
+                <div class="item-pl-3">
+                  State and local Law may require the installation of barriers, access alarms, self-latching
+                  mechanisms
+                  and/or other measures to decrease the risk to children and other persons of existing swimming pools
+                  and hot tubs, as well as
+                  various fire safety and other measures concerning other features of the Property.
+                </div>
+              </div>
+              <div class="item-pl-3">
+          <span class="fw-bold f-l">L.&nbsp; NEIGHBORHOOD, AREA, SUBDIVISION CONDITIONS; PERSONAL
+          FACTORS:&nbsp;</span>
+                <div class="item-pl-3">
+                  Neighborhood or area conditions, including
+                  schools, law enforcement, crime statistics, registered felons or offenders, fire protection, other
+                  government services, availability,
+                  adequacy and cost of internet connections or other technology services and installations,
+                  commercial, industrial or agricultural
+                  activities, existing and proposed transportation, construction and development that may affect
+                  noise, view, or traffic, airport
+                  noise, noise or odor from any source, wild and domestic animals, other nuisances, hazards, or
+                  circumstances, protected
+                  species, wetland properties, botanical diseases, historic or other governmentally protected sites or
+                  improvements, cemeteries,
+                  facilities and condition of common areas of common interest subdivisions, and possible lack of
+                  compliance with any governing
+                  documents or Homeowners' Association requirements, conditions and influences of significance to
+                  certain cultures and/or
+                  religions, and personal needs, requirements and preferences of Buyer.
+                </div>
+              </div>
+            </div>
+            <div class="fw-bold">
+              By signing below, Buyers acknowledge that they have read, understand, accept and have received a Copy of
+              this Advisory.
+              Buyers are encouraged to read it carefully.
+            </div>
 
 
-          <!--<div class="form">-->
-          <!--<div class="f-l">-->
-          <!--Buyer &nbsp;<input formControlName="input410" type="text" class="i-lr-6">-->
-          <!--</div>-->
-          <!--<div class="f-r">-->
-          <!--Buyer &nbsp;<input formControlName="input411" type="text" class="i-lr-6">-->
-          <!--</div>-->
-          <!--</div>-->
+            <div class="form">
+              <div class="f-l">
+                Buyer &nbsp;<input formControlName="text_buyer_signature_first" type="text" class="i-lr-6">
+              </div>
+              <div class="f-r">
+                Buyer &nbsp;<input formControlName="text_buyer_signature_second" type="text" class="i-lr-6">
+              </div>
+            </div>
 
-          <!--<div class="clearfix"></div>-->
-          <!--<br>-->
-          <!--<footer>-->
-          <!--<div class="fs-small text-left">-->
-          <!--&#169;1991-2004, California Association of REALTORS&#174;, Inc.-->
-          <!--THIS FORM HAS BEEN APPROVED BY THE CALIFORNIA ASSOCIATION OF REALTORS&#174; (C.A.R.). NO REPRESENTATION-->
-          <!--IS-->
-          <!--MADE AS TO THE LEGAL VALIDITY-->
-          <!--OR ACCURACY OF ANY PROVISION IN ANY SPECIFIC TRANSACTION. A REAL ESTATE BROKER IS THE PERSON QUALIFIED-->
-          <!--TO ADVISE ON REAL ESTATE-->
-          <!--TRANSACTIONS. IF YOU DESIRE LEGAL OR TAX ADVICE, CONSULT AN APPROPRIATE PROFESSIONAL.-->
-          <!--</div>-->
-          <!--<br>-->
-          <!--<div class="item-pl-3 fs-small">-->
-          <!--<div class="item-pl-3">-->
-          <!--<img src="assets/agreement/images/rebs-llc.png" width="75" height="95" class="image-left">-->
-          <!--<div>Published and Distributed by:</div>-->
-          <!--<div>REAL ESTATE BUSINESS SERVICES, LLC.</div>-->
-          <!--<div class="fs-italic">a subsidiary of the California Association of REALTORS&#174;</div>-->
-          <!--<div>525 South Virgil Avenue, Los Angeles, California 90020</div>-->
-          <!--<img src="assets/agreement/images/housing.png" width="80" height="70" class="image-right">-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div class="fw-bold mt-25">BIA REVISED 11/14 (PAGE 1 OF 1)</div>-->
-          <!--<br>-->
-          <!--<div class="text-center fw-bold">-->
-          <!--BUYER'S INSPECTION ADVISORY (BIA PAGE 1 OF 1)-->
-          <!--</div>-->
+            <div class="clearfix"></div>
+            <br>
+            <footer>
+              <div class="fs-small text-left">
+                &#169;1991-2004, California Association of REALTORS&#174;, Inc.
+                THIS FORM HAS BEEN APPROVED BY THE CALIFORNIA ASSOCIATION OF REALTORS&#174; (C.A.R.). NO REPRESENTATION
+                IS
+                MADE AS TO THE LEGAL VALIDITY
+                OR ACCURACY OF ANY PROVISION IN ANY SPECIFIC TRANSACTION. A REAL ESTATE BROKER IS THE PERSON QUALIFIED
+                TO ADVISE ON REAL ESTATE
+                TRANSACTIONS. IF YOU DESIRE LEGAL OR TAX ADVICE, CONSULT AN APPROPRIATE PROFESSIONAL.
+              </div>
+              <br>
+              <div class="item-pl-3 fs-small">
+                <div class="item-pl-3">
+                  <img src="assets/agreement/images/rebs-llc.png" width="75" height="95" class="image-left">
+                  <div>Published and Distributed by:</div>
+                  <div>REAL ESTATE BUSINESS SERVICES, LLC.</div>
+                  <div class="fs-italic">a subsidiary of the California Association of REALTORS&#174;</div>
+                  <div>525 South Virgil Avenue, Los Angeles, California 90020</div>
+                  <img src="assets/agreement/images/housing.png" width="80" height="70" class="image-right">
+                </div>
+              </div>
+              <div class="fw-bold mt-25">BIA REVISED 11/14 (PAGE 1 OF 1)</div>
+              <br>
+              <div class="text-center fw-bold">
+                BUYER'S INSPECTION ADVISORY (BIA PAGE 1 OF 1)
+              </div>
 
-          <!--</footer>-->
-          <!--</div>-->
+            </footer>
+          </div>
 
-          <!--<div class="page-breaker" id="page-15">15</div>-->
+          <div class="page-breaker" id="page-15">15</div>
 
-          <!--<div formGroupName="page_16" class="container text-justify" style="font-size: 24px; line-height: 1.3;">-->
-          <!--<header class="clearfix">-->
-          <!--<img src="assets/agreement/images/logo1.png" width="350" height="120" class="image">-->
-          <!--<div class="box">-->
-          <!--<br>-->
-          <!--<div class="main-title">CALIFORNIA CONSUMER PRIVACY ACT ADVISORY</div>-->
-          <!--<div class="main-subtitle">(C.A.R. Form CCPA, 12/19)</div>-->
-          <!--</div>-->
-          <!--</header>-->
-          <!--<br>-->
-          <!--<div>-->
-          <!--As of January 1, 2020, the California Consumer Privacy Act (commencing with Civil Code § 1798.100)-->
-          <!--(“CCPA”)-->
-          <!--grants to California residents certain rights in their private, personal information that is collected by-->
-          <!--companies with whom they do business. Under the CCPA, “personal information” is defined broadly to-->
-          <!--encompass-->
-          <!--non-public records information that could reasonably be linked directly or indirectly to you, including,-->
-          <!--potentially, photographs of or sales information about your property. Some of your personal information-->
-          <!--will-->
-          <!--be collected and likely shared with others during the process of buying and selling real estate. Depending-->
-          <!--on the situation, you may have the right to “opt out” or stop the transfer of your personal information to-->
-          <!--others and request that certain businesses delete your personal information altogether. Not all businesses-->
-          <!--you interact with are required to comply with the law, primarily just those who meet the criteria of a-->
-          <!--covered “Business” as set forth in Section 1798.140 (c)]. For more information, you may ask your Broker-->
-          <!--for-->
-          <!--a copy of the C.A.R. Legal Q&A on the subject.-->
-          <!--</div>-->
-          <!--<br>-->
-          <!--<div>-->
-          <!--A real estate broker is likely to submit personal information to a Multiple Listing Service (“MLS”) in-->
-          <!--order-->
-          <!--to help find a buyer for a seller's property. Through the MLS, the information is made available to real-->
-          <!--estate brokers and salespeople, and others. Even after a sale is complete, the MLS distributes sales-->
-          <!--information to the real estate community. Brokers, agents and MLSs may also share your personal-->
-          <!--information-->
-          <!--with others who post the personal information on websites or elsewhere, or otherwise use it. Thus, there-->
-          <!--are-->
-          <!--various service providers and companies in a real estate transaction who may be engaged in using or-->
-          <!--sharing-->
-          <!--data involving your personal information.-->
-          <!--</div>-->
-          <!--<br>-->
-          <!--<div>-->
-          <!--If your broker is a covered Business, it should have a privacy policy explaining your rights on its-->
-          <!--website-->
-          <!--and giving you an opportunity to request that personal information not be shared, used and even deleted.-->
-          <!--Even if your real estate brokerage is a covered Business, it needs, and is allowed, to keep your-->
-          <!--information-->
-          <!--to effectuate a sale and, by law, is required to maintain such information for three years to comply with-->
-          <!--regulatory requirements. Not all brokers are covered Businesses, however, and those that are not, do not-->
-          <!--have to comply with the CCPA.-->
-          <!--</div>-->
-          <!--<br>-->
-          <!--<div>-->
-          <!--Similarly, most MLSs will not be considered a covered Business. Instead, the MLS may be considered a Third-->
-          <!--Party in the event a covered Business (ex: brokerages, real estate listing aggregation or advertising-->
-          <!--internet sites or other outlets who meet the criteria of covered Businesses) exchanges personal-->
-          <!--information-->
-          <!--with the MLS. You do not have the right under the CCPA to require a Third Party to delete your personal-->
-          <!--information. And like real estate brokerages, even if an MLS is a covered Business, MLSs are also required-->
-          <!--by law to retain and make accessible in its computer system any and all listing and other information for-->
-          <!--three years.-->
-          <!--</div>-->
-          <!--<br>-->
-          <!--<div>-->
-          <!--Whether an MLS is a covered Business or a Third Party, you have a right to be notified about the sharing-->
-          <!--of-->
-          <!--your personal information and your right to contact a covered Business to opt out of your personal-->
-          <!--information being used, or shared with Third Parties. Since the MLSs and/or other entities receiving your-->
-          <!--personal information do not have direct contact with buyers and sellers and also may not be aware of which-->
-          <!--entities exchanging personal information are covered Businesses, this form is being used to notify you of-->
-          <!--your rights under the CCPA and your ability to direct requests to covered Businesses not to share personal-->
-          <!--information with Third Parties. One way to limit access to your personal information, is to inform your-->
-          <!--broker or salesperson you want to opt-out of the MLS, and if so, you will be asked to sign a document-->
-          <!--(Form-->
-          <!--SELM) confirming your request to keep your listing off the MLS. However, if you do so, it may be more-->
-          <!--difficult to sell your property or obtain the highest price for it because your property will not be-->
-          <!--exposed-->
-          <!--to the greatest number of real estate licensees and others.-->
-          <!--</div>-->
-          <!--<br>-->
-          <!--<div class="fw-bold">I/we acknowledge receipt of a copy of this California Consumer Privacy Act Advisory.-->
-          <!--</div>-->
+          <div formGroupName="page_16" class="container text-justify" style="font-size: 24px; line-height: 1.3;">
+            <header class="clearfix">
+              <img src="assets/agreement/images/logo1.png" width="350" height="120" class="image">
+              <div class="box">
+                <br>
+                <div class="main-title">CALIFORNIA CONSUMER PRIVACY ACT ADVISORY</div>
+                <div class="main-subtitle">(C.A.R. Form CCPA, 12/19)</div>
+              </div>
+            </header>
+            <br>
+            <div>
+              As of January 1, 2020, the California Consumer Privacy Act (commencing with Civil Code § 1798.100)
+              (“CCPA”)
+              grants to California residents certain rights in their private, personal information that is collected by
+              companies with whom they do business. Under the CCPA, “personal information” is defined broadly to
+              encompass
+              non-public records information that could reasonably be linked directly or indirectly to you, including,
+              potentially, photographs of or sales information about your property. Some of your personal information
+              will
+              be collected and likely shared with others during the process of buying and selling real estate. Depending
+              on the situation, you may have the right to “opt out” or stop the transfer of your personal information to
+              others and request that certain businesses delete your personal information altogether. Not all businesses
+              you interact with are required to comply with the law, primarily just those who meet the criteria of a
+              covered “Business” as set forth in Section 1798.140 (c)]. For more information, you may ask your Broker
+              for
+              a copy of the C.A.R. Legal Q&A on the subject.
+            </div>
+            <br>
+            <div>
+              A real estate broker is likely to submit personal information to a Multiple Listing Service (“MLS”) in
+              order
+              to help find a buyer for a seller's property. Through the MLS, the information is made available to real
+              estate brokers and salespeople, and others. Even after a sale is complete, the MLS distributes sales
+              information to the real estate community. Brokers, agents and MLSs may also share your personal
+              information
+              with others who post the personal information on websites or elsewhere, or otherwise use it. Thus, there
+              are
+              various service providers and companies in a real estate transaction who may be engaged in using or
+              sharing
+              data involving your personal information.
+            </div>
+            <br>
+            <div>
+              If your broker is a covered Business, it should have a privacy policy explaining your rights on its
+              website
+              and giving you an opportunity to request that personal information not be shared, used and even deleted.
+              Even if your real estate brokerage is a covered Business, it needs, and is allowed, to keep your
+              information
+              to effectuate a sale and, by law, is required to maintain such information for three years to comply with
+              regulatory requirements. Not all brokers are covered Businesses, however, and those that are not, do not
+              have to comply with the CCPA.
+            </div>
+            <br>
+            <div>
+              Similarly, most MLSs will not be considered a covered Business. Instead, the MLS may be considered a Third
+              Party in the event a covered Business (ex: brokerages, real estate listing aggregation or advertising
+              internet sites or other outlets who meet the criteria of covered Businesses) exchanges personal
+              information
+              with the MLS. You do not have the right under the CCPA to require a Third Party to delete your personal
+              information. And like real estate brokerages, even if an MLS is a covered Business, MLSs are also required
+              by law to retain and make accessible in its computer system any and all listing and other information for
+              three years.
+            </div>
+            <br>
+            <div>
+              Whether an MLS is a covered Business or a Third Party, you have a right to be notified about the sharing
+              of
+              your personal information and your right to contact a covered Business to opt out of your personal
+              information being used, or shared with Third Parties. Since the MLSs and/or other entities receiving your
+              personal information do not have direct contact with buyers and sellers and also may not be aware of which
+              entities exchanging personal information are covered Businesses, this form is being used to notify you of
+              your rights under the CCPA and your ability to direct requests to covered Businesses not to share personal
+              information with Third Parties. One way to limit access to your personal information, is to inform your
+              broker or salesperson you want to opt-out of the MLS, and if so, you will be asked to sign a document
+              (Form
+              SELM) confirming your request to keep your listing off the MLS. However, if you do so, it may be more
+              difficult to sell your property or obtain the highest price for it because your property will not be
+              exposed
+              to the greatest number of real estate licensees and others.
+            </div>
+            <br>
+            <div class="fw-bold">I/we acknowledge receipt of a copy of this California Consumer Privacy Act Advisory.
+            </div>
 
-          <!--<div class="form">-->
-          <!--<div>-->
-          <!--Buyer/Seller/Landlord/Tenant <input formControlName="input412" type="text" class="i-lr-7">-->
-          <!--&nbsp; Date &nbsp;<input matInput (click)="picker413.open()" [matDatepicker]="picker413"-->
-          <!--formControlName="input413" type="text"-->
-          <!--class="i-lr-2__5">-->
-          <!--<mat-datepicker #picker413></mat-datepicker>-->
-          <!--</div>-->
-          <!--<div>-->
-          <!--Buyer/Seller/Landlord/Tenant <input formControlName="input414" type="text" class="i-lr-7">-->
-          <!--&nbsp; Date &nbsp;<input matInput (click)="picker415.open()" [matDatepicker]="picker415"-->
-          <!--formControlName="input415" type="text"-->
-          <!--class="i-lr-2__5">-->
-          <!--<mat-datepicker #picker415></mat-datepicker>-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<br>-->
-          <!--<footer>-->
-          <!--<div class="fs-small text-left">-->
-          <!--&#169;2019, California Association of REALTORS &#174;, Inc. United States copyright law (Title 17 U.S.-->
-          <!--Code) forbids the unauthorized distribution, display and reproduction of this form,-->
-          <!--or any portion thereof, by photocopy machine or any other means, including facsimile or computerized-->
-          <!--formats.-->
-          <!--<br>-->
-          <!--THIS FORM HAS BEEN APPROVED BY THE CALIFORNIA ASSOCIATION OF REALTORS&#174; (C.A.R.). NO REPRESENTATION-->
-          <!--IS-->
-          <!--MADE AS TO THE LEGAL VALIDITY-->
-          <!--OR ACCURACY OF ANY PROVISION IN ANY SPECIFIC TRANSACTION. A REAL ESTATE BROKER IS THE PERSON QUALIFIED-->
-          <!--TO ADVISE ON REAL ESTATE-->
-          <!--TRANSACTIONS. IF YOU DESIRE LEGAL OR TAX ADVICE, CONSULT AN APPROPRIATE PROFESSIONAL.-->
-          <!--<br>-->
-          <!--This form is made available to real estate professionals through an agreement with or purchase from the-->
-          <!--California Association of REALTORS&#174;. It is not intended to identify-->
-          <!--the user as a REALTOR&#174;. REALTOR&#174; is a registered collective membership mark which may be used-->
-          <!--only by-->
-          <!--members of the NATIONAL ASSOCIATION OF REALTORS&#174;-->
-          <!--who subscribe to its Code of Ethics.-->
-          <!--</div>-->
-          <!--<br>-->
-          <!--<div class="item-pl-3 fs-small">-->
-          <!--<div class="item-pl-3">-->
-          <!--<img src="assets/agreement/images/rebs-llc.png" width="80" height="100" class="image-left">-->
-          <!--<div>Published and Distributed by:</div>-->
-          <!--<div>REAL ESTATE BUSINESS SERVICES, LLC.</div>-->
-          <!--<div class="fs-italic">a subsidiary of the California Association of REALTORS&#174;</div>-->
-          <!--<div>525 South Virgil Avenue, Los Angeles, California 90020</div>-->
-          <!--<img src="assets/agreement/images/housing.png" width="80" height="70" class="image-right">-->
-          <!--</div>-->
-          <!--</div>-->
-          <!--<div class="fw-bold mt-25">PRBS REVISED 12/19 (PAGE 1 OF 1)</div>-->
-          <!--<br>-->
-          <!--<div class="text-center fw-bold">-->
-          <!--CALIFORNIA CONSUMER PRIVACY ACT ADVISORY (CCPA PAGE 1 OF 1)-->
-          <!--</div>-->
+            <div class="form">
+              <div>
+                Buyer/Seller/Landlord/Tenant <input formControlName="text_privacy_act_advisory_first" type="text" class="i-lr-7">
+                &nbsp; Date &nbsp;<input matInput (click)="date_privacy_act_advisory_first.open()"
+                                         [matDatepicker]="date_privacy_act_advisory_first"
+                                         formControlName="date_privacy_act_advisory_first"
+                                         type="text"
+                                         class="i-lr-2__5">
+                <mat-datepicker #date_privacy_act_advisory_first></mat-datepicker>
+              </div>
+              <div>
+                Buyer/Seller/Landlord/Tenant <input formControlName="text_privacy_act_advisory_second" type="text" class="i-lr-7">
+                &nbsp; Date &nbsp;<input matInput (click)="date_privacy_act_advisory_second.open()"
+                                         [matDatepicker]="date_privacy_act_advisory_second"
+                                         formControlName="date_privacy_act_advisory_second"
+                                         type="text"
+                                         class="i-lr-2__5">
+                <mat-datepicker #date_privacy_act_advisory_second></mat-datepicker>
+              </div>
+            </div>
+            <br>
+            <footer>
+              <div class="fs-small text-left">
+                &#169;2019, California Association of REALTORS &#174;, Inc. United States copyright law (Title 17 U.S.
+                Code) forbids the unauthorized distribution, display and reproduction of this form,
+                or any portion thereof, by photocopy machine or any other means, including facsimile or computerized
+                formats.
+                <br>
+                THIS FORM HAS BEEN APPROVED BY THE CALIFORNIA ASSOCIATION OF REALTORS&#174; (C.A.R.). NO REPRESENTATION
+                IS
+                MADE AS TO THE LEGAL VALIDITY
+                OR ACCURACY OF ANY PROVISION IN ANY SPECIFIC TRANSACTION. A REAL ESTATE BROKER IS THE PERSON QUALIFIED
+                TO ADVISE ON REAL ESTATE
+                TRANSACTIONS. IF YOU DESIRE LEGAL OR TAX ADVICE, CONSULT AN APPROPRIATE PROFESSIONAL.
+                <br>
+                This form is made available to real estate professionals through an agreement with or purchase from the
+                California Association of REALTORS&#174;. It is not intended to identify
+                the user as a REALTOR&#174;. REALTOR&#174; is a registered collective membership mark which may be used
+                only by
+                members of the NATIONAL ASSOCIATION OF REALTORS&#174;
+                who subscribe to its Code of Ethics.
+              </div>
+              <br>
+              <div class="item-pl-3 fs-small">
+                <div class="item-pl-3">
+                  <img src="assets/agreement/images/rebs-llc.png" width="80" height="100" class="image-left">
+                  <div>Published and Distributed by:</div>
+                  <div>REAL ESTATE BUSINESS SERVICES, LLC.</div>
+                  <div class="fs-italic">a subsidiary of the California Association of REALTORS&#174;</div>
+                  <div>525 South Virgil Avenue, Los Angeles, California 90020</div>
+                  <img src="assets/agreement/images/housing.png" width="80" height="70" class="image-right">
+                </div>
+              </div>
+              <div class="fw-bold mt-25">PRBS REVISED 12/19 (PAGE 1 OF 1)</div>
+              <br>
+              <div class="text-center fw-bold">
+                CALIFORNIA CONSUMER PRIVACY ACT ADVISORY (CCPA PAGE 1 OF 1)
+              </div>
 
-          <!--</footer>-->
-          <!--</div>-->
+            </footer>
+          </div>
 
-          <!--<div class="page-breaker" id="page-16">16</div>-->
+          <div class="page-breaker" id="page-16">16</div>
 
         </form>
 
