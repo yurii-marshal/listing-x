@@ -59,10 +59,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.onDestroyed$.complete();
   }
 
-  phoneNumberChanged(ev) {
-    this.form.get('phoneNumber').patchValue(ev);
-  }
-
   buildForm() {
     this.form = this.formBuilder.group({
       companyName: ['', [Validators.required]],
@@ -75,6 +71,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   public onSubmit(): void {
     if (!_.isEqual(this.form.value, this.profileService.currentAgent)) {
+      this.form.value.phoneNumber = this.form.value.phoneNumber.replace(/\D/g, '');
       this.profileService.updateAgent(this.form.value)
         .subscribe(() => {
           this.snackBar.open(

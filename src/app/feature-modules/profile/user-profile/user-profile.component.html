@@ -48,10 +48,11 @@
         <div class="fieldset">
           <label>Phone number</label>
           <input formControlName="phoneNumber" placeholder="+1" spellcheck="false" class="form-control">
-          <!--<input appPhoneNumber-->
-                 <!--[phoneNumber]="form.get('phoneNumber').value"-->
-                 <!--(valueChanged)="phoneNumberChanged($event)"-->
+          <!--<input phoneMask-->
+                 <!--[preValue]="form.value.phoneNumber"-->
+                 <!--formControlName="phoneNumber"-->
                  <!--appOnlyNumbers-->
+                 <!--[maxLength]="13"-->
                  <!--placeholder="(310) 525-0619"-->
                  <!--spellcheck="false"-->
                  <!--class="form-control">-->

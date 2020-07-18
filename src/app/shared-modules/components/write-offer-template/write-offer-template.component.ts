@@ -158,7 +158,7 @@ export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
   }
 
   private buildForm(): void {
-    const offerValues = this.anonymousOffer && this.anonymousOffer.model || this.offer;
+    const offerValues = this.anonymousOffer || this.offer;
     const disabled: boolean = !!this.anonymousOffer;
 
     this.form = this.formBuilder.group({
