@@ -1,64 +1,102 @@
-import { Directive, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges } from '@angular/core';
-import { fromEvent, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Directive, ElementRef, Input, OnInit, OnDestroy, Renderer2 } from '@angular/core';
+import { NgControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Directive({
-  selector: '[appPhoneNumber]'
+  selector: '[formControlName][phoneMask]'
 })
-export class PhoneNumberDirective implements OnChanges, OnDestroy {
-  @Input() mask: string = '()';
-  @Input() phoneNumber: string;
-  @Output() valueChanged: EventEmitter<string> = new EventEmitter();
+export class PhoneNumberDirective implements OnInit, OnDestroy {
 
-  actualValue: string = '';
-  transformedValue = '';
+  private sub: Subscription;
 
-  private onDestroyed$: Subject<void> = new Subject<void>();
-
-  constructor(
-    private el: ElementRef,
-  ) {
-    fromEvent(el.nativeElement, 'input')
-      .pipe(takeUntil(this.onDestroyed$))
-      .subscribe(({target}) => {
-        this.transformValue(target.value);
-      });
+  constructor(private el: ElementRef,
+              private _phoneControl: NgControl,
+              private renderer: Renderer2) {
   }
 
-  transformValue(value: string) {
-    value = value.replace(/\s/g, '');
-    if (value.length > this.actualValue.length) {
-      this.actualValue =
-        this.actualValue + value.slice(this.actualValue.length, value.length);
-      this.valueChanged.emit(this.actualValue);
-    } else {
-      this.actualValue = this.actualValue.slice(0, value.length);
-      this.valueChanged.emit(this.actualValue);
-    }
+  private _preValue: string;
 
-    this.transformedValue = this.formatValue(this.actualValue);
-    this.el.nativeElement.value = this.transformedValue;
+  @Input()
+  set preValue(value: string) {
+    this._preValue = value;
   }
 
-  formatValue(value: any) {
-    // TODO: ^\([0-9]{3}\) [0-9]{3}-[0-9]{4}$
-    return value
-      .replace(/[0-9]{3}/, `(${value})`)
-      .replace(/([\w*]{4})/g, '$1 ')
-      .trim();
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    const phoneNumber = changes.phoneNumber;
-
-    if (phoneNumber && phoneNumber.firstChange) {
-      this.transformValue(this.phoneNumber);
-    }
+  ngOnInit() {
+    this.phoneValidate();
   }
 
   ngOnDestroy() {
-    this.onDestroyed$.next();
-    this.onDestroyed$.complete();
+    this.sub.unsubscribe();
   }
 
+  phoneValidate() {
+    this.sub = this._phoneControl.control.valueChanges.subscribe(data => {
+      const preInputValue: string = this._preValue;
+      const lastChar: string = preInputValue.substr(preInputValue.length - 1);
+      let newVal = data.replace(/\D/g, '');
+
+      let start = this.el.nativeElement.selectionStart;
+      let end = this.el.nativeElement.selectionEnd;
+
+      if (data.length < preInputValue.length) {
+        if (preInputValue.length < start) {
+          if (lastChar === ')') {
+            newVal = newVal.substr(0, newVal.length - 1);
+          }
+        }
+
+        if (newVal.length === 0) {
+          newVal = '';
+        } else if (newVal.length <= 3) {
+          newVal = newVal.replace(/^(\d{0,3})/, '($1');
+        } else if (newVal.length <= 6) {
+          newVal = newVal.replace(/^(\d{0,3})(\d{0,3})/, '($1) $2');
+        } else {
+          newVal = newVal.replace(/^(\d{0,3})(\d{0,3})(.*)/, '($1) $2-$3');
+        }
+
+        this._phoneControl.control.setValue(newVal, {emitEvent: false});
+        this.renderer.selectRootElement(this.el).nativeElement.setSelectionRange(start, end);
+
+      } else {
+        const removedD = data.charAt(start);
+
+        if (newVal.length === 0) {
+          newVal = '';
+        } else if (newVal.length <= 3) {
+          newVal = newVal.replace(/^(\d{0,3})/, '($1)');
+        } else if (newVal.length <= 6) {
+          newVal = newVal.replace(/^(\d{0,3})(\d{0,3})/, '($1) $2');
+        } else {
+          newVal = newVal.replace(/^(\d{0,3})(\d{0,3})(.*)/, '($1) $2-$3');
+        }
+
+        if (preInputValue.length >= start) {
+          if (removedD === '(') {
+            start = start + 1;
+            end = end + 1;
+          }
+          if (removedD === ')') {
+            start = start + 2;
+            end = end + 2;
+          }
+          if (removedD === '-') {
+            start = start + 1;
+            end = end + 1;
+          }
+          if (removedD === ' ') {
+            start = start + 1;
+            end = end + 1;
+          }
+
+          this._phoneControl.control.setValue(newVal, {emitEvent: false});
+          this.renderer.selectRootElement(this.el).nativeElement.setSelectionRange(start, end);
+
+        } else {
+          this._phoneControl.control.setValue(newVal, {emitEvent: false});
+          this.renderer.selectRootElement(this.el).nativeElement.setSelectionRange(start + 2, end + 2);
+        }
+      }
+    });
+  }
 }
