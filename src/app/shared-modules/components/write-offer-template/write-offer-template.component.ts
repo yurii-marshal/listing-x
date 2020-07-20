@@ -25,7 +25,7 @@ enum Type {
 export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
   @Input() offer: Offer;
 
-  @Input() anonymousOffer;
+  @Input() anonymousOffer: Offer;
 
   @Output() offerSent: EventEmitter<Offer> = new EventEmitter();
 
@@ -185,8 +185,8 @@ export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
   // Prevent redundant call to api in case form didn't touch,
   // just move forward if it's anonymous offer
   private storeFormData(item: Offer): Observable<Offer> {
-    if (this.offer && this.form.dirty) {
-      return this.offer.id
+    if (!this.anonymousOffer && this.form.dirty) {
+      return item.id
         ? this.offerService.update(item)
         : this.offerService.add(item);
     } else {
