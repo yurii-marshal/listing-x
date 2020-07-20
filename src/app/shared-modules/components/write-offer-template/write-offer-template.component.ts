@@ -178,6 +178,7 @@ export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
     });
 
     if (offerValues) {
+      this.offerService.changedOfferModel = Object.assign({}, offerValues);
       this.applyFormValues(offerValues);
     }
   }
