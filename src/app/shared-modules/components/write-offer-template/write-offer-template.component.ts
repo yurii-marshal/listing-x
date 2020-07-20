@@ -89,7 +89,7 @@ export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
     this.form.patchValue(formData);
 
     // Nested forms
-    if (!_.isEmpty(model.buyers) && !this.anonymousOffer) {
+    if (!_.isEmpty(model.buyers)) {
       const buyers = _.map(model.buyers, (item: Person, i: number) => this.createEntity(item, false));
       this.form.setControl('buyers', this.formBuilder.array(buyers));
     }
@@ -182,7 +182,8 @@ export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Prevent redundant call to api in case form didn't touch
+  // Prevent redundant call to api in case form didn't touch,
+  // just move forward if it's anonymous offer
   private storeFormData(item: Offer): Observable<Offer> {
     if (this.offer && this.form.dirty) {
       return this.offer.id
