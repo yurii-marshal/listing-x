@@ -140,12 +140,9 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         // # Price = 51c
         text_offer_price_digits: [null, [Validators.required]],
         // # Close of Escrow = 51d
-        // TODO: after redeploy 20.07.2020
-        // radio_escrow: ['date', []],
-        // date_escrow_date:
-        //   [null, [this.documentForm.get('page_5.radio_escrow').value === 'date' ? Validators.required : null]],
-        // text_escrow_days:
-        //   [null, [this.documentForm.get('page_5.radio_escrow').value === 'days' ? Validators.required : null]],
+        radio_escrow: ['date', []],
+        date_escrow_date: [null, [Validators.required]],
+        text_escrow_days: [{value: null, disabled: true}, []],
         check_agency_disclosure: [null, []],
         text_agency_broker_seller_firm: [null, []],
         text_agency_broker_seller_firm_lic: [null, []],
@@ -527,7 +524,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   patchForm(model) {
-    // TODO: refactor this scope
+    // TODO: refactor
     Object.entries(model).forEach(([key, value]) => {
       Object.keys(this.documentForm.controls).forEach((groupName) => {
 
@@ -611,6 +608,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
         if (_.includes(this.downPaymentAmountPredicates, controlName)) {
           this.updateDownPaymentAmount();
+        } else if (controlName === 'radio_escrow') {
+          this.updateEscrowFields(this.documentForm.get('page_5.radio_escrow').value);
         }
       });
   }
@@ -688,6 +687,26 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         .subscribe(() => {
           this.router.navigate([`portal/purchase-agreement/${this.offerId}/step-three`]);
         });
+  }
+
+  private updateEscrowFields(controlValue) {
+    switch (controlValue) {
+      case 'date':
+        this.documentForm.get('page_5.date_escrow_date').enable({emitEvent: false});
+        this.documentForm.get('page_5.text_escrow_days').disable({emitEvent: false});
+        this.documentForm.get('page_5.date_escrow_date').setValidators([Validators.required]);
+        this.documentForm.get('page_5.text_escrow_days').setValidators([]);
+        break;
+      case 'days':
+        this.documentForm.get('page_5.text_escrow_days').enable({emitEvent: false});
+        this.documentForm.get('page_5.date_escrow_date').disable({emitEvent: false});
+        this.documentForm.get('page_5.text_escrow_days').setValidators([Validators.required]);
+        this.documentForm.get('page_5.date_escrow_date').setValidators([]);
+        break;
+    }
+
+    this.documentForm.get('page_5.date_escrow_date').patchValue('', {emitEvent: false, onlySelf: true});
+    this.documentForm.get('page_5.text_escrow_days').patchValue('', {emitEvent: false, onlySelf: true});
   }
 
   private updateDownPaymentAmount() {
