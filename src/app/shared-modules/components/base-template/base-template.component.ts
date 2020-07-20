@@ -58,7 +58,7 @@ export class BaseTemplateComponent implements OnInit, OnDestroy {
     ];
 
     this.purchaseNavLinks.forEach((link) => {
-      link.disabled = this.offerService.currentOffer && this.offerService.currentOffer.progress < link.progress;
+      link.disabled = (offer && offer.progress) || 1 < link.progress;
     });
 
     this.authService.changedUser$
