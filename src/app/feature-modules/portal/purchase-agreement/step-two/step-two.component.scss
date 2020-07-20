@@ -33,6 +33,13 @@
             margin-bottom: 300px;
           }
         }
+
+        input {
+          &.ng-touched.ng-invalid {
+            background-color: rgba(200, 85, 120, 0.25);
+            border-bottom: solid 2px #c85578;
+          }
+        }
       }
     }
   }

@@ -3,7 +3,7 @@
     <div class="u-flex viewer">
       <div class="doc-container">
 
-        <form class="document-form" [formGroup]="documentForm">
+        <form class="document-form" [formGroup]="documentForm" #form>
 
           <div class="page-breaker" id="page-0" style="display: none;">0</div>
 
@@ -954,7 +954,7 @@
                 </div>
                 <div>
                   <span class="fw-bold">D. &nbsp;CLOSE OF ESCROW</span> shall occur on
-                  <input [value]="'date'" type="radio" formControlName="radio_escrow">
+                  <input [value]="'date'" type="radio" (change)="form.blur();" formControlName="radio_escrow">
                   <input matInput
                          (click)="date_escrow_date.open()"
                          [matDatepicker]="date_escrow_date"
@@ -963,7 +963,7 @@
                          class="i-lr-5">
                   <mat-datepicker #date_escrow_date></mat-datepicker>
                   (date)(or
-                  <input [value]="'days'" type="radio" formControlName="radio_escrow">
+                  <input [value]="'days'" type="radio" (change)="form.blur();" formControlName="radio_escrow">
                   <input formControlName="text_escrow_days"
                          appOnlyNumbers
                          type="text"
