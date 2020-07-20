@@ -26,7 +26,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.offerId = +this.route.snapshot.params.id;
-    const offer = this.route.snapshot.data && this.route.snapshot.data.offer;
+    const offer = this.route.snapshot.data.offer;
 
     if (this.offerId) {
       this.offer = offer;
