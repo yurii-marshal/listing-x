@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChildren } from '@angular/core';
 import { OfferService } from '../../services/offer.service';
 import { Offer } from '../../../../core-modules/models/offer';
 import { MatDialog, MatSnackBar } from '@angular/material';
@@ -18,6 +18,8 @@ import * as _ from 'lodash';
   providers: [DatePipe]
 })
 export class StepTwoComponent implements OnInit, OnDestroy {
+  @ViewChildren('form') form;
+
   documentForm: FormGroup;
   currentPage: number = 0;
   completedFieldsCount: number = 0;
@@ -502,7 +504,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         text_privacy_act_advisory_second: [null, []],
         date_privacy_act_advisory_second: [null, []],
       }),
-    }, {updateOn: 'blur'});
+    });
 
     this.offerService.getOfferDocument(this.offerId)
       .pipe(
@@ -586,7 +588,11 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   subscribeToFormChanges() {
     Object.values(this.documentForm.controls).forEach((group: FormGroup, groupIndex: number) => {
       Object.values(group.controls).forEach((control: FormControl, controlIndex: number) => {
-        control.valueChanges.pipe(takeUntil(this.onDestroyed$))
+        control.valueChanges
+          .pipe(
+            debounceTime(200),
+            takeUntil(this.onDestroyed$),
+          )
           .subscribe((controlValue) => {
             this.documentInputChanged(Object.keys(group.getRawValue())[controlIndex], controlValue, group, groupIndex);
           });
@@ -680,6 +686,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   acceptOfferDocument() {
+    this.documentForm.markAllAsTouched();
+
     this.documentForm.invalid
       ? this.snackbar.open('Please, fill all mandatory fields')
       : this.offerService.updateOfferProgress({progress: 3}, this.offerId)
@@ -695,13 +703,13 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         this.documentForm.get('page_5.date_escrow_date').enable({emitEvent: false});
         this.documentForm.get('page_5.text_escrow_days').disable({emitEvent: false});
         this.documentForm.get('page_5.date_escrow_date').setValidators([Validators.required]);
-        this.documentForm.get('page_5.text_escrow_days').setValidators([]);
+        this.documentForm.get('page_5.text_escrow_days').clearValidators();
         break;
       case 'days':
         this.documentForm.get('page_5.text_escrow_days').enable({emitEvent: false});
         this.documentForm.get('page_5.date_escrow_date').disable({emitEvent: false});
         this.documentForm.get('page_5.text_escrow_days').setValidators([Validators.required]);
-        this.documentForm.get('page_5.date_escrow_date').setValidators([]);
+        this.documentForm.get('page_5.date_escrow_date').clearValidators();
         break;
     }
 

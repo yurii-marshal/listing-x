@@ -73,6 +73,6 @@ export class OfferService extends BaseDataService<Offer> {
   }
 
   updateOfferProgress(data, id): Observable<any> {
-    return this.http.put(`/offer/${id}/update-progress/`, data);
+    return this.http.patch(`/offer/${id}/update-progress/`, data);
   }
 }
