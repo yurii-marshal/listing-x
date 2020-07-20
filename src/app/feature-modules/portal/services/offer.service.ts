@@ -39,15 +39,15 @@ export class OfferService extends BaseDataService<Offer> {
   }
 
   add(model: Offer): Observable<Offer> {
-    const offerData = this.anonymousOfferData;
+    const anonymousOffer = this.anonymousOfferData;
     let params = new HttpParams();
-    if (offerData) {
-      params = params.set('token', offerData.token);
+    if (anonymousOffer) {
+      params = params.set('token', anonymousOffer.token);
     }
     return this.http.post<Offer>(this.crudEndpoint, model, {params})
       .pipe(
         tap(() => this.offerChanged.next()),
-        tap(() => offerData && localStorage.removeItem(LocalStorageKey.Offer)) // tear down
+        tap(() => anonymousOffer && localStorage.removeItem(LocalStorageKey.Offer)) // tear down
       );
   }
 
