@@ -186,9 +186,9 @@ export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
   // Prevent redundant call to api in case form didn't touch,
   // just move forward if it's anonymous offer
   private storeFormData(item: Offer): Observable<Offer> {
-    if (!this.anonymousOffer && this.form.dirty) {
+    if (this.form.dirty || !item.id) {
       item.progress = 2;
-      return item.id ? this.offerService.update(item) : this.offerService.add(item);
+      return !!item.id ? this.offerService.update(item) : this.offerService.add(item);
     } else {
       return of(item);
     }
