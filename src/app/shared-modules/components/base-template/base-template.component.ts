@@ -6,6 +6,7 @@ import { ProfileService } from '../../../core-modules/core-services/profile.serv
 import { OfferService } from '../../../feature-modules/portal/services/offer.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { LocalStorageKey } from '../../../core-modules/enums/local-storage-key';
 
 @Component({
   selector: 'app-base-template',
@@ -63,8 +64,15 @@ export class BaseTemplateComponent implements OnInit, OnDestroy {
     this.authService.changedUser$
       .pipe(takeUntil(this.onDestroyed$))
       .subscribe(() => {
-      this.portalNavLinks.forEach((links) => links.disabled = !this.user.registrationCompleted);
-    });
+        this.portalNavLinks.forEach((links) => links.disabled = !this.user.registrationCompleted);
+      });
+  }
+
+  closeOffer() {
+    if (this.offerService.anonymousOfferData) {
+      localStorage.removeItem(LocalStorageKey.Offer);
+    }
+    this.router.navigateByUrl('/portal');
   }
 
   ngOnDestroy() {

@@ -2,7 +2,6 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Offer } from '../../../core-modules/models/offer';
 import { LocalStorageKey } from '../../../core-modules/enums/local-storage-key';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-write-offer-dialog',
