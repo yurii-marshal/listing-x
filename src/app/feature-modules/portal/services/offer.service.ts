@@ -2,7 +2,6 @@ import { Injectable, Injector } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Observable, of, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { LocalStorageKey } from '../../../core-modules/enums/local-storage-key';
 import { Offer, OfferSummary } from '../../../core-modules/models/offer';
 import { ApiEndpoint } from '../../../core-modules/enums/api-endpoints';
 import { BaseDataService } from '../../../core-modules/base-classes/base-data-service';
@@ -19,14 +18,6 @@ export class OfferService extends BaseDataService<Offer> {
     super(injector, ApiEndpoint.Offer);
   }
 
-  get anonymousOfferData(): { offer: Offer, token: string } {
-    const raw: string = localStorage.getItem(LocalStorageKey.Offer);
-    if (!raw) {
-      return null;
-    }
-    return JSON.parse(raw); // from generation link
-  }
-
   getOfferById(id: number) {
     if (this.currentOffer && (this.currentOffer.id === id)) {
       return of(this.currentOffer);
@@ -39,15 +30,9 @@ export class OfferService extends BaseDataService<Offer> {
   }
 
   add(model: Offer): Observable<Offer> {
-    const anonymousOffer = this.anonymousOfferData;
-    let params = new HttpParams();
-    if (anonymousOffer) {
-      params = params.set('token', anonymousOffer.token);
-    }
-    return this.http.post<Offer>(this.crudEndpoint, model, {params})
+    return this.http.post<Offer>(this.crudEndpoint, model)
       .pipe(
         tap(() => this.offerChanged.next()),
-        tap(() => anonymousOffer && localStorage.removeItem(LocalStorageKey.Offer)) // tear down
       );
   }
 

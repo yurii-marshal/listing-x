@@ -79,7 +79,7 @@ export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
   }
 
   setBuyerAsEntity() {
-    // TODO: set role as entity
+    // set role as entity
   }
 
   applyFormValues(model?: Offer): void {
@@ -184,8 +184,8 @@ export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
 
   // Prevent redundant call to api in case form didn't touch
   private storeFormData(item: Offer): Observable<Offer> {
-    if (this.form.dirty) {
-      return this.offer && this.offer.id
+    if (this.offer && this.form.dirty) {
+      return this.offer.id
         ? this.offerService.update(item)
         : this.offerService.add(item);
     } else {
