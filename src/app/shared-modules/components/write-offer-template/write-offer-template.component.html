@@ -80,7 +80,7 @@
       </button>
     </div>
   </div>
-  <div *ngIf="agentBuyers.controls.length <= 1" (click)="add(Type.AgentBuyers)" class="link">Buyer's Agent</div>
+  <div *ngIf="agentBuyers.controls.length <= 1" (click)="add(Type.AgentBuyers)" class="link">add more Buyer's Agent</div>
 
   <h4>Listing Agent</h4>
   <div *ngFor="let control of agentSellers.controls; let i = index; let first = first" [formGroup]="control">

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Offer } from '../../../../core-modules/models/offer';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { LocalStorageKey } from '../../../../core-modules/enums/local-storage-key';
 
 @Component({
   selector: 'app-step-one',
@@ -25,11 +26,11 @@ export class StepOneComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.offerId = +this.route.snapshot.params.id;
-    this.offer = this.route.snapshot.data.offer;
+    const offer = this.route.snapshot.data && this.route.snapshot.data.offer;
 
     this.offerId
-      ? this.offer = this.route.snapshot.data.offer
-      : this.anonymousOffer = this.route.snapshot.data.anonymousOffer as Offer;
+      ? this.offer = offer
+      : this.anonymousOffer = offer;
   }
 
   ngOnDestroy(): void {

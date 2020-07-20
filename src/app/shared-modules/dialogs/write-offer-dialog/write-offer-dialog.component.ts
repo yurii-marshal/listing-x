@@ -17,10 +17,10 @@ export class WriteOfferDialogComponent {
   }
 
   onClose(offer?: Offer) {
-    this.dialogRef.close(offer);
-
     offer
       ? localStorage.setItem(LocalStorageKey.Offer, JSON.stringify(offer))
       : localStorage.removeItem(LocalStorageKey.Offer);
+
+    this.dialogRef.close(offer);
   }
 }
