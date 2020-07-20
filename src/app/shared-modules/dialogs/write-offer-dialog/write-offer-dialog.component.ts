@@ -12,15 +12,15 @@ import { Router } from '@angular/router';
 export class WriteOfferDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<WriteOfferDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { model: Offer }
+    @Inject(MAT_DIALOG_DATA) public data: Offer,
   ) {
   }
 
   onClose(offer?: Offer) {
     this.dialogRef.close(offer);
 
-    if (!offer) {
-      localStorage.removeItem(LocalStorageKey.Offer);
-    }
+    offer
+      ? localStorage.setItem(LocalStorageKey.Offer, JSON.stringify(offer))
+      : localStorage.removeItem(LocalStorageKey.Offer);
   }
 }

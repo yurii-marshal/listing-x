@@ -23,17 +23,16 @@ export class WriteAnonymousOfferComponent implements OnInit {
 
   ngOnInit() {
     const offer = this.route.snapshot.data.model as Offer;
-    const token = this.route.snapshot.params.token;
-    localStorage.setItem(LocalStorageKey.Offer, JSON.stringify({offer, token}));
+    localStorage.setItem(LocalStorageKey.Offer, JSON.stringify(offer));
 
-    this.openDialog(offer, token);
+    this.openDialog(offer);
   }
 
-  private openDialog(model: Offer, token: string) {
+  private openDialog(model: Offer) {
     const dialogRef = this.dialog.open(WriteOfferDialogComponent, {
       width: '600px',
       disableClose: true,
-      data: {model, token}
+      data: model,
     });
 
     dialogRef.afterClosed()
