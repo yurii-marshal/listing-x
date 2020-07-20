@@ -933,7 +933,7 @@
           &nbsp;(County), California,&nbsp;
           <input formControlName="text_offer_zip_code" type="text" class="i-lr-1">
           &nbsp;(Zip Code), Assessor's Parcel No.&nbsp;
-          <input formControlName="text_offer_apn" type="text" class="i-lr-1">
+          <input formControlName="text_offer_apn" appOnlyNumbers type="text" class="i-lr-1">
           &nbsp;(“Property”).&nbsp;
           </span>
                   </div>
@@ -954,17 +954,17 @@
                 </div>
                 <div>
                   <span class="fw-bold">D. &nbsp;CLOSE OF ESCROW</span> shall occur on
-                  <input formControlName="check_escrow_date" type="checkbox">
-                  <input matInput
-                         (click)="date_escrow_date.open()"
-                         [matDatepicker]="date_escrow_date"
-                         formControlName="date_escrow_date"
-                         type="text"
-                         class="i-lr-5">
-                  <mat-datepicker #date_escrow_date></mat-datepicker>
-                  (date)(or
-                  <input formControlName="check_escrow_days" type="checkbox">
-                  <input formControlName="text_escrow_days" type="text" class="i-lr-1">
+                  <!--<input name="date" type="radio" formControlName="radio_escrow">-->
+                  <!--<input matInput-->
+                         <!--(click)="date_escrow_date.open()"-->
+                         <!--[matDatepicker]="date_escrow_date"-->
+                         <!--formControlName="date_escrow_date"-->
+                         <!--type="text"-->
+                         <!--class="i-lr-5">-->
+                  <!--<mat-datepicker #date_escrow_date></mat-datepicker>-->
+                  <!--(date)(or-->
+                  <!--<input name="days" type="radio" formControlName="radio_escrow">-->
+                  <!--<input formControlName="text_escrow_days" appOnlyNumbers type="text" class="i-lr-1">-->
                   <span class="fw-bold">Days </span>
                   After Acceptance).
                 </div>
@@ -1100,7 +1100,7 @@
                 </div>
 
                 <div class="col-right">
-                  $ <input formControlName="text_finance_terms_amount" type="text">
+                  $ <input formControlName="text_finance_terms_amount" appOnlyNumbers type="text">
                 </div>
 
                 <div class="col-left text-justify">
@@ -1123,7 +1123,7 @@
                 </div>
 
                 <div class="col-right">
-                  $ <input formControlName="text_finance_increased_deposit_amount" type="text">
+                  $ <input formControlName="text_finance_increased_deposit_amount" appOnlyNumbers type="text">
                 </div>
 
                 <div class="col-left ">
@@ -1223,11 +1223,11 @@
                 </div>
 
                 <div class="col-right item-d1">
-                  $ <input formControlName="text_finance_first_loan_amount" type="text">
+                  $ <input formControlName="text_finance_first_loan_amount" appOnlyNumbers type="text">
                 </div>
 
                 <div class="col-right item-d2">
-                  $ <input formControlName="text_finance_second_loan_amount" type="text">
+                  $ <input formControlName="text_finance_second_loan_amount" appOnlyNumbers type="text">
                 </div>
 
                 <div class="col-left">
@@ -1244,7 +1244,7 @@
                 </div>
 
                 <div class="col-right">
-                  $ <input formControlName="text_finance_down_payment_balance" type="text">
+                  $ <input formControlName="text_finance_down_payment_balance" appOnlyNumbers type="text">
                 </div>
 
                 <div class="col-left text-justify">
@@ -1254,7 +1254,7 @@
                 </div>
 
                 <div class="col-right">
-                  $ <input formControlName="text_finance_additional_terms_amount" type="text">
+                  $ <input formControlName="text_finance_additional_terms_amount" appOnlyNumbers type="text">
                 </div>
                 <div class="clearfix"></div>
               </div>

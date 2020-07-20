@@ -28,12 +28,8 @@ export class StepOneComponent implements OnInit, OnDestroy {
     this.offerId = +this.route.snapshot.params.id;
     const offer = this.route.snapshot.data.offer;
 
-    if (this.offerId) {
-      this.offer = offer;
-    } else {
-      this.offerService.currentOffer = null;
-      this.anonymousOffer = offer;
-    }
+    this.offer = this.offerId && offer;
+    this.anonymousOffer = !this.offerId && offer;
   }
 
   ngOnDestroy(): void {
