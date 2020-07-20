@@ -32,9 +32,8 @@ export class EditOfferDialogComponent implements OnDestroy {
         .pipe(takeUntil(this.onDestroyed$))
         .subscribe(() => this.dialogRef.close({saved: true}));
     } else {
-      // TODO: compare current offer with userChanges not the offer
-      const changes = !_.isEqual(this.offerService.currentOffer, this.offerService.changedOfferModel);
-      this.dialogRef.close({requestToSave: changes, changedOfferModel: this.offerService.changedOfferModel});
+      const isChanged = !_.isEqual(this.offerService.currentOffer, this.offerService.changedOfferModel);
+      this.dialogRef.close({requestToSave: isChanged, changedOfferModel: this.offerService.changedOfferModel});
     }
   }
 
