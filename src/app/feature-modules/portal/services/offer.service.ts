@@ -71,4 +71,8 @@ export class OfferService extends BaseDataService<Offer> {
   loadOfferSummary(id: number): Observable<OfferSummary> {
     return this.http.get<OfferSummary>(`/offers/${id}/summary`);
   }
+
+  updateOfferProgress(data, id): Observable<any> {
+    return this.http.put(`/offer/${id}/update-progress/`, data);
+  }
 }

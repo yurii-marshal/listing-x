@@ -109,7 +109,7 @@ export class NumberToWordsDirective implements OnInit, OnDestroy {
     fromEvent(this.el.nativeElement, 'input')
       .pipe(
         takeUntil(this.onDestroyed$),
-        debounceTime(300)
+        debounceTime(300),
       )
       .subscribe(({target}) => {
         const converted = this.toString ? this.getInWords(target.value) : this.getAsNumber(target.value);

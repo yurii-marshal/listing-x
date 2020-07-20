@@ -6,7 +6,7 @@ import { EditOfferDialogComponent } from '../../../../shared-modules/dialogs/edi
 import { ActivatedRoute, Router } from '@angular/router';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { fromEvent, Observable, Subject } from 'rxjs';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SaveOfferDialogComponent } from '../../../../shared-modules/dialogs/save-offer-dialog/save-offer-dialog.component';
 import { DatePipe } from '@angular/common';
 import * as _ from 'lodash';
@@ -32,6 +32,13 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
   private pageBreakersOffsetTop: number[];
   private documentFormEl: EventTarget;
+
+  private downPaymentAmountPredicates: string[] = [
+    'text_offer_price_digits',
+    'text_finance_terms_amount',
+    'text_finance_first_loan_amount',
+    'text_finance_second_loan_amount',
+  ];
 
   constructor(
     private offerService: OfferService,
@@ -129,12 +136,16 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         text_offer_country: [null, []],
         text_offer_zip_code: [null, []],
         text_offer_apn: [null, []],
-        text_offer_price_text: [null, []],
-        text_offer_price_digits: [null, []],
-        check_escrow_date: [null, []],
-        date_escrow_date: [null, []],
-        check_escrow_days: [null, []],
-        text_escrow_days: [null, []],
+        text_offer_price_text: [{value: null, disabled: true}, []],
+        // # Price = 51c
+        text_offer_price_digits: [null, [Validators.required]],
+        // # Close of Escrow = 51d
+        // TODO: after redeploy 20.07.2020
+        // radio_escrow: ['date', []],
+        // date_escrow_date:
+        //   [null, [this.documentForm.get('page_5.radio_escrow').value === 'date' ? Validators.required : null]],
+        // text_escrow_days:
+        //   [null, [this.documentForm.get('page_5.radio_escrow').value === 'days' ? Validators.required : null]],
         check_agency_disclosure: [null, []],
         text_agency_broker_seller_firm: [null, []],
         text_agency_broker_seller_firm_lic: [null, []],
@@ -153,7 +164,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         check_agency_broker_buyer_agent: [null, []],
         check_agency_broker_buyer_dual: [null, []],
         check_agency_competing_buyers_and_sellers: [null, []],
-        text_finance_terms_amount: [null, []],
+        // # Deposit = 53a
+        text_finance_terms_amount: [null, [Validators.required]],
         check_finance_buyer_cashier_check: [null, []],
         check_finance_buyer_personal_check: [null, []],
         check_finance_buyer_other_check: [null, []],
@@ -190,10 +202,12 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         text_finance_second_loan_initial_rate: [null, []],
         text_finance_second_loan_max_pay_points: [null, []],
         text_finance_written_notice_delivery_days: [null, []],
-        text_finance_first_loan_amount: [null, []],
+        text_finance_first_loan_amount: [null, [Validators.required]],
         text_finance_second_loan_amount: [null, []],
+        // # Loan Amount = loan1 + loan2 (3d1,3d2)
         text_finance_additional_terms: [null, []],
-        text_finance_down_payment_balance: [null, []],
+        // # Down Payment = formula = price - (initial deposits + all loans (3a…3d))
+        text_finance_down_payment_balance: [{value: null, disabled: true}, [Validators.required]],
         text_finance_additional_terms_amount: [null, []],
         text_finance_buyer_initials_first: [null, []],
         text_finance_buyer_initials_second: [null, []],
@@ -577,7 +591,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       Object.values(group.controls).forEach((control: FormControl, controlIndex: number) => {
         control.valueChanges.pipe(takeUntil(this.onDestroyed$))
           .subscribe((controlValue) => {
-            this.documentInputChanged(Object.keys(group.value)[controlIndex], controlValue, group, groupIndex);
+            this.documentInputChanged(Object.keys(group.getRawValue())[controlIndex], controlValue, group, groupIndex);
           });
       });
     });
@@ -587,13 +601,17 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     if (controlValue instanceof Date) {
       controlValue = this.datePipe.transform(controlValue, 'yyyy-MM-dd');
     }
-    // TODO: show saving animation if it takes a time
+    // show saving animation if it takes a time
     this.offerService.updateOfferDocumentField({offerId: this.offerId, page: groupIndex + 1}, {[controlName]: controlValue})
       .pipe(
         takeUntil(this.onDestroyed$),
       )
       .subscribe(() => {
         this.updatePageProgress(this.documentForm.getRawValue(), this.currentPage);
+
+        if (_.includes(this.downPaymentAmountPredicates, controlName)) {
+          this.updateDownPaymentAmount();
+        }
       });
   }
 
@@ -663,6 +681,22 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   acceptOfferDocument() {
-    this.router.navigate([`portal/purchase-agreement/${this.offer.id}/step-three`]);
+    this.documentForm.invalid
+      ? this.snackbar.open('Please, fill all mandatory fields')
+      : this.offerService.updateOfferProgress({progress: 3}, this.offerId)
+        .pipe(takeUntil(this.onDestroyed$))
+        .subscribe(() => {
+          this.router.navigate([`portal/purchase-agreement/${this.offerId}/step-three`]);
+        });
+  }
+
+  private updateDownPaymentAmount() {
+    const price = +this.documentForm.get('page_5.text_offer_price_digits').value || 0;
+    const initialDeposits = +this.documentForm.get('page_5.text_finance_terms_amount').value || 0;
+    const loans = +(this.documentForm.get('page_5.text_finance_first_loan_amount').value || 0) +
+      +(this.documentForm.get('page_5.text_finance_second_loan_amount').value || 0);
+
+    return this.documentForm.get('page_5.text_finance_down_payment_balance')
+      .patchValue((price - (initialDeposits + loans)).toFixed(2));
   }
 }
