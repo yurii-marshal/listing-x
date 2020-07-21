@@ -24,8 +24,10 @@ export interface Offer {
   closeEscrowDays: number;
 
   // additional
-  date?: Date | string;
+  createdAt?: Date | string;
   progress?: number;
+  status?: string;
+  transaction?: number;
 
   // Second step
   initialDeposit?: string;
@@ -33,6 +35,7 @@ export interface Offer {
   loanType?: LoanType;  // CONVENTIONAL LOAN,
   downPayment?: number;
   anySpecialFinancialTerms?: string;
+  remainingDaysCloseEscrow?: number;
 }
 
 export interface Person {
@@ -41,6 +44,10 @@ export interface Person {
   lastName: string;
   email: string;
   signed?: boolean;
+  companyLicense: string;
+  companyName: string;
+  licenseCode: number;
+  phoneNumber: number;
 }
 
 export class Loan {
