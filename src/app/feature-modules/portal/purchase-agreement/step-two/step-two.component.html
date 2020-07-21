@@ -965,9 +965,9 @@
                   (date)(or
                   <input [value]="'days'" type="radio" (change)="form.blur();" formControlName="radio_escrow">
                   <input formControlName="text_escrow_days"
-                         appOnlyNumbers
+                         appOnlyNumbers [maxLength]="3"
                          type="text"
-                         class="i-lr-1">
+                         class="i-lr-1 fw-bold">
                   <span class="fw-bold">Days </span>
                   After Acceptance).
                 </div>
@@ -1076,7 +1076,8 @@
                     <input formControlName="text_finance_buyer_other_details" type="text" class="i-lr-2">
                     within 3 business days
                     after Acceptance
-                    <div>(or<input formControlName="text_finance_countdown_alternative" appOnlyNumbers type="text" class="i-lr-6">);
+                    <div>(or<input formControlName="text_finance_countdown_alternative" appOnlyNumbers type="text"
+                                   class="i-lr-6">);
                     </div>
                   </div>
                   <div>
@@ -1093,7 +1094,8 @@
                     <input formControlName="text_finance_payable_to" type="text" class="i-lr-4">.
                     The deposit shall be held uncashed until Acceptance and then deposited with Escrow Holder within
                     3 business days after Acceptance (or
-                    <input formControlName="text_finance_deposit_countdown_alt" appOnlyNumbers type="text" class="i-lr-3">
+                    <input formControlName="text_finance_deposit_countdown_alt" appOnlyNumbers type="text"
+                           class="i-lr-3">
                     ). Deposit checks given to agent shall be an original signed check and not a copy.
                   </div>
                   <div>
@@ -1114,8 +1116,8 @@
                   . .
                   <div class="item-pl-3">
                     within <span class="fw-bold"><input formControlName="text_finance_increase_deposit_countdown"
-                                                        type="text" appOnlyNumbers
-                                                        class="i-lr-1">Days</span> After Acceptance (or
+                                                        type="text" appOnlyNumbers [maxLength]="3"
+                                                        class="i-lr-1 fw-bold">Days</span> After Acceptance (or
                     <input formControlName="text_finance_increase_deposit_countdown_alt" type="text" class="i-lr-7">
                     ).
                     If the Parties agree to liquidated damages in this Agreement, they also agree to incorporate the
@@ -1141,7 +1143,8 @@
                     <input formControlName="check_finance_attach_to_buyer_shall" type="checkbox">
                     Buyer shall, within
                     <span class="fw-bold">3 (or </span>
-                    <input formControlName="text_finance_verification_deliver_countdown" appOnlyNumbers type="text" class="i-lr-1">
+                    <input formControlName="text_finance_verification_deliver_countdown" appOnlyNumbers [maxLength]="3"
+                           type="text" class="i-lr-1 fw-bold">
                     <span class="fw-bold">) Days</span>
                     After Acceptance, Deliver to Seller such verification.
                   </div>
@@ -1211,7 +1214,8 @@
                     <span class="fw-bold">(3) FHA/VA:</span>
                     For any FHA or VA loan specified in 3D(1), Buyer has
                     <span class="fw-bold">17 (or</span>
-                    <input formControlName="text_finance_written_notice_delivery_days" appOnlyNumbers type="text" class="i-lr-1">
+                    <input formControlName="text_finance_written_notice_delivery_days" appOnlyNumbers [maxLength]="3"
+                           type="text" class="i-lr-1 fw-bold">
                     <span class="fw-bold">) Days</span>
                     After Acceptance
                     <div class="item-pl-3">
@@ -1315,7 +1319,8 @@
                     Buyer (or Buyer's lender or loan broker pursuant to paragraph
                     3J(1)) shall, within
                     <span class="fw-bold">
-          3(or <input formControlName="text_closing_cost_countdown_alt" appOnlyNumbers type="text" class="i-lr-1"> ) Days
+          3(or <input formControlName="text_closing_cost_countdown_alt" appOnlyNumbers [maxLength]="3" type="text"
+                      class="i-lr-1 fw-bold"> ) Days
           </span>
                     After Acceptance, Deliver to Seller written verification of Buyer's down payment and
                     closing costs.
@@ -1338,7 +1343,8 @@
                     specified in paragraph 14B(3),
                     in writing, remove the appraisal contingency or cancel this Agreement within
                     <span class="fw-bold">
-          17(or <input formControlName="text_appraisal_contingency_canceling_days" appOnlyNumbers type="text" class="i-lr-1"> ) Days
+          17(or <input formControlName="text_appraisal_contingency_canceling_days" appOnlyNumbers [maxLength]="3"
+                       type="text" class="i-lr-1 fw-bold"> ) Days
           </span>
                     After Acceptance.
                   </div>
@@ -1349,7 +1355,8 @@
                     <span class="fw-bold">(1) LOAN APPLICATIONS:</span>
                     Within
                     <span class="fw-bold">
-          3(or <input formControlName="text_loan_terms_application_days" appOnlyNumbers type="text" class="i-lr-1"> ) Days
+          3(or <input formControlName="text_loan_terms_application_days" appOnlyNumbers [maxLength]="3" type="text"
+                      class="i-lr-1 fw-bold"> ) Days
           </span>
                     After Acceptance, Buyer shall Deliver to Seller a letter from Buyer's lender
                     or loan broker stating that, based on a review of Buyer's written application and credit report,
@@ -1378,7 +1385,8 @@
                     <span class="fw-bold">(3) LOAN CONTINGENCY REMOVAL:</span>
                     Within
                     <span class="fw-bold">
-          21(or <input formControlName="text_loan_terms_contingency_removal_days" appOnlyNumbers type="text" class="i-lr-1"> ) Days
+          21(or <input formControlName="text_loan_terms_contingency_removal_days" appOnlyNumbers [maxLength]="3"
+                       type="text" class="i-lr-1 fw-bold"> ) Days
           </span>
                     After Acceptance, Buyer shall, as specified in paragraph 14, in writing, remove the loan
                     contingency
@@ -1658,7 +1666,8 @@
                     <div>
                       (c) The Parties shall, within
                       <span class="fw-bold">
-          5 (or <input formControlName="text_escrow_payment_days" appOnlyNumbers type="text" class="i-lr-1"> ) Days
+          5 (or <input formControlName="text_escrow_payment_days" appOnlyNumbers [maxLength]="3" type="text"
+                       class="i-lr-1 fw-bold"> ) Days
           </span>
                       After receipt, sign and return Escrow Holder's general provisions.
                     </div>
@@ -1897,17 +1906,28 @@
                   <div class="item-pl-3">
                     <span class="fw-bold">Seller-occupied or vacant property:</span>
                     Possession shall be delivered to Buyer: (i) at 6 PM or (
-                    <input formControlName="text_possession_deliver_time" type="text" class="i-lr-1">
-                    <input formControlName="check_possession_deliver_time_am" type="checkbox"> AM/
-                    <input formControlName="check_possession_deliver_time_pm" type="checkbox"> PM)
+                    <input formControlName="text_possession_deliver_time"
+                           type="text"
+                           timeMask
+                           appOnlyNumbers
+                           [maxLength]="5"
+                           class="i-lr-1">
+                    <input [value]="'am'" formControlName="radio_possession_deliver_time_ampm" type="radio"> AM/
+                    <input [value]="'pm'" formControlName="radio_possession_deliver_time_ampm" type="radio"> PM)
                     on the date of Close Of Escrow; (ii)
                     <input formControlName="check_possession_deliver_no_later_than" type="checkbox"> no later than
-                    <input formControlName="text_possession_deliver_no_later_than" appOnlyNumbers type="text" class="i-lr__5">
+                    <input formControlName="text_possession_deliver_no_later_than" appOnlyNumbers type="text"
+                           class="i-lr__5">
                     calendar days after Close Of Escrow; or (iii)
                     <input formControlName="check_possession_deliver_at" type="checkbox"> at
-                    <input formControlName="text_possession_deliver_at" type="text" class="i-lr-1">
-                    <input formControlName="check_possession_deliver_at_am" type="checkbox"> AM/
-                    <input formControlName="check_possession_deliver_at_pm" type="checkbox"> PM on
+                    <input formControlName="text_possession_deliver_at"
+                           type="text"
+                           timeMask
+                           appOnlyNumbers
+                           [maxLength]="5"
+                           class="i-lr-1">
+                    <input formControlName="radio_possession_deliver_at_ampm" type="radio"> AM/
+                    <input formControlName="radio_possession_deliver_at_ampm" type="radio"> PM on
                     <input matInput (click)="date_possession_deliver.open()" [matDatepicker]="date_possession_deliver"
                            formControlName="date_possession_deliver"
                            type="text"
@@ -1987,7 +2007,8 @@
                   <div class="item-pl-3">
                     at least
                     <span class="fw-bold">
-          5 (or <input formControlName="text_property_vacant_days" appOnlyNumbers type="text" class="i-lr-1"> ) Days
+          5 (or <input formControlName="text_property_vacant_days" appOnlyNumbers [maxLength]="3" type="text"
+                       class="i-lr-1 fw-bold"> ) Days
           </span>
                     Prior to Close Of Escrow, unless otherwise agreed in writing.
                     <span class="fw-bold">
@@ -2195,7 +2216,8 @@
                       <div class="item-pl-3">
           <span class="fw-bold">
           SELLER HAS: 7 (or
-          <input formControlName="text_seller_disclosure_days" appOnlyNumbers type="text" class="i-lr-1">
+          <input formControlName="text_seller_disclosure_days" appOnlyNumbers [maxLength]="3" type="text"
+                 class="i-lr-1 fw-bold">
           ) Days
           </span>
                         After Acceptance to disclose to Buyer if the Property is a condominium, or is located in
@@ -2263,7 +2285,8 @@
                     <span class="fw-bold">
           SELLER HAS:
           <br>
-          3 (or <input formControlName="text_seller_request_days" appOnlyNumbers type="text" class="i-lr-1"> ) Days
+          3 (or <input formControlName="text_seller_request_days" appOnlyNumbers [maxLength]="3" type="text"
+                       class="i-lr-1 fw-bold"> ) Days
           </span>
                     After Acceptance to request from the HOA (C.A.R. Form HOA1): <span class="fw-bold">(i)</span>
                     Copies of any documents
@@ -2553,9 +2576,9 @@
                     <span class="fw-bold f-l">A.&nbsp;</span>
                     <div class="item-pl-3 text-left">
           <span class="fw-bold "> SELLER HAS: 7 (or <input formControlName="text_seller_deliver_reports_days"
-                                                           appOnlyNumbers
+                                                           appOnlyNumbers [maxLength]="3"
                                                            type="text"
-                                                           class="i-lr-1"> ) Days</span>
+                                                           class="i-lr-1 fw-bold"> ) Days</span>
                       After Acceptance to Deliver to Buyer all Reports, disclosures and information for which
                       Seller is
                       responsible under paragraphs 5, 6, 7, 8B(5), 10A, B, C, and F, 11A and 13A. If, by the time
@@ -2570,9 +2593,9 @@
                       <span class="fw-bold f-l">(1) &nbsp;</span>
                       <div class="item-pl-3">
           <span class="fw-bold"> SELLER HAS: 17 (or <input formControlName="text_seller_days_after_acceptance"
-                                                           appOnlyNumbers
+                                                           appOnlyNumbers [maxLength]="3"
                                                            type="text"
-                                                           class="i-lr-1"> )
+                                                           class="i-lr-1 fw-bold"> )
           Days</span>
                         After Acceptance, unless otherwise agreed in writing, to:
                         <br>
@@ -2604,7 +2627,8 @@
                         or information for which Seller is responsible is not Delivered within the time
                         specified in paragraph 14A, then Buyer has
                         <span class="fw-bold">
-          5 ( or <input formControlName="text_buyer_days_after_delivery" appOnlyNumbers type="text" class="i-lr-1"> )Days
+          5 ( or <input formControlName="text_buyer_days_after_delivery" appOnlyNumbers [maxLength]="3" type="text"
+                        class="i-lr-1 fw-bold"> )Days
           </span>
                         After Delivery of any such items, or the time specified in paragraph 14B(1), whichever
                         is later, to Deliver to Seller a removal of
@@ -2628,7 +2652,8 @@
                       <div class="item-pl-3">
                         Buyer shall have access to the Property to conduct inspections and investigations for
                         <span class="fw-bold">17 (or <input formControlName="text_buyer_investigate_property_days"
-                                                            appOnlyNumbers type="text" class="i-lr-1"> )
+                                                            appOnlyNumbers [maxLength]="3" type="text"
+                                                            class="i-lr-1 fw-bold"> )
           Days</span> After
                         Acceptance, whether or not any part of the Buyer's Investigation Contingency has been
                         waived or removed.
@@ -2695,7 +2720,7 @@
                       class="fw-bold">(ii)</span> be signed by the applicable Buyer or
                       Seller; and <span class="fw-bold">(iii)</span> give the other Party at least <span
                       class="fw-bold">2 (or <input formControlName="text_notice_buyer_or_seller_to_perform" type="text"
-                                                   appOnlyNumbers class="i-lr-1"> ) Days</span>
+                                                   appOnlyNumbers [maxLength]="3" class="i-lr-1 fw-bold"> ) Days</span>
                       After Delivery
                       (or until the time specified in the applicable paragraph,
                       whichever occurs last) to take the applicable action. A NBP or NSP may not be Delivered any
@@ -2727,7 +2752,7 @@
                       signed by the applicable Buyer or Seller; and <span class="fw-bold">(ii)</span> give the
                       other Party at least <span class="fw-bold">3 (or <input
                       formControlName="text_days_to_close_escrow" type="text" appOnlyNumbers
-                      class="i-lr-1"> )
+                      class="i-lr-1 fw-bold"> )
           Days</span> After Delivery to close escrow. A DCE
                       may not be Delivered any earlier than <span class="fw-bold">3 Days</span> Prior to the
                       scheduled close of escrow.
@@ -2818,8 +2843,9 @@
                 <div class="item-pl-3 text-left">
                   <span class="fw-bold">FINAL VERIFICATION OF CONDITION:</span>
                   Buyer shall have the right to make a final verification of the Property within <span
-                  class="fw-bold">5 (or <input formControlName="text_property_verification_days" appOnlyNumbers type="text"
-                                               class="i-lr-1"> ) Days</span>
+                  class="fw-bold">5 (or <input formControlName="text_property_verification_days" appOnlyNumbers
+                                               type="text"
+                                               class="i-lr-1 fw-bold" [maxLength]="3"> ) Days</span>
                   Prior
                   to Close Of Escrow, NOT AS A CONTINGENCY OF THE SALE, but solely to confirm: <span
                   class="fw-bold">(i)</span>
@@ -2972,7 +2998,8 @@
                     only. Buyer and Seller will execute additional instructions, documents and forms provided by
                     Escrow Holder that are reasonably
                     necessary to close the escrow and, as directed by Escrow Holder, within <span class="fw-bold">3
-          (or <input formControlName="text_escrow_holder_pay_days" appOnlyNumbers type="text" class="i-lr-1"> ) Days,</span> shall pay
+          (or <input formControlName="text_escrow_holder_pay_days" appOnlyNumbers [maxLength]="3" type="text"
+                     class="i-lr-1 fw-bold"> ) Days,</span> shall pay
                     to Escrow Holder or HOA or
                     HOA management company or others any fee required by paragraphs 7, 10 or elsewhere in this
                     Agreement.
@@ -2984,7 +3011,8 @@
                     A Copy of this Agreement including any counter offer(s) and addenda shall be delivered to Escrow
                     Holder within <span class="fw-bold">3 Days</span> After
                     Acceptance
-                    (or <input formControlName="text_agreement_copy_deliver_days" appOnlyNumbers type="text" class="i-lr-3"> ). Buyer
+                    (or <input formControlName="text_agreement_copy_deliver_days" appOnlyNumbers [maxLength]="3"
+                               type="text" class="i-lr-3"> ). Buyer
                     and Seller authorize
                     Escrow
                     Holder to accept and rely on Copies and Signatures as defined in this Agreement as originals, to
@@ -3516,9 +3544,14 @@
                     type="text" class="i-lr-5"> , who is authorized to receive it, by 5:00 PM on the third Day
                     after this offer is signed by Buyer (or by
                     <input formControlName="check_received_on_time" type="checkbox">
-                    <input formControlName="text_received_on_time" type="text" class="i-lr-2">
-                    <input formControlName="check_received_on_time_am" type="checkbox"> AM/
-                    <input formControlName="check_received_on_time_pm" type="checkbox"> PM, on
+                    <input formControlName="text_received_on_time"
+                           type="text"
+                           timeMask
+                           appOnlyNumbers
+                           [maxLength]="5"
+                           class="i-lr-2">
+                    <input [value]="'am'" formControlName="radio_received_on_time_ampm" type="radio"> AM/
+                    <input [value]="'pm'" formControlName="radio_received_on_time_ampm" type="radio"> PM, on
                     <input matInput
                            (click)="date_received_on_date.open()"
                            [matDatepicker]="date_received_on_date"
@@ -3689,10 +3722,14 @@
                        class="i-lr-5">
                 <mat-datepicker #date_acceptance_received_date></mat-datepicker>
                 at
-                <input formControlName="text_acceptance_received_time" type="text" class="i-lr-2">
+                <input formControlName="text_acceptance_received_time"
+                       timeMask
+                       appOnlyNumbers
+                       [maxLength]="5"
+                       type="text" class="i-lr-2">
                 <br>
-                <input formControlName="check_acceptance_received_time_am" type="checkbox"> AM/
-                <input formControlName="check_acceptance_received_time_pm" type="checkbox"> PM.
+                <input [value]="'am'" formControlName="radio_acceptance_received_time_ampm" type="radio"> AM/
+                <input [value]="'pm'" formControlName="radio_acceptance_received_time_ampm" type="radio"> PM.
                 <span class="fw-bold">A binding Agreement is created when a Copy of Signed Acceptance is personally
           received by
           Buyer or Buyer's authorized agent whether or not confirmed in this document. Completion of this
@@ -3775,11 +3812,16 @@
                   State
                   <input formControlName="text_buyers_address_state" type="text" class="i-lr-1__5">
                   Zip
-                  <input formControlName="text_buyers_address_zip" type="text" class="i-lr-zip">
+                  <input formControlName="text_buyers_address_zip" appOnlyNumbers type="text" class="i-lr-zip">
                 </div>
                 <div>
                   Telephone
-                  <input formControlName="text_buyers_phone" type="text" class="i-lr-4">
+                  <input formControlName="text_buyers_phone"
+                         phoneMask
+                         [preValue]="documentForm?.value?.page_14?.text_buyers_phone"
+                         appOnlyNumbers
+                         [maxLength]="13"
+                         type="text" class="i-lr-4">
                   Fax
                   <input formControlName="text_buyers_fax" type="text" class="i-lr-2__5">
                   &nbsp;E-mail
@@ -4286,7 +4328,8 @@
 
             <div class="form">
               <div>
-                Buyer/Seller/Landlord/Tenant <input formControlName="text_privacy_act_advisory_first" type="text" class="i-lr-7">
+                Buyer/Seller/Landlord/Tenant <input formControlName="text_privacy_act_advisory_first" type="text"
+                                                    class="i-lr-7">
                 &nbsp; Date &nbsp;<input matInput (click)="date_privacy_act_advisory_first.open()"
                                          [matDatepicker]="date_privacy_act_advisory_first"
                                          formControlName="date_privacy_act_advisory_first"
@@ -4295,7 +4338,8 @@
                 <mat-datepicker #date_privacy_act_advisory_first></mat-datepicker>
               </div>
               <div>
-                Buyer/Seller/Landlord/Tenant <input formControlName="text_privacy_act_advisory_second" type="text" class="i-lr-7">
+                Buyer/Seller/Landlord/Tenant <input formControlName="text_privacy_act_advisory_second" type="text"
+                                                    class="i-lr-7">
                 &nbsp; Date &nbsp;<input matInput (click)="date_privacy_act_advisory_second.open()"
                                          [matDatepicker]="date_privacy_act_advisory_second"
                                          formControlName="date_privacy_act_advisory_second"

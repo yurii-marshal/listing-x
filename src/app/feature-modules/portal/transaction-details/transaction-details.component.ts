@@ -113,11 +113,11 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
           return;
         }
 
-        const invited: Person = {
+        const invited = {
           email,
           firstName: '<Invited',
           lastName: this.isSeller ? `Listing Agent>` : `Buyer's Agent>`
-        };
+        } as Person;
 
         const updatedListKey = this.isSeller ? 'agentSellers' : 'agentBuyers';
         this.transaction.offer[updatedListKey].push(invited);

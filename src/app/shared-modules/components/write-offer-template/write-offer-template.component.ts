@@ -9,6 +9,7 @@ import { ProgressService } from '../../../core-modules/core-services/progress.se
 import * as _ from 'lodash';
 import { switchMap, tap } from 'rxjs/operators';
 import { CustomValidators } from '../../../core-modules/validators/custom-validators';
+import { User } from '../../../feature-modules/auth/models';
 
 enum Type {
   AgentBuyers = 'agentBuyers',
@@ -118,7 +119,7 @@ export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
     }
   }
 
-  createEntity(model?: Person, disabled: boolean = false): FormGroup {
+  createEntity(model?: User | Person, disabled: boolean = false): FormGroup {
     return this.formBuilder.group({
       firstName: [{value: model && model.firstName, disabled}, [Validators.required, Validators.maxLength(30)]],
       lastName: [{value: model && model.lastName, disabled}, [Validators.required, Validators.maxLength(150)]],
