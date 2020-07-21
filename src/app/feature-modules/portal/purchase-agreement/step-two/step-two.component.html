@@ -1907,13 +1907,13 @@
                     <span class="fw-bold">Seller-occupied or vacant property:</span>
                     Possession shall be delivered to Buyer: (i) at 6 PM or (
                     <input formControlName="text_possession_deliver_time"
-                           type="text" timeMask
-                           [preValue]="documentForm.value?.page_7?.text_possession_deliver_time"
+                           type="text"
+                           timeMask
                            appOnlyNumbers
                            [maxLength]="5"
                            class="i-lr-1">
-                    <input formControlName="check_possession_deliver_time_am" type="checkbox"> AM/
-                    <input formControlName="check_possession_deliver_time_pm" type="checkbox"> PM)
+                    <input [value]="'am'" formControlName="radio_possession_deliver_time_ampm" type="radio"> AM/
+                    <input [value]="'pm'" formControlName="radio_possession_deliver_time_ampm" type="radio"> PM)
                     on the date of Close Of Escrow; (ii)
                     <input formControlName="check_possession_deliver_no_later_than" type="checkbox"> no later than
                     <input formControlName="text_possession_deliver_no_later_than" appOnlyNumbers type="text"
@@ -1921,13 +1921,13 @@
                     calendar days after Close Of Escrow; or (iii)
                     <input formControlName="check_possession_deliver_at" type="checkbox"> at
                     <input formControlName="text_possession_deliver_at"
-                           type="text" timeMask
+                           type="text"
+                           timeMask
                            appOnlyNumbers
-                           [preValue]="documentForm.value?.page_7?.text_possession_deliver_at"
                            [maxLength]="5"
                            class="i-lr-1">
-                    <input formControlName="check_possession_deliver_at_am" type="checkbox"> AM/
-                    <input formControlName="check_possession_deliver_at_pm" type="checkbox"> PM on
+                    <input formControlName="radio_possession_deliver_at_ampm" type="radio"> AM/
+                    <input formControlName="radio_possession_deliver_at_ampm" type="radio"> PM on
                     <input matInput (click)="date_possession_deliver.open()" [matDatepicker]="date_possession_deliver"
                            formControlName="date_possession_deliver"
                            type="text"
@@ -3545,13 +3545,13 @@
                     after this offer is signed by Buyer (or by
                     <input formControlName="check_received_on_time" type="checkbox">
                     <input formControlName="text_received_on_time"
-                           type="text" timeMask
-                           [preValue]="documentForm.value?.page_13?.text_received_on_time"
+                           type="text"
+                           timeMask
                            appOnlyNumbers
                            [maxLength]="5"
                            class="i-lr-2">
-                    <input formControlName="check_received_on_time_am" type="checkbox"> AM/
-                    <input formControlName="check_received_on_time_pm" type="checkbox"> PM, on
+                    <input [value]="'am'" formControlName="radio_received_on_time_ampm" type="radio"> AM/
+                    <input [value]="'pm'" formControlName="radio_received_on_time_ampm" type="radio"> PM, on
                     <input matInput
                            (click)="date_received_on_date.open()"
                            [matDatepicker]="date_received_on_date"
@@ -3723,8 +3723,8 @@
                 <mat-datepicker #date_acceptance_received_date></mat-datepicker>
                 at
                 <input formControlName="text_acceptance_received_time"
-                       timeMask appOnlyNumbers
-                       [preValue]="documentForm.value?.page_14?.text_acceptance_received_time"
+                       timeMask
+                       appOnlyNumbers
                        [maxLength]="5"
                        type="text" class="i-lr-2">
                 <br>
@@ -3818,7 +3818,7 @@
                   Telephone
                   <input formControlName="text_buyers_phone"
                          phoneMask
-                         [preValue]="documentForm.value?.page_14?.text_buyers_phone"
+                         [preValue]="documentForm?.value?.page_14?.text_buyers_phone"
                          appOnlyNumbers
                          [maxLength]="13"
                          type="text" class="i-lr-4">

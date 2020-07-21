@@ -57,7 +57,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.offerId = +this.route.snapshot.params.id;
     this.offer = this.route.snapshot.data.offer;
-    console.log(this.offer);
 
     const buyer = this.offer.buyers[0];
     const buyerSecond = this.offer.buyers[1];
@@ -329,14 +328,12 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         check_exclude_from_sale: [null, []],
         check_closing_buyer_intend: [null, []],
         text_possession_deliver_time: [null, []],
-        check_possession_deliver_time_am: [null, []],
-        check_possession_deliver_time_pm: [null, []],
+        radio_possession_deliver_time_ampm: ['am', []],
         check_possession_deliver_no_later_than: [null, []],
         text_possession_deliver_no_later_than: [null, []],
         check_possession_deliver_at: [null, []],
         text_possession_deliver_at: [null, []],
-        check_possession_deliver_at_am: [null, []],
-        check_possession_deliver_at_pm: [null, []],
+        radio_possession_deliver_at_ampm: ['am', []],
         date_possession_deliver: [null, []],
         text_possession_deliver_buyer_initials_first: [null, []],
         text_possession_deliver_buyer_initials_second: [null, []],
@@ -413,8 +410,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         text_signed_copy_received_by: [null, []],
         check_received_on_time: [null, []],
         text_received_on_time: [null, []],
-        check_received_on_time_am: [null, []],
-        check_received_on_time_pm: [null, []],
+        radio_received_on_time_ampm: ['am', []],
         date_received_on_date: [null, []],
         check_one_more_buyer: [null, []],
         date_other_buyer_first: [null, []],
@@ -455,7 +451,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         text_buyers_brokerage_firm_lic_by_first: [{value: buyer.licenseCode, disabled: true}, []],
         date_buyers_brokerage_firm_date_first: [null, []],
         text_buyers_brokerage_firm_by_second: [null, []],
-        text_buyers_brokerage_firm_lic_by_second: [{value: buyerSecond.licenseCode, disabled: true}, []],
+        text_buyers_brokerage_firm_lic_by_second: [{value: buyerSecond && buyerSecond.licenseCode, disabled: true}, []],
         date_buyers_brokerage_firm_date_second: [null, []],
         text_buyers_address_street: [{value: this.offer.streetName, disabled: true}, []],
         text_buyers_address_city: [{value: this.offer.city, disabled: true}, []],
@@ -470,7 +466,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         text_seller_brokerage_firm_lic_by_first: [{value: seller.licenseCode, disabled: true}, []],
         date_seller_brokerage_firm_date_first: [null, []],
         text_seller_brokerage_firm_by_second: [null, []],
-        text_seller_brokerage_firm_lic_by_second: [{value: sellerSecond.licenseCode, disabled: true}, []],
+        text_seller_brokerage_firm_lic_by_second: [{value: sellerSecond && sellerSecond.licenseCode, disabled: true}, []],
         date_seller_brokerage_firm_date_second: [null, []],
         text_seller_address_street: [{value: this.offer.streetName, disabled: true}, []],
         text_seller_address_city: [{value: this.offer.city, disabled: true}, []],
@@ -611,11 +607,13 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   documentInputChanged(controlName: string, controlValue: any, group: FormGroup, groupIndex: number) {
-    if (controlValue instanceof Date) {
+    if (controlValue === '') {
+      controlValue = null;
+    } else if (controlValue instanceof Date) {
       controlValue = this.datePipe.transform(controlValue, 'yyyy-MM-dd');
     }
     // show saving animation if it takes a time
-    this.offerService.updateOfferDocumentField({offerId: this.offerId, page: groupIndex + 1}, {[controlName]: controlValue || null})
+    this.offerService.updateOfferDocumentField({offerId: this.offerId, page: groupIndex + 1}, {[controlName]: controlValue})
       .pipe(
         takeUntil(this.onDestroyed$),
       )
