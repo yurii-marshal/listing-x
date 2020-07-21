@@ -8,6 +8,7 @@ export interface OfferSummary extends Offer {
 }
 
 export interface Offer {
+  // First step
   id: number;
   buyers: Person[];
   sellers: Person[];
@@ -22,13 +23,16 @@ export interface Offer {
   price: number;
   closeEscrowDays: number;
 
+  // additional
+  date?: Date | string;
+  progress?: number;
+
   // Second step
   initialDeposit?: string;
   loans?: Loan[];
   loanType?: LoanType;  // CONVENTIONAL LOAN,
   downPayment?: number;
   anySpecialFinancialTerms?: string;
-  progress?: number;
 }
 
 export interface Person {

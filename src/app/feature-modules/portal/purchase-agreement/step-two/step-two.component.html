@@ -967,7 +967,7 @@
                   <input formControlName="text_escrow_days"
                          appOnlyNumbers
                          type="text"
-                         class="i-lr-1">
+                         class="i-lr-1 fw-bold">
                   <span class="fw-bold">Days </span>
                   After Acceptance).
                 </div>
@@ -3691,8 +3691,8 @@
                 at
                 <input formControlName="text_acceptance_received_time" type="text" class="i-lr-2">
                 <br>
-                <input formControlName="check_acceptance_received_time_am" type="checkbox"> AM/
-                <input formControlName="check_acceptance_received_time_pm" type="checkbox"> PM.
+                <input [value]="'am'" formControlName="radio_acceptance_received_time_ampm" type="radio"> AM/
+                <input [value]="'pm'" formControlName="radio_acceptance_received_time_ampm" type="radio"> PM.
                 <span class="fw-bold">A binding Agreement is created when a Copy of Signed Acceptance is personally
           received by
           Buyer or Buyer's authorized agent whether or not confirmed in this document. Completion of this
@@ -3775,11 +3775,16 @@
                   State
                   <input formControlName="text_buyers_address_state" type="text" class="i-lr-1__5">
                   Zip
-                  <input formControlName="text_buyers_address_zip" type="text" class="i-lr-zip">
+                  <input formControlName="text_buyers_address_zip" appOnlyNumbers type="text" class="i-lr-zip">
                 </div>
                 <div>
                   Telephone
-                  <input formControlName="text_buyers_phone" type="text" class="i-lr-4">
+                  <input formControlName="text_buyers_phone"
+                         phoneMask
+                          [preValue]="form.value?.page_14?.text_buyers_phone"
+                          appOnlyNumbers
+                          [maxLength]="13"
+                         type="text" class="i-lr-4">
                   Fax
                   <input formControlName="text_buyers_fax" type="text" class="i-lr-2__5">
                   &nbsp;E-mail
