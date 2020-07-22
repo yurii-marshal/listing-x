@@ -955,7 +955,7 @@
                 </div>
                 <div>
                   <span class="fw-bold">D. &nbsp;CLOSE OF ESCROW</span> shall occur on
-                  <input [value]="'date'" type="radio" (change)="form.blur();" formControlName="radio_escrow">
+                  <input [value]="'date'" type="radio" (change)="updateEscrowFields('date')" formControlName="radio_escrow">
                   <input matInput
                          (click)="date_escrow_date.open()"
                          [matDatepicker]="date_escrow_date"
@@ -964,7 +964,7 @@
                          class="i-lr-5">
                   <mat-datepicker #date_escrow_date></mat-datepicker>
                   (date)(or
-                  <input [value]="'days'" type="radio" (change)="form.blur();" formControlName="radio_escrow">
+                  <input [value]="'days'" type="radio" (change)="updateEscrowFields('days')" formControlName="radio_escrow">
                   <input formControlName="text_escrow_days"
                          appOnlyNumbers [maxLength]="3"
                          type="text"
@@ -1927,8 +1927,8 @@
                            appOnlyNumbers
                            [maxLength]="5"
                            class="i-lr-1">
-                    <input formControlName="radio_possession_deliver_at_ampm" type="radio"> AM/
-                    <input formControlName="radio_possession_deliver_at_ampm" type="radio"> PM on
+                    <input [value]="'am'" formControlName="radio_possession_deliver_at_ampm" type="radio"> AM/
+                    <input [value]="'pm'" formControlName="radio_possession_deliver_at_ampm" type="radio"> PM on
                     <input matInput (click)="date_possession_deliver.open()" [matDatepicker]="date_possession_deliver"
                            formControlName="date_possession_deliver"
                            type="text"
