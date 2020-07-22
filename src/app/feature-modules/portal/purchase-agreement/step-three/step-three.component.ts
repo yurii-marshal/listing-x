@@ -9,7 +9,7 @@ import { LinkedDocuments } from '../../../../core-modules/models/linked-document
 import * as _ from 'lodash';
 import { Offer } from '../../../../core-modules/models/offer';
 import { of, Subject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-step-three',
@@ -26,7 +26,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
   private onDestroyed$: Subject<void> = new Subject<void>();
 
   constructor(public route: ActivatedRoute,
-              private service: DocumentLinkingService,
+              private documentLinkingService: DocumentLinkingService,
               private formBuilder: FormBuilder,
               private router: Router,
               private offerService: OfferService,
@@ -68,7 +68,8 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     // TODO: only do http request in case: form.dirty
     of(model)
       .pipe(
-        tap(docs => this.form.dirty ? this.service.linkDocumentsToOffer(docs) : of(docs))
+        tap(docs => this.form.dirty ? this.documentLinkingService.linkDocumentsToOffer(docs) : of(docs)),
+        switchMap(() => this.offerService.updateOfferProgress({progress: 4}, this.offer.id)),
       )
       .subscribe(() => {
         this.router.navigate(['/portal/purchase-agreement/', this.offer.id, 'summary']);
@@ -77,7 +78,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
 
   updateDocs(): void {
     const model: LinkedDocuments = this.getRequestValue();
-    this.service.updateOfferDocuments(model).subscribe(() => {
+    this.documentLinkingService.updateOfferDocuments(model).subscribe(() => {
       this.router.navigate(['/portal/transaction', this.offer.id]);
     });
   }

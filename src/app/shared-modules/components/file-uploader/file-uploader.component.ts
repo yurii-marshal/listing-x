@@ -23,14 +23,13 @@ const FILE_UPLOADER_COMPONENT_VALUE_ACCESSOR = {
              accept="image/*"
              multiple="true"
              (change)="onFilesSelect()">
-
       <img class="upload-icon" src="../../../../assets/images/icons/{{iconName}}.svg" alt="upload-file-icon">
       <div class="title">Drag and drop Files Here to Upload</div>
       <div *ngIf="shortened" class="plain-text">or</div>
       <div *ngIf="!shortened" class="subtitle">Maximum upload file size: {{ maxFileSize }} MB. Download format: .doc .pdf</div>
 
-      <label [for]="uniqueId">
-        <ng-content></ng-content>
+      <label [for]="uniqueId" (click)="fileInput.click();">
+          <ng-content></ng-content>
       </label>
     </div>
   `,
