@@ -8,8 +8,8 @@ import { DocumentLinkingService } from '../../services/document-linking.service'
 import { LinkedDocuments } from '../../../../core-modules/models/linked-documents';
 import * as _ from 'lodash';
 import { Offer } from '../../../../core-modules/models/offer';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { of, Subject } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-step-three',
@@ -66,7 +66,10 @@ export class StepThreeComponent implements OnInit, OnDestroy {
   continue(): void {
     const model: LinkedDocuments = this.getRequestValue();
     // TODO: only do http request in case: form.dirty
-    this.service.linkDocumentsToOffer(model)
+    of(model)
+      .pipe(
+        tap(docs => this.form.dirty ? this.service.linkDocumentsToOffer(docs) : of(docs))
+      )
       .subscribe(() => {
         this.router.navigate(['/portal/purchase-agreement/', this.offer.id, 'summary']);
       });

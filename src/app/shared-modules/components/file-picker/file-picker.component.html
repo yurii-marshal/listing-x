@@ -6,7 +6,7 @@
   </div>
 
   <file-uploader [shortened]="selectedItems.length > 0" (onFileSelect)="onSelectFilesForUpload($event)">
-    <button mat-flat-button appDebounceClick class="upload-btn" [class.shortened]="selectedItems.length > 0">
+    <button mat-flat-button class="upload-btn" [class.shortened]="selectedItems.length > 0">
       {{selectedItems.length > 0 ? 'UPLOAD' : 'UPLOAD NEW DOC'}}
     </button>
   </file-uploader>

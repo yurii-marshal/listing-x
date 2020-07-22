@@ -20,12 +20,8 @@ export class GetOfferResolver implements Resolve<Offer> {
             if (route.data && route.data.progress) {
               this.offerService.offerProgress = route.data.progress;
 
-              if (offer.progress > this.offerService.offerProgress) {
-                // TODO: throw out of the offer flow
-                // this.router.navigateByUrl('/portal')
-              }
               if (offer.progress < this.offerService.offerProgress) {
-                offer.progress = this.offerService.offerProgress;
+                this.router.navigateByUrl('/portal');
               }
             }
 

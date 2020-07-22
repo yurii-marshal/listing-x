@@ -148,7 +148,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         text_offer_apn: [{value: this.offer.apn, disabled: true}, []],
         text_offer_price_text: [{value: null, disabled: true}, []],
         // # Price = 51c
-        text_offer_price_digits: [null, [Validators.required]],
+        text_offer_price_digits: [0, [Validators.required]],
         // # Close of Escrow = 51d
         radio_escrow: ['date', []],
         date_escrow_date: [null, [Validators.required]],
@@ -215,7 +215,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         text_finance_additional_terms: [null, []],
         // # Down Payment = formula = price - (initial deposits + all loans (3a…3d))
         text_finance_down_payment_balance: [{value: null, disabled: true}, [Validators.required]],
-        text_finance_additional_terms_amount: [{value: this.offer.price, disabled: true}, []],
+        text_finance_additional_terms_amount: [{value: null, disabled: true}, []],
         text_finance_buyer_initials_first: [null, []],
         text_finance_buyer_initials_second: [null, []],
         text_finance_seller_initials_first: [null, []],
@@ -539,6 +539,12 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   acceptOfferDocument() {
     this.documentForm.markAllAsTouched();
 
+    const firstElementWithError = document.querySelector('input.ng-invalid');
+
+    if (firstElementWithError) {
+      firstElementWithError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
     this.documentForm.invalid
       ? this.snackbar.open('Please, fill all mandatory fields')
       : this.offerService.updateOfferProgress({progress: 3}, this.offerId)
@@ -546,6 +552,26 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         .subscribe(() => {
           this.router.navigate([`portal/purchase-agreement/${this.offerId}/step-three`]);
         });
+  }
+
+  updateEscrowFields(value) {
+    switch (value) {
+      case 'date':
+        this.documentForm.get('page_5.date_escrow_date').enable({emitEvent: false});
+        this.documentForm.get('page_5.text_escrow_days').disable({emitEvent: false});
+        this.documentForm.get('page_5.date_escrow_date').setValidators([Validators.required]);
+        this.documentForm.get('page_5.text_escrow_days').clearValidators();
+        break;
+      case 'days':
+        this.documentForm.get('page_5.text_escrow_days').enable({emitEvent: false});
+        this.documentForm.get('page_5.date_escrow_date').disable({emitEvent: false});
+        this.documentForm.get('page_5.text_escrow_days').setValidators([Validators.required]);
+        this.documentForm.get('page_5.date_escrow_date').clearValidators();
+        break;
+    }
+
+    this.documentForm.get('page_5.date_escrow_date').patchValue('', {emitEvent: false, onlySelf: true});
+    this.documentForm.get('page_5.text_escrow_days').patchValue('', {emitEvent: false, onlySelf: true});
   }
 
   private patchForm(model) {
@@ -561,6 +587,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
               if (field === controlName && data) {
                 this.documentForm.get(`${groupName}.${_.snakeCase(field)}`)
                   .patchValue(data, {emitEvent: false, onlySelf: true});
+                this.documentForm.get(`${groupName}.${_.snakeCase(field)}`).markAsTouched();
               }
 
             });
@@ -690,26 +717,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
   private saveOffer(model: Offer): Observable<Offer> {
     return this.offerService.update(model);
-  }
-
-  updateEscrowFields(value) {
-    switch (value) {
-      case 'date':
-        this.documentForm.get('page_5.date_escrow_date').enable({emitEvent: false});
-        this.documentForm.get('page_5.text_escrow_days').disable({emitEvent: false});
-        this.documentForm.get('page_5.date_escrow_date').setValidators([Validators.required]);
-        this.documentForm.get('page_5.text_escrow_days').clearValidators();
-        break;
-      case 'days':
-        this.documentForm.get('page_5.text_escrow_days').enable({emitEvent: false});
-        this.documentForm.get('page_5.date_escrow_date').disable({emitEvent: false});
-        this.documentForm.get('page_5.text_escrow_days').setValidators([Validators.required]);
-        this.documentForm.get('page_5.date_escrow_date').clearValidators();
-        break;
-    }
-
-    this.documentForm.get('page_5.date_escrow_date').patchValue('', {emitEvent: false, onlySelf: true});
-    this.documentForm.get('page_5.text_escrow_days').patchValue('', {emitEvent: false, onlySelf: true});
   }
 
   private updateDownPaymentAmount() {

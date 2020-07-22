@@ -71,7 +71,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   public onSubmit(): void {
     if (!_.isEqual(this.form.value, this.profileService.currentAgent)) {
-      this.form.value.phoneNumber = this.form.value.phoneNumber.replace(/\D/g, '');
+      // this.form.value.phoneNumber = this.form.value.phoneNumber.replace(/\D/g, '');
       this.profileService.updateAgent(this.form.value)
         .subscribe(() => {
           this.snackBar.open(
