@@ -7,6 +7,7 @@ import { OfferService } from '../../../feature-modules/portal/services/offer.ser
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { LocalStorageKey } from '../../../core-modules/enums/local-storage-key';
+import { Offer } from '../../../core-modules/models/offer';
 
 @Component({
   selector: 'app-base-template',
@@ -57,14 +58,18 @@ export class BaseTemplateComponent implements OnInit, OnDestroy {
       {label: 'Summary', path: [`./../../${offer && offer.id}/summary`], progress: 4, disabled: false},
     ];
 
-    this.purchaseNavLinks.forEach((link) => {
-      link.disabled = (offer && offer.progress) || 1 < link.progress;
-    });
+    this.updatePurchaseLinks(offer);
 
-    this.authService.changedUser$
+    this.authService.userChanged$
       .pipe(takeUntil(this.onDestroyed$))
       .subscribe(() => {
         this.portalNavLinks.forEach((links) => links.disabled = !this.user.registrationCompleted);
+      });
+
+    this.offerService.offerChanged$
+      .pipe(takeUntil(this.onDestroyed$))
+      .subscribe((data: Offer) => {
+        this.updatePurchaseLinks(data);
       });
   }
 
@@ -83,5 +88,11 @@ export class BaseTemplateComponent implements OnInit, OnDestroy {
   public logout(): void {
     this.authService.logout();
     this.router.navigateByUrl('/auth/login');
+  }
+
+  private updatePurchaseLinks(data: Offer) {
+    this.purchaseNavLinks.forEach((link) => {
+      link.disabled = (data && data.progress || 1) < link.progress;
+    });
   }
 }

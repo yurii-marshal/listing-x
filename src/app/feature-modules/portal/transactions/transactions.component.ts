@@ -52,7 +52,7 @@ export class TransactionsComponent implements OnDestroy, OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.offerService.offerChanged.pipe(
+    this.offerService.offerChanged$.pipe(
       takeUntil(this.onDestroyed$)
     ).subscribe(() => {
       this.dataSource.reload();

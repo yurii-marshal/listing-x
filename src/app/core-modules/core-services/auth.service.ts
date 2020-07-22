@@ -14,7 +14,7 @@ import { ApiEndpoint, AuthEndpoint } from '../enums/api-endpoints';
 })
 export class AuthService {
   currentUser: User;
-  changedUser$: Subject<User> = new Subject<User>();
+  userChanged$: Subject<User> = new Subject<User>();
 
   constructor(private http: HttpClient) {
   }
@@ -66,7 +66,7 @@ export class AuthService {
   // rewrite user properties after profile changes
   updateUser(props) {
     this.currentUser = Object.assign(this.currentUser, props);
-    this.changedUser$.next(this.currentUser);
+    this.userChanged$.next(this.currentUser);
   }
 
   login(user: User): Observable<JwtResponse> {

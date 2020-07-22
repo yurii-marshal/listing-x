@@ -10,7 +10,7 @@ import { BaseDataService } from '../../../core-modules/base-classes/base-data-se
 @Injectable()
 export class OfferService extends BaseDataService<Offer> {
   public offerProgress: number;
-  public offerChanged: Subject<void> = new Subject<void>();
+  public offerChanged$: Subject<Offer> = new Subject<Offer>();
 
   public currentOffer: Offer;
   public changedOfferModel: Offer;
@@ -41,7 +41,7 @@ export class OfferService extends BaseDataService<Offer> {
   add(model: Offer): Observable<Offer> {
     return this.http.post<Offer>(this.crudEndpoint, model)
       .pipe(
-        tap(() => this.offerChanged.next()),
+        tap((offer: Offer) => this.offerChanged$.next(offer)),
         tap(() => this.anonymousOfferData && localStorage.removeItem(LocalStorageKey.Offer)) // tear down
       );
   }
@@ -51,7 +51,7 @@ export class OfferService extends BaseDataService<Offer> {
     this.changedOfferModel = null;
 
     return super.update(model)
-      .pipe(tap(() => this.offerChanged.next()));
+      .pipe(tap((data: Offer) => this.offerChanged$.next(data)));
   }
 
   getAnonymousOffer(token: number): Observable<Offer> {
@@ -72,7 +72,15 @@ export class OfferService extends BaseDataService<Offer> {
     return this.http.get<OfferSummary>(`/offers/${id}/summary`);
   }
 
-  updateOfferProgress(data, id): Observable<any> {
-    return this.http.patch(`/offer/${id}/update-progress/`, data);
+  updateOfferProgress({progress}, id: number) {
+    return this.http.patch(`/offers/${id}/update-progress/`, {progress})
+      .pipe(
+        tap(() => {
+          if (progress > this.currentOffer.progress) {
+            this.currentOffer.progress = progress;
+          }
+          this.offerChanged$.next(this.currentOffer);
+        })
+      );
   }
 }
