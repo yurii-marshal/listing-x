@@ -18,7 +18,7 @@ export class OnlyNumbersDirective {
     }
     const current: string = this.el.nativeElement.value;
     const next: string = current.concat(event.key);
-    if (next && !String(+event.key).match(this.regex) || current.length >= this.maxLength) {
+    if (next && !String(+event.key).match(this.regex) || current.length === this.maxLength) {
       event.preventDefault();
     }
   }

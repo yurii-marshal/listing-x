@@ -542,7 +542,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     const firstElementWithError = document.querySelector('input.ng-invalid');
 
     if (firstElementWithError) {
-      firstElementWithError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      firstElementWithError.scrollIntoView({behavior: 'smooth', block: 'center'});
     }
 
     this.documentForm.invalid
@@ -560,18 +560,17 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         this.documentForm.get('page_5.date_escrow_date').enable({emitEvent: false});
         this.documentForm.get('page_5.text_escrow_days').disable({emitEvent: false});
         this.documentForm.get('page_5.date_escrow_date').setValidators([Validators.required]);
+        this.documentForm.get('page_5.text_escrow_days').patchValue('', {emitEvent: false, onlySelf: true});
         this.documentForm.get('page_5.text_escrow_days').clearValidators();
         break;
       case 'days':
         this.documentForm.get('page_5.text_escrow_days').enable({emitEvent: false});
         this.documentForm.get('page_5.date_escrow_date').disable({emitEvent: false});
         this.documentForm.get('page_5.text_escrow_days').setValidators([Validators.required]);
+        this.documentForm.get('page_5.date_escrow_date').patchValue('', {emitEvent: false, onlySelf: true});
         this.documentForm.get('page_5.date_escrow_date').clearValidators();
         break;
     }
-
-    this.documentForm.get('page_5.date_escrow_date').patchValue('', {emitEvent: false, onlySelf: true});
-    this.documentForm.get('page_5.text_escrow_days').patchValue('', {emitEvent: false, onlySelf: true});
   }
 
   private patchForm(model) {
@@ -587,7 +586,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
               if (field === controlName && data) {
                 this.documentForm.get(`${groupName}.${_.snakeCase(field)}`)
                   .patchValue(data, {emitEvent: false, onlySelf: true});
-                this.documentForm.get(`${groupName}.${_.snakeCase(field)}`).markAsTouched();
               }
 
             });
@@ -596,6 +594,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
       });
     });
+
+    this.updateEscrowFields(this.documentForm.get('page_5.radio_escrow').value);
   }
 
   private applyOfferFields() {
