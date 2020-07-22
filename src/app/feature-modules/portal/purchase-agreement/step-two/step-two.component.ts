@@ -214,7 +214,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         // # Loan Amount = loan1 + loan2 (3d1,3d2)
         text_finance_additional_terms: [null, []],
         // # Down Payment = formula = price - (initial deposits + all loans (3a…3d))
-        text_finance_down_payment_balance: [{value: this.offer.downPayment, disabled: true}, [Validators.required]],
+        text_finance_down_payment_balance: [{value: null, disabled: true}, [Validators.required]],
         text_finance_additional_terms_amount: [{value: this.offer.price, disabled: true}, []],
         text_finance_buyer_initials_first: [null, []],
         text_finance_buyer_initials_second: [null, []],
@@ -495,7 +495,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         text_privacy_act_advisory_second: [null, []],
         date_privacy_act_advisory_second: [null, []],
       }),
-    });
+    }, {updateOn: 'blur'});
 
     this.offerService.getOfferDocument(this.offerId)
       .pipe(
@@ -503,6 +503,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       )
       .subscribe((model) => {
         this.patchForm(model);
+        this.applyOfferFields();
         this.getAllFieldsCount(model);
         this.updatePageProgress(model, 0);
       });
@@ -516,7 +517,38 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.onDestroyed$.complete();
   }
 
-  patchForm(model) {
+  editOffer(offerChangedModel?: Offer) {
+    const dialogRef = this.dialog.open(EditOfferDialogComponent, {
+      width: '600px',
+      disableClose: true,
+      data: {offer: offerChangedModel || this.offer}
+    });
+
+    dialogRef.afterClosed()
+      .pipe(takeUntil(this.onDestroyed$))
+      .subscribe((data: any) => {
+        if (data.saved) {
+          this.snackbar.open('Offer is updated');
+        }
+        if (data.requestToSave) {
+          this.openSaveOfferDialog(data.changedOfferModel);
+        }
+      });
+  }
+
+  acceptOfferDocument() {
+    this.documentForm.markAllAsTouched();
+
+    this.documentForm.invalid
+      ? this.snackbar.open('Please, fill all mandatory fields')
+      : this.offerService.updateOfferProgress({progress: 3}, this.offerId)
+        .pipe(takeUntil(this.onDestroyed$))
+        .subscribe(() => {
+          this.router.navigate([`portal/purchase-agreement/${this.offerId}/step-three`]);
+        });
+  }
+
+  private patchForm(model) {
     // TODO: refactor
     Object.entries(model).forEach(([key, value]) => {
       Object.keys(this.documentForm.controls).forEach((groupName) => {
@@ -539,13 +571,16 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     });
   }
 
-  getAllFieldsCount(model) {
+  private applyOfferFields() {
+  }
+
+  private getAllFieldsCount(model) {
     Object.keys(model).forEach((page) => {
       this.allFieldsCount += Object.keys(model[page]).length;
     });
   }
 
-  updatePageProgress(formObj, pageNum) {
+  private updatePageProgress(formObj, pageNum) {
     const pageObj = Object.values(formObj)[pageNum];
 
     this.completedFieldsCount = 0;
@@ -562,7 +597,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.completedPageCount = Object.values(pageObj).filter((val) => !!val).length;
   }
 
-  detectPageChange(currentScrollPosition: number) {
+  private detectPageChange(currentScrollPosition: number) {
     for (let i = 0; i < this.pageBreakersOffsetTop.length; i++) {
       if (this.pageBreakersOffsetTop[i + 1]) {
         if (currentScrollPosition >= this.pageBreakersOffsetTop[i] && currentScrollPosition < this.pageBreakersOffsetTop[i + 1]) {
@@ -576,7 +611,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     }
   }
 
-  subscribeToFormChanges() {
+  private subscribeToFormChanges() {
     Object.values(this.documentForm.controls).forEach((group: FormGroup, groupIndex: number) => {
       Object.values(group.controls).forEach((control: FormControl, controlIndex: number) => {
         control.valueChanges
@@ -591,7 +626,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     });
   }
 
-  documentInputChanged(controlName: string, controlValue: any, group: FormGroup, groupIndex: number) {
+  private documentInputChanged(controlName: string, controlValue: any, group: FormGroup, groupIndex: number) {
     if (controlValue === '') {
       controlValue = null;
     } else if (controlValue instanceof Date) {
@@ -607,13 +642,11 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
         if (_.includes(this.downPaymentAmountPredicates, controlName)) {
           this.updateDownPaymentAmount();
-        } else if (controlName === 'radio_escrow') {
-          this.updateEscrowFields(this.documentForm.get('page_5.radio_escrow').value);
         }
       });
   }
 
-  initPageBreakers() {
+  private initPageBreakers() {
     this.pageBreakersOffsetTop =
       Array.from(this.elRef.nativeElement.querySelectorAll('.page-breaker'))
         .map((item: any) => item.offsetTop);
@@ -630,26 +663,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       });
   }
 
-  editOffer(offerChangedModel?: Offer) {
-    const dialogRef = this.dialog.open(EditOfferDialogComponent, {
-      width: '600px',
-      disableClose: true,
-      data: {offer: offerChangedModel || this.offer}
-    });
-
-    dialogRef.afterClosed()
-      .pipe(takeUntil(this.onDestroyed$))
-      .subscribe((data: any) => {
-        if (data.saved) {
-          this.snackbar.open('Offer is updated');
-        }
-        if (data.requestToSave) {
-          this.openSaveOfferDialog(data.changedOfferModel);
-        }
-      });
-  }
-
-  openSaveOfferDialog(changedOfferModel: Offer) {
+  private openSaveOfferDialog(changedOfferModel: Offer) {
     const dialogRef = this.dialog.open(SaveOfferDialogComponent, {
       width: '600px',
       disableClose: true,
@@ -674,24 +688,12 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       });
   }
 
-  saveOffer(model: Offer): Observable<Offer> {
+  private saveOffer(model: Offer): Observable<Offer> {
     return this.offerService.update(model);
   }
 
-  acceptOfferDocument() {
-    this.documentForm.markAllAsTouched();
-
-    this.documentForm.invalid
-      ? this.snackbar.open('Please, fill all mandatory fields')
-      : this.offerService.updateOfferProgress({progress: 3}, this.offerId)
-        .pipe(takeUntil(this.onDestroyed$))
-        .subscribe(() => {
-          this.router.navigate([`portal/purchase-agreement/${this.offerId}/step-three`]);
-        });
-  }
-
-  private updateEscrowFields(controlValue) {
-    switch (controlValue) {
+  updateEscrowFields(value) {
+    switch (value) {
       case 'date':
         this.documentForm.get('page_5.date_escrow_date').enable({emitEvent: false});
         this.documentForm.get('page_5.text_escrow_days').disable({emitEvent: false});
