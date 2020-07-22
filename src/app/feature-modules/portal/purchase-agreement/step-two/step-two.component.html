@@ -945,6 +945,7 @@
                     <input formControlName="text_offer_price_text" type="text" class="i-lr-9">
                     Dollars $
                     <input formControlName="text_offer_price_digits"
+                           appOnlyNumbers
                            appNumberToWords
                            [numToWordsForm]="documentForm"
                            [recipientControlName]="'page_5.text_offer_price_text'"
@@ -1523,8 +1524,8 @@
                   <div>
                     <span class="fw-bold f-l">(1)</span>
                     <div class="item-pl-3">
-                      <input formControlName="check_allocation_report_buyer_first" type="checkbox"> Buyer
-                      <input formControlName="check_allocation_report_seller_first" type="checkbox"> Seller shall pay
+                      <input [value]="'buyer'" formControlName="radio_allocation_report_first" type="radio"> Buyer
+                      <input [value]="'seller'" formControlName="radio_allocation_report_first" type="radio"> Seller shall pay
                       for a natural hazard zone
                       disclosure report,
                       including
@@ -1539,8 +1540,8 @@
                   <div>
                     <span class="fw-bold f-l">(2)</span>
                     <div class="item-pl-3">
-                      <input formControlName="check_allocation_report_buyer_second" type="checkbox"> Buyer
-                      <input formControlName="check_allocation_report_seller_second" type="checkbox"> Seller shall pay
+                      <input [value]="'buyer'" formControlName="radio_allocation_report_second" type="radio"> Buyer
+                      <input [value]="'seller'" formControlName="radio_allocation_report_second" type="radio"> Seller shall pay
                       for the following Report
                       <input formControlName="text_allocation_report_following_first" type="text" class="i-lr-8">
                       prepared by
@@ -1550,8 +1551,8 @@
                   <div>
                     <span class="fw-bold f-l">(3)</span>
                     <div class="item-pl-3">
-                      <input formControlName="check_allocation_report_buyer_third" type="checkbox"> Buyer
-                      <input formControlName="check_allocation_report_seller_third" type="checkbox"> Seller shall pay
+                      <input [value]="'buyer'" formControlName="radio_allocation_report_third" type="radio"> Buyer
+                      <input [value]="'seller'" formControlName="radio_allocation_report_third" type="radio"> Seller shall pay
                       for the following Report
                       <input formControlName="text_allocation_report_following_second" type="text" class="i-lr-8">
                       prepared by
@@ -1623,16 +1624,16 @@
                   <span class="fw-bold f-l">(2)</span>
                   <div class="item-pl-3">
                     <span class="fw-bold">(i)</span>
-                    <input formControlName="check_buyer_pay_government" type="checkbox"> Buyer
-                    <input formControlName="check_seller_pay_government" type="checkbox">
+                    <input [value]="'buyer'" formControlName="radio_pay_government" type="radio"> Buyer
+                    <input [value]="'seller'" formControlName="radio_pay_government" type="radio">
                     Seller shall pay the cost of compliance with any other minimum mandatory government inspections
                     and
                     reports if required as a condition of closing escrow under any Law.
                   </div>
                   <div class="item-pl-3">
                     <span class="fw-bold">(ii)</span>
-                    <input formControlName="check_buyer_pay_government_coe" type="checkbox"> Buyer
-                    <input formControlName="check_seller_pay_government_coe" type="checkbox">
+                    <input [value]="'buyer'" formControlName="radio_pay_government_coe" type="radio"> Buyer
+                    <input [value]="'seller'" formControlName="radio_pay_government_coe" type="radio">
                     Seller shall pay the cost of compliance with any other minimum mandatory government retrofit
                     standards required as a condition of closing escrow under any Law, whether the work is required
                     to
@@ -1654,8 +1655,8 @@
                   <div class="item-pl-3">
                     <div>
                       (a)
-                      <input formControlName="check_escrow_buyer_pay" type="checkbox"> Buyer
-                      <input formControlName="check_escrow_seller_pay" type="checkbox">
+                      <input [value]="'buyer'" formControlName="radio_escrow_pay" type="radio"> Buyer
+                      <input [value]="'seller'" formControlName="radio_escrow_pay" type="radio">
                       Seller shall pay escrow fee
                       <input formControlName="text_escrow_pay_amount" type="text" class="i-lr-8__5"> .
                     </div>
@@ -1676,8 +1677,8 @@
                   <div class="item-pl-3">
                     <div>
                       (a)
-                      <input formControlName="check_escrow_buyer_pay_insurance" type="checkbox"> Buyer
-                      <input formControlName="check_escrow_seller_pay_insurance" type="checkbox">
+                      <input [value]="'buyer'" formControlName="radio_escrow_pay_insurance" type="radio"> Buyer
+                      <input [value]="'seller'" formControlName="radio_escrow_pay_insurance" type="radio">
                       Seller shall pay for <span class="fw-bold">owner's</span> title insurance policy specified
                       in
                       paragraph 13E
@@ -1700,22 +1701,22 @@
                 <div class="item-pl-3">
                   <span class="fw-bold f-l">(1) </span>
                   <div class="item-pl-3">
-                    <input formControlName="check_other_costs_buyer_country_tax" type="checkbox"> Buyer
-                    <input formControlName="check_other_costs_seller_country_tax" type="checkbox">
+                    <input [value]="'buyer'" formControlName="radio_other_costs_country_tax" type="radio"> Buyer
+                    <input [value]="'seller'" formControlName="radio_other_costs_country_tax" type="radio">
                     Seller shall pay County transfer tax or fee
                     <input formControlName="text_other_costs_country_tax_amount" type="text" class="i-lr-7__5"> .
                   </div>
                   <span class="fw-bold f-l">(2) </span>
                   <div class="item-pl-3">
-                    <input formControlName="check_other_costs_buyer_city_tax" type="checkbox"> Buyer
-                    <input formControlName="check_other_costs_seller_city_tax" type="checkbox">
+                    <input [value]="'buyer'" formControlName="radio_other_costs_city_tax" type="radio"> Buyer
+                    <input [value]="'seller'" formControlName="radio_other_costs_city_tax" type="radio">
                     Seller shall pay City transfer tax or fee
                     <input formControlName="text_other_costs_country_city_amount" type="text" class="i-lr-8"> .
                   </div>
                   <span class="fw-bold f-l">(3) </span>
                   <div class="item-pl-3">
-                    <input formControlName="check_other_costs_buyer_hometown_tax" type="checkbox"> Buyer
-                    <input formControlName="check_other_costs_seller_hometown_tax" type="checkbox">
+                    <input [value]="'buyer'" formControlName="radio_other_costs_hometown_tax" type="radio"> Buyer
+                    <input [value]="'seller'" formControlName="radio_other_costs_hometown_tax" type="radio">
                     Seller shall pay Homeowners' Association (“HOA”) transfer fee
                     <input formControlName="text_other_costs_country_hometown_amount" type="text" class="i-lr-5__5"> .
                   </div>
@@ -1725,8 +1726,8 @@
                   </div>
                   <span class="fw-bold f-l">(5) </span>
                   <div class="item-pl-3">
-                    <input formControlName="check_other_costs_buyer_hao_fee" type="checkbox"> Buyer
-                    <input formControlName="check_other_costs_seller_hao_fee" type="checkbox">
+                    <input [value]="'buyer'" formControlName="radio_other_costs_hao_fee" type="radio"> Buyer
+                    <input [value]="'seller'" formControlName="radio_other_costs_hao_fee" type="radio">
                     Seller shall pay HOA fees for preparing all documents other than those required by Civil Code
                     §4525.
                   </div>
@@ -1736,31 +1737,31 @@
                   </div>
                   <span class="fw-bold f-l">(7) </span>
                   <div class="item-pl-3">
-                    <input formControlName="check_other_costs_buyer_private_fee" type="checkbox"> Buyer
-                    <input formControlName="check_other_costs_seller_private_fee" type="checkbox">
+                    <input [value]="'buyer'" formControlName="radio_other_costs_private_fee" type="radio"> Buyer
+                    <input [value]="'seller'" formControlName="radio_other_costs_private_fee" type="radio">
                     Seller shall pay for any private transfer fee
                     <input formControlName="text_other_costs_private_fee_amount" type="text" class="i-lr-7__5"> .
                   </div>
                   <span class="fw-bold f-l">(8) </span>
                   <div class="item-pl-3">
-                    <input formControlName="check_other_costs_buyer_shall_pay_first" type="checkbox"> Buyer
-                    <input formControlName="check_other_costs_seller_shall_pay_first" type="checkbox">
+                    <input [value]="'buyer'" formControlName="radio_other_costs_shall_pay_first" type="radio"> Buyer
+                    <input [value]="'seller'" formControlName="radio_other_costs_shall_pay_first" type="radio">
                     Seller shall pay for
                     <input formControlName="text_other_costs_shall_pay_amount_first" type="text" class="i-lr-9__5"> .
                   </div>
                   <span class="fw-bold f-l">(9) </span>
                   <div class="item-pl-3">
-                    <input formControlName="check_other_costs_buyer_shall_pay_second" type="checkbox"> Buyer
-                    <input formControlName="check_other_costs_seller_shall_pay_second" type="checkbox">
+                    <input [value]="'buyer'" formControlName="radio_other_costs_shall_pay_second" type="radio"> Buyer
+                    <input [value]="'seller'" formControlName="radio_other_costs_shall_pay_second" type="radio">
                     Seller shall pay for
                     <input formControlName="text_other_costs_shall_pay_amount_second" type="text" class="i-lr-9__5"> .
                   </div>
                   <span class="fw-bold f-l">(10) </span>
                   <div class="item-pl-3">
-                    <input formControlName="check_other_costs_buyer_shall_pay_cost" type="checkbox"> Buyer
-                    <input formControlName="check_other_costs_seller_shall_pay_cost" type="checkbox">
+                    <input [value]="'buyer'" formControlName="radio_other_costs_shall_pay_cost" type="radio"> Buyer
+                    <input [value]="'seller'" formControlName="radio_other_costs_shall_pay_cost" type="radio">
                     Seller shall pay for the cost, not to exceed $
-                    <input formControlName="text_other_costs_shall_pay_amount_cost" type="text" class="i-lr-4">
+                    <input formControlName="text_other_costs_shall_pay_amount_cost" appOnlyNumbers type="text" class="i-lr-4">
                     , of a standard (or
                     <input formControlName="check_other_costs_warranty" type="checkbox">
                     upgraded) one-year home warranty plan, issued by
@@ -3884,7 +3885,7 @@
                   Escrow Holder acknowledges receipt of a Copy of this Agreement, (if checked,
                   <input formControlName="check_escrow_deposit_amount" type="checkbox">
                   a deposit in the amount of $
-                  <input formControlName="text_escrow_deposit_amount" type="text" class="i-lr-3">
+                  <input formControlName="text_escrow_deposit_amount" appOnlyNumbers type="text" class="i-lr-3">
                   ), counter offer numbers
                   <input formControlName="text_counter_offer_numbers" type="text" class="i-lr-4">
                   <input formControlName="check_seller_statement_information" type="checkbox">
