@@ -1,4 +1,4 @@
-<div class="file-picker" role="dialog" aria-label="Color picker">
+<div class="file-picker" role="dialog" aria-label="picker">
   <h3>{{ title }}</h3>
 
   <div class="selected-item" *ngFor="let item of selectedItems; let i = index">
@@ -11,11 +11,11 @@
     </button>
   </file-uploader>
 
-  <div (keydown)="keyDownHandler($event)" role="listbox" tabindex="0" aria-label="Select a color">
+  <div (keydown)="keyDownHandler($event)" role="listbox" tabindex="0" aria-label="Select">
     <h3 class="title" *ngIf="dataSource?.length">Or choose existing document</h3>
     <div *ngFor="let item of dataSource; index as i"
          role="checkbox"
-         [class.custom]="item.custom"
+         [class.custom]="i > 3"
          [id]="item.id"
          [attr.aria-label]="item.title"
          [attr.aria-checked]="item.checked"

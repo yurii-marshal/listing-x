@@ -1,5 +1,4 @@
 import { LoanType } from '../enums/loan-type';
-import { Document } from './document';
 
 export interface OfferSummary extends Offer {
   documents: LinkedDocuments;
@@ -36,6 +35,9 @@ export interface Offer {
   downPayment?: number;
   anySpecialFinancialTerms?: string;
   remainingDaysCloseEscrow?: number;
+
+  // Third step
+  documents: LinkedDocuments;
 }
 
 export interface Person {
