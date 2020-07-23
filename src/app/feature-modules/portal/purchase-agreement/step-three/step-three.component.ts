@@ -65,7 +65,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
 
   continue(): void {
     const model: LinkedDocuments = this.getRequestValue();
-    // TODO: only do http request in case: form.dirty
+
     of(model)
       .pipe(
         tap(docs => this.form.dirty ? this.documentLinkingService.linkDocumentsToOffer(docs) : of(docs)),

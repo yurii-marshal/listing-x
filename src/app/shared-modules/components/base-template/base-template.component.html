@@ -20,7 +20,7 @@
            routerLinkActive #rla="routerLinkActive"
            [active]="rla.isActive"
            [disabled]="link.disabled"
-           [class.completed]="offerService.offerProgress > link.progress"
+           [class.completed]="!link.disabled && !rla.isActive"
            class="top-bar">
           {{ link.label }}
         </a>
@@ -52,6 +52,5 @@
 <ng-content></ng-content>
 
 <!--<div class="app-footer">-->
-  <!--&lt;!&ndash; FIXME: footer &ndash;&gt;-->
   <!--<img src="assets/images/icons/logo.svg" width="125" class="logo">-->
 <!--</div>-->
