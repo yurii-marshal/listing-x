@@ -109,15 +109,15 @@ export class FilePickerComponent implements OnInit, AfterViewInit, ControlValueA
       .subscribe((items: Document[]) => this.mergeNewFiles(items));
   }
 
-  removeSelectedItem(i: number) {
+  removeSelectedItem(index: number) {
     this.dataSource.forEach((document) => {
-      if (document.id === this.selectedItems[i].id) {
+      if (document.id === this.selectedItems[index].id) {
         document.checked = false;
       }
     });
 
-    this.selectedItems.splice(i, 1);
-    this.onModelChange(this.selectedItems.map(item => item.id));
+    this.selectedItems.splice(index, 1);
+    this.onModelChange(this.selectedItems);
   }
 
   registerOnChange(fn: any): void {
@@ -132,9 +132,10 @@ export class FilePickerComponent implements OnInit, AfterViewInit, ControlValueA
     this.isDisabled = isDisabled;
   }
 
-  writeValue(items: number[]): void {
-    this.selectedItems = items.map(item => this.dataSource.find(i => i.id === item));
-    this.preselect();
+  writeValue(items: Document[]): void {
+    this.selectedItems = items;
+
+    this.preselectSource();
   }
 
   private invalidateModel() {
@@ -142,7 +143,7 @@ export class FilePickerComponent implements OnInit, AfterViewInit, ControlValueA
       .filter('checked')
       .value();
 
-    this.onModelChange(this.selectedItems.map(i => i.id));
+    this.onModelChange(this.selectedItems);
   }
 
   private mergeNewFiles(items: Document[]) {
@@ -157,11 +158,11 @@ export class FilePickerComponent implements OnInit, AfterViewInit, ControlValueA
     this.service.loadListDocumentsByType(this.type, this.offerId)
       .subscribe(docs => {
         this.dataSource = docs;
-        this.preselect();
+        this.preselectSource();
       });
   }
 
-  private preselect() {
+  private preselectSource() {
     _.forEach(this.dataSource, (item: Document) => {
       item.checked = _.includes(this.selectedItems.map(i => i.id), item.id);
     });
