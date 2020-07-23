@@ -3,7 +3,7 @@ import { OfferService } from '../../services/offer.service';
 import { Offer, OfferSummary } from '../../../../core-modules/models/offer';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 
 @Component({
@@ -20,6 +20,7 @@ export class SummaryComponent implements OnInit, OnDestroy {
   constructor(
     private offerService: OfferService,
     private route: ActivatedRoute,
+    private router: Router,
     private snackbar: MatSnackBar,
   ) {
   }
@@ -40,11 +41,12 @@ export class SummaryComponent implements OnInit, OnDestroy {
   }
 
   saveOffer() {
-    this.offerService.update(this.offerSummary)
-      .pipe(takeUntil(this.onDestroyed$))
-      .subscribe(() => {
-        this.snackbar.open('Offer is updated');
-      });
+    this.router.navigateByUrl('/portal');
+    // this.offerService.update(this.offerSummary)
+    //   .pipe(takeUntil(this.onDestroyed$))
+    //   .subscribe(() => {
+    //     this.snackbar.open('Offer is updated');
+    //   });
   }
 
 }
