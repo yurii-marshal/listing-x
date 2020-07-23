@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  API_BASE_URL: 'https://dev-app-back.accuflip.com/api'
-  // API_BASE_URL: 'http://localhost:8000/api' // for local server
+  // API_BASE_URL: 'https://dev-app-back.accuflip.com/api'
+  API_BASE_URL: 'http://localhost:8000/api' // for local server
   // mailhog: http://localhost:8025/
 };
 

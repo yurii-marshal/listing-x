@@ -4,6 +4,7 @@
     <div class="title">Offer Summary</div>
 
     <div class="final-information u-flex u-flex-justify--space-between">
+
       <div class="block offer-information">
         <div class="row-layout header-section">
           <label class="header">Offer information</label>
@@ -21,24 +22,27 @@
           <label>address</label>
           <span>{{ offerSummary?.streetName }}, {{ offerSummary?.city }}, {{ offerSummary?.state }} {{ offerSummary?.zip }}</span>
         </div>
-        <div class="row-layout">
+        <div class="row-layout" *ngIf="offerSummary?.price">
           <label>offer info</label>
-          <span>${{ offerSummary?.price | number }} | {{ offerSummary?.closeEscrowDays }} Days to close escrow</span>
+          <span>${{ offerSummary?.price | number }}<span *ngIf="offerSummary?.closeEscrowDays"> | {{ offerSummary?.closeEscrowDays }} Days to close escrow</span></span>
         </div>
       </div>
+
       <div class="block supporting-docs">
         <div class="row-layout header-section">
           <label class="header" style="min-width: 190px;">Supporting docs</label>
           <span routerLink="/portal/purchase-agreement/{{offerSummary?.id}}/step-three" class="link">Edit</span>
         </div>
-        <div class="row-layout"><label>Add Pre-approval Letter</label>
+        <div class="row-layout" *ngIf="offerSummary?.documents?.preApproval.length">
+          <label>Add Pre-approval Letter</label>
           <div class="doc-preview">
             <img *ngFor="let img of offerSummary?.documents?.preApproval"
                  src="assets/images/icons/{{ img.extension }}.svg"
                  [title]="img.title" height="20">
           </div>
         </div>
-        <div class="row-layout"><label>Add Proof of Funds</label>
+        <div class="row-layout" *ngIf="offerSummary?.documents?.proofOfFunds.length">
+          <label>Add Proof of Funds</label>
           <div class="doc-preview">
             <div class="doc-preview">
               <img *ngFor="let img of offerSummary?.documents?.proofOfFunds"
@@ -47,7 +51,8 @@
             </div>
           </div>
         </div>
-        <div class="row-layout"><label>Add Cover Letter</label>
+        <div class="row-layout" *ngIf="offerSummary?.documents?.coverLetter.length">
+          <label>Add Cover Letter</label>
           <div class="doc-preview">
             <div class="doc-preview">
               <img *ngFor="let img of offerSummary?.documents?.coverLetter"
@@ -57,12 +62,13 @@
           </div>
         </div>
       </div>
+
       <div class="block payment-information">
         <div class="row-layout header-section">
           <label class="header">payment information</label>
           <span routerLink="/portal/purchase-agreement/{{offerSummary?.id}}/step-two" class="link">Edit</span>
         </div>
-        <div class="row-layout">
+        <div class="row-layout" *ngIf="offerSummary?.initialDeposit">
           <label>Initial deposit</label>
           <span>${{ offerSummary?.initialDeposit | number }}</span>
         </div>
@@ -81,16 +87,17 @@
             <label>points</label><span>{{ item.points | number }}</span>
           </div>
         </ng-container>
-        <div class="row-layout">
+        <div class="row-layout" *ngIf="offerSummary?.loanType">
           <label>variation</label><span class="bold">{{ offerSummary?.loanType }}</span>
         </div>
-        <div class="row-layout">
+        <div class="row-layout" *ngIf="offerSummary?.downPayment">
           <label>down payment</label><span>${{ offerSummary?.downPayment | number }}</span>
         </div>
-        <div class="row-layout">
+        <div class="row-layout" *ngIf="offerSummary?.anySpecialFinancialTerms">
           <label>special financing terms</label><span>{{ offerSummary?.anySpecialFinancialTerms }}</span>
         </div>
       </div>
+
     </div>
 
     <button mat-flat-button appDebounceClick
