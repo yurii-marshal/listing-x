@@ -5,7 +5,7 @@ import { Document } from '../../../core-modules/models/document';
   selector: 'app-selected-file-item',
   template: `
     <div class="file-item u-flex u-flex-align-items--center">
-      <img src="assets/images/icons/{{item?.extension}}.svg" alt="{{item?.extension}}">
+      <img src="assets/images/icons/{{ item?.extension }}.svg" alt="file">
       <div class="title">{{item?.title}}</div>
     </div>
     <button class="remove-btn" mat-icon-button (click)="removeItem()">

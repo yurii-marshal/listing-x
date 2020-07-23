@@ -47,7 +47,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
       coverLetter: [[]],
     });
 
-    const model = _.pick(this.offer, Object.keys(this.form.controls));
+    const model = _.pick(this.offer.documents, Object.keys(this.form.controls));
     this.form.patchValue(model);
   }
 
@@ -68,7 +68,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
 
     of(model)
       .pipe(
-        tap(docs => this.form.dirty ? this.documentLinkingService.linkDocumentsToOffer(docs) : of(docs)),
+        tap(docs => this.documentLinkingService.linkDocumentsToOffer(docs)),
         switchMap(() => this.offerService.updateOfferProgress({progress: 4}, this.offer.id)),
       )
       .subscribe(() => {

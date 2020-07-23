@@ -17,7 +17,7 @@
           <label>seller #{{ i + 1 }}</label>
           <span>{{ item.firstName }} {{ item.lastName }} | {{ item.email }}</span>
         </div>
-        <div class="row-layout">
+        <div class="row-layout" *ngIf="offerSummary?.streetName">
           <label>address</label>
           <span>{{ offerSummary?.streetName }}, {{ offerSummary?.city }}, {{ offerSummary?.state }} {{ offerSummary?.zip }}</span>
         </div>
