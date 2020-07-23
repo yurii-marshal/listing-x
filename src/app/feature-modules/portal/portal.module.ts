@@ -29,6 +29,7 @@ import { StepThreeComponent } from './purchase-agreement/step-three/step-three.c
 import { SummaryComponent } from './purchase-agreement/summary/summary.component';
 import { EditOfferDialogComponent } from '../../shared-modules/dialogs/edit-offer-dialog/edit-offer-dialog.component';
 import { SaveOfferDialogComponent } from '../../shared-modules/dialogs/save-offer-dialog/save-offer-dialog.component';
+import { AgreementsListComponent } from './purchase-agreement/agreements-list/agreements-list.component';
 
 const MatModules = [
   MatCheckboxModule,
@@ -64,6 +65,7 @@ const MatModules = [
     StepTwoComponent,
     StepThreeComponent,
     SummaryComponent,
+    AgreementsListComponent,
   ],
   entryComponents: [
     AddendumDialogComponent,

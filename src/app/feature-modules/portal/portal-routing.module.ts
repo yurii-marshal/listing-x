@@ -23,6 +23,7 @@ import { StepThreeComponent } from './purchase-agreement/step-three/step-three.c
 import { SummaryComponent } from './purchase-agreement/summary/summary.component';
 import { CreateOfferGuardService } from '../../core-modules/guards/create-offer-guard.service';
 import { GetOfferResolver } from '../../core-modules/resolvers/get-offer.resolver';
+import { AgreementsListComponent } from './purchase-agreement/agreements-list/agreements-list.component';
 
 const routes: Routes = [
   {
@@ -86,6 +87,11 @@ const routes: Routes = [
     canActivate: [AuthGuardService],
     canActivateChild: [AuthGuardService],
     children: [
+      {
+        path: 'all',
+        pathMatch: 'full',
+        component: AgreementsListComponent,
+      },
       {
         path: 'step-one',
         pathMatch: 'full',
