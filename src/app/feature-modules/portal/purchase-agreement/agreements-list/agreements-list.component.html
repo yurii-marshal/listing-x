@@ -1,0 +1,122 @@
+<app-base-template>
+
+  <div class="u-flex u-flex-justify--center">
+    <div class="u-flex u-flex-direction--column u-flex-align-items--center">
+      <h2 style="margin: 0">Purchase Agreements</h2>
+      <mat-form-field>
+        <mat-label style="display: none">Status</mat-label>
+        <mat-select (valueChange)="onFilter($event)" [value]="Status.All">
+          <mat-option *ngFor="let item of statuses" [value]="item">
+            {{ statusLabels[item] }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- Grid   -->
+  <div class="common-grid">
+    <table mat-table [dataSource]="dataSource">
+
+      <!--&lt;!&ndash; Date Column &ndash;&gt;-->
+      <!--<ng-container matColumnDef="createdAt">-->
+        <!--<th mat-header-cell *matHeaderCellDef>Date</th>-->
+        <!--<td mat-cell *matCellDef="let element" [ngClass]="getClassName(element.status)"> {{ element.createdAt | date: 'short' }} </td>-->
+      <!--</ng-container>-->
+
+      <!--&lt;!&ndash; Address Column &ndash;&gt;-->
+      <!--<ng-container matColumnDef="address">-->
+        <!--<th mat-header-cell *matHeaderCellDef>Address</th>-->
+        <!--<td mat-cell *matCellDef="let element">-->
+          <!--<div class="u-flex u-flex-align-items&#45;&#45;center">-->
+            <!--<p>-->
+              <!--<span *ngIf="element.offer.streetName">{{ element.offer.streetName }},&nbsp;</span>-->
+              <!--{{ element.offer.city }} {{ element.offer.state }}-->
+              <!--<span *ngIf="element.offer.zip">, {{ element.offer.zip }}</span>-->
+            <!--</p>-->
+          <!--</div>-->
+        <!--</td>-->
+      <!--</ng-container>-->
+
+      <!--&lt;!&ndash; Agent buyer column &ndash;&gt;-->
+      <!--<ng-container matColumnDef="agentBuyers">-->
+        <!--<th mat-header-cell *matHeaderCellDef>Buyer's Agents</th>-->
+        <!--<td mat-cell *matCellDef="let element">-->
+          <!--<div *ngFor="let item of element.offer.agentBuyers">-->
+            <!--<mat-icon fontSet="fa" fontIcon="fa-user" class="user-icon" [class.current-user]="isCurrentUser(item)"></mat-icon>-->
+            <!--{{ item.firstName }} {{ item.lastName }}-->
+          <!--</div>-->
+        <!--</td>-->
+      <!--</ng-container>-->
+
+      <!--&lt;!&ndash; Agent seller column &ndash;&gt;-->
+      <!--<ng-container matColumnDef="agentSellers">-->
+        <!--<th mat-header-cell *matHeaderCellDef>Listing Agents</th>-->
+        <!--<td mat-cell *matCellDef="let element">-->
+          <!--<div *ngFor="let item of element.offer.agentSellers">-->
+            <!--<mat-icon fontSet="fa" fontIcon="fa-user" class="user-icon" [class.current-user]="isCurrentUser(item)"></mat-icon>-->
+            <!--{{ item.firstName }} {{ item.lastName }}-->
+          <!--</div>-->
+        <!--</td>-->
+      <!--</ng-container>-->
+
+      <!--&lt;!&ndash; Buyer Column &ndash;&gt;-->
+      <!--<ng-container matColumnDef="buyers">-->
+        <!--<th mat-header-cell *matHeaderCellDef>Buyer</th>-->
+        <!--<td mat-cell *matCellDef="let element">-->
+          <!--<div *ngFor="let item of element.offer.buyers">-->
+            <!--<mat-icon fontSet="fa" fontIcon="fa-user" class="user-icon" [class.current-user]="isCurrentUser(item)"></mat-icon>-->
+            <!--{{ item.firstName }} {{ item.lastName }}-->
+          <!--</div>-->
+        <!--</td>-->
+      <!--</ng-container>-->
+
+      <!--&lt;!&ndash; Seller &ndash;&gt;-->
+      <!--<ng-container matColumnDef="sellers">-->
+        <!--<th mat-header-cell *matHeaderCellDef>Seller</th>-->
+        <!--<td mat-cell *matCellDef="let element">-->
+          <!--<div *ngFor="let item of element.offer.sellers" class="u-flex u-flex-align-items&#45;&#45;center">-->
+            <!--<mat-icon fontSet="fa" fontIcon="fa-user" class="user-icon" [class.current-user]="isCurrentUser(item)"></mat-icon>-->
+            <!--{{ item.firstName }} {{ item.lastName }}-->
+          <!--</div>-->
+        <!--</td>-->
+      <!--</ng-container>-->
+
+      <!--&lt;!&ndash; Status &ndash;&gt;-->
+      <!--<ng-container matColumnDef="status">-->
+        <!--<th mat-header-cell *matHeaderCellDef>Status</th>-->
+        <!--<td mat-cell *matCellDef="let element" [ngClass]="getClassName(element.status)">-->
+          <!--{{ statusLabels[element.status] }}-->
+        <!--</td>-->
+      <!--</ng-container>-->
+
+      <!--<ng-container matColumnDef="lastLogs">-->
+        <!--<th mat-header-cell *matHeaderCellDef>Last Events</th>-->
+        <!--<td mat-cell *matCellDef="let element">-->
+          <!--<div *ngFor="let item of element.lastLogs; let i = index">-->
+            <!--<div *ngIf="i < 2" [class.small-text]="element?.lastLogs?.length > 2">-->
+              <!--<div style="opacity: 0.85">{{ item.createdAt | date: 'short' }}</div>-->
+              <!--<div class="truncated" style="width: 100%">{{ item.title }}</div>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<div *ngIf="element?.lastLogs?.length > 2" style="font-style: italic; opacity: .75;"> and {{ element?.lastLogs?.length - 2 }} more ...</div>-->
+        <!--</td>-->
+      <!--</ng-container>-->
+
+      <!--&lt;!&ndash; Actions Column &ndash;&gt;-->
+      <!--<ng-container matColumnDef="actions">-->
+        <!--<th mat-header-cell *matHeaderCellDef></th>-->
+        <!--<td mat-cell *matCellDef="let element">-->
+          <!--<div routerLink="/portal/transaction/{{ element.id }}" class="detail-btn" [ngClass]="getClassName(element.status)">-->
+            <!--More Details-->
+          <!--</div>-->
+        <!--</td>-->
+      <!--</ng-container>-->
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+</app-base-template>

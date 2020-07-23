@@ -8,8 +8,8 @@ import { DocumentLinkingService } from '../../services/document-linking.service'
 import { LinkedDocuments } from '../../../../core-modules/models/linked-documents';
 import * as _ from 'lodash';
 import { Offer } from '../../../../core-modules/models/offer';
-import { of, Subject } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+import { forkJoin, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-step-three',
@@ -58,29 +58,32 @@ export class StepThreeComponent implements OnInit, OnDestroy {
 
   getRequestValue(): LinkedDocuments {
     return {
-      ...this.form.value,
-      offerId: this.offer.id
+      ...this.form.value.preApproval.map(i => i.id),
+      ...this.form.value.proofOfFunds.map(i => i.id),
+      ...this.form.value.coverLetter.map(i => i.id),
+      offerId: this.offer.id,
     } as LinkedDocuments;
   }
 
   continue(): void {
     const model: LinkedDocuments = this.getRequestValue();
 
-    of(model)
-      .pipe(
-        tap(docs => this.documentLinkingService.linkDocumentsToOffer(docs)),
-        switchMap(() => this.offerService.updateOfferProgress({progress: 4}, this.offer.id)),
-      )
+    forkJoin(
+      this.documentLinkingService.linkDocumentsToOffer(model),
+      this.offerService.updateOfferProgress({progress: 4}, this.offer.id)
+    )
+      .pipe(takeUntil(this.onDestroyed$))
       .subscribe(() => {
+        this.offerService.currentOffer.documents = this.form.value;
         this.router.navigate(['/portal/purchase-agreement/', this.offer.id, 'summary']);
       });
   }
 
-  updateDocs(): void {
-    const model: LinkedDocuments = this.getRequestValue();
-    this.documentLinkingService.updateOfferDocuments(model).subscribe(() => {
-      this.router.navigate(['/portal/transaction', this.offer.id]);
-    });
-  }
+  // updateDocs(): void {
+  //   const model: LinkedDocuments = this.getRequestValue();
+  //   this.documentLinkingService.updateOfferDocuments(model).subscribe(() => {
+  //     this.router.navigate(['/portal/transaction', this.offer.id]);
+  //   });
+  // }
 
 }

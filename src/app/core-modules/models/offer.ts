@@ -1,4 +1,5 @@
 import { LoanType } from '../enums/loan-type';
+import { Document } from './document';
 
 export interface OfferSummary extends Offer {
   documents: LinkedDocuments;
