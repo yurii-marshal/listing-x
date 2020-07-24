@@ -10,6 +10,7 @@ import * as _ from 'lodash';
 import { catchError, takeUntil } from 'rxjs/operators';
 import { of, Subject } from 'rxjs';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
+import { User } from '../../auth/models';
 
 @Component({
   selector: 'app-user-profile',
@@ -17,6 +18,7 @@ import { AuthService } from '../../../core-modules/core-services/auth.service';
   styleUrls: ['./user-profile.component.scss']
 })
 export class UserProfileComponent implements OnInit, OnDestroy {
+  public user: User;
   public form: FormGroup = this.formBuilder.group({});
 
   public noteTypes = NotificationType;
@@ -32,6 +34,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.user = this.authService.currentUser;
+
     this.buildForm();
 
     this.profileService.getAgent()
