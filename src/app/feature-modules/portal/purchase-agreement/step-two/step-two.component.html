@@ -159,10 +159,13 @@
               </div>
 
               <div>
-                <input formControlName="check_disclosure_buyer_1" type="checkbox"> Buyer
-                <input formControlName="check_disclosure_seller_1" type="checkbox"> Seller
-                <input formControlName="check_disclosure_landlord_1" type="checkbox"> Landlord
-                <input formControlName="check_disclosure_tenant_1" type="checkbox"> Tenant
+                <input [value]="'buyer'" formControlName="radio_disclosure_1" type="radio"> Buyer
+                <input [value]="'seller'" formControlName="radio_disclosure_1" type="radio"> Seller
+                <input [value]="'landlord'" formControlName="radio_disclosure_1" type="radio"> Landlord
+                <input [value]="'tenant'" formControlName="radio_disclosure_1" type="radio"> Tenant
+                <!--<app-signature-box-->
+                  <!--[signature]="signature"-->
+                <!--&gt;</app-signature-box>-->
                 <input formControlName="text_disclosure_role_name_1" type="text" class="i-lr-6"> Date
                 <input formControlName="date_disclosure_1" type="text" class="i-lr-3">
                 <!--<input matInput (click)="date_disclosure_1.open()" [matDatepicker]="date_disclosure_1"-->
@@ -171,10 +174,10 @@
                 <!--<mat-datepicker #date_disclosure_1></mat-datepicker>-->
               </div>
               <div>
-                <input formControlName="check_disclosure_buyer_2" type="checkbox"> Buyer
-                <input formControlName="check_disclosure_seller_2" type="checkbox"> Seller
-                <input formControlName="check_disclosure_landlord_2" type="checkbox"> Landlord
-                <input formControlName="check_disclosure_tenant_2" type="checkbox"> Tenant
+                <input [value]="'buyer'" formControlName="radio_disclosure_2" type="radio"> Buyer
+                <input [value]="'seller'" formControlName="radio_disclosure_2" type="radio"> Seller
+                <input [value]="'landlord'" formControlName="radio_disclosure_2" type="radio"> Landlord
+                <input [value]="'tenant'" formControlName="radio_disclosure_2" type="radio"> Tenant
                 <input formControlName="text_disclosure_role_name_2" type="text" class="i-lr-6"> Date
                 <input formControlName="date_disclosure_2" type="text" class="i-lr-3">
                 <!--<input matInput (click)="date_disclosure_2.open()" [matDatepicker]="date_disclosure_2"-->
@@ -362,8 +365,8 @@
               </div>
               <div>
                 Is the broker of (check one):
-                <input formControlName="check_confirm_seller_is_seller" type="checkbox"> the seller; or
-                <input formControlName="check_confirm_seller_is_dual_agent" type="checkbox"> both the buyer and seller.
+                <input [value]="'seller'" formControlName="radio_confirm_seller" type="radio"> the seller; or
+                <input [value]="'dual_agent'" formControlName="radio_confirm_seller" type="radio"> both the buyer and seller.
                 (dual agent)
               </div>
               <div>
@@ -374,9 +377,9 @@
               </div>
               <div>
                 Is (check one):
-                <input formControlName="check_confirm_seller_agent_is_seller" type="checkbox"> the Seller's Agent.
+                <input [value]="'seller_agent'" formControlName="radio_confirm_seller_agent" type="radio"> the Seller's Agent.
                 (salesperson or broker associate)
-                <input formControlName="check_confirm_seller_agent_is_dual_agent" type="checkbox"> both the Buyer's and
+                <input [value]="'dual_agent'" formControlName="radio_confirm_seller_agent" type="radio"> both the Buyer's and
                 Seller's Agent. (dual agent)
               </div>
               <div>
@@ -387,8 +390,8 @@
               </div>
               <div>
                 Is the broker of (check one):
-                <input formControlName="check_confirm_buyer_is_buyer" type="checkbox"> the buyer; or
-                <input formControlName="check_confirm_buyer_is_dual_agent" type="checkbox"> both the buyer and seller.
+                <input [value]="'buyer'" formControlName="radio_confirm_buyer" type="radio"> the buyer; or
+                <input [value]="'dual_agent'" formControlName="radio_confirm_buyer" type="radio"> both the buyer and seller.
                 (dual agent)
               </div>
               <div>
@@ -399,9 +402,9 @@
               </div>
               <div>
                 Is (check one):
-                <input formControlName="check_confirm_buyer_agent_is_seller" type="checkbox"> the Buyer's Agent.
+                <input [value]="'buyer_agent'" formControlName="radio_confirm_buyer_agent" type="radio"> the Buyer's Agent.
                 (salesperson or broker associate)
-                <input formControlName="check_confirm_buyer_agent_is_dual_agent" type="checkbox"> both the Buyer's and
+                <input [value]="'dual_agent'" formControlName="radio_confirm_buyer_agent" type="radio"> both the Buyer's and
                 Seller's Agent. (dual agent)
               </div>
             </div>
@@ -635,13 +638,13 @@
                 <input formControlName="text_acknowledge_buyer_agent_firm" type="text" class="i-lr-5">
                 DRE Lic. #
                 &nbsp; <input formControlName="text_acknowledge_buyer_agent_firm_lic" type="text" class="i-lr-2">
-                Date
-                <input matInput (click)="date_acknowledge_buyer_agent_firm_date.open()"
-                       [matDatepicker]="date_acknowledge_buyer_agent_firm_date"
-                       formControlName="date_acknowledge_buyer_agent_firm_date"
-                       type="text"
-                       class="i-lr-2__5">
-                <mat-datepicker #date_acknowledge_buyer_agent_firm_date></mat-datepicker>
+                <!--Date-->
+                <!--<input matInput (click)="date_acknowledge_buyer_agent_firm_date.open()"-->
+                       <!--[matDatepicker]="date_acknowledge_buyer_agent_firm_date"-->
+                       <!--formControlName="date_acknowledge_buyer_agent_firm_date"-->
+                       <!--type="text"-->
+                       <!--class="i-lr-2__5">-->
+                <!--<mat-datepicker #date_acknowledge_buyer_agent_firm_date></mat-datepicker>-->
               </div>
               <div>
                 By
@@ -649,12 +652,13 @@
                 &nbsp; &nbsp;DRE Lic. #
                 &nbsp; <input formControlName="text_acknowledge_buyer_agent_lic" type="text" class="i-lr-2">
                 &nbsp; Date
-                <input matInput (click)="date_acknowledge_buyer_agent_date.open()"
-                       [matDatepicker]="date_acknowledge_buyer_agent_date"
-                       formControlName="date_acknowledge_buyer_agent_date"
-                       type="text"
-                       class="i-lr-2__5">
-                <mat-datepicker #date_acknowledge_buyer_agent_date></mat-datepicker>
+                <input formControlName="date_acknowledge_buyer_agent_date" type="text" class="i-lr-2__5">
+                <!--<input matInput (click)="date_acknowledge_buyer_agent_date.open()"-->
+                       <!--[matDatepicker]="date_acknowledge_buyer_agent_date"-->
+                       <!--formControlName="date_acknowledge_buyer_agent_date"-->
+                       <!--type="text"-->
+                       <!--class="i-lr-2__5">-->
+                <!--<mat-datepicker #date_acknowledge_buyer_agent_date></mat-datepicker>-->
               </div>
               <br>
               <div>
@@ -1012,9 +1016,9 @@
                     &nbsp; <input formControlName="text_agency_broker_seller_firm_lic" type="text" class="i-lr-2">
                     <br>
                     Is the broker of (check one):
-                    <input formControlName="check_agency_broker_of_seller" type="checkbox">
+                    <input [value]="'seller'" formControlName="radio_agency_broker_seller" type="radio">
                     the seller; or
-                    <input formControlName="check_agency_broker_seller_both" type="checkbox">
+                    <input [value]="'both'" formControlName="radio_agency_broker_seller" type="radio">
                     both the buyer and seller. (dual agent)
                     <br>
                     Seller's Agent
@@ -1023,9 +1027,9 @@
                     &nbsp; <input formControlName="text_agency_broker_seller_agent_lic" type="text" class="i-lr-2">
                     <br>
                     Is (check one):
-                    <input formControlName="check_agency_broker_seller_agent" type="checkbox">
+                    <input [value]="'seller_agent'" formControlName="radio_agency_broker_seller_agent" type="radio">
                     the Seller's Agent. (salesperson or broker associate)
-                    <input formControlName="check_agency_broker_seller_dual" type="checkbox">
+                    <input [value]="'dual'" formControlName="radio_agency_broker_seller_agent" type="radio">
                     both the Buyer's and Seller's Agent. (dual agent)
                     <br>
                     <span class="fw-bold">
@@ -1036,9 +1040,9 @@
                     &nbsp; <input formControlName="text_agency_broker_buyer_firm_lic" type="text" class="i-lr-2">
                     <br>
                     Is the broker of (check one):
-                    <input formControlName="check_agency_broker_of_buyer" type="checkbox">
+                    <input [value]="'buyer'" formControlName="radio_agency_broker_buyer" type="radio">
                     the buyer; or
-                    <input formControlName="check_agency_broker_buyer_both" type="checkbox">
+                    <input [value]="'both'" formControlName="radio_agency_broker_buyer" type="radio">
                     both the buyer and seller. (dual agent)
                     <br>
                     Buyer's Agent
@@ -1047,9 +1051,9 @@
                     &nbsp; <input formControlName="text_agency_broker_buyer_agent_lic" type="text" class="i-lr-2">
                     <br>
                     Is (check one):
-                    <input formControlName="check_agency_broker_buyer_agent" type="checkbox">
+                    <input [value]="'buyer_agent'" formControlName="radio_agency_broker_buyer_agent" type="radio">
                     the Buyer's Agent. (salesperson or broker associate)
-                    <input formControlName="check_agency_broker_buyer_dual" type="checkbox">
+                    <input [value]="'dual'" formControlName="radio_agency_broker_buyer_agent" type="radio">
                     both the Buyer's and Seller's Agent. (dual agent)
                   </div>
                 </div>

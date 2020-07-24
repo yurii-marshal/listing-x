@@ -4,7 +4,7 @@ import { TransactionService } from '../../portal/services/transaction.service';
 import { AddendumData, GeneratedDocument } from '../../../core-modules/models/document';
 import { filter, map, scan, switchMap, tap } from 'rxjs/operators';
 import { Transaction } from '../../../core-modules/models/transaction';
-import { SignatureBoxComponent, SignMode } from '../components/signature-box/signature-box.component';
+import { SignatureBoxComponent, SignMode } from '../../../shared-modules/components/signature-box/signature-box.component';
 import * as _ from 'lodash';
 import { merge, Observable } from 'rxjs';
 import { FinishSigningDialogComponent } from '../dialogs/finish-signing-dialog/finish-signing-dialog.component';

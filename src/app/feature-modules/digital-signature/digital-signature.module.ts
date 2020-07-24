@@ -4,7 +4,7 @@ import { DigitalSignatureRoutingModule } from './digital-signature-routing.modul
 import { ESignatureComponent } from './e-signature/e-signature.component';
 import { SharedModule } from '../../shared-modules/shared.module';
 import { MatButtonModule, MatDialogModule, MatIconModule, MatProgressBarModule } from '@angular/material';
-import { SignatureBoxComponent } from './components/signature-box/signature-box.component';
+import { SignatureBoxComponent } from '../../shared-modules/components/signature-box/signature-box.component';
 import { FinishSigningDialogComponent } from './dialogs/finish-signing-dialog/finish-signing-dialog.component';
 import { TransactionService } from '../portal/services/transaction.service';
 import { SpqSignatureComponent } from './spq-signature/spq-signature.component';
@@ -20,7 +20,6 @@ const MatModules = [
 @NgModule({
   declarations: [
     ESignatureComponent,
-    SignatureBoxComponent,
     FinishSigningDialogComponent,
     SpqSignatureComponent,
     AddendumSignatureComponent

@@ -10,6 +10,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { SaveOfferDialogComponent } from '../../../../shared-modules/dialogs/save-offer-dialog/save-offer-dialog.component';
 import { DatePipe } from '@angular/common';
 import * as _ from 'lodash';
+import { Signature } from '../../../../core-modules/models/document';
 
 @Component({
   selector: 'app-step-two',
@@ -19,6 +20,11 @@ import * as _ from 'lodash';
 })
 export class StepTwoComponent implements OnInit, OnDestroy {
   @ViewChildren('form') form;
+
+  signature: Signature = {
+    email: 'email@dot.com',
+    signature: 'fjwefwif'
+  };
 
   documentForm: FormGroup;
   currentPage: number = 0;
@@ -38,6 +44,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   private downPaymentAmountPredicates: string[] = [
     'text_offer_price_digits',
     'text_finance_terms_amount',
+    'text_finance_increased_deposit_amount',
     'text_finance_first_loan_amount',
     'text_finance_second_loan_amount',
   ];
@@ -61,16 +68,10 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.documentForm = this.fb.group({
       page_1: this.fb.group({
         check_civil_code: [null, []],
-        check_disclosure_buyer_1: [{value: true, disabled: true}, []],
-        check_disclosure_seller_1: [{value: null, disabled: true}, []],
-        check_disclosure_landlord_1: [{value: null, disabled: true}, []],
-        check_disclosure_tenant_1: [{value: null, disabled: true}, []],
+        radio_disclosure_1: [{value: 'buyer', disabled: true}, []],
         text_disclosure_role_name_1: ['', []],
         date_disclosure_1: ['', []],
-        check_disclosure_buyer_2: [{value: true, disabled: true}, []],
-        check_disclosure_seller_2: [{value: null, disabled: true}, []],
-        check_disclosure_landlord_2: [{value: null, disabled: true}, []],
-        check_disclosure_tenant_2: [{value: null, disabled: true}, []],
+        radio_disclosure_2: [{value: 'buyer', disabled: true}, []],
         text_disclosure_role_name_2: ['', []],
         date_disclosure_2: ['', []],
         text_disclosure_agent: [{value: '', disabled: true}, []],
@@ -82,20 +83,16 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       page_2: this.fb.group({
         text_confirm_seller_firm_name: [{value: '', disabled: true}, []],
         text_confirm_seller_firm_lic: [{value: '', disabled: true}, []],
-        check_confirm_seller_is_seller: [{value: true, disabled: true}, []],
-        check_confirm_seller_is_dual_agent: [{value: null, disabled: true}, []],
+        radio_confirm_seller: [{value: 'seller', disabled: true}, []],
         text_confirm_seller_agent_firm_name: [{value: '', disabled: true}, []],
         text_confirm_seller_agent_firm_lic: [{value: '', disabled: true}, []],
-        check_confirm_seller_agent_is_seller: [{value: true, disabled: true}, []],
-        check_confirm_seller_agent_is_dual_agent: [{value: null, disabled: true}, []],
+        radio_confirm_seller_agent: [{value: 'seller_agent', disabled: true}, []],
         text_confirm_buyer_firm_name: [{value: '', disabled: true}, []],
         text_confirm_buyer_firm_lic: [{value: '', disabled: true}, []],
-        check_confirm_buyer_is_buyer: [{value: true, disabled: true}, []],
-        check_confirm_buyer_is_dual_agent: [{value: null, disabled: true}, []],
+        radio_confirm_buyer: [{value: 'buyer', disabled: true}, []],
         text_confirm_buyer_agent_firm_name: [{value: '', disabled: true}, []],
         text_confirm_buyer_agent_firm_lic: [{value: '', disabled: true}, []],
-        check_confirm_buyer_agent_is_seller: [{value: true, disabled: true}, []],
-        check_confirm_buyer_agent_is_dual_agent: [{value: null, disabled: true}, []],
+        radio_confirm_buyer_agent: [{value: 'buyer_agent', disabled: true}, []],
       }),
       page_3: this.fb.group({
         text_acknowledge_seller_1: [null, []],
@@ -148,20 +145,16 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         check_agency_disclosure: [null, []],
         text_agency_broker_seller_firm: [{value: '', disabled: true}, []],
         text_agency_broker_seller_firm_lic: [{value: '', disabled: true}, []],
-        check_agency_broker_of_seller: [{value: true, disabled: true}, []],
-        check_agency_broker_seller_both: [{value: null, disabled: true}, []],
+        radio_agency_broker_seller: [{value: 'seller', disabled: true}, []],
         text_agency_broker_seller_agent: [{value: '', disabled: true}, []],
         text_agency_broker_seller_agent_lic: [{value: '', disabled: true}, []],
-        check_agency_broker_seller_agent: [{value: true, disabled: true}, []],
-        check_agency_broker_seller_dual: [{value: null, disabled: true}, []],
+        radio_agency_broker_seller_agent: [{value: 'seller_agent', disabled: true}, []],
         text_agency_broker_buyer_firm: [{value: '', disabled: true}, []],
         text_agency_broker_buyer_firm_lic: [{value: '', disabled: true}, []],
-        check_agency_broker_of_buyer: [{value: true, disabled: true}, []],
-        check_agency_broker_buyer_both: [{value: null, disabled: true}, []],
+        radio_agency_broker_buyer: [{value: 'buyer', disabled: true}, []],
         text_agency_broker_buyer_agent: [{value: '', disabled: true}, []],
         text_agency_broker_buyer_agent_lic: [{value: '', disabled: true}, []],
-        check_agency_broker_buyer_agent: [{value: true, disabled: true}, []],
-        check_agency_broker_buyer_dual: [{value: null, disabled: true}, []],
+        radio_agency_broker_buyer_agent: [{value: 'buyer_agent', disabled: true}, []],
         check_agency_competing_buyers_and_sellers: [null, []],
         // # Deposit = 53a
         text_finance_terms_amount: [null, [Validators.required]],
@@ -712,10 +705,11 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   private updateDownPaymentAmount() {
     const price = +this.documentForm.get('page_5.text_offer_price_digits').value || 0;
     const initialDeposits = +this.documentForm.get('page_5.text_finance_terms_amount').value || 0;
+    const increasedDeposits = +this.documentForm.get('page_5.text_finance_increased_deposit_amount').value || 0;
     const loans = +(this.documentForm.get('page_5.text_finance_first_loan_amount').value || 0) +
       +(this.documentForm.get('page_5.text_finance_second_loan_amount').value || 0);
 
     return this.documentForm.get('page_5.text_finance_down_payment_balance')
-      .patchValue((price - (initialDeposits + loans)).toFixed(2));
+      .patchValue((price - (initialDeposits + increasedDeposits + loans)).toFixed(2));
   }
 }
