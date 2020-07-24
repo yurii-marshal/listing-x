@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { SignatureBoxComponent, SignMode } from '../components/signature-box/signature-box.component';
+import { SignatureBoxComponent, SignMode } from '../../../shared-modules/components/signature-box/signature-box.component';
 import { filter, map, scan, switchMap, tap } from 'rxjs/operators';
 import { merge, Observable } from 'rxjs';
 import { FinishSigningDialogComponent } from '../dialogs/finish-signing-dialog/finish-signing-dialog.component';

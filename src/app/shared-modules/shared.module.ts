@@ -48,6 +48,7 @@ import { SelectedFileItemComponent } from './components/selected-file-item/selec
 import { PhoneNumberDirective } from './directives/phone-number.directive';
 import { NumberToWordsDirective } from './directives/number-to-words.directive';
 import { TimeFormatDirective } from './directives/time-format.directive';
+import { SignatureBoxComponent } from './components/signature-box/signature-box.component';
 
 const materialModules = [
   MatDialogModule,
@@ -94,6 +95,7 @@ const components = [
   CalendarComponent,
   NotificationBarComponent,
   SelectedFileItemComponent,
+  SignatureBoxComponent,
   FirstLetterPipe,
   ...dialogs,
 ];
