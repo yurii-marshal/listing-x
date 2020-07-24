@@ -1,8 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../../core-modules/core-services/auth.service';
 import { MatSnackBar } from '@angular/material';
-import { User } from '../../auth/models';
 import { ProfileService } from '../../../core-modules/core-services/profile.service';
 import { NotificationType } from '../../../core-modules/enums/notification-type';
 import { CustomValidators } from '../../../core-modules/validators/custom-validators';
@@ -11,6 +9,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as _ from 'lodash';
 import { catchError, takeUntil } from 'rxjs/operators';
 import { of, Subject } from 'rxjs';
+import { AuthService } from '../../../core-modules/core-services/auth.service';
+import { User } from '../../auth/models';
 
 @Component({
   selector: 'app-user-profile',
@@ -19,7 +19,6 @@ import { of, Subject } from 'rxjs';
 })
 export class UserProfileComponent implements OnInit, OnDestroy {
   public user: User;
-
   public form: FormGroup = this.formBuilder.group({});
 
   public noteTypes = NotificationType;
@@ -27,9 +26,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   private onDestroyed$: Subject<void> = new Subject<void>();
 
   constructor(private formBuilder: FormBuilder,
-              private authService: AuthService,
               private route: ActivatedRoute,
               private router: Router,
+              private authService: AuthService,
               private profileService: ProfileService,
               private snackBar: MatSnackBar) {
   }
@@ -78,7 +77,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
             'Profile has been updated',
             'OK',
             {duration: 5000});
-          this.profileService.changeUserProps({registrationCompleted: true});
+          this.authService.updateUser({registrationCompleted: true});
           this.router.navigateByUrl('/portal');
         });
     }
