@@ -24,13 +24,13 @@
         </div>
 
         <div class="fieldset">
-          <label>License number</label>
+          <label>Broker’s License Number</label>
           <input formControlName="companyLicense" appOnlyNumbers type="text" maxlength="9" placeholder="ex. 201446383" spellcheck="false" class="form-control">
           <app-form-validation-error [baseControl]="form?.get('companyLicense')"></app-form-validation-error>
         </div>
 
         <div class="fieldset">
-          <label>Broker’s License Number</label>
+          <label>Agent's License number</label>
           <input formControlName="licenseCode" appOnlyNumbers type="text" maxlength="8" placeholder="ex. 01446383" spellcheck="false" class="form-control">
           <app-form-validation-error [baseControl]="form?.get('licenseCode')"></app-form-validation-error>
         </div>

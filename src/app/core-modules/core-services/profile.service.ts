@@ -3,7 +3,6 @@ import { ApiEndpoint } from '../enums/api-endpoints';
 import { BaseDataService } from '../base-classes/base-data-service';
 import { Agent } from '../models/agent';
 import { Observable, of } from 'rxjs';
-import { AuthService } from './auth.service';
 import { tap } from 'rxjs/operators';
 
 @Injectable({
@@ -14,13 +13,8 @@ export class ProfileService extends BaseDataService<Agent> {
 
   constructor(
     protected injector: Injector,
-    private authService: AuthService,
   ) {
     super(injector, ApiEndpoint.AgentProfile);
-  }
-
-  changeUserProps(props) {
-    this.authService.updateUser(props);
   }
 
   updateAgent(model: Agent): Observable<Agent> {

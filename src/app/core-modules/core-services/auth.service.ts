@@ -8,6 +8,7 @@ import { Observable, of, Subject } from 'rxjs';
 import { JwtResponse } from '../interfaces/jwt-response';
 import * as _ from 'lodash';
 import { ApiEndpoint, AuthEndpoint } from '../enums/api-endpoints';
+import { ProfileService } from './profile.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,10 @@ export class AuthService {
   currentUser: User;
   userChanged$: Subject<User> = new Subject<User>();
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private profileService: ProfileService,
+  ) {
   }
 
   /** @Deprecated */
@@ -107,6 +111,7 @@ export class AuthService {
 
   logout() {
     this.currentUser = null;
+    this.profileService.currentAgent = null;
     localStorage.removeItem(LocalStorageKey.Token);
     localStorage.removeItem(LocalStorageKey.Expiration);
   }
