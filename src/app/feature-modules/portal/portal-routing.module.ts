@@ -96,6 +96,7 @@ const routes: Routes = [
         path: 'step-one',
         pathMatch: 'full',
         component: StepOneComponent,
+        canActivate: [CreateOfferGuardService],
         resolve: {offer: CreateOfferResolver}
       },
       {
@@ -105,7 +106,7 @@ const routes: Routes = [
             path: 'step-one',
             pathMatch: 'full',
             component: StepOneComponent,
-            canActivate: [CreateOfferGuardService],
+            canActivate: [],
             data: {progress: 1},
             resolve: {offer: GetOfferResolver}
           },
@@ -113,7 +114,7 @@ const routes: Routes = [
             path: 'step-two',
             pathMatch: 'full',
             component: StepTwoComponent,
-            canActivate: [CreateOfferGuardService],
+            canActivate: [],
             data: {progress: 2},
             resolve: {offer: GetOfferResolver}
           },
@@ -121,7 +122,7 @@ const routes: Routes = [
             path: 'step-three',
             pathMatch: 'full',
             component: StepThreeComponent,
-            canActivate: [CreateOfferGuardService],
+            canActivate: [],
             data: {progress: 3},
             resolve: {offer: GetOfferResolver}
           },
@@ -129,7 +130,7 @@ const routes: Routes = [
             path: 'summary',
             pathMatch: 'full',
             component: SummaryComponent,
-            canActivate: [CreateOfferGuardService],
+            canActivate: [],
             data: {progress: 4},
             resolve: {offer: GetOfferResolver}
           },
