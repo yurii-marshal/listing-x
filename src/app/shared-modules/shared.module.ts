@@ -49,6 +49,7 @@ import { PhoneNumberDirective } from './directives/phone-number.directive';
 import { NumberToWordsDirective } from './directives/number-to-words.directive';
 import { TimeFormatDirective } from './directives/time-format.directive';
 import { SignatureBoxComponent } from './components/signature-box/signature-box.component';
+import { SignatureDirective } from './directives/signature.directive';
 
 const materialModules = [
   MatDialogModule,
@@ -89,6 +90,7 @@ const components = [
   PhoneNumberDirective,
   TimeFormatDirective,
   NumberToWordsDirective,
+  SignatureDirective,
   FilePickerComponent,
   FileOption,
   FileUploaderComponent,

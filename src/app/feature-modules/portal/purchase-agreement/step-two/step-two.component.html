@@ -163,10 +163,14 @@
                 <input [value]="'seller'" formControlName="radio_disclosure_1" type="radio"> Seller
                 <input [value]="'landlord'" formControlName="radio_disclosure_1" type="radio"> Landlord
                 <input [value]="'tenant'" formControlName="radio_disclosure_1" type="radio"> Tenant
-                <!--<app-signature-box-->
-                  <!--[signature]="signature"-->
-                <!--&gt;</app-signature-box>-->
-                <input formControlName="text_disclosure_role_name_1" type="text" class="i-lr-6"> Date
+                <input appSignature
+                       [sign]="userSign"
+                       [form]="documentForm"
+                       signControlName="page_1.text_disclosure_role_name_1"
+                       dateControlName="page_1.date_disclosure_1"
+                       type="text"
+                       formControlName="text_disclosure_role_name_1"
+                       class="i-lr-6"> Date
                 <input formControlName="date_disclosure_1" type="text" class="i-lr-3">
                 <!--<input matInput (click)="date_disclosure_1.open()" [matDatepicker]="date_disclosure_1"-->
                        <!--formControlName="date_disclosure_1" type="text"-->
@@ -355,7 +359,7 @@
               separate writing executed or acknowledged by the seller and the seller's agent prior to or coincident with
               the execution of that contract by the seller.
             </div>
-            <div class="form" class="m-auto">
+            <div class="form m-auto">
               <div>CONFIRMATION: The following agency relationships are confirmed for this transaction:</div>
               <div>
                 Seller's Brokerage Firm &nbsp; <input formControlName="text_confirm_seller_firm_name" type="text"
