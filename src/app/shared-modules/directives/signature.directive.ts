@@ -1,5 +1,5 @@
 import { Directive, ElementRef, HostListener, Input, Renderer2 } from '@angular/core';
-import { FormGroup, NgControl } from '@angular/forms';
+import { NgControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 
 @Directive({
@@ -20,7 +20,6 @@ export class SignatureDirective {
   }
 
   @HostListener('focus', ['$event']) focus() {
-    console.log(this.ngControl);
     this.signButtonEl ? this.removeSignButton() : this.renderSignButton();
   }
 
@@ -41,14 +40,10 @@ export class SignatureDirective {
     this.renderer.appendChild(this.el.nativeElement.parentNode, this.signButtonEl);
     this.renderer.listen(this.signButtonEl, 'click', () => this.signFields());
 
-    this.renderer.addClass(this.el.nativeElement, 'sign-input');
-    this.renderer.addClass(this.signButtonEl, 'sign-button');
-
     this.setButtonStyles();
   }
 
   private removeSignButton() {
-    this.renderer.removeClass(this.el.nativeElement, 'sign-input');
     this.renderer.removeClass(this.signButtonEl, 'sign-button');
     this.renderer.removeChild(this.el.nativeElement.parentNode, this.signButtonEl);
     this.signButtonEl = null;
@@ -61,6 +56,8 @@ export class SignatureDirective {
     this.ngControl.control.disable();
     this.ngControl['_parent'].control.get(this.dateControlName).disable();
 
+    this.renderer.addClass(this.el.nativeElement, 'sign-input');
+
     this.removeSignButton();
   }
 
@@ -69,6 +66,8 @@ export class SignatureDirective {
 
     this.renderer.setStyle(this.signButtonEl, 'top', signField.offsetTop + signField.clientHeight + 'px');
     this.renderer.setStyle(this.signButtonEl, 'left', signField.offsetLeft + 'px');
+
+    this.renderer.addClass(this.signButtonEl, 'sign-button');
   }
 
 }
