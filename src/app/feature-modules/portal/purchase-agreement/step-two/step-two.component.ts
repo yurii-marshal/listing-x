@@ -11,7 +11,6 @@ import { SaveOfferDialogComponent } from '../../../../shared-modules/dialogs/sav
 import { DatePipe } from '@angular/common';
 import * as _ from 'lodash';
 import { Signature } from '../../../../core-modules/models/document';
-import { AuthService } from '../../../../core-modules/core-services/auth.service';
 
 @Component({
   selector: 'app-step-two',
@@ -26,8 +25,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     email: 'email@dot.com',
     signature: 'fjwefwif'
   };
-
-  userSign: string;
 
   documentForm: FormGroup;
   currentPage: number = 0;
@@ -63,20 +60,12 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private elRef: ElementRef,
     private datePipe: DatePipe,
-    private authService: AuthService,
   ) {
   }
 
   ngOnInit() {
     this.offerId = +this.route.snapshot.params.id;
     this.offer = this.route.snapshot.data.offer;
-
-    this.userSign =
-      `${
-        this.authService.currentUser.firstName.substr(0, 1).toUpperCase()
-        }. ${
-        this.authService.currentUser.lastName.substr(0, 1).toUpperCase()
-        }.`;
 
     this.isDisabled = this.offer.userRole === 'buyer';
 
