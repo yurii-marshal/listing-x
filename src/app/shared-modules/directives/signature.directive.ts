@@ -43,6 +43,8 @@ export class SignatureDirective {
 
     this.renderer.addClass(this.el.nativeElement, 'sign-input');
     this.renderer.addClass(this.signButtonEl, 'sign-button');
+
+    this.setButtonStyles();
   }
 
   private removeSignButton() {
@@ -59,6 +61,13 @@ export class SignatureDirective {
     this.form.get(this.dateControlName).disable();
 
     this.removeSignButton();
+  }
+
+  private setButtonStyles() {
+    const signField = this.el.nativeElement;
+
+    this.renderer.setStyle(this.signButtonEl, 'top', signField.offsetTop + signField.clientHeight + 'px');
+    this.renderer.setStyle(this.signButtonEl, 'left', signField.offsetLeft + 'px');
   }
 
 }
