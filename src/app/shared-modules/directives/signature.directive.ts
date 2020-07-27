@@ -33,7 +33,11 @@ export class SignatureDirective implements OnInit {
   }
 
   @HostListener('focus', ['$event']) focus() {
-    this.signButtonEl ? this.removeSignButton() : this.renderSignButton();
+    this.signButtonEl
+      ? this.removeSignButton()
+      : setTimeout(() => {
+        this.renderSignButton();
+      }, 200);
   }
 
   @HostListener('document:click', ['$event']) blur($event) {
@@ -80,7 +84,7 @@ export class SignatureDirective implements OnInit {
   private setButtonStyles() {
     const signField = this.el.nativeElement;
 
-    this.renderer.setStyle(this.signButtonEl, 'top', signField.offsetTop + signField.clientHeight + 'px');
+    this.renderer.setStyle(this.signButtonEl, 'margin-top', signField.offsetHeight + 'px');
     this.renderer.setStyle(this.signButtonEl, 'left', signField.offsetLeft + 'px');
 
     this.renderer.addClass(this.signButtonEl, 'sign-button');
