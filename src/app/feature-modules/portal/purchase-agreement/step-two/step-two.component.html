@@ -3032,8 +3032,11 @@
                     only. Buyer and Seller will execute additional instructions, documents and forms provided by
                     Escrow Holder that are reasonably
                     necessary to close the escrow and, as directed by Escrow Holder, within <span class="fw-bold">3
-          (or <input formControlName="text_escrow_holder_pay_days" appOnlyNumbers [maxLength]="3" type="text"
-                     class="i-lr-1 fw-bold"> ) Days,</span> shall pay
+          (or <input matInput (click)="date_escrow_holder_pay_days.open()" [matDatepicker]="date_escrow_holder_pay_days"
+                           formControlName="date_escrow_holder_pay_days"
+                           type="text"
+                           class="i-lr-2__5">
+                <mat-datepicker #date_escrow_holder_pay_days></mat-datepicker> ) Days,</span> shall pay
                     to Escrow Holder or HOA or
                     HOA management company or others any fee required by paragraphs 7, 10 or elsewhere in this
                     Agreement.
@@ -3700,11 +3703,15 @@
                   <input formControlName="check_seller_acceptance_attached" type="checkbox">
                   <span>(If checked) SELLER'S ACCEPTANCE IS</span>
                   <span class="fw-bold">SUBJECT TO ATTACHED COUNTER OFFER (C.A.R. Form SCO or SMCO) DATED:</span>
-                  <input formControlName="check_one_or_more_seller" type="text" class="i-lr-3"> .
+                  <input matInput (click)="date_one_or_more_seller.open()" [matDatepicker]="date_one_or_more_seller"
+                         formControlName="date_one_or_more_seller"
+                         type="text"
+                         class="i-lr-2__5">
+                  <mat-datepicker #date_one_or_more_seller></mat-datepicker> .
                 </div>
               </div>
               <div class="text-justify">
-                <input formControlName="text_one_or_more_seller" type="checkbox">
+                <input formControlName="check_one_or_more_seller" type="checkbox">
                 One or more Sellers is signing this Agreement in a representative capacity and not for him/herself as an
                 individual. See attached
                 Representative Capacity Signature Disclosure (C.A.R. Form RCSD-S) for additional terms.
