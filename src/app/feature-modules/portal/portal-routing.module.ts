@@ -96,7 +96,7 @@ const routes: Routes = [
         path: 'step-one',
         pathMatch: 'full',
         component: StepOneComponent,
-        canActivate: [CreateOfferGuardService],
+        canActivate: [],
         resolve: {offer: CreateOfferResolver}
       },
       {
@@ -106,7 +106,7 @@ const routes: Routes = [
             path: 'step-one',
             pathMatch: 'full',
             component: StepOneComponent,
-            canActivate: [],
+            canActivate: [CreateOfferGuardService],
             data: {progress: 1},
             resolve: {offer: GetOfferResolver}
           },
