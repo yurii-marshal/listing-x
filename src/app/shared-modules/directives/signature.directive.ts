@@ -1,13 +1,14 @@
-import { Directive, ElementRef, HostListener, Input, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, OnInit, Renderer2 } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { AuthService } from '../../core-modules/core-services/auth.service';
 
 @Directive({
   selector: '[appSignature]'
 })
-export class SignatureDirective {
+export class SignatureDirective implements OnInit {
   @Input() sign: string;
-  @Input() dateControlName: string;
+  @Input() withDateControl: string;
 
   private signButtonEl: HTMLElement;
 
@@ -16,7 +17,19 @@ export class SignatureDirective {
     private datePipe: DatePipe,
     private renderer: Renderer2,
     private ngControl: NgControl,
+    private authService: AuthService,
   ) {
+  }
+
+  ngOnInit() {
+    if (!this.sign) {
+      this.sign =
+        `${
+          this.authService.currentUser.firstName.substr(0, 1).toUpperCase()
+          }. ${
+          this.authService.currentUser.lastName.substr(0, 1).toUpperCase()
+          }.`;
+    }
   }
 
   @HostListener('focus', ['$event']) focus() {
@@ -50,11 +63,14 @@ export class SignatureDirective {
   }
 
   private signFields() {
-    // TODO: find access to parent control by DI
     this.ngControl.control.patchValue(this.sign);
-    this.ngControl['_parent'].control.get(this.dateControlName).patchValue(this.datePipe.transform(new Date().getTime(), 'yyyy-MM-dd'));
     this.ngControl.control.disable();
-    this.ngControl['_parent'].control.get(this.dateControlName).disable();
+
+    if (this.withDateControl) {
+      // TODO: find access to parent control by DI
+      this.ngControl['_parent'].control.get(this.withDateControl).patchValue(this.datePipe.transform(new Date().getTime(), 'yyyy-MM-dd'));
+      this.ngControl['_parent'].control.get(this.withDateControl).disable();
+    }
 
     this.renderer.addClass(this.el.nativeElement, 'sign-input');
 

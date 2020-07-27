@@ -163,9 +163,7 @@
                 <input [value]="'seller'" formControlName="radio_disclosure_1" type="radio"> Seller
                 <input [value]="'landlord'" formControlName="radio_disclosure_1" type="radio"> Landlord
                 <input [value]="'tenant'" formControlName="radio_disclosure_1" type="radio"> Tenant
-                <input appSignature
-                       [sign]="userSign"
-                       [dateControlName]="'date_disclosure_1'"
+                <input appSignature [withDateControl]="'date_disclosure_1'"
                        formControlName="text_disclosure_role_name_1"
                        type="text" class="i-lr-6"> Date
                 <input formControlName="date_disclosure_1" type="text" class="i-lr-3">
@@ -179,7 +177,10 @@
                 <input [value]="'seller'" formControlName="radio_disclosure_2" type="radio"> Seller
                 <input [value]="'landlord'" formControlName="radio_disclosure_2" type="radio"> Landlord
                 <input [value]="'tenant'" formControlName="radio_disclosure_2" type="radio"> Tenant
-                <input formControlName="text_disclosure_role_name_2" type="text" class="i-lr-6"> Date
+                <input
+                  appSignature [withDateControl]="'date_disclosure_2'"
+                  formControlName="text_disclosure_role_name_2"
+                  type="text" class="i-lr-6"> Date
                 <input formControlName="date_disclosure_2" type="text" class="i-lr-3">
                 <!--<input matInput (click)="date_disclosure_2.open()" [matDatepicker]="date_disclosure_2"-->
                        <!--formControlName="date_disclosure_2"-->
@@ -199,7 +200,8 @@
                 <span class="p-relative">
                     By
                     <span class="initial text-center">(Salesperson or Broker-Associate, if any)</span>
-                    &nbsp; <input formControlName="text_disclosure_seller" type="text" class="i-lr-5">
+                    &nbsp; <input appSignature [withDateControl]="'date_disclosure_3'"
+                  formControlName="text_disclosure_seller" type="text" class="i-lr-5">
                 </span>
 
                 &nbsp; DRE Lic. #
@@ -598,7 +600,8 @@
 
             <div class="form">
               <div>
-                Seller &nbsp;<input formControlName="text_acknowledge_seller_1" type="text" class="i-lr-10">
+                Seller &nbsp;<input appSignature [withDateControl]="'date_acknowledge_seller_1'"
+                formControlName="text_acknowledge_seller_1" type="text" class="i-lr-10">
                 Date &nbsp;<input formControlName="date_acknowledge_seller_1" type="text" class="i-lr-2__5">
                 <!--<input matInput (click)="date_acknowledge_seller_1.open()"-->
                                   <!--[matDatepicker]="date_acknowledge_seller_1"-->
@@ -607,7 +610,8 @@
                 <!--<mat-datepicker #date_acknowledge_seller_1></mat-datepicker>-->
               </div>
               <div>
-                Seller &nbsp;<input formControlName="text_acknowledge_seller_2" type="text" class="i-lr-10">
+                Seller &nbsp;<input appSignature [withDateControl]="'date_acknowledge_seller_2'"
+                formControlName="text_acknowledge_seller_2" type="text" class="i-lr-10">
                 Date &nbsp;<input formControlName="date_acknowledge_seller_2" type="text" class="i-lr-2__5">
                 <!--<input matInput (click)="date_acknowledge_seller_2.open()"-->
                                   <!--[matDatepicker]="date_acknowledge_seller_2"-->
@@ -617,7 +621,8 @@
               </div>
               <br>
               <div>
-                Buyer &nbsp;<input formControlName="text_acknowledge_buyer_1" type="text" class="i-lr-10">
+                Buyer &nbsp;<input appSignature [withDateControl]="'date_acknowledge_buyer_1'"
+                formControlName="text_acknowledge_buyer_1" type="text" class="i-lr-10">
                 Date &nbsp;<input formControlName="date_acknowledge_buyer_1" type="text" class="i-lr-2__5">
                 <!--<input matInput (click)="date_acknowledge_buyer_1.open()"-->
                                   <!--[matDatepicker]="date_acknowledge_buyer_1"-->
@@ -626,7 +631,8 @@
                 <!--<mat-datepicker #date_acknowledge_buyer_1></mat-datepicker>-->
               </div>
               <div>
-                Buyer &nbsp;<input formControlName="text_acknowledge_buyer_2" type="text" class="i-lr-10">
+                Buyer &nbsp;<input appSignature [withDateControl]="'date_acknowledge_buyer_2'"
+                formControlName="text_acknowledge_buyer_2" type="text" class="i-lr-10">
                 Date &nbsp;<input formControlName="date_acknowledge_buyer_2" type="text" class="i-lr-2__5">
                 <!--<input matInput (click)="date_acknowledge_buyer_2.open()"-->
                                   <!--[matDatepicker]="date_acknowledge_buyer_2"-->
@@ -637,10 +643,12 @@
               <br>
               <div>
                 Buyer's Brokerage Firm
-                <input formControlName="text_acknowledge_buyer_agent_firm" type="text" class="i-lr-5">
+                <input appSignature [withDateControl]="'date_acknowledge_buyer_agent_firm_date'"
+                  formControlName="text_acknowledge_buyer_agent_firm" type="text" class="i-lr-5">
                 DRE Lic. #
                 &nbsp; <input formControlName="text_acknowledge_buyer_agent_firm_lic" type="text" class="i-lr-2">
-                <!--Date-->
+                Date
+                <input formControlName="date_acknowledge_buyer_agent_firm_date" type="text" class="i-lr-2__5">
                 <!--<input matInput (click)="date_acknowledge_buyer_agent_firm_date.open()"-->
                        <!--[matDatepicker]="date_acknowledge_buyer_agent_firm_date"-->
                        <!--formControlName="date_acknowledge_buyer_agent_firm_date"-->
@@ -650,7 +658,8 @@
               </div>
               <div>
                 By
-                <input formControlName="text_acknowledge_buyer_agent" type="text" class="i-lr-7">
+                <input appSignature [withDateControl]="'date_acknowledge_buyer_agent_date'"
+                  formControlName="text_acknowledge_buyer_agent" type="text" class="i-lr-7">
                 &nbsp; &nbsp;DRE Lic. #
                 &nbsp; <input formControlName="text_acknowledge_buyer_agent_lic" type="text" class="i-lr-2">
                 &nbsp; Date
@@ -665,7 +674,8 @@
               <br>
               <div>
                 Seller's Brokerage Firm
-                <input formControlName="text_acknowledge_seller_agent_firm" type="text" class="i-lr-5">
+                <input appSignature [withDateControl]="'date_acknowledge_seller_agent_firm_date'"
+                  formControlName="text_acknowledge_seller_agent_firm" type="text" class="i-lr-5">
                 DRE Lic. #
                 &nbsp; <input formControlName="text_acknowledge_seller_agent_firm_lic" type="text" class="i-lr-2">
                 Date
@@ -679,7 +689,8 @@
               </div>
               <div>
                 By
-                <input formControlName="text_acknowledge_seller_agent" type="text" class="i-lr-7">
+                <input appSignature [withDateControl]="'date_acknowledge_seller_agent_date'"
+                  formControlName="text_acknowledge_seller_agent" type="text" class="i-lr-7">
                 &nbsp; &nbsp;DRE Lic. #
                 &nbsp; <input formControlName="text_acknowledge_seller_agent_lic" type="text" class="i-lr-2">
                 &nbsp; Date
@@ -829,7 +840,8 @@
             </div>
             <div class="form">
               <div>
-                Buyer/Tenant &nbsp;<input formControlName="text_buyer_tenant_1" type="text" class="i-lr-9">
+                Buyer/Tenant &nbsp;<input appSignature [withDateControl]="'date_buyer_tenant_1'"
+                formControlName="text_buyer_tenant_1" type="text" class="i-lr-9">
                 &nbsp; Date <input formControlName="date_buyer_tenant_1" type="text" class="i-lr-2__5">
                 <!--<input matInput (click)="date_buyer_tenant_1.open()" [matDatepicker]="date_buyer_tenant_1"-->
                                    <!--formControlName="date_buyer_tenant_1" type="text"-->
@@ -837,7 +849,8 @@
                 <!--<mat-datepicker #date_buyer_tenant_1></mat-datepicker>-->
               </div>
               <div>
-                Buyer/Tenant &nbsp;<input formControlName="text_buyer_tenant_2" type="text" class="i-lr-9">
+                Buyer/Tenant &nbsp;<input appSignature [withDateControl]="'date_buyer_tenant_2'"
+                formControlName="text_buyer_tenant_2" type="text" class="i-lr-9">
                 &nbsp; Date <input formControlName="date_buyer_tenant_2" type="text" class="i-lr-2__5">
                 <!--<input matInput (click)="date_buyer_tenant_2.open()" [matDatepicker]="date_buyer_tenant_2"-->
                                    <!--formControlName="date_buyer_tenant_2" type="text"-->
@@ -845,7 +858,8 @@
                 <!--<mat-datepicker #date_buyer_tenant_2></mat-datepicker>-->
               </div>
               <div>
-                Seller/Landlord <input formControlName="text_seller_landlord_1" type="text" class="i-lr-9">
+                Seller/Landlord <input appSignature [withDateControl]="'date_seller_landlord_1'"
+                formControlName="text_seller_landlord_1" type="text" class="i-lr-9">
                 Date <input formControlName="date_seller_landlord_1" type="text" class="i-lr-2__5">
                 <!--<input matInput (click)="date_seller_landlord_1.open()" [matDatepicker]="date_seller_landlord_1"-->
                             <!--formControlName="date_seller_landlord_1"-->
@@ -854,7 +868,8 @@
                 <!--<mat-datepicker #date_seller_landlord_1></mat-datepicker>-->
               </div>
               <div>
-                Seller/Landlord <input formControlName="text_seller_landlord_2" type="text" class="i-lr-9">
+                Seller/Landlord <input appSignature [withDateControl]="'date_seller_landlord_2'"
+                formControlName="text_seller_landlord_2" type="text" class="i-lr-9">
                 Date <input formControlName="date_seller_landlord_2" type="text" class="i-lr-2__5">
                 <!--<input matInput (click)="date_seller_landlord_2.open()" [matDatepicker]="date_seller_landlord_2"-->
                             <!--formControlName="date_seller_landlord_2"-->
@@ -3596,7 +3611,8 @@
                          <!--class="i-lr-2">-->
                   <!--<mat-datepicker #date_other_buyer_first></mat-datepicker>-->
                   BUYER
-                  <input formControlName="text_other_buyer_first" type="text" class="i-lr-10__5">
+                  <input appSignature [withDateControl]="'date_other_buyer_first'"
+                    formControlName="text_other_buyer_first" type="text" class="i-lr-10__5">
                 </div>
                 <div>
                   <span class="fw-bold">(Print name)</span> &nbsp;
@@ -3611,7 +3627,8 @@
                          <!--class="i-lr-2">-->
                   <!--<mat-datepicker #date_other_buyer_second></mat-datepicker>-->
                   BUYER
-                  <input formControlName="text_other_buyer_second" type="text" class="i-lr-10__5">
+                  <input appSignature [withDateControl]="'date_other_buyer_second'"
+                    formControlName="text_other_buyer_second" type="text" class="i-lr-10__5">
                 </div>
                 <div>
                   <span class="fw-bold">(Print name)</span> &nbsp;
@@ -3700,7 +3717,8 @@
                        <!--type="text" class="i-lr-2">-->
                 <!--<mat-datepicker #date_seller_first></mat-datepicker>-->
                 SELLER
-                <input formControlName="text_seller_first" type="text" class="i-lr-10__5">
+                <input appSignature [withDateControl]="'date_seller_first'"
+                  formControlName="text_seller_first" type="text" class="i-lr-10__5">
               </div>
               <div>
                 <span class="fw-bold">(Print name)</span> &nbsp;
@@ -3708,7 +3726,8 @@
               </div>
               <div>
                 Date
-                <input formControlName="date_seller_second" type="text" class="i-lr-2">
+                <input appSignature [withDateControl]="'date_seller_second'"
+                  formControlName="date_seller_second" type="text" class="i-lr-2">
                 <!--<input matInput (click)="date_seller_second.open()" [matDatepicker]="date_seller_second"-->
                        <!--formControlName="date_seller_second"-->
                        <!--type="text" class="i-lr-2">-->
@@ -3803,7 +3822,8 @@
                 </div>
                 <div>
                   By
-                  <input formControlName="text_buyers_brokerage_firm_by_first" type="text" class="i-lr-7">
+                  <input appSignature [withDateControl]="'date_buyers_brokerage_firm_date_first'"
+                    formControlName="text_buyers_brokerage_firm_by_first" type="text" class="i-lr-7">
                   &nbsp; DRE Lic. #&nbsp;&nbsp;
                   <input formControlName="text_buyers_brokerage_firm_lic_by_first" type="text" class="i-lr-2">
                   &nbsp;&nbsp;Date&nbsp;
@@ -3817,7 +3837,8 @@
                 </div>
                 <div>
                   By
-                  <input formControlName="text_buyers_brokerage_firm_by_second" type="text" class="i-lr-7">
+                  <input appSignature [withDateControl]="'date_buyers_brokerage_firm_date_second'"
+                    formControlName="text_buyers_brokerage_firm_by_second" type="text" class="i-lr-7">
                   &nbsp; DRE Lic. #&nbsp;&nbsp;
                   <input formControlName="text_buyers_brokerage_firm_lic_by_second" type="text" class="i-lr-2">
                   &nbsp;&nbsp;Date&nbsp;
@@ -3860,7 +3881,8 @@
                 </div>
                 <div>
                   By
-                  <input formControlName="text_seller_brokerage_firm_by_first" type="text" class="i-lr-7">
+                  <input appSignature [withDateControl]="'date_seller_brokerage_firm_date_first'"
+                    formControlName="text_seller_brokerage_firm_by_first" type="text" class="i-lr-7">
                   &nbsp; DRE Lic. #&nbsp;&nbsp;
                   <input formControlName="text_seller_brokerage_firm_lic_by_first" type="text" class="i-lr-2">
                   &nbsp;&nbsp;Date&nbsp;
@@ -3874,7 +3896,8 @@
                 </div>
                 <div>
                   By
-                  <input formControlName="text_seller_brokerage_firm_by_second" type="text" class="i-lr-7">
+                  <input appSignature [withDateControl]="'date_seller_brokerage_firm_date_second'"
+                    formControlName="text_seller_brokerage_firm_by_second" type="text" class="i-lr-7">
                   &nbsp; DRE Lic. #&nbsp;&nbsp;
                   <input formControlName="text_seller_brokerage_firm_lic_by_second" type="text" class="i-lr-2">
                   &nbsp;&nbsp;Date&nbsp;
@@ -3935,7 +3958,8 @@
                 </div>
                 <div>
                   By
-                  &nbsp; <input formControlName="text_escrow_by" type="text" class="i-lr-9">
+                  &nbsp; <input appSignature [withDateControl]="'date_escrow_by_date'"
+                  formControlName="text_escrow_by" type="text" class="i-lr-9">
                   &nbsp; Date
                   <input formControlName="date_escrow_by_date" type="text" class="i-lr-3__5">
                   <!--<input matInput (click)="date_escrow_by_date.open()" [matDatepicker]="date_escrow_by_date"-->
@@ -4356,8 +4380,8 @@
 
             <div class="form">
               <div>
-                Buyer/Seller/Landlord/Tenant <input formControlName="text_privacy_act_advisory_first" type="text"
-                                                    class="i-lr-7">
+                Buyer/Seller/Landlord/Tenant <input appSignature [withDateControl]="'date_privacy_act_advisory_first'"
+                formControlName="text_privacy_act_advisory_first" type="text" class="i-lr-7">
                 &nbsp; Date &nbsp;<input formControlName="date_privacy_act_advisory_first" type="text" class="i-lr-2__5">
                 <!--<input matInput (click)="date_privacy_act_advisory_first.open()"-->
                                          <!--[matDatepicker]="date_privacy_act_advisory_first"-->
@@ -4367,8 +4391,8 @@
                 <!--<mat-datepicker #date_privacy_act_advisory_first></mat-datepicker>-->
               </div>
               <div>
-                Buyer/Seller/Landlord/Tenant <input formControlName="text_privacy_act_advisory_second" type="text"
-                                                    class="i-lr-7">
+                Buyer/Seller/Landlord/Tenant <input appSignature [withDateControl]="'date_privacy_act_advisory_second'"
+                formControlName="text_privacy_act_advisory_second" type="text" class="i-lr-7">
                 &nbsp; Date &nbsp;<input formControlName="date_privacy_act_advisory_second" type="text" class="i-lr-2__5">
                 <!--<input matInput (click)="date_privacy_act_advisory_second.open()"-->
                                          <!--[matDatepicker]="date_privacy_act_advisory_second"-->
