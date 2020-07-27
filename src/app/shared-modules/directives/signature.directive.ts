@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, Input, OnInit, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, Renderer2 } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { AuthService } from '../../core-modules/core-services/auth.service';
@@ -9,6 +9,8 @@ import { AuthService } from '../../core-modules/core-services/auth.service';
 export class SignatureDirective implements OnInit {
   @Input() sign: string;
   @Input() withDateControl: string;
+
+  @Output() fieldSigned: EventEmitter<void> = new EventEmitter<void>();
 
   private signButtonEl: HTMLElement;
 
@@ -76,9 +78,11 @@ export class SignatureDirective implements OnInit {
       this.ngControl['_parent'].control.get(this.withDateControl).disable();
     }
 
-    this.renderer.addClass(this.el.nativeElement, 'sign-input');
+    this.renderer.addClass(this.el.nativeElement, 'signed');
 
     this.removeSignButton();
+
+    this.fieldSigned.emit();
   }
 
   private setButtonStyles() {

@@ -24,7 +24,7 @@ export class CreateOfferGuardService implements CanActivate, CanActivateChild {
     const redirectUrl = '/portal/purchase-agreement/step-one';
     return this.offerService.getOfferById(+route.params.id)
       .pipe(
-        map(() => this.authService.currentUser.accountType === 'agent'),
+        map(() => true),
         catchError(() => of(this.router.parseUrl(redirectUrl)))
       );
   }
