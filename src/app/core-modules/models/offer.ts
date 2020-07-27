@@ -36,6 +36,7 @@ export interface Offer {
   downPayment?: number;
   anySpecialFinancialTerms?: string;
   remainingDaysCloseEscrow?: number;
+  userRole?: string;
 
   // Third step
   documents: LinkedDocuments;

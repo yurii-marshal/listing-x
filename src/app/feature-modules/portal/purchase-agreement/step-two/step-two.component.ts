@@ -27,7 +27,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     signature: 'fjwefwif'
   };
 
-  userSign: string = 'S. A.';
+  userSign: string;
 
   documentForm: FormGroup;
   currentPage: number = 0;
@@ -71,7 +71,14 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.offerId = +this.route.snapshot.params.id;
     this.offer = this.route.snapshot.data.offer;
 
-    this.isDisabled = this.authService.currentUser.accountType !== 'agent';
+    this.userSign =
+      `${
+        this.authService.currentUser.firstName.substr(0, 1).toUpperCase()
+        }. ${
+        this.authService.currentUser.lastName.substr(0, 1).toUpperCase()
+        }.`;
+
+    this.isDisabled = this.offer.userRole === 'buyer';
 
     this.documentForm = this.fb.group({
       page_1: this.fb.group({

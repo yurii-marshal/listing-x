@@ -46,7 +46,8 @@
         }
 
         .sign-button {
-
+          position: fixed;
+          z-index: 1;
         }
       }
     }
