@@ -1,5 +1,5 @@
 import { Directive, ElementRef, HostListener, Input, Renderer2 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, NgControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 
 @Directive({
@@ -7,8 +7,6 @@ import { DatePipe } from '@angular/common';
 })
 export class SignatureDirective {
   @Input() sign: string;
-  @Input() form: FormGroup;
-  @Input() signControlName: string;
   @Input() dateControlName: string;
 
   private signButtonEl: HTMLElement;
@@ -17,10 +15,12 @@ export class SignatureDirective {
     private el: ElementRef,
     private datePipe: DatePipe,
     private renderer: Renderer2,
+    private ngControl: NgControl,
   ) {
   }
 
   @HostListener('focus', ['$event']) focus() {
+    console.log(this.ngControl);
     this.signButtonEl ? this.removeSignButton() : this.renderSignButton();
   }
 
@@ -55,10 +55,11 @@ export class SignatureDirective {
   }
 
   private signFields() {
-    this.form.get(this.signControlName).patchValue(this.sign);
-    this.form.get(this.dateControlName).patchValue(this.datePipe.transform(new Date().getTime(), 'yyyy-MM-dd'));
-    this.form.get(this.signControlName).disable();
-    this.form.get(this.dateControlName).disable();
+    // TODO: find access to parent control by DI
+    this.ngControl.control.patchValue(this.sign);
+    this.ngControl['_parent'].control.get(this.dateControlName).patchValue(this.datePipe.transform(new Date().getTime(), 'yyyy-MM-dd'));
+    this.ngControl.control.disable();
+    this.ngControl['_parent'].control.get(this.dateControlName).disable();
 
     this.removeSignButton();
   }
