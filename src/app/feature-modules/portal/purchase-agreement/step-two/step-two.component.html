@@ -165,12 +165,9 @@
                 <input [value]="'tenant'" formControlName="radio_disclosure_1" type="radio"> Tenant
                 <input appSignature
                        [sign]="userSign"
-                       [form]="documentForm"
-                       signControlName="page_1.text_disclosure_role_name_1"
-                       dateControlName="page_1.date_disclosure_1"
-                       type="text"
+                       [dateControlName]="'date_disclosure_1'"
                        formControlName="text_disclosure_role_name_1"
-                       class="i-lr-6"> Date
+                       type="text" class="i-lr-6"> Date
                 <input formControlName="date_disclosure_1" type="text" class="i-lr-3">
                 <!--<input matInput (click)="date_disclosure_1.open()" [matDatepicker]="date_disclosure_1"-->
                        <!--formControlName="date_disclosure_1" type="text"-->
@@ -195,7 +192,7 @@
                     <span class="initial text-center">Real Estate Broker (Firm)</span>
                     <input formControlName="text_disclosure_agent" type="text" class="i-lr-7">
                 </span>
-                &nbsp; DRE Lic. # &nbsp; <input formControlName="text_disclosure_agent_lic" type="text"
+                &nbsp; DRE Lic. # &nbsp; <input formControlName="text_disclosure_seller_lic" type="text"
                                                 class="i-lr-4__5">
               </div>
               <div class="pb-20 mb-20">
@@ -206,7 +203,7 @@
                 </span>
 
                 &nbsp; DRE Lic. #
-                &nbsp; <input formControlName="text_disclosure_seller_lic" type="text" class="i-lr-3">
+                &nbsp; <input formControlName="text_disclosure_agent_lic" type="text" class="i-lr-3">
                 Date
                 <input formControlName="date_disclosure_3" type="text" class="i-lr-3">
                 <!--<input matInput (click)="date_disclosure_3.open()" [matDatepicker]="date_disclosure_3"-->
