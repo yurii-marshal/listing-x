@@ -36,7 +36,7 @@ export interface Offer {
   downPayment?: number;
   anySpecialFinancialTerms?: string;
   remainingDaysCloseEscrow?: number;
-  userRole?: 'buyer' | 'agent' | 'buyer_agent' | 'seller_agent';
+  userRole?: 'customer' | 'agent';
 
   // Third step
   documents: LinkedDocuments;
