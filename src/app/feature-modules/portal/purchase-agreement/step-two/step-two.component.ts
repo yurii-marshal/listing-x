@@ -5,7 +5,7 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 import { EditOfferDialogComponent } from '../../../../shared-modules/dialogs/edit-offer-dialog/edit-offer-dialog.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { debounceTime, takeUntil } from 'rxjs/operators';
-import { fromEvent, Observable, of, Subject } from 'rxjs';
+import { fromEvent, Observable, Subject } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SaveOfferDialogComponent } from '../../../../shared-modules/dialogs/save-offer-dialog/save-offer-dialog.component';
 import { DatePipe } from '@angular/common';
@@ -73,6 +73,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       page_1: this.fb.group({
         check_civil_code: [{value: null, disabled: this.isDisabled}, []],
         radio_disclosure_1: [{value: 'buyer', disabled: true}, []],
+        // TODO: unrecognized
         text_disclosure_role_name_1: this.getFieldAllowedFor(['buyer']),
         date_disclosure_1: this.getFieldAllowedFor(['buyer']),
         radio_disclosure_2: [{value: 'buyer', disabled: true}, []],
@@ -105,6 +106,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         // TODO: unrecognized
         text_acknowledge_seller_2: this.getFieldAllowedFor(['seller']),
         date_acknowledge_seller_2: this.getFieldAllowedFor(['seller']),
+        // TODO: unrecognized
         text_acknowledge_buyer_1: this.getFieldAllowedFor(['buyer']),
         date_acknowledge_buyer_1: this.getFieldAllowedFor(['buyer']),
         // TODO: unrecognized
@@ -114,6 +116,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         text_acknowledge_buyer_agent_firm: this.getFieldAllowedFor(['buyer_agent']),
         text_acknowledge_buyer_agent_firm_lic: [{value: '', disabled: true}, []],
         date_acknowledge_buyer_agent_firm_date: this.getFieldAllowedFor(['buyer_agent']),
+        // TODO: unrecognized
         text_acknowledge_buyer_agent: this.getFieldAllowedFor(['buyer_agent']),
         text_acknowledge_buyer_agent_lic: [{value: '', disabled: true}, []],
         date_acknowledge_buyer_agent_date: this.getFieldAllowedFor(['buyer_agent']),
@@ -121,17 +124,20 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         text_acknowledge_seller_agent_firm: this.getFieldAllowedFor(['seller_agent']),
         text_acknowledge_seller_agent_firm_lic: [{value: '', disabled: true}, []],
         date_acknowledge_seller_agent_firm_date: this.getFieldAllowedFor(['seller_agent']),
+        // TODO: unrecognized
         text_acknowledge_seller_agent: this.getFieldAllowedFor(['seller_agent']),
         text_acknowledge_seller_agent_lic: [{value: '', disabled: true}, []],
         date_acknowledge_seller_agent_date: this.getFieldAllowedFor(['seller_agent']),
       }),
       page_4: this.fb.group({
         text_property_address: [{value: '', disabled: true}, []],
+        // TODO: unrecognized
         text_buyer_tenant_1: this.getFieldAllowedFor(['buyer']),
         date_buyer_tenant_1: this.getFieldAllowedFor(['buyer']),
         // TODO: unrecognized
         text_buyer_tenant_2: this.getFieldAllowedFor(['buyer']),
         date_buyer_tenant_2: this.getFieldAllowedFor(['buyer']),
+        // TODO: unrecognized
         text_seller_landlord_1: this.getFieldAllowedFor(['seller']),
         date_seller_landlord_1: this.getFieldAllowedFor(['seller']),
         // TODO: unrecognized
@@ -362,8 +368,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         text_property_address: [{value: '', disabled: true}, []],
         date_property_date: [{value: '', disabled: true}, []],
         text_property_verification_days: [{value: null, disabled: this.isDisabled}, []],
-        date_escrow_holder_pay_days: [{value: null, disabled: this.isDisabled}, []],
-        text_agreement_copy_deliver_days: [{value: null, disabled: this.isDisabled}, []],
+        text_escrow_holder_pay_days: [{value: null, disabled: this.isDisabled}, []],
+        date_agreement_copy_deliver_date: [{value: null, disabled: this.isDisabled}, []],
         text_buyer_initials_first: [{value: null, disabled: this.isDisabled}, []],
         text_buyer_initials_second: [{value: null, disabled: this.isDisabled}, []],
         text_seller_initials_first: [{value: null, disabled: this.isDisabled}, []],
@@ -394,6 +400,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         radio_received_on_time_ampm: ['am', []],
         date_received_on_date: [{value: null, disabled: this.isDisabled}, []],
         check_one_more_buyer: [{value: null, disabled: this.isDisabled}, []],
+        // TODO: unrecognized
         text_other_buyer_first: this.getFieldAllowedFor(['buyer']),
         date_other_buyer_first: this.getFieldAllowedFor(['buyer']),
         text_other_buyer_print_name_first: [{value: null, disabled: this.isDisabled}, []],
@@ -413,6 +420,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         check_seller_acceptance_attached: [{value: null, disabled: this.isDisabled}, []],
         check_one_or_more_seller: [{value: null, disabled: this.isDisabled}, []],
         date_one_or_more_seller: [{value: null, disabled: this.isDisabled}, []],
+        // TODO: unrecognized
         date_seller_first: this.getFieldAllowedFor(['seller']),
         text_seller_first: this.getFieldAllowedFor(['seller']),
         text_seller_print_name_first: [{value: null, disabled: this.isDisabled}, []],
@@ -428,6 +436,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         radio_acceptance_received_time_ampm: ['am', []],
         text_buyers_brokerage_firm: [{value: '', disabled: true}, []],
         text_buyers_brokerage_firm_lic: [{value: '', disabled: true}, []],
+        // TODO: unrecognized
         text_buyers_brokerage_firm_by_first: this.getFieldAllowedFor(['agent_buyer']),
         text_buyers_brokerage_firm_lic_by_first: [{value: '', disabled: true}, []],
         date_buyers_brokerage_firm_date_first: this.getFieldAllowedFor(['agent_buyer']),
@@ -444,6 +453,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         text_buyers_email: [{value: '', disabled: true}, []],
         text_seller_brokerage_firm: [{value: '', disabled: true}, []],
         text_seller_brokerage_firm_lic: [{value: '', disabled: true}, []],
+        // TODO: unrecognized
         text_seller_brokerage_firm_by_first: this.getFieldAllowedFor(['agent_seller']),
         text_seller_brokerage_firm_lic_by_first: [{value: '', disabled: true}, []],
         date_seller_brokerage_firm_date_first: this.getFieldAllowedFor(['agent_seller']),
@@ -488,6 +498,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         text_buyer_signature_second: [{value: null, disabled: this.isDisabled}, []],
       }),
       page_16: this.fb.group({
+        // TODO: unrecognized
         text_privacy_act_advisory_first: this.getFieldAllowedFor(['buyer', 'seller', 'agent_buyer', 'agent_seller']),
         date_privacy_act_advisory_first: this.getFieldAllowedFor(['buyer', 'seller', 'agent_buyer', 'agent_seller']),
         // TODO: unrecognized
@@ -595,9 +606,12 @@ export class StepTwoComponent implements OnInit, OnDestroy {
             Object.keys(value).forEach((controlName) => {
 
               if (field === controlName && data) {
+                // TODO: check if data is an object of value-email
+                // check if email is equal to current user
+                // allow user to change this field or disable
                 this.documentForm.get(`${groupName}.${_.snakeCase(field)}`)
                   .patchValue(data, {emitEvent: false, onlySelf: true});
-                // TODO: resolve this
+                // TODO: resolve disabling status
                 // this.documentForm.get(`${groupName}.${_.snakeCase(field)}`)
                 //   .disable({emitEvent: false, onlySelf: true});
               }
