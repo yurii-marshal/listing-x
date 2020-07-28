@@ -3036,11 +3036,8 @@
                     only. Buyer and Seller will execute additional instructions, documents and forms provided by
                     Escrow Holder that are reasonably
                     necessary to close the escrow and, as directed by Escrow Holder, within <span class="fw-bold">3
-          (or <input matInput (click)="date_escrow_holder_pay_days.open()" [matDatepicker]="date_escrow_holder_pay_days"
-                           formControlName="date_escrow_holder_pay_days"
-                           type="text"
-                           class="i-lr-2__5">
-                <mat-datepicker #date_escrow_holder_pay_days></mat-datepicker> ) Days,</span> shall pay
+          (or <input formControlName="text_escrow_holder_pay_days" appOnlyNumbers [maxLength]="3" type="text"
+                     class="i-lr-1 fw-bold"> ) Days,</span> shall pay
                     to Escrow Holder or HOA or
                     HOA management company or others any fee required by paragraphs 7, 10 or elsewhere in this
                     Agreement.
@@ -3052,8 +3049,11 @@
                     A Copy of this Agreement including any counter offer(s) and addenda shall be delivered to Escrow
                     Holder within <span class="fw-bold">3 Days</span> After
                     Acceptance
-                    (or <input formControlName="text_agreement_copy_deliver_days" appOnlyNumbers [maxLength]="3"
-                               type="text" class="i-lr-3"> ). Buyer
+                    (or <input matInput (click)="date_agreement_copy_deliver_date.open()" [matDatepicker]="date_agreement_copy_deliver_date"
+                               formControlName="date_agreement_copy_deliver_date"
+                               type="text"
+                               class="i-lr-3">
+                    <mat-datepicker #date_agreement_copy_deliver_date></mat-datepicker> ). Buyer
                     and Seller authorize
                     Escrow
                     Holder to accept and rely on Copies and Signatures as defined in this Agreement as originals, to
@@ -3073,7 +3073,8 @@
               <div class="clearfix">
                 <div class="col-left-initials">
                   <label>Buyer's Initials</label>
-                  (<input formControlName="text_buyer_initials_first" type="text" name="" id="Buyer-1-7" class="i-lr-1">)
+                  (<input formControlName="text_buyer_initials_first" type="text" name="" id="Buyer-1-7"
+                          class="i-lr-1">)
                   &nbsp;
                   (<input formControlName="text_buyer_initials_second" type="text" name="" id="Buyer-2-7"
                           class="i-lr-1">)
