@@ -8,54 +8,54 @@
       <div class="block offer-information">
         <div class="row-layout header-section">
           <label class="header">Offer information</label>
-          <span routerLink="/portal/purchase-agreement/{{offerSummary?.id}}/step-one" class="link">Edit</span>
+          <span routerLink="/portal/purchase-agreement/{{offer?.id}}/step-one" class="link">Edit</span>
         </div>
-        <div class="row-layout" *ngFor="let item of offerSummary?.buyers; let i = index">
+        <div class="row-layout" *ngFor="let item of offer?.buyers; let i = index">
           <label>buyer #{{ i + 1 }}</label>
           <span>{{ item.firstName }} {{ item.lastName }} | {{ item.email }}</span>
         </div>
-        <div class="row-layout" *ngFor="let item of offerSummary?.sellers; let i = index">
+        <div class="row-layout" *ngFor="let item of offer?.sellers; let i = index">
           <label>seller #{{ i + 1 }}</label>
           <span>{{ item.firstName }} {{ item.lastName }} | {{ item.email }}</span>
         </div>
-        <div class="row-layout" *ngIf="offerSummary?.streetName">
+        <div class="row-layout" *ngIf="offer?.streetName">
           <label>address</label>
-          <span>{{ offerSummary?.streetName }}, {{ offerSummary?.city }}, {{ offerSummary?.state }} {{ offerSummary?.zip }}</span>
+          <span>{{ offer?.streetName }}, {{ offer?.city }}, {{ offer?.state }} {{ offer?.zip }}</span>
         </div>
-        <div class="row-layout" *ngIf="offerSummary?.price">
+        <div class="row-layout" *ngIf="offer?.price">
           <label>offer info</label>
-          <span>${{ offerSummary?.price | number }}<span *ngIf="offerSummary?.closeEscrowDays"> | {{ offerSummary?.closeEscrowDays }} Days to close escrow</span></span>
+          <span>${{ offer?.price | number }}<span *ngIf="offer?.closeEscrowDays"> | {{ offer?.closeEscrowDays }} Days to close escrow</span></span>
         </div>
       </div>
 
       <div class="block supporting-docs">
         <div class="row-layout header-section">
           <label class="header" style="min-width: 190px;">Supporting docs</label>
-          <span routerLink="/portal/purchase-agreement/{{offerSummary?.id}}/step-three" class="link">Edit</span>
+          <span routerLink="/portal/purchase-agreement/{{offer?.id}}/step-three" class="link">Edit</span>
         </div>
-        <div class="row-layout" *ngIf="offerSummary?.documents?.preApproval.length">
+        <div class="row-layout" *ngIf="offer?.documents?.preApproval.length">
           <label>Add Pre-approval Letter</label>
           <div class="doc-preview">
-            <img *ngFor="let img of offerSummary?.documents?.preApproval"
+            <img *ngFor="let img of offer?.documents?.preApproval"
                  src="assets/images/icons/{{ img.extension }}.svg"
                  [title]="img.title" height="20">
           </div>
         </div>
-        <div class="row-layout" *ngIf="offerSummary?.documents?.proofOfFunds.length">
+        <div class="row-layout" *ngIf="offer?.documents?.proofOfFunds.length">
           <label>Add Proof of Funds</label>
           <div class="doc-preview">
             <div class="doc-preview">
-              <img *ngFor="let img of offerSummary?.documents?.proofOfFunds"
+              <img *ngFor="let img of offer?.documents?.proofOfFunds"
                    src="assets/images/icons/{{ img.extension }}.svg"
                    [title]="img.title" height="20">
             </div>
           </div>
         </div>
-        <div class="row-layout" *ngIf="offerSummary?.documents?.coverLetter.length">
+        <div class="row-layout" *ngIf="offer?.documents?.coverLetter.length">
           <label>Add Cover Letter</label>
           <div class="doc-preview">
             <div class="doc-preview">
-              <img *ngFor="let img of offerSummary?.documents?.coverLetter"
+              <img *ngFor="let img of offer?.documents?.coverLetter"
                    src="assets/images/icons/{{ img.extension }}.svg"
                    [title]="img.title" height="20">
             </div>
@@ -66,13 +66,13 @@
       <div class="block payment-information">
         <div class="row-layout header-section">
           <label class="header">payment information</label>
-          <span routerLink="/portal/purchase-agreement/{{offerSummary?.id}}/step-two" class="link">Edit</span>
+          <span routerLink="/portal/purchase-agreement/{{offer?.id}}/step-two" class="link">Edit</span>
         </div>
-        <div class="row-layout" *ngIf="offerSummary?.initialDeposit">
+        <div class="row-layout" *ngIf="offer?.initialDeposit">
           <label>Initial deposit</label>
-          <span>${{ offerSummary?.initialDeposit | number }}</span>
+          <span>${{ offer?.initialDeposit | number }}</span>
         </div>
-        <ng-container *ngFor="let item of offerSummary?.loans; let i = index">
+        <ng-container *ngFor="let item of offer?.loans; let i = index">
           <div class="row-layout">
             <label>
               <span style="margin-right: 20px; font-weight: bold;">loan #{{ i+1 }}</span>
@@ -87,14 +87,14 @@
             <label>points</label><span>{{ item.points | number }}</span>
           </div>
         </ng-container>
-        <div class="row-layout" *ngIf="offerSummary?.loanType">
-          <label>variation</label><span class="bold">{{ offerSummary?.loanType }}</span>
+        <div class="row-layout" *ngIf="offer?.loanType">
+          <label>variation</label><span class="bold">{{ offer?.loanType }}</span>
         </div>
-        <div class="row-layout" *ngIf="offerSummary?.downPayment">
-          <label>down payment</label><span>${{ offerSummary?.downPayment | number }}</span>
+        <div class="row-layout" *ngIf="offer?.downPayment">
+          <label>down payment</label><span>${{ offer?.downPayment | number }}</span>
         </div>
-        <div class="row-layout" *ngIf="offerSummary?.anySpecialFinancialTerms">
-          <label>special financing terms</label><span>{{ offerSummary?.anySpecialFinancialTerms }}</span>
+        <div class="row-layout" *ngIf="offer?.anySpecialFinancialTerms">
+          <label>special financing terms</label><span>{{ offer?.anySpecialFinancialTerms }}</span>
         </div>
       </div>
 
