@@ -52,21 +52,17 @@
         <div class="row-layout" *ngIf="offer?.documents?.proofOfFunds.length">
           <label>Add Proof of Funds</label>
           <div class="doc-preview">
-            <div class="doc-preview">
-              <img *ngFor="let img of offer?.documents?.proofOfFunds"
-                   src="assets/images/icons/{{ img.extension }}.svg"
-                   [title]="img.title" height="20">
-            </div>
+            <img *ngFor="let img of offer?.documents?.proofOfFunds"
+                 src="assets/images/icons/{{ img.extension }}.svg"
+                 [title]="img.title" height="20">
           </div>
         </div>
         <div class="row-layout" *ngIf="offer?.documents?.coverLetter.length">
           <label>Add Cover Letter</label>
           <div class="doc-preview">
-            <div class="doc-preview">
-              <img *ngFor="let img of offer?.documents?.coverLetter"
-                   src="assets/images/icons/{{ img.extension }}.svg"
-                   [title]="img.title" height="20">
-            </div>
+            <img *ngFor="let img of offer?.documents?.coverLetter"
+                 src="assets/images/icons/{{ img.extension }}.svg"
+                 [title]="img.title" height="20">
           </div>
         </div>
       </div>

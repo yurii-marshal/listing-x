@@ -484,11 +484,43 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         text_buyer_signature_second: [{value: null, disabled: this.isDisabled}, []],
       }),
       page_16: this.fb.group({
-        // TODO: remove duplicate and set current user signature
-        text_privacy_act_advisory_first: [{value: null, disabled: this.isDisabled}, []],
-        date_privacy_act_advisory_first: [{value: null, disabled: this.isDisabled}, []],
-        text_privacy_act_advisory_second: [{value: null, disabled: this.isDisabled}, []],
-        date_privacy_act_advisory_second: [{value: null, disabled: this.isDisabled}, []],
+        // TODO: review this logic
+        text_privacy_act_advisory_first:
+          [{
+            value: null,
+            disabled: this.offer[this.offer.userRole + 's'] ? this.offer[this.offer.userRole + 's'][0].email !== this.user.email : true,
+          },
+            this.offer[this.offer.userRole + 's'] && this.offer[this.offer.userRole + 's'][0].email === this.user.email
+              ? [Validators.required]
+              : []
+          ],
+        date_privacy_act_advisory_first:
+          [{
+            value: null,
+            disabled: this.offer[this.offer.userRole + 's'] ? this.offer[this.offer.userRole + 's'][0].email !== this.user.email : true,
+          },
+            this.offer[this.offer.userRole + 's'] && this.offer[this.offer.userRole + 's'][0].email === this.user.email
+              ? [Validators.required]
+              : []
+          ],
+        text_privacy_act_advisory_second:
+          [{
+            value: null,
+            disabled: this.offer[this.offer.userRole + 's'] ? this.offer[this.offer.userRole + 's'][1].email !== this.user.email : true,
+          },
+            this.offer[this.offer.userRole + 's'] && this.offer[this.offer.userRole + 's'][0].email === this.user.email
+              ? [Validators.required]
+              : []
+          ],
+        date_privacy_act_advisory_second:
+          [{
+            value: null,
+            disabled: this.offer[this.offer.userRole + 's'] ? this.offer[this.offer.userRole + 's'][1].email !== this.user.email : true,
+          },
+            this.offer[this.offer.userRole + 's'] && this.offer[this.offer.userRole + 's'][0].email === this.user.email
+              ? [Validators.required]
+              : []
+          ],
       }),
     }, {updateOn: 'blur'});
 
@@ -557,16 +589,18 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     switch (value) {
       case 'date':
         this.documentForm.get(dateControlName).enable({emitEvent: false});
+        this.documentForm.get(dateControlName).markAsDirty();
         this.documentForm.get(daysControlName).disable({emitEvent: false});
         this.documentForm.get(dateControlName).setValidators([Validators.required]);
-        this.documentForm.get(daysControlName).patchValue('', {emitEvent: false, onlySelf: true});
+        this.documentForm.get(daysControlName).patchValue('');
         this.documentForm.get(daysControlName).clearValidators();
         break;
       case 'days':
         this.documentForm.get(daysControlName).enable({emitEvent: false});
+        this.documentForm.get(daysControlName).markAsDirty();
         this.documentForm.get(dateControlName).disable({emitEvent: false});
         this.documentForm.get(daysControlName).setValidators([Validators.required]);
-        this.documentForm.get(dateControlName).patchValue('', {emitEvent: false, onlySelf: true});
+        this.documentForm.get(dateControlName).patchValue('');
         this.documentForm.get(dateControlName).clearValidators();
         break;
     }
@@ -739,7 +773,10 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
   private getFieldAllowedFor(role: string, index: number) {
     return [
-      {value: '', disabled: this.offer[role][index] ? this.offer[role][index].email !== this.user.email : true},
+      {
+        value: '',
+        disabled: this.offer[role][index] ? this.offer[role][index].email !== this.user.email : true,
+      },
       this.offer[role][index]
         ? (this.offer[role][index].email === this.user.email ? [Validators.required] : [])
         : [],
