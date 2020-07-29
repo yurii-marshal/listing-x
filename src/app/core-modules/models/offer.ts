@@ -40,7 +40,8 @@ export interface Offer {
   downPayment?: number;
   anySpecialFinancialTerms?: string;
   remainingDaysCloseEscrow?: number;
-  userRole?: 'buyer' | 'seller' | 'agent_buyer' | 'agent_seller';
+  // TODO: remove last two types
+  userRole?: 'buyer' | 'seller' | 'agent_buyer' | 'agent_seller' | 'seller_agent' | 'buyer_agent';
 
   // Third step
   documents: LinkedDocuments;
