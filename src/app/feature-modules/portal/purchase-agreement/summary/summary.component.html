@@ -84,23 +84,25 @@
           <label>Loan amount</label>
           <span>${{ offerSummary?.loan | number }}</span>
         </div>
-        <!--TODO: find props-->
-        <!--<div class="row-layout" *ngIf="offerSummary?.loan">-->
-          <!--<label>Interest rate</label>-->
-          <!--<span>${{ offerSummary?.loan | number }}</span>-->
-        <!--</div>-->
-        <!--<div class="row-layout" *ngIf="offerSummary?.loan">-->
-          <!--<label>Points</label>-->
-          <!--<span>${{ offerSummary?.loan | number }}</span>-->
-        <!--</div>-->
+        <div class="row-layout" *ngIf="offerSummary?.interestRate">
+          <label>Interest rate</label>
+          <span>{{ offerSummary?.interestRate }}</span>
+        </div>
+        <div class="row-layout" *ngIf="offerSummary?.points">
+          <label>Points</label>
+          <span>{{ offerSummary?.points }}</span>
+        </div>
         <div class="row-layout" *ngIf="offer?.loanType">
           <label>variation</label><span class="bold">{{ offer?.loanType }}</span>
         </div>
         <div class="row-layout" *ngIf="offerSummary?.downPayment">
           <label>down payment</label><span>${{ offerSummary?.downPayment | number }}</span>
         </div>
-        <div class="row-layout" *ngIf="offer?.anySpecialFinancialTerms">
-          <label>special financing terms</label><span>{{ offer?.anySpecialFinancialTerms }}</span>
+        <div class="row-layout">
+          <label>special financing terms</label>
+          <span>
+          {{ offer?.anySpecialFinancialTerms || 'Without any special financing terms'}}
+          </span>
         </div>
       </div>
 
