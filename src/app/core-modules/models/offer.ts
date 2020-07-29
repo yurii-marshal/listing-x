@@ -5,6 +5,8 @@ export interface OfferSummary extends Offer {
   documents: LinkedDocuments;
   remainingDaysCloseEscrow: number;
   transaction: number;
+  loan?: number;
+  deposit?: number;
 }
 
 export interface Offer {

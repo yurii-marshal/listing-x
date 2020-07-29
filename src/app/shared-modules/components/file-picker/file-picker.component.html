@@ -15,7 +15,7 @@
     <h3 class="title" *ngIf="dataSource?.length">Or choose existing document</h3>
     <div *ngFor="let item of dataSource; index as i"
          role="checkbox"
-         [class.custom]="i > 2"
+         [class.custom]="false"
          [id]="item.id"
          [attr.aria-label]="item.title"
          [attr.aria-checked]="item.checked"
