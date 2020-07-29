@@ -7,6 +7,8 @@ export interface OfferSummary extends Offer {
   transaction: number;
   loan?: number;
   deposit?: number;
+  interestRate?: number;
+  points?: number;
 }
 
 export interface Offer {

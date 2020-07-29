@@ -557,7 +557,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     switch (value) {
       case 'date':
         this.documentForm.get(dateControlName).enable({emitEvent: false});
-        this.documentForm.get(daysControlName).setValidators([Validators.required]);
+        this.documentForm.get(daysControlName).disable({emitEvent: false});
+        this.documentForm.get(dateControlName).setValidators([Validators.required]);
         this.documentForm.get(daysControlName).patchValue('', {emitEvent: false, onlySelf: true});
         this.documentForm.get(daysControlName).clearValidators();
         break;
