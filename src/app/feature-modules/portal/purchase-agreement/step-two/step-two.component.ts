@@ -211,7 +211,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         text_finance_additional_terms: [{value: null, disabled: this.isDisabled}, []],
         // # Down Payment = formula = price - (initial deposits + all loans (3a…3d))
         text_finance_down_payment_balance: [{value: null, disabled: true}, [Validators.required]],
-        text_finance_additional_terms_amount: [{value: null, disabled: true}, []],
+        // text_finance_additional_terms_amount: [{value: null, disabled: true}, []],
         text_finance_buyer_initials_first: [{value: null, disabled: this.isDisabled}, []],
         text_finance_buyer_initials_second: [{value: null, disabled: this.isDisabled}, []],
         text_finance_seller_initials_first: [{value: null, disabled: this.isDisabled}, []],

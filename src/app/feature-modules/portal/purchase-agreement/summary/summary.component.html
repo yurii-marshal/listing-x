@@ -18,6 +18,14 @@
           <label>seller #{{ i + 1 }}</label>
           <span>{{ item.firstName }} {{ item.lastName }} | {{ item.email }}</span>
         </div>
+        <div class="row-layout" *ngFor="let item of offer?.agentBuyers; let i = index">
+          <label>agent buyer #{{ i + 1 }}</label>
+          <span>{{ item.firstName }} {{ item.lastName }} | {{ item.email }}</span>
+        </div>
+        <div class="row-layout" *ngFor="let item of offer?.agentSellers; let i = index">
+          <label>agent seller #{{ i + 1 }}</label>
+          <span>{{ item.firstName }} {{ item.lastName }} | {{ item.email }}</span>
+        </div>
         <div class="row-layout" *ngIf="offer?.streetName">
           <label>address</label>
           <span>{{ offer?.streetName }}, {{ offer?.city }}, {{ offer?.state }} {{ offer?.zip }}</span>
@@ -68,30 +76,27 @@
           <label class="header">payment information</label>
           <span routerLink="/portal/purchase-agreement/{{offer?.id}}/step-two" class="link">Edit</span>
         </div>
-        <div class="row-layout" *ngIf="offer?.initialDeposit">
+        <div class="row-layout" *ngIf="offerSummary?.deposit">
           <label>Initial deposit</label>
-          <span>${{ offer?.initialDeposit | number }}</span>
+          <span>${{ offerSummary?.deposit | number }}</span>
         </div>
-        <ng-container *ngFor="let item of offer?.loans; let i = index">
-          <div class="row-layout">
-            <label>
-              <span style="margin-right: 20px; font-weight: bold;">loan #{{ i+1 }}</span>
-              loan amount
-            </label>
-            <span>${{ item.loanAmount | number }}</span>
-          </div>
-          <div class="row-layout">
-            <label>interest rate</label><span>{{ item.interestRate | number }}</span>
-          </div>
-          <div class="row-layout">
-            <label>points</label><span>{{ item.points | number }}</span>
-          </div>
-        </ng-container>
+        <div class="row-layout" *ngIf="offerSummary?.loan">
+          <label>Loan amount</label>
+          <span>${{ offerSummary?.loan | number }}</span>
+        </div>
+        <div class="row-layout" *ngIf="offerSummary?.loan">
+          <label>Interest rate</label>
+          <span>${{ offerSummary?.loan | number }}</span>
+        </div>
+        <div class="row-layout" *ngIf="offerSummary?.loan">
+          <label>Points</label>
+          <span>${{ offerSummary?.loan | number }}</span>
+        </div>
         <div class="row-layout" *ngIf="offer?.loanType">
           <label>variation</label><span class="bold">{{ offer?.loanType }}</span>
         </div>
-        <div class="row-layout" *ngIf="offer?.downPayment">
-          <label>down payment</label><span>${{ offer?.downPayment | number }}</span>
+        <div class="row-layout" *ngIf="offerSummary?.downPayment">
+          <label>down payment</label><span>${{ offerSummary?.downPayment | number }}</span>
         </div>
         <div class="row-layout" *ngIf="offer?.anySpecialFinancialTerms">
           <label>special financing terms</label><span>{{ offer?.anySpecialFinancialTerms }}</span>
