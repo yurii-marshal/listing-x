@@ -84,14 +84,15 @@
           <label>Loan amount</label>
           <span>${{ offerSummary?.loan | number }}</span>
         </div>
-        <div class="row-layout" *ngIf="offerSummary?.loan">
-          <label>Interest rate</label>
-          <span>${{ offerSummary?.loan | number }}</span>
-        </div>
-        <div class="row-layout" *ngIf="offerSummary?.loan">
-          <label>Points</label>
-          <span>${{ offerSummary?.loan | number }}</span>
-        </div>
+        <!--TODO: find props-->
+        <!--<div class="row-layout" *ngIf="offerSummary?.loan">-->
+          <!--<label>Interest rate</label>-->
+          <!--<span>${{ offerSummary?.loan | number }}</span>-->
+        <!--</div>-->
+        <!--<div class="row-layout" *ngIf="offerSummary?.loan">-->
+          <!--<label>Points</label>-->
+          <!--<span>${{ offerSummary?.loan | number }}</span>-->
+        <!--</div>-->
         <div class="row-layout" *ngIf="offer?.loanType">
           <label>variation</label><span class="bold">{{ offer?.loanType }}</span>
         </div>
