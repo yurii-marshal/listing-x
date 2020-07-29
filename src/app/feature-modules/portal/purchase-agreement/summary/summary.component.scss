@@ -118,8 +118,11 @@
     }
 
     .doc-preview {
-      flex: 1;
-      overflow: hidden;
+      display: flex;
+
+      img {
+        margin-right: 5px;
+      }
     }
 
   }
