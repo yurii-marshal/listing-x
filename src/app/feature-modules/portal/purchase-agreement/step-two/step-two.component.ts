@@ -74,7 +74,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
     this.user = this.authService.currentUser;
 
-    this.isDisabled = this.offer.userRole !== 'buyer_agent';
+    this.isDisabled = this.offer.userRole !== 'agent_buyer';
 
     this.documentForm = this.fb.group({
       page_1: this.fb.group({
