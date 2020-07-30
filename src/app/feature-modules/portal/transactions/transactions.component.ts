@@ -72,7 +72,7 @@ export class TransactionsComponent implements OnDestroy, OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed()
-      .pipe(filter(dialogResult => !!dialogResult),)
+      .pipe(filter(dialogResult => !!dialogResult))
       .subscribe();
   }
 

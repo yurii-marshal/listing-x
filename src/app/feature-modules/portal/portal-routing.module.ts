@@ -28,7 +28,7 @@ import { AgreementsListComponent } from './purchase-agreement/agreements-list/ag
 const routes: Routes = [
   {
     path: '',
-    component: TransactionsComponent,
+    component: AgreementsListComponent,
     canActivate: [AuthGuardService],
     canActivateChild: [AuthGuardService],
     children: [
@@ -137,23 +137,32 @@ const routes: Routes = [
         ]
       },
     ]
-  }, {
-    path: 'transaction/:id',
-    component: TransactionDetailsComponent,
+  },
+  {
+    path: 'transactions',
+    component: TransactionsComponent,
     canActivate: [AuthGuardService],
+    canActivateChild: [AuthGuardService],
     children: [
       {
-        path: 'upload',
-        component: DialogsWrapperComponent,
-        data: {
-          component: WriteOfferUploadDocumentsDialogComponent,
-          modalType: UploadDocsModalType.OfferUpdating,
-          transactionPage: true
-        },
-        resolve: {model: OfferDocumentsResolver}
+        path: ':id',
+        component: TransactionDetailsComponent,
+        canActivate: [AuthGuardService],
+        children: [
+          {
+            path: 'upload',
+            component: DialogsWrapperComponent,
+            data: {
+              component: WriteOfferUploadDocumentsDialogComponent,
+              modalType: UploadDocsModalType.OfferUpdating,
+              transactionPage: true
+            },
+            resolve: {model: OfferDocumentsResolver}
+          }
+        ]
       }
     ]
-  }
+  },
 ];
 
 @NgModule({
