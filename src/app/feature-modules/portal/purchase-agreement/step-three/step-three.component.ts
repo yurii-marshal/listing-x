@@ -58,10 +58,9 @@ export class StepThreeComponent implements OnInit, OnDestroy {
 
   getRequestValue(): LinkedDocuments {
     return {
-      ...this.form.value.preApproval.map(i => i.id),
-      ...this.form.value.proofOfFunds.map(i => i.id),
-      ...this.form.value.coverLetter.map(i => i.id),
-      offerId: this.offer.id,
+      preApproval: this.form.value.preApproval.map(i => i.id),
+      proofOfFunds: this.form.value.proofOfFunds.map(i => i.id),
+      coverLetter: this.form.value.coverLetter.map(i => i.id),
     } as LinkedDocuments;
   }
 
@@ -69,7 +68,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     const model: LinkedDocuments = this.getRequestValue();
 
     forkJoin(
-      this.documentLinkingService.linkDocumentsToOffer(model),
+      this.documentLinkingService.linkDocumentsToOffer(model, this.offer.id),
       this.offerService.updateOfferProgress({progress: 4}, this.offer.id)
     )
       .pipe(takeUntil(this.onDestroyed$))

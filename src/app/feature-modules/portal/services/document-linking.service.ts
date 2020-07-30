@@ -21,8 +21,8 @@ export class DocumentLinkingService {
     return this.http.get<any>(`/offers/${offerId}/documents/`);
   }
 
-  linkDocumentsToOffer(model: LinkedDocuments): Observable<LinkedDocuments> {
-    return this.http.post<LinkedDocuments>(`/offers/${model.offerId}/documents/`, model);
+  linkDocumentsToOffer(model: LinkedDocuments, offerId: number): Observable<LinkedDocuments> {
+    return this.http.post<LinkedDocuments>(`/offers/${offerId}/documents/`, model);
   }
 
   updateOfferDocuments(model: LinkedDocuments): Observable<LinkedDocuments> {

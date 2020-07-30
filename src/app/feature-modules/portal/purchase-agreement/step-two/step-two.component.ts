@@ -148,7 +148,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         text_offer_apn: [{value: '', disabled: true}, []],
         text_offer_price_text: [{value: null, disabled: true}, []],
         // # Price = 51c
-        text_offer_price_digits: [0, [Validators.required]],
+        text_offer_price_digits: [{value: null, disabled: this.isDisabled}, [Validators.required]],
         // # Close of Escrow = 51d
         radio_escrow: ['date', []],
         date_escrow_date: [{value: null, disabled: this.isDisabled}, [Validators.required]],
@@ -571,6 +571,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.documentForm.markAllAsTouched();
 
     const firstElementWithError = document.querySelector('input.ng-invalid');
+
+    console.log(firstElementWithError);
 
     if (firstElementWithError) {
       firstElementWithError.scrollIntoView({behavior: 'smooth', block: 'center'});
