@@ -3,7 +3,7 @@
     <div class="u-flex viewer">
       <div class="doc-container">
 
-        <form class="document-form" [formGroup]="documentForm" #form>
+        <form class="document-form" [formGroup]="documentForm" #form id="form">
 
           <div class="page-breaker" id="page-0" style="display: none;">0</div>
 
@@ -191,7 +191,7 @@
               <div class="pb-20">
                 <span class="p-relative">Agent &nbsp;
                     <span class="initial text-center">Real Estate Broker (Firm)</span>
-                    <input formControlName="text_disclosure_agent" type="text" class="i-lr-7">
+                    <input appSignature (fieldSigned)="moveToNextSignField()" formControlName="text_disclosure_agent" type="text" class="i-lr-7">
                 </span>
                 &nbsp; DRE Lic. # &nbsp; <input formControlName="text_disclosure_seller_lic" type="text"
                                                 class="i-lr-4__5">
