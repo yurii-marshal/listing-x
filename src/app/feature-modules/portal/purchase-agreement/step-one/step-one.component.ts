@@ -3,8 +3,6 @@ import { OfferService } from '../../services/offer.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Offer } from '../../../../core-modules/models/offer';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { LocalStorageKey } from '../../../../core-modules/enums/local-storage-key';
 
 @Component({
   selector: 'app-step-one',

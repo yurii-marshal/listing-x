@@ -60,7 +60,7 @@ export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
   }
 
   private get predefinedUser() {
-    return this.authService.currentUser
+    return this.offer && this.offer.userRole === 'agent_buyer'
       ? this.createEntity(this.authService.currentUser, true)
       : this.createEntity();
   }
@@ -162,6 +162,7 @@ export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
     const offerValues = this.anonymousOffer || this.offer;
     const disabled: boolean = !!this.anonymousOffer;
 
+    // TODO: set predefined user accordingly to userRole
     this.form = this.formBuilder.group({
       id: [offerValues && offerValues.id || null, []],
       agentBuyers: this.formBuilder.array([this.predefinedUser]),
