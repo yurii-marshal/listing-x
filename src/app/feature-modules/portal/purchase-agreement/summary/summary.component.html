@@ -32,7 +32,7 @@
         </div>
         <div class="row-layout">
           <label>offer info</label>
-          <span>{{(offer?.price || 0) | currency }}<span> | {{ offer?.closeEscrowDays || 0 }} Day(s) to close escrow</span></span>
+          <span>{{(offer?.price || 0) | currency }}<span> | {{ offer?.closeEscrowDays || 0 }} Day <span *ngIf="offer?.closeEscrowDays !== 1">s </span>to close escrow</span></span>
         </div>
       </div>
 
