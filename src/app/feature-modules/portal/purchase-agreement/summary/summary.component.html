@@ -30,9 +30,9 @@
           <label>address</label>
           <span>{{ offer?.streetName }}, {{ offer?.city }}, {{ offer?.state }} {{ offer?.zip }}</span>
         </div>
-        <div class="row-layout" *ngIf="offer?.price">
+        <div class="row-layout">
           <label>offer info</label>
-          <span>${{ offer?.price | number }}<span *ngIf="offer?.closeEscrowDays"> | {{ offer?.closeEscrowDays }} Days to close escrow</span></span>
+          <span>{{(offer?.price || 0) | currency }}<span> | {{ offer?.closeEscrowDays || 0 }} Day(s) to close escrow</span></span>
         </div>
       </div>
 
@@ -74,11 +74,11 @@
         </div>
         <div class="row-layout" *ngIf="offerSummary?.deposit">
           <label>Initial deposit</label>
-          <span>${{ offerSummary?.deposit | number }}</span>
+          <span>{{ offerSummary?.deposit | currency }}</span>
         </div>
         <div class="row-layout" *ngIf="offerSummary?.loan">
           <label>Loan amount</label>
-          <span>${{ offerSummary?.loan | number }}</span>
+          <span>{{ offerSummary?.loan | currency }}</span>
         </div>
         <div class="row-layout" *ngIf="offerSummary?.interestRate">
           <label>Interest rate</label>
@@ -92,7 +92,7 @@
           <label>variation</label><span class="bold">{{ offer?.loanType }}</span>
         </div>
         <div class="row-layout" *ngIf="offerSummary?.downPayment">
-          <label>down payment</label><span>${{ offerSummary?.downPayment | number }}</span>
+          <label>down payment</label><span>{{ offerSummary?.downPayment | currency }}</span>
         </div>
         <div class="row-layout">
           <label>special financing terms</label>
