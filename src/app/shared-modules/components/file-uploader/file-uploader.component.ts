@@ -29,7 +29,7 @@ const FILE_UPLOADER_COMPONENT_VALUE_ACCESSOR = {
       <div *ngIf="!shortened" class="subtitle">Maximum upload file size: {{ maxFileSize }} MB. Download format: .doc .pdf</div>
 
       <label [for]="uniqueId" (click)="fileInput.click();">
-          <ng-content></ng-content>
+        <ng-content></ng-content>
       </label>
     </div>
   `,
@@ -55,14 +55,11 @@ export class FileUploaderComponent {
 
   @ViewChild('fileInput', {static: false})
   fileInput: any;
-
+  iconName: string = 'upload-file-icon';
   @HostBinding('style.background-color')
   private background = '#ffffff';
-
   @HostBinding('style.opacity')
   private opacity = '1';
-
-  iconName: string = 'upload-file-icon';
 
   constructor(private snackBar: MatSnackBar) {
   }
@@ -116,6 +113,12 @@ export class FileUploaderComponent {
     if (!this.isSupportedExtensions(files)) {
       this.snackBar.open('Unsupported file extension', 'OK', config);
     } else if (this.calculateTotalSize(files) > this.maxFileSize * 1024 * 1024) {
+      // TODO: calculate total or every?
+      // const exceededIndex = files.findIndex((item) => item.size >= this.maxFileSize * 1024 * 1024);
+      //
+      // if (exceededIndex > -1) {
+      //   this.snackBar.open(`File #${exceededIndex} exceeds size limit (${this.maxFileSize}Mb)`, 'OK', config);
+      // }
       this.snackBar.open(`File exceeds size limit (${this.maxFileSize}Mb)`, 'OK', config);
     } else {
       this.onFileSelect.emit(files);
@@ -126,7 +129,7 @@ export class FileUploaderComponent {
 
   isSupportedExtensions(files: File[]): boolean {
     if (this.fileTypes === '*') {
-      return  true;
+      return true;
     }
     return _.every(files, ({name}) => this.fileTypes.includes(this.getExtension(name)));
   }
