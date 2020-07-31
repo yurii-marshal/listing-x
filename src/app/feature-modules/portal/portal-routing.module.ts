@@ -24,6 +24,7 @@ import { SummaryComponent } from './purchase-agreement/summary/summary.component
 import { CreateOfferGuardService } from '../../core-modules/guards/create-offer-guard.service';
 import { GetOfferResolver } from '../../core-modules/resolvers/get-offer.resolver';
 import { AgreementsListComponent } from './purchase-agreement/agreements-list/agreements-list.component';
+import { AgreementDetailsComponent } from './purchase-agreement/agreement-details/agreement-details.component';
 
 const routes: Routes = [
   {
@@ -134,14 +135,14 @@ const routes: Routes = [
             data: {progress: 4},
             resolve: {offer: GetOfferResolver}
           },
+          {
+            path: 'details',
+            pathMatch: 'full',
+            component: AgreementDetailsComponent,
+            canActivate: [],
+          },
         ]
       },
-      {
-        path: ':id/details',
-        pathMatch: 'full',
-        component: TransactionDetailsComponent,
-        canActivate: [],
-      }
     ]
   },
   {
