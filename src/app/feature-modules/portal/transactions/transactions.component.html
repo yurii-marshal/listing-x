@@ -126,7 +126,7 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let element">
-          <div routerLink="/portal/transaction/{{ element.id }}" class="detail-btn" [ngClass]="getClassName(element.status)">
+          <div routerLink="/portal/transactions/{{ element.id }}" class="detail-btn" [ngClass]="getClassName(element.status)">
             More Details
           </div>
         </td>
