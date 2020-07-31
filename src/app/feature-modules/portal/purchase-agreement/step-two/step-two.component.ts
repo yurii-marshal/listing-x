@@ -537,7 +537,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   acceptOfferDocument() {
     this.documentForm.markAllAsTouched();
 
-    const hasFormInvalidFields = this.scrollToInvalidField();
+    const hasFormInvalidFields = this.scrollToFirstInvalidField();
 
     hasFormInvalidFields
       ? this.snackbar.open('Please, fill all mandatory fields')
@@ -582,7 +582,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     }
   }
 
-  private scrollToInvalidField(): boolean {
+  private scrollToFirstInvalidField(): boolean {
     for (const groupName of Object.keys(this.documentForm.controls)) {
       if (this.documentForm.controls[groupName].invalid) {
         for (const controlName of Object.keys((this.documentForm.controls[groupName] as FormGroup).controls)) {
@@ -592,9 +592,10 @@ export class StepTwoComponent implements OnInit, OnDestroy {
             return true;
           }
         }
-        return false;
       }
     }
+
+    return false;
   }
 
   // TODO: review this logic in scope 4.0
