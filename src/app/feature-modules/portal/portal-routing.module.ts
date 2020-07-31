@@ -136,6 +136,12 @@ const routes: Routes = [
           },
         ]
       },
+      {
+        path: ':id/details',
+        pathMatch: 'full',
+        component: TransactionDetailsComponent,
+        canActivate: [],
+      }
     ]
   },
   {
