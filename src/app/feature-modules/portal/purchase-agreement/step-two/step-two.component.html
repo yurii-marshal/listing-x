@@ -4585,6 +4585,7 @@
           <button mat-flat-button
                   color="primary"
                   class="continue-btn u-flex u-flex-align-items--center u-flex-justify--center"
+                  [title]="isSideBarOpen ? '' : 'Continue'"
                   [class.wide]="isSideBarOpen"
                   (click)="acceptOfferDocument()">
             <span>Continue</span>
