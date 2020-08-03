@@ -60,9 +60,7 @@ export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
   }
 
   private get predefinedUser() {
-    return this.offer && this.offer.userRole === 'agent_buyer'
-      ? this.createEntity(this.authService.currentUser, true)
-      : this.createEntity();
+    return this.createEntity(this.authService.currentUser, true);
   }
 
   ngOnInit() {
@@ -102,9 +100,7 @@ export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
 
     if (model.agentBuyers && model.agentBuyers.length) {
       const mb = model.agentBuyers.map((item, index) => {
-        return (index === 0 && !!this.anonymousOffer)
-          ? this.predefinedUser
-          : this.createEntity(item, !!this.anonymousOffer);
+        return (index === 0) ? this.predefinedUser : this.createEntity(item);
       });
       this.form.setControl('agentBuyers', this.formBuilder.array(mb));
     }

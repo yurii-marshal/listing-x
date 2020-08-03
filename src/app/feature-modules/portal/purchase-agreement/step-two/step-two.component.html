@@ -978,7 +978,7 @@
                     <input formControlName="text_offer_price_text" type="text" class="i-lr-9">
                     Dollars $
                     <input formControlName="text_offer_price_digits"
-                           appOnlyNumbers
+                           appOnlyNumbers="float"
                            appNumberToWords
                            [numToWordsForm]="documentForm"
                            [recipientControlName]="'page_5.text_offer_price_text'"
