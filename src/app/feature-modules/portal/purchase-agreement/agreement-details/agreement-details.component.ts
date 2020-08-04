@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
-import { CalendarEvent, Transaction, TransactionStatus } from '../../../../core-modules/models/transaction';
+import { Transaction, TransactionStatus } from '../../../../core-modules/models/transaction';
 import { FormControl, Validators } from '@angular/forms';
 import { AddendumData, Document, GeneratedDocument } from '../../../../core-modules/models/document';
 import { AuthService } from '../../../../core-modules/core-services/auth.service';
@@ -13,6 +13,7 @@ import { DocumentStatus } from '../../../../core-modules/enums/document-status';
 import { Person } from '../../../../core-modules/models/offer';
 import { SpqDialogComponent } from '../../dialogs/spq-dialog/spq-dialog.component';
 import { AddendumDialogComponent } from '../../dialogs/addendum-dialog/addendum-dialog.component';
+import { CalendarEvent } from '../../../../core-modules/models/calendar-event';
 
 @Component({
   selector: 'app-agreement-details',

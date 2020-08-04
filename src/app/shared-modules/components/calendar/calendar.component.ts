@@ -1,5 +1,4 @@
-import { Component, ComponentRef, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { CalendarEvent } from '../../../core-modules/models/transaction';
+import { Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { ViewOptionsInput } from '@fullcalendar/core/types/input-types';
@@ -11,6 +10,7 @@ import { ComponentPortal } from '@angular/cdk/portal';
 import * as _ from 'lodash';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, tap } from 'rxjs/operators';
+import { CalendarEvent } from '../../../core-modules/models/calendar-event';
 
 export enum CalendarView {
   Month = 'dayGridMonth',

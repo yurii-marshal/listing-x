@@ -50,6 +50,7 @@ import { NumberToWordsDirective } from './directives/number-to-words.directive';
 import { TimeFormatDirective } from './directives/time-format.directive';
 import { SignatureBoxComponent } from './components/signature-box/signature-box.component';
 import { SignatureDirective } from './directives/signature.directive';
+import { FloatNumberPipe } from './pipes/float-number.pipe';
 
 const materialModules = [
   MatDialogModule,
@@ -99,6 +100,7 @@ const components = [
   SelectedFileItemComponent,
   SignatureBoxComponent,
   FirstLetterPipe,
+  FloatNumberPipe,
   ...dialogs,
 ];
 

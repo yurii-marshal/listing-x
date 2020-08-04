@@ -1,7 +1,7 @@
 import {GeneratedDocumentType, UploadDocumentType} from '../enums/upload-document-type';
 import {DocumentStatus} from '../enums/document-status';
 import {SpqQuestion} from './spq-question';
-import { Log } from './transaction';
+import { Log } from './log';
 
 export interface Document {
   id: number;
