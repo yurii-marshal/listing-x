@@ -85,11 +85,11 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         radio_disclosure_2: [{value: 'buyer', disabled: true}, []],
         text_disclosure_role_name_2: this.getSignFieldAllowedFor('buyers', 1),
         date_disclosure_2: this.getSignFieldAllowedFor('buyers', 1),
-        text_disclosure_agent: this.getSignFieldAllowedFor('agentBuyers', 0),
-        text_disclosure_agent_lic: [{value: '', disabled: true}, []],
-        text_disclosure_seller: this.getSignFieldAllowedFor('sellers', 0),
-        text_disclosure_seller_lic: [{value: '', disabled: true}, []],
-        date_disclosure_3: this.getSignFieldAllowedFor('sellers', 0),
+        text_disclosure_firm: [{value: null, disabled: this.isDisabled}, []],
+        text_disclosure_firm_lic: [{value: '', disabled: true}, []],
+        text_disclosure_agent_buyer: this.getSignFieldAllowedFor('agentBuyers', 0),
+        text_disclosure_agent_buyer_lic: [{value: '', disabled: true}, []],
+        date_disclosure_3: this.getSignFieldAllowedFor('agentBuyers', 0),
       }),
       page_2: this.fb.group({
         text_confirm_seller_firm_name: [{value: '', disabled: true}, []],
@@ -212,10 +212,10 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         // # Down Payment = formula = price - (initial deposits + all loans (3a…3d))
         text_finance_down_payment_balance: [{value: null, disabled: true}, [Validators.required]],
         // text_finance_additional_terms_amount: [{value: null, disabled: true}, []],
-        text_finance_buyer_initials_first: [{value: null, disabled: this.isDisabled}, []],
-        text_finance_buyer_initials_second: [{value: null, disabled: this.isDisabled}, []],
-        text_finance_seller_initials_first: [{value: null, disabled: this.isDisabled}, []],
-        text_finance_seller_initials_second: [{value: null, disabled: this.isDisabled}, []],
+        text_finance_buyer_initials_first: this.getSignFieldAllowedFor('buyers', 0),
+        text_finance_buyer_initials_second: this.getSignFieldAllowedFor('buyers', 1),
+        text_finance_seller_initials_first: this.getSignFieldAllowedFor('sellers', 0),
+        text_finance_seller_initials_second: this.getSignFieldAllowedFor('sellers', 1),
       }),
       page_6: this.fb.group({
         text_property_address: [{value: '', disabled: true}, []],
@@ -257,10 +257,10 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         text_allocation_report_prepared_by_third: [{value: null, disabled: this.isDisabled}, []],
         check_allocation_report_government_buyer: [{value: null, disabled: this.isDisabled}, []],
         check_allocation_report_government_seller: [{value: null, disabled: this.isDisabled}, []],
-        text_allocation_report_buyer_initials_first: [{value: null, disabled: this.isDisabled}, []],
-        text_allocation_report_buyer_initials_second: [{value: null, disabled: this.isDisabled}, []],
-        text_allocation_report_seller_initials_first: [{value: null, disabled: this.isDisabled}, []],
-        text_allocation_report_seller_initials_second: [{value: null, disabled: this.isDisabled}, []],
+        text_allocation_report_buyer_initials_first: this.getSignFieldAllowedFor('buyers', 0),
+        text_allocation_report_buyer_initials_second: this.getSignFieldAllowedFor('buyers', 1),
+        text_allocation_report_seller_initials_first: this.getSignFieldAllowedFor('sellers', 0),
+        text_allocation_report_seller_initials_second: this.getSignFieldAllowedFor('sellers', 1),
       }),
       page_7: this.fb.group({
         text_property_address: [{value: '', disabled: true}, []],
@@ -316,10 +316,10 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         text_possession_deliver_at: [{value: null, disabled: this.isDisabled}, []],
         radio_possession_deliver_at_ampm: ['am', []],
         date_possession_deliver: [{value: null, disabled: this.isDisabled}, []],
-        text_possession_deliver_buyer_initials_first: [{value: null, disabled: this.isDisabled}, []],
-        text_possession_deliver_buyer_initials_second: [{value: null, disabled: this.isDisabled}, []],
-        text_possession_deliver_seller_initials_first: [{value: null, disabled: this.isDisabled}, []],
-        text_possession_deliver_seller_initials_second: [{value: null, disabled: this.isDisabled}, []],
+        text_possession_deliver_buyer_initials_first: this.getSignFieldAllowedFor('buyers', 0),
+        text_possession_deliver_buyer_initials_second: this.getSignFieldAllowedFor('buyers', 1),
+        text_possession_deliver_seller_initials_first: this.getSignFieldAllowedFor('sellers', 0),
+        text_possession_deliver_seller_initials_second: this.getSignFieldAllowedFor('sellers', 1),
       }),
       page_8: this.fb.group({
         text_property_address: [{value: '', disabled: true}, []],
@@ -329,19 +329,19 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         text_property_vacant_days: [{value: null, disabled: this.isDisabled}, []],
         text_seller_disclosure_days: [{value: null, disabled: this.isDisabled}, []],
         check_tenant_to_remain: [{value: null, disabled: this.isDisabled}, []],
-        text_buyer_initials_first: [{value: null, disabled: this.isDisabled}, []],
-        text_buyer_initials_second: [{value: null, disabled: this.isDisabled}, []],
-        text_seller_initials_first: [{value: null, disabled: this.isDisabled}, []],
-        text_seller_initials_second: [{value: null, disabled: this.isDisabled}, []],
+        text_buyer_initials_first: this.getSignFieldAllowedFor('buyers', 0),
+        text_buyer_initials_second: this.getSignFieldAllowedFor('buyers', 1),
+        text_seller_initials_first: this.getSignFieldAllowedFor('sellers', 0),
+        text_seller_initials_second: this.getSignFieldAllowedFor('sellers', 1),
       }),
       page_9: this.fb.group({
         text_property_address: [{value: '', disabled: true}, []],
         date_property_date: [{value: '', disabled: true}, []],
         text_seller_request_days: [{value: null, disabled: this.isDisabled}, []],
-        text_buyer_initials_first: [{value: null, disabled: this.isDisabled}, []],
-        text_buyer_initials_second: [{value: null, disabled: this.isDisabled}, []],
-        text_seller_initials_first: [{value: null, disabled: this.isDisabled}, []],
-        text_seller_initials_second: [{value: null, disabled: this.isDisabled}, []],
+        text_buyer_initials_first: this.getSignFieldAllowedFor('buyers', 0),
+        text_buyer_initials_second: this.getSignFieldAllowedFor('buyers', 1),
+        text_seller_initials_first: this.getSignFieldAllowedFor('sellers', 0),
+        text_seller_initials_second: this.getSignFieldAllowedFor('sellers', 1),
       }),
       page_10: this.fb.group({
         text_property_address: [{value: '', disabled: true}, []],
@@ -353,10 +353,10 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         check_remove_all_contingencies: [{value: null, disabled: this.isDisabled}, []],
         text_notice_buyer_or_seller_to_perform: [{value: null, disabled: this.isDisabled}, []],
         text_days_to_close_escrow: [{value: null, disabled: this.isDisabled}, []],
-        text_buyer_initials_first: [{value: null, disabled: this.isDisabled}, []],
-        text_buyer_initials_second: [{value: null, disabled: this.isDisabled}, []],
-        text_seller_initials_first: [{value: null, disabled: this.isDisabled}, []],
-        text_seller_initials_second: [{value: null, disabled: this.isDisabled}, []],
+        text_buyer_initials_first: this.getSignFieldAllowedFor('buyers', 0),
+        text_buyer_initials_second: this.getSignFieldAllowedFor('buyers', 1),
+        text_seller_initials_first: this.getSignFieldAllowedFor('sellers', 0),
+        text_seller_initials_second: this.getSignFieldAllowedFor('sellers', 1),
       }),
       page_11: this.fb.group({
         text_property_address: [{value: '', disabled: true}, []],
@@ -364,26 +364,26 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         text_property_verification_days: [{value: null, disabled: this.isDisabled}, []],
         text_escrow_holder_pay_days: [{value: null, disabled: this.isDisabled}, []],
         date_agreement_copy_deliver_date: [{value: null, disabled: this.isDisabled}, []],
-        text_buyer_initials_first: [{value: null, disabled: this.isDisabled}, []],
-        text_buyer_initials_second: [{value: null, disabled: this.isDisabled}, []],
-        text_seller_initials_first: [{value: null, disabled: this.isDisabled}, []],
-        text_seller_initials_second: [{value: null, disabled: this.isDisabled}, []],
+        text_buyer_initials_first: this.getSignFieldAllowedFor('buyers', 0),
+        text_buyer_initials_second: this.getSignFieldAllowedFor('buyers', 1),
+        text_seller_initials_first: this.getSignFieldAllowedFor('sellers', 0),
+        text_seller_initials_second: this.getSignFieldAllowedFor('sellers', 1),
       }),
       page_12: this.fb.group({
         text_property_address: [{value: '', disabled: true}, []],
         date_property_date: [{value: '', disabled: true}, []],
-        text_first_buyer_initials_first: [{value: null, disabled: this.isDisabled}, []],
-        text_first_buyer_initials_second: [{value: null, disabled: this.isDisabled}, []],
-        text_first_seller_initials_first: [{value: null, disabled: this.isDisabled}, []],
-        text_first_seller_initials_second: [{value: null, disabled: this.isDisabled}, []],
-        text_second_buyer_initials_first: [{value: null, disabled: this.isDisabled}, []],
-        text_second_buyer_initials_second: [{value: null, disabled: this.isDisabled}, []],
-        text_second_seller_initials_first: [{value: null, disabled: this.isDisabled}, []],
-        text_second_seller_initials_second: [{value: null, disabled: this.isDisabled}, []],
-        text_third_buyer_initials_first: [{value: null, disabled: this.isDisabled}, []],
-        text_third_buyer_initials_second: [{value: null, disabled: this.isDisabled}, []],
-        text_third_seller_initials_first: [{value: null, disabled: this.isDisabled}, []],
-        text_third_seller_initials_second: [{value: null, disabled: this.isDisabled}, []],
+        text_first_buyer_initials_first: this.getSignFieldAllowedFor('buyers', 0),
+        text_first_buyer_initials_second: this.getSignFieldAllowedFor('buyers', 1),
+        text_first_seller_initials_first: this.getSignFieldAllowedFor('sellers', 0),
+        text_first_seller_initials_second: this.getSignFieldAllowedFor('sellers', 1),
+        text_second_buyer_initials_first: this.getSignFieldAllowedFor('buyers', 0),
+        text_second_buyer_initials_second: this.getSignFieldAllowedFor('buyers', 1),
+        text_second_seller_initials_first: this.getSignFieldAllowedFor('sellers', 0),
+        text_second_seller_initials_second: this.getSignFieldAllowedFor('sellers', 1),
+        text_third_buyer_initials_first: this.getSignFieldAllowedFor('buyers', 0),
+        text_third_buyer_initials_second: this.getSignFieldAllowedFor('buyers', 1),
+        text_third_seller_initials_first: this.getSignFieldAllowedFor('sellers', 0),
+        text_third_seller_initials_second: this.getSignFieldAllowedFor('sellers', 1),
       }),
       page_13: this.fb.group({
         text_property_address: [{value: '', disabled: true}, []],
@@ -401,10 +401,10 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         text_other_buyer_second: this.getSignFieldAllowedFor('buyers', 1),
         text_other_buyer_print_name_second: [{value: null, disabled: this.isDisabled}, []],
         check_additional_signature_attached: [{value: null, disabled: this.isDisabled}, []],
-        text_buyer_initials_first: [{value: null, disabled: this.isDisabled}, []],
-        text_buyer_initials_second: [{value: null, disabled: this.isDisabled}, []],
-        text_seller_initials_first: [{value: null, disabled: this.isDisabled}, []],
-        text_seller_initials_second: [{value: null, disabled: this.isDisabled}, []],
+        text_buyer_initials_first: this.getSignFieldAllowedFor('buyers', 0),
+        text_buyer_initials_second: this.getSignFieldAllowedFor('buyers', 1),
+        text_seller_initials_first: this.getSignFieldAllowedFor('sellers', 0),
+        text_seller_initials_second: this.getSignFieldAllowedFor('sellers', 1),
       }),
       page_14: this.fb.group({
         text_property_address: [{value: '', disabled: true}, []],
@@ -419,8 +419,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         text_seller_second: this.getSignFieldAllowedFor('sellers', 1),
         text_seller_print_name_second: [{value: null, disabled: this.isDisabled}, []],
         check_seller_additional_signature: [{value: null, disabled: this.isDisabled}, []],
-        text_seller_initials_first: [{value: null, disabled: this.isDisabled}, []],
-        text_seller_initials_second: [{value: null, disabled: this.isDisabled}, []],
+        text_seller_initials_first: this.getSignFieldAllowedFor('sellers', 0),
+        text_seller_initials_second: this.getSignFieldAllowedFor('sellers', 1),
         date_acceptance_received_date: [{value: null, disabled: this.isDisabled}, []],
         text_acceptance_received_time: [{value: null, disabled: this.isDisabled}, []],
         radio_acceptance_received_time_ampm: ['am', []],
@@ -472,22 +472,23 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         check_department_real_estate: [{value: null, disabled: this.isDisabled}, []],
         text_broker_designee_initials: [{value: null, disabled: this.isDisabled}, []],
         date_presentation_of_offer: [{value: null, disabled: this.isDisabled}, []],
+        // TODO: reject offer signs scope 4.0
         text_rejection_offer_seller_initial_first: [{value: null, disabled: this.isDisabled}, []],
         text_rejection_offer_seller_initial_second: [{value: null, disabled: this.isDisabled}, []],
         date_rejection_offer_date: [{value: null, disabled: this.isDisabled}, []],
-        text_rejection_offer_buyer_initial_first: [{value: null, disabled: this.isDisabled}, []],
-        text_rejection_offer_buyer_initial_second: [{value: null, disabled: this.isDisabled}, []],
+        text_buyer_initial_first: this.getSignFieldAllowedFor('buyers', 0),
+        text_buyer_initial_second: this.getSignFieldAllowedFor('buyers', 1),
       }),
       page_15: this.fb.group({
         text_property_address: [{value: '', disabled: true}, []],
-        text_buyer_signature_first: [{value: null, disabled: this.isDisabled}, []],
-        text_buyer_signature_second: [{value: null, disabled: this.isDisabled}, []],
+        text_buyer_signature_first: this.getSignFieldAllowedFor('buyers', 0),
+        text_buyer_signature_second: this.getSignFieldAllowedFor('buyers', 1),
       }),
       page_16: this.fb.group({
-        text_privacy_act_advisory_first: this.getFinalSignatureField(0),
-        date_privacy_act_advisory_first: this.getFinalSignatureField(0),
-        text_privacy_act_advisory_second: this.getFinalSignatureField(1),
-        date_privacy_act_advisory_second: this.getFinalSignatureField(1),
+        text_privacy_act_advisory_first: this.getSignFieldAllowedFor('buyers', 0),
+        date_privacy_act_advisory_first: this.getSignFieldAllowedFor('buyers', 0),
+        text_privacy_act_advisory_second: this.getSignFieldAllowedFor('buyers', 1),
+        date_privacy_act_advisory_second: this.getSignFieldAllowedFor('buyers', 1),
       }),
     }, {updateOn: 'blur'});
 
@@ -598,22 +599,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     return false;
   }
 
-  // TODO: review this logic in scope 4.0
-  private getFinalSignatureField(index: number) {
-    return [{
-      value: null,
-      disabled:
-        this.offer.userRole && this.offer[_.camelCase(this.offer.userRole) + 's'][index]
-          ? this.offer[_.camelCase(this.offer.userRole) + 's'][index].email !== this.user.email
-          : true,
-    },
-      this.offer.userRole && this.offer[_.camelCase(this.offer.userRole) + 's'][index]
-      && this.offer[_.camelCase(this.offer.userRole) + 's'][index].email === this.user.email
-        ? [Validators.required]
-        : []
-    ];
-  }
-
   private patchForm(model) {
     Object.entries(model).forEach(([key, value]) => {
       Object.keys(this.documentForm.controls).forEach((groupName) => {
@@ -698,7 +683,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     } else if (controlValue instanceof Date) {
       controlValue = this.datePipe.transform(controlValue, 'yyyy-MM-dd');
     } else if (+controlValue) {
-      console.log(controlValue);
       controlValue = String(controlValue).replace(',', '');
     }
     // show saving animation if it takes a time
@@ -773,14 +757,12 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   private getSignFieldAllowedFor(role: string, index: number) {
-    return [
-      {
-        value: '',
-        disabled: this.offer[role][index] ? this.offer[role][index].email !== this.user.email : true,
-      },
-      this.offer[role][index]
-        ? (this.offer[role][index].email === this.user.email ? [Validators.required] : [])
-        : [],
-    ];
+    const value = {
+      value: '',
+      disabled: this.offer[role][index] ? this.offer[role][index].email !== this.user.email : true,
+    };
+    // const validators = this.offer[role][index] ? (this.offer[role][index].email === this.user.email ? [Validators.required] : []) : [];
+
+    return [value, []];
   }
 }

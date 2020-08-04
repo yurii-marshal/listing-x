@@ -7,7 +7,13 @@ import { AuthService } from '../../core-modules/core-services/auth.service';
   selector: '[appSignature]'
 })
 export class SignatureDirective implements OnInit {
-  @Input() sign: string;
+  @Input() mode: 'sign' | 'initials' = 'sign';
+  @Input() sign: string = `${this.authService.currentUser.firstName} ${this.authService.currentUser.lastName}`;
+  @Input() initials: string = `${
+    this.authService.currentUser.firstName.substr(0, 1).toUpperCase()
+    }. ${
+    this.authService.currentUser.lastName.substr(0, 1).toUpperCase()
+    }.`;
   @Input() withDateControl: string;
 
   @Output() fieldSigned: EventEmitter<void> = new EventEmitter<void>();
@@ -24,13 +30,8 @@ export class SignatureDirective implements OnInit {
   }
 
   ngOnInit() {
-    if (!this.sign) {
-      this.sign =
-        `${
-          this.authService.currentUser.firstName.substr(0, 1).toUpperCase()
-          }. ${
-          this.authService.currentUser.lastName.substr(0, 1).toUpperCase()
-          }.`;
+    if (!this.ngControl.control.disabled) {
+      this.renderer.addClass(this.el.nativeElement, 'sign-input');
     }
   }
 
@@ -69,7 +70,7 @@ export class SignatureDirective implements OnInit {
   }
 
   private signFields() {
-    this.ngControl.control.patchValue(this.sign);
+    this.ngControl.control.patchValue(this[this.mode]);
     this.ngControl.control.disable();
 
     if (this.withDateControl) {
