@@ -1,6 +1,5 @@
 import {Injectable, Injector} from '@angular/core';
 import {HttpParams} from '@angular/common/http';
-import {Transaction} from '../../../core-modules/models/transaction';
 import {Observable, Subject} from 'rxjs';
 import {ApiEndpoint} from '../../../core-modules/enums/api-endpoints';
 import {map, tap} from 'rxjs/operators';
@@ -10,14 +9,15 @@ import {BaseDataService} from '../../../core-modules/base-classes/base-data-serv
 import {AddendumData, GeneratedDocument} from '../../../core-modules/models/document';
 import {SpqQuestion} from '../../../core-modules/models/spq-question';
 import { CalendarEvent } from '../../../core-modules/models/calendar-event';
+import { Agreement } from '../../../core-modules/models/agreement';
 
 @Injectable()
-export class TransactionService extends BaseDataService<Transaction> {
+export class AgreementService extends BaseDataService<Agreement> {
   private today = moment().utcOffset(0);
   transactionChanged: Subject<void> = new Subject<void>();
 
   constructor(protected injector: Injector) {
-    super(injector, ApiEndpoint.Transactions);
+    super(injector, ApiEndpoint.Agreements);
   }
 
   // loadSignDocument(transactionId: number): Observable<Transaction> {

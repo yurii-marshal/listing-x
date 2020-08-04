@@ -697,6 +697,9 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       controlValue = null;
     } else if (controlValue instanceof Date) {
       controlValue = this.datePipe.transform(controlValue, 'yyyy-MM-dd');
+    } else if (+controlValue) {
+      console.log(controlValue);
+      controlValue = String(controlValue).replace(',', '');
     }
     // show saving animation if it takes a time
     this.offerService.updateOfferDocumentField({offerId: this.offerId, page: groupIndex + 1}, {[controlName]: controlValue})

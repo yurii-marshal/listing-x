@@ -31,6 +31,7 @@ import { EditOfferDialogComponent } from '../../shared-modules/dialogs/edit-offe
 import { SaveOfferDialogComponent } from '../../shared-modules/dialogs/save-offer-dialog/save-offer-dialog.component';
 import { AgreementsListComponent } from './purchase-agreement/agreements-list/agreements-list.component';
 import { AgreementDetailsComponent } from './purchase-agreement/agreement-details/agreement-details.component';
+import { AgreementService } from './services/agreement.service';
 
 const MatModules = [
   MatCheckboxModule,
@@ -76,6 +77,7 @@ const MatModules = [
     SpqDialogComponent
   ],
   providers: [
+    AgreementService,
     TransactionService,
     MatDatepickerModule
   ],

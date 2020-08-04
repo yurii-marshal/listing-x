@@ -4,13 +4,14 @@ import { AddressDialogComponent } from '../../../shared-modules/dialogs/address-
 import { filter, takeUntil } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { BaseTableDataSource } from '../../../core-modules/datasources/base-table-data-source';
-import { CalendarEvent, Transaction, TransactionStatus } from '../../../core-modules/models/transaction';
+import { Transaction, TransactionStatus } from '../../../core-modules/models/transaction';
 import { TransactionService } from '../services/transaction.service';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
 import { Person } from '../../../core-modules/models/offer';
 import { OfferService } from '../services/offer.service';
 import { Subject } from 'rxjs';
 import { User } from '../../auth/models';
+import { CalendarEvent } from '../../../core-modules/models/calendar-event';
 
 @Component({
   selector: 'app-transactions',

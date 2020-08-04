@@ -1,15 +1,17 @@
 import { Directive, ElementRef, HostListener, Input, OnInit } from '@angular/core';
 
 @Directive({
-  selector: '[appOnlyNumbers]'
+  selector: '[formControlName][appOnlyNumbers]'
 })
 export class OnlyNumbersDirective implements OnInit {
-  @Input() appOnlyNumbers: '' | 'decimal' | 'float';
+  @Input() appOnlyNumbers: '' | 'float';
   @Input() maxLength = 19; // max value of bigint size
   private regex: RegExp;
   private specialKeys = ['Backspace', 'Tab', 'End', 'Home'];
 
-  constructor(private el: ElementRef) {
+  constructor(
+    private el: ElementRef,
+  ) {
   }
 
   ngOnInit() {

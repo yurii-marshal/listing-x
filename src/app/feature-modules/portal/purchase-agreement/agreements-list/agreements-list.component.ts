@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { CalendarEvent, Transaction, TransactionStatus } from '../../../../core-modules/models/transaction';
+import { TransactionStatus } from '../../../../core-modules/models/transaction';
 import { BaseTableDataSource } from '../../../../core-modules/datasources/base-table-data-source';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
@@ -11,6 +11,8 @@ import { AuthService } from '../../../../core-modules/core-services/auth.service
 import { MatDialog } from '@angular/material';
 import { AddressDialogComponent } from '../../../../shared-modules/dialogs/address-dialog/address-dialog.component';
 import { Person } from '../../../../core-modules/models/offer';
+import { CalendarEvent } from '../../../../core-modules/models/calendar-event';
+import { Agreement, AgreementStatus } from '../../../../core-modules/models/agreement';
 
 @Component({
   selector: 'app-agreements-list',
@@ -18,37 +20,48 @@ import { Person } from '../../../../core-modules/models/offer';
   styleUrls: ['./agreements-list.component.scss']
 })
 export class AgreementsListComponent implements OnInit, AfterViewInit, OnDestroy {
-  displayedColumns: string[] = ['createdAt', 'address', 'agentBuyers', 'agentSellers',
-    'buyers', 'sellers', 'status', 'lastLogs', 'actions'];
-  dataSource: BaseTableDataSource<Transaction>;
-  statuses: string[] = Object.values(TransactionStatus);
+  displayedColumns: string[] = [
+    'createdAt',
+    'address',
+    'agentBuyers',
+    'agentSellers',
+    'buyers',
+    'sellers',
+    'status',
+    'lastLogs',
+    'actions',
+  ];
+  dataSource: BaseTableDataSource<Agreement>;
+  statuses: string[] = Object.values(AgreementStatus);
   calendarDataSource: CalendarEvent[];
   user: User;
   /* TODO: Refactor */
   readonly statusLabels: { [key: string]: string } = {
-    [TransactionStatus.All]: 'All agreements',
-    [TransactionStatus.New]: 'New',
-    [TransactionStatus.InProgress]: 'In progress',
-    [TransactionStatus.Finished]: 'Finished'
+    [AgreementStatus.All]: 'All agreements',
+    [AgreementStatus.Started]: 'Started',
+    [AgreementStatus.Delivered]: 'Delivered',
+    [AgreementStatus.Accepted]: 'Accepted',
+    [AgreementStatus.Completed]: 'Completed',
+    [AgreementStatus.Denied]: 'Denied',
   };
   private onDestroyed$: Subject<void> = new Subject<void>();
 
   constructor(private router: Router,
-              private service: TransactionService,
+              private transactionService: TransactionService,
               private offerService: OfferService,
               private authService: AuthService,
               private dialog: MatDialog) {
   }
 
   get Status() {
-    return TransactionStatus;
+    return AgreementStatus;
   }
 
   ngOnInit() {
     // this.service.loadCalendar()
     //   .subscribe(events => this.calendarDataSource = events);
     this.user = this.authService.currentUser;
-    this.dataSource = new BaseTableDataSource(this.service, null, null);
+    this.dataSource = new BaseTableDataSource(this.offerService, null, null);
   }
 
   ngAfterViewInit(): void {

@@ -2,10 +2,10 @@ import { OfferSummary } from './offer';
 import { GeneratedDocument } from './document';
 import { Log } from './log';
 
-export interface Transaction {
+export interface Agreement {
   id: number;
   createdAt: string;
-  status: TransactionStatus;
+  status: AgreementStatus;
   lastLogs: Log[];
   offer: OfferSummary;
   documents: GeneratedDocument[];
@@ -18,9 +18,11 @@ export interface Transaction {
   allowSign: boolean;
 }
 
-export enum TransactionStatus {
-  All = 'all_transactions',
-  New = 'new',
-  InProgress = 'in_progress',
-  Finished = 'finished'
+export enum AgreementStatus {
+  All = 'all_agreements',
+  Started = 'started',
+  Delivered = 'delivered',
+  Denied = 'denied',
+  Accepted = 'accepted',
+  Completed = 'completed',
 }
