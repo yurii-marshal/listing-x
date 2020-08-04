@@ -575,8 +575,9 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
     if (signFieldElements.length) {
       for (const item of signFieldElements) {
-        if (!item.classList.contains('ng-disabled')) {
+        if (!item.value) {
           item.scrollIntoView({behavior: 'smooth', block: 'center'});
+          item.focus();
           break;
         }
       }
