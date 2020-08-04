@@ -2,7 +2,9 @@
 
 $green: #66ad58;
 $yellow: #f8ce5f;
+$orange: #f89949;
 $red: #cd584a;
+$violet: #9b63cd;
 $blue: rgba(2, 136, 209, 0.9);
 $grey: rgba(0, 0, 0, .12);
 
@@ -60,6 +62,10 @@ $grey: rgba(0, 0, 0, .12);
     border: solid 1px $red;
     background-color: $red;
   }
+  &.orange {
+    border: solid 1px $orange;
+    background-color: $orange;
+  }
   &.yellow {
     border: solid 1px $yellow;
     background-color: $yellow;
@@ -67,6 +73,10 @@ $grey: rgba(0, 0, 0, .12);
   &.blue {
     border: solid 1px $blue;
     background-color: $blue;
+  }
+  &.violet {
+    border: solid 1px $violet;
+    background-color: $violet;
   }
   &:disabled {
     background-color: $grey;
@@ -83,7 +93,9 @@ $grey: rgba(0, 0, 0, .12);
     border-left: 5px solid $green;
     &.red { border-left-color: $red; }
     &.yellow { border-left-color: $yellow; }
+    &.orange { border-left-color: $orange; }
     &.blue { border-left-color: $blue; }
+    &.violet { border-left-color: $violet; }
   }
 
   &.mat-column-lastLogs {
@@ -97,7 +109,9 @@ $grey: rgba(0, 0, 0, .12);
     color: $green;
     &.red { color: $red; }
     &.yellow { color: $yellow; }
+    &.orange { color: $orange; }
     &.blue { color: $blue; }
+    &.violet { color: $violet; }
   }
   &.mat-column-createdAt {
     min-width: 100px;

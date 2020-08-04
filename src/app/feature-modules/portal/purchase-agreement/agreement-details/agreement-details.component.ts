@@ -98,11 +98,11 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
       case AgreementStatus.Started:
         return 'blue';
       case AgreementStatus.Delivered:
-        return 'yellow';
-      case AgreementStatus.Accepted:
         return 'orange';
+      case AgreementStatus.Accepted:
+        return 'yellow';
       case AgreementStatus.Completed:
-        return 'green';
+        return 'violet';
       case AgreementStatus.Denied:
         return 'red';
     }
