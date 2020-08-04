@@ -75,16 +75,17 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   offerLoaded(offer: Offer): void {
+    console.log(offer);
     this.offer = offer;
 
-    const {agentBuyers, agentSellers, sellers} = offer;
-    this.isAgent = [...agentSellers, ...agentBuyers].some(({email}) => email === this.authService.currentUser.email);
-    this.isSeller = [...agentSellers, ...sellers].some(({email}) => email === this.authService.currentUser.email);
-
-    const residentialAgreement = offer.documents.find(doc => doc.documentType === GeneratedDocumentType.Contract);
-    this.isResidentialAgreementCompleted = residentialAgreement && residentialAgreement.status === DocumentStatus.Completed;
-
-    this.filterDocumentList(offer.documents);
+    // const {agentBuyers, agentSellers, sellers} = offer;
+    // this.isAgent = [...agentSellers, ...agentBuyers].some(({email}) => email === this.authService.currentUser.email);
+    // this.isSeller = [...agentSellers, ...sellers].some(({email}) => email === this.authService.currentUser.email);
+    //
+    // const residentialAgreement = offer.documents.find(doc => doc.documentType === GeneratedDocumentType.Contract);
+    // this.isResidentialAgreementCompleted = residentialAgreement && residentialAgreement.status === DocumentStatus.Completed;
+    //
+    // this.filterDocumentList(offer.documents);
   }
 
   onDelete() {
@@ -183,7 +184,7 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     trigger.click();
   }
 
-  private filterDocumentList(documents: GeneratedDocument[]): void {
+  private filterDocumentList(documents): void {
     /**
      * contract status = STARTED
      * if all buyers signed, contract status = DELIVERED
