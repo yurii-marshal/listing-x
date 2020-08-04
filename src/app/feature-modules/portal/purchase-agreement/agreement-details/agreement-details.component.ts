@@ -1,19 +1,19 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
-import { Transaction, TransactionStatus } from '../../../../core-modules/models/transaction';
 import { FormControl, Validators } from '@angular/forms';
 import { AddendumData, Document, GeneratedDocument } from '../../../../core-modules/models/document';
 import { AuthService } from '../../../../core-modules/core-services/auth.service';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TransactionService } from '../../services/transaction.service';
 import { flatMap, map, takeUntil } from 'rxjs/operators';
 import { GeneratedDocumentType } from '../../../../core-modules/enums/upload-document-type';
 import { DocumentStatus } from '../../../../core-modules/enums/document-status';
-import { Person } from '../../../../core-modules/models/offer';
+import { Offer } from '../../../../core-modules/models/offer';
 import { SpqDialogComponent } from '../../dialogs/spq-dialog/spq-dialog.component';
 import { AddendumDialogComponent } from '../../dialogs/addendum-dialog/addendum-dialog.component';
 import { CalendarEvent } from '../../../../core-modules/models/calendar-event';
+import { OfferService } from '../../services/offer.service';
+import { AgreementStatus } from '../../../../core-modules/models/agreement';
 
 @Component({
   selector: 'app-agreement-details',
@@ -22,7 +22,7 @@ import { CalendarEvent } from '../../../../core-modules/models/calendar-event';
 })
 export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   private onDestroyed$: Subject<void> = new Subject<void>();
-  transaction: Transaction;
+  offer: Offer;
 
   calendarDataSource: CalendarEvent[];
 
@@ -39,89 +39,95 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
 
   /* TODO: Refactor */
   readonly statusLabels: {[key: string]: string} = {
-    [TransactionStatus.All]: 'All transactions',
-    [TransactionStatus.New]: 'New',
-    [TransactionStatus.InProgress]: 'In progress',
-    [TransactionStatus.Finished]: 'Finished'
+    [AgreementStatus.All]: 'All agreements',
+    [AgreementStatus.Started]: 'Started',
+    [AgreementStatus.Delivered]: 'Delivered',
+    [AgreementStatus.Accepted]: 'Accepted',
+    [AgreementStatus.Completed]: 'Completed',
+    [AgreementStatus.Denied]: 'Denied',
   };
 
   constructor(private authService: AuthService,
               private dialog: MatDialog,
               private route: ActivatedRoute,
-              private transactionService: TransactionService,
+              private offerService: OfferService,
               private snackbar: MatSnackBar,
               private router: Router) {
   }
 
   ngOnInit() {
-    const transactionId: number = Number(this.route.snapshot.params.id);
-    this.transactionService.loadOne(transactionId)
-      .subscribe((transaction: Transaction) => this.transactionLoaded(transaction));
+    const offerId: number = Number(this.route.snapshot.params.id);
+    this.offerService.loadOne(offerId)
+      .subscribe((offer: Offer) => this.offerLoaded(offer));
 
-    this.transactionService.loadCalendarByTransaction(transactionId)
-      .subscribe(items => this.calendarDataSource = items);
+    // this.offerService.loadCalendarByOffer(offerId)
+    //   .subscribe(items => this.calendarDataSource = items);
   }
 
   ngAfterViewInit(): void {
-    this.transactionService.transactionChanged.pipe(
-      takeUntil(this.onDestroyed$),
-      flatMap(() => {
-        const transactionId: number = Number(this.route.snapshot.params.id);
-        return this.transactionService.loadOne(transactionId);
-      })
-    ).subscribe((transaction) => this.transactionLoaded(transaction));
+    // this.offerService.offerChanged.pipe(
+    //   takeUntil(this.onDestroyed$),
+    //   flatMap(() => {
+    //     const offerId: number = Number(this.route.snapshot.params.id);
+    //     return this.offerService.loadOne(offerId);
+    //   })
+    // ).subscribe((offer) => this.offerLoaded(offer));
   }
 
-  transactionLoaded(transaction: Transaction): void {
-    this.transaction = transaction;
+  offerLoaded(offer: Offer): void {
+    this.offer = offer;
 
-    const {agentBuyers, agentSellers, sellers} = transaction.offer;
+    const {agentBuyers, agentSellers, sellers} = offer;
     this.isAgent = [...agentSellers, ...agentBuyers].some(({email}) => email === this.authService.currentUser.email);
     this.isSeller = [...agentSellers, ...sellers].some(({email}) => email === this.authService.currentUser.email);
 
-    const residentialAgreement = transaction.documents.find(doc => doc.documentType === GeneratedDocumentType.Contract);
+    const residentialAgreement = offer.documents.find(doc => doc.documentType === GeneratedDocumentType.Contract);
     this.isResidentialAgreementCompleted = residentialAgreement && residentialAgreement.status === DocumentStatus.Completed;
 
-    this.filterDocumentList(transaction.documents);
+    this.filterDocumentList(offer.documents);
   }
 
   onDelete() {
-    this.transactionService.delete(this.transaction.id)
+    this.offerService.delete(this.offer.id)
       .subscribe(() => this.router.navigate(['/portal']));
   }
 
-  getClassName(status: TransactionStatus): string {
+  getClassName(status: AgreementStatus): string {
     switch (status) {
-      case TransactionStatus.New:
+      case AgreementStatus.Started:
         return 'blue';
-      case TransactionStatus.InProgress:
+      case AgreementStatus.Delivered:
         return 'yellow';
-      case TransactionStatus.Finished:
+      case AgreementStatus.Accepted:
+        return 'orange';
+      case AgreementStatus.Completed:
         return 'green';
+      case AgreementStatus.Denied:
+        return 'red';
     }
   }
 
   inviteUser() {
     this.isOpenInviteUserOverlay = false;
     const email: string = this.userEmailControl.value.toLowerCase();
-    const transactionId: number = Number(this.route.snapshot.params.id);
-    this.transactionService.inviteUser(transactionId, email)
-      .subscribe(() => {
-        this.snackbar.open(`Invite sent to email: ${email}`);
-        if (!this.isAgent) {
-          return;
-        }
-
-        const invited = {
-          email,
-          firstName: '<Invited',
-          lastName: this.isSeller ? `Listing Agent>` : `Buyer's Agent>`
-        } as Person;
-
-        const updatedListKey = this.isSeller ? 'agentSellers' : 'agentBuyers';
-        this.transaction.offer[updatedListKey].push(invited);
-        this.userEmailControl.setValue(null);
-      });
+    const offerId: number = Number(this.route.snapshot.params.id);
+    // this.offerService.inviteUser(offerId, email)
+    //   .subscribe(() => {
+    //     this.snackbar.open(`Invite sent to email: ${email}`);
+    //     if (!this.isAgent) {
+    //       return;
+    //     }
+    //
+    //     const invited = {
+    //       email,
+    //       firstName: '<Invited',
+    //       lastName: this.isSeller ? `Listing Agent>` : `Buyer's Agent>`
+    //     } as Person;
+    //
+    //     const updatedListKey = this.isSeller ? 'agentSellers' : 'agentBuyers';
+    //     this.offer[updatedListKey].push(invited);
+    //     this.userEmailControl.setValue(null);
+    //   });
   }
 
   goToESign(doc: GeneratedDocument): void {
@@ -137,27 +143,27 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     }
 
     this.router.navigate([url, doc.id]);
-    // this.transactionService.lockOffer(this.transaction.id)
-    //   .subscribe(() => this.router.navigate(['/e-sign', this.transaction.id]));
+    // this.offerService.lockOffer(this.offer.id)
+    //   .subscribe(() => this.router.navigate(['/e-sign', this.offer.id]));
   }
 
   deny() {
     const id: number = Number(this.route.snapshot.params.id);
-    this.transactionService.deny(id)
-      .subscribe(() => {
-        this.transaction.allowDeny = false;
-        this.snackbar.open(`Denied.`);
-      });
+    // this.offerService.deny(id)
+    //   .subscribe(() => {
+    //     this.offer.allowDeny = false;
+    //     this.snackbar.open(`Denied.`);
+    //   });
   }
 
   /*downloadAndToggleState(file: string | Document) {
     const id: number = Number(this.route.snapshot.params.id);
-    this.transactionService.toggleState(id).subscribe();
+    this.offerService.toggleState(id).subscribe();
     this.triggerDownloadFile(file);
   }*/
 
   triggerDownloadFile(doc: GeneratedDocument | Document) {
-    this.transactionService.documentOpenedEvent(doc.id).subscribe();
+    // this.offerService.documentOpenedEvent(doc.id).subscribe();
 
     let {file, title} = doc;
 
@@ -211,7 +217,7 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     this.dialog.open(AddendumDialogComponent, {
       width: '600px',
       data: {
-        transactionId: this.transaction.id,
+        offerId: this.offer.id,
         docData: doc ? doc.documentData as AddendumData : null,
         docId: doc ? doc.id : null
       }
