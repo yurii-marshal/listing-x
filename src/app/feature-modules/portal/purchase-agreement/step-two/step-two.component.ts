@@ -571,7 +571,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   moveToNextSignField() {
-    const signFieldElements = Array.from(document.getElementsByClassName('sign-input'));
+    const signFieldElements: any[] = Array.from(document.getElementsByClassName('sign-input'));
 
     if (signFieldElements.length) {
       for (const item of signFieldElements) {
