@@ -8,12 +8,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { flatMap, map, takeUntil } from 'rxjs/operators';
 import { GeneratedDocumentType } from '../../../../core-modules/enums/upload-document-type';
 import { DocumentStatus } from '../../../../core-modules/enums/document-status';
-import { Offer } from '../../../../core-modules/models/offer';
+import { Offer, Person } from '../../../../core-modules/models/offer';
 import { SpqDialogComponent } from '../../dialogs/spq-dialog/spq-dialog.component';
 import { AddendumDialogComponent } from '../../dialogs/addendum-dialog/addendum-dialog.component';
 import { CalendarEvent } from '../../../../core-modules/models/calendar-event';
 import { OfferService } from '../../services/offer.service';
 import { AgreementStatus } from '../../../../core-modules/models/agreement';
+import { TransactionService } from '../../services/transaction.service';
 
 @Component({
   selector: 'app-agreement-details',
@@ -21,24 +22,17 @@ import { AgreementStatus } from '../../../../core-modules/models/agreement';
   styleUrls: ['./agreement-details.component.scss']
 })
 export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
-  private onDestroyed$: Subject<void> = new Subject<void>();
   offer: Offer;
-
   calendarDataSource: CalendarEvent[];
-
   isOpenInviteUserOverlay: boolean;
   isResidentialAgreementCompleted: boolean = false;
-
   userEmailControl: FormControl = new FormControl(null, [Validators.required, Validators.email]);
-
-  isAgent: boolean = false;
+  isAgent: boolean = this.authService.currentUser.accountType === 'agent';
   isSeller: boolean = false;
-
   pendingDocuments: Observable<GeneratedDocument[]>;
   completedDocuments: Observable<GeneratedDocument[]>;
-
   /* TODO: Refactor */
-  readonly statusLabels: {[key: string]: string} = {
+  readonly statusLabels: { [key: string]: string } = {
     [AgreementStatus.All]: 'All agreements',
     [AgreementStatus.Started]: 'Started',
     [AgreementStatus.Delivered]: 'Delivered',
@@ -46,17 +40,20 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     [AgreementStatus.Completed]: 'Completed',
     [AgreementStatus.Denied]: 'Denied',
   };
+  private onDestroyed$: Subject<void> = new Subject<void>();
 
   constructor(private authService: AuthService,
               private dialog: MatDialog,
               private route: ActivatedRoute,
               private offerService: OfferService,
+              private transactionService: TransactionService,
               private snackbar: MatSnackBar,
               private router: Router) {
   }
 
   ngOnInit() {
     const offerId: number = Number(this.route.snapshot.params.id);
+
     this.offerService.loadOne(offerId)
       .subscribe((offer: Offer) => this.offerLoaded(offer));
 
@@ -65,27 +62,25 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   ngAfterViewInit(): void {
-    // this.offerService.offerChanged.pipe(
-    //   takeUntil(this.onDestroyed$),
-    //   flatMap(() => {
-    //     const offerId: number = Number(this.route.snapshot.params.id);
-    //     return this.offerService.loadOne(offerId);
-    //   })
-    // ).subscribe((offer) => this.offerLoaded(offer));
+    this.offerService.offerChanged$.pipe(
+      takeUntil(this.onDestroyed$),
+      flatMap(() => {
+        const offerId: number = Number(this.route.snapshot.params.id);
+        return this.offerService.loadOne(offerId);
+      })
+    ).subscribe((offer) => this.offerLoaded(offer));
   }
 
   offerLoaded(offer: Offer): void {
-    console.log(offer);
     this.offer = offer;
 
-    // const {agentBuyers, agentSellers, sellers} = offer;
-    // this.isAgent = [...agentSellers, ...agentBuyers].some(({email}) => email === this.authService.currentUser.email);
-    // this.isSeller = [...agentSellers, ...sellers].some(({email}) => email === this.authService.currentUser.email);
-    //
-    // const residentialAgreement = offer.documents.find(doc => doc.documentType === GeneratedDocumentType.Contract);
+    const {agentBuyers, agentSellers, sellers} = offer;
+    this.isSeller = [...agentSellers, ...sellers].some(({email}) => email === this.authService.currentUser.email);
+
+    // const residentialAgreement = Array(offer.documents).find(doc => doc.documentType === GeneratedDocumentType.Contract);
     // this.isResidentialAgreementCompleted = residentialAgreement && residentialAgreement.status === DocumentStatus.Completed;
-    //
-    // this.filterDocumentList(offer.documents);
+
+    this.filterDocumentList(offer.documents);
   }
 
   onDelete() {
@@ -112,59 +107,61 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     this.isOpenInviteUserOverlay = false;
     const email: string = this.userEmailControl.value.toLowerCase();
     const offerId: number = Number(this.route.snapshot.params.id);
-    // this.offerService.inviteUser(offerId, email)
-    //   .subscribe(() => {
-    //     this.snackbar.open(`Invite sent to email: ${email}`);
-    //     if (!this.isAgent) {
-    //       return;
-    //     }
-    //
-    //     const invited = {
-    //       email,
-    //       firstName: '<Invited',
-    //       lastName: this.isSeller ? `Listing Agent>` : `Buyer's Agent>`
-    //     } as Person;
-    //
-    //     const updatedListKey = this.isSeller ? 'agentSellers' : 'agentBuyers';
-    //     this.offer[updatedListKey].push(invited);
-    //     this.userEmailControl.setValue(null);
-    //   });
+    this.transactionService.inviteUser(offerId, email)
+      .subscribe(() => {
+        this.snackbar.open(`Invite sent to email: ${email}`);
+        if (!this.isAgent) {
+          return;
+        }
+
+        const invited = {
+          email,
+          firstName: '<Invited',
+          lastName: this.isSeller ? `Listing Agent>` : `Buyer's Agent>`
+        } as Person;
+
+        const updatedListKey = this.isSeller ? 'agentSellers' : 'agentBuyers';
+        this.offer[updatedListKey].push(invited);
+        this.userEmailControl.setValue(null);
+      });
   }
 
   goToESign(doc: GeneratedDocument): void {
-    const url = {
-      [GeneratedDocumentType.Contract]: '/e-sign',
-      [GeneratedDocumentType.Spq]: '/e-sign/spq',
-      [GeneratedDocumentType.Addendum]: '/e-sign/addendum'
-    }[doc.documentType];
-
-    if (doc.documentType === GeneratedDocumentType.Spq && !this.isAgent && this.isSeller) {
-      this.openSPQDialog(doc, true);
-      return;
-    }
-
-    this.router.navigate([url, doc.id]);
-    // this.offerService.lockOffer(this.offer.id)
+    // const url = {
+    //   [GeneratedDocumentType.Contract]: '/e-sign',
+    //   [GeneratedDocumentType.Spq]: '/e-sign/spq',
+    //   [GeneratedDocumentType.Addendum]: '/e-sign/addendum'
+    // }[doc.documentType];
+    //
+    // if (doc.documentType === GeneratedDocumentType.Spq && !this.isAgent && this.isSeller) {
+    //   this.openSPQDialog(doc, true);
+    //   return;
+    // }
+    //
+    // this.router.navigate([url, doc.id]);
+    // this.transactionService.lockOffer(this.offer.id)
     //   .subscribe(() => this.router.navigate(['/e-sign', this.offer.id]));
+    // TODO: navigate to PA flow Step 2
+    this.router.navigateByUrl(`portal/purchase-agreement/${this.offer.id}/step-two`);
   }
 
   deny() {
     const id: number = Number(this.route.snapshot.params.id);
-    // this.offerService.deny(id)
-    //   .subscribe(() => {
-    //     this.offer.allowDeny = false;
-    //     this.snackbar.open(`Denied.`);
-    //   });
+    this.transactionService.deny(id)
+      .subscribe(() => {
+        // this.offer.allowDeny = false;
+        this.snackbar.open(`Denied.`);
+      });
   }
 
-  /*downloadAndToggleState(file: string | Document) {
+  downloadAndToggleState(file: string | Document) {
     const id: number = Number(this.route.snapshot.params.id);
-    this.offerService.toggleState(id).subscribe();
-    this.triggerDownloadFile(file);
-  }*/
+    // this.offerService.toggleState(id).subscribe();
+    // this.triggerDownloadFile(file);
+  }
 
   triggerDownloadFile(doc: GeneratedDocument | Document) {
-    // this.offerService.documentOpenedEvent(doc.id).subscribe();
+    this.transactionService.documentOpenedEvent(doc.id).subscribe();
 
     let {file, title} = doc;
 
@@ -182,25 +179,6 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     trigger.download = title;
     trigger.target = '_blank';
     trigger.click();
-  }
-
-  private filterDocumentList(documents): void {
-    /**
-     * contract status = STARTED
-     * if all buyers signed, contract status = DELIVERED
-     * when contract status is DELIVERED , sellers are allowed to sign.
-     * (in case are more than one seller and if not all sellers signed , contract status = ACCEPTED.
-     * after all sellers signed, contract status = COMPLETED
-     */
-
-    const completedDocsStatuses = [DocumentStatus.Completed];
-
-    this.pendingDocuments = of(documents).pipe(
-      map((docs) => docs.filter(doc => !completedDocsStatuses.includes(doc.status)))
-    );
-    this.completedDocuments = of(documents).pipe(
-      map((docs) => docs.filter(doc => completedDocsStatuses.includes(doc.status)))
-    );
   }
 
   openSPQDialog(doc: GeneratedDocument, signAfterFill: boolean = false): void {
@@ -228,5 +206,24 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   ngOnDestroy(): void {
     this.onDestroyed$.next();
     this.onDestroyed$.complete();
+  }
+
+  private filterDocumentList(documents): void {
+    /**
+     * contract status = STARTED
+     * if all buyers signed, contract status = DELIVERED
+     * when contract status is DELIVERED , sellers are allowed to sign.
+     * (in case are more than one seller and if not all sellers signed , contract status = ACCEPTED.
+     * after all sellers signed, contract status = COMPLETED
+     */
+
+    const completedDocsStatuses = [DocumentStatus.Completed];
+
+    // this.pendingDocuments = of(documents).pipe(
+    //   map((docs) => docs.filter(doc => !completedDocsStatuses.includes(doc.status)))
+    // );
+    // this.completedDocuments = of(documents).pipe(
+    //   map((docs) => docs.filter(doc => completedDocsStatuses.includes(doc.status)))
+    // );
   }
 }
