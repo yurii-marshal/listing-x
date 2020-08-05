@@ -362,11 +362,13 @@
             </div>
             <div class="form m-auto">
               <div>CONFIRMATION: The following agency relationships are confirmed for this transaction:</div>
-              <div>
+              <div class="license-row">
                 Seller's Brokerage Firm &nbsp; <input formControlName="text_confirm_seller_firm_name" type="text"
                                                       class="i-lr-8">
-                &nbsp; License Number &nbsp; <input formControlName="text_confirm_seller_firm_lic" type="text"
-                                                    class="i-lr-2">
+                <div class="license">
+                  &nbsp; License Number &nbsp; <input formControlName="text_confirm_seller_firm_lic" type="text"
+                                                      class="i-lr-2">
+                </div>
               </div>
               <div>
                 Is the broker of (check one):
@@ -375,11 +377,11 @@
                 seller.
                 (dual agent)
               </div>
-              <div>
+              <div class="license-row">
                 Seller's Agent &nbsp;<input formControlName="text_confirm_seller_agent_firm_name" type="text"
                                             class="i-lr-9">
-                License Number &nbsp; <input formControlName="text_confirm_seller_agent_firm_lic" type="text"
-                                             class="i-lr-2">
+                <div class="license">&nbsp; License Number &nbsp; <input formControlName="text_confirm_seller_agent_firm_lic" type="text"
+                                                                  class="i-lr-2"></div>
               </div>
               <div>
                 Is (check one):
@@ -390,11 +392,11 @@
                 Buyer's and
                 Seller's Agent. (dual agent)
               </div>
-              <div>
+              <div class="license-row">
                 Buyer's Brokerage Firm &nbsp; <input formControlName="text_confirm_buyer_firm_name" type="text"
                                                      class="i-lr-8">
-                &nbsp; License Number &nbsp; <input formControlName="text_confirm_buyer_firm_lic" type="text"
-                                                    class="i-lr-2">
+                <div class="license">&nbsp; License Number &nbsp; <input formControlName="text_confirm_buyer_firm_lic" type="text"
+                                                                         class="i-lr-2"></div>
               </div>
               <div>
                 Is the broker of (check one):
@@ -403,11 +405,11 @@
                 seller.
                 (dual agent)
               </div>
-              <div>
+              <div class="license-row">
                 Buyer's Agent &nbsp;<input formControlName="text_confirm_buyer_agent_firm_name" type="text"
                                            class="i-lr-9">
-                License Number &nbsp; <input formControlName="text_confirm_buyer_agent_firm_lic" type="text"
-                                             class="i-lr-2">
+                <div class="license">&nbsp; License Number &nbsp; <input formControlName="text_confirm_buyer_agent_firm_lic" type="text"
+                                                                  class="i-lr-2"></div>
               </div>
               <div>
                 Is (check one):
@@ -956,8 +958,8 @@
             </header>
             <br>
             <div class="form">
-              <div class="fw-bold">
-                Date Prepared:
+              <div>
+                <span class="fw-bold">Date Prepared:</span>
                 <input matInput (click)="date_date_prepared.open()" [matDatepicker]="date_date_prepared"
                        formControlName="date_date_prepared"
                        type="text"
@@ -978,7 +980,7 @@
                   <input formControlName="text_offer_street_name" type="text" name="" class="i-lr-8">,
                   situated in
                   <div class="item-pl-35">
-          <span class="fs-small">
+          <span>
           <input formControlName="text_offer_city" type="text" class="i-lr-2__5">
           &nbsp;(City),&nbsp;
           <input formControlName="text_offer_country" type="text" class="i-lr-2">
@@ -3786,7 +3788,7 @@
                   Buyer.
                   <br>
                   <input formControlName="check_seller_acceptance_attached" type="checkbox">
-                  <span>(If checked) SELLER'S ACCEPTANCE IS</span>
+                  <span>(If checked) SELLER'S ACCEPTANCE IS </span>
                   <span class="fw-bold">SUBJECT TO ATTACHED COUNTER OFFER (C.A.R. Form SCO or SMCO) DATED:</span>
                   <input matInput (click)="date_one_or_more_seller.open()" [matDatepicker]="date_one_or_more_seller"
                          formControlName="date_one_or_more_seller"

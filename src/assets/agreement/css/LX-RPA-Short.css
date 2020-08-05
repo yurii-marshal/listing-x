@@ -381,3 +381,14 @@ ol>li {
 <span class="fw-bold">(ii)</span>
 
 */
+
+.license-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.license {
+  width: 26%;
+  display: flex;
+  justify-content: space-between;
+}

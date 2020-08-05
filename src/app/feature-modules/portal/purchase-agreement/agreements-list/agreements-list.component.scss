@@ -85,6 +85,10 @@ $grey: rgba(0, 0, 0, .12);
   }
 }
 
+.table-row {
+  margin-bottom: 7px;
+}
+
 .mat-cell {
   font-size: 13px!important;
   &.mat-column-createdAt {
@@ -96,6 +100,18 @@ $grey: rgba(0, 0, 0, .12);
     &.orange { border-left-color: $orange; }
     &.blue { border-left-color: $blue; }
     &.violet { border-left-color: $violet; }
+  }
+
+  &.mat-column-agentBuyers,
+  &.mat-column-agentSellers,
+  &.mat-column-buyers,
+  &.mat-column-sellers {
+    width: 130px;
+
+    div {
+      width: 110px;
+      @include mat-truncate-line();
+    }
   }
 
   &.mat-column-lastLogs {
@@ -114,11 +130,14 @@ $grey: rgba(0, 0, 0, .12);
     &.violet { color: $violet; }
   }
   &.mat-column-createdAt {
-    min-width: 100px;
+    width: 80px;
   }
   &.mat-column-address {
-    max-width: 300px;
+    max-width: 188px;
     p {margin: 0; white-space: nowrap; overflow-x: hidden; text-overflow: ellipsis; padding-right: 10px;}
+  }
+  &.mat-column-actions {
+    text-align: center;
   }
 }
 

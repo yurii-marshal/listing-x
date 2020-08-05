@@ -43,7 +43,7 @@
         </button>
       </div>
     </div>
-    <div (click)="addAgent()" class="link">add seller</div>
+    <div *ngIf="sellers.controls.length < 2" (click)="addAgent()" class="link">add seller</div>
     <h4 style="margin-top: 5px;">Address</h4>
     <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
       <div class="fieldset u-flex-1">
