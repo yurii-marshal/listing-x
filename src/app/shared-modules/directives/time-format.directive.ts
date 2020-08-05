@@ -202,7 +202,6 @@ export class TimeFormatDirective implements ControlValueAccessor, Validator {
 
   private _setHours(hours: string, minutes: string, key) {
     const hoursArray: string[] = hours.split('');
-    const firstDigit: string = hoursArray[0];
     const secondDigit: string = hoursArray[1];
 
     let newHour = '';

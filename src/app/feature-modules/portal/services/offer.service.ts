@@ -85,6 +85,10 @@ export class OfferService extends BaseDataService<Offer> {
       );
   }
 
+  signOffer(offerId: number) {
+    return this.http.post(`/offers/${offerId}/sign/`, {});
+  }
+
   loadCalendarByOffer(id: number, start?: Date, end?: Date): Observable<CalendarEvent[]> {
     const url = super.transformEndpoint(ApiEndpoint.TransactionCalendar, id);
     return super.fetchCalendarData(url, start, end);
