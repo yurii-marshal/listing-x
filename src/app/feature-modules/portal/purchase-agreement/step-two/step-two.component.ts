@@ -244,7 +244,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         check_advisories_other: [{value: null, disabled: this.isDisabled}, []],
         text_other_terms: [{value: null, disabled: this.isDisabled}, []],
         radio_allocation_report_first: ['buyer', []],
-        check_allocation_report_tax: [{value: null, disabled: this.isDisabled}, []],
         check_allocation_report_environmental: [{value: null, disabled: this.isDisabled}, []],
         check_allocation_report_other: [{value: null, disabled: this.isDisabled}, []],
         text_allocation_report_other: [{value: null, disabled: this.isDisabled}, []],
