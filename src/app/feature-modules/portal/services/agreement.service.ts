@@ -1,10 +1,7 @@
 import {Injectable, Injector} from '@angular/core';
-import {HttpParams} from '@angular/common/http';
 import {Observable, Subject} from 'rxjs';
 import {ApiEndpoint} from '../../../core-modules/enums/api-endpoints';
-import {map, tap} from 'rxjs/operators';
-import * as _ from 'lodash';
-import * as moment from 'moment';
+import {tap} from 'rxjs/operators';
 import {BaseDataService} from '../../../core-modules/base-classes/base-data-service';
 import {AddendumData, GeneratedDocument} from '../../../core-modules/models/document';
 import {SpqQuestion} from '../../../core-modules/models/spq-question';
@@ -13,7 +10,6 @@ import { Agreement } from '../../../core-modules/models/agreement';
 
 @Injectable()
 export class AgreementService extends BaseDataService<Agreement> {
-  private today = moment().utcOffset(0);
   transactionChanged: Subject<void> = new Subject<void>();
 
   constructor(protected injector: Injector) {
@@ -92,33 +88,5 @@ export class AgreementService extends BaseDataService<Agreement> {
     return this.http.put<GeneratedDocument>(url, data).pipe(
       tap(() => this.transactionChanged.next())
     );
-  }
-
-  private fetchCalendarData(url: string, start: Date, end: Date) {
-    let params = new HttpParams();
-    if (start) {
-      params = params.set('start_date', start.toISOString());
-    }
-    if (end) {
-      params = params.set('end_date', end.toISOString());
-    }
-    return this.http.get<CalendarEvent[]>(url, {params})
-      .pipe(
-        map(events => _.map(events, event => this.wrapCalendarEvent(event)))
-      );
-  }
-
-  private wrapCalendarEvent(event: CalendarEvent): CalendarEvent {
-    let color: string = '#66ad58';
-    if (this.today.isBefore(event.date, 'day')) {
-      color = '#cd584a';
-    } else if (this.today.isAfter(event.date, 'day')) {
-      color = '#f8ce5f';
-    }
-    return {
-      ...event,
-      backgroundColor: color,
-      borderColor: color
-    };
   }
 }

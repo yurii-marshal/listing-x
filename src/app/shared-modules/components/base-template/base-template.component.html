@@ -15,15 +15,18 @@
         </a>
       </nav>
       <nav [class]="state" *ngIf="state === 'purchase'" mat-tab-nav-bar>
-        <a mat-tab-link *ngFor="let link of purchaseNavLinks"
-           [routerLink]="link.path"
-           routerLinkActive #rla="routerLinkActive"
-           [active]="rla.isActive"
-           [disabled]="link.disabled"
-           [class.completed]="!link.disabled && !rla.isActive"
-           class="top-bar">
-          {{ link.label }}
-        </a>
+        <ng-container *ngFor="let link of purchaseNavLinks">
+          <a mat-tab-link
+             *ngIf="user.accountType === 'agent'"
+             [routerLink]="link.path"
+             routerLinkActive #rla="routerLinkActive"
+             [active]="rla.isActive"
+             [disabled]="link.disabled"
+             [class.completed]="!link.disabled && !rla.isActive"
+             class="top-bar">
+            {{ link.label }}
+          </a>
+        </ng-container>
       </nav>
 
       <button (click)="closeOffer()" class="close-btn" *ngIf="state === 'purchase'" mat-stroked-button color="primary">

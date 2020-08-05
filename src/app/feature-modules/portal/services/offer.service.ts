@@ -6,6 +6,7 @@ import { LocalStorageKey } from '../../../core-modules/enums/local-storage-key';
 import { Offer, OfferSummary } from '../../../core-modules/models/offer';
 import { ApiEndpoint } from '../../../core-modules/enums/api-endpoints';
 import { BaseDataService } from '../../../core-modules/base-classes/base-data-service';
+import { CalendarEvent } from '../../../core-modules/models/calendar-event';
 
 @Injectable()
 export class OfferService extends BaseDataService<Offer> {
@@ -82,5 +83,10 @@ export class OfferService extends BaseDataService<Offer> {
           this.offerChanged$.next(this.currentOffer);
         })
       );
+  }
+
+  loadCalendarByOffer(id: number, start?: Date, end?: Date): Observable<CalendarEvent[]> {
+    const url = super.transformEndpoint(ApiEndpoint.TransactionCalendar, id);
+    return super.fetchCalendarData(url, start, end);
   }
 }

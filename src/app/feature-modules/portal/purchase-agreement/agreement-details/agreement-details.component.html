@@ -8,7 +8,7 @@
           <div class="header">{{ offer.streetName }}, {{ offer.city }}, {{ offer.state }} {{ offer.zip }}</div>
           <div>
             <span class="status-label">STATUS: </span>
-            <span [ngClass]="getClassName(status)" class="status">&nbsp;{{ statusLabels[status] }}</span>
+            <span [ngClass]="getClassName(offer.status)" class="status">&nbsp;{{ statusLabels[status] }}</span>
           </div>
         </div>
         <div class="description"> Offer created: {{ createdAt | date : 'short' }}
@@ -68,7 +68,7 @@
             <span>{{ item.title }}</span>
           </div>
         </div>
-        <!-- <div class="row-layout" style="position: relative;"><label class="header">offer</label>
+        <div class="row-layout" style="position: relative;"><label class="header">offer</label>
            <img *ngIf="urlDocument"
              src="assets/images/icons/pdf.svg"
              (click)="downloadAndToggleState(urlDocument)"
@@ -76,13 +76,13 @@
              height="80"
              class="e-document">
          </div>
-         <div class="row-layout" style="opacity: .0"><label></label><span>Signed by buyer 1 Lopushynsky</span></div>
-         <div class="row-layout" style="opacity: .0"><label></label><span>Signed by seller 1 Serhii Movchan</span></div>
-         <div class="row-layout" style="opacity: .0"><label></label><span>Hasn’t been signed by all buyers</span></div>
-         <div class="row-layout u-flex-justify&#45;&#45;start">
-           <button  mat-flat-button [disabled]="!allowDeny" (click)="deny()" color="accent" style="margin: 0 15px 0 220px">DENY</button>
-           <button  mat-flat-button [disabled]="!allowSign" (click)="goToESign()" color="primary">SIGN</button>
-         </div>-->
+         <!--<div class="row-layout" style="opacity: .0"><label></label><span>Signed by buyer 1</span></div>-->
+         <!--<div class="row-layout" style="opacity: .0"><label></label><span>Signed by seller 1</span></div>-->
+         <!--<div class="row-layout" style="opacity: .0"><label></label><span>Hasn’t been signed by all buyers</span></div>-->
+         <div class="row-layout u-flex-justify--start">
+           <button mat-flat-button [disabled]="!offer.allowDeny" (click)="deny()" color="accent" style="margin: 0 15px 0 220px">DENY</button>
+           <button mat-flat-button [disabled]="!offer.allowSign" (click)="goToESign()" color="primary">SIGN</button>
+         </div>
       </div>
     </div>
 

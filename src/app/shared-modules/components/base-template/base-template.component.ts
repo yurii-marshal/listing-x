@@ -41,7 +41,7 @@ export class BaseTemplateComponent implements OnInit, OnDestroy {
     this.user = this.authService.currentUser;
 
     this.portalNavLinks = [
-      {label: 'Transactions', path: '/portal', disabled: !this.user.registrationCompleted, hidden: false},
+      {label: 'Agreements', path: '/portal', disabled: !this.user.registrationCompleted, hidden: false},
       {label: 'Addresses', path: '/addresses', disabled: !this.user.registrationCompleted, hidden: false},
       {label: 'Profile', path: '/profile', disabled: false, hidden: this.user.accountType === 'customer'},
     ];

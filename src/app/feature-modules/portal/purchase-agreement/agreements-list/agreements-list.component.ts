@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { TransactionStatus } from '../../../../core-modules/models/transaction';
 import { BaseTableDataSource } from '../../../../core-modules/datasources/base-table-data-source';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
@@ -89,22 +88,26 @@ export class AgreementsListComponent implements OnInit, AfterViewInit, OnDestroy
       .subscribe();
   }
 
-  onFilter(status: TransactionStatus) {
+  onFilter(status: AgreementStatus) {
     let query = `status=${status}`;
-    if (status === TransactionStatus.All) {
+    if (status === AgreementStatus.All) {
       query = '';
     }
     this.dataSource.filter = query;
   }
 
-  getClassName(status: TransactionStatus): string {
+  getClassName(status: AgreementStatus): string {
     switch (status) {
-      case TransactionStatus.New:
+      case AgreementStatus.Started:
         return 'blue';
-      case TransactionStatus.InProgress:
+      case AgreementStatus.Delivered:
+        return 'orange';
+      case AgreementStatus.Accepted:
         return 'yellow';
-      case TransactionStatus.Finished:
-        return 'green';
+      case AgreementStatus.Completed:
+        return 'violet';
+      case AgreementStatus.Denied:
+        return 'red';
     }
   }
 

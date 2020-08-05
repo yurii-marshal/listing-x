@@ -12,7 +12,6 @@ import { Subject } from 'rxjs';
 export class StepOneComponent implements OnInit, OnDestroy {
   offer: Offer;
   offerId: number;
-  anonymousOffer: Offer;
   private onDestroyed$: Subject<void> = new Subject<void>();
 
   constructor(
@@ -24,10 +23,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.offerId = +this.route.snapshot.params.id;
-    const offer = this.route.snapshot.data.offer;
-
-    this.offer = this.offerId && offer;
-    this.anonymousOffer = !this.offerId && offer;
+    this.offer = this.route.snapshot.data.offer;
   }
 
   ngOnDestroy(): void {

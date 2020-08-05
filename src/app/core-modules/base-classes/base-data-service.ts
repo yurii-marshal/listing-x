@@ -4,8 +4,11 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injector } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { ConfirmationBarComponent } from '../../shared-modules/components/confirmation-bar/confirmation-bar.component';
-import { switchMap, tap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { ApiEndpoint } from '../enums/api-endpoints';
+import { CalendarEvent } from '../models/calendar-event';
+import * as _ from 'lodash';
+import * as moment from 'moment';
 
 /*
 * Base CRUD dataservice
@@ -13,6 +16,8 @@ import { ApiEndpoint } from '../enums/api-endpoints';
 export abstract class BaseDataService<TModel extends {id: number}> implements IDataService<TModel> {
   protected snackbar: MatSnackBar;
   protected http: HttpClient;
+
+  private today = moment().utcOffset(0);
 
   protected detailUrl(id: number): string {
     return `${this.crudEndpoint}${id}/`;
@@ -62,6 +67,34 @@ export abstract class BaseDataService<TModel extends {id: number}> implements ID
         switchMap(() => this.http.delete<void>(url)),
         tap(() => this.snackbar.open('Successfully deleted item.'))
       );
+  }
+
+  fetchCalendarData(url: string, start: Date, end: Date) {
+    let params = new HttpParams();
+    if (start) {
+      params = params.set('start_date', start.toISOString());
+    }
+    if (end) {
+      params = params.set('end_date', end.toISOString());
+    }
+    return this.http.get<CalendarEvent[]>(url, {params})
+      .pipe(
+        map(events => _.map(events, event => this.wrapCalendarEvent(event)))
+      );
+  }
+
+  private wrapCalendarEvent(event: CalendarEvent): CalendarEvent {
+    let color: string = '#66ad58';
+    if (this.today.isBefore(event.date, 'day')) {
+      color = '#cd584a';
+    } else if (this.today.isAfter(event.date, 'day')) {
+      color = '#f8ce5f';
+    }
+    return {
+      ...event,
+      backgroundColor: color,
+      borderColor: color
+    };
   }
 
 }
