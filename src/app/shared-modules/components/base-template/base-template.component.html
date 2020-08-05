@@ -17,7 +17,7 @@
       <nav [class]="state" *ngIf="state === 'purchase'" mat-tab-nav-bar>
         <ng-container *ngFor="let link of purchaseNavLinks">
           <a mat-tab-link
-             *ngIf="user.accountType === 'agent'"
+             *ngIf="offerService.currentOffer.userRole === 'agent_buyer'"
              [routerLink]="link.path"
              routerLinkActive #rla="routerLinkActive"
              [active]="rla.isActive"

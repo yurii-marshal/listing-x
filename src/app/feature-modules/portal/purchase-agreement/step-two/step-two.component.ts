@@ -534,7 +534,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       });
   }
 
-  acceptOfferDocument() {
+  continue() {
     this.documentForm.markAllAsTouched();
 
     const hasFormInvalidFields = this.scrollToFirstInvalidField();
@@ -544,7 +544,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       : this.offerService.updateOfferProgress({progress: 3}, this.offerId)
         .pipe(takeUntil(this.onDestroyed$))
         .subscribe(() => {
-          this.router.navigate([`portal/purchase-agreement/${this.offerId}/step-three`]);
+          const url = `portal/purchase-agreement/${this.offerId}/` + (this.offer.userRole === 'agent_buyer' ? 'step-three' : 'details');
+          this.router.navigate([url]);
         });
   }
 
@@ -579,6 +580,10 @@ export class StepTwoComponent implements OnInit, OnDestroy {
           item.focus();
           break;
         }
+      }
+
+      if (signFieldElements.every(item => !!item.value)) {
+        this.signAgreement();
       }
     }
   }
@@ -764,5 +769,11 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     // const validators = this.offer[role][index] ? (this.offer[role][index].email === this.user.email ? [Validators.required] : []) : [];
 
     return [value, []];
+  }
+
+  private signAgreement() {
+    this.offerService.signOffer(this.offerId)
+      .pipe(takeUntil(this.onDestroyed$))
+      .subscribe(() => this.snackbar.open('Offer is signed now'));
   }
 }

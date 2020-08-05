@@ -1,3 +1,5 @@
+@import "../../../../assets/scss/mixins";
+
 .mat-column-actions {
   width: 150px;
   max-width: 150px;
@@ -27,9 +29,20 @@
   }
 }
 
+.mat-column-sellers {
+  li {
+    max-width: 205px;
+
+    @include mat-truncate-line();
+  }
+}
+
 .mat-column-address {
-  max-width: 300px;
-  p {margin: 0; white-space: nowrap; overflow-x: hidden; text-overflow: ellipsis; padding-right: 10px;}
+  li {
+    max-width: 300px;
+
+    @include mat-truncate-line();
+  }
 }
 
 .mat-column-actions {
