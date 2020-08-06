@@ -141,6 +141,12 @@ const routes: Routes = [
             component: AgreementDetailsComponent,
             canActivate: [],
           },
+          {
+            path: 'sign',
+            pathMatch: 'full',
+            component: StepTwoComponent,
+            resolve: {offer: GetOfferResolver}
+          },
         ]
       },
     ]

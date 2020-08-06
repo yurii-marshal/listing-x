@@ -23,6 +23,8 @@ export class BaseTemplateComponent implements OnInit, OnDestroy {
 
   user: User;
 
+  offer: Offer;
+
   portalNavLinks: { label, path, disabled, hidden }[] = [];
 
   purchaseNavLinks: { label, path, progress, disabled }[] = [];
@@ -37,7 +39,7 @@ export class BaseTemplateComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    const offer = this.offerService.currentOffer;
+    this.offer = this.offerService.currentOffer;
     this.user = this.authService.currentUser;
 
     this.portalNavLinks = [
@@ -49,16 +51,16 @@ export class BaseTemplateComponent implements OnInit, OnDestroy {
     this.purchaseNavLinks = [
       {
         label: 'Step 1',
-        path: [offer ? `./../../${offer.id}/step-one` : './../step-one'],
+        path: [this.offer ? `./../../${this.offer.id}/step-one` : './../step-one'],
         progress: 1,
         disabled: false,
       },
-      {label: 'Step 2', path: [`./../../${offer && offer.id}/step-two`], progress: 2, disabled: false},
-      {label: 'Step 3', path: [`./../../${offer && offer.id}/step-three`], progress: 3, disabled: false},
-      {label: 'Summary', path: [`./../../${offer && offer.id}/summary`], progress: 4, disabled: false},
+      {label: 'Step 2', path: [`./../../${this.offer && this.offer.id}/step-two`], progress: 2, disabled: false},
+      {label: 'Step 3', path: [`./../../${this.offer && this.offer.id}/step-three`], progress: 3, disabled: false},
+      {label: 'Summary', path: [`./../../${this.offer && this.offer.id}/summary`], progress: 4, disabled: false},
     ];
 
-    this.updatePurchaseLinks(offer);
+    this.updatePurchaseLinks(this.offer);
 
     this.authService.userChanged$
       .pipe(takeUntil(this.onDestroyed$))

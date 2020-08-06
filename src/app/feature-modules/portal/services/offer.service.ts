@@ -85,8 +85,25 @@ export class OfferService extends BaseDataService<Offer> {
       );
   }
 
-  signOffer(offerId: number) {
-    return this.http.post(`/offers/${offerId}/sign/`, {});
+  signOffer(offerId: number): Observable<any> {
+    let isSigned: boolean;
+
+    switch (this.currentOffer.userRole) {
+      case 'agent_buyer':
+        // isSigned = this.currentOffer.status === 'started';
+        break;
+      case 'buyer':
+        isSigned = this.currentOffer.status === 'delivered';
+        break;
+      case 'agent_seller':
+        isSigned = this.currentOffer.status === 'accepted';
+        break;
+      case 'seller':
+        isSigned = this.currentOffer.status === 'completed';
+        break;
+    }
+
+    return isSigned ? of(false) : this.http.post(`/offers/${offerId}/sign/`, {});
   }
 
   loadCalendarByOffer(id: number, start?: Date, end?: Date): Observable<CalendarEvent[]> {

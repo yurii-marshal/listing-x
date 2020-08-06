@@ -10,7 +10,6 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { SaveOfferDialogComponent } from '../../../../shared-modules/dialogs/save-offer-dialog/save-offer-dialog.component';
 import { DatePipe } from '@angular/common';
 import * as _ from 'lodash';
-import { Signature } from '../../../../core-modules/models/document';
 import { User } from '../../../auth/models';
 import { AuthService } from '../../../../core-modules/core-services/auth.service';
 
@@ -22,11 +21,6 @@ import { AuthService } from '../../../../core-modules/core-services/auth.service
 })
 export class StepTwoComponent implements OnInit, OnDestroy {
   @ViewChildren('form') form;
-
-  signature: Signature = {
-    email: 'email@dot.com',
-    signature: 'fjwefwif'
-  };
 
   documentForm: FormGroup;
   currentPage: number = 0;
@@ -59,7 +53,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     private offerService: OfferService,
     private dialog: MatDialog,
     private router: Router,
-    private route: ActivatedRoute,
+    public route: ActivatedRoute,
     private snackbar: MatSnackBar,
     private fb: FormBuilder,
     private elRef: ElementRef,
@@ -504,6 +498,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         );
         this.getAllFieldsCount(model);
         this.updatePageProgress(model, 0);
+
+        this.moveToNextSignField();
       });
 
     this.initPageBreakers();
@@ -542,7 +538,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     if (hasFormInvalidFields) {
       this.snackbar.open('Please, fill all mandatory fields');
     } else {
-      if (this.offer.userRole === 'agent_buyer') {
+      if (this.route.snapshot.routeConfig.path === 'step-two') {
         this.offerService.updateOfferProgress({progress: 3}, this.offerId)
           .pipe(takeUntil(this.onDestroyed$))
           .subscribe(() => {
@@ -779,6 +775,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   private signAgreement() {
     this.offerService.signOffer(this.offerId)
       .pipe(takeUntil(this.onDestroyed$))
-      .subscribe(() => this.snackbar.open('Offer is signed now'));
+      .subscribe((res: any) => res ? this.snackbar.open('Offer is signed now') : this.snackbar.open('Offer is already signed'));
   }
 }
