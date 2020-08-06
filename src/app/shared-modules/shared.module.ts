@@ -47,7 +47,7 @@ import { SaveOfferDialogComponent } from './dialogs/save-offer-dialog/save-offer
 import { SelectedFileItemComponent } from './components/selected-file-item/selected-file-item.component';
 import { PhoneNumberDirective } from './directives/phone-number.directive';
 import { NumberToWordsDirective } from './directives/number-to-words.directive';
-import { TimeFormatDirective } from './directives/time-format.directive';
+import { TimeMaskDirective } from './directives/time-mask.directive';
 import { SignatureBoxComponent } from './components/signature-box/signature-box.component';
 import { SignatureDirective } from './directives/signature.directive';
 import { FloatNumberPipe } from './pipes/float-number.pipe';
@@ -89,7 +89,7 @@ const components = [
   TooltipDirective,
   OnlyNumbersDirective,
   PhoneNumberDirective,
-  TimeFormatDirective,
+  TimeMaskDirective,
   NumberToWordsDirective,
   SignatureDirective,
   FilePickerComponent,

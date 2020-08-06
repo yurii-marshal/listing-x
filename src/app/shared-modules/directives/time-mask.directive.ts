@@ -29,17 +29,17 @@ import {
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => TimeFormatDirective),
+      useExisting: forwardRef(() => TimeMaskDirective),
       multi: true,
     },
     {
       provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => TimeFormatDirective),
+      useExisting: forwardRef(() => TimeMaskDirective),
       multi: true,
     },
   ],
 })
-export class TimeFormatDirective implements ControlValueAccessor, Validator {
+export class TimeMaskDirective implements ControlValueAccessor, Validator {
   _onChange: (_: string) => void;
 
   _touched: () => void;
@@ -137,7 +137,7 @@ export class TimeFormatDirective implements ControlValueAccessor, Validator {
   }
 
   writeValue(value: string): void {
-    const v = value ? value.substr(0, 5) : '00:00';
+    const v = value ? value.substr(0, 5) : '';
 
     this._renderer.setProperty(this._el.nativeElement, 'value', v);
   }

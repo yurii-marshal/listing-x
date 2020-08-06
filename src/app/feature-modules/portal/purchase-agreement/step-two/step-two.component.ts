@@ -539,14 +539,19 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
     const hasFormInvalidFields = this.scrollToFirstInvalidField();
 
-    hasFormInvalidFields
-      ? this.snackbar.open('Please, fill all mandatory fields')
-      : this.offerService.updateOfferProgress({progress: 3}, this.offerId)
-        .pipe(takeUntil(this.onDestroyed$))
-        .subscribe(() => {
-          const url = `portal/purchase-agreement/${this.offerId}/` + (this.offer.userRole === 'agent_buyer' ? 'step-three' : 'details');
-          this.router.navigate([url]);
-        });
+    if (hasFormInvalidFields) {
+      this.snackbar.open('Please, fill all mandatory fields');
+    } else {
+      if (this.offer.userRole === 'agent_buyer') {
+        this.offerService.updateOfferProgress({progress: 3}, this.offerId)
+          .pipe(takeUntil(this.onDestroyed$))
+          .subscribe(() => {
+            this.router.navigate([`portal/purchase-agreement/${this.offerId}/step-three`]);
+          });
+      } else {
+        this.router.navigate([`portal/purchase-agreement/${this.offerId}/details`]);
+      }
+    }
   }
 
   switchDaysAndDate(value: string, daysControlName: string, dateControlName: string) {
