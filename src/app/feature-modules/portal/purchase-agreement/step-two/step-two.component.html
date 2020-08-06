@@ -1009,6 +1009,7 @@
                            appNumberToWords
                            [numToWordsForm]="documentForm"
                            [recipientControlName]="'page_5.text_offer_price_text'"
+                           appOnlyNumbers
                            type="text" class="i-lr-3">.
                   </div>
 
@@ -4352,10 +4353,10 @@
 
             <div class="form">
               <div class="f-l">
-                Buyer &nbsp;<input formControlName="text_buyer_signature_first" type="text" class="i-lr-6">
+                Buyer &nbsp;<input appSignature (fieldSigned)="moveToNextSignField()" formControlName="text_buyer_signature_first" type="text" class="i-lr-6">
               </div>
               <div class="f-r">
-                Buyer &nbsp;<input formControlName="text_buyer_signature_second" type="text" class="i-lr-6">
+                Buyer &nbsp;<input appSignature (fieldSigned)="moveToNextSignField()" formControlName="text_buyer_signature_second" type="text" class="i-lr-6">
               </div>
             </div>
 
@@ -4607,6 +4608,7 @@
         <button
           mat-flat-button
           class="edit-btn u-flex-align-self--end"
+          *ngIf="route.snapshot.routeConfig.path === 'step-two'"
           (click)="editOffer()"
         >
           <span class="text">

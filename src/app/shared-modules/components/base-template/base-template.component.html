@@ -14,11 +14,11 @@
           <span *ngIf="link.disabled"></span>
         </a>
       </nav>
-      <!--*ngIf="offerService.currentOffer.userRole === 'agent_buyer'"-->
 
       <nav [class]="state" *ngIf="state === 'purchase'" mat-tab-nav-bar>
         <ng-container *ngFor="let link of purchaseNavLinks">
           <a mat-tab-link
+             *ngIf="offer.userRole === 'agent_buyer'"
              [routerLink]="link.path"
              routerLinkActive #rla="routerLinkActive"
              [active]="rla.isActive"
