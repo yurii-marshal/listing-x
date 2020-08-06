@@ -187,8 +187,8 @@ export class TimeMaskDirective implements ControlValueAccessor, Validator {
   private _setInputText(key: string) {
     const input: string[] = this._el.nativeElement.value.split(':');
 
-    const hours: string = input[0];
-    const minutes: string = input[1];
+    const hours: string = input[0] || '00';
+    const minutes: string = input[1] || '00';
 
     const caretPosition = this._doGetCaretPosition();
     if (caretPosition < 3) {

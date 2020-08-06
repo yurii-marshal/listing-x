@@ -70,6 +70,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
     this.user = this.authService.currentUser;
 
+    //  || this.route.snapshot.routeConfig.path === 'sign'
     this.isDisabled = this.offer.userRole !== 'agent_buyer';
 
     this.documentForm = this.fb.group({
