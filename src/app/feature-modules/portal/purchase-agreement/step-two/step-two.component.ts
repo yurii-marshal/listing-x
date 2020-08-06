@@ -41,6 +41,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   private pageBreakersOffsetTop: number[];
   private documentFormEl: EventTarget;
 
+  private signFieldElements: any[] = [];
+
   private downPaymentAmountPredicates: string[] = [
     'text_offer_price_digits',
     'text_finance_terms_amount',
@@ -499,6 +501,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         this.getAllFieldsCount(model);
         this.updatePageProgress(model, 0);
 
+        this.disableSignedFields();
         this.moveToNextSignField();
       });
 
@@ -572,20 +575,16 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   moveToNextSignField() {
-    const signFieldElements: any[] = Array.from(document.getElementsByClassName('sign-input'));
-
-    if (signFieldElements.length) {
-      for (const item of signFieldElements) {
+    if (this.signFieldElements.length) {
+      for (const item of this.signFieldElements) {
         if (!item.value) {
           item.scrollIntoView({behavior: 'smooth', block: 'center'});
           item.focus();
-          break;
+          return;
         }
       }
 
-      if (signFieldElements.every(item => !!item.value)) {
-        this.signAgreement();
-      }
+      this.signAgreement();
     }
   }
 
@@ -772,9 +771,16 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     return [value, []];
   }
 
+  private disableSignedFields() {
+    this.signFieldElements = Array.from(document.getElementsByClassName('sign-input'));
+    this.signFieldElements.forEach(item => item.disabled = !!item.value);
+  }
+
   private signAgreement() {
-    this.offerService.signOffer(this.offerId)
-      .pipe(takeUntil(this.onDestroyed$))
-      .subscribe((res: any) => res ? this.snackbar.open('Offer is signed now') : this.snackbar.open('Offer is already signed'));
+    this.offer.isSigned
+      ? this.snackbar.open('Offer is already signed')
+      : this.offerService.signOffer(this.offerId)
+        .pipe(takeUntil(this.onDestroyed$))
+        .subscribe(() => this.snackbar.open('Offer is signed now'));
   }
 }
