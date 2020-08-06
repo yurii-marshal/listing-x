@@ -50,6 +50,7 @@ export interface Offer {
   // Details
   allowDeny: boolean;
   allowSign: boolean;
+  isSigned: boolean;
 }
 
 export interface Person {
