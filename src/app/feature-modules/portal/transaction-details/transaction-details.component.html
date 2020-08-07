@@ -3,7 +3,7 @@
   <ng-container *ngIf="transaction">
     <div class="toolbar">
       <div class="toolbar-content">
-        <div class="back-btn" routerLink="/portal"><mat-icon fontSet="fa" fontIcon="fa-chevron-left"></mat-icon>Back</div>
+        <div class="back-btn" routerLink="/portal/transactions"><mat-icon fontSet="fa" fontIcon="fa-chevron-left"></mat-icon>Back</div>
         <div class="u-flex u-flex-align-items--center u-flex-justify--space-between">
           <div class="header">{{ transaction.offer.streetName }}, {{ transaction.offer.city }}, {{ transaction.offer.state }} {{ transaction.offer.zip }}</div>
           <div>
@@ -11,7 +11,7 @@
             <span [ngClass]="getClassName(transaction.status)" class="status">&nbsp;{{ statusLabels[transaction.status] }}</span>
           </div>
         </div>
-        <div class="description"> Offer created: {{ transaction.createdAt | date : 'short' }}
+        <div class="description"> Offer created: {{ transaction.createdAt | date : 'MM/dd/yy h:mm a' }}
           <span *ngIf="transaction.offer.remainingDaysCloseEscrow">({{ transaction.offer.remainingDaysCloseEscrow }} days until  close escrow)</span>
         </div>
         <div class="control-bar" *ngIf="isAgent">
@@ -29,7 +29,7 @@
                   #trigger="cdkOverlayOrigin"
                   (click)="isOpenInviteUserOverlay = !isOpenInviteUserOverlay"
                   color="primary">
-            INVITE MODERATORS
+            INVITE USERS
           </button>
           <ng-template cdkConnectedOverlay
             [cdkConnectedOverlayOrigin]="trigger"
@@ -89,6 +89,8 @@
 
     <div class="u-flex u-flex-justify--start">
       <div class="column-layout fullwidth">
+        <div class="row-layout new-section"><label class="header">Purchase Agreement</label></div>
+
         <div class="row-layout new-section"><label class="header">Completed documents</label></div>
 
         <div class="row-layout doc-item" *ngFor="let doc of (completedDocuments | async); let i = index;">
@@ -171,7 +173,8 @@
               >Edit</button>
               <button mat-menu-item (click)="triggerDownloadFile(doc)">View</button>
               <button mat-menu-item (click)="triggerDownloadFile(doc)">Download</button>
-              <button mat-menu-item disabled>Deny</button>
+              <button mat-menu-item >Deny</button>
+              <button mat-menu-item class="delete-button">Delete</button>
             </mat-menu>
           </div>
         </div>

@@ -544,7 +544,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       : this.offerService.updateOfferProgress({progress: 3}, this.offerId)
         .pipe(takeUntil(this.onDestroyed$))
         .subscribe(() => {
-          this.router.navigate([`portal/purchase-agreement/${this.offerId}/step-three`]);
+          this.router.navigate([`portal/purchase-agreements/${this.offerId}/step-three`]);
         });
   }
 

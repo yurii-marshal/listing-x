@@ -73,7 +73,7 @@ export class AgreementsListComponent implements OnInit, AfterViewInit, OnDestroy
 
   openOfferFlow() {
     this.offerService.currentOffer = null;
-    this.router.navigate(['/portal/purchase-agreement/step-one']);
+    this.router.navigate(['/portal/purchase-agreements/step-one']);
   }
 
   openCreateAddressDialog() {

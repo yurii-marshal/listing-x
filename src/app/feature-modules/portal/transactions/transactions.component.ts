@@ -62,7 +62,7 @@ export class TransactionsComponent implements OnDestroy, OnInit, AfterViewInit {
 
   openOfferFlow() {
     this.offerService.currentOffer = null;
-    this.router.navigate(['/portal/purchase-agreement/step-one']);
+    this.router.navigate(['/portal/purchase-agreements/step-one']);
   }
 
   openCreateAddressDialog() {

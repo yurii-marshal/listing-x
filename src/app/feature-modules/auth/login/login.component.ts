@@ -22,10 +22,10 @@ export class LoginComponent implements OnInit {
   }
 
   private get redirectUrl(): string {
-    let uri = this.route.snapshot.queryParams.redirectUrl || '/portal';
+    let uri = this.route.snapshot.queryParams.redirectUrl || '/portal/purchase-agreements';
 
     if (this.hasOfferData) {
-      uri = '/portal/purchase-agreement/step-one';
+      uri = '/portal/purchase-agreements/step-one';
     }
 
     return uri;

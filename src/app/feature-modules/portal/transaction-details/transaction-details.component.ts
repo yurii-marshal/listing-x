@@ -88,7 +88,7 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
 
   onDelete() {
     this.transactionService.delete(this.transaction.id)
-      .subscribe(() => this.router.navigate(['/portal']));
+      .subscribe(() => this.router.navigate(['/portal/purchase-agreements']));
   }
 
   getClassName(status: TransactionStatus): string {

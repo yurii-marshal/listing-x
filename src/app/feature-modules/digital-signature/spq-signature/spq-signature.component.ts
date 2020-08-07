@@ -59,7 +59,7 @@ export class SpqSignatureComponent implements AfterViewInit, OnInit {
         switchMap(() => this.transactionService.sign(this.doc)),
         tap(() => this.snackbar.open('Successfully signed document', 'OK'))
       )
-      .subscribe(() => this.router.navigate(['/portal/transaction/', transactionId]));
+      .subscribe(() => this.router.navigate(['/portal/transactions/', transactionId]));
   }
 
   private handleCurrentUserSignatureChanges() {

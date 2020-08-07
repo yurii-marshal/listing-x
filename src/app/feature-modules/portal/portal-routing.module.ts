@@ -29,7 +29,6 @@ import { AgreementDetailsComponent } from './purchase-agreement/agreement-detail
 const routes: Routes = [
   {
     path: '',
-    component: AgreementsListComponent,
     canActivate: [AuthGuardService],
     canActivateChild: [AuthGuardService],
     children: [
@@ -84,7 +83,8 @@ const routes: Routes = [
       },
     ]
   }, {
-    path: 'purchase-agreement',
+    path: 'purchase-agreements',
+    component: AgreementsListComponent,
     canActivate: [AuthGuardService],
     canActivateChild: [AuthGuardService],
     children: [
@@ -100,76 +100,71 @@ const routes: Routes = [
         canActivate: [],
         resolve: {offer: CreateOfferResolver}
       },
+    ]
+  }, {
+    path: 'purchase-agreements/:id',
+    children: [
       {
-        path: ':id',
-        children: [
-          {
-            path: 'step-one',
-            pathMatch: 'full',
-            component: StepOneComponent,
-            canActivate: [CreateOfferGuardService],
-            data: {progress: 1},
-            resolve: {offer: GetOfferResolver}
-          },
-          {
-            path: 'step-two',
-            pathMatch: 'full',
-            component: StepTwoComponent,
-            canActivate: [],
-            data: {progress: 2},
-            resolve: {offer: GetOfferResolver}
-          },
-          {
-            path: 'step-three',
-            pathMatch: 'full',
-            component: StepThreeComponent,
-            canActivate: [],
-            data: {progress: 3},
-            resolve: {offer: GetOfferResolver}
-          },
-          {
-            path: 'summary',
-            pathMatch: 'full',
-            component: SummaryComponent,
-            canActivate: [],
-            data: {progress: 4},
-            resolve: {offer: GetOfferResolver}
-          },
-          {
-            path: 'details',
-            pathMatch: 'full',
-            component: AgreementDetailsComponent,
-            canActivate: [],
-          },
-        ]
+        path: 'step-one',
+        pathMatch: 'full',
+        component: StepOneComponent,
+        canActivate: [CreateOfferGuardService],
+        data: {progress: 1},
+        resolve: {offer: GetOfferResolver}
+      },
+      {
+        path: 'step-two',
+        pathMatch: 'full',
+        component: StepTwoComponent,
+        canActivate: [],
+        data: {progress: 2},
+        resolve: {offer: GetOfferResolver}
+      },
+      {
+        path: 'step-three',
+        pathMatch: 'full',
+        component: StepThreeComponent,
+        canActivate: [],
+        data: {progress: 3},
+        resolve: {offer: GetOfferResolver}
+      },
+      {
+        path: 'summary',
+        pathMatch: 'full',
+        component: SummaryComponent,
+        canActivate: [],
+        data: {progress: 4},
+        resolve: {offer: GetOfferResolver}
+      },
+      {
+        path: 'details',
+        pathMatch: 'full',
+        component: AgreementDetailsComponent,
+        canActivate: [],
       },
     ]
-  },
-  {
+  }, {
     path: 'transactions',
     component: TransactionsComponent,
     canActivate: [AuthGuardService],
-    canActivateChild: [AuthGuardService],
+    canActivateChild: [AuthGuardService]
+  }, {
+    path: 'transactions/:id',
+    component: TransactionDetailsComponent,
+    canActivate: [AuthGuardService],
     children: [
       {
-        path: ':id',
-        component: TransactionDetailsComponent,
-        canActivate: [AuthGuardService],
-        children: [
-          {
-            path: 'upload',
-            component: DialogsWrapperComponent,
-            data: {
-              component: WriteOfferUploadDocumentsDialogComponent,
-              modalType: UploadDocsModalType.OfferUpdating,
-              transactionPage: true
-            },
-            resolve: {model: OfferDocumentsResolver}
-          }
-        ]
+        path: 'upload',
+        component: DialogsWrapperComponent,
+        data: {
+          component: WriteOfferUploadDocumentsDialogComponent,
+          modalType: UploadDocsModalType.OfferUpdating,
+          transactionPage: true
+        },
+        resolve: {model: OfferDocumentsResolver}
       }
     ]
-  },
+  }
 ];
 
 @NgModule({

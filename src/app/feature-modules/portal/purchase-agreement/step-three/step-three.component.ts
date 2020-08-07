@@ -74,14 +74,14 @@ export class StepThreeComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.onDestroyed$))
       .subscribe(() => {
         this.offerService.currentOffer.documents = this.form.value;
-        this.router.navigate(['/portal/purchase-agreement/', this.offer.id, 'summary']);
+        this.router.navigate(['/portal/purchase-agreements/', this.offer.id, 'summary']);
       });
   }
 
   // updateDocs(): void {
   //   const model: LinkedDocuments = this.getRequestValue();
   //   this.documentLinkingService.updateOfferDocuments(model).subscribe(() => {
-  //     this.router.navigate(['/portal/transaction', this.offer.id]);
+  //     this.router.navigate(['/portal/transactions', this.offer.id]);
   //   });
   // }
 
