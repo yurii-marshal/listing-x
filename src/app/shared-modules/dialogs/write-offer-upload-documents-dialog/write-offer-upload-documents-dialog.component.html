@@ -9,19 +9,19 @@
     formControlName="preApproval"
     [docsIds]="modelIds['preApproval']"
     [type]="Type.preApproval"
-    [offerId]="data.transactionPage ? data.model.offerId : null"
+    [offerId]="data.model.offerId"
   ></app-file-picker>
   <app-file-picker
     formControlName="proofOfFunds"
     [docsIds]="modelIds['proofOfFunds']"
     [type]="Type.proofOfFunds"
-    [offerId]="data.transactionPage ? data.model.offerId : null"
+    [offerId]="data.model.offerId"
   ></app-file-picker>
   <app-file-picker
     formControlName="coverLetter"
     [docsIds]="modelIds['coverLetter']"
     [type]="Type.coverLetter"
-    [offerId]="data.transactionPage ? data.model.offerId : null"
+    [offerId]="data.model.offerId"
   ></app-file-picker>
 </div>
 
@@ -30,7 +30,7 @@
     <button
       mat-stroked-button
       mat-dialog-close
-      [routerLink]="['/portal/transactions', data.model.offerId]"
+      [routerLink]="data.transactionPage ? '/portal/transactions' + data.model.offerId : '/portal/purchase-agreements/' + data.model.offerId + '/details'"
     >CANCEL</button>
     <button
       mat-flat-button

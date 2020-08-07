@@ -1,25 +1,39 @@
 <app-base-template>
   <router-outlet></router-outlet>
-  <ng-container *ngIf="transaction">
+  <ng-container *ngIf="transactionsFlow ? transaction : offer">
     <div class="toolbar">
       <div class="toolbar-content">
-        <div class="back-btn" routerLink="/portal/transactions"><mat-icon fontSet="fa" fontIcon="fa-chevron-left"></mat-icon>Back</div>
+        <div class="back-btn" routerLink="{{ transactionsFlow ? '/portal/transactions' : '/portal/purchase-agreements' }}">
+          <mat-icon fontSet="fa" fontIcon="fa-chevron-left"></mat-icon>Back</div>
         <div class="u-flex u-flex-align-items--center u-flex-justify--space-between">
-          <div class="header">{{ transaction.offer.streetName }}, {{ transaction.offer.city }}, {{ transaction.offer.state }} {{ transaction.offer.zip }}</div>
+          <div class="header">
+            {{ transactionsFlow ? transaction.offer.streetName : offer.streetName }},
+            {{ transactionsFlow ? transaction.offer.city : offer.city }},
+            {{ transactionsFlow ? transaction.offer.state : offer.state }}
+            {{ transactionsFlow ? transaction.offer.zip : offer.zip }}
+          </div>
           <div>
             <span class="status-label">STATUS: </span>
-            <span [ngClass]="getClassName(transaction.status)" class="status">&nbsp;{{ statusLabels[transaction.status] }}</span>
+            <span [ngClass]="getClassName(transactionsFlow ? transaction.status : offer.status)" class="status">&nbsp;
+              {{ transactionsFlow ? transactionStatusLabels[transaction.status] : agreementStatusLabels[offer.status] }}
+            </span>
           </div>
         </div>
-        <div class="description"> Offer created: {{ transaction.createdAt | date : 'MM/dd/yy h:mm a' }}
-          <span *ngIf="transaction.offer.remainingDaysCloseEscrow">({{ transaction.offer.remainingDaysCloseEscrow }} days until  close escrow)</span>
+        <div class="description"> Offer created:
+          {{ transactionsFlow ? (transaction.createdAt | date : 'MM/dd/yy h:mm a') : (offer.createdAt | date : 'MM/dd/yy h:mm a') }}
+          <span *ngIf="transactionsFlow ? transaction.offer.remainingDaysCloseEscrow : offer.remainingDaysCloseEscrow">
+            ({{ transactionsFlow ? transaction.offer.remainingDaysCloseEscrow : offer.remainingDaysCloseEscrow }} days until  close escrow)
+          </span>
         </div>
         <div class="control-bar" *ngIf="isAgent">
           <div class="u-flex-1">
-            <button *ngIf="transaction.allowEdit" mat-icon-button color="accent" routerLink="/portal/offer/{{ transaction.offer.id }}">
+            <button *ngIf="transactionsFlow ? transaction.allowEdit : allowEdit"
+                    mat-icon-button
+                    color="accent"
+                    routerLink="{{ transactionsFlow ? '/portal/offer/' + transaction.offer.id : '/portal/offer/' + offer.id }}">
               <mat-icon fontSet="fa" fontIcon="fa-edit" class="icon"></mat-icon>
             </button>
-            <button *ngIf="transaction.allowDelete" mat-icon-button color="accent" (click)="onDelete()">
+            <button *ngIf="transactionsFlow ? transaction.allowDelete : allowDelete" mat-icon-button color="accent" (click)="onDelete()">
               <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
             </button>
           </div>
@@ -32,9 +46,9 @@
             INVITE USERS
           </button>
           <ng-template cdkConnectedOverlay
-            [cdkConnectedOverlayOrigin]="trigger"
-            [cdkConnectedOverlayOffsetY]="3"
-            [cdkConnectedOverlayOpen]="isOpenInviteUserOverlay">
+                       [cdkConnectedOverlayOrigin]="trigger"
+                       [cdkConnectedOverlayOffsetY]="3"
+                       [cdkConnectedOverlayOpen]="isOpenInviteUserOverlay">
               <div role="dialog" class="invite-user-dialog">
                 <input [formControl]="userEmailControl" class="u-flex-1" spellcheck="false">
                 <button mat-icon-button [disabled]="userEmailControl.invalid" (click)="inviteUser()">
@@ -49,47 +63,81 @@
     <div class="u-flex u-flex-justify--center">
       <div class="column-layout">
         <div class="row-layout"><label class="header">Offer information</label></div>
-        <div class="row-layout" *ngFor="let item of transaction.offer.agentBuyers; let i = index"><label>Buyer's Agent #{{ i + 1 }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span></div>
-        <div class="row-layout" *ngFor="let item of transaction.offer.agentSellers; let i = index"><label>Listing Agent #{{ i + 1 }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span></div>
-        <div class="row-layout" *ngFor="let item of transaction.offer.buyers; let i = index"><label>buyer #{{ i + 1 }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span></div>
-        <div class="row-layout" *ngFor="let item of transaction.offer.sellers; let i = index"><label>seller #{{ i + 1 }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span></div>
-        <div class="row-layout"><label>address</label><span>{{ transaction.offer.streetName }}, {{ transaction.offer.city }}, {{ transaction.offer.state }} {{ transaction.offer.zip }}</span></div>
+        <div class="row-layout" *ngFor="let item of (transactionsFlow ? transaction.offer.agentBuyers : offer.agentBuyers); let i = index">
+          <label>Buyer's Agent #{{ i + 1 }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span>
+        </div>
+        <div class="row-layout" *ngFor="let item of (transactionsFlow ? transaction.offer.agentSellers : offer.agentSellers); let i = index">
+          <label>Listing Agent #{{ i + 1 }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span>
+        </div>
+        <div class="row-layout" *ngFor="let item of (transactionsFlow ? transaction.offer.buyers : offer.buyers); let i = index">
+          <label>buyer #{{ i + 1 }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span>
+        </div>
+        <div class="row-layout" *ngFor="let item of (transactionsFlow ? transaction.offer.sellers : offer.sellers); let i = index">
+          <label>seller #{{ i + 1 }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span>
+        </div>
+        <div class="row-layout"><label>address</label>
+          <span>
+            {{ transactionsFlow ? transaction.offer.streetName : offer.streetName }},
+            {{ transactionsFlow ? transaction.offer.city : offer.city }},
+            {{ transactionsFlow ? transaction.offer.state : offer.state }} {{ transactionsFlow ? transaction.offer.zip : offer.zip }}
+          </span>
+        </div>
         <div class="row-layout"><label>offer info</label>
-          <span>${{ transaction.offer.price | number }}
-            <ng-container *ngIf="transaction.offer.closeEscrowDays">&nbsp;|&nbsp;{{ transaction.offer.closeEscrowDays }} Days to close escrow</ng-container>
+          <span>${{ transactionsFlow ? (transaction.offer.price | number) : (offer.price | number) }}
+            <ng-container *ngIf="transactionsFlow ? transaction.offer.closeEscrowDays : offer.closeEscrowDays">
+              &nbsp;|&nbsp;{{ transactionsFlow ? transaction.offer.closeEscrowDays : offer.closeEscrowDays }} Days to close escrow
+            </ng-container>
           </span>
         </div>
       </div>
       <div class="column-layout">
         <div class="row-layout"><label class="header">last activity</label></div>
         <div class="scroll-content">
-          <div class="row-layout" *ngFor="let item of transaction.lastLogs">
+          <div class="row-layout" *ngFor="let item of (transactionsFlow ? transaction.lastLogs : lastLogs)">
             <label>{{ item.createdAt | date: 'short' }}</label>
             <span>{{ item.title }}</span>
           </div>
         </div>
-       <!-- <div class="row-layout" style="position: relative;"><label class="header">offer</label>
-          <img *ngIf="transaction.urlDocument"
-            src="assets/images/icons/pdf.svg"
-            (click)="downloadAndToggleState(transaction.urlDocument)"
-            [title]="transaction.urlDocument"
-            height="80"
-            class="e-document">
-        </div>
-        <div class="row-layout" style="opacity: .0"><label></label><span>Signed by buyer 1 Lopushynsky</span></div>
-        <div class="row-layout" style="opacity: .0"><label></label><span>Signed by seller 1 Serhii Movchan</span></div>
-        <div class="row-layout" style="opacity: .0"><label></label><span>Hasn’t been signed by all buyers</span></div>
-        <div class="row-layout u-flex-justify&#45;&#45;start">
-          <button  mat-flat-button [disabled]="!transaction.allowDeny" (click)="deny()" color="accent" style="margin: 0 15px 0 220px">DENY</button>
-          <button  mat-flat-button [disabled]="!transaction.allowSign" (click)="goToESign()" color="primary">SIGN</button>
-        </div>-->
+<!--        <div class="row-layout" style="position: relative;"><label class="header">offer</label>-->
+<!--          <img *ngIf="transaction.urlDocument"-->
+<!--            src="assets/images/icons/pdf.svg"-->
+<!--            (click)="downloadAndToggleState(transaction.urlDocument)"-->
+<!--            [title]="transaction.urlDocument"-->
+<!--            height="80"-->
+<!--            class="e-document">-->
+<!--        </div>-->
+<!--        <div class="row-layout" style="opacity: .0"><label></label><span>Signed by buyer 1 Lopushynsky</span></div>-->
+<!--        <div class="row-layout" style="opacity: .0"><label></label><span>Signed by seller 1 Serhii Movchan</span></div>-->
+<!--        <div class="row-layout" style="opacity: .0"><label></label><span>Hasn’t been signed by all buyers</span></div>-->
+<!--        <div class="row-layout u-flex-justify&#45;&#45;start">-->
+<!--          <button  mat-flat-button [disabled]="!transaction.allowDeny" (click)="deny()" color="accent" style="margin: 0 15px 0 220px">DENY</button>-->
+<!--          <button  mat-flat-button [disabled]="!transaction.allowSign" (click)="goToESign()" color="primary">SIGN</button>-->
+<!--        </div>-->
       </div>
     </div>
 
 
     <div class="u-flex u-flex-justify--start">
       <div class="column-layout fullwidth">
-        <div class="row-layout new-section"><label class="header">Purchase Agreement</label></div>
+        <div *ngIf="transactionsFlow" class="row-layout new-section"><label class="header">Purchase Agreement</label></div>
+
+        <div class="row-layout doc-item" *ngFor="let doc of (purchaseAgreement | async); let i = index;">
+          <label>document #{{i + 1}}</label>
+          <div class="doc-title"><img src="assets/images/icons/{{ doc.extension }}.svg" [title]="doc.title" height="20"> {{doc.title}}.{{doc.extension}}</div>
+          <div class="doc-events">
+            <label>{{ doc.lastEvent?.createdAt | date: 'short' }}</label>
+            <span>{{ doc.lastEvent?.title }}</span>
+          </div>
+          <div class="doc-actions">Actions:
+
+            <span class="action-icon" (click)="triggerDownloadFile(doc)">
+              <ng-container *ngTemplateOutlet="viewIcon"></ng-container>
+            </span>
+            <span class="action-icon" (click)="triggerDownloadFile(doc)">
+              <ng-container *ngTemplateOutlet="downloadIcon"></ng-container>
+            </span>
+          </div>
+        </div>
 
         <div class="row-layout new-section"><label class="header">Completed documents</label></div>
 
@@ -100,7 +148,6 @@
             <label>{{ doc.lastEvent?.createdAt | date: 'short' }}</label>
             <span>{{ doc.lastEvent?.title }}</span>
           </div>
-          <div class="doc-status">Status: <strong [ngClass]="doc.status">{{doc.status}}</strong></div>
           <div class="doc-actions">Actions:
 
             <span class="action-icon" (click)="triggerDownloadFile(doc)">
@@ -122,7 +169,6 @@
               color="primary"
               class="button-sm"
               [matMenuTriggerFor]="docs"
-              [disabled]="!isResidentialAgreementCompleted"
             >ADD DOCUMENT</button>
             <mat-menu #docs="matMenu" xPosition="before">
               <button mat-menu-item (click)="openAddendumDialog()">Addendum</button>
@@ -154,23 +200,23 @@
             </svg>
 
             <mat-menu #menu="matMenu" xPosition="before">
-              <button *ngIf="doc.documentType === 'contract' && isAgent && !isSeller"
-                      mat-menu-item
-                      [disabled]="!doc.allowEdit"
-                      routerLink="/portal/offer/{{ transaction.offer.id }}"
-              >Edit</button>
+<!--              <button *ngIf="doc.documentType === 'contract' && isAgent && !isSeller"-->
+<!--                      mat-menu-item-->
+<!--                      [disabled]="!doc.allowEdit"-->
+<!--                      routerLink="/portal/offer/{{ transaction.offer.id }}"-->
+<!--              >Edit</button>-->
 
-              <button *ngIf="doc.documentType === 'spq'"
-                      mat-menu-item
-                      [disabled]="!doc.allowEdit"
-                      (click)="openSPQDialog(doc)"
-              >Edit</button>
+<!--              <button *ngIf="doc.documentType === 'spq'"-->
+<!--                      mat-menu-item-->
+<!--                      [disabled]="!doc.allowEdit"-->
+<!--                      (click)="openSPQDialog(doc)"-->
+<!--              >Edit</button>-->
 
-              <button *ngIf="doc.documentType === 'addendum' && isAgent"
-                      mat-menu-item
-                      [disabled]="!doc.allowEdit"
-                      (click)="openAddendumDialog(doc)"
-              >Edit</button>
+<!--              <button *ngIf="doc.documentType === 'addendum' && isAgent"-->
+<!--                      mat-menu-item-->
+<!--                      [disabled]="!doc.allowEdit"-->
+<!--                      (click)="openAddendumDialog(doc)"-->
+<!--              >Edit</button>-->
               <button mat-menu-item (click)="triggerDownloadFile(doc)">View</button>
               <button mat-menu-item (click)="triggerDownloadFile(doc)">Download</button>
               <button mat-menu-item >Deny</button>
@@ -182,7 +228,7 @@
         <div class="row-layout new-section"><label class="header">Attached docs</label></div>
         <div class="row-layout"><label>Add Pre-approval Letter</label>
           <div class="doc-preview">
-            <img *ngFor="let img of transaction.offer.documents?.preApproval"
+            <img *ngFor="let img of (transactionsFlow ? transaction.offer.documents?.preApproval : offer.documents?.preApproval)"
                  src="assets/images/icons/{{ img.extension }}.svg"
                  [title]="img.title"
                  (click)="triggerDownloadFile(img)"
@@ -190,17 +236,21 @@
           </div>
         </div>
         <div class="row-layout"><label>Add Proof of Funds</label><div class="doc-preview">
-          <div class="doc-preview"><img *ngFor="let img of transaction.offer.documents?.proofOfFunds"
+          <div class="doc-preview">
+            <img *ngFor="let img of (transactionsFlow ? transaction.offer.documents?.proofOfFunds : offer.documents?.proofOfFunds)"
                                         src="assets/images/icons/{{ img.extension }}.svg"
                                         (click)="triggerDownloadFile(img)"
-                                        [title]="img.title" height="20"></div>
+                                        [title]="img.title" height="20">
+          </div>
         </div></div>
         <div class="row-layout"><label>Add Cover Letter</label><div class="doc-preview">
-          <div class="doc-preview"><img *ngFor="let img of transaction.offer.documents?.coverLetter"
+          <div class="doc-preview">
+            <img *ngFor="let img of (transactionsFlow ? transaction.offer.documents?.coverLetter : offer.documents?.coverLetter)"
                                         src="assets/images/icons/{{ img.extension }}.svg"
                                         (click)="triggerDownloadFile(img)"
                                         [title]="img.title"
-                                        height="20"></div>
+                                        height="20">
+          </div>
         </div></div>
       </div>
     </div>

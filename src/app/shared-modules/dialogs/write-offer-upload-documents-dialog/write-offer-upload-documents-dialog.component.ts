@@ -25,8 +25,8 @@ export class WriteOfferUploadDocumentsDialogComponent implements OnInit {
   }
 
   get closeLink() {
-    return this.data.modalType === UploadDocsModalType.OfferUpdating ?
-      `/portal/transactions/${this.data.model.offerId}` : '/portal/purchase-agreements';
+    return this.data.transactionPage ?
+      `/portal/transactions/${this.data.model.offerId}` : `/portal/purchase-agreements/${this.data.model.offerId}/details`;
   }
 
   constructor(public route: ActivatedRoute,
@@ -73,7 +73,9 @@ export class WriteOfferUploadDocumentsDialogComponent implements OnInit {
     const model: LinkedDocuments = this.getRequestValue();
     this.service.updateOfferDocuments(model).subscribe(() => {
       this.dialogRef.close(this.form);
-      this.router.navigate(['/portal/transactions/', this.data.model.offerId]);
+      this.router.navigateByUrl(this.data.transactionPage ?
+        '/portal/transactions/' + this.data.model.offerId :
+        '/portal/purchase-agreements/' + this.data.model.offerId + '/details');
     });
   }
 }

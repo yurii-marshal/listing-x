@@ -84,7 +84,7 @@ const routes: Routes = [
     ]
   }, {
     path: 'purchase-agreements',
-    component: AgreementsListComponent,
+    component: TransactionsComponent,
     canActivate: [AuthGuardService],
     canActivateChild: [AuthGuardService],
     children: [
@@ -138,20 +138,33 @@ const routes: Routes = [
       },
       {
         path: 'details',
-        pathMatch: 'full',
-        component: AgreementDetailsComponent,
-        canActivate: [],
+        component: TransactionDetailsComponent,
+        canActivate: [AuthGuardService],
+        children: [
+          {
+            path: 'upload',
+            component: DialogsWrapperComponent,
+            data: {
+              component: WriteOfferUploadDocumentsDialogComponent,
+              modalType: UploadDocsModalType.OfferUpdating,
+              transactionPage: false
+            },
+            resolve: {model: OfferDocumentsResolver}
+          }
+        ]
       },
     ]
   }, {
     path: 'transactions',
     component: TransactionsComponent,
     canActivate: [AuthGuardService],
-    canActivateChild: [AuthGuardService]
+    canActivateChild: [AuthGuardService],
+    data: {transactionPage: true}
   }, {
     path: 'transactions/:id',
     component: TransactionDetailsComponent,
     canActivate: [AuthGuardService],
+    data: {transactionPage: true},
     children: [
       {
         path: 'upload',

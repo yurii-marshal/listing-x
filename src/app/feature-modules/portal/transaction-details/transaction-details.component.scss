@@ -158,7 +158,7 @@ $blue: rgba(2, 136, 209, 0.9);
 }
 
 .doc-item {
-  align-items: flex-end;
+  align-items: center;
   font-size: 13px;
   line-height: 16px;
   color: #444C5C;
@@ -185,7 +185,7 @@ $blue: rgba(2, 136, 209, 0.9);
 
   .doc-actions {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     min-width: 171px;
     button {
       margin: 0 22px 0 17px;

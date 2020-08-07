@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AddressDialogComponent } from '../../../shared-modules/dialogs/address-dialog/address-dialog.component';
 import { filter, takeUntil } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
@@ -12,6 +12,7 @@ import { OfferService } from '../services/offer.service';
 import { Subject } from 'rxjs';
 import { User } from '../../auth/models';
 import { CalendarEvent } from '../../../core-modules/models/calendar-event';
+import { Agreement, AgreementStatus } from 'src/app/core-modules/models/agreement';
 
 @Component({
   selector: 'app-transactions',
@@ -19,22 +20,41 @@ import { CalendarEvent } from '../../../core-modules/models/calendar-event';
   styleUrls: ['./transactions.component.scss']
 })
 export class TransactionsComponent implements OnDestroy, OnInit, AfterViewInit {
-  displayedColumns: string[] = ['createdAt', 'address', 'agentBuyers', 'agentSellers',
-    'buyers', 'sellers', 'status', 'lastLogs', 'actions'];
-  dataSource: BaseTableDataSource<Transaction>;
-  statuses: string[] = Object.values(TransactionStatus);
+  displayedColumns: string[] = [
+    'createdAt',
+    'address',
+    'agentBuyers',
+    'agentSellers',
+    'buyers',
+    'sellers',
+    'status',
+    'lastLogs',
+    'actions',
+  ];
+  dataSource: BaseTableDataSource<Transaction | Agreement>;
+  statuses: string[];
   calendarDataSource: CalendarEvent[];
   user: User;
+  transactionsFlow: boolean;
   /* TODO: Refactor */
-  readonly statusLabels: { [key: string]: string } = {
+  readonly transactionStatusLabels: { [key: string]: string } = {
     [TransactionStatus.All]: 'All transactions',
     [TransactionStatus.New]: 'New',
     [TransactionStatus.InProgress]: 'In progress',
     [TransactionStatus.Finished]: 'Finished'
   };
+  readonly agreementStatusLabels: { [key: string]: string } = {
+    [AgreementStatus.All]: 'All agreements',
+    [AgreementStatus.Started]: 'Started',
+    [AgreementStatus.Delivered]: 'Delivered',
+    [AgreementStatus.Accepted]: 'Accepted',
+    [AgreementStatus.Completed]: 'Completed',
+    [AgreementStatus.Denied]: 'Denied',
+  };
   private onDestroyed$: Subject<void> = new Subject<void>();
 
   constructor(private router: Router,
+              private route: ActivatedRoute,
               private service: TransactionService,
               private offerService: OfferService,
               private authService: AuthService,
@@ -42,14 +62,18 @@ export class TransactionsComponent implements OnDestroy, OnInit, AfterViewInit {
   }
 
   get Status() {
-    return TransactionStatus;
+    return this.transactionsFlow ? TransactionStatus : AgreementStatus;
   }
 
   ngOnInit() {
     // this.service.loadCalendar()
     //   .subscribe(events => this.calendarDataSource = events);
     this.user = this.authService.currentUser;
-    this.dataSource = new BaseTableDataSource(this.service, null, null);
+    this.transactionsFlow = this.route.snapshot.data.transactionPage ? this.route.snapshot.data.transactionPage : false;
+    this.statuses = this.transactionsFlow ? Object.values(TransactionStatus) : Object.values(AgreementStatus);
+    this.dataSource = this.transactionsFlow ?
+      new BaseTableDataSource(this.service, null, null) :
+      new BaseTableDataSource(this.offerService, null, null);
   }
 
   ngAfterViewInit(): void {
@@ -77,15 +101,15 @@ export class TransactionsComponent implements OnDestroy, OnInit, AfterViewInit {
       .subscribe();
   }
 
-  onFilter(status: TransactionStatus) {
+  onFilter(status: TransactionStatus | AgreementStatus) {
     let query = `status=${status}`;
-    if (status === TransactionStatus.All) {
+    if (status === TransactionStatus.All || status === AgreementStatus.All) {
       query = '';
     }
     this.dataSource.filter = query;
   }
 
-  getClassName(status: TransactionStatus): string {
+  getClassName(status: TransactionStatus | AgreementStatus): string {
     switch (status) {
       case TransactionStatus.New:
         return 'blue';
@@ -93,6 +117,16 @@ export class TransactionsComponent implements OnDestroy, OnInit, AfterViewInit {
         return 'yellow';
       case TransactionStatus.Finished:
         return 'green';
+      case AgreementStatus.Started:
+        return 'blue';
+      case AgreementStatus.Delivered:
+        return 'orange';
+      case AgreementStatus.Accepted:
+        return 'yellow';
+      case AgreementStatus.Completed:
+        return 'violet';
+      case AgreementStatus.Denied:
+        return 'red';
     }
   }
 
