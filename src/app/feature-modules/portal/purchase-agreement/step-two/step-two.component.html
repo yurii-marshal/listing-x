@@ -3821,14 +3821,14 @@
               </div>
               <div>
                 Date
-                <input appSignature (fieldSigned)="moveToNextSignField()" [withDateControl]="'date_seller_second'"
-                       formControlName="date_seller_second" type="text" class="i-lr-2">
+                <input formControlName="date_seller_second" type="text" class="i-lr-2">
                 <!--<input matInput (click)="date_seller_second.open()" [matDatepicker]="date_seller_second"-->
                 <!--formControlName="date_seller_second"-->
                 <!--type="text" class="i-lr-2">-->
                 <!--<mat-datepicker #date_seller_second></mat-datepicker>-->
                 SELLER
-                <input formControlName="text_seller_second" type="text" class="i-lr-10__5">
+                <input appSignature (fieldSigned)="moveToNextSignField()" [withDateControl]="'date_seller_second'"
+                       formControlName="text_seller_second" type="text" class="i-lr-10__5">
               </div>
               <div>
                 <span class="fw-bold">(Print name)</span> &nbsp;
