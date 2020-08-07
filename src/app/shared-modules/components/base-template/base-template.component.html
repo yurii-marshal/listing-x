@@ -15,10 +15,10 @@
         </a>
       </nav>
 
-      <nav [class]="state" *ngIf="state === 'purchase'" mat-tab-nav-bar>
+      <nav [class]="state" *ngIf="state === 'agreement'" mat-tab-nav-bar>
         <ng-container *ngFor="let link of purchaseNavLinks">
           <a mat-tab-link
-             *ngIf="!offer || offer.userRole === 'agent_buyer'"
+             *ngIf="offer && offer.userRole === 'agent_buyer'"
              [routerLink]="link.path"
              routerLinkActive #rla="routerLinkActive"
              [active]="rla.isActive"
@@ -30,7 +30,7 @@
         </ng-container>
       </nav>
 
-      <button (click)="closeOffer()" class="close-btn" *ngIf="state === 'purchase'" mat-stroked-button color="primary">
+      <button (click)="closeOffer()" class="close-btn" *ngIf="state === 'agreement'" mat-stroked-button color="primary">
         <img src="assets/images/icons/close-btn-icon.svg" alt="close-btn-icon">
         CLOSE
       </button>
