@@ -86,7 +86,8 @@ export class OfferService extends BaseDataService<Offer> {
   }
 
   signOffer(offerId: number): Observable<any> {
-    return this.http.post(`/offers/${offerId}/sign/`, {});
+    return this.http.post(`/offers/${offerId}/sign/`, {})
+      .pipe(tap(() => this.currentOffer.isSigned = true));
   }
 
   loadCalendarByOffer(id: number, start?: Date, end?: Date): Observable<CalendarEvent[]> {
