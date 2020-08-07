@@ -147,7 +147,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         // # Price = 51c
         text_offer_price_digits: [{value: null, disabled: this.isDisabled}, [Validators.required]],
         // # Close of Escrow = 51d
-        radio_escrow: ['date', []],
+        radio_escrow: [{value: 'date', disabled: this.isDisabled}, []],
         date_escrow_date: [{value: null, disabled: this.isDisabled}, [Validators.required]],
         text_escrow_days: [{value: '', disabled: true}, []],
         check_agency_disclosure: [{value: null, disabled: this.isDisabled}, []],
@@ -472,6 +472,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         text_rejection_offer_seller_initial_first: [{value: null, disabled: this.isDisabled}, []],
         text_rejection_offer_seller_initial_second: [{value: null, disabled: this.isDisabled}, []],
         date_rejection_offer_date: [{value: null, disabled: this.isDisabled}, []],
+        //
         text_buyer_initial_first: this.getSignFieldAllowedFor('buyers', 0),
         text_buyer_initial_second: this.getSignFieldAllowedFor('buyers', 1),
       }),
