@@ -17,7 +17,7 @@ build-app-dev:
 	$(call build_app,develop)
 
 build-app-stage:
-	$(call build_app,stage)
+	$(call build_app,staging)
 
 build-app-prod:
 	$(call build_app,production)
