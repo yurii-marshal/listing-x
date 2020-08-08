@@ -16,7 +16,7 @@ endef
 build-app-dev:
 	$(call build_app,develop)
 
-build-app-dev:
+build-app-stage:
 	$(call build_app,stage)
 
 build-app-prod:
