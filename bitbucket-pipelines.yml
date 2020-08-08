@@ -20,6 +20,26 @@ pipelines:
           - pip install awscli --upgrade
           # deploy app to dev and notify to slack
           - make deploy-app-dev
+  staging:
+   - step:
+       caches:
+         - node
+       name: Build app staging
+       image: node:12.2.0
+       script:
+         - make build-app-stage
+       artifacts:
+         - dist/**
+   - step:
+        name: Auto-deploy to staging
+        deployment: test
+        image: python:3.6
+        caches:
+          - pip
+        script:
+          - pip install awscli --upgrade
+          # deploy app to dev and notify to slack
+          - make deploy-app-stage
   master:
    - step:
        caches:
