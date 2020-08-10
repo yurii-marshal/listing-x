@@ -9,6 +9,7 @@ import { JwtResponse } from '../interfaces/jwt-response';
 import * as _ from 'lodash';
 import { ApiEndpoint, AuthEndpoint } from '../enums/api-endpoints';
 import { ProfileService } from './profile.service';
+import { OfferService } from '../../feature-modules/portal/services/offer.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private profileService: ProfileService,
+    private offerService: OfferService,
   ) {
   }
 
@@ -112,6 +114,7 @@ export class AuthService {
   logout() {
     this.currentUser = null;
     this.profileService.currentAgent = null;
+    this.offerService.currentOffer = null;
     localStorage.removeItem(LocalStorageKey.Token);
     localStorage.removeItem(LocalStorageKey.Expiration);
   }
