@@ -779,10 +779,18 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   private signAgreement() {
-    this.offer.isSigned
-      ? this.snackbar.open('Offer is already signed')
-      : this.offerService.signOffer(this.offerId)
-        .pipe(takeUntil(this.onDestroyed$))
-        .subscribe(() => this.snackbar.open('Offer is signed now'));
+    this.offerService.loadOne(this.offerId)
+      .pipe(takeUntil(this.onDestroyed$))
+      .subscribe((offer: Offer) => {
+        offer.isSigned
+          ? this.snackbar.open('Offer is already signed')
+          : this.offerService.signOffer(this.offerId)
+            .pipe(takeUntil(this.onDestroyed$))
+            .subscribe((model: Offer) => {
+              this.offer = model;
+              this.offerService.currentOffer = model;
+              this.snackbar.open('Offer is signed now');
+            });
+      });
   }
 }

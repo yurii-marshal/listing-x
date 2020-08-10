@@ -1,7 +1,7 @@
 import { Injectable, Injector } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Observable, of, Subject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 import { LocalStorageKey } from '../../../core-modules/enums/local-storage-key';
 import { Offer, OfferSummary } from '../../../core-modules/models/offer';
 import { ApiEndpoint } from '../../../core-modules/enums/api-endpoints';
@@ -87,7 +87,7 @@ export class OfferService extends BaseDataService<Offer> {
 
   signOffer(offerId: number): Observable<any> {
     return this.http.post(`/offers/${offerId}/sign/`, {})
-      .pipe(tap(() => this.currentOffer.isSigned = true));
+      .pipe(switchMap(() => super.loadOne(offerId)));
   }
 
   loadCalendarByOffer(id: number, start?: Date, end?: Date): Observable<CalendarEvent[]> {

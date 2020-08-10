@@ -1338,11 +1338,11 @@
                 <div class="col-left-initials">
                   <label>Buyer's Initials</label>
                   (<span>
-                  <input appSignature [mode]="'initials'" formControlName="text_finance_buyer_initials_first"
+                  <input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_finance_buyer_initials_first"
                          type="text" name="" id="Buyer-1-1"
                          class="i-lr-1">
                 </span>) &nbsp;
-                  (<span><input appSignature [mode]="'initials'" formControlName="text_finance_buyer_initials_second"
+                  (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_finance_buyer_initials_second"
                                 type="text" name="" id="Buyer-2-1"
                                 class="i-lr-1"></span>)
                   <div class="fs-small">&#169; 1991-2018, California Association of REALTORS &#174;, Inc.</div>
@@ -1350,10 +1350,10 @@
 
                 <div class="col-right-initials">
                   <label>Seller's Initials</label>
-                  (<span><input appSignature [mode]="'initials'" formControlName="text_finance_seller_initials_first"
+                  (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_finance_seller_initials_first"
                                 type="text" name="" id="Seller-1-1"
                                 class="i-lr-1"></span>) &nbsp;
-                  (<span><input appSignature [mode]="'initials'" formControlName="text_finance_seller_initials_second"
+                  (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_finance_seller_initials_second"
                                 type="text" name="" id="Seller-2-1"
                                 class="i-lr-1"></span>)
                   <br>
@@ -1652,10 +1652,10 @@
               <div class="clearfix">
                 <div class="col-left-initials">
                   <label>Buyer's Initials</label>
-                  (<span><input appSignature [mode]="'initials'" formControlName="text_allocation_report_buyer_initials_first"
+                  (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_allocation_report_buyer_initials_first"
                                 type="text" name=""
                                 id="Buyer-1-2" class="i-lr-1"></span>) &nbsp;
-                  (<span><input appSignature [mode]="'initials'"
+                  (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()"
                                 formControlName="text_allocation_report_buyer_initials_second" type="text" name=""
                                 id="Buyer-2-2" class="i-lr-1"></span>)
                   <div class="fs-small">&#169; 1991-2018, California Association of REALTORS &#174;, Inc.</div>
@@ -1663,10 +1663,10 @@
 
                 <div class="col-right-initials">
                   <label>Seller's Initials</label>
-                  (<span><input appSignature [mode]="'initials'"
+                  (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()"
                                 formControlName="text_allocation_report_seller_initials_first" type="text" name=""
                                 id="Seller-1-2" class="i-lr-1"></span>) &nbsp;
-                  (<span><input appSignature [mode]="'initials'"
+                  (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()"
                                 formControlName="text_allocation_report_seller_initials_second" type="text" name=""
                                 id="Seller-2-2" class="i-lr-1"></span>)
                   <br>
@@ -2020,10 +2020,10 @@
               <div class="clearfix">
                 <div class="col-left-initials">
                   <label>Buyer's Initials</label>
-                  (<span><input appSignature [mode]="'initials'"
+                  (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()"
                                 formControlName="text_possession_deliver_buyer_initials_first" type="text" name=""
                                 id="Buyer-1-3" class="i-lr-1"></span>) &nbsp;
-                  (<span><input appSignature [mode]="'initials'"
+                  (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()"
                                 formControlName="text_possession_deliver_buyer_initials_second" type="text" name=""
                                 id="Buyer-2-3" class="i-lr-1"></span>)
                   <div class="fs-small">&#169; 1991-2018, California Association of REALTORS &#174;, Inc.</div>
@@ -2031,10 +2031,10 @@
 
                 <div class="col-right-initials">
                   <label>Seller's Initials</label>
-                  (<span><input appSignature [mode]="'initials'"
+                  (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()"
                                 formControlName="text_possession_deliver_seller_initials_first" type="text" name=""
                                 id="Seller-1-3" class="i-lr-1"></span>) &nbsp;
-                  (<span><input appSignature [mode]="'initials'"
+                  (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()"
                                 formControlName="text_possession_deliver_seller_initials_second" type="text" name=""
                                 id="Seller-2-3" class="i-lr-1"></span>)
                   <br>
@@ -2316,11 +2316,11 @@
               <div class="clearfix">
                 <div class="col-left-initials">
                   <label>Buyer's Initials</label>
-                  (<span><input appSignature [mode]="'initials'" formControlName="text_buyer_initials_first" type="text"
+                  (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_buyer_initials_first" type="text"
                                 name="" id="Buyer-1-4"
                                 class="i-lr-1"></span>)
                   &nbsp;
-                  (<span><input appSignature [mode]="'initials'" formControlName="text_buyer_initials_second" type="text"
+                  (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_buyer_initials_second" type="text"
                                 name="" id="Buyer-2-4"
                                 class="i-lr-1"></span>)
                   <div class="fs-small">&#169; 1991-2018, California Association of REALTORS &#174;, Inc.</div>
@@ -2328,10 +2328,10 @@
 
                 <div class="col-right-initials">
                   <label>Seller's Initials</label>
-                  (<span><input appSignature [mode]="'initials'" formControlName="text_seller_initials_first" type="text"
+                  (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_seller_initials_first" type="text"
                                 name="" id="Seller-1-4"
                                 class="i-lr-1"></span>) &nbsp;
-                  (<span><input appSignature [mode]="'initials'" formControlName="text_seller_initials_second" type="text"
+                  (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_seller_initials_second" type="text"
                                 name="" id="Seller-2-4"
                                 class="i-lr-1"></span>)
                   <br>
@@ -2607,11 +2607,11 @@
               <div class="clearfix">
                 <div class="col-left-initials">
                   <label>Buyer's Initials</label>
-                  (<span><input appSignature [mode]="'initials'" formControlName="text_buyer_initials_first" type="text"
+                  (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_buyer_initials_first" type="text"
                                 name="" id="Buyer-1-5"
                                 class="i-lr-1"></span>)
                   &nbsp;
-                  (<span><input appSignature [mode]="'initials'" formControlName="text_buyer_initials_second" type="text"
+                  (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_buyer_initials_second" type="text"
                                 name="" id="Buyer-2-5"
                                 class="i-lr-1"></span>)
                   <div class="fs-small">&#169; 1991-2018, California Association of REALTORS &#174;, Inc.</div>
@@ -2619,10 +2619,10 @@
 
                 <div class="col-right-initials">
                   <label>Seller's Initials</label>
-                  (<span><input appSignature [mode]="'initials'" formControlName="text_seller_initials_first" type="text"
+                  (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_seller_initials_first" type="text"
                                 name="" id="Seller-1-5"
                                 class="i-lr-1"></span>) &nbsp;
-                  (<span><input appSignature [mode]="'initials'" formControlName="text_seller_initials_second" type="text"
+                  (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_seller_initials_second" type="text"
                                 name="" id="Seller-2-5"
                                 class="i-lr-1"></span>)
                   <br>
@@ -2888,11 +2888,11 @@
               <div class="clearfix">
                 <div class="col-left-initials">
                   <label>Buyer's Initials</label>
-                  (<span><input appSignature [mode]="'initials'" formControlName="text_buyer_initials_first" type="text"
+                  (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_buyer_initials_first" type="text"
                                 name="" id="Buyer-1-6"
                                 class="i-lr-1"></span>)
                   &nbsp;
-                  (<span><input appSignature [mode]="'initials'" formControlName="text_buyer_initials_second" type="text"
+                  (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_buyer_initials_second" type="text"
                                 name="" id="Buyer-2-6"
                                 class="i-lr-1"></span>)
                   <div class="fs-small">&#169; 1991-2018, California Association of REALTORS &#174;, Inc.</div>
@@ -2900,10 +2900,10 @@
 
                 <div class="col-right-initials">
                   <label>Seller's Initials</label>
-                  (<span><input appSignature [mode]="'initials'" formControlName="text_seller_initials_first" type="text"
+                  (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_seller_initials_first" type="text"
                                 name="" id="Seller-1-6"
                                 class="i-lr-1"></span>) &nbsp;
-                  (<span><input appSignature [mode]="'initials'" formControlName="text_seller_initials_second" type="text"
+                  (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_seller_initials_second" type="text"
                                 name="" id="Seller-2-6"
                                 class="i-lr-1"></span>)
                   <br>
@@ -3135,11 +3135,11 @@
               <div class="clearfix">
                 <div class="col-left-initials">
                   <label>Buyer's Initials</label>
-                  (<span><input appSignature [mode]="'initials'" formControlName="text_buyer_initials_first" type="text"
+                  (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_buyer_initials_first" type="text"
                                 name="" id="Buyer-1-7"
                                 class="i-lr-1"></span>)
                   &nbsp;
-                  (<span><input appSignature [mode]="'initials'" formControlName="text_buyer_initials_second" type="text"
+                  (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_buyer_initials_second" type="text"
                                 name="" id="Buyer-2-7"
                                 class="i-lr-1"></span>)
                   <div class="fs-small">&#169; 1991-2018, California Association of REALTORS &#174;, Inc.</div>
@@ -3147,10 +3147,10 @@
 
                 <div class="col-right-initials">
                   <label>Seller's Initials</label>
-                  (<span><input appSignature [mode]="'initials'" formControlName="text_seller_initials_first" type="text"
+                  (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_seller_initials_first" type="text"
                                 name="" id="Seller-1-7"
                                 class="i-lr-1"></span>) &nbsp;
-                  (<span><input appSignature [mode]="'initials'" formControlName="text_seller_initials_second" type="text"
+                  (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_seller_initials_second" type="text"
                                 name="" id="Seller-2-7"
                                 class="i-lr-1"></span>)
                   <br>
@@ -3254,20 +3254,20 @@
                 <div class="clearfix mt-20 mb-20">
                   <div class="col-left-initials ml-6">
                     <label>Buyer's Initials</label>
-                    (<span><input appSignature [mode]="'initials'" formControlName="text_first_buyer_initials_first"
+                    (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_first_buyer_initials_first"
                                   type="text" name="" id="Buyer-1-8"
                                   class="i-lr-1"></span>) &nbsp;
-                    (<span><input appSignature [mode]="'initials'" formControlName="text_first_buyer_initials_second"
+                    (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_first_buyer_initials_second"
                                   type="text" name="" id="Buyer-2-8"
                                   class="i-lr-1"></span>)
                   </div>
 
                   <div class="col-right-initials">
                     <label>Seller's Initials</label>
-                    (<span><input appSignature [mode]="'initials'" formControlName="text_first_seller_initials_first"
+                    (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_first_seller_initials_first"
                                   type="text" name="" id="Seller-1-8"
                                   class="i-lr-1"></span>) &nbsp;
-                    (<span><input appSignature [mode]="'initials'" formControlName="text_first_seller_initials_second"
+                    (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_first_seller_initials_second"
                                   type="text" name="" id="Seller-2-8"
                                   class="i-lr-1"></span>)
                   </div>
@@ -3346,20 +3346,20 @@
                 <div class="clearfix mt-20 mb-20">
                   <div class="col-left-initials ml-6">
                     <label>Buyer's Initials</label>
-                    (<span><input appSignature [mode]="'initials'" formControlName="text_second_buyer_initials_first"
+                    (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_second_buyer_initials_first"
                                   type="text" name="" id="Buyer-1-9"
                                   class="i-lr-1"></span>) &nbsp;
-                    (<span><input appSignature [mode]="'initials'" formControlName="text_second_buyer_initials_second"
+                    (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_second_buyer_initials_second"
                                   type="text" name="" id="Buyer-2-9"
                                   class="i-lr-1"></span>)
                   </div>
 
                   <div class="col-right-initials">
                     <label>Seller's Initials</label>
-                    (<span><input appSignature [mode]="'initials'" formControlName="text_second_seller_initials_first"
+                    (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_second_seller_initials_first"
                                   type="text" name="" id="Seller-1-9"
                                   class="i-lr-1"></span>) &nbsp;
-                    (<span><input appSignature [mode]="'initials'" formControlName="text_second_seller_initials_second"
+                    (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_second_seller_initials_second"
                                   type="text" name="" id="Seller-2-9"
                                   class="i-lr-1"></span>)
                   </div>
@@ -3388,10 +3388,10 @@
               <div class="clearfix">
                 <div class="col-left-initials">
                   <label>Buyer's Initials</label>
-                  (<span><input appSignature [mode]="'initials'" formControlName="text_third_buyer_initials_first" type="text"
+                  (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_third_buyer_initials_first" type="text"
                                 name="" id="Buyer-1-10"
                                 class="i-lr-1"></span>) &nbsp;
-                  (<span><input appSignature [mode]="'initials'" formControlName="text_third_buyer_initials_second"
+                  (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_third_buyer_initials_second"
                                 type="text" name="" id="Buyer-2-10"
                                 class="i-lr-1"></span>)
                   <div class="fs-small">&#169; 1991-2018, California Association of REALTORS &#174;, Inc.</div>
@@ -3399,10 +3399,10 @@
 
                 <div class="col-right-initials">
                   <label>Seller's Initials</label>
-                  (<span><input appSignature [mode]="'initials'" formControlName="text_third_seller_initials_first"
+                  (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_third_seller_initials_first"
                                 type="text" name="" id="Seller-1-10"
                                 class="i-lr-1"></span>) &nbsp;
-                  (<span><input appSignature [mode]="'initials'" formControlName="text_third_seller_initials_second"
+                  (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_third_seller_initials_second"
                                 type="text" name="" id="Seller-2-10"
                                 class="i-lr-1"></span>)
                   <br>
@@ -3729,10 +3729,10 @@
                 <div class="clearfix">
                   <div class="col-left-initials">
                     <label>Buyer's Initials</label>
-                    (<span><input appSignature [mode]="'initials'" formControlName="text_buyer_initials_first" type="text"
+                    (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_buyer_initials_first" type="text"
                                   name="" id="Buyer-1-11"
                                   class="i-lr-1"></span>) &nbsp;
-                    (<span><input appSignature [mode]="'initials'" formControlName="text_buyer_initials_second" type="text"
+                    (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_buyer_initials_second" type="text"
                                   name="" id="Buyer-2-11"
                                   class="i-lr-1"></span>)
                     <div class="fs-small">&#169; 1991-2018, California Association of REALTORS &#174;, Inc.</div>
@@ -3740,10 +3740,10 @@
 
                   <div class="col-right-initials">
                     <label>Seller's Initials</label>
-                    (<span><input appSignature [mode]="'initials'" formControlName="text_seller_initials_first" type="text"
+                    (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_seller_initials_first" type="text"
                                   name="" id="Seller-1-11"
                                   class="i-lr-1"></span>) &nbsp;
-                    (<span><input appSignature [mode]="'initials'" formControlName="text_seller_initials_second" type="text"
+                    (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_seller_initials_second" type="text"
                                   name="" id="Seller-2-11"
                                   class="i-lr-1"></span>)
                     <br>
@@ -4142,9 +4142,9 @@
                     <span class="p-relative ml-6">
           Buyer Acknowledges that page 10 is part of this Agreement
           <span class="initial initial__ml69">Buyer's Initials</span>
-          (<span><input appSignature [mode]="'initials'" formControlName="text_buyer_initial_first" type="text"
+          (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_buyer_initial_first" type="text"
                         class="i-lr-1"></span>)
-          (<span><input appSignature [mode]="'initials'" formControlName="text_buyer_initial_second" type="text"
+          (<span><input appSignature [mode]="'initials'" (fieldSigned)="moveToNextSignField()" formControlName="text_buyer_initial_second" type="text"
                         class="i-lr-1"></span>)
           </span>
                   </div>
