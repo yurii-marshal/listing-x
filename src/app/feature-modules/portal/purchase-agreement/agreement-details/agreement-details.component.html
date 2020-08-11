@@ -3,7 +3,10 @@
   <ng-container *ngIf="offer">
     <div class="toolbar">
       <div class="toolbar-content">
-        <div class="back-btn" routerLink="/portal"><mat-icon fontSet="fa" fontIcon="fa-chevron-left"></mat-icon>Back</div>
+        <div class="back-btn" routerLink="/portal">
+          <mat-icon fontSet="fa" fontIcon="fa-chevron-left"></mat-icon>
+          Back
+        </div>
         <div class="u-flex u-flex-align-items--center u-flex-justify--space-between">
           <div class="header">{{ offer.streetName }}, {{ offer.city }}, {{ offer.state }} {{ offer.zip }}</div>
           <div>
@@ -12,7 +15,8 @@
           </div>
         </div>
         <div class="description"> Offer created: {{ createdAt | date : 'short' }}
-          <span *ngIf="offer.remainingDaysCloseEscrow">({{ offer.remainingDaysCloseEscrow }} days until  close escrow)</span>
+          <span
+            *ngIf="offer.remainingDaysCloseEscrow">({{ offer.remainingDaysCloseEscrow }} days until  close escrow)</span>
         </div>
         <div class="control-bar" *ngIf="isAgent">
           <div class="u-flex-1">
@@ -49,14 +53,20 @@
     <div class="u-flex u-flex-justify--center">
       <div class="column-layout">
         <div class="row-layout"><label class="header">Offer information</label></div>
-        <div class="row-layout" *ngFor="let item of offer.agentBuyers; let i = index"><label>Buyer's Agent #{{ i + 1 }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span></div>
-        <div class="row-layout" *ngFor="let item of offer.agentSellers; let i = index"><label>Listing Agent #{{ i + 1 }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span></div>
-        <div class="row-layout" *ngFor="let item of offer.buyers; let i = index"><label>buyer #{{ i + 1 }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span></div>
-        <div class="row-layout" *ngFor="let item of offer.sellers; let i = index"><label>seller #{{ i + 1 }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span></div>
-        <div class="row-layout"><label>address</label><span>{{ offer.streetName }}, {{ offer.city }}, {{ offer.state }} {{ offer.zip }}</span></div>
+        <div class="row-layout" *ngFor="let item of offer.agentBuyers; let i = index"><label>Buyer's Agent #{{ i + 1
+          }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span></div>
+        <div class="row-layout" *ngFor="let item of offer.agentSellers; let i = index"><label>Listing Agent #{{ i + 1
+          }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span></div>
+        <div class="row-layout" *ngFor="let item of offer.buyers; let i = index"><label>buyer #{{ i + 1 }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span>
+        </div>
+        <div class="row-layout" *ngFor="let item of offer.sellers; let i = index"><label>seller #{{ i + 1
+          }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span></div>
+        <div class="row-layout"><label>address</label><span>{{ offer.streetName }}, {{ offer.city }}, {{ offer.state }} {{ offer.zip }}</span>
+        </div>
         <div class="row-layout"><label>offer info</label>
           <span>${{ offer.price | number }}
-            <ng-container *ngIf="offer.closeEscrowDays">&nbsp;|&nbsp;{{ offer.closeEscrowDays }} Days to close escrow</ng-container>
+            <ng-container
+              *ngIf="offer.closeEscrowDays">&nbsp;|&nbsp;{{ offer.closeEscrowDays }} Days to close escrow</ng-container>
           </span>
         </div>
       </div>
@@ -69,20 +79,42 @@
           </div>
         </div>
         <div class="row-layout" style="position: relative;"><label class="header">offer</label>
-           <img *ngIf="urlDocument"
-             src="assets/images/icons/pdf.svg"
-             (click)="downloadAndToggleState(urlDocument)"
-             [title]="urlDocument"
-             height="80"
-             class="e-document">
-         </div>
-         <!--<div class="row-layout" style="opacity: .0"><label></label><span>Signed by buyer 1</span></div>-->
-         <!--<div class="row-layout" style="opacity: .0"><label></label><span>Signed by seller 1</span></div>-->
-         <!--<div class="row-layout" style="opacity: .0"><label></label><span>Hasn’t been signed by all buyers</span></div>-->
-         <div class="row-layout u-flex-justify--start">
-           <button mat-flat-button [disabled]="!offer.allowDeny" (click)="deny()" color="accent" style="margin: 0 15px 0 220px">DENY</button>
-           <button mat-flat-button [disabled]="!offer.allowSign" (click)="goToESign()" color="primary">SIGN</button>
-         </div>
+          <img *ngIf="urlDocument"
+               src="assets/images/icons/pdf.svg"
+               (click)="downloadAndToggleState(urlDocument)"
+               [title]="urlDocument"
+               height="80"
+               class="e-document">
+        </div>
+        <!--<div class="row-layout" style="opacity: .0"><label></label><span>Signed by buyer 1</span></div>-->
+        <!--<div class="row-layout" style="opacity: .0"><label></label><span>Signed by seller 1</span></div>-->
+        <!--<div class="row-layout" style="opacity: .0"><label></label><span>Hasn’t been signed by all buyers</span></div>-->
+        <div class="controls row-layout u-flex-justify--start">
+          <button class="deny-btn"
+            mat-flat-button
+            [disabled]="!offer.allowDeny"
+            (click)="deny()"
+            color="accent">
+            DENY
+          </button>
+
+          <button class="sign-btn"
+                  mat-flat-button
+                  [disabled]="!offer.allowSign"
+                  (click)="goToESign()"
+                  color="primary">
+            SIGN
+          </button>
+
+          <button class="counter-offer-btn"
+                  *ngIf="offer.userRole === 'agent_seller'"
+                  mat-flat-button
+                  [disabled]="!offer.isSigned"
+                  (click)="goToCounterOffer()"
+                  color="primary">
+            COUNTER OFFER
+          </button>
+        </div>
       </div>
     </div>
 
@@ -93,7 +125,9 @@
 
         <div class="row-layout doc-item" *ngFor="let doc of (completedDocuments | async); let i = index;">
           <label>document #{{i + 1}}</label>
-          <div class="doc-title"><img src="assets/images/icons/{{ doc.extension }}.svg" [title]="doc.title" height="20"> {{doc.title}}.{{doc.extension}}</div>
+          <div class="doc-title"><img src="assets/images/icons/{{ doc.extension }}.svg" [title]="doc.title" height="20">
+            {{doc.title}}.{{doc.extension}}
+          </div>
           <div class="doc-events">
             <label>{{ doc.lastEvent?.createdAt | date: 'short' }}</label>
             <span>{{ doc.lastEvent?.title }}</span>
@@ -121,7 +155,8 @@
               class="button-sm"
               [matMenuTriggerFor]="docs"
               [disabled]="!isResidentialAgreementCompleted"
-            >ADD DOCUMENT</button>
+            >ADD DOCUMENT
+            </button>
             <mat-menu #docs="matMenu" xPosition="before">
               <button mat-menu-item (click)="openAddendumDialog()">Addendum</button>
             </mat-menu>
@@ -130,7 +165,9 @@
 
         <div class="row-layout doc-item" *ngFor="let doc of (pendingDocuments | async); let i = index;">
           <label>document #{{i + 1}}</label>
-          <div class="doc-title"><img src="assets/images/icons/{{ doc.extension }}.svg" [title]="doc.title" height="20"> {{doc.title}}.{{doc.extension}}</div>
+          <div class="doc-title"><img src="assets/images/icons/{{ doc.extension }}.svg" [title]="doc.title" height="20">
+            {{doc.title}}.{{doc.extension}}
+          </div>
           <div class="doc-events">
             <label>{{ doc.lastEvent?.createdAt | date: 'short' }}</label>
             <span>{{ doc.lastEvent?.title }}</span>
@@ -144,11 +181,19 @@
               color="primary"
               (click)="goToESign(doc)"
               [disabled]="!doc.allowSign"
-            >SIGN</button>
-            <svg class="menu-trigger" [matMenuTriggerFor]="menu" width="22" height="6" viewBox="0 0 22 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M2.61905 0.380951C1.1749 0.380951 0 1.55586 0 3C0 4.44414 1.1749 5.61905 2.61905 5.61905C4.06319 5.61905 5.2381 4.44414 5.2381 3C5.2381 1.55586 4.06319 0.380951 2.61905 0.380951Z" fill="#419BDF"/>
-              <path d="M10.9999 0.380951C9.55576 0.380951 8.38086 1.55586 8.38086 3C8.38086 4.44414 9.55576 5.61905 10.9999 5.61905C12.444 5.61905 13.619 4.44414 13.619 3C13.619 1.55586 12.444 0.380951 10.9999 0.380951Z" fill="#419BDF"/>
-              <path d="M19.3808 0.380951C17.9366 0.380951 16.7617 1.55586 16.7617 3C16.7617 4.44414 17.9366 5.61905 19.3808 5.61905C20.8249 5.61905 21.9998 4.44414 21.9998 3C21.9998 1.55586 20.8249 0.380951 19.3808 0.380951Z" fill="#419BDF"/>
+            >SIGN
+            </button>
+            <svg class="menu-trigger" [matMenuTriggerFor]="menu" width="22" height="6" viewBox="0 0 22 6" fill="none"
+                 xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M2.61905 0.380951C1.1749 0.380951 0 1.55586 0 3C0 4.44414 1.1749 5.61905 2.61905 5.61905C4.06319 5.61905 5.2381 4.44414 5.2381 3C5.2381 1.55586 4.06319 0.380951 2.61905 0.380951Z"
+                fill="#419BDF"/>
+              <path
+                d="M10.9999 0.380951C9.55576 0.380951 8.38086 1.55586 8.38086 3C8.38086 4.44414 9.55576 5.61905 10.9999 5.61905C12.444 5.61905 13.619 4.44414 13.619 3C13.619 1.55586 12.444 0.380951 10.9999 0.380951Z"
+                fill="#419BDF"/>
+              <path
+                d="M19.3808 0.380951C17.9366 0.380951 16.7617 1.55586 16.7617 3C16.7617 4.44414 17.9366 5.61905 19.3808 5.61905C20.8249 5.61905 21.9998 4.44414 21.9998 3C21.9998 1.55586 20.8249 0.380951 19.3808 0.380951Z"
+                fill="#419BDF"/>
             </svg>
 
             <mat-menu #menu="matMenu" xPosition="before">
@@ -156,19 +201,22 @@
                       mat-menu-item
                       [disabled]="!doc.allowEdit"
                       routerLink="/portal/offer/{{ offer.id }}"
-              >Edit</button>
+              >Edit
+              </button>
 
               <button *ngIf="doc.documentType === 'spq'"
                       mat-menu-item
                       [disabled]="!doc.allowEdit"
                       (click)="openSPQDialog(doc)"
-              >Edit</button>
+              >Edit
+              </button>
 
               <button *ngIf="doc.documentType === 'addendum' && isAgent"
                       mat-menu-item
                       [disabled]="!doc.allowEdit"
                       (click)="openAddendumDialog(doc)"
-              >Edit</button>
+              >Edit
+              </button>
               <button mat-menu-item (click)="triggerDownloadFile(doc)">View</button>
               <button mat-menu-item (click)="triggerDownloadFile(doc)">Download</button>
               <button mat-menu-item disabled>Deny</button>
@@ -186,19 +234,23 @@
                  height="20">
           </div>
         </div>
-        <div class="row-layout"><label>Add Proof of Funds</label><div class="doc-preview">
-          <div class="doc-preview"><img *ngFor="let img of offer.documents?.proofOfFunds"
-                                        src="assets/images/icons/{{ img.extension }}.svg"
-                                        (click)="triggerDownloadFile(img)"
-                                        [title]="img.title" height="20"></div>
-        </div></div>
-        <div class="row-layout"><label>Add Cover Letter</label><div class="doc-preview">
-          <div class="doc-preview"><img *ngFor="let img of offer.documents?.coverLetter"
-                                        src="assets/images/icons/{{ img.extension }}.svg"
-                                        (click)="triggerDownloadFile(img)"
-                                        [title]="img.title"
-                                        height="20"></div>
-        </div></div>
+        <div class="row-layout"><label>Add Proof of Funds</label>
+          <div class="doc-preview">
+            <div class="doc-preview"><img *ngFor="let img of offer.documents?.proofOfFunds"
+                                          src="assets/images/icons/{{ img.extension }}.svg"
+                                          (click)="triggerDownloadFile(img)"
+                                          [title]="img.title" height="20"></div>
+          </div>
+        </div>
+        <div class="row-layout"><label>Add Cover Letter</label>
+          <div class="doc-preview">
+            <div class="doc-preview"><img *ngFor="let img of offer.documents?.coverLetter"
+                                          src="assets/images/icons/{{ img.extension }}.svg"
+                                          (click)="triggerDownloadFile(img)"
+                                          [title]="img.title"
+                                          height="20"></div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -220,8 +272,12 @@
 <ng-template #viewIcon>
   <svg width="22" height="22" viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g clip-path="url(#clip0)">
-      <path d="M21.6433 9.96421C20.4086 8.38112 18.8093 7.07165 17.0183 6.17747C15.19 5.26469 13.2232 4.79109 11.1701 4.76625C11.1135 4.7647 10.8865 4.7647 10.8299 4.76625C8.7768 4.79113 6.80995 5.26469 4.98172 6.17747C3.19075 7.07165 1.59149 8.38108 0.356747 9.96421C-0.118916 10.5741 -0.118916 11.4259 0.356747 12.0358C1.59145 13.6189 3.19075 14.9283 4.98172 15.8225C6.80995 16.7353 8.77676 17.2089 10.8299 17.2337C10.8865 17.2353 11.1135 17.2353 11.1701 17.2337C13.2232 17.2089 15.19 16.7353 17.0183 15.8225C18.8093 14.9283 20.4085 13.6189 21.6433 12.0358C22.119 11.4258 22.119 10.5741 21.6433 9.96421ZM5.38155 15.0218C3.70921 14.1868 2.2157 12.9639 1.06246 11.4853C0.839586 11.1996 0.839586 10.8004 1.06246 10.5146C2.21566 9.03605 3.70916 7.81316 5.38155 6.97819C5.85652 6.74109 6.34155 6.53604 6.83556 6.36245C5.56463 7.5049 4.76391 9.16057 4.76391 11C4.76391 12.8395 5.56468 14.4953 6.83573 15.6377C6.34172 15.4641 5.85656 15.2589 5.38155 15.0218ZM11 16.3411C8.05488 16.3411 5.65887 13.9451 5.65887 10.9999C5.65887 8.05477 8.05488 5.6588 11 5.6588C13.9452 5.6588 16.3412 8.05482 16.3412 11C16.3412 13.9451 13.9452 16.3411 11 16.3411ZM20.9376 11.4853C19.7844 12.9639 18.2909 14.1868 16.6185 15.0218C16.1441 15.2586 15.6594 15.4627 15.166 15.6362C16.4361 14.4938 17.2362 12.8386 17.2362 10.9999C17.2362 9.16027 16.4352 7.50439 15.1641 6.36194C15.6582 6.53557 16.1435 6.74088 16.6186 6.97811C18.2909 7.81307 19.7844 9.03596 20.9377 10.5146C21.1605 10.8004 21.1605 11.1995 20.9376 11.4853Z" fill="#419BDF"/>
-      <path d="M11.0006 8.7142C9.74021 8.7142 8.71484 9.73957 8.71484 10.9999C8.71484 12.2603 9.74021 13.2857 11.0006 13.2857C12.2609 13.2857 13.2863 12.2603 13.2863 10.9999C13.2863 9.73957 12.261 8.7142 11.0006 8.7142ZM11.0006 12.3907C10.2337 12.3907 9.60975 11.7669 9.60975 10.9999C9.60975 10.233 10.2336 9.60916 11.0006 9.60916C11.7674 9.60916 12.3913 10.233 12.3913 10.9999C12.3914 11.7669 11.7674 12.3907 11.0006 12.3907Z" fill="#419BDF"/>
+      <path
+        d="M21.6433 9.96421C20.4086 8.38112 18.8093 7.07165 17.0183 6.17747C15.19 5.26469 13.2232 4.79109 11.1701 4.76625C11.1135 4.7647 10.8865 4.7647 10.8299 4.76625C8.7768 4.79113 6.80995 5.26469 4.98172 6.17747C3.19075 7.07165 1.59149 8.38108 0.356747 9.96421C-0.118916 10.5741 -0.118916 11.4259 0.356747 12.0358C1.59145 13.6189 3.19075 14.9283 4.98172 15.8225C6.80995 16.7353 8.77676 17.2089 10.8299 17.2337C10.8865 17.2353 11.1135 17.2353 11.1701 17.2337C13.2232 17.2089 15.19 16.7353 17.0183 15.8225C18.8093 14.9283 20.4085 13.6189 21.6433 12.0358C22.119 11.4258 22.119 10.5741 21.6433 9.96421ZM5.38155 15.0218C3.70921 14.1868 2.2157 12.9639 1.06246 11.4853C0.839586 11.1996 0.839586 10.8004 1.06246 10.5146C2.21566 9.03605 3.70916 7.81316 5.38155 6.97819C5.85652 6.74109 6.34155 6.53604 6.83556 6.36245C5.56463 7.5049 4.76391 9.16057 4.76391 11C4.76391 12.8395 5.56468 14.4953 6.83573 15.6377C6.34172 15.4641 5.85656 15.2589 5.38155 15.0218ZM11 16.3411C8.05488 16.3411 5.65887 13.9451 5.65887 10.9999C5.65887 8.05477 8.05488 5.6588 11 5.6588C13.9452 5.6588 16.3412 8.05482 16.3412 11C16.3412 13.9451 13.9452 16.3411 11 16.3411ZM20.9376 11.4853C19.7844 12.9639 18.2909 14.1868 16.6185 15.0218C16.1441 15.2586 15.6594 15.4627 15.166 15.6362C16.4361 14.4938 17.2362 12.8386 17.2362 10.9999C17.2362 9.16027 16.4352 7.50439 15.1641 6.36194C15.6582 6.53557 16.1435 6.74088 16.6186 6.97811C18.2909 7.81307 19.7844 9.03596 20.9377 10.5146C21.1605 10.8004 21.1605 11.1995 20.9376 11.4853Z"
+        fill="#419BDF"/>
+      <path
+        d="M11.0006 8.7142C9.74021 8.7142 8.71484 9.73957 8.71484 10.9999C8.71484 12.2603 9.74021 13.2857 11.0006 13.2857C12.2609 13.2857 13.2863 12.2603 13.2863 10.9999C13.2863 9.73957 12.261 8.7142 11.0006 8.7142ZM11.0006 12.3907C10.2337 12.3907 9.60975 11.7669 9.60975 10.9999C9.60975 10.233 10.2336 9.60916 11.0006 9.60916C11.7674 9.60916 12.3913 10.233 12.3913 10.9999C12.3914 11.7669 11.7674 12.3907 11.0006 12.3907Z"
+        fill="#419BDF"/>
     </g>
     <defs>
       <clipPath id="clip0">
@@ -234,7 +290,9 @@
 <ng-template #downloadIcon>
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g clip-path="url(#clip0)">
-      <path d="M16.0072 10.8789L10 16.8861L3.99277 10.8789L5.09766 9.77402L9.21875 13.8951V0H10.7812V13.8951L14.9023 9.77402L16.0072 10.8789ZM20 18.4375H0V20H20V18.4375Z" fill="#419BDF"/>
+      <path
+        d="M16.0072 10.8789L10 16.8861L3.99277 10.8789L5.09766 9.77402L9.21875 13.8951V0H10.7812V13.8951L14.9023 9.77402L16.0072 10.8789ZM20 18.4375H0V20H20V18.4375Z"
+        fill="#419BDF"/>
     </g>
     <defs>
       <clipPath id="clip0">

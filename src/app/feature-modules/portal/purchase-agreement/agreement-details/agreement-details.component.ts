@@ -145,6 +145,10 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     this.router.navigateByUrl(`portal/purchase-agreement/${this.offer.id}/sign`);
   }
 
+  goToCounterOffer() {
+    this.router.navigateByUrl(`portal/counter-offer`);
+  }
+
   deny() {
     const id: number = Number(this.route.snapshot.params.id);
     this.transactionService.deny(id)
