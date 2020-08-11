@@ -32,6 +32,7 @@ import { SaveOfferDialogComponent } from '../../shared-modules/dialogs/save-offe
 import { AgreementsListComponent } from './purchase-agreement/agreements-list/agreements-list.component';
 import { AgreementDetailsComponent } from './purchase-agreement/agreement-details/agreement-details.component';
 import { AgreementService } from './services/agreement.service';
+import { CounterOfferComponent } from './counter-offer/counter-offer/counter-offer.component';
 
 const MatModules = [
   MatCheckboxModule,
@@ -69,6 +70,7 @@ const MatModules = [
     SummaryComponent,
     AgreementsListComponent,
     AgreementDetailsComponent,
+    CounterOfferComponent,
   ],
   entryComponents: [
     AddendumDialogComponent,
