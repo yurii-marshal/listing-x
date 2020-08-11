@@ -94,7 +94,7 @@
       <ng-container matColumnDef="sellers">
         <th mat-header-cell *matHeaderCellDef>Seller</th>
         <td mat-cell *matCellDef="let element">
-          <div *ngFor="let item of element.sellers" class="u-flex u-flex-align-items--center">
+          <div *ngFor="let item of element.sellers">
             <mat-icon fontSet="fa" fontIcon="fa-user" class="user-icon" [class.current-user]="isCurrentUser(item)"></mat-icon>
             {{ item.firstName }} {{ item.lastName }}
           </div>

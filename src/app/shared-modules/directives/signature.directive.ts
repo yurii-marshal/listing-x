@@ -29,9 +29,21 @@ export class SignatureDirective implements OnInit {
   ) {
   }
 
+  get signatureControl() {
+    return this.ngControl.control;
+  }
+
+  get dateControl() {
+    return this.ngControl['_parent'].control.get(this.withDateControl);
+  }
+
   ngOnInit() {
-    if (!this.ngControl.control.disabled) {
+    if (!this.signatureControl.disabled) {
       this.renderer.addClass(this.el.nativeElement, 'sign-input');
+
+      if (this.withDateControl) {
+        this.dateControl.disable({emitEvent: false, onlySelf: true});
+      }
     }
   }
 
@@ -70,13 +82,12 @@ export class SignatureDirective implements OnInit {
   }
 
   private signFields() {
-    this.ngControl.control.patchValue(this[this.mode]);
-    this.ngControl.control.disable();
+    this.signatureControl.patchValue(this[this.mode]);
+    this.signatureControl.disable();
 
     if (this.withDateControl) {
-      // TODO: find access to parent control by DI
-      this.ngControl['_parent'].control.get(this.withDateControl).patchValue(this.datePipe.transform(new Date().getTime(), 'yyyy-MM-dd'));
-      this.ngControl['_parent'].control.get(this.withDateControl).disable();
+      this.dateControl.patchValue(this.datePipe.transform(new Date().getTime(), 'yyyy-MM-dd'));
+      this.dateControl.disable();
     }
 
     this.renderer.addClass(this.el.nativeElement, 'signed');

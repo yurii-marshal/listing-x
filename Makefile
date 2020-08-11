@@ -16,11 +16,17 @@ endef
 build-app-dev:
 	$(call build_app,develop)
 
+build-app-stage:
+	$(call build_app,staging)
+
 build-app-prod:
 	$(call build_app,production)
 
 deploy-app-dev:
 	$(call deploy_app,dev-app.accuflip.com,E1TRW5JKLK548V)
+
+deploy-app-stage:
+	$(call deploy_app,stage-app.accuflip.com,E3P1MNUGP44UH4)
 
 deploy-app-prod:
 	$(call deploy_app,app.accuflip.com,ERKH4N7XHBLC3)

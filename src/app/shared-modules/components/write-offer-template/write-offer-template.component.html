@@ -130,13 +130,13 @@
       </div>
       <div class="fieldset u-flex-06">
         <label>Zip</label>
-        <input formControlName="zip" placeholder="Enter zip code" spellcheck="false" class="form-control">
+        <input formControlName="zip" appOnlyNumbers placeholder="Enter zip code" spellcheck="false" class="form-control">
         <app-form-validation-error [baseControl]="form.get('zip')"></app-form-validation-error>
       </div>
     </div>
     <div class="fieldset u-flex-04">
       <label>APN</label>
-      <input formControlName="apn" placeholder="APN" spellcheck="false" class="form-control">
+      <input formControlName="apn" appOnlyNumbers placeholder="APN" spellcheck="false" class="form-control">
       <app-form-validation-error [baseControl]="form.get('apn')"></app-form-validation-error>
     </div>
   </div>

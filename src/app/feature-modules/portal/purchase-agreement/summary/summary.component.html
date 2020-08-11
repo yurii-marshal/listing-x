@@ -1,4 +1,4 @@
-<app-base-template [state]="'purchase'">
+<app-base-template [state]="'agreement'">
   <div class="summary u-flex u-flex-direction--column u-flex-align-items--center">
 
     <div class="title">Offer Summary</div>
@@ -44,25 +44,34 @@
         <div class="row-layout" *ngIf="offer?.documents?.preApproval.length">
           <label>Add Pre-approval Letter</label>
           <div class="doc-preview">
-            <img *ngFor="let img of offer?.documents?.preApproval"
-                 src="assets/images/icons/{{ img.extension }}.svg"
-                 [title]="img.title" height="20">
+            <ng-container *ngFor="let img of offer?.documents?.preApproval; let i = index;">
+              <img *ngIf="i < 5"
+                   src="assets/images/icons/{{ img.extension }}.svg"
+                   [title]="img.title" height="20">
+            </ng-container>
+            <div class="more-label" *ngIf="offer?.documents?.preApproval.length > 5">(+{{offer?.documents?.preApproval.length - 5}} more)</div>
           </div>
         </div>
         <div class="row-layout" *ngIf="offer?.documents?.proofOfFunds.length">
           <label>Add Proof of Funds</label>
           <div class="doc-preview">
-            <img *ngFor="let img of offer?.documents?.proofOfFunds"
-                 src="assets/images/icons/{{ img.extension }}.svg"
-                 [title]="img.title" height="20">
+            <ng-container *ngFor="let img of offer?.documents?.proofOfFunds; let i = index;">
+              <img *ngIf="i < 5"
+                   src="assets/images/icons/{{ img.extension }}.svg"
+                   [title]="img.title" height="20">
+            </ng-container>
+            <div class="more-label" *ngIf="offer?.documents?.proofOfFunds.length > 5">(+{{offer?.documents?.proofOfFunds.length - 5}} more)</div>
           </div>
         </div>
         <div class="row-layout" *ngIf="offer?.documents?.coverLetter.length">
           <label>Add Cover Letter</label>
           <div class="doc-preview">
-            <img *ngFor="let img of offer?.documents?.coverLetter"
-                 src="assets/images/icons/{{ img.extension }}.svg"
-                 [title]="img.title" height="20">
+            <ng-container *ngFor="let img of offer?.documents?.coverLetter; let i = index;">
+              <img *ngIf="i < 5"
+                   src="assets/images/icons/{{ img.extension }}.svg"
+                   [title]="img.title" height="20">
+            </ng-container>
+            <div class="more-label" *ngIf="offer?.documents?.coverLetter.length > 5">(+{{offer?.documents?.coverLetter.length - 5}} more)</div>
           </div>
         </div>
       </div>
