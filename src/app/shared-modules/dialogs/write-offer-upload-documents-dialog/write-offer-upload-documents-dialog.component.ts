@@ -26,7 +26,7 @@ export class WriteOfferUploadDocumentsDialogComponent implements OnInit {
 
   get closeLink() {
     return this.data.transactionPage ?
-      `/portal/transactions/${this.data.model.offerId}` : `/portal/purchase-agreements/${this.data.model.offerId}/details`;
+      `/portal/transactions/${this.data.transactionId}` : `/portal/purchase-agreements/${this.data.model.offerId}/details`;
   }
 
   constructor(public route: ActivatedRoute,
@@ -34,7 +34,8 @@ export class WriteOfferUploadDocumentsDialogComponent implements OnInit {
               private formBuilder: FormBuilder,
               private router: Router,
               public dialogRef: MatDialogRef<WriteOfferUploadDocumentsDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: {model: LinkedDocuments, modalType: UploadDocsModalType, transactionPage: boolean}) {}
+              @Inject(MAT_DIALOG_DATA)
+                public data: {model: LinkedDocuments, modalType: UploadDocsModalType, transactionPage: boolean, transactionId: number}) {}
 
   ngOnInit(): void {
     const disabled = this.data.modalType === UploadDocsModalType.Upload;
@@ -74,7 +75,7 @@ export class WriteOfferUploadDocumentsDialogComponent implements OnInit {
     this.service.updateOfferDocuments(model).subscribe(() => {
       this.dialogRef.close(this.form);
       this.router.navigateByUrl(this.data.transactionPage ?
-        '/portal/transactions/' + this.data.model.offerId :
+        '/portal/transactions/' + this.data.transactionId :
         '/portal/purchase-agreements/' + this.data.model.offerId + '/details');
     });
   }

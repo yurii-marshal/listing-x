@@ -25,6 +25,7 @@ import { CreateOfferGuardService } from '../../core-modules/guards/create-offer-
 import { GetOfferResolver } from '../../core-modules/resolvers/get-offer.resolver';
 import { AgreementsListComponent } from './purchase-agreement/agreements-list/agreements-list.component';
 import { AgreementDetailsComponent } from './purchase-agreement/agreement-details/agreement-details.component';
+import { TransactionDocumentsResolver } from 'src/app/feature-modules/portal/resolvers/transaction-documents.resolver';
 
 const routes: Routes = [
   {
@@ -174,7 +175,7 @@ const routes: Routes = [
           modalType: UploadDocsModalType.OfferUpdating,
           transactionPage: true
         },
-        resolve: {model: OfferDocumentsResolver}
+        resolve: {model: TransactionDocumentsResolver}
       }
     ]
   }
@@ -190,6 +191,7 @@ const routes: Routes = [
     CreateOfferResolver,
     GetOfferResolver,
     OfferDocumentsResolver,
+    TransactionDocumentsResolver,
     OfferSummaryResolver
   ]
 })

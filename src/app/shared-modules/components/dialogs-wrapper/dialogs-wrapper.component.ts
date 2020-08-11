@@ -29,7 +29,8 @@ export class DialogsWrapperComponent implements OnInit {
       scrollStrategy: this.overlay.scrollStrategies.noop(),
       data: {
         ...this.route.snapshot.data,
-        isEdit: !!this.route.parent.snapshot.params.id
+        isEdit: !!this.route.parent.snapshot.params.id,
+        transactionId: this.route.parent.snapshot.params.id
       }
     });
   }
