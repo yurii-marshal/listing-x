@@ -109,7 +109,7 @@
 <!--        <div class="row-layout" style="opacity: .0"><label></label><span>Signed by buyer 1 Lopushynsky</span></div>-->
 <!--        <div class="row-layout" style="opacity: .0"><label></label><span>Signed by seller 1 Serhii Movchan</span></div>-->
 <!--        <div class="row-layout" style="opacity: .0"><label></label><span>Hasn’t been signed by all buyers</span></div>-->
-<!--        <div class="row-layout u-flex-justify&#45;&#45;start">-->
+<!--        <div *ngIf="!transactionsFlow" class="row-layout u-flex-justify&#45;&#45;start">-->
 <!--          <button  mat-flat-button [disabled]="!transaction.allowDeny" (click)="deny()" color="accent" style="margin: 0 15px 0 220px">DENY</button>-->
 <!--          <button  mat-flat-button [disabled]="!transaction.allowSign" (click)="goToESign()" color="primary">SIGN</button>-->
 <!--        </div>-->

@@ -25,8 +25,10 @@ export class WriteOfferUploadDocumentsDialogComponent implements OnInit {
   }
 
   get closeLink() {
-    return this.data.transactionPage ?
-      `/portal/transactions/${this.data.transactionId}` : `/portal/purchase-agreements/${this.data.model.offerId}/details`;
+    return this.data.modalType === UploadDocsModalType.OfferUpdating ?
+      this.data.transactionPage ?
+        `/portal/transactions/${this.data.transactionId}` : `/portal/purchase-agreements/${this.data.model.offerId}/details` :
+      '/portal/purchase-agreements';
   }
 
   constructor(public route: ActivatedRoute,

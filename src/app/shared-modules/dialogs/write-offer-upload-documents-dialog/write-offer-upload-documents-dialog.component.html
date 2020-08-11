@@ -9,19 +9,19 @@
     formControlName="preApproval"
     [docsIds]="modelIds['preApproval']"
     [type]="Type.preApproval"
-    [offerId]="data.model.offerId"
+    [offerId]="data.transactionPage ? data.model.offerId : null"
   ></app-file-picker>
   <app-file-picker
     formControlName="proofOfFunds"
     [docsIds]="modelIds['proofOfFunds']"
     [type]="Type.proofOfFunds"
-    [offerId]="data.model.offerId"
+    [offerId]="data.transactionPage ? data.model.offerId : null"
   ></app-file-picker>
   <app-file-picker
     formControlName="coverLetter"
     [docsIds]="modelIds['coverLetter']"
     [type]="Type.coverLetter"
-    [offerId]="data.model.offerId"
+    [offerId]="data.transactionPage ? data.model.offerId : null"
   ></app-file-picker>
 </div>
 

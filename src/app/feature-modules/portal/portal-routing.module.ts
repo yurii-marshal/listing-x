@@ -30,6 +30,7 @@ import { TransactionDocumentsResolver } from 'src/app/feature-modules/portal/res
 const routes: Routes = [
   {
     path: '',
+    component: TransactionsComponent,
     canActivate: [AuthGuardService],
     canActivateChild: [AuthGuardService],
     children: [
@@ -88,20 +89,16 @@ const routes: Routes = [
     component: TransactionsComponent,
     canActivate: [AuthGuardService],
     canActivateChild: [AuthGuardService],
-    children: [
-      {
-        path: 'all',
-        pathMatch: 'full',
-        component: AgreementsListComponent,
-      },
-      {
-        path: 'step-one',
-        pathMatch: 'full',
-        component: StepOneComponent,
-        canActivate: [],
-        resolve: {offer: CreateOfferResolver}
-      },
-    ]
+  }, {
+    path: 'purchase-agreements/all',
+    pathMatch: 'full',
+    component: TransactionsComponent,
+  }, {
+    path: 'purchase-agreements/step-one',
+    pathMatch: 'full',
+    component: StepOneComponent,
+    canActivate: [],
+    resolve: {offer: CreateOfferResolver}
   }, {
     path: 'purchase-agreements/:id',
     children: [
@@ -153,6 +150,12 @@ const routes: Routes = [
             resolve: {model: OfferDocumentsResolver}
           }
         ]
+      },
+      {
+        path: 'sign',
+        pathMatch: 'full',
+        component: StepTwoComponent,
+        resolve: {offer: GetOfferResolver}
       },
     ]
   }, {
