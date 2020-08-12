@@ -32,6 +32,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   offerId: number;
   offer: Offer;
 
+  datepickerMinDate: Date = new Date();
+
   private user: User;
 
   private isDisabled: boolean;
@@ -495,16 +497,19 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       )
       .subscribe((model) => {
         this.patchForm(model);
-        this.switchDaysAndDate(
-          this.documentForm.get('page_5.radio_escrow').value,
-          'page_5.text_escrow_days',
-          'page_5.date_escrow_date'
-        );
         this.getAllFieldsCount(model);
         this.updatePageProgress(model, 0);
 
         this.disableSignedFields();
         this.moveToNextSignField();
+
+        if (!this.isDisabled) {
+          this.switchDaysAndDate(
+            this.documentForm.get('page_5.radio_escrow').value,
+            'page_5.text_escrow_days',
+            'page_5.date_escrow_date'
+          );
+        }
       });
 
     this.initPageBreakers();
@@ -560,16 +565,16 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       case 'date':
         this.documentForm.get(dateControlName).enable({emitEvent: false});
         this.documentForm.get(dateControlName).markAsDirty();
-        this.documentForm.get(daysControlName).disable({emitEvent: false});
         this.documentForm.get(dateControlName).setValidators([Validators.required]);
+        this.documentForm.get(daysControlName).disable({emitEvent: false});
         this.documentForm.get(daysControlName).patchValue('');
         this.documentForm.get(daysControlName).clearValidators();
         break;
       case 'days':
         this.documentForm.get(daysControlName).enable({emitEvent: false});
         this.documentForm.get(daysControlName).markAsDirty();
-        this.documentForm.get(dateControlName).disable({emitEvent: false});
         this.documentForm.get(daysControlName).setValidators([Validators.required]);
+        this.documentForm.get(dateControlName).disable({emitEvent: false});
         this.documentForm.get(dateControlName).patchValue('');
         this.documentForm.get(dateControlName).clearValidators();
         break;
@@ -779,6 +784,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   private signAgreement() {
+    // TODO: refactor two req to no one
     this.offerService.loadOne(this.offerId)
       .pipe(takeUntil(this.onDestroyed$))
       .subscribe((offer: Offer) => {

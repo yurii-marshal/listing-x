@@ -91,10 +91,11 @@
         <!--<div class="row-layout" style="opacity: .0"><label></label><span>Hasn’t been signed by all buyers</span></div>-->
         <div class="controls row-layout u-flex-justify--start">
           <button class="deny-btn"
-            mat-flat-button
-            [disabled]="!offer.allowDeny"
-            (click)="deny()"
-            color="accent">
+                  mat-flat-button
+                  *ngIf="offer.userRole === 'agent_seller'"
+                  [disabled]="!offer.allowSign"
+                  (click)="deny()"
+                  color="accent">
             DENY
           </button>
 

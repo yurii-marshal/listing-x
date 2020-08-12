@@ -150,10 +150,9 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   deny() {
-    const id: number = Number(this.route.snapshot.params.id);
-    this.transactionService.deny(id)
+    this.offerService.rejectOffer(this.offer.id)
       .subscribe(() => {
-        // this.offer.allowDeny = false;
+        this.offer.allowSign = false;
         this.snackbar.open(`Denied.`);
       });
   }
