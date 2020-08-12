@@ -501,7 +501,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         this.updatePageProgress(model, 0);
 
         this.disableSignedFields();
-        this.moveToNextSignField();
+        this.moveToNextSignField(true);
 
         if (!this.isDisabled) {
           this.switchDaysAndDate(
@@ -581,17 +581,21 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     }
   }
 
-  moveToNextSignField() {
-    if (this.signFieldElements.length) {
-      for (const item of this.signFieldElements) {
-        if (!item.value) {
-          item.scrollIntoView({behavior: 'smooth', block: 'center'});
-          item.focus();
-          return;
+  moveToNextSignField(isSigned) {
+    if (isSigned) {
+      if (this.signFieldElements.length) {
+        for (const item of this.signFieldElements) {
+          if (!item.value) {
+            item.scrollIntoView({behavior: 'smooth', block: 'center'});
+            item.focus();
+            return;
+          }
         }
-      }
 
-      this.signAgreement();
+        this.finalSignAgreement();
+      }
+    } else {
+      this.scrollToFirstInvalidField();
     }
   }
 
@@ -783,7 +787,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.signFieldElements.forEach(item => item.disabled = !!item.value);
   }
 
-  private signAgreement() {
+  private finalSignAgreement() {
     // TODO: refactor two req to no one
     this.offerService.loadOne(this.offerId)
       .pipe(takeUntil(this.onDestroyed$))
