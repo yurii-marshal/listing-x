@@ -26,6 +26,7 @@ import { GetOfferResolver } from '../../core-modules/resolvers/get-offer.resolve
 import { AgreementsListComponent } from './purchase-agreement/agreements-list/agreements-list.component';
 import { AgreementDetailsComponent } from './purchase-agreement/agreement-details/agreement-details.component';
 import { TransactionDocumentsResolver } from 'src/app/feature-modules/portal/resolvers/transaction-documents.resolver';
+import { CounterOfferComponent } from './counter-offer/counter-offer/counter-offer.component';
 
 const routes: Routes = [
   {
@@ -84,6 +85,13 @@ const routes: Routes = [
         },
       },
     ]
+  },
+  {
+    path: 'counter-offer',
+    canActivate: [AuthGuardService],
+    canActivateChild: [AuthGuardService],
+    component: CounterOfferComponent,
+    children: [],
   }, {
     path: 'purchase-agreements',
     component: TransactionsComponent,

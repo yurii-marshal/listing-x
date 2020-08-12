@@ -184,31 +184,41 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
   }
 
   goToESign(doc: GeneratedDocument): void {
-    const url = {
-      [GeneratedDocumentType.Contract]: '/e-sign',
-      [GeneratedDocumentType.Spq]: '/e-sign/spq',
-      [GeneratedDocumentType.Addendum]: '/e-sign/addendum'
-    }[doc.documentType];
+    // const url = {
+    //   [GeneratedDocumentType.Contract]: '/e-sign',
+    //   [GeneratedDocumentType.Spq]: '/e-sign/spq',
+    //   [GeneratedDocumentType.Addendum]: '/e-sign/addendum'
+    // }[doc.documentType];
+    //
+    // if (doc.documentType === GeneratedDocumentType.Spq && !this.isAgent && this.isSeller) {
+    //   this.openSPQDialog(doc, true);
+    //   return;
+    // }
 
-    if (doc.documentType === GeneratedDocumentType.Spq && !this.isAgent && this.isSeller) {
-      this.openSPQDialog(doc, true);
-      return;
-    }
-
-    this.transactionsFlow ?
-      this.router.navigate([url, doc.id]) :
+    // this.transactionsFlow ?
+    //   this.router.navigate([url, doc.id]) :
       this.router.navigateByUrl(`portal/purchase-agreements/${this.offer.id}/step-two`);
     // this.transactionService.lockOffer(this.transaction.id)
     //   .subscribe(() => this.router.navigate(['/e-sign', this.transaction.id]));
   }
 
+  goToCounterOffer() {
+    this.router.navigateByUrl(`portal/counter-offer`);
+  }
+
   deny() {
     const id: number = Number(this.route.snapshot.params.id);
-    this.transactionService.deny(id)
-      .subscribe(() => {
-        this.transaction.allowDeny = false;
-        this.snackbar.open(`Denied.`);
-      });
+    this.transactionsFlow ?
+      this.transactionService.deny(id)
+        .subscribe(() => {
+          this.transaction.allowDeny = false;
+          this.snackbar.open(`Denied.`);
+        }) :
+      this.offerService.rejectOffer(this.offer.id)
+        .subscribe(() => {
+          this.offer.allowSign = false;
+          this.snackbar.open(`Denied.`);
+        });
   }
 
   downloadAndToggleState(file: string | Document) {

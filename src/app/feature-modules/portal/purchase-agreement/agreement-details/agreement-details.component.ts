@@ -145,11 +145,14 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     this.router.navigateByUrl(`portal/purchase-agreements/${this.offer.id}/step-two`);
   }
 
+  goToCounterOffer() {
+    this.router.navigateByUrl(`portal/counter-offer`);
+  }
+
   deny() {
-    const id: number = Number(this.route.snapshot.params.id);
-    this.transactionService.deny(id)
+    this.offerService.rejectOffer(this.offer.id)
       .subscribe(() => {
-        // this.offer.allowDeny = false;
+        this.offer.allowSign = false;
         this.snackbar.open(`Denied.`);
       });
   }

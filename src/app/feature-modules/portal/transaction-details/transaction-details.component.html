@@ -109,10 +109,33 @@
 <!--        <div class="row-layout" style="opacity: .0"><label></label><span>Signed by buyer 1 Lopushynsky</span></div>-->
 <!--        <div class="row-layout" style="opacity: .0"><label></label><span>Signed by seller 1 Serhii Movchan</span></div>-->
 <!--        <div class="row-layout" style="opacity: .0"><label></label><span>Hasn’t been signed by all buyers</span></div>-->
-<!--        <div *ngIf="!transactionsFlow" class="row-layout u-flex-justify&#45;&#45;start">-->
-<!--          <button  mat-flat-button [disabled]="!transaction.allowDeny" (click)="deny()" color="accent" style="margin: 0 15px 0 220px">DENY</button>-->
-<!--          <button  mat-flat-button [disabled]="!transaction.allowSign" (click)="goToESign()" color="primary">SIGN</button>-->
-<!--        </div>-->
+        <div *ngIf="!transactionsFlow" class="controls row-layout u-flex-justify--start">
+          <button class="deny-btn"
+                  mat-flat-button
+                  *ngIf="offer.userRole === 'agent_seller'"
+                  [disabled]="!offer.allowSign"
+                  (click)="deny()"
+                  color="accent">
+            DENY
+          </button>
+
+          <button class="sign-btn"
+                  mat-flat-button
+                  [disabled]="!offer.allowSign"
+                  (click)="goToESign()"
+                  color="primary">
+            SIGN
+          </button>
+
+          <button class="counter-offer-btn"
+                  *ngIf="offer.userRole === 'agent_seller'"
+                  mat-flat-button
+                  [disabled]="!offer.isSigned"
+                  (click)="goToCounterOffer()"
+                  color="primary">
+            COUNTER OFFER
+          </button>
+        </div>
       </div>
     </div>
 
@@ -169,6 +192,7 @@
               color="primary"
               class="button-sm"
               [matMenuTriggerFor]="docs"
+              [disabled]="!isResidentialAgreementCompleted"
             >ADD DOCUMENT</button>
             <mat-menu #docs="matMenu" xPosition="before">
               <button mat-menu-item (click)="openAddendumDialog()">Addendum</button>
