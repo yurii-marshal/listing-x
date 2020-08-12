@@ -501,7 +501,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         this.updatePageProgress(model, 0);
 
         this.disableSignedFields();
-        this.moveToNextSignField();
+        this.moveToNextSignField(true);
 
         if (!this.isDisabled) {
           this.switchDaysAndDate(
