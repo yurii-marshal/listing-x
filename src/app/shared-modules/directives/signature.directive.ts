@@ -2,6 +2,7 @@ import { Directive, ElementRef, EventEmitter, HostListener, Input, OnInit, Outpu
 import { NgControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { AuthService } from '../../core-modules/core-services/auth.service';
+import { MatSnackBar } from '@angular/material';
 
 @Directive({
   selector: '[appSignature]'
@@ -16,7 +17,7 @@ export class SignatureDirective implements OnInit {
     }.`;
   @Input() withDateControl: string;
 
-  @Output() fieldSigned: EventEmitter<void> = new EventEmitter<void>();
+  @Output() fieldSigned: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   private signButtonEl: HTMLElement;
 
@@ -26,6 +27,7 @@ export class SignatureDirective implements OnInit {
     private renderer: Renderer2,
     private ngControl: NgControl,
     private authService: AuthService,
+    private snackbar: MatSnackBar,
   ) {
   }
 
@@ -34,7 +36,7 @@ export class SignatureDirective implements OnInit {
   }
 
   get dateControl() {
-    return this.ngControl['_parent'].control.get(this.withDateControl);
+    return this.ngControl.control.parent.get(this.withDateControl);
   }
 
   ngOnInit() {
@@ -82,19 +84,24 @@ export class SignatureDirective implements OnInit {
   }
 
   private signFields() {
-    this.signatureControl.patchValue(this[this.mode]);
-    this.signatureControl.disable();
+    if (!this.signatureControl.parent.parent.invalid) {
+      this.signatureControl.patchValue(this[this.mode]);
+      this.signatureControl.disable();
 
-    if (this.withDateControl) {
-      this.dateControl.patchValue(this.datePipe.transform(new Date().getTime(), 'yyyy-MM-dd'));
-      this.dateControl.disable();
+      if (this.withDateControl) {
+        this.dateControl.patchValue(this.datePipe.transform(new Date().getTime(), 'yyyy-MM-dd'));
+        this.dateControl.disable();
+      }
+
+      this.renderer.addClass(this.el.nativeElement, 'signed');
+
+      this.removeSignButton();
+
+      this.fieldSigned.emit(true);
+    } else {
+      this.snackbar.open(`Can't sign. Please, fill all required fields`);
+      this.fieldSigned.emit(false);
     }
-
-    this.renderer.addClass(this.el.nativeElement, 'signed');
-
-    this.removeSignButton();
-
-    this.fieldSigned.emit();
   }
 
   private setButtonStyles() {
