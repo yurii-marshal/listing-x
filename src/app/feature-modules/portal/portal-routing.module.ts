@@ -94,15 +94,27 @@ const routes: Routes = [
     children: [
       {
         path: 'single',
-        redirectTo: 'single/:id',
         pathMatch: 'full',
         component: SingleCOComponent,
+        children: [
+          {
+            path: ':id',
+            pathMatch: 'full',
+            component: SingleCOComponent,
+          }
+        ]
       },
       {
         path: 'multiple',
-        redirectTo: 'multiple/:id',
         pathMatch: 'full',
         component: MultipleCOComponent,
+        children: [
+          {
+            path: ':id',
+            pathMatch: 'full',
+            component: MultipleCOComponent,
+          }
+        ]
       },
     ],
   }, {
