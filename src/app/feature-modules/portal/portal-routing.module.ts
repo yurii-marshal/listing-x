@@ -95,8 +95,12 @@ const routes: Routes = [
       {
         path: 'single',
         pathMatch: 'full',
-        component: SingleCOComponent,
         children: [
+          {
+            path: '',
+            pathMatch: 'full',
+            component: SingleCOComponent,
+          },
           {
             path: ':id',
             pathMatch: 'full',
@@ -107,8 +111,12 @@ const routes: Routes = [
       {
         path: 'multiple',
         pathMatch: 'full',
-        component: MultipleCOComponent,
         children: [
+          {
+            path: '',
+            pathMatch: 'full',
+            component: MultipleCOComponent,
+          },
           {
             path: ':id',
             pathMatch: 'full',
@@ -149,7 +157,7 @@ const routes: Routes = [
             path: 'step-two',
             pathMatch: 'full',
             component: StepTwoComponent,
-            canActivate: [],
+            canActivate: [CreateOfferGuardService],
             data: {progress: 2},
             resolve: {offer: GetOfferResolver}
           },
