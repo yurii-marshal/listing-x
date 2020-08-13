@@ -1,1 +1,362 @@
-<p>multiple-co works!</p>
+<app-base-template [state]="state">
+  <div class="u-flex viewer-container">
+    <div class="u-flex viewer">
+      <div class="doc-container">
+
+        <form class="document-form" [formGroup]="documentForm" #form>
+
+          <div class="container" style="font-size: 21px; line-height: 1.2;">
+            <header class="clearfix">
+              <img src="assets/counter-offer/images/logo1.png" width="350" height="120" class="image">
+              <div class="box">
+                <br>
+                <div class="form">
+                  <div class="main-title">SELLER MULTIPLE COUNTER OFFER No.
+                    <input type="text" class="i-lr__5">
+                  </div>
+                </div>
+              </div>
+              <div class="main-subtitle">
+                (C.A.R. Form SMCO, Revised 12/18)
+              </div>
+            </header>
+          </div>
+          <br>
+          <div class="form">
+            <div class="f-r">Date <input type="text" class="i-lr-2"></div>
+            <div class="clearfix"></div>
+            <div>
+              This is a counter offer to the: Purchase Agreement,
+              <input type="checkbox"> Other
+              <input type="text" class="i-lr-7"> (“Offer”),
+              <br> dated
+              <input type="text" class="i-lr-2"> , on property known as
+              <input type="text" class="i-lr-8">(“Property”),
+              <br> between &nbsp;
+              <input type="text" class="i-lr-11__5"> &nbsp; (“Buyer”) &nbsp; &nbsp; and &nbsp;
+              <input type="text" class="i-lr-12__45">&nbsp; (“Seller”).
+            </div>
+            <div>
+              <div>
+                <b>1. &nbsp;TERMS:</b> The terms and conditions of the above referenced document are accepted subject to
+                the following:
+              </div>
+              <div class="item-pl-3 fw-bold">
+                <div>
+                  <span class="f-l">A.</span>
+                  <div class="item-pl-3 text-justify">
+                    Paragraphs in the Offer that require initials by all parties, but are not initialed by all
+                    parties, are excluded from the final agreement
+                    unless specifically referenced for inclusion in paragraph 1C of this or another Counter Offer.
+                  </div>
+                </div>
+                <div>
+                  <span class="f-l">B.</span>
+                  <div class="item-pl-3 text-justify">
+                    Unless otherwise agreed in writing, down payment and loan amount(s) will be adjusted in the same
+                    proportion as in the original Offer,
+                    but deposit amount(s) shall remain unchanged from the original Offer.
+                  </div>
+                </div>
+                <div>
+                  <span>C. &nbsp;OTHER TERMS:</span>
+                  <div class="item-pl-3">
+                    <textarea style="width: 1300px; height: 270px;"></textarea>
+                  </div>
+                </div>
+                <div>
+                    <span class="fw-bold f-l">D. The following attached addenda are incorporated into this Buyer
+                        Counter offer:</span>
+                  <div class="item-pl-3">
+                    &nbsp; <input type="checkbox"> &nbsp; <span class="fw-normal">Addendum No.</span>
+                    <input type="text" class="i-lr-3"><br>
+                    <input type="checkbox"> &nbsp;
+                    <input type="text" class="i-lr-6"> &nbsp;
+                    <input type="checkbox"> &nbsp;
+                    <input type="text" class="i-lr-6">
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="fw-bold f-l">
+                  2. &nbsp;BINDING EFFECT:&nbsp;
+                </div>
+                <div class="item-pl-3">
+                  Seller is making Multiple Counter Offers to other prospective Buyers on terms that may or may not be
+                  the same as in this
+                  Multiple Counter Offer. This Multiple Counter Offer does not bind Seller and Buyer unless all of the
+                  following occur in the times specified below:
+                  Seller signs in paragraph 5, Buyer signs in paragraph 7, Seller signs in paragraph 8, and Buyer
+                  receives a copy of the Multiple Counter Offer with
+                  all of the signatures. (Note: Prior to the completion of all of the foregoing, Buyer and Seller
+                  shall have no duties or obligations for the purchase or
+                  sale of the Property.)
+                </div>
+              </div>
+              <div>
+                <div class="fw-bold f-l">
+                  3. &nbsp;EXPIRATION OF SELLER MULTIPLE COUNTER OFFER:&nbsp;
+                </div>
+                <div class="item-pl-3">
+                  This Multiple Counter Offer shall be deemed revoked and the deposits, if any, shall be
+                  returned to Buyer unless by 5:00PM on the third Day After the date Seller signs in paragraph 5 (if
+                  more than one Seller, then the last date) (or by
+                  <input type="text" class="i-lr-1">
+                  &nbsp;<input type="checkbox"> AM/
+                  <input type="checkbox"> PM
+                  on <input type="text" class="i-lr-2__5">
+                  (Date)), <b>(i)</b> it is signed in paragraph 7 by Buyer, and <b>(ii)</b> a copy of the Multiple
+                  Counter
+                  Offer signed by Buyer is personally received by Seller or
+                  <input type="text" class="i-lr-5"> , who is authorized to receive it;
+                </div>
+              </div>
+              <div>
+                <div class="fw-bold f-l">
+                  4. &nbsp;MARKETING TO OTHER BUYERS:&nbsp;
+                </div>
+                <div class="item-pl-3">
+                  Seller has the right to continue to offer the Property for sale. Seller has the right to accept any
+                  other offer
+                  received, prior to Seller selection of this Multiple Counter Offer.
+                </div>
+              </div>
+              <div>
+                <div class="fw-bold">
+                  5. &nbsp;SELLER MAKES THIS MULTIPLE COUNTER OFFER ON THE TERMS ABOVE AND ACKNOWLEDGES RECEIPT OF A
+                  COPY.&nbsp;
+                </div>
+                <div class="item-pl-3">
+                  <div>
+                    <!-- Seller  -->
+                    <input type="text" class="i-lr-10__5">
+                    Date <input type="text" class="i-lr-2__5">
+                  </div>
+                  <div>
+                    <!-- Seller -->
+                    <input type="text" class="i-lr-10__5">
+                    Date <input type="text" class="i-lr-2__5">
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="fw-bold f-l">
+                  6. &nbsp;ACCEPTANCE OF SELLER MULTIPLE COUNTER OFFER:&nbsp;
+                </div>
+                <div class="item-pl-3">
+                  Buyer's acceptance of this Seller Multiple Counter Offer shall be deemed revoked and
+                  the deposit, if any, shall be returned to Buyer unless by 5:00PM on the fourth Day After the date
+                  Seller signs in paragraph 5 (if more than one Seller,
+                  then the last date) (or by
+                  <input type="text" class="i-lr-1">
+                  &nbsp;<input type="checkbox"> AM/
+                  <input type="checkbox"> PM
+                  on <input type="text" class="i-lr-2__5">
+                  (Date)), <b>(i)</b> it is signed in paragraph 8 by Seller, and <b>(ii)</b> a copy of this
+                  Seller Multiple Counter Offer signed by Seller in paragraph 8 is personally received by Buyer or
+                  <input type="text" class="i-lr-5"> , who is authorized to receive it.
+                </div>
+              </div>
+              <div>
+                <div class="fw-bold f-l">
+                  7. &nbsp;ACCEPTANCE:&nbsp;
+                </div>
+                <div class="item-pl-3">
+                  Buyer accepts the above Multiple Counter Offer
+                  <span class="fw-bold">
+                        (If checked <input type="checkbox"> SUBJECT TO THE ATTACHED COUNTER OFFER <br>
+                        # <input type="text" class="i-lr-2"> )
+                    </span>
+                  and acknowledges receipt of a Copy.
+                  <div>
+                    &nbsp;<input type="text" class="i-lr-7">&nbsp;
+                    Date &nbsp;<input type="text" class="i-lr-3">
+                    Time &nbsp;<input type="text" class="i-lr-1">
+                    &nbsp;<input type="checkbox"> AM/
+                    <input type="checkbox"> PM
+                  </div>
+                  <div>
+                    &nbsp;<input type="text" class="i-lr-7">&nbsp;
+                    Date &nbsp;<input type="text" class="i-lr-3">
+                    Time &nbsp;<input type="text" class="i-lr-1">
+                    &nbsp;<input type="checkbox"> AM/
+                    <input type="checkbox"> PM
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="fw-bold">
+                  8. &nbsp;SELECTION OF ACCEPTED MULTIPLE COUNTER OFFER:&nbsp;
+                </div>
+                <div class="item-pl-3 border-dark">
+                  By signing below, Seller accepts this Multiple Counter Offer. <b>NOTE TO SELLER:</b> Do
+                  NOT sign in this box until after Buyer signs in paragraph 7. DO NOT sign in this box if this Seller
+                  Multiple Counter Offer is subject to an attached
+                  <br>
+                  Counter Offer:
+                  <div>
+                    <input type="text" class="i-lr-7">
+                    Date &nbsp;<input type="text" class="i-lr-3">
+                    Time &nbsp;<input type="text" class="i-lr-1">
+                    &nbsp;<input type="checkbox"> AM/
+                    <input type="checkbox"> PM
+                  </div>
+                  <div>
+                    <input type="text" class="i-lr-7">
+                    Date &nbsp;<input type="text" class="i-lr-3">
+                    Time &nbsp;<input type="text" class="i-lr-1">
+                    &nbsp;<input type="checkbox"> AM/
+                    <input type="checkbox"> PM
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <b>CONFIRMATION OF ACCEPTANCE:</b>
+              <br>
+              <div>
+                ( <input type="text" class="i-lr-1"> /
+                <input type="text" class="i-lr-1"> ) (Initials)
+                <span class="fw-bold">Confirmation of Acceptance:</span>
+                A Copy of the Signed Seller Selection was personally received by Buyer or Buyer's
+                authorized agent on (date)
+                <input type="text" class="i-lr-3"> at
+                <input type="text" class="i-lr-1">
+                <input type="checkbox"> AM/
+                <input type="checkbox"> PM.
+                <span class="fw-bold">
+                    A binding Agreement is created when a Copy
+                    of the Signed Seller Selection is personally received by Buyer or Buyer's authorized agent whether
+                    or not confirmed in this document.
+                </span>
+              </div>
+            </div>
+          </div>
+          <br>
+          <br>
+          <footer>
+            <div class="fs-small text-left">
+              &#169;2015, California Association of REALTORS &#174;, Inc.
+              <br>
+              THIS FORM HAS BEEN APPROVED BY THE CALIFORNIA ASSOCIATION OF REALTORS&#174; (C.A.R.). NO REPRESENTATION
+              IS
+              MADE AS TO THE LEGAL VALIDITY
+              OR ACCURACY OF ANY PROVISION IN ANY SPECIFIC TRANSACTION. A REAL ESTATE BROKER IS THE PERSON QUALIFIED
+              TO ADVISE ON REAL ESTATE
+              TRANSACTIONS. IF YOU DESIRE LEGAL OR TAX ADVICE, CONSULT AN APPROPRIATE PROFESSIONAL.
+            </div>
+            <div class="fs-small">
+              <div class="item-pl-3">
+                <img src="assets/counter-offer/images/rebs-llc.png" width="80" height="90" class="image-left">
+                <div>Published and Distributed by:</div>
+                <div>REAL ESTATE BUSINESS SERVICES, LLC.</div>
+                <div class="fs-italic">a subsidiary of the California Association of REALTORS&#174;</div>
+                <div>525 South Virgil Avenue, Los Angeles, California 90020</div>
+                <img src="assets/counter-offer/images/housing.png" width="80" height="70" class="image-right">
+              </div>
+            </div>
+            <div class="fw-bold mt-25">SMCO REVISED 12/18 (PAGE 1 OF 1)</div>
+            <div class="text-center fw-bold">
+              SELLER MULTIPLE COUNTER OFFER (SMCO PAGE 1 OF 1)
+            </div>
+          </footer>
+
+      </form>
+
+    </div>
+  </div>
+
+  <div class="side-bar u-flex u-flex-direction--column u-flex-justify--space-between"
+       [class.open]="isSideBarOpen">
+
+    <div class="offer-information u-flex u-flex-direction--column u-flex-justify--start u-flex-align-items--start"
+         *ngIf="isSideBarOpen">
+      <img
+        class="close-icon"
+        src="assets/images/icons/close-sidebar.svg"
+        alt="close"
+        (click)="isSideBarOpen = !isSideBarOpen"
+      />
+
+      <h4>Offer information</h4>
+
+      <div class="roles-list">
+        <div class="sellers truncated" *ngFor="let item of offer.sellers; let i = index">
+          <h6>Seller #{{i+1}}</h6>
+          <div class="item">
+            {{item.firstName}} {{item.lastName}} | {{item.email}}
+          </div>
+        </div>
+        <div class="agents truncated" *ngFor="let item of offer.agentBuyers; let i = index">
+          <h6>Buyer's Agent #{{i+1}}</h6>
+          <div class="item">
+            {{item.firstName}} {{item.lastName}} | {{item.email}}
+          </div>
+        </div>
+        <div class="agents truncated" *ngFor="let item of offer.agentSellers; let i = index">
+          <h6>Listing Agent #{{i+1}}</h6>
+          <div class="item">
+            {{item.firstName}} {{item.lastName}} | {{item.email}}
+          </div>
+        </div>
+        <div class="buyers truncated" *ngFor="let item of offer.buyers; let i = index">
+          <h6>Buyer #{{i+1}}</h6>
+          <div class="item">
+            {{item.firstName}} {{item.lastName}} | {{item.email}}
+          </div>
+        </div>
+        <div class="address truncated">
+          <h6>Address</h6>
+          <div class="item">
+            {{offer.streetName}}, {{offer.city}} {{offer.zip}}
+          </div>
+        </div>
+      </div>
+
+      <button
+        mat-flat-button
+        class="edit-btn u-flex-align-self--end"
+        *ngIf="route.snapshot.routeConfig.path === 'step-two'"
+        (click)="editOffer()"
+      >
+          <span class="text">
+            Edit
+          </span>
+      </button>
+    </div>
+    <div class="open-control u-flex u-flex-justify--center" *ngIf="!isSideBarOpen">
+      <button
+        mat-flat-button
+        class="open-btn"
+        (click)="isSideBarOpen = !isSideBarOpen"
+      >
+        <img src="assets/images/icons/hamburger.svg" alt="open sidebar"/>
+      </button>
+    </div>
+
+    <div class="controls">
+      <div class="progress-container" *ngIf="isSideBarOpen">
+        <div class="labels u-flex u-flex-justify--space-between">
+          <h6 class="pages u-flex u-flex-08">COMPLETED FIELDS</h6>
+          <div class="progress u-flex u-flex-02">{{completedFieldsCount}}/{{allFieldsCount}}</div>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-line" [style.width.%]="(completedFieldsCount / allFieldsCount) * 100"></div>
+        </div>
+      </div>
+
+      <div class="u-flex u-flex-justify--center">
+        <button mat-flat-button
+                color="primary"
+                class="continue-btn u-flex u-flex-align-items--center u-flex-justify--center"
+                [title]="isSideBarOpen ? '' : 'Continue'"
+                [class.wide]="isSideBarOpen"
+                (click)="continue()">
+          <span>Continue</span>
+          <img src="assets/images/icons/chevron-right.svg" alt="continue"/>
+        </button>
+      </div>
+    </div>
+  </div>
+  </div>
+</app-base-template>

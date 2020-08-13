@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SingleCOComponent } from './single-co.component';
+import { SellerCOAgreementComponent } from './seller-co-agreement.component';
 
-describe('SingleCOComponent', () => {
-  let component: SingleCOComponent;
-  let fixture: ComponentFixture<SingleCOComponent>;
+describe('SellerCOAgreementComponent', () => {
+  let component: SellerCOAgreementComponent;
+  let fixture: ComponentFixture<SellerCOAgreementComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SingleCOComponent ]
+      declarations: [ SellerCOAgreementComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SingleCOComponent);
+    fixture = TestBed.createComponent(SellerCOAgreementComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -32,8 +32,9 @@ import { SaveOfferDialogComponent } from '../../shared-modules/dialogs/save-offe
 import { AgreementsListComponent } from './purchase-agreement/agreements-list/agreements-list.component';
 import { AgreementDetailsComponent } from './purchase-agreement/agreement-details/agreement-details.component';
 import { AgreementService } from './services/agreement.service';
-import { SingleCOComponent } from './counter-offer/single-co/single-co.component';
 import { MultipleCOComponent } from './counter-offer/multiple-co/multiple-co.component';
+import { BuyerCOAgreementComponent } from './counter-offer/single-co/buyer-co-agreement/buyer-co-agreement.component';
+import { SellerCOAgreementComponent } from './counter-offer/single-co/seller-co-agreement/seller-co-agreement.component';
 
 const MatModules = [
   MatCheckboxModule,
@@ -71,8 +72,9 @@ const MatModules = [
     SummaryComponent,
     AgreementsListComponent,
     AgreementDetailsComponent,
-    SingleCOComponent,
     MultipleCOComponent,
+    BuyerCOAgreementComponent,
+    SellerCOAgreementComponent,
   ],
   entryComponents: [
     AddendumDialogComponent,

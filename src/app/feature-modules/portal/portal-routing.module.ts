@@ -26,8 +26,9 @@ import { GetOfferResolver } from '../../core-modules/resolvers/get-offer.resolve
 import { AgreementsListComponent } from './purchase-agreement/agreements-list/agreements-list.component';
 import { AgreementDetailsComponent } from './purchase-agreement/agreement-details/agreement-details.component';
 import { TransactionDocumentsResolver } from 'src/app/feature-modules/portal/resolvers/transaction-documents.resolver';
-import { SingleCOComponent } from './counter-offer/single-co/single-co.component';
 import { MultipleCOComponent } from './counter-offer/multiple-co/multiple-co.component';
+import { BuyerCOAgreementComponent } from './counter-offer/single-co/buyer-co-agreement/buyer-co-agreement.component';
+import { SellerCOAgreementComponent } from './counter-offer/single-co/seller-co-agreement/seller-co-agreement.component';
 
 const routes: Routes = [
   {
@@ -94,29 +95,24 @@ const routes: Routes = [
     children: [
       {
         path: 'single',
-        pathMatch: 'full',
+        component: SellerCOAgreementComponent,
         children: [
           {
-            path: '',
+            path: ':id/seller',
             pathMatch: 'full',
-            component: SingleCOComponent,
+            component: SellerCOAgreementComponent,
           },
           {
-            path: ':id',
+            path: ':id/buyer',
             pathMatch: 'full',
-            component: SingleCOComponent,
-          }
+            component: BuyerCOAgreementComponent,
+          },
         ]
       },
       {
         path: 'multiple',
-        pathMatch: 'full',
+        component: MultipleCOComponent,
         children: [
-          {
-            path: '',
-            pathMatch: 'full',
-            component: MultipleCOComponent,
-          },
           {
             path: ':id',
             pathMatch: 'full',
