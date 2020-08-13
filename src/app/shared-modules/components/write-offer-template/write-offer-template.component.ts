@@ -94,7 +94,7 @@ export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
     }
 
     if (!_.isEmpty(model.sellers)) {
-      const sellers = _.map(model.sellers, item => this.createEntity(item, !!this.anonymousOffer));
+      const sellers = _.map(model.sellers, item => this.createEntity(item, true));
       this.form.setControl('sellers', this.formBuilder.array(sellers));
     }
 
@@ -102,12 +102,14 @@ export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
       // const mb = model.agentBuyers.map((item, index) => {
       //   return (index === 0) ? this.predefinedUser : this.createEntity(item);
       // });
-      const agentBuyers = _.map(model.agentBuyers, item => this.createEntity(item, !!this.anonymousOffer));
+      const agentBuyers = _.map(model.agentBuyers, (item, index) => {
+        this.createEntity(item, !!this.anonymousOffer || item.email === this.authService.currentUser.email || index === 0);
+      });
       this.form.setControl('agentBuyers', this.formBuilder.array(agentBuyers));
     }
 
     if (model.agentSellers && model.agentSellers.length) {
-      const mb = model.agentSellers.map((item) => this.createEntity(item, !!this.anonymousOffer));
+      const mb = model.agentSellers.map((item) => this.createEntity(item, true));
       this.form.setControl('agentSellers', this.formBuilder.array(mb));
     }
 

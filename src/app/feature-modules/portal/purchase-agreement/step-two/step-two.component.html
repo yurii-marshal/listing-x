@@ -926,8 +926,9 @@
                   <div class="item-pl-35">
                     <input formControlName="text_offer_price_text" type="text" class="i-lr-9">
                     Dollars $
+                    <!--TODO: create hidden input for value formatting into $$-->
                     <input formControlName="text_offer_price_digits"
-                           appOnlyNumbers="float"
+                           appOnlyNumbers
                            appNumberToWords
                            [numToWordsForm]="documentForm"
                            [recipientControlName]="'page_5.text_offer_price_text'"
