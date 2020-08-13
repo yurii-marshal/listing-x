@@ -1,30 +1,43 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AddressDialogComponent } from '../../../shared-modules/dialogs/address-dialog/address-dialog.component';
-import { filter, takeUntil } from 'rxjs/operators';
+import { filter, map, takeUntil } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
-import { BaseTableDataSource } from '../../../core-modules/datasources/base-table-data-source';
 import { Transaction, TransactionStatus } from '../../../core-modules/models/transaction';
 import { TransactionService } from '../services/transaction.service';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
-import { Person } from '../../../core-modules/models/offer';
+import { Offer, Person } from '../../../core-modules/models/offer';
 import { OfferService } from '../services/offer.service';
 import { Subject } from 'rxjs';
 import { User } from '../../auth/models';
 import { CalendarEvent } from '../../../core-modules/models/calendar-event';
+import { AgreementStatus } from 'src/app/core-modules/models/agreement';
+import { BaseDataService } from 'src/app/core-modules/base-classes/base-data-service';
+import { log } from 'util';
 
 @Component({
   selector: 'app-transactions',
-  templateUrl: './transactions.component.html',
-  styleUrls: ['./transactions.component.scss']
+  templateUrl: '../purchase-agreement/agreements-list/agreements-list.component.html',
+  styleUrls: ['../purchase-agreement/agreements-list/agreements-list.component.scss']
 })
-export class TransactionsComponent implements OnDestroy, OnInit, AfterViewInit {
-  displayedColumns: string[] = ['createdAt', 'address', 'agentBuyers', 'agentSellers',
-    'buyers', 'sellers', 'status', 'lastLogs', 'actions'];
-  dataSource: BaseTableDataSource<Transaction>;
+export class TransactionsComponent implements OnDestroy, OnInit {
+  displayedColumns: string[] = [
+    'createdAt',
+    'address',
+    'agentBuyers',
+    'agentSellers',
+    'buyers',
+    'sellers',
+    'status',
+    'lastLogs',
+    'actions',
+  ];
+  dataSource: Offer[];
+  catchedDataSourse: Offer[];
   statuses: string[] = Object.values(TransactionStatus);
   calendarDataSource: CalendarEvent[];
   user: User;
+  transactionsFlow: boolean;
   /* TODO: Refactor */
   readonly statusLabels: { [key: string]: string } = {
     [TransactionStatus.All]: 'All transactions',
@@ -35,6 +48,7 @@ export class TransactionsComponent implements OnDestroy, OnInit, AfterViewInit {
   private onDestroyed$: Subject<void> = new Subject<void>();
 
   constructor(private router: Router,
+              private route: ActivatedRoute,
               private service: TransactionService,
               private offerService: OfferService,
               private authService: AuthService,
@@ -49,20 +63,24 @@ export class TransactionsComponent implements OnDestroy, OnInit, AfterViewInit {
     // this.service.loadCalendar()
     //   .subscribe(events => this.calendarDataSource = events);
     this.user = this.authService.currentUser;
-    this.dataSource = new BaseTableDataSource(this.service, null, null);
-  }
-
-  ngAfterViewInit(): void {
-    this.offerService.offerChanged$.pipe(
-      takeUntil(this.onDestroyed$)
-    ).subscribe(() => {
-      this.dataSource.reload();
-    });
+    this.transactionsFlow = this.router.url.includes('transaction');
+    this.service.loadList().pipe(
+      takeUntil(this.onDestroyed$),
+      map((resp: any) => {
+        return resp.results.map(transaction => {
+          return {...transaction.offer, status: transaction.status};
+        });
+      })
+    )
+      .subscribe(offer => {
+        this.catchedDataSourse = offer;
+        this.dataSource = offer;
+      });
   }
 
   openOfferFlow() {
     this.offerService.currentOffer = null;
-    this.router.navigate(['/portal/purchase-agreement/step-one']);
+    this.router.navigate(['/portal/purchase-agreements/step-one']);
   }
 
   openCreateAddressDialog() {
@@ -76,16 +94,17 @@ export class TransactionsComponent implements OnDestroy, OnInit, AfterViewInit {
       .pipe(filter(dialogResult => !!dialogResult))
       .subscribe();
   }
-
-  onFilter(status: TransactionStatus) {
-    let query = `status=${status}`;
+  // TODO: filter by params in GET query
+  onFilter(status) {
     if (status === TransactionStatus.All) {
-      query = '';
+      this.dataSource = Object.assign(this.catchedDataSourse);
+      return;
     }
-    this.dataSource.filter = query;
+
+    this.dataSource = this.catchedDataSourse.filter(element => element.status === status);
   }
 
-  getClassName(status: TransactionStatus): string {
+  getClassName(status: TransactionStatus | AgreementStatus): string {
     switch (status) {
       case TransactionStatus.New:
         return 'blue';

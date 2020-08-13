@@ -21,7 +21,7 @@
 
   <div class="u-flex u-flex-justify--center">
     <div class="u-flex u-flex-direction--column u-flex-align-items--center">
-      <h2 style="margin: 0">Purchase Agreements</h2>
+      <h2 style="margin: 0">{{ transactionsFlow ? 'Transactions' : 'Purchase Agreements' }}</h2>
       <mat-form-field>
         <mat-label style="display: none">Status</mat-label>
         <mat-select (valueChange)="onFilter($event)" [value]="Status.All">
@@ -126,7 +126,9 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let element">
-          <div routerLink="/portal/purchase-agreement/{{ element.id }}/details" class="detail-btn" [ngClass]="getClassName(element.status)">
+          <div routerLink="{{ transactionsFlow ?
+          '/portal/transactions/' + element.transaction :
+          '/portal/purchase-agreements/' + element.id + '/details'}}" class="detail-btn" [ngClass]="getClassName(element.status)">
             More Details
           </div>
         </td>

@@ -41,7 +41,7 @@ export class WriteOfferSummaryComponent {
   }
 
   goToList(): void {
-    this.router.navigate(['/portal']);
+    this.router.navigate(['/portal/purchase-agreements/all']);
   }
 
   goToESign() {

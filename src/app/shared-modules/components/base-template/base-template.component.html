@@ -1,6 +1,6 @@
 <div class="base-header">
   <div class="wrapper u-flex u-flex-justify--space-between u-flex-align-items--center">
-    <img routerLink="/portal" src="assets/images/icons/logo.svg" width="125" class="logo">
+    <img routerLink="/portal/purchase-agreements/all" src="assets/images/icons/logo.svg" width="125" class="logo">
     <ng-container *ngIf="isVisibleNavBar">
       <nav [class]="state" *ngIf="state === 'portal'" mat-tab-nav-bar>
         <a mat-tab-link *ngFor="let link of portalNavLinks"

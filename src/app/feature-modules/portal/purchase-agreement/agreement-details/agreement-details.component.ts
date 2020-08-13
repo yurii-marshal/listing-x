@@ -31,6 +31,7 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   isSeller: boolean = false;
   pendingDocuments: Observable<GeneratedDocument[]>;
   completedDocuments: Observable<GeneratedDocument[]>;
+  transactionsFlow: boolean;
   /* TODO: Refactor */
   readonly statusLabels: { [key: string]: string } = {
     [AgreementStatus.All]: 'All agreements',
@@ -52,6 +53,7 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   ngOnInit() {
+    this.transactionsFlow = this.router.url.includes('transaction');
     const offerId: number = Number(this.route.snapshot.params.id);
 
     this.offerService.loadOne(offerId)
@@ -85,7 +87,7 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
 
   onDelete() {
     this.offerService.delete(this.offer.id)
-      .subscribe(() => this.router.navigate(['/portal']));
+      .subscribe(() => this.router.navigate(['/portal/purchase-agreements/all']));
   }
 
   getClassName(status: AgreementStatus): string {
@@ -141,15 +143,21 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     // this.router.navigate([url, doc.id]);
     // this.transactionService.lockOffer(this.offer.id)
     //   .subscribe(() => this.router.navigate(['/e-sign', this.offer.id]));
-    // TODO: navigate to PA flow Step 2
-    this.router.navigateByUrl(`portal/purchase-agreement/${this.offer.id}/sign`);
+    this.router.navigateByUrl(`portal/purchase-agreements/${this.offer.id}/sign`);
+  }
+
+  goToCounterOffer() {
+    this.router.navigateByUrl(`portal/counter-offer/single`);
+  }
+
+  goToMCO() {
+    this.router.navigateByUrl(`portal/counter-offer/multiple`);
   }
 
   deny() {
-    const id: number = Number(this.route.snapshot.params.id);
-    this.transactionService.deny(id)
+    this.offerService.rejectOffer(this.offer.id)
       .subscribe(() => {
-        // this.offer.allowDeny = false;
+        this.offer.allowSign = false;
         this.snackbar.open(`Denied.`);
       });
   }

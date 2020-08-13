@@ -18,13 +18,17 @@ export class WriteOfferUploadDocumentsDialogComponent implements OnInit {
 
   Type = UploadDocumentType;
 
+  modelIds = {};
+
   get ModalTypes() {
     return UploadDocsModalType;
   }
 
   get closeLink() {
     return this.data.modalType === UploadDocsModalType.OfferUpdating ?
-      `/portal/transaction/${this.data.model.offerId}` : '/portal';
+      this.data.transactionPage ?
+        `/portal/transactions/${this.data.transactionId}` : `/portal/purchase-agreements/${this.data.model.offerId}/details` :
+      '/portal/purchase-agreements/all';
   }
 
   constructor(public route: ActivatedRoute,
@@ -32,7 +36,8 @@ export class WriteOfferUploadDocumentsDialogComponent implements OnInit {
               private formBuilder: FormBuilder,
               private router: Router,
               public dialogRef: MatDialogRef<WriteOfferUploadDocumentsDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: {model: LinkedDocuments, modalType: UploadDocsModalType, transactionPage: boolean}) {}
+              @Inject(MAT_DIALOG_DATA)
+                public data: {model: LinkedDocuments, modalType: UploadDocsModalType, transactionPage: boolean, transactionId: number}) {}
 
   ngOnInit(): void {
     const disabled = this.data.modalType === UploadDocsModalType.Upload;
@@ -44,13 +49,15 @@ export class WriteOfferUploadDocumentsDialogComponent implements OnInit {
 
     if (this.data.model) {
       const model = _.pick(this.data.model, Object.keys(this.form.controls));
-      this.form.setValue(model);
+      this.modelIds = model;
     }
   }
 
   getRequestValue(): LinkedDocuments {
+    const formValue = this.form.value;
+    Object.keys(formValue).forEach(key => formValue[key] = formValue[key].map(elem => elem.id));
     return {
-      ...this.form.value,
+      ...formValue,
       offerId: this.data.model.offerId
     };
   }
@@ -68,8 +75,10 @@ export class WriteOfferUploadDocumentsDialogComponent implements OnInit {
   updateDocs(): void {
     const model: LinkedDocuments = this.getRequestValue();
     this.service.updateOfferDocuments(model).subscribe(() => {
-      this.dialogRef.close(model);
-      this.router.navigate(['/portal/transaction', this.data.model.offerId]);
+      this.dialogRef.close(this.form);
+      this.router.navigateByUrl(this.data.transactionPage ?
+        '/portal/transactions/' + this.data.transactionId :
+        '/portal/purchase-agreements/' + this.data.model.offerId + '/details');
     });
   }
 }

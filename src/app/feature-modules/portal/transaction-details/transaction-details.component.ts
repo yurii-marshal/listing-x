@@ -9,21 +9,23 @@ import { AddendumData, Document, GeneratedDocument } from '../../../core-modules
 import { AuthService } from '../../../core-modules/core-services/auth.service';
 import { Observable, of, Subject } from 'rxjs';
 import { DocumentStatus } from '../../../core-modules/enums/document-status';
-import { Person } from '../../../core-modules/models/offer';
+import { Offer, Person } from '../../../core-modules/models/offer';
 import { GeneratedDocumentType } from '../../../core-modules/enums/upload-document-type';
 import { MatDialog } from '@angular/material/dialog';
 import { SpqDialogComponent } from '../dialogs/spq-dialog/spq-dialog.component';
 import { AddendumDialogComponent } from '../dialogs/addendum-dialog/addendum-dialog.component';
 import { CalendarEvent } from '../../../core-modules/models/calendar-event';
+import { OfferService } from 'src/app/feature-modules/portal/services/offer.service';
 
 @Component({
   selector: 'app-transaction-details',
-  templateUrl: './transaction-details.component.html',
-  styleUrls: ['./transaction-details.component.scss']
+  templateUrl: '../purchase-agreement/agreement-details/agreement-details.component.html',
+  styleUrls: ['../purchase-agreement/agreement-details/agreement-details.component.scss']
 })
 export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, OnInit {
-  private onDestroyed$: Subject<void> = new Subject<void>();
+  // TODO: reassigne transaction propeties due to common template
   transaction: Transaction;
+  offer: Offer;
 
   calendarDataSource: CalendarEvent[];
 
@@ -37,6 +39,9 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
 
   pendingDocuments: Observable<GeneratedDocument[]>;
   completedDocuments: Observable<GeneratedDocument[]>;
+  purchaseAgreement: Observable<GeneratedDocument[]>;
+
+  transactionsFlow: boolean;
 
   /* TODO: Refactor */
   readonly statusLabels: {[key: string]: string} = {
@@ -45,17 +50,22 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
     [TransactionStatus.InProgress]: 'In progress',
     [TransactionStatus.Finished]: 'Finished'
   };
+  private onDestroyed$: Subject<void> = new Subject<void>();
 
   constructor(private authService: AuthService,
               private dialog: MatDialog,
               private route: ActivatedRoute,
               private transactionService: TransactionService,
+              private offerService: OfferService,
               private snackbar: MatSnackBar,
               private router: Router) {
   }
 
   ngOnInit() {
+    this.transactionsFlow = this.router.url.includes('transaction');
+
     const transactionId: number = Number(this.route.snapshot.params.id);
+
     this.transactionService.loadOne(transactionId)
       .subscribe((transaction: Transaction) => this.transactionLoaded(transaction));
 
@@ -75,6 +85,7 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
 
   transactionLoaded(transaction: Transaction): void {
     this.transaction = transaction;
+    this.offer = transaction.offer;
 
     const {agentBuyers, agentSellers, sellers} = transaction.offer;
     this.isAgent = [...agentSellers, ...agentBuyers].some(({email}) => email === this.authService.currentUser.email);
@@ -86,9 +97,21 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
     this.filterDocumentList(transaction.documents);
   }
 
+  offerLoaded(offer: Offer): void {
+    this.offer = offer;
+
+    const {agentBuyers, agentSellers, sellers} = offer;
+    this.isSeller = [...agentSellers, ...sellers].some(({email}) => email === this.authService.currentUser.email);
+
+    // const residentialAgreement = Array(offer.documents).find(doc => doc.documentType === GeneratedDocumentType.Contract);
+    // this.isResidentialAgreementCompleted = residentialAgreement && residentialAgreement.status === DocumentStatus.Completed;
+
+    this.filterDocumentList(offer.documents);
+  }
+
   onDelete() {
     this.transactionService.delete(this.transaction.id)
-      .subscribe(() => this.router.navigate(['/portal']));
+      .subscribe(() => this.router.navigate(['/portal/transactions']));
   }
 
   getClassName(status: TransactionStatus): string {
@@ -126,18 +149,18 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
   }
 
   goToESign(doc: GeneratedDocument): void {
-    const url = {
-      [GeneratedDocumentType.Contract]: '/e-sign',
-      [GeneratedDocumentType.Spq]: '/e-sign/spq',
-      [GeneratedDocumentType.Addendum]: '/e-sign/addendum'
-    }[doc.documentType];
+    // const url = {
+    //   [GeneratedDocumentType.Contract]: '/e-sign',
+    //   [GeneratedDocumentType.Spq]: '/e-sign/spq',
+    //   [GeneratedDocumentType.Addendum]: '/e-sign/addendum'
+    // }[doc.documentType];
+    //
+    // if (doc.documentType === GeneratedDocumentType.Spq && !this.isAgent && this.isSeller) {
+    //   this.openSPQDialog(doc, true);
+    //   return;
+    // }
 
-    if (doc.documentType === GeneratedDocumentType.Spq && !this.isAgent && this.isSeller) {
-      this.openSPQDialog(doc, true);
-      return;
-    }
-
-    this.router.navigate([url, doc.id]);
+    // this.router.navigate([url, doc.id]);
     // this.transactionService.lockOffer(this.transaction.id)
     //   .subscribe(() => this.router.navigate(['/e-sign', this.transaction.id]));
   }
@@ -151,11 +174,12 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
       });
   }
 
-  /*downloadAndToggleState(file: string | Document) {
+  downloadAndToggleState(file: string | Document) {
     const id: number = Number(this.route.snapshot.params.id);
     this.transactionService.toggleState(id).subscribe();
-    this.triggerDownloadFile(file);
-  }*/
+    // this.offerService.toggleState(id).subscribe();
+    // this.triggerDownloadFile(file);
+  }
 
   triggerDownloadFile(doc: GeneratedDocument | Document) {
     this.transactionService.documentOpenedEvent(doc.id).subscribe();
@@ -178,7 +202,7 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
     trigger.click();
   }
 
-  private filterDocumentList(documents: GeneratedDocument[]): void {
+  private filterDocumentList(documents): void {
     /**
      * contract status = STARTED
      * if all buyers signed, contract status = DELIVERED
@@ -189,12 +213,15 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
 
     const completedDocsStatuses = [DocumentStatus.Completed];
 
-    this.pendingDocuments = of(documents).pipe(
-      map((docs) => docs.filter(doc => !completedDocsStatuses.includes(doc.status)))
-    );
-    this.completedDocuments = of(documents).pipe(
-      map((docs) => docs.filter(doc => completedDocsStatuses.includes(doc.status)))
-    );
+    // this.pendingDocuments = of(documents).pipe(
+    //   map((docs) => docs.filter(doc => !completedDocsStatuses.includes(doc.status)))
+    // );
+    // this.completedDocuments = of(documents).pipe(
+    //   map((docs) => docs.filter(doc => completedDocsStatuses.includes(doc.status)))
+    // );
+    // this.purchaseAgreement = of(documents).pipe(
+    //   map((docs) => docs.filter(doc => completedDocsStatuses.includes(doc.status)))
+    // );
   }
 
   openSPQDialog(doc: GeneratedDocument, signAfterFill: boolean = false): void {
@@ -212,7 +239,8 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
     this.dialog.open(AddendumDialogComponent, {
       width: '600px',
       data: {
-        transactionId: this.transaction.id,
+        transactionId: this.transaction && this.transaction.id,
+        offerId: this.offer && this.offer.id,
         docData: doc ? doc.documentData as AddendumData : null,
         docId: doc ? doc.id : null
       }

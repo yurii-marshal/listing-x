@@ -8,7 +8,7 @@
       <div class="block offer-information">
         <div class="row-layout header-section">
           <label class="header">Offer information</label>
-          <span routerLink="/portal/purchase-agreement/{{offer?.id}}/step-one" class="link">Edit</span>
+          <span routerLink="/portal/purchase-agreements/{{offer?.id}}/step-one" class="link">Edit</span>
         </div>
         <div class="row-layout" *ngFor="let item of offer?.buyers; let i = index">
           <label>buyer #{{ i + 1 }}</label>
@@ -39,30 +39,39 @@
       <div class="block supporting-docs">
         <div class="row-layout header-section">
           <label class="header" style="min-width: 190px;">Supporting docs</label>
-          <span routerLink="/portal/purchase-agreement/{{offer?.id}}/step-three" class="link">Edit</span>
+          <span routerLink="/portal/purchase-agreements/{{offer?.id}}/step-three" class="link">Edit</span>
         </div>
         <div class="row-layout" *ngIf="offer?.documents?.preApproval.length">
           <label>Add Pre-approval Letter</label>
           <div class="doc-preview">
-            <img *ngFor="let img of offer?.documents?.preApproval"
-                 src="assets/images/icons/{{ img.extension }}.svg"
-                 [title]="img.title" height="20">
+            <ng-container *ngFor="let img of offer?.documents?.preApproval; let i = index;">
+              <img *ngIf="i < 5"
+                   src="assets/images/icons/{{ img.extension }}.svg"
+                   [title]="img.title" height="20">
+            </ng-container>
+            <div class="more-label" *ngIf="offer?.documents?.preApproval.length > 5">(+{{offer?.documents?.preApproval.length - 5}} more)</div>
           </div>
         </div>
         <div class="row-layout" *ngIf="offer?.documents?.proofOfFunds.length">
           <label>Add Proof of Funds</label>
           <div class="doc-preview">
-            <img *ngFor="let img of offer?.documents?.proofOfFunds"
-                 src="assets/images/icons/{{ img.extension }}.svg"
-                 [title]="img.title" height="20">
+            <ng-container *ngFor="let img of offer?.documents?.proofOfFunds; let i = index;">
+              <img *ngIf="i < 5"
+                   src="assets/images/icons/{{ img.extension }}.svg"
+                   [title]="img.title" height="20">
+            </ng-container>
+            <div class="more-label" *ngIf="offer?.documents?.proofOfFunds.length > 5">(+{{offer?.documents?.proofOfFunds.length - 5}} more)</div>
           </div>
         </div>
         <div class="row-layout" *ngIf="offer?.documents?.coverLetter.length">
           <label>Add Cover Letter</label>
           <div class="doc-preview">
-            <img *ngFor="let img of offer?.documents?.coverLetter"
-                 src="assets/images/icons/{{ img.extension }}.svg"
-                 [title]="img.title" height="20">
+            <ng-container *ngFor="let img of offer?.documents?.coverLetter; let i = index;">
+              <img *ngIf="i < 5"
+                   src="assets/images/icons/{{ img.extension }}.svg"
+                   [title]="img.title" height="20">
+            </ng-container>
+            <div class="more-label" *ngIf="offer?.documents?.coverLetter.length > 5">(+{{offer?.documents?.coverLetter.length - 5}} more)</div>
           </div>
         </div>
       </div>
@@ -70,7 +79,7 @@
       <div class="block payment-information">
         <div class="row-layout header-section">
           <label class="header">payment information</label>
-          <span routerLink="/portal/purchase-agreement/{{offer?.id}}/step-two" class="link">Edit</span>
+          <span routerLink="/portal/purchase-agreements/{{offer?.id}}/step-two" class="link">Edit</span>
         </div>
         <div class="row-layout" *ngIf="offerSummary?.deposit">
           <label>Initial deposit</label>

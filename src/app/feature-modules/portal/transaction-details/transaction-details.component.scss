@@ -284,3 +284,16 @@ $blue: rgba(2, 136, 209, 0.9);
     padding-top: 24px;
   }
 }
+
+.delete-button {
+  color: $red;
+}
+
+.controls {
+  margin-left: 220px;
+
+  .sign-btn,
+  .counter-offer-btn {
+    margin-left: 15px;
+  }
+}

@@ -25,6 +25,9 @@ import { CreateOfferGuardService } from '../../core-modules/guards/create-offer-
 import { GetOfferResolver } from '../../core-modules/resolvers/get-offer.resolver';
 import { AgreementsListComponent } from './purchase-agreement/agreements-list/agreements-list.component';
 import { AgreementDetailsComponent } from './purchase-agreement/agreement-details/agreement-details.component';
+import { TransactionDocumentsResolver } from 'src/app/feature-modules/portal/resolvers/transaction-documents.resolver';
+import { SingleCOComponent } from './counter-offer/single-co/single-co.component';
+import { MultipleCOComponent } from './counter-offer/multiple-co/multiple-co.component';
 
 const routes: Routes = [
   {
@@ -83,8 +86,47 @@ const routes: Routes = [
         },
       },
     ]
+  },
+  {
+    path: 'counter-offer',
+    canActivate: [AuthGuardService],
+    canActivateChild: [AuthGuardService],
+    children: [
+      {
+        path: 'single',
+        pathMatch: 'full',
+        children: [
+          {
+            path: '',
+            pathMatch: 'full',
+            component: SingleCOComponent,
+          },
+          {
+            path: ':id',
+            pathMatch: 'full',
+            component: SingleCOComponent,
+          }
+        ]
+      },
+      {
+        path: 'multiple',
+        pathMatch: 'full',
+        children: [
+          {
+            path: '',
+            pathMatch: 'full',
+            component: MultipleCOComponent,
+          },
+          {
+            path: ':id',
+            pathMatch: 'full',
+            component: MultipleCOComponent,
+          }
+        ]
+      },
+    ],
   }, {
-    path: 'purchase-agreement',
+    path: 'purchase-agreements',
     canActivate: [AuthGuardService],
     canActivateChild: [AuthGuardService],
     children: [
@@ -115,7 +157,7 @@ const routes: Routes = [
             path: 'step-two',
             pathMatch: 'full',
             component: StepTwoComponent,
-            canActivate: [],
+            canActivate: [CreateOfferGuardService],
             data: {progress: 2},
             resolve: {offer: GetOfferResolver}
           },
@@ -153,14 +195,16 @@ const routes: Routes = [
   },
   {
     path: 'transactions',
-    component: TransactionsComponent,
     canActivate: [AuthGuardService],
     canActivateChild: [AuthGuardService],
     children: [
       {
+        path: '',
+        component: TransactionsComponent,
+      },
+      {
         path: ':id',
         component: TransactionDetailsComponent,
-        canActivate: [AuthGuardService],
         children: [
           {
             path: 'upload',
@@ -188,6 +232,7 @@ const routes: Routes = [
     CreateOfferResolver,
     GetOfferResolver,
     OfferDocumentsResolver,
+    TransactionDocumentsResolver,
     OfferSummaryResolver
   ]
 })

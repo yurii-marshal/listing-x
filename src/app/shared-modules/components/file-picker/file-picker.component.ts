@@ -1,4 +1,13 @@
-import { AfterViewInit, Component, Directive, forwardRef, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Directive,
+  forwardRef,
+  Input,
+  OnInit,
+  QueryList,
+  ViewChildren
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ActiveDescendantKeyManager, Highlightable } from '@angular/cdk/a11y';
 import { UploadDocumentType } from '../../../core-modules/enums/upload-document-type';
@@ -45,6 +54,9 @@ export class FilePickerComponent implements OnInit, AfterViewInit, ControlValueA
 
   @Input()
   offerId: number = null;
+
+  @Input()
+  docsIds: number[] = [];
 
   @ViewChildren(FileOption)
   options: QueryList<FileOption>;
@@ -158,6 +170,10 @@ export class FilePickerComponent implements OnInit, AfterViewInit, ControlValueA
     this.service.loadListDocumentsByType(this.type, this.offerId)
       .subscribe(docs => {
         this.dataSource = docs;
+        if (this.docsIds) {
+          this.selectedItems = this.docsIds.map(id => docs.find(doc => doc.id === id));
+          this.onModelChange(this.selectedItems);
+        }
         this.preselectSource();
       });
   }

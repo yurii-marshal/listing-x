@@ -32,6 +32,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   offerId: number;
   offer: Offer;
 
+  datepickerMinDate: Date = new Date();
+
   private user: User;
 
   private isDisabled: boolean;
@@ -495,16 +497,19 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       )
       .subscribe((model) => {
         this.patchForm(model);
-        this.switchDaysAndDate(
-          this.documentForm.get('page_5.radio_escrow').value,
-          'page_5.text_escrow_days',
-          'page_5.date_escrow_date'
-        );
         this.getAllFieldsCount(model);
         this.updatePageProgress(model, 0);
 
         this.disableSignedFields();
-        this.moveToNextSignField();
+        this.moveToNextSignField(true);
+
+        if (!this.isDisabled) {
+          this.switchDaysAndDate(
+            this.documentForm.get('page_5.radio_escrow').value,
+            'page_5.text_escrow_days',
+            'page_5.date_escrow_date'
+          );
+        }
       });
 
     this.initPageBreakers();
@@ -547,10 +552,10 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         this.offerService.updateOfferProgress({progress: 3}, this.offerId)
           .pipe(takeUntil(this.onDestroyed$))
           .subscribe(() => {
-            this.router.navigate([`portal/purchase-agreement/${this.offerId}/step-three`]);
+            this.router.navigate([`portal/purchase-agreements/${this.offerId}/step-three`]);
           });
       } else {
-        this.router.navigate([`portal/purchase-agreement/${this.offerId}/details`]);
+        this.router.navigate([`portal/purchase-agreements/${this.offerId}/details`]);
       }
     }
   }
@@ -560,33 +565,37 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       case 'date':
         this.documentForm.get(dateControlName).enable({emitEvent: false});
         this.documentForm.get(dateControlName).markAsDirty();
-        this.documentForm.get(daysControlName).disable({emitEvent: false});
         this.documentForm.get(dateControlName).setValidators([Validators.required]);
+        this.documentForm.get(daysControlName).disable({emitEvent: false});
         this.documentForm.get(daysControlName).patchValue('');
         this.documentForm.get(daysControlName).clearValidators();
         break;
       case 'days':
         this.documentForm.get(daysControlName).enable({emitEvent: false});
         this.documentForm.get(daysControlName).markAsDirty();
-        this.documentForm.get(dateControlName).disable({emitEvent: false});
         this.documentForm.get(daysControlName).setValidators([Validators.required]);
+        this.documentForm.get(dateControlName).disable({emitEvent: false});
         this.documentForm.get(dateControlName).patchValue('');
         this.documentForm.get(dateControlName).clearValidators();
         break;
     }
   }
 
-  moveToNextSignField() {
-    if (this.signFieldElements.length) {
-      for (const item of this.signFieldElements) {
-        if (!item.value) {
-          item.scrollIntoView({behavior: 'smooth', block: 'center'});
-          item.focus();
-          return;
+  moveToNextSignField(isSigned) {
+    if (isSigned) {
+      if (this.signFieldElements.length) {
+        for (const item of this.signFieldElements) {
+          if (!item.value) {
+            item.scrollIntoView({behavior: 'smooth', block: 'center'});
+            item.focus();
+            return;
+          }
         }
-      }
 
-      this.signAgreement();
+        this.finalSignAgreement();
+      }
+    } else {
+      this.scrollToFirstInvalidField();
     }
   }
 
@@ -778,11 +787,20 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.signFieldElements.forEach(item => item.disabled = !!item.value);
   }
 
-  private signAgreement() {
-    this.offer.isSigned
-      ? this.snackbar.open('Offer is already signed')
-      : this.offerService.signOffer(this.offerId)
-        .pipe(takeUntil(this.onDestroyed$))
-        .subscribe(() => this.snackbar.open('Offer is signed now'));
+  private finalSignAgreement() {
+    // TODO: refactor two req to no one
+    this.offerService.loadOne(this.offerId)
+      .pipe(takeUntil(this.onDestroyed$))
+      .subscribe((offer: Offer) => {
+        offer.isSigned
+          ? this.snackbar.open('Offer is already signed')
+          : this.offerService.signOffer(this.offerId)
+            .pipe(takeUntil(this.onDestroyed$))
+            .subscribe((model: Offer) => {
+              this.offer = model;
+              this.offerService.currentOffer = model;
+              this.snackbar.open('Offer is signed now');
+            });
+      });
   }
 }
