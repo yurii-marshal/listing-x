@@ -3,7 +3,7 @@
   <ng-container *ngIf="offer">
     <div class="toolbar">
       <div class="toolbar-content">
-        <div class="back-btn" routerLink="/portal/purchase-agreements">
+        <div class="back-btn" routerLink="{{ transactionsFlow ? '/portal/transactions' : '/portal/purchase-agreements' }}">
           <mat-icon fontSet="fa" fontIcon="fa-chevron-left"></mat-icon>
           Back
         </div>
@@ -33,7 +33,7 @@
                   #trigger="cdkOverlayOrigin"
                   (click)="isOpenInviteUserOverlay = !isOpenInviteUserOverlay"
                   color="primary">
-            INVITE MODERATORS
+            INVITE USERS
           </button>
           <ng-template cdkConnectedOverlay
                        [cdkConnectedOverlayOrigin]="trigger"
@@ -72,13 +72,13 @@
       </div>
       <div class="column-layout">
         <div class="row-layout"><label class="header">last activity</label></div>
-        <div class="scroll-content">
-          <div class="row-layout" *ngFor="let item of lastLogs">
+        <div *ngIf="transactionsFlow" class="scroll-content">
+          <div class="row-layout" *ngFor="let item of transaction.lastLogs">
             <label>{{ item.createdAt | date: 'short' }}</label>
             <span>{{ item.title }}</span>
           </div>
         </div>
-        <div class="row-layout" style="position: relative;"><label class="header">offer</label>
+        <div *ngIf="!transactionsFlow" class="row-layout" style="position: relative;"><label class="header">offer</label>
           <img *ngIf="urlDocument"
                src="assets/images/icons/pdf.svg"
                (click)="downloadAndToggleState(urlDocument)"
@@ -89,7 +89,7 @@
         <!--<div class="row-layout" style="opacity: .0"><label></label><span>Signed by buyer 1</span></div>-->
         <!--<div class="row-layout" style="opacity: .0"><label></label><span>Signed by seller 1</span></div>-->
         <!--<div class="row-layout" style="opacity: .0"><label></label><span>Hasn’t been signed by all buyers</span></div>-->
-        <div class="controls row-layout u-flex-justify--start">
+        <div *ngIf="!transactionsFlow" class="controls row-layout u-flex-justify--start">
           <button class="deny-btn"
                   mat-flat-button
                   *ngIf="offer.userRole === 'agent_seller'"
@@ -122,6 +122,8 @@
 
     <div class="u-flex u-flex-justify--start">
       <div class="column-layout fullwidth">
+        <div *ngIf="transactionsFlow" class="row-layout new-section"><label class="header">Purchase agreements</label></div>
+
         <div class="row-layout new-section"><label class="header">Completed documents</label></div>
 
         <div class="row-layout doc-item" *ngFor="let doc of (completedDocuments | async); let i = index;">

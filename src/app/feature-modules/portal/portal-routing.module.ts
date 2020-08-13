@@ -94,13 +94,13 @@ const routes: Routes = [
     children: [],
   }, {
     path: 'purchase-agreements',
-    component: TransactionsComponent,
+    component: AgreementsListComponent,
     canActivate: [AuthGuardService],
     canActivateChild: [AuthGuardService],
   }, {
     path: 'purchase-agreements/all',
     pathMatch: 'full',
-    component: TransactionsComponent,
+    component: AgreementsListComponent,
   }, {
     path: 'purchase-agreements/step-one',
     pathMatch: 'full',
@@ -144,7 +144,7 @@ const routes: Routes = [
       },
       {
         path: 'details',
-        component: TransactionDetailsComponent,
+        component: AgreementDetailsComponent,
         canActivate: [AuthGuardService],
         children: [
           {

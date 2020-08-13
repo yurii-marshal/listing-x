@@ -20,7 +20,7 @@ import { OfferService } from 'src/app/feature-modules/portal/services/offer.serv
 
 @Component({
   selector: 'app-transaction-details',
-  templateUrl: './transaction-details.component.html',
+  templateUrl: '../purchase-agreement/agreement-details/agreement-details.component.html',
   styleUrls: ['./transaction-details.component.scss']
 })
 export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, OnInit {
@@ -34,7 +34,7 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
 
   userEmailControl: FormControl = new FormControl(null, [Validators.required, Validators.email]);
 
-  isAgent: boolean;
+  isAgent: boolean = false;
   isSeller: boolean = false;
 
   pendingDocuments: Observable<GeneratedDocument[]>;
@@ -44,19 +44,11 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
   transactionsFlow: boolean;
 
   /* TODO: Refactor */
-  readonly transactionStatusLabels: {[key: string]: string} = {
+  readonly statusLabels: {[key: string]: string} = {
     [TransactionStatus.All]: 'All transactions',
     [TransactionStatus.New]: 'New',
     [TransactionStatus.InProgress]: 'In progress',
     [TransactionStatus.Finished]: 'Finished'
-  };
-  readonly agreementStatusLabels: { [key: string]: string } = {
-    [AgreementStatus.All]: 'All agreements',
-    [AgreementStatus.Started]: 'Started',
-    [AgreementStatus.Delivered]: 'Delivered',
-    [AgreementStatus.Accepted]: 'Accepted',
-    [AgreementStatus.Completed]: 'Completed',
-    [AgreementStatus.Denied]: 'Denied',
   };
   private onDestroyed$: Subject<void> = new Subject<void>();
 
@@ -71,43 +63,29 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
 
   ngOnInit() {
     this.transactionsFlow = this.route.snapshot.data.transactionPage ? this.route.snapshot.data.transactionPage : false;
-    this.isAgent = this.transactionsFlow ? false : this.authService.currentUser.accountType === 'agent';
 
     const transactionId: number = Number(this.route.snapshot.params.id);
 
-    this.transactionsFlow ?
-      this.transactionService.loadOne(transactionId)
-        .subscribe((transaction: Transaction) => this.transactionLoaded(transaction)) :
-      this.offerService.loadOne(transactionId)
-        .subscribe((offer: Offer) => this.offerLoaded(offer));
+    this.transactionService.loadOne(transactionId)
+      .subscribe((transaction: Transaction) => this.transactionLoaded(transaction));
 
-    // this.transactionsFlow ?
-    //   this.transactionService.loadCalendarByTransaction(transactionId)
-    //   .subscribe(items => this.calendarDataSource = items) :
-    //   this.offerService.loadCalendarByOffer(transactionId)
-    //     .subscribe(items => this.calendarDataSource = items);
+    this.transactionService.loadCalendarByTransaction(transactionId)
+      .subscribe(items => this.calendarDataSource = items);
   }
 
   ngAfterViewInit(): void {
-    this.transactionsFlow ?
-      this.transactionService.transactionChanged.pipe(
-        takeUntil(this.onDestroyed$),
-        flatMap(() => {
-          const transactionId: number = Number(this.route.snapshot.params.id);
-          return this.transactionService.loadOne(transactionId);
-        })
-      ).subscribe((transaction) => this.transactionLoaded(transaction)) :
-      this.offerService.offerChanged$.pipe(
-        takeUntil(this.onDestroyed$),
-        flatMap(() => {
-          const offerId: number = Number(this.route.snapshot.params.id);
-          return this.offerService.loadOne(offerId);
-        })
-      ).subscribe((offer) => this.offerLoaded(offer));
+    this.transactionService.transactionChanged.pipe(
+      takeUntil(this.onDestroyed$),
+      flatMap(() => {
+        const transactionId: number = Number(this.route.snapshot.params.id);
+        return this.transactionService.loadOne(transactionId);
+      })
+    ).subscribe((transaction) => this.transactionLoaded(transaction));
   }
 
   transactionLoaded(transaction: Transaction): void {
     this.transaction = transaction;
+    this.offer = transaction.offer;
 
     const {agentBuyers, agentSellers, sellers} = transaction.offer;
     this.isAgent = [...agentSellers, ...agentBuyers].some(({email}) => email === this.authService.currentUser.email);
@@ -132,11 +110,8 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
   }
 
   onDelete() {
-    this.transactionsFlow ?
-      this.transactionService.delete(this.transaction.id)
-        .subscribe(() => this.router.navigate(['/portal/purchase-agreements'])) :
-      this.offerService.delete(this.offer.id)
-        .subscribe(() => this.router.navigate(['/portal/purchase-agreements']));
+    this.transactionService.delete(this.transaction.id)
+      .subscribe(() => this.router.navigate(['/portal/transactions']));
   }
 
   getClassName(status: TransactionStatus | AgreementStatus): string {
@@ -147,16 +122,6 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
         return 'yellow';
       case TransactionStatus.Finished:
         return 'green';
-      case AgreementStatus.Started:
-        return 'blue';
-      case AgreementStatus.Delivered:
-        return 'orange';
-      case AgreementStatus.Accepted:
-        return 'yellow';
-      case AgreementStatus.Completed:
-        return 'violet';
-      case AgreementStatus.Denied:
-        return 'red';
     }
   }
 
@@ -178,7 +143,7 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
         } as Person;
 
         const updatedListKey = this.isSeller ? 'agentSellers' : 'agentBuyers';
-        this.transactionsFlow ? this.transaction.offer[updatedListKey].push(invited) : this.offer[updatedListKey].push(invited);
+        this.transaction.offer[updatedListKey].push(invited);
         this.userEmailControl.setValue(null);
       });
   }
@@ -195,30 +160,18 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
     //   return;
     // }
 
-    // this.transactionsFlow ?
-    //   this.router.navigate([url, doc.id]) :
-      this.router.navigateByUrl(`portal/purchase-agreements/${this.offer.id}/step-two`);
+    // this.router.navigate([url, doc.id]);
     // this.transactionService.lockOffer(this.transaction.id)
     //   .subscribe(() => this.router.navigate(['/e-sign', this.transaction.id]));
   }
 
-  goToCounterOffer() {
-    this.router.navigateByUrl(`portal/counter-offer`);
-  }
-
   deny() {
     const id: number = Number(this.route.snapshot.params.id);
-    this.transactionsFlow ?
-      this.transactionService.deny(id)
-        .subscribe(() => {
-          this.transaction.allowDeny = false;
-          this.snackbar.open(`Denied.`);
-        }) :
-      this.offerService.rejectOffer(this.offer.id)
-        .subscribe(() => {
-          this.offer.allowSign = false;
-          this.snackbar.open(`Denied.`);
-        });
+    this.transactionService.deny(id)
+      .subscribe(() => {
+        this.transaction.allowDeny = false;
+        this.snackbar.open(`Denied.`);
+      });
   }
 
   downloadAndToggleState(file: string | Document) {

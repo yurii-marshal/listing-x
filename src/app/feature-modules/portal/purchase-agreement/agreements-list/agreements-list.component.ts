@@ -5,7 +5,7 @@ import { filter, takeUntil } from 'rxjs/operators';
 import { TransactionService } from '../../services/transaction.service';
 import { OfferService } from '../../services/offer.service';
 import { User } from '../../../auth/models';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../../core-modules/core-services/auth.service';
 import { MatDialog } from '@angular/material';
 import { AddressDialogComponent } from '../../../../shared-modules/dialogs/address-dialog/address-dialog.component';
@@ -34,6 +34,7 @@ export class AgreementsListComponent implements OnInit, AfterViewInit, OnDestroy
   statuses: string[] = Object.values(AgreementStatus);
   calendarDataSource: CalendarEvent[];
   user: User;
+  transactionsFlow: boolean;
   /* TODO: Refactor */
   readonly statusLabels: { [key: string]: string } = {
     [AgreementStatus.All]: 'All agreements',
@@ -46,6 +47,7 @@ export class AgreementsListComponent implements OnInit, AfterViewInit, OnDestroy
   private onDestroyed$: Subject<void> = new Subject<void>();
 
   constructor(private router: Router,
+              private route: ActivatedRoute,
               private transactionService: TransactionService,
               private offerService: OfferService,
               private authService: AuthService,
@@ -59,6 +61,7 @@ export class AgreementsListComponent implements OnInit, AfterViewInit, OnDestroy
   ngOnInit() {
     // this.service.loadCalendar()
     //   .subscribe(events => this.calendarDataSource = events);
+    this.transactionsFlow = this.route.snapshot.data.transactionPage ? this.route.snapshot.data.transactionPage : false;
     this.user = this.authService.currentUser;
     this.dataSource = new BaseTableDataSource(this.offerService, null, null);
   }

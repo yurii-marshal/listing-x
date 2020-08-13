@@ -31,6 +31,7 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   isSeller: boolean = false;
   pendingDocuments: Observable<GeneratedDocument[]>;
   completedDocuments: Observable<GeneratedDocument[]>;
+  transactionsFlow: boolean;
   /* TODO: Refactor */
   readonly statusLabels: { [key: string]: string } = {
     [AgreementStatus.All]: 'All agreements',
@@ -52,6 +53,7 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   ngOnInit() {
+    this.transactionsFlow = this.route.snapshot.data.transactionPage ? this.route.snapshot.data.transactionPage : false;
     const offerId: number = Number(this.route.snapshot.params.id);
 
     this.offerService.loadOne(offerId)
