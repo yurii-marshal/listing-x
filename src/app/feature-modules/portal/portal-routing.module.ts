@@ -25,7 +25,8 @@ import { CreateOfferGuardService } from '../../core-modules/guards/create-offer-
 import { GetOfferResolver } from '../../core-modules/resolvers/get-offer.resolver';
 import { AgreementsListComponent } from './purchase-agreement/agreements-list/agreements-list.component';
 import { AgreementDetailsComponent } from './purchase-agreement/agreement-details/agreement-details.component';
-import { CounterOfferComponent } from './counter-offer/counter-offer/counter-offer.component';
+import { SingleCOComponent } from './counter-offer/single-co/single-co.component';
+import { MultipleCOComponent } from './counter-offer/multiple-co/multiple-co.component';
 
 const routes: Routes = [
   {
@@ -89,10 +90,22 @@ const routes: Routes = [
     path: 'counter-offer',
     canActivate: [AuthGuardService],
     canActivateChild: [AuthGuardService],
-    component: CounterOfferComponent,
-    children: [],
+    children: [
+      {
+        path: 'single',
+        redirectTo: 'single/:id',
+        pathMatch: 'full',
+        component: SingleCOComponent,
+      },
+      {
+        path: 'multiple',
+        redirectTo: 'multiple/:id',
+        pathMatch: 'full',
+        component: MultipleCOComponent,
+      },
+    ],
   }, {
-    path: 'purchase-agreement',
+    path: 'purchase-agreements',
     canActivate: [AuthGuardService],
     canActivateChild: [AuthGuardService],
     children: [
