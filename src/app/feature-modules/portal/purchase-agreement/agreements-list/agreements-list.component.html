@@ -127,7 +127,7 @@
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let element">
           <div routerLink="{{ transactionsFlow ?
-          '/portal/transactions/' + element.id :
+          '/portal/transactions/' + element.transaction :
           '/portal/purchase-agreements/' + element.id + '/details'}}" class="detail-btn" [ngClass]="getClassName(element.status)">
             More Details
           </div>

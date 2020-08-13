@@ -15,15 +15,15 @@ import { MatDialog } from '@angular/material/dialog';
 import { SpqDialogComponent } from '../dialogs/spq-dialog/spq-dialog.component';
 import { AddendumDialogComponent } from '../dialogs/addendum-dialog/addendum-dialog.component';
 import { CalendarEvent } from '../../../core-modules/models/calendar-event';
-import { AgreementStatus } from 'src/app/core-modules/models/agreement';
 import { OfferService } from 'src/app/feature-modules/portal/services/offer.service';
 
 @Component({
   selector: 'app-transaction-details',
   templateUrl: '../purchase-agreement/agreement-details/agreement-details.component.html',
-  styleUrls: ['./transaction-details.component.scss']
+  styleUrls: ['../purchase-agreement/agreement-details/agreement-details.component.scss']
 })
 export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, OnInit {
+  // TODO: reassigne transaction propeties due to common template
   transaction: Transaction;
   offer: Offer;
 
@@ -114,7 +114,7 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
       .subscribe(() => this.router.navigate(['/portal/transactions']));
   }
 
-  getClassName(status: TransactionStatus | AgreementStatus): string {
+  getClassName(status: TransactionStatus): string {
     switch (status) {
       case TransactionStatus.New:
         return 'blue';

@@ -18,7 +18,7 @@ import { log } from 'util';
 @Component({
   selector: 'app-transactions',
   templateUrl: '../purchase-agreement/agreements-list/agreements-list.component.html',
-  styleUrls: ['./transactions.component.scss']
+  styleUrls: ['../purchase-agreement/agreements-list/agreements-list.component.scss']
 })
 export class TransactionsComponent implements OnDestroy, OnInit {
   displayedColumns: string[] = [
@@ -94,7 +94,7 @@ export class TransactionsComponent implements OnDestroy, OnInit {
       .pipe(filter(dialogResult => !!dialogResult))
       .subscribe();
   }
-
+  // TODO: filter by params in GET query
   onFilter(status) {
     if (status === TransactionStatus.All) {
       this.dataSource = Object.assign(this.catchedDataSourse);
