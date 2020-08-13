@@ -21,13 +21,13 @@ export class GetOfferResolver implements Resolve<Offer> {
               this.offerService.offerProgress = route.data.progress;
 
               if (offer.progress < this.offerService.offerProgress) {
-                this.router.navigateByUrl('/portal/purchase-agreements');
+                this.router.navigateByUrl('/portal/purchase-agreements/all');
               }
             }
 
             return offer;
           },
-          error: err => this.router.navigateByUrl('/portal/purchase-agreements')
+          error: err => this.router.navigateByUrl('/portal/purchase-agreements/all')
         }),
         first()
       );

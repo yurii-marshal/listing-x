@@ -87,7 +87,7 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
 
   onDelete() {
     this.offerService.delete(this.offer.id)
-      .subscribe(() => this.router.navigate(['/portal/purchase-agreements']));
+      .subscribe(() => this.router.navigate(['/portal/purchase-agreements/all']));
   }
 
   getClassName(status: AgreementStatus): string {
@@ -148,7 +148,11 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   goToCounterOffer() {
-    this.router.navigateByUrl(`portal/counter-offer`);
+    this.router.navigateByUrl(`portal/counter-offer/single`);
+  }
+
+  goToMCO() {
+    this.router.navigateByUrl(`portal/counter-offer/multiple`);
   }
 
   deny() {

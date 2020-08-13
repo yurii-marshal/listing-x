@@ -80,7 +80,7 @@ export class BaseTemplateComponent implements OnInit, OnDestroy {
     if (this.offerService.anonymousOfferData) {
       localStorage.removeItem(LocalStorageKey.Offer);
     }
-    this.router.navigateByUrl('/portal/purchase-agreements');
+    this.router.navigateByUrl('/portal/purchase-agreements/all');
   }
 
   ngOnDestroy() {

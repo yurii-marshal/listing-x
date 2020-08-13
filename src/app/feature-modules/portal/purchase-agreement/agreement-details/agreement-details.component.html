@@ -3,7 +3,7 @@
   <ng-container *ngIf="offer">
     <div class="toolbar">
       <div class="toolbar-content">
-        <div class="back-btn" routerLink="{{ transactionsFlow ? '/portal/transactions' : '/portal/purchase-agreements' }}">
+        <div class="back-btn" routerLink="{{ transactionsFlow ? '/portal/transactions' : '/portal/purchase-agreements/all' }}">
           <mat-icon fontSet="fa" fontIcon="fa-chevron-left"></mat-icon>
           Back
         </div>
@@ -117,6 +117,15 @@
                   (click)="goToCounterOffer()"
                   color="primary">
             COUNTER OFFER
+          </button>
+
+          <button class="counter-offer-btn"
+                  *ngIf="offer.userRole === 'agent_seller'"
+                  mat-flat-button
+                  [disabled]="!offer.isSigned || offer.status === 'denied'"
+                  (click)="goToMCO()"
+                  color="primary">
+            MCO
           </button>
         </div>
       </div>

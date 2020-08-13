@@ -12,7 +12,7 @@ export class LoginGuardService implements CanActivate, CanActivateChild {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
-    const redirectUrl = route.queryParams.redirectUrl || '/portal/purchase-agreements';
+    const redirectUrl = route.queryParams.redirectUrl || '/portal/purchase-agreements/all';
     return this.authService.isLoggedIn().pipe(
       map(isLoggedIn => isLoggedIn ? this.router.parseUrl(redirectUrl) : true)
     );

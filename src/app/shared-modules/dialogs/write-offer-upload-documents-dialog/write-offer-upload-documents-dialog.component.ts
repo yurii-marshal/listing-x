@@ -28,7 +28,7 @@ export class WriteOfferUploadDocumentsDialogComponent implements OnInit {
     return this.data.modalType === UploadDocsModalType.OfferUpdating ?
       this.data.transactionPage ?
         `/portal/transactions/${this.data.transactionId}` : `/portal/purchase-agreements/${this.data.model.offerId}/details` :
-      '/portal/purchase-agreements';
+      '/portal/purchase-agreements/all';
   }
 
   constructor(public route: ActivatedRoute,
