@@ -102,9 +102,7 @@ export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
       // const mb = model.agentBuyers.map((item, index) => {
       //   return (index === 0) ? this.predefinedUser : this.createEntity(item);
       // });
-      const agentBuyers = _.map(model.agentBuyers, (item, index) => {
-        this.createEntity(item, !!this.anonymousOffer || item.email === this.authService.currentUser.email || index === 0);
-      });
+      const agentBuyers = _.map(model.agentBuyers, item => this.createEntity(item, !!this.anonymousOffer || !!this.offer.id));
       this.form.setControl('agentBuyers', this.formBuilder.array(agentBuyers));
     }
 
@@ -159,7 +157,7 @@ export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
 
   private buildForm(): void {
     const offerValues = this.anonymousOffer || this.offer;
-    const disabled: boolean = !!this.anonymousOffer;
+    const disabled: boolean = !!this.anonymousOffer || !!this.offer.id;
 
     // TODO: set predefined user accordingly to userRole
     this.form = this.formBuilder.group({

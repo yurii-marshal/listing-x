@@ -23,7 +23,7 @@
         <input formControlName="email" placeholder="example@maill.com" spellcheck="false" class="form-control">
         <app-form-validation-error [baseControl]="control.get('email')"></app-form-validation-error>
       </div>
-      <button *ngIf="!first" mat-icon-button color="accent" (click)="remove(Type.Buyers, i)">
+      <button *ngIf="!first && control.enabled" mat-icon-button color="accent" (click)="remove(Type.Buyers, i)">
         <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
       </button>
     </div>
@@ -75,7 +75,7 @@
         <input formControlName="email" placeholder="example@maill.com" spellcheck="false" class="form-control">
         <app-form-validation-error [baseControl]="control.get('email')"></app-form-validation-error>
       </div>
-      <button *ngIf="!first" mat-icon-button color="accent" (click)="remove(Type.AgentBuyers, i)">
+      <button *ngIf="!first && control.enabled" mat-icon-button color="accent" (click)="remove(Type.AgentBuyers, i)">
         <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
       </button>
     </div>
@@ -101,7 +101,7 @@
         <input formControlName="email" placeholder="example@maill.com" spellcheck="false" class="form-control">
         <app-form-validation-error [baseControl]="control.get('email')"></app-form-validation-error>
       </div>
-      <button *ngIf="!first" mat-icon-button color="accent" (click)="remove(Type.AgentSellers, i)">
+      <button *ngIf="!first && control.enabled" mat-icon-button color="accent" (click)="remove(Type.AgentSellers, i)">
         <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
       </button>
     </div>
