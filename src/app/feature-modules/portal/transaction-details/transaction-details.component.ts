@@ -62,7 +62,7 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
   }
 
   ngOnInit() {
-    this.transactionsFlow = this.route.snapshot.data.transactionPage ? this.route.snapshot.data.transactionPage : false;
+    this.transactionsFlow = this.router.url.includes('transaction');
 
     const transactionId: number = Number(this.route.snapshot.params.id);
 

@@ -63,7 +63,7 @@ export class TransactionsComponent implements OnDestroy, OnInit {
     // this.service.loadCalendar()
     //   .subscribe(events => this.calendarDataSource = events);
     this.user = this.authService.currentUser;
-    this.transactionsFlow = this.route.snapshot.data.transactionPage ? this.route.snapshot.data.transactionPage : false;
+    this.transactionsFlow = this.router.url.includes('transaction');
     this.service.loadList().pipe(
       takeUntil(this.onDestroyed$),
       map((resp: any) => {

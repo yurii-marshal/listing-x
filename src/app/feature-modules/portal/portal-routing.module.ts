@@ -26,12 +26,11 @@ import { GetOfferResolver } from '../../core-modules/resolvers/get-offer.resolve
 import { AgreementsListComponent } from './purchase-agreement/agreements-list/agreements-list.component';
 import { AgreementDetailsComponent } from './purchase-agreement/agreement-details/agreement-details.component';
 import { TransactionDocumentsResolver } from 'src/app/feature-modules/portal/resolvers/transaction-documents.resolver';
-import { CounterOfferComponent } from './counter-offer/counter-offer/counter-offer.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: TransactionsComponent,
+    component: AgreementsListComponent,
     canActivate: [AuthGuardService],
     canActivateChild: [AuthGuardService],
     children: [
@@ -90,62 +89,86 @@ const routes: Routes = [
     path: 'counter-offer',
     canActivate: [AuthGuardService],
     canActivateChild: [AuthGuardService],
-    component: CounterOfferComponent,
-    children: [],
   }, {
     path: 'purchase-agreements',
-    component: AgreementsListComponent,
     canActivate: [AuthGuardService],
     canActivateChild: [AuthGuardService],
-  }, {
-    path: 'purchase-agreements/all',
-    pathMatch: 'full',
-    component: AgreementsListComponent,
-  }, {
-    path: 'purchase-agreements/step-one',
-    pathMatch: 'full',
-    component: StepOneComponent,
-    canActivate: [],
-    resolve: {offer: CreateOfferResolver}
-  }, {
-    path: 'purchase-agreements/:id',
     children: [
+      {
+        path: 'all',
+        pathMatch: 'full',
+        component: AgreementsListComponent,
+      },
       {
         path: 'step-one',
         pathMatch: 'full',
         component: StepOneComponent,
-        canActivate: [CreateOfferGuardService],
-        data: {progress: 1},
-        resolve: {offer: GetOfferResolver}
-      },
-      {
-        path: 'step-two',
-        pathMatch: 'full',
-        component: StepTwoComponent,
         canActivate: [],
-        data: {progress: 2},
-        resolve: {offer: GetOfferResolver}
+        resolve: {offer: CreateOfferResolver}
       },
       {
-        path: 'step-three',
-        pathMatch: 'full',
-        component: StepThreeComponent,
-        canActivate: [],
-        data: {progress: 3},
-        resolve: {offer: GetOfferResolver}
+        path: ':id',
+        children: [
+          {
+            path: 'step-one',
+            pathMatch: 'full',
+            component: StepOneComponent,
+            canActivate: [CreateOfferGuardService],
+            data: {progress: 1},
+            resolve: {offer: GetOfferResolver}
+          },
+          {
+            path: 'step-two',
+            pathMatch: 'full',
+            component: StepTwoComponent,
+            canActivate: [],
+            data: {progress: 2},
+            resolve: {offer: GetOfferResolver}
+          },
+          {
+            path: 'step-three',
+            pathMatch: 'full',
+            component: StepThreeComponent,
+            canActivate: [],
+            data: {progress: 3},
+            resolve: {offer: GetOfferResolver}
+          },
+          {
+            path: 'summary',
+            pathMatch: 'full',
+            component: SummaryComponent,
+            canActivate: [],
+            data: {progress: 4},
+            resolve: {offer: GetOfferResolver}
+          },
+          {
+            path: 'details',
+            pathMatch: 'full',
+            component: AgreementDetailsComponent,
+            canActivate: [],
+          },
+          {
+            path: 'sign',
+            pathMatch: 'full',
+            component: StepTwoComponent,
+            resolve: {offer: GetOfferResolver}
+          },
+        ]
+      },
+    ]
+  },
+  {
+    path: 'transactions',
+    canActivate: [AuthGuardService],
+    canActivateChild: [AuthGuardService],
+    children: [
+      {
+        path: '',
+        component: TransactionsComponent,
       },
       {
-        path: 'summary',
-        pathMatch: 'full',
-        component: SummaryComponent,
-        canActivate: [],
-        data: {progress: 4},
-        resolve: {offer: GetOfferResolver}
-      },
-      {
-        path: 'details',
-        component: AgreementDetailsComponent,
-        canActivate: [AuthGuardService],
+        path: ':id',
+        component: TransactionDetailsComponent,
         children: [
           {
             path: 'upload',
@@ -153,43 +176,14 @@ const routes: Routes = [
             data: {
               component: WriteOfferUploadDocumentsDialogComponent,
               modalType: UploadDocsModalType.OfferUpdating,
-              transactionPage: false
+              transactionPage: true
             },
             resolve: {model: OfferDocumentsResolver}
           }
         ]
-      },
-      {
-        path: 'sign',
-        pathMatch: 'full',
-        component: StepTwoComponent,
-        resolve: {offer: GetOfferResolver}
-      },
-    ]
-  }, {
-    path: 'transactions',
-    component: TransactionsComponent,
-    canActivate: [AuthGuardService],
-    canActivateChild: [AuthGuardService],
-    data: {transactionPage: true}
-  }, {
-    path: 'transactions/:id',
-    component: TransactionDetailsComponent,
-    canActivate: [AuthGuardService],
-    data: {transactionPage: true},
-    children: [
-      {
-        path: 'upload',
-        component: DialogsWrapperComponent,
-        data: {
-          component: WriteOfferUploadDocumentsDialogComponent,
-          modalType: UploadDocsModalType.OfferUpdating,
-          transactionPage: true
-        },
-        resolve: {model: TransactionDocumentsResolver}
       }
     ]
-  }
+  },
 ];
 
 @NgModule({
