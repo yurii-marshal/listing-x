@@ -261,102 +261,102 @@
             </div>
           </footer>
 
-      </form>
+        </form>
 
+      </div>
     </div>
-  </div>
 
-  <!--<div class="side-bar u-flex u-flex-direction&#45;&#45;column u-flex-justify&#45;&#45;space-between"-->
-       <!--[class.open]="isSideBarOpen">-->
+    <!--<div class="side-bar u-flex u-flex-direction&#45;&#45;column u-flex-justify&#45;&#45;space-between"-->
+    <!--[class.open]="isSideBarOpen">-->
 
     <!--<div class="offer-information u-flex u-flex-direction&#45;&#45;column u-flex-justify&#45;&#45;start u-flex-align-items&#45;&#45;start"-->
-         <!--*ngIf="isSideBarOpen">-->
-      <!--<img-->
-        <!--class="close-icon"-->
-        <!--src="assets/images/icons/close-sidebar.svg"-->
-        <!--alt="close"-->
-        <!--(click)="isSideBarOpen = !isSideBarOpen"-->
-      <!--/>-->
+    <!--*ngIf="isSideBarOpen">-->
+    <!--<img-->
+    <!--class="close-icon"-->
+    <!--src="assets/images/icons/close-sidebar.svg"-->
+    <!--alt="close"-->
+    <!--(click)="isSideBarOpen = !isSideBarOpen"-->
+    <!--/>-->
 
-      <!--<h4>Offer information</h4>-->
+    <!--<h4>Offer information</h4>-->
 
-      <!--<div class="roles-list">-->
-        <!--<div class="sellers truncated" *ngFor="let item of offer.sellers; let i = index">-->
-          <!--<h6>Seller #{{i+1}}</h6>-->
-          <!--<div class="item">-->
-            <!--{{item.firstName}} {{item.lastName}} | {{item.email}}-->
-          <!--</div>-->
-        <!--</div>-->
-        <!--<div class="agents truncated" *ngFor="let item of offer.agentBuyers; let i = index">-->
-          <!--<h6>Buyer's Agent #{{i+1}}</h6>-->
-          <!--<div class="item">-->
-            <!--{{item.firstName}} {{item.lastName}} | {{item.email}}-->
-          <!--</div>-->
-        <!--</div>-->
-        <!--<div class="agents truncated" *ngFor="let item of offer.agentSellers; let i = index">-->
-          <!--<h6>Listing Agent #{{i+1}}</h6>-->
-          <!--<div class="item">-->
-            <!--{{item.firstName}} {{item.lastName}} | {{item.email}}-->
-          <!--</div>-->
-        <!--</div>-->
-        <!--<div class="buyers truncated" *ngFor="let item of offer.buyers; let i = index">-->
-          <!--<h6>Buyer #{{i+1}}</h6>-->
-          <!--<div class="item">-->
-            <!--{{item.firstName}} {{item.lastName}} | {{item.email}}-->
-          <!--</div>-->
-        <!--</div>-->
-        <!--<div class="address truncated">-->
-          <!--<h6>Address</h6>-->
-          <!--<div class="item">-->
-            <!--{{offer.streetName}}, {{offer.city}} {{offer.zip}}-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
+    <!--<div class="roles-list">-->
+    <!--<div class="sellers truncated" *ngFor="let item of offer.sellers; let i = index">-->
+    <!--<h6>Seller #{{i+1}}</h6>-->
+    <!--<div class="item">-->
+    <!--{{item.firstName}} {{item.lastName}} | {{item.email}}-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="agents truncated" *ngFor="let item of offer.agentBuyers; let i = index">-->
+    <!--<h6>Buyer's Agent #{{i+1}}</h6>-->
+    <!--<div class="item">-->
+    <!--{{item.firstName}} {{item.lastName}} | {{item.email}}-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="agents truncated" *ngFor="let item of offer.agentSellers; let i = index">-->
+    <!--<h6>Listing Agent #{{i+1}}</h6>-->
+    <!--<div class="item">-->
+    <!--{{item.firstName}} {{item.lastName}} | {{item.email}}-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="buyers truncated" *ngFor="let item of offer.buyers; let i = index">-->
+    <!--<h6>Buyer #{{i+1}}</h6>-->
+    <!--<div class="item">-->
+    <!--{{item.firstName}} {{item.lastName}} | {{item.email}}-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="address truncated">-->
+    <!--<h6>Address</h6>-->
+    <!--<div class="item">-->
+    <!--{{offer.streetName}}, {{offer.city}} {{offer.zip}}-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
 
-      <!--<button-->
-        <!--mat-flat-button-->
-        <!--class="edit-btn u-flex-align-self&#45;&#45;end"-->
-        <!--*ngIf="route.snapshot.routeConfig.path === 'step-two'"-->
-        <!--(click)="editOffer()"-->
-      <!--&gt;-->
-          <!--<span class="text">-->
-            <!--Edit-->
-          <!--</span>-->
-      <!--</button>-->
+    <!--<button-->
+    <!--mat-flat-button-->
+    <!--class="edit-btn u-flex-align-self&#45;&#45;end"-->
+    <!--*ngIf="route.snapshot.routeConfig.path === 'step-two'"-->
+    <!--(click)="editOffer()"-->
+    <!--&gt;-->
+    <!--<span class="text">-->
+    <!--Edit-->
+    <!--</span>-->
+    <!--</button>-->
     <!--</div>-->
     <!--<div class="open-control u-flex u-flex-justify&#45;&#45;center" *ngIf="!isSideBarOpen">-->
-      <!--<button-->
-        <!--mat-flat-button-->
-        <!--class="open-btn"-->
-        <!--(click)="isSideBarOpen = !isSideBarOpen"-->
-      <!--&gt;-->
-        <!--<img src="assets/images/icons/hamburger.svg" alt="open sidebar"/>-->
-      <!--</button>-->
+    <!--<button-->
+    <!--mat-flat-button-->
+    <!--class="open-btn"-->
+    <!--(click)="isSideBarOpen = !isSideBarOpen"-->
+    <!--&gt;-->
+    <!--<img src="assets/images/icons/hamburger.svg" alt="open sidebar"/>-->
+    <!--</button>-->
     <!--</div>-->
 
     <!--<div class="controls">-->
-      <!--<div class="progress-container" *ngIf="isSideBarOpen">-->
-        <!--<div class="labels u-flex u-flex-justify&#45;&#45;space-between">-->
-          <!--<h6 class="pages u-flex u-flex-08">COMPLETED FIELDS</h6>-->
-          <!--<div class="progress u-flex u-flex-02">{{completedFieldsCount}}/{{allFieldsCount}}</div>-->
-        <!--</div>-->
-        <!--<div class="progress-bar">-->
-          <!--<div class="progress-line" [style.width.%]="(completedFieldsCount / allFieldsCount) * 100"></div>-->
-        <!--</div>-->
-      <!--</div>-->
-
-      <!--<div class="u-flex u-flex-justify&#45;&#45;center">-->
-        <!--<button mat-flat-button-->
-                <!--color="primary"-->
-                <!--class="continue-btn u-flex u-flex-align-items&#45;&#45;center u-flex-justify&#45;&#45;center"-->
-                <!--[title]="isSideBarOpen ? '' : 'Continue'"-->
-                <!--[class.wide]="isSideBarOpen"-->
-                <!--(click)="continue()">-->
-          <!--<span>Continue</span>-->
-          <!--<img src="assets/images/icons/chevron-right.svg" alt="continue"/>-->
-        <!--</button>-->
-      <!--</div>-->
+    <!--<div class="progress-container" *ngIf="isSideBarOpen">-->
+    <!--<div class="labels u-flex u-flex-justify&#45;&#45;space-between">-->
+    <!--<h6 class="pages u-flex u-flex-08">COMPLETED FIELDS</h6>-->
+    <!--<div class="progress u-flex u-flex-02">{{completedFieldsCount}}/{{allFieldsCount}}</div>-->
     <!--</div>-->
-  <!--</div>-->
-  <!--</div>-->
+    <!--<div class="progress-bar">-->
+    <!--<div class="progress-line" [style.width.%]="(completedFieldsCount / allFieldsCount) * 100"></div>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="u-flex u-flex-justify&#45;&#45;center">-->
+    <!--<button mat-flat-button-->
+    <!--color="primary"-->
+    <!--class="continue-btn u-flex u-flex-align-items&#45;&#45;center u-flex-justify&#45;&#45;center"-->
+    <!--[title]="isSideBarOpen ? '' : 'Continue'"-->
+    <!--[class.wide]="isSideBarOpen"-->
+    <!--(click)="continue()">-->
+    <!--<span>Continue</span>-->
+    <!--<img src="assets/images/icons/chevron-right.svg" alt="continue"/>-->
+    <!--</button>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+  </div>
 </app-base-template>
