@@ -23,7 +23,7 @@ import { OfferService } from 'src/app/feature-modules/portal/services/offer.serv
   styleUrls: ['../purchase-agreement/agreement-details/agreement-details.component.scss']
 })
 export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, OnInit {
-  // TODO: reassigne transaction propeties due to common template
+  // TODO: reassign transaction properties accordingly to using common template
   transaction: Transaction;
   offer: Offer;
 

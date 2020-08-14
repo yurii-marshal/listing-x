@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChildren } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { BaseCounterOfferAbstract } from '../../base-counter-offer.abstract';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OfferService } from '../../../services/offer.service';
 import { User } from 'src/app/feature-modules/auth/models';
 import { Offer } from 'src/app/core-modules/models/offer';
+import { CounterOfferService } from '../../../services/counter-offer.service';
 
 @Component({
   selector: 'app-buyer-co-agreement',
@@ -26,10 +27,12 @@ export class BuyerCOAgreementComponent extends BaseCounterOfferAbstract<null> im
 
   constructor(
     private fb: FormBuilder,
+    protected route: ActivatedRoute,
     protected router: Router,
     protected offerService: OfferService,
+    protected counterOfferService: CounterOfferService,
   ) {
-    super(router, offerService);
+    super(route, router, offerService, counterOfferService);
   }
 
   ngOnInit() {

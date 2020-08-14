@@ -2,6 +2,7 @@ export enum ApiEndpoint {
   CurrentUser = '/users/current/',
   Addresses = '/addresses/',
   Offer = '/offers/',
+  CounterOffer = '/counter-offers/',
   AnonymousOffer = '/offers/token/',
   Upload = '/documents/upload/',
   Agreements = '/agreements/',

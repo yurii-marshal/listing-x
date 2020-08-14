@@ -64,7 +64,7 @@ export class WriteOfferUploadDocumentsDialogComponent implements OnInit {
 
   continue(): void {
     const model: LinkedDocuments = this.getRequestValue();
-    // TODO: only do http request in case: form.dirty
+    // TODO: do http request in case: form.dirty only
     this.service.linkDocumentsToOffer(model, this.data.model.offerId)
       .subscribe(() => {
         this.dialogRef.close(model);
