@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewChildren } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { BaseCounterOfferAbstract } from '../base-counter-offer.abstract';
+import { Router } from '@angular/router';
+import { OfferService } from '../../services/offer.service';
 import { Offer } from 'src/app/core-modules/models/offer';
 import { User } from 'src/app/feature-modules/auth/models';
 
@@ -8,7 +11,7 @@ import { User } from 'src/app/feature-modules/auth/models';
   templateUrl: './multiple-co.component.html',
   styleUrls: ['./../counter-offer.scss', './multiple-co.component.scss']
 })
-export class MultipleCOComponent implements OnInit {
+export class MultipleCOComponent extends BaseCounterOfferAbstract<null> implements OnInit {
   @ViewChildren('form') form;
   isSideBarOpen: boolean;
   completedFieldsCount: number = 0;
@@ -21,7 +24,13 @@ export class MultipleCOComponent implements OnInit {
 
   private user: User;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(
+    private fb: FormBuilder,
+    protected router: Router,
+    protected offerService: OfferService,
+    ) {
+    super(router, offerService);
+  }
 
   ngOnInit() {
     this.documentForm = this.fb.group({
@@ -78,13 +87,7 @@ export class MultipleCOComponent implements OnInit {
   }
 
   private getSignFieldAllowedFor(role: string, index: number) {
-    const value = {
-      value: '',
-      disabled: this.offer[role][index] ? this.offer[role][index].email !== this.user.email : true,
-    };
-    // const validators = this.offer[role][index] ? (this.offer[role][index].email === this.user.email ? [Validators.required] : []) : [];
-
-    return [value, []];
+    return null;
   }
 
   continue() {

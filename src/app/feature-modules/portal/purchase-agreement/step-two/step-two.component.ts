@@ -560,6 +560,10 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     }
   }
 
+  closeOffer() {
+    this.router.navigateByUrl('/portal/purchase-agreements/all');
+  }
+
   switchDaysAndDate(value: string, daysControlName: string, dateControlName: string) {
     switch (value) {
       case 'date':
