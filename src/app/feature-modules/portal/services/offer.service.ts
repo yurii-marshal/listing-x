@@ -7,6 +7,7 @@ import { Offer, OfferSummary } from '../../../core-modules/models/offer';
 import { ApiEndpoint } from '../../../core-modules/enums/api-endpoints';
 import { BaseDataService } from '../../../core-modules/base-classes/base-data-service';
 import { CalendarEvent } from '../../../core-modules/models/calendar-event';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class OfferService extends BaseDataService<Offer> {
@@ -16,7 +17,7 @@ export class OfferService extends BaseDataService<Offer> {
   public currentOffer: Offer;
   public changedOfferModel: Offer;
 
-  constructor(protected injector: Injector) {
+  constructor(protected injector: Injector, private router: Router) {
     super(injector, ApiEndpoint.Offer);
   }
 

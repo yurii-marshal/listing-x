@@ -13,7 +13,7 @@ export class GetOfferResolver implements Resolve<Offer> {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Offer> {
-    return this.offerService.getOfferById(+route.params.id)
+    return this.offerService.loadOne(+route.params.id)
       .pipe(
         tap({
           next: (offer) => {

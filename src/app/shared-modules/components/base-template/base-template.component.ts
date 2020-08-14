@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../../feature-modules/auth/models';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
@@ -21,6 +21,8 @@ export class BaseTemplateComponent implements OnInit, OnDestroy {
   @Input()
   state: string = 'portal';
 
+  @Output() close: EventEmitter<void> = new EventEmitter<void>();
+
   user: User;
 
   offer: Offer;
@@ -28,6 +30,8 @@ export class BaseTemplateComponent implements OnInit, OnDestroy {
   portalNavLinks: { label, path, disabled, hidden }[] = [];
 
   purchaseNavLinks: { label, path, progress, disabled }[] = [];
+
+  isChildPage: boolean = false;
 
   private onDestroyed$: Subject<void> = new Subject<void>();
 
@@ -41,6 +45,8 @@ export class BaseTemplateComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.offer = this.offerService.currentOffer;
     this.user = this.authService.currentUser;
+
+    this.isChildPage = this.state === 'agreement' || this.state === 'counter-offer';
 
     this.portalNavLinks = [
       {label: 'Agreements', path: '/portal/purchase-agreements/all', disabled: !this.user.registrationCompleted, hidden: false},
@@ -80,7 +86,8 @@ export class BaseTemplateComponent implements OnInit, OnDestroy {
     if (this.offerService.anonymousOfferData) {
       localStorage.removeItem(LocalStorageKey.Offer);
     }
-    this.router.navigateByUrl('/portal/purchase-agreements/all');
+
+    this.close.emit();
   }
 
   ngOnDestroy() {

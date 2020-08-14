@@ -80,12 +80,12 @@ const MatModules = [
     AddendumDialogComponent,
     EditOfferDialogComponent,
     SaveOfferDialogComponent,
-    SpqDialogComponent
+    SpqDialogComponent,
   ],
   providers: [
     AgreementService,
     TransactionService,
-    MatDatepickerModule
+    MatDatepickerModule,
   ],
 })
 export class PortalModule {

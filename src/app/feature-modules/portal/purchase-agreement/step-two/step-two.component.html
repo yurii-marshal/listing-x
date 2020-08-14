@@ -1,4 +1,4 @@
-<app-base-template [state]="'agreement'">
+<app-base-template [state]="'agreement'" (close)="closeOffer()">
   <div class="u-flex viewer-container">
     <div class="u-flex viewer">
       <div class="doc-container">
@@ -928,7 +928,7 @@
                     Dollars $
                     <!--TODO: create hidden input for value formatting into $$-->
                     <input formControlName="text_offer_price_digits"
-                           appOnlyNumbers
+                           appOnlyNumbers [maxLength]="9"
                            appNumberToWords
                            [numToWordsForm]="documentForm"
                            [recipientControlName]="'page_5.text_offer_price_text'"

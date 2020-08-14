@@ -96,7 +96,7 @@
           <button class="deny-btn"
                   mat-flat-button
                   *ngIf="offer.userRole === 'agent_seller'"
-                  [disabled]="!offer.allowSign || offer.status === 'denied'"
+                  [disabled]="!offer.allowSign || offer.status === 'denied' || offer.isSigned"
                   (click)="deny()"
                   color="accent">
             DENY
@@ -107,7 +107,7 @@
                   [disabled]="!offer.allowSign || offer.status === 'denied'"
                   (click)="goToESign()"
                   color="primary">
-            SIGN
+            {{offer.isSigned ? 'OPEN' : 'SIGN'}}
           </button>
 
           <button class="counter-offer-btn"
