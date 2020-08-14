@@ -10,6 +10,9 @@ import { Offer } from 'src/app/core-modules/models/offer';
 })
 export class BuyerCOAgreementComponent implements OnInit {
   @ViewChildren('form') form;
+  isSideBarOpen: boolean;
+  completedFieldsCount: number = 0;
+  allFieldsCount: number = 0;
 
   documentForm: FormGroup;
   offer: Offer;
@@ -68,6 +71,10 @@ export class BuyerCOAgreementComponent implements OnInit {
     // const validators = this.offer[role][index] ? (this.offer[role][index].email === this.user.email ? [Validators.required] : []) : [];
 
     return [value, []];
+  }
+
+  continue() {
+    this.documentForm.markAllAsTouched();
   }
 
 }

@@ -1,0 +1,15 @@
+<div class="progress-container">
+  <div class="labels u-flex u-flex-justify--space-between" *ngIf="currentPage">
+    <h6 class="pages u-flex u-flex-08">PAGE {{currentPage+1}} COMPLETED FIELDS</h6>
+    <div class="progress u-flex u-flex-02">
+      {{completedPageCount}}/{{pagesNum}}
+    </div>
+  </div>
+  <div class="labels u-flex u-flex-justify--space-between">
+    <h6 class="pages u-flex u-flex-08">TOTAL COMPLETED FIELDS</h6>
+    <div class="progress u-flex u-flex-02">{{completedFieldsCount}}/{{totalFieldsNum}}</div>
+  </div>
+  <div class="progress-bar">
+    <div class="progress-line" [style.width.%]="(completedFieldsCount / totalFieldsNum) * 100"></div>
+  </div>
+</div>
