@@ -73,13 +73,7 @@ export class BuyerCOAgreementComponent extends BaseCounterOfferAbstract<null> im
   }
 
   private getSignFieldAllowedFor(role: string, index: number) {
-    const value = {
-      value: '',
-      disabled: this.offer[role][index] ? this.offer[role][index].email !== this.user.email : true,
-    };
-    // const validators = this.offer[role][index] ? (this.offer[role][index].email === this.user.email ? [Validators.required] : []) : [];
-
-    return [value, []];
+    return null;
   }
 
   continue() {
