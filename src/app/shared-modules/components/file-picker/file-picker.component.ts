@@ -103,7 +103,7 @@ export class FilePickerComponent implements OnInit, AfterViewInit, ControlValueA
 
   keyDownHandler(event: KeyboardEvent): void {
     if (event.keyCode === ENTER) {
-      // TODO: select
+      // select
     } else {
       this.keyKeyManager.onKeydown(event);
     }

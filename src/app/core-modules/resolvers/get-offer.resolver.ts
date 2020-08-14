@@ -17,6 +17,8 @@ export class GetOfferResolver implements Resolve<Offer> {
       .pipe(
         tap({
           next: (offer) => {
+            this.offerService.currentOffer = offer;
+
             if (route.data && route.data.progress) {
               this.offerService.offerProgress = route.data.progress;
 

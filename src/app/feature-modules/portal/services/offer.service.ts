@@ -88,7 +88,9 @@ export class OfferService extends BaseDataService<Offer> {
 
   signOffer(offerId: number): Observable<any> {
     return this.http.post(`/offers/${offerId}/sign/`, {})
-      .pipe(switchMap(() => super.loadOne(offerId)));
+      .pipe(
+        tap(() => this.currentOffer.isSigned = true)
+      );
   }
 
   rejectOffer(offerId: number): Observable<any> {

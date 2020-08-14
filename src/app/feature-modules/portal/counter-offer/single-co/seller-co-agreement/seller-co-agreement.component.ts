@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChildren } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { BaseCounterOfferAbstract } from '../../base-counter-offer.abstract';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OfferService } from '../../../services/offer.service';
-import { Offer } from 'src/app/core-modules/models/offer';
 import { User } from 'src/app/feature-modules/auth/models';
+import { CounterOfferService } from '../../../services/counter-offer.service';
 
 @Component({
   selector: 'app-seller-co-agreement',
@@ -18,7 +18,6 @@ export class SellerCOAgreementComponent extends BaseCounterOfferAbstract<null> i
   allFieldsCount: number = 0;
 
   documentForm: FormGroup;
-  offer: Offer;
 
   state = 'counter-offer';
 
@@ -26,10 +25,12 @@ export class SellerCOAgreementComponent extends BaseCounterOfferAbstract<null> i
 
   constructor(
     private fb: FormBuilder,
+    protected route: ActivatedRoute,
     protected router: Router,
     protected offerService: OfferService,
+    protected counterOfferService: CounterOfferService,
   ) {
-    super(router, offerService);
+    super(route, router, offerService, counterOfferService);
   }
 
   ngOnInit() {
@@ -72,12 +73,12 @@ export class SellerCOAgreementComponent extends BaseCounterOfferAbstract<null> i
     });
   }
 
-  private getSignFieldAllowedFor(role: string, index: number) {
-    return null;
-  }
-
   continue() {
     this.documentForm.markAllAsTouched();
+  }
+
+  private getSignFieldAllowedFor(role: string, index: number) {
+    return null;
   }
 
 }

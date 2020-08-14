@@ -470,7 +470,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         check_department_real_estate: [{value: null, disabled: this.isDisabled}, []],
         text_broker_designee_initials: [{value: null, disabled: this.isDisabled}, []],
         date_presentation_of_offer: [{value: null, disabled: this.isDisabled}, []],
-        // TODO: reject offer signs scope 4.0
+        // TODO: reject offer signs
         text_rejection_offer_seller_initial_first: [{value: null, disabled: this.isDisabled}, []],
         text_rejection_offer_seller_initial_second: [{value: null, disabled: this.isDisabled}, []],
         date_rejection_offer_date: [{value: null, disabled: this.isDisabled}, []],
@@ -631,9 +631,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
               if (field === controlName && data) {
                 this.documentForm.get(`${groupName}.${_.snakeCase(field)}`)
                   .patchValue(data, {emitEvent: false, onlySelf: true});
-                // TODO: check it in SRS
-                // this.documentForm.get(`${groupName}.${_.snakeCase(field)}`)
-                //   .disable({onlySelf: true, emitEvent: false});
               }
 
             });
@@ -792,19 +789,13 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   private finalSignAgreement() {
-    // TODO: refactor two req to no one
-    this.offerService.loadOne(this.offerId)
-      .pipe(takeUntil(this.onDestroyed$))
-      .subscribe((offer: Offer) => {
-        offer.isSigned
-          ? this.snackbar.open('Offer is already signed')
-          : this.offerService.signOffer(this.offerId)
-            .pipe(takeUntil(this.onDestroyed$))
-            .subscribe((model: Offer) => {
-              this.offer = model;
-              this.offerService.currentOffer = model;
-              this.snackbar.open('Offer is signed now');
-            });
-      });
+    this.offer.isSigned
+      ? this.snackbar.open('Offer is already signed')
+      : this.offerService.signOffer(this.offerId)
+        .pipe(takeUntil(this.onDestroyed$))
+        .subscribe(() => {
+          this.offer.isSigned = true;
+          this.snackbar.open('Offer is signed now');
+        });
   }
 }
