@@ -8,6 +8,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class MultipleCOComponent implements OnInit {
   @ViewChildren('form') form;
+  isSideBarOpen: boolean;
+  completedFieldsCount: number = 0;
+  allFieldsCount: number = 0;
 
   documentForm: FormGroup;
 
@@ -17,6 +20,10 @@ export class MultipleCOComponent implements OnInit {
 
   ngOnInit() {
     this.documentForm = this.fb.group({});
+  }
+
+  continue() {
+    this.documentForm.markAllAsTouched();
   }
 
 }
