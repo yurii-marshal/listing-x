@@ -1,0 +1,38 @@
+<div class="side-bar u-flex u-flex-direction--column u-flex-justify--space-between"
+     [class.open]="opened">
+
+  <div class="open-control u-flex u-flex-justify--center" *ngIf="!opened">
+    <button
+      mat-flat-button
+      class="open-btn"
+      (click)="openedChange.emit(true)"
+    >
+      <img src="assets/images/icons/hamburger.svg" alt="open sidebar"/>
+    </button>
+  </div>
+
+  <img
+    *ngIf="opened"
+    class="close-icon"
+    src="assets/images/icons/close-sidebar.svg"
+    alt="close"
+    (click)="openedChange.emit(false)"
+  />
+
+  <ng-content></ng-content>
+
+  <div class="controls">
+    <div class="u-flex u-flex-justify--center">
+      <button mat-flat-button
+              color="primary"
+              class="continue-btn u-flex u-flex-align-items--center u-flex-justify--center"
+              [title]="opened ? '' : okButtonText"
+              [class.wide]="opened"
+              (click)="okButtonAction()">
+        <span>{{okButtonText}}</span>
+        <img src="assets/images/icons/chevron-right.svg" alt="{{okButtonText}}"/>
+      </button>
+    </div>
+  </div>
+
+</div>
