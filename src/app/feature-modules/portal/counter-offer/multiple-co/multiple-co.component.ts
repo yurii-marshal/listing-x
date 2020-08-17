@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChildren } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { BaseCounterOfferAbstract } from '../base-counter-offer.abstract';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OfferService } from '../../services/offer.service';
-import { Offer } from 'src/app/core-modules/models/offer';
-import { User } from 'src/app/feature-modules/auth/models';
 import { CounterOfferService } from '../../services/counter-offer.service';
+import { MatSnackBar } from '@angular/material';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-multiple-co',
@@ -13,17 +13,6 @@ import { CounterOfferService } from '../../services/counter-offer.service';
   styleUrls: ['./../counter-offer.scss', './multiple-co.component.scss']
 })
 export class MultipleCOComponent extends BaseCounterOfferAbstract<null> implements OnInit {
-  @ViewChildren('form') form;
-  isSideBarOpen: boolean;
-  completedFieldsCount: number = 0;
-  allFieldsCount: number = 0;
-
-  documentForm: FormGroup;
-  offer: Offer;
-
-  state = 'counter-offer';
-
-  private user: User;
 
   constructor(
     private fb: FormBuilder,
@@ -31,8 +20,10 @@ export class MultipleCOComponent extends BaseCounterOfferAbstract<null> implemen
     protected router: Router,
     protected offerService: OfferService,
     protected counterOfferService: CounterOfferService,
+    protected snackbar: MatSnackBar,
+    protected datePipe: DatePipe,
   ) {
-    super(route, router, offerService, counterOfferService);
+    super(route, router, offerService, counterOfferService, snackbar, datePipe);
   }
 
   ngOnInit() {
@@ -86,15 +77,7 @@ export class MultipleCOComponent extends BaseCounterOfferAbstract<null> implemen
       date_copy_received_date: [{value: null, disabled: true}, []],
       time_copy_received_time: [{value: null, disabled: true}, []],
       radio_copy_received_am_pm: [{value: 'AM', disabled: true}, []],
-    });
-  }
-
-  private getSignFieldAllowedFor(role: string, index: number) {
-    return null;
-  }
-
-  continue() {
-    this.documentForm.markAllAsTouched();
+    }, {updateOn: 'blur'});
   }
 
 }
