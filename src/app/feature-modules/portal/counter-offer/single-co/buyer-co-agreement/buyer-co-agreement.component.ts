@@ -6,13 +6,14 @@ import { OfferService } from '../../../services/offer.service';
 import { CounterOfferService } from '../../../services/counter-offer.service';
 import { MatSnackBar } from '@angular/material';
 import { DatePipe } from '@angular/common';
+import { CounterOffer } from '../../../../../core-modules/models/counter-offer';
 
 @Component({
   selector: 'app-buyer-co-agreement',
   templateUrl: './buyer-co-agreement.component.html',
   styleUrls: ['./../../counter-offer.scss', './buyer-co-agreement.component.scss']
 })
-export class BuyerCOAgreementComponent extends BaseCounterOfferAbstract<null> implements OnInit {
+export class BuyerCOAgreementComponent extends BaseCounterOfferAbstract<CounterOffer> implements OnInit {
 
   constructor(
     private fb: FormBuilder,

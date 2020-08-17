@@ -6,13 +6,14 @@ import { OfferService } from '../../services/offer.service';
 import { CounterOfferService } from '../../services/counter-offer.service';
 import { MatSnackBar } from '@angular/material';
 import { DatePipe } from '@angular/common';
+import { CounterOffer } from '../../../../core-modules/models/counter-offer';
 
 @Component({
   selector: 'app-multiple-co',
   templateUrl: './multiple-co.component.html',
   styleUrls: ['./../counter-offer.scss', './multiple-co.component.scss']
 })
-export class MultipleCOComponent extends BaseCounterOfferAbstract<null> implements OnInit {
+export class MultipleCOComponent extends BaseCounterOfferAbstract<CounterOffer> implements OnInit {
 
   constructor(
     private fb: FormBuilder,

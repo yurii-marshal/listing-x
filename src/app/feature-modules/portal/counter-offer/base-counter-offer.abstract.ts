@@ -11,7 +11,7 @@ import * as _ from 'lodash';
 import { MatSnackBar } from '@angular/material';
 import { DatePipe } from '@angular/common';
 
-export abstract class BaseCounterOfferAbstract<TModel> implements OnInit, OnDestroy {
+export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements OnInit, OnDestroy {
   @ViewChildren('form') form;
 
   protected id: number;
