@@ -14,34 +14,34 @@ import { DatePipe } from '@angular/common';
 export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements OnInit, OnDestroy {
   @ViewChildren('form') form;
 
-  protected id: number;
-  protected counterOffer: CounterOffer = {} as CounterOffer;
+  id: number;
+  counterOffer: CounterOffer = {} as CounterOffer;
 
-  protected documentForm: FormGroup;
+  documentForm: FormGroup;
 
-  protected datepickerMinDate: Date;
+  datepickerMinDate: Date;
 
-  protected state = 'counter-offer';
+  state = 'counter-offer';
 
-  protected isSideBarOpen: boolean;
-  protected completedFieldsCount: number = 0;
-  protected allFieldsCount: number = 0;
+  isSideBarOpen: boolean;
+  completedFieldsCount: number = 0;
+  allFieldsCount: number = 0;
 
-  protected isDisabled: boolean;
+  isDisabled: boolean;
 
-  protected user: User;
+  user: User;
 
-  protected signFieldElements: any[] = [];
+  signFieldElements: any[] = [];
 
   private onDestroyed$: Subject<void> = new Subject<void>();
 
   constructor(
-    protected route: ActivatedRoute,
-    protected router: Router,
-    protected offerService: OfferService,
-    protected counterOfferService: CounterOfferService,
-    protected snackbar: MatSnackBar,
-    protected datePipe: DatePipe,
+    public route: ActivatedRoute,
+    public router: Router,
+    public offerService: OfferService,
+    public counterOfferService: CounterOfferService,
+    public snackbar: MatSnackBar,
+    public datePipe: DatePipe,
   ) {
   }
 
@@ -76,13 +76,13 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     this.onDestroyed$.complete();
   }
 
-  protected closeCO() {
+  closeCO() {
     this.router.navigateByUrl(`portal/purchase-agreements/` +
       (this.offerService.currentOffer ? `${this.offerService.currentOffer.id}/details` : 'all')
     );
   }
 
-  protected moveToNextSignField(isSigned) {
+  moveToNextSignField(isSigned) {
     if (isSigned) {
       if (this.signFieldElements.length) {
         for (const item of this.signFieldElements) {
@@ -98,7 +98,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     }
   }
 
-  protected scrollToFirstInvalidField(): boolean {
+  scrollToFirstInvalidField(): boolean {
     for (const groupName of Object.keys(this.documentForm.controls)) {
       if (this.documentForm.controls[groupName].invalid) {
         for (const controlName of Object.keys((this.documentForm.controls[groupName] as FormGroup).controls)) {
@@ -177,7 +177,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     this.signFieldElements.forEach(item => item.disabled = !!item.value);
   }
 
-  protected continue() {
+  continue() {
     this.documentForm.markAllAsTouched();
 
     this.counterOffer.isSigned
@@ -190,7 +190,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         });
   }
 
-  protected getSignFieldAllowedFor(role: string, index: number) {
+  getSignFieldAllowedFor(role: string, index: number) {
     // const value = {
     //   value: '',
     //   disabled: this.counterOffer[role][index] ? this.counterOffer[role][index].email !== this.user.email : true,

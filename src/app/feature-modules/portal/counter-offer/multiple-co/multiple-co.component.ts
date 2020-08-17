@@ -17,12 +17,12 @@ export class MultipleCOComponent extends BaseCounterOfferAbstract<CounterOffer> 
 
   constructor(
     private fb: FormBuilder,
-    protected route: ActivatedRoute,
-    protected router: Router,
-    protected offerService: OfferService,
-    protected counterOfferService: CounterOfferService,
-    protected snackbar: MatSnackBar,
-    protected datePipe: DatePipe,
+    public route: ActivatedRoute,
+    public router: Router,
+    public offerService: OfferService,
+    public counterOfferService: CounterOfferService,
+    public snackbar: MatSnackBar,
+    public datePipe: DatePipe,
   ) {
     super(route, router, offerService, counterOfferService, snackbar, datePipe);
   }
