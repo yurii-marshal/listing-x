@@ -17,20 +17,20 @@
             </header>
             <br>
             <div class="form">
-              <div class="f-r">Date <input type="text" class="i-lr-2"></div>
+              <div class="f-r">Date <input formControlName="date_buyer_counter_date" type="text" class="i-lr-2"></div>
               <div class="clearfix"></div>
               <div>
                 This is a counter offer to the:
-                <input type="checkbox"> Seller Counter Offer No.
-                <input type="text" class="i-lr__5"> ,
-                <input type="checkbox"> Seller Multiple Counter Offer No.
-                <input type="text" class="i-lr__5"> , or
-                <input type="checkbox"> Other
-                <input type="text" class="i-lr-1__5"> (“Offer”), dated
-                <input type="text" class="i-lr-2"> , on property known as &nbsp;
-                <input type="text" class="i-lr-7__5"> &nbsp; (“Property”), between &nbsp;
-                <input type="text" class="i-lr-5"> &nbsp; (“Buyer”) and &nbsp;
-                <input type="text" class="i-lr-5"> &nbsp; (“Seller”).
+                <input [value]="'Counter Offer'" formControlName="radio_counter_offer_type" type="radio"> Seller Counter Offer No.
+                <input formControlName="text_counter_offer_number" type="text" class="i-lr__5"> ,
+                <input [value]="'Counter Offer Multiple'" formControlName="radio_counter_offer_type" type="radio"> Seller Multiple Counter Offer No.
+                <input formControlName="text_multiple_counter_offer_number" type="text" class="i-lr__5"> , or
+                <input [value]="'Other'" formControlName="radio_counter_offer_type" type="radio"> Other
+                <input formControlName="text_offer_type_other" type="text" class="i-lr-1__5"> (“Offer”), dated
+                <input formControlName="date_offer_dated" type="text" class="i-lr-2"> , on property known as &nbsp;
+                <input formControlName="text_property_address" type="text" class="i-lr-7__5"> &nbsp; (“Property”), between &nbsp;
+                <input formControlName="text_between_buyer" type="text" class="i-lr-5"> &nbsp; (“Buyer”) and &nbsp;
+                <input formControlName="text_between_seller" type="text" class="i-lr-5"> &nbsp; (“Seller”).
               </div>
               <div>
                 <div>
@@ -58,19 +58,19 @@
                   <div>
                     <span>C. &nbsp;OTHER TERMS:</span>
                     <div class="item-pl-3">
-                      <textarea style="width: 1300px; height: 400px;"></textarea>
+                      <textarea formControlName="text_other_therms" style="width: 1300px; height: 400px;"></textarea>
                     </div>
                   </div>
                   <div>
                         <span class="fw-bold f-l">D. The following attached addenda are incorporated into this Buyer
                             Counter offer:</span>
                     <div class="item-pl-3">
-                      &nbsp; <input type="checkbox"> &nbsp; <span class="fw-normal">Addendum No.</span>
-                      <input type="text" class="i-lr-3"><br>
-                      <input type="checkbox"> &nbsp;
-                      <input type="text" class="i-lr-6"> &nbsp;
-                      <input type="checkbox"> &nbsp;
-                      <input type="text" class="i-lr-6">
+                      &nbsp; <input formControlName="check_attached_addendum_first" type="checkbox"> &nbsp; <span class="fw-normal">Addendum No.</span>
+                      <input formControlName="text_addendum_number_first" type="text" class="i-lr-3"><br>
+                      <input formControlName="check_attached_addendum_second" type="checkbox"> &nbsp;
+                      <input formControlName="text_addendum_number_second" type="text" class="i-lr-6"> &nbsp;
+                      <input formControlName="check_attached_addendum_third" type="checkbox"> &nbsp;
+                      <input formControlName="text_addendum_number_third" type="text" class="i-lr-6">
                     </div>
                   </div>
                 </div>
@@ -85,20 +85,20 @@
                       <div class="item-pl-3">
                         Unless by 5:00pm on the third Day After the date it is signed in paragraph 3 (if more
                         than one signature then, the last signature date)(or by <br>
-                        <input type="text" class="i-lr__5">
-                        <input type="checkbox"> AM
-                        <input type="checkbox"> PM on
-                        <input type="text" class="i-lr-1"> (date))
+                        <input formControlName="time_counter_offer_expiration_time" type="text" class="i-lr__5">
+                        <input [value]="'AM'" formControlName="radio_expiration_am_pm" type="radio"> AM
+                        <input [value]="'PM'" formControlName="radio_expiration_am_pm" type="radio"> PM on
+                        <input formControlName="date_expiration_date" type="text" class="i-lr-1"> (date))
                         <b>(i)</b> it is signed in paragraph 4 by Seller and <b>(ii)</b> a copy of the signed
                         Buyer Counter Offer is personally received by Buyer or
-                        <input type="text" class="i-lr-5"> , who is authorized to receive it.
+                        <input formControlName="text_buyer_alternative_name" type="text" class="i-lr-5"> , who is authorized to receive it.
                       </div>
                     </div>
                     <div>
                       <span class="fw-bold f-l">B.</span>
                       <div class="item-pl-3">
                         OR
-                        <input type="checkbox">
+                        <input formControlName="check_buyer_withdraw" type="checkbox">
                         If Buyer withdraws it in writing (CAR Form WOO) anytime prior to Acceptance.
                       </div>
                     </div>
@@ -111,12 +111,12 @@
                   </div>
                   <div class="item-pl-3">
                     <div>
-                      Buyer <input type="text" class="i-lr-9__5">
-                      Date <input type="text" class="i-lr-2__5">
+                      Buyer <input formControlName="text_buyer_name_first" type="text" class="i-lr-9__5">
+                      Date <input formControlName="date_buyer_signature_first" type="text" class="i-lr-2__5">
                     </div>
                     <div>
-                      Buyer <input type="text" class="i-lr-9__5">
-                      Date <input type="text" class="i-lr-2__5">
+                      Buyer <input formControlName="text_buyer_name_second" type="text" class="i-lr-9__5">
+                      Date <input formControlName="date_buyer_signature_second" type="text" class="i-lr-2__5">
                     </div>
                   </div>
                 </div>
@@ -127,22 +127,22 @@
                   <div class="item-pl-3">
                     accept the above Buyer Counter Offer
                     <span class="fw-bold">
-                            (If checked <input type="checkbox"> SUBJECT TO THE ATTACHED COUNTER OFFER)
+                            (If checked <input formControlName="check_receive_copy" type="checkbox"> SUBJECT TO THE ATTACHED COUNTER OFFER)
                         </span>
                     and acknowledge receipt of a Copy.
                     <div>
-                      Seller &nbsp;<input type="text" class="i-lr-7">
-                      Date &nbsp;<input type="text" class="i-lr-2__5">
-                      Time &nbsp;<input type="text" class="i-lr-1">
-                      &nbsp;<input type="checkbox"> AM/
-                      <input type="checkbox"> PM
+                      Seller &nbsp;<input formControlName="text_seller_signature_name_first" type="text" class="i-lr-7">
+                      Date &nbsp;<input formControlName="date_seller_first_signature" type="text" class="i-lr-2__5">
+                      Time &nbsp;<input formControlName="time_seller_signature_time_first" type="text" class="i-lr-1">
+                      &nbsp;<input [value]="'AM'" formControlName="radio_seller_signature_first" type="checkbox"> AM/
+                      <input [value]="'PM'" formControlName="radio_seller_signature_first" type="checkbox"> PM
                     </div>
                     <div>
-                      Seller &nbsp;<input type="text" class="i-lr-7">
-                      Date &nbsp;<input type="text" class="i-lr-2__5">
-                      Time &nbsp;<input type="text" class="i-lr-1">
-                      &nbsp;<input type="checkbox"> AM/
-                      <input type="checkbox"> PM
+                      Seller &nbsp;<input formControlName="text_seller_signature_name_second" type="text" class="i-lr-7">
+                      Date &nbsp;<input formControlName="date_seller_second_signature" type="text" class="i-lr-2__5">
+                      Time &nbsp;<input formControlName="time_seller_signature_time_second" type="text" class="i-lr-1">
+                      &nbsp;<input [value]="'AM'" formControlName="radio_seller_signature_second" type="checkbox"> AM/
+                      <input [value]="'PM'" formControlName="radio_seller_signature_second" type="checkbox"> PM
                     </div>
                   </div>
                 </div>
@@ -151,15 +151,15 @@
                 <b>CONFIRMATION OF ACCEPTANCE:</b>
                 <br>
                 <div>
-                  ( <input type="text" class="i-lr-1"> /
-                  <input type="text" class="i-lr-1"> ) (Initials)
+                  ( <input formControlName="text_buyer_initials_first" type="text" class="i-lr-1"> /
+                  <input formControlName="text_buyer_initials_second" type="text" class="i-lr-1"> ) (Initials)
                   <span class="fw-bold">Confirmation of Acceptance:</span>
                   A Copy of Signed Acceptance was personally received by Buyer or Buyer's
                   authorized agent as specified in paragraph 2A on (date)
-                  <input type="text" class="i-lr-3"> at
-                  <input type="text" class="i-lr-1">
-                  <input type="checkbox"> AM/
-                  <input type="checkbox"> PM.
+                  <input formControlName="date_copy_received_date" type="text" class="i-lr-3"> at
+                  <input formControlName="time_copy_received_time" type="text" class="i-lr-1">
+                  <input [value]="'AM'" formControlName="radio_copy_received_am_pm" type="checkbox"> AM/
+                  <input [value]="'PM'" formControlName="radio_copy_received_am_pm" type="checkbox"> PM.
                   <span class="fw-bold">
                         A binding Agreement is created
                         when a Copy of Signed Acceptance is personally received by Buyer or Buyer's authorized agent whether or not confirmed in

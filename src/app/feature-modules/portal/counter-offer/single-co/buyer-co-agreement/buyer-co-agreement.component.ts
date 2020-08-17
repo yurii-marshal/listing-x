@@ -30,6 +30,9 @@ export class BuyerCOAgreementComponent extends BaseCounterOfferAbstract<null> im
     this.isDisabled = this.counterOffer.userRole !== 'agent_buyer';
 
     this.documentForm = this.fb.group({
+      date_buyer_counter_date: [{value: null, disabled: true}, []],
+      radio_counter_offer_type: [{value: 'Counter Offer', disabled: true}, []],
+      text_offer_type_other: [{value: null, disabled: true}, []],
       text_counter_offer_number: [{value: null, disabled: true}, []],
       text_multiple_counter_offer_number: [{value: null, disabled: true}, []],
       date_offer_dated: [{value: null, disabled: true}, []],
@@ -52,6 +55,7 @@ export class BuyerCOAgreementComponent extends BaseCounterOfferAbstract<null> im
       date_buyer_signature_first: [{value: this.getSignFieldAllowedFor('buyers', 0), disabled: true}, []],
       text_buyer_name_second: [{value: this.getSignFieldAllowedFor('buyers', 0), disabled: true}, []],
       date_buyer_signature_second: [{value: this.getSignFieldAllowedFor('buyers', 1), disabled: true}, []],
+      check_receive_copy: [{value: null, disabled: true}, []],
       text_seller_signature_name_first: [{value: this.getSignFieldAllowedFor('buyers', 1), disabled: true}, []],
       date_seller_first_signature: [{value: this.getSignFieldAllowedFor('seller', 0), disabled: true}, []],
       time_seller_signature_time_first: [{value: this.getSignFieldAllowedFor('seller', 0), disabled: true}, []],

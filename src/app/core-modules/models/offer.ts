@@ -1,6 +1,8 @@
 import { LoanType } from '../enums/loan-type';
-import { Document } from './document';
+import { Document, GeneratedDocument } from './document';
 import { AgreementStatus } from './agreement';
+import { Log } from 'src/app/core-modules/models/log';
+import { TransactionStatus } from 'src/app/core-modules/models/transaction';
 
 export interface OfferSummary extends Offer {
   documents: LinkedDocuments;
@@ -32,7 +34,7 @@ export interface Offer {
   // additional
   createdAt?: Date | string;
   progress?: number;
-  status?: AgreementStatus;
+  status?: AgreementStatus | TransactionStatus;
   transaction?: number;
 
   // Second step
@@ -48,9 +50,15 @@ export interface Offer {
   documents: LinkedDocuments;
 
   // Details
+  allowEdit?: boolean;
+  allowDelete?: boolean;
+  allowInvite?: boolean;
   allowDeny: boolean;
   allowSign: boolean;
   isSigned: boolean;
+
+  lastLogs?: Log[];
+  transactionDocs?: GeneratedDocument[];
 }
 
 export interface Person {
