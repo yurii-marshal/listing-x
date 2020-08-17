@@ -27,6 +27,8 @@ export class MultipleCOComponent extends BaseCounterOfferAbstract<null> implemen
   }
 
   ngOnInit() {
+    super.ngOnInit();
+
     this.documentForm = this.fb.group({
       text_counter_offer_number: [{value: null, disabled: true}, []],
       date_seller_counter_date: [{value: null, disabled: true}, []],

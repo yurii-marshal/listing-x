@@ -27,6 +27,8 @@ export class BuyerCOAgreementComponent extends BaseCounterOfferAbstract<null> im
   }
 
   ngOnInit() {
+    super.ngOnInit();
+
     this.isDisabled = this.counterOffer.userRole !== 'agent_buyer';
 
     this.documentForm = this.fb.group({
