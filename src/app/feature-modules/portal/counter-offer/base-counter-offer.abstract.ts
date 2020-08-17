@@ -92,8 +92,6 @@ export abstract class BaseCounterOfferAbstract<TModel> implements OnInit, OnDest
             return;
           }
         }
-
-        // this.finalSignAgreement();
       }
     } else {
       this.scrollToFirstInvalidField();
