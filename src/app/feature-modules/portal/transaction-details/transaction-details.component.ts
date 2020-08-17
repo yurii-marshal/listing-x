@@ -23,8 +23,6 @@ import { OfferService } from 'src/app/feature-modules/portal/services/offer.serv
   styleUrls: ['../purchase-agreement/agreement-details/agreement-details.component.scss']
 })
 export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, OnInit {
-  // TODO: reassign transaction properties accordingly to using common template
-  transaction: Transaction;
   offer: Offer;
 
   calendarDataSource: CalendarEvent[];
@@ -84,8 +82,17 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
   }
 
   transactionLoaded(transaction: Transaction): void {
-    this.transaction = transaction;
-    this.offer = transaction.offer;
+    this.offer = {
+      ...transaction.offer,
+      allowDelete: transaction.allowDelete,
+      allowDeny: transaction.allowDeny,
+      allowEdit: transaction.allowEdit,
+      allowInvite: transaction.allowInvite,
+      createdAt: transaction.createdAt,
+      lastLogs: transaction.lastLogs,
+      transactionDocs: transaction.documents,
+      status: transaction.status
+    };
 
     const {agentBuyers, agentSellers, sellers} = transaction.offer;
     this.isAgent = [...agentSellers, ...agentBuyers].some(({email}) => email === this.authService.currentUser.email);
@@ -110,7 +117,7 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
   }
 
   onDelete() {
-    this.transactionService.delete(this.transaction.id)
+    this.transactionService.delete(this.offer.transaction)
       .subscribe(() => this.router.navigate(['/portal/transactions']));
   }
 
@@ -143,7 +150,7 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
         } as Person;
 
         const updatedListKey = this.isSeller ? 'agentSellers' : 'agentBuyers';
-        this.transaction.offer[updatedListKey].push(invited);
+        this.offer[updatedListKey].push(invited);
         this.userEmailControl.setValue(null);
       });
   }
@@ -161,15 +168,15 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
     // }
 
     // this.router.navigate([url, doc.id]);
-    // this.transactionService.lockOffer(this.transaction.id)
-    //   .subscribe(() => this.router.navigate(['/e-sign', this.transaction.id]));
+    // this.transactionService.lockOffer(this.offer.transaction)
+    //   .subscribe(() => this.router.navigate(['/e-sign', this.offer.transaction]));
   }
 
   deny() {
     const id: number = Number(this.route.snapshot.params.id);
     this.transactionService.deny(id)
       .subscribe(() => {
-        this.transaction.allowDeny = false;
+        this.offer.allowDeny = false;
         this.snackbar.open(`Denied.`);
       });
   }
@@ -239,7 +246,7 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
     this.dialog.open(AddendumDialogComponent, {
       width: '600px',
       data: {
-        transactionId: this.transaction && this.transaction.id,
+        transactionId: this.offer && this.offer.transaction,
         offerId: this.offer && this.offer.id,
         docData: doc ? doc.documentData as AddendumData : null,
         docId: doc ? doc.id : null

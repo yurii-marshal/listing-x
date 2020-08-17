@@ -12,8 +12,7 @@ import { Subject } from 'rxjs';
 import { User } from '../../auth/models';
 import { CalendarEvent } from '../../../core-modules/models/calendar-event';
 import { AgreementStatus } from 'src/app/core-modules/models/agreement';
-import { BaseDataService } from 'src/app/core-modules/base-classes/base-data-service';
-import { log } from 'util';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-transactions',
@@ -33,7 +32,6 @@ export class TransactionsComponent implements OnDestroy, OnInit {
     'actions',
   ];
   dataSource: Offer[];
-  catchedDataSourse: Offer[];
   statuses: string[] = Object.values(TransactionStatus);
   calendarDataSource: CalendarEvent[];
   user: User;
@@ -62,18 +60,19 @@ export class TransactionsComponent implements OnDestroy, OnInit {
   ngOnInit() {
     // this.service.loadCalendar()
     //   .subscribe(events => this.calendarDataSource = events);
+    let params = new HttpParams();
+    params = params.set('ordering', '-id');
+
     this.user = this.authService.currentUser;
     this.transactionsFlow = this.router.url.includes('transaction');
-    this.service.loadList().pipe(
+    this.service.loadList(params).pipe(
       takeUntil(this.onDestroyed$),
       map((resp: any) => {
         return resp.results.map(transaction => {
           return {...transaction.offer, status: transaction.status};
         });
       })
-    )
-      .subscribe(offer => {
-        this.catchedDataSourse = offer;
+    ).subscribe(offer => {
         this.dataSource = offer;
       });
   }
@@ -94,14 +93,25 @@ export class TransactionsComponent implements OnDestroy, OnInit {
       .pipe(filter(dialogResult => !!dialogResult))
       .subscribe();
   }
-  // TODO: filter by params in GET query
+
   onFilter(status) {
-    if (status === TransactionStatus.All) {
-      this.dataSource = Object.assign(this.catchedDataSourse);
-      return;
+    let params = new HttpParams();
+    params = params.set('ordering', '-id');
+
+    if (status !== TransactionStatus.All) {
+      params = params.set('status', status);
     }
 
-    this.dataSource = this.catchedDataSourse.filter(element => element.status === status);
+    this.service.loadList(params).pipe(
+      takeUntil(this.onDestroyed$),
+      map((resp: any) => {
+        return resp.results.map(transaction => {
+          return {...transaction.offer, status: transaction.status};
+        });
+      })
+    ).subscribe(offer => {
+      this.dataSource = offer;
+    });
   }
 
   getClassName(status: TransactionStatus | AgreementStatus): string {
