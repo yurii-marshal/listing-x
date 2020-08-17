@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChildren } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { BaseCounterOfferAbstract } from '../base-counter-offer.abstract';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OfferService } from '../../services/offer.service';
-import { Offer } from 'src/app/core-modules/models/offer';
-import { User } from 'src/app/feature-modules/auth/models';
 import { CounterOfferService } from '../../services/counter-offer.service';
+import { MatSnackBar } from '@angular/material';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-multiple-co',
@@ -13,17 +13,6 @@ import { CounterOfferService } from '../../services/counter-offer.service';
   styleUrls: ['./../counter-offer.scss', './multiple-co.component.scss']
 })
 export class MultipleCOComponent extends BaseCounterOfferAbstract<null> implements OnInit {
-  @ViewChildren('form') form;
-  isSideBarOpen: boolean;
-  completedFieldsCount: number = 0;
-  allFieldsCount: number = 0;
-
-  documentForm: FormGroup;
-  offer: Offer;
-
-  state = 'counter-offer';
-
-  private user: User;
 
   constructor(
     private fb: FormBuilder,
@@ -31,11 +20,15 @@ export class MultipleCOComponent extends BaseCounterOfferAbstract<null> implemen
     protected router: Router,
     protected offerService: OfferService,
     protected counterOfferService: CounterOfferService,
+    protected snackbar: MatSnackBar,
+    protected datePipe: DatePipe,
   ) {
-    super(route, router, offerService, counterOfferService);
+    super(route, router, offerService, counterOfferService, snackbar, datePipe);
   }
 
   ngOnInit() {
+    super.ngOnInit();
+
     this.documentForm = this.fb.group({
       text_counter_offer_number: [{value: null, disabled: true}, []],
       date_seller_counter_date: [{value: null, disabled: true}, []],
@@ -57,9 +50,9 @@ export class MultipleCOComponent extends BaseCounterOfferAbstract<null> implemen
       date_expiration_date: [{value: null, disabled: true}, []],
       text_seller_alternative_name: [{value: null, disabled: true}, []],
       text_seller_name_first: [{value: null, disabled: true}, []],
-      date_seller_signature_first: [{value: this.getSignFieldAllowedFor('sellers', 0), disabled: true}, []],
+      date_seller_signature_first: this.getSignFieldAllowedFor('sellers', 0),
       text_seller_name_second: [{value: null, disabled: true}, []],
-      date_seller_signature_second: [{value: this.getSignFieldAllowedFor('sellers', 1), disabled: true}, []],
+      date_seller_signature_second: this.getSignFieldAllowedFor('sellers', 1),
       time_deposit_revoke_time: [{value: null, disabled: true}, []],
       radio_deposit_revoke_am_pm: [{value: 'AM', disabled: true}, []],
       date_deposit_revoke_expiration_date: [{value: null, disabled: true}, []],
@@ -67,35 +60,27 @@ export class MultipleCOComponent extends BaseCounterOfferAbstract<null> implemen
       check_receive_copy: [{value: null, disabled: true}, []],
       text_receive_copy: [{value: null, disabled: true}, []],
       text_buyer_name_first: [{value: null, disabled: true}, []],
-      date_buyer_signature_first: [{value: this.getSignFieldAllowedFor('buyers', 0), disabled: true}, []],
-      time_buyer_signature_time_first: [{value: this.getSignFieldAllowedFor('buyers', 0), disabled: true}, []],
+      date_buyer_signature_first: this.getSignFieldAllowedFor('buyers', 0),
+      time_buyer_signature_time_first: this.getSignFieldAllowedFor('buyers', 0),
       radio_buyer_signature_first: [{value: 'AM', disabled: true}, []],
       text_buyer_name_second: [{value: null, disabled: true}, []],
-      date_buyer_signature_second: [{value: this.getSignFieldAllowedFor('buyers', 1), disabled: true}, []],
-      time_buyer_signature_time_second: [{value: this.getSignFieldAllowedFor('buyers', 1), disabled: true}, []],
+      date_buyer_signature_second: this.getSignFieldAllowedFor('buyers', 1),
+      time_buyer_signature_time_second: this.getSignFieldAllowedFor('buyers', 1),
       radio_buyer_signature_second: [{value: 'AM', disabled: true}, []],
       text_seller_signature_name_first: [{value: null, disabled: true}, []],
-      date_seller_first_signature: [{value: this.getSignFieldAllowedFor('sellers', 0), disabled: true}, []],
-      time_seller_signature_time_first: [{value: this.getSignFieldAllowedFor('sellers', 0), disabled: true}, []],
+      date_seller_first_signature: this.getSignFieldAllowedFor('sellers', 0),
+      time_seller_signature_time_first: this.getSignFieldAllowedFor('sellers', 0),
       radio_seller_signature_first: [{value: 'AM', disabled: true}, []],
       text_seller_signature_name_second: [{value: null, disabled: true}, []],
-      date_seller_second_signature: [{value: this.getSignFieldAllowedFor('sellers', 1), disabled: true}, []],
-      time_seller_signature_time_second: [{value: this.getSignFieldAllowedFor('sellers', 1), disabled: true}, []],
+      date_seller_second_signature: this.getSignFieldAllowedFor('sellers', 1),
+      time_seller_signature_time_second: this.getSignFieldAllowedFor('sellers', 1),
       radio_seller_signature_second: [{value: 'AM', disabled: true}, []],
       text_seller_initials_first: [{value: null, disabled: true}, []],
       text_seller_initials_second: [{value: null, disabled: true}, []],
       date_copy_received_date: [{value: null, disabled: true}, []],
       time_copy_received_time: [{value: null, disabled: true}, []],
       radio_copy_received_am_pm: [{value: 'AM', disabled: true}, []],
-    });
-  }
-
-  private getSignFieldAllowedFor(role: string, index: number) {
-    return null;
-  }
-
-  continue() {
-    this.documentForm.markAllAsTouched();
+    }, {updateOn: 'blur'});
   }
 
 }

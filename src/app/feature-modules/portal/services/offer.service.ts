@@ -1,7 +1,7 @@
 import { Injectable, Injector } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Observable, of, Subject } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { LocalStorageKey } from '../../../core-modules/enums/local-storage-key';
 import { Offer, OfferSummary } from '../../../core-modules/models/offer';
 import { ApiEndpoint } from '../../../core-modules/enums/api-endpoints';

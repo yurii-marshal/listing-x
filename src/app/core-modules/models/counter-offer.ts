@@ -1,3 +1,5 @@
-export interface CounterOffer {
-  id: number;
+import { Offer } from './offer';
+
+export interface CounterOffer extends Offer {
+  round: number;
 }
