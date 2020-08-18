@@ -46,7 +46,7 @@ export class BaseTemplateComponent implements OnInit, OnDestroy {
     this.offer = this.offerService.currentOffer;
     this.user = this.authService.currentUser;
 
-    this.isChildPage = this.state === 'agreement' || this.state === 'counter-offer';
+    this.isChildPage = this.state !== 'portal';
 
     this.portalNavLinks = [
       {label: 'Agreements', path: '/portal/purchase-agreements/all', disabled: !this.user.registrationCompleted, hidden: false},

@@ -1,4 +1,4 @@
-<app-base-template [state]="'agreement'" (close)="closeOffer()">
+<app-base-template [state]="'offer'" (close)="closeOffer()">
   <div class="u-flex viewer-container">
     <div class="u-flex viewer">
       <div class="doc-container">
@@ -4479,7 +4479,7 @@
       </div>
     </div>
 
-    <app-sidebar [(opened)]="isSideBarOpen" (continue)="continue()">
+    <app-sidebar [(opened)]="isSideBarOpen" [isEnable]="isEnableContinue" (continue)="continue()">
 
       <div class="offer-information u-flex u-flex-direction--column u-flex-justify--start u-flex-align-items--start"
            *ngIf="isSideBarOpen">
