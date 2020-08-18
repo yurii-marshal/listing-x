@@ -36,6 +36,8 @@ export class SellerCOAgreementComponent extends BaseCounterOfferAbstract<Counter
     this.isDisabled = false;
     // this.isDisabled = this.counterOffer.userRole !== 'agent_seller';
 
+    this.signFieldElements = Array.from(document.getElementsByClassName('sign-input'));
+
     this.documentForm = this.fb.group({
       date_seller_counter_date: [{value: null, disabled: true}, []],
       radio_counter_offer_type: [{value: 'purchase_agreement', disabled: this.isDisabled}, []],
@@ -86,17 +88,25 @@ export class SellerCOAgreementComponent extends BaseCounterOfferAbstract<Counter
         this.counterOfferService.getCounterOfferDocument(this.id, this.type),
       )
         .pipe(takeUntil(this.onDestroyed$))
-        .subscribe(([data, model]) => {
-          this.counterOffer = data;
+        .subscribe(([counterOffer, document]) => {
+          this.counterOffer = counterOffer;
 
-          this.patchForm(model, this.documentForm);
-          this.getAllFieldsCount(model);
+          if (counterOffer.isSigned) {
+            this.snackbar.open('Counter Offer is already signed');
+          }
+
+          this.patchForm(document, this.documentForm);
+          this.getAllFieldsCount(document);
           this.disableSignedFields();
-          this.moveToNextSignField(true);
+          this.nextField(true);
         });
 
-      this.subscribeToFormChanges();
+      this.subscribeToFormChanges(this.documentForm);
     }
+  }
+
+  nextField(isSigned) {
+    this.moveToNextSignField(isSigned, this.signFieldElements, this.documentForm);
   }
 
   ngOnDestroy(): void {
