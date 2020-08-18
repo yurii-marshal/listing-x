@@ -6,7 +6,6 @@ import { AuthService } from '../../../../core-modules/core-services/auth.service
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { flatMap, map, takeUntil } from 'rxjs/operators';
-import { GeneratedDocumentType } from '../../../../core-modules/enums/upload-document-type';
 import { DocumentStatus } from '../../../../core-modules/enums/document-status';
 import { Offer, Person } from '../../../../core-modules/models/offer';
 import { SpqDialogComponent } from '../../dialogs/spq-dialog/spq-dialog.component';
@@ -15,6 +14,8 @@ import { CalendarEvent } from '../../../../core-modules/models/calendar-event';
 import { OfferService } from '../../services/offer.service';
 import { AgreementStatus } from '../../../../core-modules/models/agreement';
 import { TransactionService } from '../../services/transaction.service';
+import { CounterOffer } from 'src/app/core-modules/models/counter-offer';
+import { CounterOfferService } from 'src/app/feature-modules/portal/services/counter-offer.service';
 
 @Component({
   selector: 'app-agreement-details',
@@ -23,6 +24,7 @@ import { TransactionService } from '../../services/transaction.service';
 })
 export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   offer: Offer;
+  counterOffers: CounterOffer[];
   calendarDataSource: CalendarEvent[];
   isOpenInviteUserOverlay: boolean;
   isResidentialAgreementCompleted: boolean = false;
@@ -48,6 +50,7 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
               private route: ActivatedRoute,
               private offerService: OfferService,
               private transactionService: TransactionService,
+              private counterOfferService: CounterOfferService,
               private snackbar: MatSnackBar,
               private router: Router) {
   }
@@ -58,6 +61,10 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
 
     this.offerService.loadOne(offerId)
       .subscribe((offer: Offer) => this.offerLoaded(offer));
+
+    this.counterOfferService.getCounterOffersList(offerId).pipe(
+      takeUntil(this.onDestroyed$)
+    ).subscribe((counterOffers: CounterOffer[]) => this.counterOffers = counterOffers);
 
     // this.offerService.loadCalendarByOffer(offerId)
     //   .subscribe(items => this.calendarDataSource = items);
@@ -146,12 +153,22 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     this.router.navigateByUrl(`portal/purchase-agreements/${this.offer.id}/sign`);
   }
 
-  goToCounterOffer() {
-    this.router.navigateByUrl(`portal/counter-offer/single`);
+  goToCounterOffer(id?: number) {
+    if (id) {
+      this.isSeller ?
+        this.router.navigateByUrl(`portal/counter-offer/single/${id}/seller`) :
+        this.router.navigateByUrl(`portal/counter-offer/single/${id}/buyer`);
+    } else {
+      this.router.navigateByUrl(`portal/counter-offer/single`);
+    }
   }
 
-  goToMCO() {
-    this.router.navigateByUrl(`portal/counter-offer/multiple`);
+  goToMCO(id?: number) {
+    if (id) {
+      this.router.navigateByUrl(`portal/counter-offer/multiple/${id}`);
+    } else {
+      this.router.navigateByUrl(`portal/counter-offer/multiple`);
+    }
   }
 
   deny() {

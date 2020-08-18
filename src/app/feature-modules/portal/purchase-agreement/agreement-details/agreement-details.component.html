@@ -239,6 +239,16 @@
           </div>
         </div>
 
+        <div class="row-layout"><label>Counter offers</label>
+          <div class="doc-preview">
+            <img *ngFor="let counterOffer of counterOffers"
+                 src="assets/images/icons/pdf.svg"
+                 [title]="counterOffer.id"
+                 (click)="goToCounterOffer(counterOffer.id)"
+                 height="20">
+          </div>
+        </div>
+
         <div class="row-layout new-section"><label class="header">Attached docs</label></div>
         <div class="row-layout"><label>Add Pre-approval Letter</label>
           <div class="doc-preview">

@@ -175,9 +175,20 @@ const routes: Routes = [
           },
           {
             path: 'details',
-            pathMatch: 'full',
             component: AgreementDetailsComponent,
             canActivate: [],
+            children: [
+              {
+                path: 'upload',
+                component: DialogsWrapperComponent,
+                data: {
+                  component: WriteOfferUploadDocumentsDialogComponent,
+                  modalType: UploadDocsModalType.OfferUpdating,
+                  transactionPage: false
+                },
+                resolve: {model: OfferDocumentsResolver}
+              },
+            ]
           },
           {
             path: 'sign',
