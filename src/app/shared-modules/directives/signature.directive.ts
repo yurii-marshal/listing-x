@@ -94,19 +94,23 @@ export class SignatureDirective implements OnInit {
 
   private signField(parent: AbstractControl) {
     if (!parent.invalid) {
-      this.signatureControl.patchValue(this[this.mode]);
-      this.signatureControl.disable();
+      setTimeout(() => {
+        this.signatureControl.patchValue(this[this.mode]);
+        this.signatureControl.disable();
 
-      if (this.withDateControl) {
-        this.dateControl.patchValue(this.datePipe.transform(new Date().getTime(), 'yyyy-MM-dd'));
-        this.dateControl.disable();
-      }
+        if (this.withDateControl) {
+          setTimeout(() => {
+            this.dateControl.patchValue(this.datePipe.transform(new Date().getTime(), 'yyyy-MM-dd'));
+            this.dateControl.disable();
+          }, 200);
+        }
 
-      this.renderer.addClass(this.el.nativeElement, 'signed');
+        this.renderer.addClass(this.el.nativeElement, 'signed');
 
-      this.removeSignButton();
+        this.removeSignButton();
 
-      this.fieldSigned.emit(true);
+        this.fieldSigned.emit(true);
+      }, 300);
     } else {
       this.snackbar.open(`Can't sign. Please, fill all required fields`);
       this.fieldSigned.emit(false);
