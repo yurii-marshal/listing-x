@@ -1,5 +1,5 @@
 import { Directive, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, Renderer2 } from '@angular/core';
-import { NgControl } from '@angular/forms';
+import { AbstractControl, NgControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { AuthService } from '../../core-modules/core-services/auth.service';
 import { MatSnackBar } from '@angular/material';
@@ -72,7 +72,7 @@ export class SignatureDirective implements OnInit {
 
     this.renderer.appendChild(this.signButtonEl, this.renderer.createText('Sign'));
     this.renderer.appendChild(this.el.nativeElement.parentNode, this.signButtonEl);
-    this.renderer.listen(this.signButtonEl, 'click', () => this.signFields());
+    this.renderer.listen(this.signButtonEl, 'click', () => this.getRootParent(this.signatureControl.parent));
 
     this.setButtonStyles();
   }
@@ -83,8 +83,17 @@ export class SignatureDirective implements OnInit {
     this.signButtonEl = null;
   }
 
-  private signFields() {
-    if (!this.signatureControl.parent.parent.invalid) {
+  private getRootParent(parent: AbstractControl) {
+    if (parent && parent.parent) {
+      this.getRootParent(parent.parent);
+    } else {
+      // now parent is root form
+      this.signField(parent);
+    }
+  }
+
+  private signField(parent: AbstractControl) {
+    if (!parent.invalid) {
       this.signatureControl.patchValue(this[this.mode]);
       this.signatureControl.disable();
 

@@ -15,7 +15,7 @@
         </a>
       </nav>
 
-      <nav [class]="state" *ngIf="state === 'agreement'" mat-tab-nav-bar>
+      <nav [class]="state" *ngIf="state === 'offer'" mat-tab-nav-bar>
         <ng-container *ngFor="let link of purchaseNavLinks">
           <a mat-tab-link
              *ngIf="offer && offer.userRole === 'agent_buyer'"

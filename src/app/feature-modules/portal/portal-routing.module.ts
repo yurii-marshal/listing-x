@@ -89,36 +89,34 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'counter-offer',
+    path: 'counter-offers',
     canActivate: [AuthGuardService],
     canActivateChild: [AuthGuardService],
     children: [
       {
         path: 'single',
+        pathMatch: 'full',
         component: SellerCOAgreementComponent,
-        children: [
-          {
-            path: ':id/seller',
-            pathMatch: 'full',
-            component: SellerCOAgreementComponent,
-          },
-          {
-            path: ':id/buyer',
-            pathMatch: 'full',
-            component: BuyerCOAgreementComponent,
-          },
-        ]
       },
       {
         path: 'multiple',
+        pathMatch: 'full',
         component: MultipleCOComponent,
-        children: [
-          {
-            path: ':id',
-            pathMatch: 'full',
-            component: MultipleCOComponent,
-          }
-        ]
+      },
+      {
+        path: ':id/seller',
+        pathMatch: 'full',
+        component: SellerCOAgreementComponent,
+      },
+      {
+        path: ':id/buyer',
+        pathMatch: 'full',
+        component: BuyerCOAgreementComponent,
+      },
+      {
+        path: ':id/multiple',
+        pathMatch: 'full',
+        component: MultipleCOComponent,
       },
     ],
   }, {

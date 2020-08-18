@@ -4,16 +4,17 @@ import { OnDestroy, OnInit, ViewChildren } from '@angular/core';
 import { CounterOffer } from '../../../core-modules/models/counter-offer';
 import { CounterOfferService } from '../services/counter-offer.service';
 import { debounceTime, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 import { FormControl, FormGroup } from '@angular/forms';
 import { User } from '../../auth/models';
 import * as _ from 'lodash';
 import { MatSnackBar } from '@angular/material';
 import { DatePipe } from '@angular/common';
+import { Subject } from 'rxjs';
 
 export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements OnInit, OnDestroy {
   @ViewChildren('form') form;
 
+  type;
   id: number;
   counterOffer: CounterOffer = {} as CounterOffer;
 
@@ -32,8 +33,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   user: User;
 
   signFieldElements: any[] = [];
-
-  private onDestroyed$: Subject<void> = new Subject<void>();
+  onDestroyed$: Subject<void> = new Subject<void>();
 
   constructor(
     public route: ActivatedRoute,
@@ -48,32 +48,6 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   ngOnInit() {
     this.id = +this.route.snapshot.params.id;
     this.datepickerMinDate = new Date();
-
-    if (this.id) {
-      this.counterOfferService.loadOne(this.id)
-        .pipe(takeUntil(this.onDestroyed$))
-        .subscribe((data: CounterOffer) => {
-          this.counterOffer = data;
-        });
-
-      this.counterOfferService.getCounterOfferDocument(this.id)
-        .pipe(
-          takeUntil(this.onDestroyed$),
-        )
-        .subscribe((model) => {
-          this.patchForm(model);
-          this.getAllFieldsCount(model);
-          this.disableSignedFields();
-          this.moveToNextSignField(true);
-        });
-
-      this.subscribeToFormChanges();
-    }
-  }
-
-  ngOnDestroy(): void {
-    this.onDestroyed$.next();
-    this.onDestroyed$.complete();
   }
 
   closeCO() {
@@ -114,9 +88,9 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     return false;
   }
 
-  private patchForm(model) {
+  patchForm(model, documentForm) {
     Object.entries(model).forEach(([key, value]) => {
-      Object.keys(this.documentForm.controls).forEach((groupName) => {
+      Object.keys(documentForm.controls).forEach((groupName) => {
 
         if (_.camelCase(groupName) === key) {
 
@@ -124,7 +98,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
             Object.keys(value).forEach((controlName) => {
 
               if (field === controlName && data) {
-                this.documentForm.get(`${groupName}.${_.snakeCase(field)}`)
+                documentForm.get(`${groupName}.${_.snakeCase(field)}`)
                   .patchValue(data, {emitEvent: false, onlySelf: true});
               }
 
@@ -137,13 +111,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     });
   }
 
-  private getAllFieldsCount(model) {
-    Object.keys(model).forEach((page) => {
-      this.allFieldsCount += Object.keys(model[page]).length;
-    });
-  }
-
-  private subscribeToFormChanges() {
+  subscribeToFormChanges() {
     Object.values(this.documentForm.controls).forEach((control: FormControl, controlIndex: number) => {
       control.valueChanges
         .pipe(
@@ -154,27 +122,6 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
           this.documentInputChanged(Object.keys(this.documentForm.getRawValue())[controlIndex], controlValue);
         });
     });
-  }
-
-  private documentInputChanged(controlName: string, controlValue: any) {
-    if (controlValue === '') {
-      controlValue = null;
-    } else if (controlValue instanceof Date) {
-      controlValue = this.datePipe.transform(controlValue, 'yyyy-MM-dd');
-    } else if (+controlValue) {
-      controlValue = String(controlValue).replace(',', '');
-    }
-    // show saving animation if it takes a time
-    this.counterOfferService.updateCounterOfferDocumentField({offerId: this.id}, {[controlName]: controlValue})
-      .pipe(
-        takeUntil(this.onDestroyed$),
-      )
-      .subscribe(() => {});
-  }
-
-  private disableSignedFields() {
-    this.signFieldElements = Array.from(document.getElementsByClassName('sign-input'));
-    this.signFieldElements.forEach(item => item.disabled = !!item.value);
   }
 
   continue() {
@@ -197,6 +144,39 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     // };
 
     return ['', []];
+  }
+
+  getAllFieldsCount(model) {
+    Object.keys(model).forEach((page) => {
+      this.allFieldsCount += Object.keys(model[page]).length;
+    });
+  }
+
+  documentInputChanged(controlName: string, controlValue: any) {
+    if (controlValue === '') {
+      controlValue = null;
+    } else if (controlValue instanceof Date) {
+      controlValue = this.datePipe.transform(controlValue, 'yyyy-MM-dd');
+    } else if (+controlValue) {
+      controlValue = String(controlValue).replace(',', '');
+    }
+    // show saving animation if it takes a time
+    this.counterOfferService.updateCounterOfferDocumentField({offerId: this.id}, {[controlName]: controlValue})
+      .pipe(
+        takeUntil(this.onDestroyed$),
+      )
+      .subscribe(() => {
+      });
+  }
+
+  disableSignedFields() {
+    this.signFieldElements = Array.from(document.getElementsByClassName('sign-input'));
+    this.signFieldElements.forEach(item => item.disabled = !!item.value);
+  }
+
+  ngOnDestroy(): void {
+    this.onDestroyed$.next();
+    this.onDestroyed$.complete();
   }
 
 }

@@ -78,6 +78,10 @@ export class StepThreeComponent implements OnInit, OnDestroy {
       });
   }
 
+  closeOffer() {
+    this.router.navigateByUrl('/portal/purchase-agreements/all');
+  }
+
   // updateDocs(): void {
   //   const model: LinkedDocuments = this.getRequestValue();
   //   this.documentLinkingService.updateOfferDocuments(model).subscribe(() => {

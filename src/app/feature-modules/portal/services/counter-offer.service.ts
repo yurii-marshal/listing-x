@@ -15,8 +15,8 @@ export class CounterOfferService extends BaseDataService<CounterOffer> {
     super(injector, ApiEndpoint.CounterOffer);
   }
 
-  getCounterOfferDocument(id: number): Observable<any> {
-    return this.http.get(`/counter-offers/${id}/agreement-doc`);
+  getCounterOfferDocument(id: number, type: 'seller' | 'buyer' | 'multiple'): Observable<any> {
+    return this.http.get(`/counter-offers/agreement-doc/${id}/${type}`);
   }
 
   updateCounterOfferDocumentField(query, model: object) {

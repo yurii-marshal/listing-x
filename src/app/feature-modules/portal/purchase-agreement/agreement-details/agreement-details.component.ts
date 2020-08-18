@@ -1,12 +1,11 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { FormControl, Validators } from '@angular/forms';
 import { AddendumData, Document, GeneratedDocument } from '../../../../core-modules/models/document';
 import { AuthService } from '../../../../core-modules/core-services/auth.service';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { flatMap, map, takeUntil } from 'rxjs/operators';
-import { GeneratedDocumentType } from '../../../../core-modules/enums/upload-document-type';
+import { flatMap, takeUntil } from 'rxjs/operators';
 import { DocumentStatus } from '../../../../core-modules/enums/document-status';
 import { Offer, Person } from '../../../../core-modules/models/offer';
 import { SpqDialogComponent } from '../../dialogs/spq-dialog/spq-dialog.component';
@@ -146,12 +145,12 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     this.router.navigateByUrl(`portal/purchase-agreements/${this.offer.id}/sign`);
   }
 
-  goToCounterOffer() {
-    this.router.navigateByUrl(`portal/counter-offer/single`);
+  createCounterOffer() {
+    this.router.navigateByUrl(`portal/counter-offers/single`);
   }
 
-  goToMCO() {
-    this.router.navigateByUrl(`portal/counter-offer/multiple`);
+  createMCO() {
+    this.router.navigateByUrl(`portal/counter-offers/multiple`);
   }
 
   deny() {

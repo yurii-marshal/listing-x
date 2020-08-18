@@ -29,6 +29,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   allFieldsCount: number = 0;
   allPageCount: number = 0;
   isSideBarOpen: boolean;
+  isEnableContinue: boolean = false;
   offerId: number;
   offer: Offer;
 
@@ -71,6 +72,10 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.offer = this.route.snapshot.data.offer;
 
     this.user = this.authService.currentUser;
+
+    if (this.offer.isSigned) {
+      this.snackbar.open('Offer is already signed');
+    }
 
     //  || this.route.snapshot.routeConfig.path === 'sign'
     this.isDisabled = this.offer.userRole !== 'agent_buyer';
@@ -510,6 +515,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
             'page_5.date_escrow_date'
           );
         }
+
+        this.isEnableContinue = this.offer.isSigned || this.documentForm.valid;
       });
 
     this.initPageBreakers();
@@ -548,15 +555,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     if (hasFormInvalidFields) {
       this.snackbar.open('Please, fill all mandatory fields');
     } else {
-      if (this.route.snapshot.routeConfig.path === 'step-two') {
-        this.offerService.updateOfferProgress({progress: 3}, this.offerId)
-          .pipe(takeUntil(this.onDestroyed$))
-          .subscribe(() => {
-            this.router.navigate([`portal/purchase-agreements/${this.offerId}/step-three`]);
-          });
-      } else {
-        this.router.navigate([`portal/purchase-agreements/${this.offerId}/details`]);
-      }
+      this.offer.isSigned ? this.moveToNextPage() : this.finalSignAgreement();
     }
   }
 
@@ -595,8 +594,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
             return;
           }
         }
-
-        this.finalSignAgreement();
       }
     } else {
       this.scrollToFirstInvalidField();
@@ -704,9 +701,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     }
     // show saving animation if it takes a time
     this.offerService.updateOfferDocumentField({offerId: this.offerId, page: groupIndex + 1}, {[controlName]: controlValue})
-      .pipe(
-        takeUntil(this.onDestroyed$),
-      )
+      .pipe(takeUntil(this.onDestroyed$))
       .subscribe(() => {
         this.updatePageProgress(this.documentForm.getRawValue(), this.currentPage);
 
@@ -778,9 +773,9 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       value: '',
       disabled: this.offer[role][index] ? this.offer[role][index].email !== this.user.email : true,
     };
-    // const validators = this.offer[role][index] ? (this.offer[role][index].email === this.user.email ? [Validators.required] : []) : [];
+    const validators = this.offer[role][index] ? (this.offer[role][index].email === this.user.email ? [Validators.required] : []) : [];
 
-    return [value, []];
+    return [value, validators];
   }
 
   private disableSignedFields() {
@@ -789,13 +784,25 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   private finalSignAgreement() {
-    this.offer.isSigned
-      ? this.snackbar.open('Offer is already signed')
-      : this.offerService.signOffer(this.offerId)
+    this.offerService.signOffer(this.offerId)
+      .pipe(takeUntil(this.onDestroyed$))
+      .subscribe(() => {
+        this.offer.isSigned = true;
+        this.snackbar.open('Offer is signed now');
+
+        this.moveToNextPage();
+      });
+  }
+
+  private moveToNextPage() {
+    if (this.route.snapshot.routeConfig.path === 'step-two') {
+      this.offerService.updateOfferProgress({progress: 3}, this.offerId)
         .pipe(takeUntil(this.onDestroyed$))
         .subscribe(() => {
-          this.offer.isSigned = true;
-          this.snackbar.open('Offer is signed now');
+          this.router.navigate([`portal/purchase-agreements/${this.offerId}/step-three`]);
         });
+    } else {
+      this.router.navigate([`portal/purchase-agreements/${this.offerId}/details`]);
+    }
   }
 }

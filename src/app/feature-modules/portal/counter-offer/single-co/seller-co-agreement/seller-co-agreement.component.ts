@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { BaseCounterOfferAbstract } from '../../base-counter-offer.abstract';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,6 +7,8 @@ import { CounterOfferService } from '../../../services/counter-offer.service';
 import { DatePipe } from '@angular/common';
 import { MatSnackBar } from '@angular/material';
 import { CounterOffer } from '../../../../../core-modules/models/counter-offer';
+import { forkJoin } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-seller-co-agreement',
@@ -14,7 +16,7 @@ import { CounterOffer } from '../../../../../core-modules/models/counter-offer';
   styleUrls: ['./../../counter-offer.scss', './seller-co-agreement.component.scss'],
   providers: [DatePipe],
 })
-export class SellerCOAgreementComponent extends BaseCounterOfferAbstract<CounterOffer> implements OnInit {
+export class SellerCOAgreementComponent extends BaseCounterOfferAbstract<CounterOffer> implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
@@ -75,6 +77,31 @@ export class SellerCOAgreementComponent extends BaseCounterOfferAbstract<Counter
       time_copy_received_time: [{value: null, disabled: this.isDisabled}, []],
       radio_copy_received_am_pm: [{value: 'AM', disabled: this.isDisabled}, []],
     }, {updateOn: 'blur'});
+
+    if (this.id) {
+      this.type = this.router.url.split('/').pop() as 'seller' | 'buyer' | 'multiple';
+
+      forkJoin(
+        this.counterOfferService.loadOne(this.id),
+        this.counterOfferService.getCounterOfferDocument(this.id, this.type),
+      )
+        .pipe(takeUntil(this.onDestroyed$))
+        .subscribe(([data, model]) => {
+          this.counterOffer = data;
+
+          this.patchForm(model, this.documentForm);
+          this.getAllFieldsCount(model);
+          this.disableSignedFields();
+          this.moveToNextSignField(true);
+        });
+
+      this.subscribeToFormChanges();
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.onDestroyed$.next();
+    this.onDestroyed$.complete();
   }
 
 }
