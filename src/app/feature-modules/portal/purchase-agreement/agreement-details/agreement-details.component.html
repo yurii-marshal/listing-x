@@ -114,7 +114,7 @@
                   *ngIf="offer.userRole === 'agent_seller'"
                   mat-flat-button
                   [disabled]="!offer.isSigned || offer.status === 'denied'"
-                  (click)="createCounterOffer()"
+                  (click)="goToCounterOffer()"
                   color="primary">
             COUNTER OFFER
           </button>
@@ -123,7 +123,7 @@
                   *ngIf="offer.userRole === 'agent_seller'"
                   mat-flat-button
                   [disabled]="!offer.isSigned || offer.status === 'denied'"
-                  (click)="createMCO()"
+                  (click)="goToMCO()"
                   color="primary">
             MCO
           </button>

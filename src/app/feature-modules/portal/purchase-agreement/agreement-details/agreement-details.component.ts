@@ -146,7 +146,7 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     //   this.openSPQDialog(doc, true);
     //   return;
     // }
-    //
+
     // this.router.navigate([url, doc.id]);
     // this.transactionService.lockOffer(this.offer.id)
     //   .subscribe(() => this.router.navigate(['/e-sign', this.offer.id]));
@@ -156,18 +156,18 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   goToCounterOffer(id?: number) {
     if (id) {
       this.isSeller ?
-        this.router.navigateByUrl(`portal/counter-offer/single/${id}/seller`) :
-        this.router.navigateByUrl(`portal/counter-offer/single/${id}/buyer`);
+        this.router.navigateByUrl(`portal/counter-offers/${id}/seller`) :
+        this.router.navigateByUrl(`portal/counter-offers/${id}/buyer`);
     } else {
-      this.router.navigateByUrl(`portal/counter-offer/single`);
+      this.router.navigateByUrl(`portal/counter-offers/single`);
     }
   }
 
   goToMCO(id?: number) {
     if (id) {
-      this.router.navigateByUrl(`portal/counter-offer/multiple/${id}`);
+      this.router.navigateByUrl(`portal/counter-offers/${id}/multiple`);
     } else {
-      this.router.navigateByUrl(`portal/counter-offer/multiple`);
+      this.router.navigateByUrl(`portal/counter-offers/multiple`);
     }
   }
 
