@@ -51,15 +51,13 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   }
 
   closeCO() {
-    this.router.navigateByUrl(`portal/purchase-agreements/` +
-      (this.offerService.currentOffer ? `${this.offerService.currentOffer.id}/details` : 'all')
-    );
+    this.router.navigateByUrl(`portal/purchase-agreements/${this.offerService.currentOffer.id}`);
   }
 
-  moveToNextSignField(isSigned) {
+  moveToNextSignField(isSigned, elements, documentForm) {
     if (isSigned) {
-      if (this.signFieldElements.length) {
-        for (const item of this.signFieldElements) {
+      if (elements.length) {
+        for (const item of elements) {
           if (!item.value) {
             item.scrollIntoView({behavior: 'smooth', block: 'center'});
             item.focus();
@@ -68,15 +66,15 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         }
       }
     } else {
-      this.scrollToFirstInvalidField();
+      this.scrollToFirstInvalidField(documentForm);
     }
   }
 
-  scrollToFirstInvalidField(): boolean {
-    for (const groupName of Object.keys(this.documentForm.controls)) {
-      if (this.documentForm.controls[groupName].invalid) {
-        for (const controlName of Object.keys((this.documentForm.controls[groupName] as FormGroup).controls)) {
-          if (this.documentForm.get(`${groupName}.${controlName}`).invalid) {
+  scrollToFirstInvalidField(documentForm): boolean {
+    for (const groupName of Object.keys(documentForm.controls)) {
+      if (documentForm.controls[groupName].invalid) {
+        for (const controlName of Object.keys((documentForm.controls[groupName] as FormGroup).controls)) {
+          if (documentForm.get(`${groupName}.${controlName}`).invalid) {
             const invalidControl = document.querySelector('[formcontrolname="' + controlName + '"]');
             invalidControl.scrollIntoView({behavior: 'smooth', block: 'center'});
             return true;
@@ -90,36 +88,26 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
   patchForm(model, documentForm) {
     Object.entries(model).forEach(([key, value]) => {
-      Object.keys(documentForm.controls).forEach((groupName) => {
+      Object.keys(documentForm.controls).forEach((controlName) => {
 
-        if (_.camelCase(groupName) === key) {
-
-          Object.entries(value).forEach(([field, data]) => {
-            Object.keys(value).forEach((controlName) => {
-
-              if (field === controlName && data) {
-                documentForm.get(`${groupName}.${_.snakeCase(field)}`)
-                  .patchValue(data, {emitEvent: false, onlySelf: true});
-              }
-
-            });
-          });
-
+        if (_.camelCase(controlName) === key && value) {
+          documentForm.get(`${_.snakeCase(controlName)}`)
+            .patchValue(value, {emitEvent: false, onlySelf: true});
         }
 
       });
     });
   }
 
-  subscribeToFormChanges() {
-    Object.values(this.documentForm.controls).forEach((control: FormControl, controlIndex: number) => {
+  subscribeToFormChanges(documentForm) {
+    Object.values(documentForm.controls).forEach((control: FormControl, controlIndex: number) => {
       control.valueChanges
         .pipe(
           debounceTime(200),
           takeUntil(this.onDestroyed$),
         )
         .subscribe((controlValue) => {
-          this.documentInputChanged(Object.keys(this.documentForm.getRawValue())[controlIndex], controlValue);
+          this.documentInputChanged(Object.keys(documentForm.getRawValue())[controlIndex], controlValue);
         });
     });
   }
@@ -127,14 +115,21 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   continue() {
     this.documentForm.markAllAsTouched();
 
-    this.counterOffer.isSigned
-      ? this.snackbar.open('Counter Offer is already signed')
-      : this.offerService.signOffer(this.id)
-        .pipe(takeUntil(this.onDestroyed$))
-        .subscribe(() => {
-          this.counterOffer.isSigned = true;
-          this.snackbar.open('Counter Offer is signed now');
-        });
+    if (!this.counterOffer.isSigned) {
+      if (this.documentForm.valid) {
+        this.counterOfferService.signCounterOffer(this.id)
+          .pipe(takeUntil(this.onDestroyed$))
+          .subscribe(() => {
+            this.counterOffer.isSigned = true;
+            this.snackbar.open('Counter Offer is signed now');
+            this.router.navigateByUrl(`portal/purchase-agreements/${this.offerService.currentOffer.id}`);
+          });
+      } else {
+        this.snackbar.open('Please, fill all mandatory fields');
+      }
+    } else {
+      this.router.navigateByUrl(`portal/purchase-agreements/${this.offerService.currentOffer.id}`);
+    }
   }
 
   getSignFieldAllowedFor(role: string, index: number) {
@@ -162,9 +157,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     }
     // show saving animation if it takes a time
     this.counterOfferService.updateCounterOfferDocumentField({offerId: this.id}, {[controlName]: controlValue})
-      .pipe(
-        takeUntil(this.onDestroyed$),
-      )
+      .pipe(takeUntil(this.onDestroyed$))
       .subscribe(() => {
       });
   }

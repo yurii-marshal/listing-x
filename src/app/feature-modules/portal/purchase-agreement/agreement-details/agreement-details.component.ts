@@ -62,7 +62,7 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     this.offerService.loadOne(offerId)
       .subscribe((offer: Offer) => this.offerLoaded(offer));
 
-    this.counterOfferService.loadList().pipe(
+    this.counterOfferService.getCounterOffersList(offerId).pipe(
       takeUntil(this.onDestroyed$)
     ).subscribe((counterOffers: CounterOffer[]) => this.counterOffers = counterOffers);
 
