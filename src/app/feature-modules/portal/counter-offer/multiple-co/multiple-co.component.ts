@@ -11,7 +11,8 @@ import { CounterOffer } from '../../../../core-modules/models/counter-offer';
 @Component({
   selector: 'app-multiple-co',
   templateUrl: './multiple-co.component.html',
-  styleUrls: ['./../counter-offer.scss', './multiple-co.component.scss']
+  styleUrls: ['./../counter-offer.scss', './multiple-co.component.scss'],
+  providers: [DatePipe],
 })
 export class MultipleCOComponent extends BaseCounterOfferAbstract<CounterOffer> implements OnInit {
 
