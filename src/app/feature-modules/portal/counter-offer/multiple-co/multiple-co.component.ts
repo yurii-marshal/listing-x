@@ -31,6 +31,8 @@ export class MultipleCOComponent extends BaseCounterOfferAbstract<CounterOffer> 
   ngOnInit() {
     super.ngOnInit();
 
+    this.signFieldElements = Array.from(document.getElementsByClassName('sign-input'));
+
     this.documentForm = this.fb.group({
       text_counter_offer_number: [{value: null, disabled: true}, []],
       date_seller_counter_date: [{value: null, disabled: true}, []],
@@ -83,6 +85,10 @@ export class MultipleCOComponent extends BaseCounterOfferAbstract<CounterOffer> 
       time_copy_received_time: [{value: null, disabled: true}, []],
       radio_copy_received_am_pm: [{value: 'AM', disabled: true}, []],
     }, {updateOn: 'blur'});
+  }
+
+  nextField(isSigned) {
+    this.moveToNextSignField(isSigned, this.signFieldElements, this.documentForm);
   }
 
 }

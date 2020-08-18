@@ -121,13 +121,13 @@
                   </div>
                   <div class="item-pl-3">
                     <div>
-                      Buyer <input appSignature (fieldSigned)="moveToNextSignField($event)"
+                      Buyer <input appSignature (fieldSigned)="nextField($event)"
                                    [withDateControl]="'date_buyer_signature_first'"
                                    formControlName="text_buyer_name_first" type="text" class="i-lr-9__5">
                       Date <input formControlName="date_buyer_signature_first" type="text" class="i-lr-2__5">
                     </div>
                     <div>
-                      Buyer <input appSignature (fieldSigned)="moveToNextSignField($event)"
+                      Buyer <input appSignature (fieldSigned)="nextField($event)"
                                    [withDateControl]="'date_buyer_signature_second'"
                                    formControlName="text_buyer_name_second" type="text" class="i-lr-9__5">
                       Date <input formControlName="date_buyer_signature_second" type="text" class="i-lr-2__5">
@@ -145,7 +145,7 @@
                         </span>
                     and acknowledge receipt of a Copy.
                     <div>
-                      Seller &nbsp;<input appSignature (fieldSigned)="moveToNextSignField($event)"
+                      Seller &nbsp;<input appSignature (fieldSigned)="nextField($event)"
                                      [withDateControl]="'date_seller_first_signature'"
                                      formControlName="text_seller_signature_name_first" type="text" class="i-lr-7">
                       Date &nbsp;<input formControlName="date_seller_first_signature" type="text" class="i-lr-2__5">
@@ -154,7 +154,7 @@
                       <input formControlName="radio_seller_signature_first" value="PM" type="checkbox"> PM
                     </div>
                     <div>
-                      Seller &nbsp;<input appSignature (fieldSigned)="moveToNextSignField($event)"
+                      Seller &nbsp;<input appSignature (fieldSigned)="nextField($event)"
                                           [withDateControl]="'date_seller_second_signature'"
                                      formControlName="text_seller_signature_name_second" type="text" class="i-lr-7">
                       Date &nbsp;<input formControlName="date_seller_second_signature" type="text" class="i-lr-2__5">
