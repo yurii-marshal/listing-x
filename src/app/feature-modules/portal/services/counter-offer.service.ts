@@ -26,8 +26,9 @@ export class CounterOfferService extends BaseDataService<CounterOffer> {
   }
 
   getCounterOffersList(id: number): Observable<CounterOffer[]> {
-    const url: string = `counter_offers`;
-    return this.http.get<CounterOffer[]>(url);
+    let params = new HttpParams();
+    params = params.set('offer_id', String(id));
+    return this.http.get<CounterOffer[]>('counter_offers', {params});
 }
 
   signCounterOffer(offerId: number): Observable<any> {
