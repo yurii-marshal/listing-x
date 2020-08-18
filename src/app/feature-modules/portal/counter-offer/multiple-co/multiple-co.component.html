@@ -139,14 +139,14 @@
                   <div class="item-pl-3">
                     <div>
                       <!-- Seller  -->
-                      <input appSignature (fieldSigned)="moveToNextSignField($event)"
+                      <input appSignature (fieldSigned)="nextField($event)"
                              [withDateControl]="'date_seller_signature_first'"
                              formControlName="text_seller_name_first" type="text" class="i-lr-10__5">
                       Date <input formControlName="date_seller_signature_first" type="text" class="i-lr-2__5">
                     </div>
                     <div>
                       <!-- Seller -->
-                      <input appSignature (fieldSigned)="moveToNextSignField($event)"
+                      <input appSignature (fieldSigned)="nextField($event)"
                              [withDateControl]="'date_seller_signature_second'"
                              formControlName="text_seller_name_second" type="text" class="i-lr-10__5">
                       Date <input formControlName="date_seller_signature_second" type="text" class="i-lr-2__5">
@@ -188,7 +188,7 @@
                     </span>
                     and acknowledges receipt of a Copy.
                     <div>
-                      &nbsp;<input appSignature (fieldSigned)="moveToNextSignField($event)"
+                      &nbsp;<input appSignature (fieldSigned)="nextField($event)"
                               [withDateControl]="'date_buyer_signature_first'"
                               formControlName="text_buyer_name_first" type="text" class="i-lr-7">&nbsp;
                       Date &nbsp;<input formControlName="date_buyer_signature_first" type="text" class="i-lr-3">
@@ -197,7 +197,7 @@
                       <input formControlName="radio_buyer_signature_first" value="PM" type="radio"> PM
                     </div>
                     <div>
-                      &nbsp;<input appSignature (fieldSigned)="moveToNextSignField($event)"
+                      &nbsp;<input appSignature (fieldSigned)="nextField($event)"
                               [withDateControl]="'date_buyer_signature_second'"
                               formControlName="text_buyer_name_second" type="text" class="i-lr-7">&nbsp;
                       Date &nbsp;<input formControlName="date_buyer_signature_second" type="text" class="i-lr-3">
@@ -218,7 +218,7 @@
                     <br>
                     Counter Offer:
                     <div>
-                      <input appSignature (fieldSigned)="moveToNextSignField($event)"
+                      <input appSignature (fieldSigned)="nextField($event)"
                              [withDateControl]="'date_seller_first_signature'"
                              formControlName="text_seller_signature_name_first" type="text" class="i-lr-7">
                       Date &nbsp;<input formControlName="date_seller_first_signature" type="text" class="i-lr-3">
@@ -227,7 +227,7 @@
                       <input formControlName="radio_seller_signature_first" value="PM" type="radio"> PM
                     </div>
                     <div>
-                      <input appSignature (fieldSigned)="moveToNextSignField($event)"
+                      <input appSignature (fieldSigned)="nextField($event)"
                              [withDateControl]="'date_seller_second_signature'"
                              formControlName="text_seller_signature_name_second" type="text" class="i-lr-7">
                       Date &nbsp;<input formControlName="date_seller_second_signature" type="text" class="i-lr-3">
