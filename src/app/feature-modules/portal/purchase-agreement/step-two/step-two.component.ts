@@ -45,6 +45,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   private documentFormEl: EventTarget;
 
   private signFieldElements: any[] = [];
+  private canFinalSign: boolean;
 
   private downPaymentAmountPredicates: string[] = [
     'text_offer_price_digits',
@@ -555,7 +556,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     if (hasFormInvalidFields) {
       this.snackbar.open('Please, fill all mandatory fields');
     } else {
-      this.offer.isSigned ? this.moveToNextPage() : this.finalSignAgreement();
+      !this.offer.isSigned && this.canFinalSign ? this.finalSignAgreement() : this.moveToNextPage();
     }
   }
 
@@ -594,6 +595,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
             return;
           }
         }
+
+        this.canFinalSign = true;
       }
     } else {
       this.scrollToFirstInvalidField();
@@ -775,7 +778,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     };
     const validators = this.offer[role][index] ? (this.offer[role][index].email === this.user.email ? [Validators.required] : []) : [];
 
-    return [value, validators];
+    return [value, []];
   }
 
   private disableSignedFields() {
