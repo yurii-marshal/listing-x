@@ -11,7 +11,8 @@ import { CounterOffer } from '../../../../../core-modules/models/counter-offer';
 @Component({
   selector: 'app-buyer-co-agreement',
   templateUrl: './buyer-co-agreement.component.html',
-  styleUrls: ['./../../counter-offer.scss', './buyer-co-agreement.component.scss']
+  styleUrls: ['./../../counter-offer.scss', './buyer-co-agreement.component.scss'],
+  providers: [DatePipe],
 })
 export class BuyerCOAgreementComponent extends BaseCounterOfferAbstract<CounterOffer> implements OnInit {
 
