@@ -25,7 +25,7 @@ export class CounterOfferService extends BaseDataService<CounterOffer> {
     return this.http.patch(`/counter-offers/${query.offerId}/agreement-doc`, model, {params});
   }
 
-  getCounterOffersList(offerId: number): Observable<CounterOffer[]> {
+  getCounterOffersList(offerId: number): Observable<any> {
     let params = new HttpParams();
     params = params.set('offer_id', offerId.toString());
     return this.http.get(`/counter_offers/`, {params});
