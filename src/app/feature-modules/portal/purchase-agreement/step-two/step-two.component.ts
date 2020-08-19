@@ -46,6 +46,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
   private signFieldElements: any[] = [];
 
+  private hasFormInvalidFields: boolean;
+
   private downPaymentAmountPredicates: string[] = [
     'text_offer_price_digits',
     'text_finance_terms_amount',
@@ -550,9 +552,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   continue() {
     this.documentForm.markAllAsTouched();
 
-    const hasFormInvalidFields = this.scrollToFirstInvalidField();
-
-    hasFormInvalidFields
+    this.hasFormInvalidFields
       ? this.snackbar.open('Please, fill all mandatory fields')
       : this.moveToNextPage();
   }
@@ -593,28 +593,30 @@ export class StepTwoComponent implements OnInit, OnDestroy {
           }
         }
 
-        // TODO: reactive approach???
-        setTimeout(() => this.finalSignAgreement(), 500);
+        if (!this.offer.isSigned) {
+          // TODO: reactive approach???
+          setTimeout(() => this.finalSignAgreement(), 500);
+        }
       }
     } else {
       this.scrollToFirstInvalidField();
     }
   }
 
-  private scrollToFirstInvalidField(): boolean {
+  private scrollToFirstInvalidField() {
+    this.hasFormInvalidFields = false;
+
     for (const groupName of Object.keys(this.documentForm.controls)) {
       if (this.documentForm.controls[groupName].invalid) {
         for (const controlName of Object.keys((this.documentForm.controls[groupName] as FormGroup).controls)) {
           if (this.documentForm.get(`${groupName}.${controlName}`).invalid) {
             const invalidControl = this.elRef.nativeElement.querySelector('[formcontrolname="' + controlName + '"]');
             invalidControl.scrollIntoView({behavior: 'smooth', block: 'center'});
-            return true;
+            this.hasFormInvalidFields = true;
           }
         }
       }
     }
-
-    return false;
   }
 
   private patchForm(model) {
@@ -790,8 +792,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.offer.isSigned = true;
         this.snackbar.open('Offer is signed now');
-
-        this.moveToNextPage();
       });
   }
 
