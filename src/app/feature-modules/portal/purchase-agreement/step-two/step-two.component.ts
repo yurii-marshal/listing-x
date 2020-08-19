@@ -45,7 +45,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   private documentFormEl: EventTarget;
 
   private signFieldElements: any[] = [];
-  private canFinalSign: boolean;
 
   private downPaymentAmountPredicates: string[] = [
     'text_offer_price_digits',
@@ -553,11 +552,9 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
     const hasFormInvalidFields = this.scrollToFirstInvalidField();
 
-    if (hasFormInvalidFields) {
-      this.snackbar.open('Please, fill all mandatory fields');
-    } else {
-      !this.offer.isSigned && this.canFinalSign ? this.finalSignAgreement() : this.moveToNextPage();
-    }
+    hasFormInvalidFields
+      ? this.snackbar.open('Please, fill all mandatory fields')
+      : this.moveToNextPage();
   }
 
   closeOffer() {
@@ -596,7 +593,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
           }
         }
 
-        this.canFinalSign = true;
+        // TODO: reactive approach???
+        setTimeout(() => this.finalSignAgreement(), 500);
       }
     } else {
       this.scrollToFirstInvalidField();

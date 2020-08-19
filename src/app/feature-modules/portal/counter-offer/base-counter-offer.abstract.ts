@@ -28,7 +28,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   completedFieldsCount: number = 0;
   allFieldsCount: number = 0;
 
-  isDisabled: boolean;
+  isDisabled: boolean = true;
 
   user: User;
 
@@ -48,22 +48,30 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   ngOnInit() {
     this.id = +this.route.snapshot.params.id;
     this.datepickerMinDate = new Date();
+
+    this.signFieldElements = Array.from(document.getElementsByClassName('sign-input'));
+
+    if (this.id) {
+      this.type = this.router.url.split('/').pop() as 'seller' | 'buyer' | 'multiple';
+    }
   }
 
   closeCO() {
-    this.router.navigateByUrl(`portal/purchase-agreements/${this.offerService.currentOffer.id}`);
+    this.router.navigateByUrl(`portal/purchase-agreements/${this.offerService.currentOffer && this.offerService.currentOffer.id || 'all'}`);
   }
 
-  moveToNextSignField(isSigned, elements, documentForm) {
+  moveToNextSignField(isSigned, documentForm) {
     if (isSigned) {
-      if (elements.length) {
-        for (const item of elements) {
+      if (this.signFieldElements.length) {
+        for (const item of this.signFieldElements) {
           if (!item.value) {
             item.scrollIntoView({behavior: 'smooth', block: 'center'});
             item.focus();
             return;
           }
         }
+
+        // setTimeout(() => this.counterOfferService.signCounterOffer(), 500);
       }
     } else {
       this.scrollToFirstInvalidField(documentForm);
@@ -163,7 +171,6 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   }
 
   disableSignedFields() {
-    this.signFieldElements = Array.from(document.getElementsByClassName('sign-input'));
     this.signFieldElements.forEach(item => item.disabled = !!item.value);
   }
 
