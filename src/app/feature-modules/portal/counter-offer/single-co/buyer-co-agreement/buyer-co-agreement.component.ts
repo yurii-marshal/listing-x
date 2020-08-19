@@ -53,7 +53,7 @@ export class BuyerCOAgreementComponent extends BaseCounterOfferAbstract<CounterO
       check_attached_addendum_third: [{value: null, disabled: true}, []],
       text_addendum_number_third: [{value: null, disabled: true}, []],
       time_counter_offer_expiration_time: [{value: null, disabled: true}, []],
-      radio_expiration_am_pm: [{value: 'AM', disabled: true}, []],
+      radio_expiration_am_pm: [{value: 'am', disabled: true}, []],
       date_expiration_date: [{value: null, disabled: true}, []],
       text_buyer_alternative_name: [{value: null, disabled: true}, []],
       check_buyer_withdraw: [{value: null, disabled: true}, []],
@@ -65,16 +65,16 @@ export class BuyerCOAgreementComponent extends BaseCounterOfferAbstract<CounterO
       text_seller_signature_name_first: [{value: this.getSignFieldAllowedFor('buyers', 1), disabled: true}, []],
       date_seller_first_signature: [{value: this.getSignFieldAllowedFor('seller', 0), disabled: true}, []],
       time_seller_signature_time_first: [{value: this.getSignFieldAllowedFor('seller', 0), disabled: true}, []],
-      radio_seller_signature_first: [{value: 'AM', disabled: true}, []],
+      radio_seller_signature_first: [{value: 'am', disabled: true}, []],
       text_seller_signature_name_second: [{value: null, disabled: true}, []],
       date_seller_second_signature: [{value: this.getSignFieldAllowedFor('seller', 1), disabled: true}, []],
       time_seller_signature_time_second: [{value: this.getSignFieldAllowedFor('seller', 1), disabled: true}, []],
-      radio_seller_signature_second: [{value: 'AM', disabled: true}, []],
+      radio_seller_signature_second: [{value: 'am', disabled: true}, []],
       text_buyer_initials_first: [{value: null, disabled: true}, []],
       text_buyer_initials_second: [{value: null, disabled: true}, []],
       date_copy_received_date: [{value: null, disabled: true}, []],
       time_copy_received_time: [{value: null, disabled: true}, []],
-      radio_copy_received_am_pm: [{value: 'AM', disabled: true}, []],
+      radio_copy_received_am_pm: [{value: 'am', disabled: true}, []],
     }, {updateOn: 'blur'});
 
     forkJoin(
@@ -84,6 +84,7 @@ export class BuyerCOAgreementComponent extends BaseCounterOfferAbstract<CounterO
       .pipe(takeUntil(this.onDestroyed$))
       .subscribe(([counterOffer, document]) => {
         this.counterOffer = counterOffer;
+        this.isDisabled = this.counterOffer.offerType !== 'buyer_counter_offer';
 
         if (counterOffer.isSigned) {
           this.snackbar.open('Counter Offer is already signed');
