@@ -29,7 +29,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   completedFieldsCount: number = 0;
   allFieldsCount: number = 0;
 
-  isDisabled: boolean = true;
+  isDisabled: boolean;
 
   user: User;
 
@@ -57,7 +57,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   }
 
   closeCO() {
-    this.router.navigateByUrl(`portal/purchase-agreements/${this.offerService.currentOffer && this.offerService.currentOffer.id || 'all'}`);
+    this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}`);
   }
 
   moveToNextSignField(isSigned, documentForm) {
@@ -101,8 +101,6 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         if (_.camelCase(controlName) === key && value) {
           documentForm.get(`${_.snakeCase(controlName)}`)
             .patchValue(value, {emitEvent: false, onlySelf: true});
-          documentForm.get(`${_.snakeCase(controlName)}`)
-            .disable({emitEvent: false, onlySelf: true});
         }
 
       });
@@ -122,6 +120,22 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     });
   }
 
+  rejectCO() {
+    this.counterOfferService.rejectCounterOffer(this.offerId)
+      .pipe(takeUntil(this.onDestroyed$))
+      .subscribe(() => {
+        this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}`);
+      });
+  }
+
+  createCO(type: 'counter_offer' | 'multiple_counter_offer' | 'buyer_counter_offer') {
+    this.counterOfferService.createCounterOffer({offer: this.offerId, type})
+      .pipe(takeUntil(this.onDestroyed$))
+      .subscribe((data: CounterOffer) => {
+        this.router.navigateByUrl(`portal/offer/${this.offerId}/counter-offers/${data.id}/multiple`);
+      });
+  }
+
   continue() {
     this.documentForm.markAllAsTouched();
 
@@ -132,13 +146,13 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
           .subscribe(() => {
             this.counterOffer.isSigned = true;
             this.snackbar.open('Counter Offer is signed now');
-            this.router.navigateByUrl(`portal/purchase-agreements/${this.offerService.currentOffer.id}`);
+            this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/details`);
           });
       } else {
         this.snackbar.open('Please, fill all mandatory fields');
       }
     } else {
-      this.router.navigateByUrl(`portal/purchase-agreements/${this.offerService.currentOffer.id}`);
+      this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/details`);
     }
   }
 

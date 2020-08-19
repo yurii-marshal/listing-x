@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { AuthGuardService } from '../../core-modules/guards/auth-guard.service';
 import { DialogsWrapperComponent } from '../../shared-modules/components/dialogs-wrapper/dialogs-wrapper.component';
-import { WriteOfferDialogComponent } from '../../shared-modules/dialogs/write-offer-dialog/write-offer-dialog.component';
 import { OfferResolver } from './resolvers/offer.resolver';
 import {
   WriteOfferUploadDocumentsDialogComponent
