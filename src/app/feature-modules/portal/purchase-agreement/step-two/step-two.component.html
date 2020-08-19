@@ -1093,7 +1093,7 @@
                 </div>
 
                 <div class="col-right">
-                  $ <input formControlName="text_finance_terms_amount" appOnlyNumbers type="text">
+                  $ <input formControlName="text_finance_terms_amount" currencyMask appOnlyNumbers type="text">
                 </div>
 
                 <div class="col-left text-justify">
@@ -1116,7 +1116,7 @@
                 </div>
 
                 <div class="col-right">
-                  $ <input formControlName="text_finance_increased_deposit_amount" appOnlyNumbers type="text">
+                  $ <input formControlName="text_finance_increased_deposit_amount" currencyMask appOnlyNumbers type="text">
                 </div>
 
                 <div class="col-left ">
@@ -1218,11 +1218,11 @@
                 </div>
 
                 <div class="col-right item-d1">
-                  $ <input formControlName="text_finance_first_loan_amount" appOnlyNumbers type="text">
+                  $ <input formControlName="text_finance_first_loan_amount" currencyMask appOnlyNumbers type="text">
                 </div>
 
                 <div class="col-right item-d2">
-                  $ <input formControlName="text_finance_second_loan_amount" appOnlyNumbers type="text">
+                  $ <input formControlName="text_finance_second_loan_amount" currencyMask appOnlyNumbers type="text">
                 </div>
 
                 <div class="col-left">
@@ -1239,7 +1239,7 @@
                 </div>
 
                 <div class="col-right">
-                  $ <input formControlName="text_finance_down_payment_balance" appOnlyNumbers type="text">
+                  $ <input formControlName="text_finance_down_payment_balance" currencyMask appOnlyNumbers type="text">
                 </div>
 
                 <div class="col-left text-justify">
@@ -1249,7 +1249,7 @@
                 </div>
 
                 <div class="col-right">
-                  $ <input [value]="documentForm.get('page_5.text_offer_price_digits').value" appOnlyNumbers
+                  $ <input [value]="documentForm.get('page_5.text_offer_price_digits').value" currencyMask appOnlyNumbers
                            disabled="disabled" type="text">
                 </div>
                 <div class="clearfix"></div>

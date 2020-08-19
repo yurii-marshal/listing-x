@@ -33,8 +33,6 @@ export class BuyerCOAgreementComponent extends BaseCounterOfferAbstract<CounterO
 
     this.isDisabled = this.counterOffer.userRole !== 'agent_buyer';
 
-    this.signFieldElements = Array.from(document.getElementsByClassName('sign-input'));
-
     this.documentForm = this.fb.group({
       date_buyer_counter_date: [{value: null, disabled: true}, []],
       radio_counter_offer_type: [{value: 'Counter Offer', disabled: true}, []],
@@ -79,7 +77,7 @@ export class BuyerCOAgreementComponent extends BaseCounterOfferAbstract<CounterO
   }
 
   nextField(isSigned) {
-    this.moveToNextSignField(isSigned, this.signFieldElements, this.documentForm);
+    this.moveToNextSignField(isSigned, this.documentForm);
   }
 
 }
