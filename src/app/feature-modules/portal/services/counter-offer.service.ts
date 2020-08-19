@@ -23,10 +23,8 @@ export class CounterOfferService extends BaseDataService<CounterOffer> {
     return this.http.get(`/counter_offers/agreement-doc/${id}/${type}`);
   }
 
-  updateCounterOfferDocumentField(query, model: object) {
-    let params = new HttpParams();
-    params = params.set('page', query.page);
-    return this.http.patch(`/counter_offers/${query.offerId}/agreement-doc`, model, {params});
+  updateCounterOfferDocumentField(id: number, type: 'seller' | 'buyer' | 'multiple', model) {
+    return this.http.patch(`/counter_offers/agreement-doc/${id}/${type}`, model);
   }
 
   getCounterOffersList(offerId: number): Observable<any> {

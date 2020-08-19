@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material';
 import { CounterOffer } from '../../../../../core-modules/models/counter-offer';
 import { forkJoin } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { AuthService } from '../../../../../core-modules/core-services/auth.service';
 
 @Component({
   selector: 'app-seller-co-agreement',
@@ -19,6 +20,7 @@ import { takeUntil } from 'rxjs/operators';
 export class SellerCOAgreementComponent extends BaseCounterOfferAbstract<CounterOffer> implements OnInit, OnDestroy {
 
   constructor(
+    private authService: AuthService,
     private fb: FormBuilder,
     public route: ActivatedRoute,
     public router: Router,
@@ -32,6 +34,7 @@ export class SellerCOAgreementComponent extends BaseCounterOfferAbstract<Counter
 
   ngOnInit() {
     super.ngOnInit();
+    this.user = this.authService.currentUser;
 
     this.documentForm = this.fb.group({
       date_seller_counter_date: [{value: null, disabled: true}, []],

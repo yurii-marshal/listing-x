@@ -57,7 +57,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   }
 
   closeCO() {
-    this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}`);
+    this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/details`);
   }
 
   moveToNextSignField(isSigned, documentForm) {
@@ -95,12 +95,15 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   }
 
   patchForm(model, documentForm) {
+    this.completedFieldsCount = 0;
+
     Object.entries(model).forEach(([key, value]) => {
       Object.keys(documentForm.controls).forEach((controlName) => {
 
         if (_.camelCase(controlName) === key && value) {
           documentForm.get(`${_.snakeCase(controlName)}`)
             .patchValue(value, {emitEvent: false, onlySelf: true});
+          this.completedFieldsCount += 1;
         }
 
       });
@@ -157,12 +160,12 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   }
 
   getSignFieldAllowedFor(role: string, index: number) {
-    // const value = {
-    //   value: '',
-    //   disabled: this.counterOffer[role][index] ? this.counterOffer[role][index].email !== this.user.email : true,
-    // };
+    const value = {
+      value: '',
+      disabled: this.counterOffer.pitcher !== this.user.id,
+    };
 
-    return ['', []];
+    return [value, []];
   }
 
   getAllFieldsCount(model) {
@@ -178,9 +181,16 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
       controlValue = String(controlValue).replace(',', '');
     }
     // show saving animation if it takes a time
-    this.counterOfferService.updateCounterOfferDocumentField({offerId: this.id}, {[controlName]: controlValue})
+    this.counterOfferService.updateCounterOfferDocumentField(this.id, this.type, {[controlName]: controlValue})
       .pipe(takeUntil(this.onDestroyed$))
-      .subscribe(() => {
+      .subscribe((document) => {
+        this.completedFieldsCount = 0;
+
+        Object.keys(document).forEach((field) => {
+          if (document[field]) {
+            this.completedFieldsCount += 1;
+          }
+        });
       });
   }
 
