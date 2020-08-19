@@ -153,22 +153,22 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     this.router.navigateByUrl(`portal/purchase-agreements/${this.offer.id}/sign`);
   }
 
-  goToCounterOffer(id?: number) {
+  openCounterOffer(id?: number) {
     if (id) {
       this.isSeller ?
-        this.router.navigateByUrl(`portal/counter-offers/${id}/seller`) :
-        this.router.navigateByUrl(`portal/counter-offers/${id}/buyer`);
+        this.router.navigateByUrl(`portal/offer/${this.offer.id}/counter-offers/${id}/seller`) :
+        this.router.navigateByUrl(`portal/offer/${this.offer.id}/counter-offers/${id}/buyer`);
     } else {
-      this.router.navigateByUrl(`portal/counter-offers/single`);
+      this.router.navigateByUrl(`portal/offer/${this.offer.id}/counter-offers/single`);
     }
   }
 
-  goToMCO(id?: number) {
-    if (id) {
-      this.router.navigateByUrl(`portal/counter-offers/${id}/multiple`);
-    } else {
-      this.router.navigateByUrl(`portal/counter-offers/multiple`);
-    }
+  createCounterOffer(type: 'counter_offer' | 'multiple_counter_offer' | 'buyer_counter_offer') {
+    this.counterOfferService.createCounterOffer({offer: this.offer.id, type})
+      .pipe(takeUntil(this.onDestroyed$))
+      .subscribe((data: CounterOffer) => {
+        this.router.navigateByUrl(`portal/offer/${this.offer.id}/counter-offers/${data.id}/multiple`);
+      });
   }
 
   deny() {

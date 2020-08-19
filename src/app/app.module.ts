@@ -13,7 +13,6 @@ import { ProgressService } from './core-modules/core-services/progress.service';
 import { HttpBodyConverterInterceptor } from './core-modules/interceptors/http-body-converter.interceptor';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { SharedModule } from './shared-modules/shared.module';
-import { NgxCurrencyModule } from 'ngx-currency';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,7 +25,6 @@ import { NgxCurrencyModule } from 'ngx-currency';
     MatProgressBarModule,
     MatIconModule,
     FullCalendarModule,
-    NgxCurrencyModule,
 
     SharedModule.forRoot()
   ],

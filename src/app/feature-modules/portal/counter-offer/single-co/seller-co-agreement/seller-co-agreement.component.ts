@@ -78,27 +78,25 @@ export class SellerCOAgreementComponent extends BaseCounterOfferAbstract<Counter
       radio_copy_received_am_pm: [{value: 'AM', disabled: this.isDisabled}, []],
     }, {updateOn: 'blur'});
 
-    if (this.id) {
-      forkJoin(
-        this.counterOfferService.loadOne(this.id),
-        this.counterOfferService.getCounterOfferDocument(this.id, this.type),
-      )
-        .pipe(takeUntil(this.onDestroyed$))
-        .subscribe(([counterOffer, document]) => {
-          this.counterOffer = counterOffer;
+    forkJoin(
+      this.counterOfferService.loadOne(this.id),
+      this.counterOfferService.getCounterOfferDocument(this.id, this.type),
+    )
+      .pipe(takeUntil(this.onDestroyed$))
+      .subscribe(([counterOffer, document]) => {
+        this.counterOffer = counterOffer;
 
-          if (counterOffer.isSigned) {
-            this.snackbar.open('Counter Offer is already signed');
-          }
+        if (counterOffer.isSigned) {
+          this.snackbar.open('Counter Offer is already signed');
+        }
 
-          this.patchForm(document, this.documentForm);
-          this.getAllFieldsCount(document);
-          this.disableSignedFields();
-          this.nextField(true);
-        });
+        this.patchForm(document, this.documentForm);
+        this.getAllFieldsCount(document);
+        this.disableSignedFields();
+        this.nextField(true);
+      });
 
-      this.subscribeToFormChanges(this.documentForm);
-    }
+    this.subscribeToFormChanges(this.documentForm);
   }
 
   nextField(isSigned) {

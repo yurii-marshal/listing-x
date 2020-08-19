@@ -15,14 +15,18 @@ export class CounterOfferService extends BaseDataService<CounterOffer> {
     super(injector, ApiEndpoint.CounterOffer);
   }
 
+  createCounterOffer(model: object): Observable<any> {
+    return this.http.post(`/counter_offers/`, model);
+  }
+
   getCounterOfferDocument(id: number, type: 'seller' | 'buyer' | 'multiple'): Observable<any> {
-    return this.http.get(`/counter-offers/agreement-doc/${id}/${type}`);
+    return this.http.get(`/counter_offers/agreement-doc/${id}/${type}`);
   }
 
   updateCounterOfferDocumentField(query, model: object) {
     let params = new HttpParams();
     params = params.set('page', query.page);
-    return this.http.patch(`/counter-offers/${query.offerId}/agreement-doc`, model, {params});
+    return this.http.patch(`/counter_offers/${query.offerId}/agreement-doc`, model, {params});
   }
 
   getCounterOffersList(offerId: number): Observable<any> {
@@ -32,11 +36,11 @@ export class CounterOfferService extends BaseDataService<CounterOffer> {
   }
 
   signCounterOffer(offerId: number): Observable<any> {
-    return this.http.post(`/counter-offers/${offerId}/sign/`, {})
+    return this.http.post(`/counter_offers/${offerId}/sign/`, {})
       .pipe(switchMap(() => super.loadOne(offerId)));
   }
 
   rejectCounterOffer(offerId: number): Observable<any> {
-    return this.http.post(`/counter-offers/${offerId}/reject/`, {});
+    return this.http.post(`/counter_offers/${offerId}/reject/`, {});
   }
 }

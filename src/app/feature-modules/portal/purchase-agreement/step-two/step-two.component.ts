@@ -477,7 +477,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         check_department_real_estate: [{value: null, disabled: this.isDisabled}, []],
         text_broker_designee_initials: [{value: null, disabled: this.isDisabled}, []],
         date_presentation_of_offer: [{value: null, disabled: this.isDisabled}, []],
-        // TODO: reject offer signs
+        // reject offer signs?
         text_rejection_offer_seller_initial_first: [{value: null, disabled: this.isDisabled}, []],
         text_rejection_offer_seller_initial_second: [{value: null, disabled: this.isDisabled}, []],
         date_rejection_offer_date: [{value: null, disabled: this.isDisabled}, []],
