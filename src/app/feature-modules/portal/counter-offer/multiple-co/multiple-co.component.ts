@@ -7,6 +7,8 @@ import { CounterOfferService } from '../../services/counter-offer.service';
 import { MatSnackBar } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { CounterOffer } from '../../../../core-modules/models/counter-offer';
+import { forkJoin } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-multiple-co',
@@ -83,6 +85,26 @@ export class MultipleCOComponent extends BaseCounterOfferAbstract<CounterOffer> 
       time_copy_received_time: [{value: null, disabled: true}, []],
       radio_copy_received_am_pm: [{value: 'AM', disabled: true}, []],
     }, {updateOn: 'blur'});
+
+    forkJoin(
+      this.counterOfferService.loadOne(this.id),
+      this.counterOfferService.getCounterOfferDocument(this.id, this.type),
+    )
+      .pipe(takeUntil(this.onDestroyed$))
+      .subscribe(([counterOffer, document]) => {
+        this.counterOffer = counterOffer;
+
+        if (counterOffer.isSigned) {
+          this.snackbar.open('Counter Offer is already signed');
+        }
+
+        this.patchForm(document, this.documentForm);
+        this.getAllFieldsCount(document);
+        this.disableSignedFields();
+        this.nextField(true);
+      });
+
+    this.subscribeToFormChanges(this.documentForm);
   }
 
   nextField(isSigned) {

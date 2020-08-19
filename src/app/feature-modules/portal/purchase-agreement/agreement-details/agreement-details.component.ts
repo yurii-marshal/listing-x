@@ -59,8 +59,9 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     this.transactionsFlow = this.router.url.includes('transaction');
     const offerId: number = Number(this.route.snapshot.params.id);
 
-    this.offerService.loadOne(offerId)
-      .subscribe((offer: Offer) => this.offerLoaded(offer));
+    this.offerService.loadOne(offerId).pipe(
+      takeUntil(this.onDestroyed$)
+    ).subscribe((offer: Offer) => this.offerLoaded(offer));
 
     this.counterOfferService.getCounterOffersList(offerId).pipe(
       takeUntil(this.onDestroyed$)
@@ -93,8 +94,9 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   onDelete() {
-    this.offerService.delete(this.offer.id)
-      .subscribe(() => this.router.navigate(['/portal/purchase-agreements/all']));
+    this.offerService.delete(this.offer.id).pipe(
+      takeUntil(this.onDestroyed$)
+    ).subscribe(() => this.router.navigate(['/portal/purchase-agreements/all']));
   }
 
   getClassName(status: AgreementStatus): string {
@@ -116,8 +118,9 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     this.isOpenInviteUserOverlay = false;
     const email: string = this.userEmailControl.value.toLowerCase();
     const offerId: number = Number(this.route.snapshot.params.id);
-    this.transactionService.inviteUser(offerId, email)
-      .subscribe(() => {
+    this.transactionService.inviteUser(offerId, email).pipe(
+      takeUntil(this.onDestroyed$)
+    ).subscribe(() => {
         this.snackbar.open(`Invite sent to email: ${email}`);
         if (!this.isAgent) {
           return;
@@ -172,8 +175,9 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   deny() {
-    this.offerService.rejectOffer(this.offer.id)
-      .subscribe(() => {
+    this.offerService.rejectOffer(this.offer.id).pipe(
+      takeUntil(this.onDestroyed$)
+    ).subscribe(() => {
         this.offer.allowSign = false;
         this.snackbar.open(`Denied.`);
       });
