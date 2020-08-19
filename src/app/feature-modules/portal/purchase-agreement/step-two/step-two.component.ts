@@ -46,8 +46,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
   private signFieldElements: any[] = [];
 
-  private hasFormInvalidFields: boolean;
-
   private downPaymentAmountPredicates: string[] = [
     'text_offer_price_digits',
     'text_finance_terms_amount',
@@ -499,9 +497,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     }, {updateOn: 'blur'});
 
     this.offerService.getOfferDocument(this.offerId)
-      .pipe(
-        takeUntil(this.onDestroyed$),
-      )
+      .pipe(takeUntil(this.onDestroyed$))
       .subscribe((model) => {
         this.patchForm(model);
         this.getAllFieldsCount(model);
@@ -552,9 +548,11 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   continue() {
     this.documentForm.markAllAsTouched();
 
-    this.hasFormInvalidFields
-      ? this.snackbar.open('Please, fill all mandatory fields')
-      : this.moveToNextPage();
+    if (this.scrollToFirstInvalidField()) {
+      this.snackbar.open('Please, fill all mandatory fields');
+    } else {
+      this.moveToNextPage();
+    }
   }
 
   closeOffer() {
@@ -594,7 +592,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         }
 
         if (!this.offer.isSigned) {
-          // TODO: reactive approach???
+          // TODO: reactive approach
           setTimeout(() => this.finalSignAgreement(), 500);
         }
       }
@@ -604,19 +602,19 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   private scrollToFirstInvalidField() {
-    this.hasFormInvalidFields = false;
-
     for (const groupName of Object.keys(this.documentForm.controls)) {
       if (this.documentForm.controls[groupName].invalid) {
         for (const controlName of Object.keys((this.documentForm.controls[groupName] as FormGroup).controls)) {
           if (this.documentForm.get(`${groupName}.${controlName}`).invalid) {
             const invalidControl = this.elRef.nativeElement.querySelector('[formcontrolname="' + controlName + '"]');
             invalidControl.scrollIntoView({behavior: 'smooth', block: 'center'});
-            this.hasFormInvalidFields = true;
+            return true;
           }
         }
       }
     }
+
+    return false;
   }
 
   private patchForm(model) {

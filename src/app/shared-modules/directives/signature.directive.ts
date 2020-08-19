@@ -72,7 +72,7 @@ export class SignatureDirective implements OnInit {
 
     this.renderer.appendChild(this.signButtonEl, this.renderer.createText('Sign'));
     this.renderer.appendChild(this.el.nativeElement.parentNode, this.signButtonEl);
-    this.renderer.listen(this.signButtonEl, 'click', () => this.getRootParent(this.signatureControl.parent));
+    this.renderer.listen(this.signButtonEl, 'click', () => this.checkRootParent(this.signatureControl.parent));
 
     this.setButtonStyles();
   }
@@ -83,38 +83,38 @@ export class SignatureDirective implements OnInit {
     this.signButtonEl = null;
   }
 
-  private getRootParent(parent: AbstractControl) {
+  private checkRootParent(parent: AbstractControl) {
     if (parent && parent.parent) {
-      this.getRootParent(parent.parent);
+      this.checkRootParent(parent.parent);
     } else {
       // now parent is root form
-      this.signField(parent);
+      if (parent.valid) {
+        this.signField();
+      } else {
+        this.snackbar.open(`Can't sign. Please, fill all required fields`);
+        this.fieldSigned.emit(false);
+      }
     }
   }
 
-  private signField(parent: AbstractControl) {
-    if (!parent.invalid) {
-      setTimeout(() => {
-        this.signatureControl.patchValue(this[this.mode]);
-        this.signatureControl.disable();
+  private signField() {
+    setTimeout(() => {
+      this.signatureControl.patchValue(this[this.mode]);
+      this.signatureControl.disable();
 
-        if (this.withDateControl) {
-          setTimeout(() => {
-            this.dateControl.patchValue(this.datePipe.transform(new Date().getTime(), 'yyyy-MM-dd'));
-            this.dateControl.disable();
-          }, 200);
-        }
+      if (this.withDateControl) {
+        setTimeout(() => {
+          this.dateControl.patchValue(this.datePipe.transform(new Date().getTime(), 'yyyy-MM-dd'));
+          this.dateControl.disable();
+        }, 200);
+      }
 
-        this.renderer.addClass(this.el.nativeElement, 'signed');
+      this.renderer.addClass(this.el.nativeElement, 'signed');
 
-        this.removeSignButton();
+      this.removeSignButton();
 
-        this.fieldSigned.emit(true);
-      }, 300);
-    } else {
-      this.snackbar.open(`Can't sign. Please, fill all required fields`);
-      this.fieldSigned.emit(false);
-    }
+      this.fieldSigned.emit(true);
+    }, 300);
   }
 
   private setButtonStyles() {
