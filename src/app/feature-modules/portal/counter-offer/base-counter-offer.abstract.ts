@@ -16,6 +16,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
   type;
   id: number;
+  offerId: number;
   counterOffer: CounterOffer = {} as CounterOffer;
 
   documentForm: FormGroup;
@@ -47,13 +48,12 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
   ngOnInit() {
     this.id = +this.route.snapshot.params.id;
+    this.offerId = +this.route.snapshot.params.offerId;
     this.datepickerMinDate = new Date();
 
     this.signFieldElements = Array.from(document.getElementsByClassName('sign-input'));
 
-    if (this.id) {
-      this.type = this.router.url.split('/').pop() as 'seller' | 'buyer' | 'multiple';
-    }
+    this.type = this.router.url.split('/').pop() as 'seller' | 'buyer' | 'multiple';
   }
 
   closeCO() {
@@ -101,6 +101,8 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         if (_.camelCase(controlName) === key && value) {
           documentForm.get(`${_.snakeCase(controlName)}`)
             .patchValue(value, {emitEvent: false, onlySelf: true});
+          documentForm.get(`${_.snakeCase(controlName)}`)
+            .disable({emitEvent: false, onlySelf: true});
         }
 
       });
@@ -150,9 +152,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   }
 
   getAllFieldsCount(model) {
-    Object.keys(model).forEach((page) => {
-      this.allFieldsCount += Object.keys(model[page]).length;
-    });
+    this.allFieldsCount = Object.keys(model).length;
   }
 
   documentInputChanged(controlName: string, controlValue: any) {
