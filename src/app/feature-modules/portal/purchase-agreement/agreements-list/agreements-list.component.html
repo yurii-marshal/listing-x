@@ -13,7 +13,7 @@
       <div class="u-flex u-flex-justify--center u-flex-align-items--center file-types">
         <img src="assets/images/icons/doc.svg">
         <img src="assets/images/icons/pdf.svg">
-        <img src="assets/images/icons/plus.svg" class="trigger" style="display: none">
+        <img src="assets/images/icons/plus.svg" class="trigger">
       </div>
       <span>Supporting Docs</span>
     </div>
@@ -22,7 +22,7 @@
   <div class="u-flex u-flex-justify--center">
     <div class="u-flex u-flex-direction--column u-flex-align-items--center">
       <h2 style="margin: 0">{{ transactionsFlow ? 'Transactions' : 'Purchase Agreements' }}</h2>
-      <mat-form-field>
+      <mat-form-field appearance="none">
         <mat-label style="display: none">Status</mat-label>
         <mat-select (valueChange)="onFilter($event)" [value]="Status.All">
           <mat-option *ngFor="let item of statuses" [value]="item">
