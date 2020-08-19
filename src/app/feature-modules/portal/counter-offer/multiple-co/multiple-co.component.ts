@@ -50,7 +50,7 @@ export class MultipleCOComponent extends BaseCounterOfferAbstract<CounterOffer> 
       check_attached_addendum_third: [{value: null, disabled: true}, []],
       text_addendum_number_third: [{value: null, disabled: true}, []],
       time_counter_offer_expiration_time: [{value: null, disabled: true}, []],
-      radio_expiration_am_pm: [{value: 'AM', disabled: true}, []],
+      radio_expiration_am_pm: [{value: 'am', disabled: true}, []],
       date_expiration_date: [{value: null, disabled: true}, []],
       text_seller_alternative_name: [{value: null, disabled: true}, []],
       text_seller_name_first: [{value: null, disabled: true}, []],
@@ -58,7 +58,7 @@ export class MultipleCOComponent extends BaseCounterOfferAbstract<CounterOffer> 
       text_seller_name_second: [{value: null, disabled: true}, []],
       date_seller_signature_second: this.getSignFieldAllowedFor('sellers', 1),
       time_deposit_revoke_time: [{value: null, disabled: true}, []],
-      radio_deposit_revoke_am_pm: [{value: 'AM', disabled: true}, []],
+      radio_deposit_revoke_am_pm: [{value: 'am', disabled: true}, []],
       date_deposit_revoke_expiration_date: [{value: null, disabled: true}, []],
       text_buyer_alternative_name: [{value: null, disabled: true}, []],
       check_receive_copy: [{value: null, disabled: true}, []],
@@ -66,24 +66,24 @@ export class MultipleCOComponent extends BaseCounterOfferAbstract<CounterOffer> 
       text_buyer_name_first: [{value: null, disabled: true}, []],
       date_buyer_signature_first: this.getSignFieldAllowedFor('buyers', 0),
       time_buyer_signature_time_first: this.getSignFieldAllowedFor('buyers', 0),
-      radio_buyer_signature_first: [{value: 'AM', disabled: true}, []],
+      radio_buyer_signature_first: [{value: 'am', disabled: true}, []],
       text_buyer_name_second: [{value: null, disabled: true}, []],
       date_buyer_signature_second: this.getSignFieldAllowedFor('buyers', 1),
       time_buyer_signature_time_second: this.getSignFieldAllowedFor('buyers', 1),
-      radio_buyer_signature_second: [{value: 'AM', disabled: true}, []],
+      radio_buyer_signature_second: [{value: 'am', disabled: true}, []],
       text_seller_signature_name_first: [{value: null, disabled: true}, []],
       date_seller_first_signature: this.getSignFieldAllowedFor('sellers', 0),
       time_seller_signature_time_first: this.getSignFieldAllowedFor('sellers', 0),
-      radio_seller_signature_first: [{value: 'AM', disabled: true}, []],
+      radio_seller_signature_first: [{value: 'am', disabled: true}, []],
       text_seller_signature_name_second: [{value: null, disabled: true}, []],
       date_seller_second_signature: this.getSignFieldAllowedFor('sellers', 1),
       time_seller_signature_time_second: this.getSignFieldAllowedFor('sellers', 1),
-      radio_seller_signature_second: [{value: 'AM', disabled: true}, []],
+      radio_seller_signature_second: [{value: 'am', disabled: true}, []],
       text_seller_initials_first: [{value: null, disabled: true}, []],
       text_seller_initials_second: [{value: null, disabled: true}, []],
       date_copy_received_date: [{value: null, disabled: true}, []],
       time_copy_received_time: [{value: null, disabled: true}, []],
-      radio_copy_received_am_pm: [{value: 'AM', disabled: true}, []],
+      radio_copy_received_am_pm: [{value: 'am', disabled: true}, []],
     }, {updateOn: 'blur'});
 
     forkJoin(
@@ -93,6 +93,7 @@ export class MultipleCOComponent extends BaseCounterOfferAbstract<CounterOffer> 
       .pipe(takeUntil(this.onDestroyed$))
       .subscribe(([counterOffer, document]) => {
         this.counterOffer = counterOffer;
+        this.isDisabled = this.counterOffer.offerType !== 'multiple_counter_offer';
 
         if (counterOffer.isSigned) {
           this.snackbar.open('Counter Offer is already signed');
