@@ -137,7 +137,7 @@ const routes: Routes = [
             path: 'step-two',
             pathMatch: 'full',
             component: StepTwoComponent,
-            canActivate: [CreateOfferGuardService],
+            canActivate: [],
             data: {progress: 2},
             resolve: {offer: GetOfferResolver}
           },
