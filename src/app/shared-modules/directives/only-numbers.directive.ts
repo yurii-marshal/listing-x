@@ -74,7 +74,7 @@ export class OnlyNumbersDirective implements OnInit, OnDestroy {
   }
 
   private createInsertString() {
-    String.prototype['insert'] = function (what, index) {
+    String.prototype['insert'] = function(what, index) {
       return index > 0
         ? this.replace(new RegExp('.{' + index + '}'), '$&' + what)
         : what + this;
