@@ -315,25 +315,10 @@
 
       <app-offer-information [counterOffer]="counterOffer" [isSideBarOpen]="isSideBarOpen"></app-offer-information>
 
-      <div class="controls u-flex u-flex-justify--space-between" *ngIf="isSideBarOpen">
-        <button class="sign-btn"
-                mat-flat-button
-                [disabled]="!counterOffer.allowDeny || counterOffer.isSigned"
-                *ngIf="counterOffer.catcher === user.id"
-                (click)="rejectCO()"
-                color="primary">
-          REJECT
-        </button>
-
-        <button class="sign-btn"
-                mat-flat-button
-                *ngIf="counterOffer.catcher === user.id"
-                [disabled]="counterOffer.isSigned"
-                (click)="createCO('multiple_counter_offer')"
-                color="primary">
-          COUNTER OFFER
-        </button>
-      </div>
+      <app-sidebar-controls [counterOffer]="counterOffer"
+                            [isSideBarOpen]="isSideBarOpen"
+                            [user]="user">
+      </app-sidebar-controls>
 
       <div class="controls" *ngIf="isSideBarOpen">
         <app-progress-bar
