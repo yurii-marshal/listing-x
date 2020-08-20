@@ -781,7 +781,9 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
   private disableSignedFields() {
     this.signFieldElements = Array.from(document.getElementsByClassName('sign-input'));
-    this.signFieldElements.forEach(item => item.disabled = !!item.value);
+    this.offer.isSigned
+      ? this.signFieldElements.forEach(item => item.value = '')
+      : this.signFieldElements.forEach(item => item.disabled = !!item.value);
   }
 
   private finalSignAgreement() {
