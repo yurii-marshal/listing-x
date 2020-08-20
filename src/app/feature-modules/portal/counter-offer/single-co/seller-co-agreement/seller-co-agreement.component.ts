@@ -7,8 +7,6 @@ import { CounterOfferService } from '../../../services/counter-offer.service';
 import { DatePipe } from '@angular/common';
 import { MatSnackBar } from '@angular/material';
 import { CounterOffer } from '../../../../../core-modules/models/counter-offer';
-import { forkJoin } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { AuthService } from '../../../../../core-modules/core-services/auth.service';
 
 @Component({
@@ -20,7 +18,6 @@ import { AuthService } from '../../../../../core-modules/core-services/auth.serv
 export class SellerCOAgreementComponent extends BaseCounterOfferAbstract<CounterOffer> implements OnInit, OnDestroy {
 
   constructor(
-    private authService: AuthService,
     private fb: FormBuilder,
     public route: ActivatedRoute,
     public router: Router,
@@ -28,18 +25,18 @@ export class SellerCOAgreementComponent extends BaseCounterOfferAbstract<Counter
     public counterOfferService: CounterOfferService,
     public snackbar: MatSnackBar,
     public datePipe: DatePipe,
+    public authService: AuthService,
   ) {
-    super(route, router, offerService, counterOfferService, snackbar, datePipe);
+    super(route, router, offerService, counterOfferService, snackbar, datePipe, authService);
   }
 
   ngOnInit() {
     super.ngOnInit();
-    this.user = this.authService.currentUser;
 
     this.documentForm = this.fb.group({
-      date_seller_counter_date: [{value: null, disabled: true}, []],
+      date_seller_counter_date: [{value: null, disabled: this.isDisabled}, []],
       radio_counter_offer_type: [{value: 'purchase_agreement', disabled: this.isDisabled}, []],
-      text_counter_offer_number: [{value: null, disabled: true}, []],
+      text_counter_offer_number: [{value: null, disabled: this.isDisabled}, []],
       text_offer_type_other: [{value: null, disabled: this.isDisabled}, []],
       date_offer_dated: [{value: null, disabled: this.isDisabled}, []],
       text_property_address: [{value: null, disabled: this.isDisabled}, []],
@@ -58,18 +55,20 @@ export class SellerCOAgreementComponent extends BaseCounterOfferAbstract<Counter
       text_seller_alternative_name: [{value: null, disabled: this.isDisabled}, []],
       check_seller_withdraw: [{value: null, disabled: this.isDisabled}, []],
       check_seller_accept: [{value: null, disabled: this.isDisabled}, []],
-      text_seller_name_first: [{value: null, disabled: this.isDisabled}, []],
-      date_seller_signature_first: this.getSignFieldAllowedFor('sellers', 0),
-      text_seller_name_second: [{value: null, disabled: this.isDisabled}, []],
-      date_seller_signature_second: this.getSignFieldAllowedFor('sellers', 1),
+      text_seller_name_first: this.getSignFieldAllowedFor('text_seller_name_first', 'pitcher_customers', 0),
+      date_seller_signature_first: [{value: null, disabled: true}, []],
+      text_seller_name_second: this.getSignFieldAllowedFor('text_seller_name_second', 'pitcher_customers', 1),
+      date_seller_signature_second: [{value: null, disabled: true}, []],
       check_receive_copy: [{value: null, disabled: this.isDisabled}, []],
-      text_buyer_name_first: [{value: null, disabled: this.isDisabled}, []],
-      date_buyer_signature_first: this.getSignFieldAllowedFor('buyers', 0),
-      time_buyer_signature_time_first: this.getSignFieldAllowedFor('buyers', 0),
+      text_buyer_name_first: this.getSignFieldAllowedFor('text_buyer_name_first', 'catcher_customers', 0),
+      date_buyer_signature_first: [{value: null, disabled: true}, []],
+      // TODO: set time to sign directive
+      time_buyer_signature_time_first: [{value: null, disabled: true}, []],
       radio_buyer_signature_first: [{value: 'am', disabled: this.isDisabled}, []],
-      text_buyer_name_second: [{value: null, disabled: this.isDisabled}, []],
-      date_buyer_signature_second: this.getSignFieldAllowedFor('buyers', 1),
-      time_buyer_signature_time_second: this.getSignFieldAllowedFor('buyers', 1),
+      text_buyer_name_second: this.getSignFieldAllowedFor('text_buyer_name_second', 'catcher_customers', 1),
+      date_buyer_signature_second: [{value: null, disabled: true}, []],
+      // TODO: set time to sign directive
+      time_buyer_signature_time_second: [{value: null, disabled: true}, []],
       radio_buyer_signature_second: [{value: 'am', disabled: this.isDisabled}, []],
       text_seller_initials_first: [{value: null, disabled: this.isDisabled}, []],
       text_seller_initials_second: [{value: null, disabled: this.isDisabled}, []],
@@ -77,31 +76,5 @@ export class SellerCOAgreementComponent extends BaseCounterOfferAbstract<Counter
       time_copy_received_time: [{value: null, disabled: this.isDisabled}, []],
       radio_copy_received_am_pm: [{value: 'am', disabled: this.isDisabled}, []],
     }, {updateOn: 'blur'});
-
-    forkJoin(
-      this.counterOfferService.loadOne(this.id),
-      this.counterOfferService.getCounterOfferDocument(this.id, this.type),
-    )
-      .pipe(takeUntil(this.onDestroyed$))
-      .subscribe(([counterOffer, document]) => {
-        this.counterOffer = counterOffer;
-        this.isDisabled = this.counterOffer.offerType !== 'counter_offer';
-
-        if (counterOffer.isSigned) {
-          this.snackbar.open('Counter Offer is already signed');
-        }
-
-        this.patchForm(document, this.documentForm);
-        this.getAllFieldsCount(document);
-        this.disableSignedFields();
-        this.nextField(true);
-      });
-
-    this.subscribeToFormChanges(this.documentForm);
   }
-
-  nextField(isSigned) {
-    this.moveToNextSignField(isSigned, this.documentForm);
-  }
-
 }

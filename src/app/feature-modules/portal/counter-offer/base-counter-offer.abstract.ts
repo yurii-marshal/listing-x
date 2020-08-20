@@ -3,13 +3,14 @@ import { OfferService } from '../services/offer.service';
 import { OnDestroy, OnInit, ViewChildren } from '@angular/core';
 import { CounterOffer } from '../../../core-modules/models/counter-offer';
 import { CounterOfferService } from '../services/counter-offer.service';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import { debounceTime, map, takeUntil } from 'rxjs/operators';
 import { FormControl, FormGroup } from '@angular/forms';
 import { User } from '../../auth/models';
 import * as _ from 'lodash';
 import { MatSnackBar } from '@angular/material';
 import { DatePipe } from '@angular/common';
-import { Subject } from 'rxjs';
+import { forkJoin, Observable, Subject } from 'rxjs';
+import { AuthService } from '../../../core-modules/core-services/auth.service';
 
 export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements OnInit, OnDestroy {
   @ViewChildren('form') form;
@@ -17,7 +18,8 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   type;
   id: number;
   offerId: number;
-  counterOffer: CounterOffer = {} as CounterOffer;
+  counterOffer: CounterOffer;
+  documentObj;
 
   documentForm: FormGroup;
 
@@ -33,6 +35,8 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
   user: User;
 
+  signFields = [];
+
   signFieldElements: any[] = [];
   onDestroyed$: Subject<void> = new Subject<void>();
 
@@ -43,6 +47,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     public counterOfferService: CounterOfferService,
     public snackbar: MatSnackBar,
     public datePipe: DatePipe,
+    public authService: AuthService,
   ) {
   }
 
@@ -51,16 +56,44 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     this.offerId = +this.route.snapshot.params.offerId;
     this.datepickerMinDate = new Date();
 
-    this.signFieldElements = Array.from(document.getElementsByClassName('sign-input'));
+    this.user = this.authService.currentUser;
 
     this.type = this.router.url.split('/').pop() as 'seller' | 'buyer' | 'multiple';
+
+    this.getCounterOffer()
+      .pipe(
+        takeUntil(this.onDestroyed$),
+        map(() => this.patchForm())
+      ).subscribe(() => this.nextField(true));
+  }
+
+  getCounterOffer(): Observable<any> {
+    return forkJoin(
+      this.counterOfferService.loadOne(this.id),
+      this.counterOfferService.getCounterOfferDocument(this.id, this.type),
+    )
+      .pipe(
+        takeUntil(this.onDestroyed$),
+        map(([counterOffer, document]) => {
+          this.counterOffer = counterOffer;
+          this.documentObj = document;
+          this.isDisabled = this.counterOffer.pitcher !== this.user.id;
+
+          if (counterOffer.isSigned) {
+            this.snackbar.open('Counter Offer is already signed');
+          }
+
+          this.setSignFields();
+          this.subscribeToFormChanges(this.documentForm);
+        }),
+      );
   }
 
   closeCO() {
     this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/details`);
   }
 
-  moveToNextSignField(isSigned, documentForm) {
+  nextField(isSigned) {
     if (isSigned) {
       if (this.signFieldElements.length) {
         for (const item of this.signFieldElements) {
@@ -74,7 +107,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         // setTimeout(() => this.counterOfferService.signCounterOffer(), 500);
       }
     } else {
-      this.scrollToFirstInvalidField(documentForm);
+      this.scrollToFirstInvalidField(this.documentForm);
     }
   }
 
@@ -94,24 +127,25 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     return false;
   }
 
-  patchForm(model, documentForm) {
+  patchForm() {
     this.completedFieldsCount = 0;
 
-    Object.entries(model).forEach(([key, value]) => {
-      Object.keys(documentForm.controls).forEach((controlName) => {
-
+    Object.entries(this.documentObj).map(([key, value]) => {
+      Object.keys(this.documentForm.controls).map((controlName) => {
         if (_.camelCase(controlName) === key && value) {
-          documentForm.get(`${_.snakeCase(controlName)}`)
+          this.documentForm.get(`${_.snakeCase(controlName)}`)
             .patchValue(value, {emitEvent: false, onlySelf: true});
           this.completedFieldsCount += 1;
         }
-
       });
     });
+
+    this.getAllFieldsCount();
+    this.disableSignedFields();
   }
 
   subscribeToFormChanges(documentForm) {
-    Object.values(documentForm.controls).forEach((control: FormControl, controlIndex: number) => {
+    Object.values(documentForm.controls).map((control: FormControl, controlIndex: number) => {
       control.valueChanges
         .pipe(
           debounceTime(200),
@@ -159,17 +193,26 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     }
   }
 
-  getSignFieldAllowedFor(role: string, index: number) {
-    const value = {
-      value: '',
-      disabled: this.counterOffer.pitcher !== this.user.id,
-    };
+  getSignFieldAllowedFor(controlName: string, role: string, index: number) {
+    this.signFields.push({controlName, role, index});
 
-    return [value, []];
+    return ['', []];
   }
 
-  getAllFieldsCount(model) {
-    this.allFieldsCount = Object.keys(model).length;
+  setSignFields() {
+    this.signFields.map((fieldObj) => {
+      if (
+        this.documentForm.get(fieldObj.controlName).value ||
+        (this.counterOffer[fieldObj.role][fieldObj.index] &&
+        this.counterOffer[fieldObj.role][fieldObj.index].email !== this.user.email)
+      ) {
+        this.documentForm.get(fieldObj.controlName).disable({emitEvent: false});
+      }
+    });
+  }
+
+  getAllFieldsCount() {
+    this.allFieldsCount = Object.keys(this.documentObj).length;
   }
 
   documentInputChanged(controlName: string, controlValue: any) {
@@ -186,7 +229,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
       .subscribe((document) => {
         this.completedFieldsCount = 0;
 
-        Object.keys(document).forEach((field) => {
+        Object.keys(document).map((field) => {
           if (document[field]) {
             this.completedFieldsCount += 1;
           }
@@ -195,6 +238,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   }
 
   disableSignedFields() {
+    this.signFieldElements = Array.from(document.getElementsByClassName('sign-input'));
     this.signFieldElements.forEach(item => item.disabled = !!item.value);
   }
 
