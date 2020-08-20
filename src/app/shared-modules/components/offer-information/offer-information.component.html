@@ -1,0 +1,41 @@
+<div class="offer-information u-flex u-flex-direction--column u-flex-justify--start u-flex-align-items--start"
+     *ngIf="isSideBarOpen">
+
+  <h4>Counter Offer information</h4>
+
+  <h6>status: {{counterOffer.status}}</h6>
+
+  <div class="roles-list">
+    <div class="agents truncated" *ngFor="let item of counterOffer.pitchers; let i = index">
+      <h6>Pitcher #{{i+1}}</h6>
+      <div class="item">
+        {{item.firstName}} {{item.lastName}} | {{item.email}}
+      </div>
+    </div>
+    <div class="buyers truncated" *ngFor="let item of counterOffer.catchers; let i = index">
+      <h6>Catcher #{{i+1}}</h6>
+      <div class="item">
+        {{item.firstName}} {{item.lastName}} | {{item.email}}
+      </div>
+    </div>
+    <div class="sellers truncated" *ngFor="let item of counterOffer.catcher_customers; let i = index">
+      <h6>Catcher customer #{{i+1}}</h6>
+      <div class="item">
+        {{item.firstName}} {{item.lastName}} | {{item.email}}
+      </div>
+    </div>
+    <div class="agents truncated" *ngFor="let item of counterOffer.pitcher_customers; let i = index">
+      <h6>Pitcher customer #{{i+1}}</h6>
+      <div class="item">
+        {{item.firstName}} {{item.lastName}} | {{item.email}}
+      </div>
+    </div>
+    <!--<div class="address truncated">-->
+    <!--<h6>Address</h6>-->
+    <!--<div class="item">-->
+    <!--{{offer.streetName}}, {{offer.city}} {{offer.zip}}-->
+    <!--</div>-->
+    <!--</div>-->
+  </div>
+
+</div>
