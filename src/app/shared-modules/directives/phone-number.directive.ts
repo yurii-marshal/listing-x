@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnInit, OnDestroy, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, OnDestroy, Renderer2, HostListener } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
@@ -7,8 +7,11 @@ import { Subscription } from 'rxjs';
 })
 export class PhoneNumberDirective implements OnInit, OnDestroy {
 
+  private regex: RegExp;
+  private specialKeys = ['Backspace', 'Tab', 'End', 'Home'];
+
   private sub: Subscription;
-  
+
   private phoneLength: number = 10;
 
   constructor(private el: ElementRef,
@@ -24,6 +27,7 @@ export class PhoneNumberDirective implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.regex = new RegExp(/^[\d\s()-]*$/g);
     this.phoneValidate();
   }
 
@@ -104,5 +108,16 @@ export class PhoneNumberDirective implements OnInit, OnDestroy {
         this._phoneControl.control.setValue(data.slice(0, data.length - 1), {emitEvent: false});
       }
     });
+  }
+
+  @HostListener('keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent) {
+    if (this.specialKeys.indexOf(event.key) > -1) {
+      return;
+    }
+
+    if (!String(event.key).match(this.regex)) {
+      event.preventDefault();
+    }
   }
 }
