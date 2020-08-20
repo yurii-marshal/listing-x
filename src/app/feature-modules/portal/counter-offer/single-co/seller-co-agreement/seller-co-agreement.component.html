@@ -173,20 +173,20 @@
                     <div>
                       Buyer <input appSignature (fieldSigned)="nextField($event)"
                                    [withDateControl]="'date_buyer_signature_first'"
+                                   [withTimeControl]="'time_buyer_signature_time_first'"
                                    formControlName="text_buyer_name_first" type="text" class="i-lr-7">
                       Date <input formControlName="date_buyer_signature_first" type="text" class="i-lr-2__5">
-                      Time &nbsp;<input timeMask appOnlyNumbers formControlName="time_buyer_signature_time_first"
-                                        type="text" class="i-lr-1">
+                      Time &nbsp;<input timeMask formControlName="time_buyer_signature_time_first" type="text" class="i-lr-1">
                       <input formControlName="radio_buyer_signature_first" value="am" type="radio"> AM/
                       <input formControlName="radio_buyer_signature_first" value="pm" type="radio"> PM
                     </div>
                     <div>
                       Buyer <input appSignature (fieldSigned)="nextField($event)"
                                    [withDateControl]="'date_buyer_signature_second'"
+                                   [withTimeControl]="'time_buyer_signature_time_second'"
                                    formControlName="text_buyer_name_second" type="text" class="i-lr-7">
                       Date <input formControlName="date_buyer_signature_second" type="text" class="i-lr-2__5">
-                      Time &nbsp;<input timeMask appOnlyNumbers formControlName="time_buyer_signature_time_second"
-                                        type="text" class="i-lr-1">
+                      Time &nbsp;<input timeMask formControlName="time_buyer_signature_time_second" type="text" class="i-lr-1">
                       <input formControlName="radio_buyer_signature_second" value="am" type="radio"> AM/
                       <input formControlName="radio_buyer_signature_second" value="pm" type="radio"> PM
                     </div>
@@ -197,8 +197,8 @@
                 <b>CONFIRMATION OF ACCEPTANCE:</b>
                 <br>
                 <div>
-                  ( <input formControlName="text_seller_initials_first" type="text" class="i-lr-1"> /
-                  <input formControlName="text_seller_initials_second" type="text" class="i-lr-1"> ) (Initials)
+                  ( <input appSignature [mode]="'initials'" (fieldSigned)="nextField($event)" formControlName="text_seller_initials_first" type="text" class="i-lr-1"> /
+                  <input appSignature [mode]="'initials'" (fieldSigned)="nextField($event)" formControlName="text_seller_initials_second" type="text" class="i-lr-1"> ) (Initials)
                   <span class="fw-bold">Confirmation of Acceptance: A Copy of Signed Acceptance was personally
                         received by Seller, or Seller's
                         authorized agent as specified in paragraph 2A on (date)

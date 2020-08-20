@@ -204,7 +204,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
       if (
         this.documentForm.get(fieldObj.controlName).value ||
         (this.counterOffer[fieldObj.role][fieldObj.index] &&
-        this.counterOffer[fieldObj.role][fieldObj.index].email !== this.user.email)
+          this.counterOffer[fieldObj.role][fieldObj.index].email !== this.user.email)
       ) {
         this.documentForm.get(fieldObj.controlName).disable({emitEvent: false});
       }
