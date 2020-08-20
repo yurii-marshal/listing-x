@@ -35,7 +35,7 @@ export class AgreementsListComponent implements OnInit, AfterViewInit, OnDestroy
   calendarDataSource: CalendarEvent[];
   user: User;
   transactionsFlow: boolean;
-  /* TODO: Refactor */
+
   readonly statusLabels: { [key: string]: string } = {
     [AgreementStatus.All]: 'All agreements',
     [AgreementStatus.Started]: 'Started',

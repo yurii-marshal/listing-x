@@ -34,7 +34,7 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   pendingDocuments: Observable<GeneratedDocument[]>;
   completedDocuments: Observable<GeneratedDocument[]>;
   transactionsFlow: boolean;
-  /* TODO: Refactor */
+
   readonly statusLabels: { [key: string]: string } = {
     [AgreementStatus.All]: 'All agreements',
     [AgreementStatus.Started]: 'Started',
