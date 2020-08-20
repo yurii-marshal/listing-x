@@ -161,7 +161,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     this.counterOfferService.rejectCounterOffer(this.offerId)
       .pipe(takeUntil(this.onDestroyed$))
       .subscribe(() => {
-        this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}`);
+        this.closeCO();
       });
   }
 
@@ -183,13 +183,13 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
           .subscribe(() => {
             this.counterOffer.isSigned = true;
             this.snackbar.open('Counter Offer is signed now');
-            this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/details`);
+            this.closeCO();
           });
       } else {
         this.snackbar.open('Please, fill all mandatory fields');
       }
     } else {
-      this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/details`);
+      this.closeCO();
     }
   }
 
