@@ -510,7 +510,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
           this.switchDaysAndDate(
             this.documentForm.get('page_5.radio_escrow').value,
             'page_5.text_escrow_days',
-            'page_5.date_escrow_date'
+            'page_5.date_escrow_date',
+            false
           );
         }
 
@@ -564,14 +565,14 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/portal/purchase-agreements/all');
   }
 
-  switchDaysAndDate(value: string, daysControlName: string, dateControlName: string) {
+  switchDaysAndDate(value: string, daysControlName: string, dateControlName: string, emit = true) {
     switch (value) {
       case 'date':
         this.documentForm.get(dateControlName).enable({emitEvent: false});
         this.documentForm.get(dateControlName).markAsDirty();
         this.documentForm.get(dateControlName).setValidators([Validators.required]);
         this.documentForm.get(daysControlName).disable({emitEvent: false});
-        this.documentForm.get(daysControlName).patchValue('');
+        this.documentForm.get(daysControlName).patchValue('', {emitEvent: emit});
         this.documentForm.get(daysControlName).clearValidators();
         break;
       case 'days':
@@ -579,7 +580,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         this.documentForm.get(daysControlName).markAsDirty();
         this.documentForm.get(daysControlName).setValidators([Validators.required]);
         this.documentForm.get(dateControlName).disable({emitEvent: false});
-        this.documentForm.get(dateControlName).patchValue('');
+        this.documentForm.get(dateControlName).patchValue('', {emitEvent: emit});
         this.documentForm.get(dateControlName).clearValidators();
         break;
     }
@@ -811,7 +812,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       this.router.navigate([`portal/purchase-agreements/${this.offerId}/details`]);
     }
   }
-  
+
   private clearEditableSignFields() {
     console.log(this.signFieldElements);
   }

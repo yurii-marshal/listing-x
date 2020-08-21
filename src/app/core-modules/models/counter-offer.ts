@@ -1,8 +1,9 @@
 import { Offer, Person } from './offer';
+import { CounterOfferType } from './counter-offer-type';
 
 export interface CounterOffer extends Offer {
   round: number;
-  offerType: 'counter_offer' | 'multiple_counter_offer' | 'buyer_counter_offer';
+  offerType: CounterOfferType;
   catcher: number;
   pitcher: number;
   catchers: Person[];
