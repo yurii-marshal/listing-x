@@ -16,6 +16,7 @@ import { AgreementStatus } from '../../../../core-modules/models/agreement';
 import { TransactionService } from '../../services/transaction.service';
 import { CounterOffer } from 'src/app/core-modules/models/counter-offer';
 import { CounterOfferService } from 'src/app/feature-modules/portal/services/counter-offer.service';
+import { CounterOfferType } from 'src/app/core-modules/models/counter-offer-type';
 
 @Component({
   selector: 'app-agreement-details',
@@ -156,21 +157,15 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     this.router.navigateByUrl(`portal/purchase-agreements/${this.offer.id}/sign`);
   }
 
-  openCounterOffer(id?: number) {
-    if (id) {
-      this.isSeller ?
-        this.router.navigateByUrl(`portal/offer/${this.offer.id}/counter-offers/${id}/seller`) :
-        this.router.navigateByUrl(`portal/offer/${this.offer.id}/counter-offers/${id}/buyer`);
-    } else {
-      this.router.navigateByUrl(`portal/offer/${this.offer.id}/counter-offers/single`);
-    }
+  openCounterOffer(counterOffer: CounterOffer) {
+    this.router.navigateByUrl(`portal/offer/${this.offer.id}/counter-offers/${counterOffer.id}/${CounterOfferType[counterOffer.offerType]}`)
   }
 
-  createCounterOffer(type: 'counter_offer' | 'multiple_counter_offer' | 'buyer_counter_offer') {
-    this.counterOfferService.createCounterOffer({offer: this.offer.id, type})
+  createCounterOffer(type: CounterOfferType) {
+    this.counterOfferService.createCounterOffer({offer: this.offer.id, offerType: type})
       .pipe(takeUntil(this.onDestroyed$))
       .subscribe((data: CounterOffer) => {
-        this.router.navigateByUrl(`portal/offer/${this.offer.id}/counter-offers/${data.id}/multiple`);
+        this.router.navigateByUrl(`portal/offer/${this.offer.id}/counter-offers/${data.id}/${CounterOfferType[type]}`);
       });
   }
 
