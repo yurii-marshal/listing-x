@@ -136,7 +136,7 @@
     </div>
     <div class="fieldset u-flex-04">
       <label>APN</label>
-      <input formControlName="apn" appOnlyNumbers placeholder="APN" spellcheck="false" class="form-control">
+      <input formControlName="apn" appOnlyNumbers [maxLength]="4" placeholder="APN" spellcheck="false" class="form-control">
       <app-form-validation-error [baseControl]="form.get('apn')"></app-form-validation-error>
     </div>
   </div>
