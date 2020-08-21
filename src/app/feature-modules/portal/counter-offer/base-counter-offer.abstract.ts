@@ -180,17 +180,13 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   getSignFieldAllowedFor(controlName: string, role: string, index: number) {
     this.signFields.push({controlName, role, index});
 
-    return ['', []];
+    return [{value: '', disabled: true}, []];
   }
 
   setSignFields() {
     this.signFields.map((fieldObj) => {
-      if (
-        this.documentForm.get(fieldObj.controlName).value ||
-        (this.counterOffer[fieldObj.role][fieldObj.index] &&
-          this.counterOffer[fieldObj.role][fieldObj.index].email !== this.user.email)
-      ) {
-        this.documentForm.get(fieldObj.controlName).disable({emitEvent: false});
+      if (this.counterOffer[fieldObj.role][fieldObj.index] && this.counterOffer[fieldObj.role][fieldObj.index].email === this.user.email) {
+        this.documentForm.get(fieldObj.controlName).enable({emitEvent: false});
       }
     });
   }

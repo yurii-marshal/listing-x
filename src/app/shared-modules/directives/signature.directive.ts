@@ -17,6 +17,7 @@ export class SignatureDirective implements OnInit {
     }.`;
   @Input() withDateControl: string;
   @Input() withTimeControl: string;
+  @Input() withAmpmControl: string;
 
   @Output() fieldSigned: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -44,17 +45,13 @@ export class SignatureDirective implements OnInit {
     return this.ngControl.control.parent.get(this.withTimeControl);
   }
 
+  get ampmControl() {
+    return this.ngControl.control.parent.get(this.withAmpmControl);
+  }
+
   ngOnInit() {
     if (!this.signatureControl.disabled) {
       this.renderer.addClass(this.el.nativeElement, 'sign-input');
-
-      if (this.withDateControl) {
-        this.dateControl.disable({emitEvent: false, onlySelf: true});
-      }
-
-      if (this.withTimeControl) {
-        this.timeControl.disable({emitEvent: false, onlySelf: true});
-      }
     }
   }
 
@@ -114,14 +111,18 @@ export class SignatureDirective implements OnInit {
       if (this.withDateControl) {
         setTimeout(() => {
           this.dateControl.patchValue(this.datePipe.transform(new Date().getTime(), 'yyyy-MM-dd'));
-          this.dateControl.disable();
         }, 200);
       }
 
       if (this.withTimeControl) {
         setTimeout(() => {
           this.timeControl.patchValue(this.datePipe.transform(new Date().getTime(), 'hh:mm'));
-          this.timeControl.disable();
+        }, 200);
+      }
+
+      if (this.withAmpmControl) {
+        setTimeout(() => {
+          this.ampmControl.patchValue(new Date().getHours() > 12 ? 'pm' : 'am');
         }, 200);
       }
 

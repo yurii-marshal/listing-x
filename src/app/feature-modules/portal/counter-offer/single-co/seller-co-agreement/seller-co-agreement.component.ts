@@ -63,16 +63,16 @@ export class SellerCOAgreementComponent extends BaseCounterOfferAbstract<Counter
       text_buyer_name_first: this.getSignFieldAllowedFor('text_buyer_name_first', 'catcherCustomers', 0),
       date_buyer_signature_first: [{value: null, disabled: true}, []],
       time_buyer_signature_time_first: [{value: null, disabled: true}, []],
-      radio_buyer_signature_first: [{value: 'am', disabled: this.isDisabled}, []],
+      radio_buyer_signature_first: [{value: 'am', disabled: true}, []],
       text_buyer_name_second: this.getSignFieldAllowedFor('text_buyer_name_second', 'catcherCustomers', 1),
       date_buyer_signature_second: [{value: null, disabled: true}, []],
       time_buyer_signature_time_second: [{value: null, disabled: true}, []],
-      radio_buyer_signature_second: [{value: 'am', disabled: this.isDisabled}, []],
-      text_seller_initials_first: [{value: null, disabled: this.isDisabled}, []],
-      text_seller_initials_second: [{value: null, disabled: this.isDisabled}, []],
-      date_copy_received_date: [{value: null, disabled: this.isDisabled}, []],
-      time_copy_received_time: [{value: null, disabled: this.isDisabled}, []],
-      radio_copy_received_am_pm: [{value: 'am', disabled: this.isDisabled}, []],
+      radio_buyer_signature_second: [{value: 'am', disabled: true}, []],
+      text_seller_initials_first: this.getSignFieldAllowedFor('text_seller_initials_first', 'pitcherCustomers', 1),
+      text_seller_initials_second: this.getSignFieldAllowedFor('text_seller_initials_second', 'pitcherCustomers', 1),
+      date_copy_received_date: [{value: null, disabled: true}, []],
+      time_copy_received_time: [{value: null, disabled: true}, []],
+      radio_copy_received_am_pm: [{value: 'am', disabled: true}, []],
     }, {updateOn: 'blur'});
   }
 }
