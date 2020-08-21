@@ -43,7 +43,7 @@ export class SidebarControlsComponent implements OnInit {
     this.counterOfferService.createCounterOffer({offer: this.offerId, type})
       .pipe(takeUntil(this.onDestroyed$))
       .subscribe((data: CounterOffer) => {
-        this.router.navigateByUrl(`portal/offer/${this.offerId}/counter-offers/${data.id}/multiple`);
+        this.router.navigateByUrl(`portal/offer/${this.offerId}/counter-offers/${data.id}/${CounterOfferType[type]}`);
       });
   }
 }
