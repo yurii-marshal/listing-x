@@ -3,6 +3,7 @@ import { AbstractControl, NgControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { AuthService } from '../../core-modules/core-services/auth.service';
 import { MatSnackBar } from '@angular/material';
+import { OfferService } from '../../feature-modules/portal/services/offer.service';
 
 @Directive({
   selector: '[appSignature]'
@@ -30,6 +31,7 @@ export class SignatureDirective implements OnInit {
     private ngControl: NgControl,
     private authService: AuthService,
     private snackbar: MatSnackBar,
+    private offerService: OfferService,
   ) {
   }
 
@@ -53,6 +55,11 @@ export class SignatureDirective implements OnInit {
     // 2 - set class-marker if a field is allowed for current user
     if (!this.signatureControl.disabled) {
       this.renderer.addClass(this.el.nativeElement, 'sign-input');
+      this.offerService.activeSignControls.push(this.signatureControl);
+
+      if (this.withDateControl) {
+        this.offerService.activeSignControls.push(this.dateControl);
+      }
     }
   }
 

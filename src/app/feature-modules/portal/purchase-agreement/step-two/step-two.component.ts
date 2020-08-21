@@ -6,12 +6,13 @@ import { EditOfferDialogComponent } from '../../../../shared-modules/dialogs/edi
 import { ActivatedRoute, Router } from '@angular/router';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { fromEvent, Observable, Subject } from 'rxjs';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SaveOfferDialogComponent } from '../../../../shared-modules/dialogs/save-offer-dialog/save-offer-dialog.component';
 import { DatePipe } from '@angular/common';
 import * as _ from 'lodash';
 import { User } from '../../../auth/models';
 import { AuthService } from '../../../../core-modules/core-services/auth.service';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-step-two',
@@ -504,7 +505,10 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         this.updatePageProgress(model, 0);
 
         this.disableSignedFields();
-        this.moveToNextSignField(true);
+
+        if (!this.offer.isSigned) {
+          this.clearEditableSignFields();
+        }
 
         if (!this.isDisabled) {
           this.switchDaysAndDate(
@@ -516,11 +520,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         }
 
         this.isEnableContinue = this.offer.isSigned || this.documentForm.valid;
-
-        // TODO: clear user sign fields if offer isn't signed and has editable sign fields
-        // if (!this.offer.isSigned) {
-        //   this.clearEditableSignFields();
-        // }
       });
 
     this.initPageBreakers();
@@ -528,6 +527,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.offerService.activeSignControls = [];
+
     this.onDestroyed$.next();
     this.onDestroyed$.complete();
   }
@@ -587,23 +588,16 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   moveToNextSignField(isSigned) {
-    if (isSigned) {
-      if (this.signFieldElements.length) {
-        for (const item of this.signFieldElements) {
-          if (!item.value) {
-            item.scrollIntoView({behavior: 'smooth', block: 'center'});
-            item.focus();
-            return;
-          }
-        }
+    isSigned
+      ? this.scrollToEmptySignField()
+      : this.scrollToFirstInvalidField();
+  }
 
-        if (!this.offer.isSigned) {
-          // TODO: reactive approach
-          setTimeout(() => this.finalSignAgreement(), 500);
-        }
-      }
-    } else {
-      this.scrollToFirstInvalidField();
+  private clearEditableSignFields() {
+    if (!this.scrollToEmptySignField() && !this.offer.isSigned) {
+      this.offerService.activeSignControls
+        .forEach((control: AbstractControl) => control.patchValue('', {emitEvent: false}));
+      // this.signFieldElements.map((item) => item.value = '');
     }
   }
 
@@ -715,6 +709,10 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         if (_.includes(this.downPaymentAmountPredicates, controlName)) {
           this.updateDownPaymentAmount();
         }
+
+        if (!this.signFieldElements.some((el) => !!el.value) && !this.offer.isSigned) {
+          this.finalSignAgreement();
+        }
       });
   }
 
@@ -813,7 +811,17 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     }
   }
 
-  private clearEditableSignFields() {
-    console.log(this.signFieldElements);
+  private scrollToEmptySignField(): boolean {
+    if (this.signFieldElements.length) {
+      for (const item of this.signFieldElements) {
+        if (!item.value) {
+          item.scrollIntoView({behavior: 'smooth', block: 'center'});
+          item.focus();
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
 }
