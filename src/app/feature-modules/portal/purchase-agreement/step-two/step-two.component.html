@@ -1250,9 +1250,7 @@
                 </div>
 
                 <div class="col-right">
-                  $ <input [value]="documentForm.get('page_5.text_offer_price_digits').value"
-                           currencyMask [options]="currencyMaskOptions"
-                           disabled="disabled" type="text">
+                  $ <input [value]="documentForm.get('page_5.text_offer_price_digits').value | number: '1.2-2'" disabled="disabled" type="text">
                 </div>
                 <div class="clearfix"></div>
               </div>
