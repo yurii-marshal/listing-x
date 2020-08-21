@@ -12,7 +12,6 @@ import { DatePipe } from '@angular/common';
 import * as _ from 'lodash';
 import { User } from '../../../auth/models';
 import { AuthService } from '../../../../core-modules/core-services/auth.service';
-import { element } from 'protractor';
 
 @Component({
   selector: 'app-step-two',
@@ -33,6 +32,14 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   isEnableContinue: boolean = false;
   offerId: number;
   offer: Offer;
+
+  currencyMaskOptions = {
+    min: 0,
+    max: 1000000000000,
+    prefix: '',
+    allowNegative: false,
+    align: 'left'
+  };
 
   datepickerMinDate: Date = new Date();
 
