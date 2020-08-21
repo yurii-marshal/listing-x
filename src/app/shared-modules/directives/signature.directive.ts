@@ -131,8 +131,10 @@ export class SignatureDirective implements OnInit {
         }, 200);
       }
 
-      this.signatureControl.patchValue(this[this.mode]);
-      this.signatureControl.disable();
+      setTimeout(() => {
+        this.signatureControl.patchValue(this[this.mode]);
+        this.signatureControl.disable();
+      }, 200);
 
       this.renderer.addClass(this.el.nativeElement, 'signed');
 
