@@ -4,7 +4,7 @@ import { OnDestroy, OnInit, ViewChildren } from '@angular/core';
 import { CounterOffer } from '../../../core-modules/models/counter-offer';
 import { CounterOfferService } from '../services/counter-offer.service';
 import { debounceTime, map, takeUntil } from 'rxjs/operators';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from '../../auth/models';
 import * as _ from 'lodash';
 import { MatSnackBar } from '@angular/material';
@@ -187,6 +187,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     this.signFields.map((fieldObj) => {
       if (this.counterOffer[fieldObj.role][fieldObj.index] && this.counterOffer[fieldObj.role][fieldObj.index].email === this.user.email) {
         this.documentForm.get(fieldObj.controlName).enable({emitEvent: false});
+        this.documentForm.get(fieldObj.controlName).setValidators([Validators.required]);
       }
     });
   }

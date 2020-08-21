@@ -32,7 +32,7 @@ export class SidebarControlsComponent implements OnInit {
   }
 
   rejectCO() {
-    this.counterOfferService.rejectCounterOffer(this.offerId)
+    this.counterOfferService.rejectCounterOffer(this.counterOffer.id)
       .pipe(takeUntil(this.onDestroyed$))
       .subscribe(() => {
         this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/details`);
@@ -40,7 +40,7 @@ export class SidebarControlsComponent implements OnInit {
   }
 
   createCO(type: CounterOfferType) {
-    this.counterOfferService.createCounterOffer({offer: this.offerId, type})
+    this.counterOfferService.createCounterOffer({offer: this.offerId, offerType: 'buyer_counter_offer'})
       .pipe(takeUntil(this.onDestroyed$))
       .subscribe((data: CounterOffer) => {
         this.router.navigateByUrl(`portal/offer/${this.offerId}/counter-offers/${data.id}/${CounterOfferType[type]}`);
