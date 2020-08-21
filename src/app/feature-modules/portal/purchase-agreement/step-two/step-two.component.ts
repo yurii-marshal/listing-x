@@ -798,11 +798,14 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   private finalSignAgreement() {
+    this.offer.isSigned = true;
+
     this.offerService.signOffer(this.offerId)
       .pipe(takeUntil(this.onDestroyed$))
       .subscribe(() => {
-        this.offer.isSigned = true;
         this.snackbar.open('Offer is signed now');
+      }, () => {
+        this.router.navigate([`portal/purchase-agreements/${this.offerId}/details`]);
       });
   }
 
