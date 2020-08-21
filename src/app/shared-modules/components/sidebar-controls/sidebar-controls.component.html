@@ -2,10 +2,10 @@
   <button class="sign-btn"
           mat-flat-button
           *ngIf="counterOffer.catcher === user.id"
-          [disabled]="!counterOffer.allowDeny || counterOffer.isSigned"
+          [disabled]="counterOffer.isSigned"
           (click)="rejectCO()"
           color="primary">
-    REJECT
+    DENY
   </button>
 
   <button class="sign-btn"

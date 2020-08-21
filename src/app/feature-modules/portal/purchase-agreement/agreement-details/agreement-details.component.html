@@ -248,12 +248,12 @@
           </div>
         </div>
 
-        <div class="row-layout"><label>Counter offers</label>
+        <div class="row-layout" *ngIf="!transactionsFlow"><label>Counter offers</label>
           <div class="doc-preview">
             <img *ngFor="let counterOffer of counterOffers"
                  src="assets/images/icons/pdf.svg"
                  [title]="counterOffer.id"
-                 (click)="openCounterOffer(counterOffer.id)"
+                 (click)="openCounterOffer(counterOffer)"
                  height="20">
           </div>
         </div>
