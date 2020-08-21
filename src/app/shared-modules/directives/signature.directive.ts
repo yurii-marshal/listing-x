@@ -1,5 +1,5 @@
 import { Directive, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, Renderer2 } from '@angular/core';
-import { NgControl } from '@angular/forms';
+import { AbstractControl, NgControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { AuthService } from '../../core-modules/core-services/auth.service';
 import { MatSnackBar } from '@angular/material';
@@ -16,6 +16,8 @@ export class SignatureDirective implements OnInit {
     this.authService.currentUser.lastName.substr(0, 1).toUpperCase()
     }.`;
   @Input() withDateControl: string;
+  @Input() withTimeControl: string;
+  @Input() withAmpmControl: string;
 
   @Output() fieldSigned: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -39,13 +41,17 @@ export class SignatureDirective implements OnInit {
     return this.ngControl.control.parent.get(this.withDateControl);
   }
 
+  get timeControl() {
+    return this.ngControl.control.parent.get(this.withTimeControl);
+  }
+
+  get ampmControl() {
+    return this.ngControl.control.parent.get(this.withAmpmControl);
+  }
+
   ngOnInit() {
     if (!this.signatureControl.disabled) {
       this.renderer.addClass(this.el.nativeElement, 'sign-input');
-
-      if (this.withDateControl) {
-        this.dateControl.disable({emitEvent: false, onlySelf: true});
-      }
     }
   }
 
@@ -72,7 +78,7 @@ export class SignatureDirective implements OnInit {
 
     this.renderer.appendChild(this.signButtonEl, this.renderer.createText('Sign'));
     this.renderer.appendChild(this.el.nativeElement.parentNode, this.signButtonEl);
-    this.renderer.listen(this.signButtonEl, 'click', () => this.signFields());
+    this.renderer.listen(this.signButtonEl, 'click', () => this.checkRootParent(this.signatureControl.parent));
 
     this.setButtonStyles();
   }
@@ -83,14 +89,41 @@ export class SignatureDirective implements OnInit {
     this.signButtonEl = null;
   }
 
-  private signFields() {
-    if (!this.signatureControl.parent.parent.invalid) {
+  private checkRootParent(parent: AbstractControl) {
+    if (parent && parent.parent) {
+      this.checkRootParent(parent.parent);
+    } else {
+      // now parent is root form
+      if (parent.valid) {
+        this.signField();
+      } else {
+        this.snackbar.open(`Can't sign. Please, fill all required fields`);
+        this.fieldSigned.emit(false);
+      }
+    }
+  }
+
+  private signField() {
+    setTimeout(() => {
       this.signatureControl.patchValue(this[this.mode]);
       this.signatureControl.disable();
 
       if (this.withDateControl) {
-        this.dateControl.patchValue(this.datePipe.transform(new Date().getTime(), 'yyyy-MM-dd'));
-        this.dateControl.disable();
+        setTimeout(() => {
+          this.dateControl.patchValue(this.datePipe.transform(new Date().getTime(), 'yyyy-MM-dd'));
+        }, 200);
+      }
+
+      if (this.withTimeControl) {
+        setTimeout(() => {
+          this.timeControl.patchValue(this.datePipe.transform(new Date().getTime(), 'hh:mm'));
+        }, 200);
+      }
+
+      if (this.withAmpmControl) {
+        setTimeout(() => {
+          this.ampmControl.patchValue(new Date().getHours() > 12 ? 'pm' : 'am');
+        }, 200);
       }
 
       this.renderer.addClass(this.el.nativeElement, 'signed');
@@ -98,10 +131,7 @@ export class SignatureDirective implements OnInit {
       this.removeSignButton();
 
       this.fieldSigned.emit(true);
-    } else {
-      this.snackbar.open(`Can't sign. Please, fill all required fields`);
-      this.fieldSigned.emit(false);
-    }
+    }, 300);
   }
 
   private setButtonStyles() {

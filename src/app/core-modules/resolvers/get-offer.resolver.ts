@@ -13,10 +13,12 @@ export class GetOfferResolver implements Resolve<Offer> {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Offer> {
-    return this.offerService.getOfferById(+route.params.id)
+    return this.offerService.loadOne(+route.params.id)
       .pipe(
         tap({
           next: (offer) => {
+            this.offerService.currentOffer = offer;
+
             if (route.data && route.data.progress) {
               this.offerService.offerProgress = route.data.progress;
 

@@ -50,4 +50,8 @@ export class SummaryComponent implements OnInit, OnDestroy {
     //   });
   }
 
+  closeOffer() {
+    this.router.navigateByUrl('/portal/purchase-agreements/all');
+  }
+
 }

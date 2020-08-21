@@ -11,22 +11,22 @@
           <div class="header">{{ offer.streetName }}, {{ offer.city }}, {{ offer.state }} {{ offer.zip }}</div>
           <div>
             <span class="status-label">STATUS: </span>
-            <span [ngClass]="getClassName(transactionsFlow ? transaction.status : offer.status)" class="status">&nbsp;
-              {{ transactionsFlow ? statusLabels[transaction.status] : statusLabels[offer.status] }}
+            <span [ngClass]="getClassName(offer.status)" class="status">&nbsp;
+              {{ statusLabels[offer.status] }}
             </span>
           </div>
         </div>
         <div class="description"> Offer created:
-          {{ transactionsFlow ? (transaction.createdAt | date : 'short') : (createdAt | date : 'short') }}
+          {{ offer.createdAt | date : 'short' }}
           <span
             *ngIf="offer.remainingDaysCloseEscrow">({{ offer.remainingDaysCloseEscrow }} days until  close escrow)</span>
         </div>
         <div class="control-bar" *ngIf="isAgent">
           <div class="u-flex-1">
-            <button *ngIf="transactionsFlow ? transaction.allowEdit : allowEdit" mat-icon-button color="accent" routerLink="/portal/offer/{{ offer.id }}">
+            <button *ngIf="offer.allowEdit" mat-icon-button color="accent" routerLink="/portal/offer/{{ offer.id }}">
               <mat-icon fontSet="fa" fontIcon="fa-edit" class="icon"></mat-icon>
             </button>
-            <button *ngIf="transactionsFlow ? transaction.allowDelete : allowDelete" mat-icon-button color="accent" (click)="onDelete()">
+            <button *ngIf="offer.allowDelete" mat-icon-button color="accent" (click)="onDelete()">
               <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
             </button>
           </div>
@@ -76,16 +76,16 @@
       <div class="column-layout">
         <div class="row-layout"><label class="header">last activity</label></div>
         <div *ngIf="transactionsFlow" class="scroll-content">
-          <div class="row-layout" *ngFor="let item of transaction.lastLogs">
+          <div class="row-layout" *ngFor="let item of offer.lastLogs">
             <label>{{ item.createdAt | date: 'short' }}</label>
             <span>{{ item.title }}</span>
           </div>
         </div>
         <div *ngIf="!transactionsFlow" class="row-layout" style="position: relative;"><label class="header">offer</label>
-          <img *ngIf="urlDocument"
+          <img *ngIf="offer.urlDocument"
                src="assets/images/icons/pdf.svg"
-               (click)="downloadAndToggleState(urlDocument)"
-               [title]="urlDocument"
+               (click)="downloadAndToggleState(offer.urlDocument)"
+               [title]="offer.urlDocument"
                height="80"
                class="e-document">
         </div>
@@ -96,7 +96,7 @@
           <button class="deny-btn"
                   mat-flat-button
                   *ngIf="offer.userRole === 'agent_seller'"
-                  [disabled]="!offer.allowSign || offer.status === 'denied'"
+                  [disabled]="!offer.allowSign || offer.status === 'denied' || offer.isSigned"
                   (click)="deny()"
                   color="accent">
             DENY
@@ -107,23 +107,32 @@
                   [disabled]="!offer.allowSign || offer.status === 'denied'"
                   (click)="goToESign()"
                   color="primary">
-            SIGN
+            {{offer.isSigned ? 'OPEN' : 'SIGN'}}
           </button>
 
           <button class="counter-offer-btn"
                   *ngIf="offer.userRole === 'agent_seller'"
                   mat-flat-button
                   [disabled]="!offer.isSigned || offer.status === 'denied'"
-                  (click)="goToCounterOffer()"
+                  (click)="createCounterOffer('counter_offer')"
                   color="primary">
             COUNTER OFFER
           </button>
 
+          <!--<button class="counter-offer-btn"-->
+                  <!--*ngIf="offer.userRole === 'agent_buyer'"-->
+                  <!--mat-flat-button-->
+                  <!--[disabled]="!offer.isSigned || offer.status === 'denied'"-->
+                  <!--(click)="createCounterOffer('buyer_counter_offer')"-->
+                  <!--color="primary">-->
+            <!--COUNTER OFFER-->
+          <!--</button>-->
+
           <button class="counter-offer-btn"
                   *ngIf="offer.userRole === 'agent_seller'"
                   mat-flat-button
                   [disabled]="!offer.isSigned || offer.status === 'denied'"
-                  (click)="goToMCO()"
+                  (click)="createCounterOffer('multiple_counter_offer')"
                   color="primary">
             MCO
           </button>
@@ -236,6 +245,16 @@
               <button mat-menu-item (click)="triggerDownloadFile(doc)">Download</button>
               <button mat-menu-item disabled>Deny</button>
             </mat-menu>
+          </div>
+        </div>
+
+        <div class="row-layout"><label>Counter offers</label>
+          <div class="doc-preview">
+            <img *ngFor="let counterOffer of counterOffers"
+                 src="assets/images/icons/pdf.svg"
+                 [title]="counterOffer.id"
+                 (click)="openCounterOffer(counterOffer.id)"
+                 height="20">
           </div>
         </div>
 

@@ -50,6 +50,10 @@ import { NumberToWordsDirective } from './directives/number-to-words.directive';
 import { TimeMaskDirective } from './directives/time-mask.directive';
 import { SignatureBoxComponent } from './components/signature-box/signature-box.component';
 import { SignatureDirective } from './directives/signature.directive';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
+import { OfferInformationComponent } from './components/offer-information/offer-information.component';
+import { SidebarControlsComponent } from './components/sidebar-controls/sidebar-controls.component';
 
 const materialModules = [
   MatDialogModule,
@@ -98,6 +102,10 @@ const components = [
   NotificationBarComponent,
   SelectedFileItemComponent,
   SignatureBoxComponent,
+  SidebarComponent,
+  ProgressBarComponent,
+  OfferInformationComponent,
+  SidebarControlsComponent,
   FirstLetterPipe,
   ...dialogs,
 ];

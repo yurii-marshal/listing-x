@@ -1,12 +1,13 @@
 import { Injectable, Injector } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Observable, of, Subject } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { LocalStorageKey } from '../../../core-modules/enums/local-storage-key';
 import { Offer, OfferSummary } from '../../../core-modules/models/offer';
 import { ApiEndpoint } from '../../../core-modules/enums/api-endpoints';
 import { BaseDataService } from '../../../core-modules/base-classes/base-data-service';
 import { CalendarEvent } from '../../../core-modules/models/calendar-event';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class OfferService extends BaseDataService<Offer> {
@@ -16,7 +17,7 @@ export class OfferService extends BaseDataService<Offer> {
   public currentOffer: Offer;
   public changedOfferModel: Offer;
 
-  constructor(protected injector: Injector) {
+  constructor(protected injector: Injector, private router: Router) {
     super(injector, ApiEndpoint.Offer);
   }
 
@@ -87,7 +88,9 @@ export class OfferService extends BaseDataService<Offer> {
 
   signOffer(offerId: number): Observable<any> {
     return this.http.post(`/offers/${offerId}/sign/`, {})
-      .pipe(switchMap(() => super.loadOne(offerId)));
+      .pipe(
+        tap(() => this.currentOffer.isSigned = true)
+      );
   }
 
   rejectOffer(offerId: number): Observable<any> {
