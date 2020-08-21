@@ -515,6 +515,11 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         }
 
         this.isEnableContinue = this.offer.isSigned || this.documentForm.valid;
+
+        // TODO: clear user sign fields if offer isn't signed and has editable sign fields
+        // if (!this.offer.isSigned) {
+        //   this.clearEditableSignFields();
+        // }
       });
 
     this.initPageBreakers();
@@ -770,20 +775,20 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   private getSignFieldAllowedFor(role: string, index: number) {
+    // 1 - disable if this field isn't allowed for current user
     const value = {
       value: '',
       disabled: this.offer[role][index] ? this.offer[role][index].email !== this.user.email : true,
     };
-    const validators = this.offer[role][index] ? (this.offer[role][index].email === this.user.email ? [Validators.required] : []) : [];
+    // const validators = this.offer[role][index] ? (this.offer[role][index].email === this.user.email ? [Validators.required] : []) : [];
 
     return [value, []];
   }
 
+  // 3 - disable if user already signed a field with class-marker
   private disableSignedFields() {
     this.signFieldElements = Array.from(document.getElementsByClassName('sign-input'));
-    this.offer.isSigned
-      ? this.signFieldElements.forEach(item => item.disabled = !!item.value)
-      : this.signFieldElements.forEach(item => item.value = '');
+    this.signFieldElements.forEach(item => item.disabled = !!item.value);
   }
 
   private finalSignAgreement() {
@@ -805,5 +810,9 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     } else {
       this.router.navigate([`portal/purchase-agreements/${this.offerId}/details`]);
     }
+  }
+  
+  private clearEditableSignFields() {
+    console.log(this.signFieldElements);
   }
 }
