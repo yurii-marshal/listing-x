@@ -8,6 +8,7 @@ import { ApiEndpoint } from '../../../core-modules/enums/api-endpoints';
 import { BaseDataService } from '../../../core-modules/base-classes/base-data-service';
 import { CalendarEvent } from '../../../core-modules/models/calendar-event';
 import { Router } from '@angular/router';
+import { AbstractControl } from '@angular/forms';
 
 @Injectable()
 export class OfferService extends BaseDataService<Offer> {
@@ -16,6 +17,8 @@ export class OfferService extends BaseDataService<Offer> {
 
   public currentOffer: Offer;
   public changedOfferModel: Offer;
+
+  public activeSignControls: AbstractControl[] = [];
 
   constructor(protected injector: Injector, private router: Router) {
     super(injector, ApiEndpoint.Offer);
