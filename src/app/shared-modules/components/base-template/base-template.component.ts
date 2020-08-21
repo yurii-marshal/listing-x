@@ -87,6 +87,8 @@ export class BaseTemplateComponent implements OnInit, OnDestroy {
       localStorage.removeItem(LocalStorageKey.Offer);
     }
 
+    this.offerService.currentOffer = null;
+
     this.close.emit();
   }
 

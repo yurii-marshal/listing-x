@@ -50,6 +50,7 @@ export class SignatureDirective implements OnInit {
   }
 
   ngOnInit() {
+    // 2 - set class-marker if a field is allowed for current user
     if (!this.signatureControl.disabled) {
       this.renderer.addClass(this.el.nativeElement, 'sign-input');
     }

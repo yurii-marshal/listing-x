@@ -510,11 +510,17 @@ export class StepTwoComponent implements OnInit, OnDestroy {
           this.switchDaysAndDate(
             this.documentForm.get('page_5.radio_escrow').value,
             'page_5.text_escrow_days',
-            'page_5.date_escrow_date'
+            'page_5.date_escrow_date',
+            false
           );
         }
 
         this.isEnableContinue = this.offer.isSigned || this.documentForm.valid;
+
+        // TODO: clear user sign fields if offer isn't signed and has editable sign fields
+        // if (!this.offer.isSigned) {
+        //   this.clearEditableSignFields();
+        // }
       });
 
     this.initPageBreakers();
@@ -559,14 +565,14 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/portal/purchase-agreements/all');
   }
 
-  switchDaysAndDate(value: string, daysControlName: string, dateControlName: string) {
+  switchDaysAndDate(value: string, daysControlName: string, dateControlName: string, emit = true) {
     switch (value) {
       case 'date':
         this.documentForm.get(dateControlName).enable({emitEvent: false});
         this.documentForm.get(dateControlName).markAsDirty();
         this.documentForm.get(dateControlName).setValidators([Validators.required]);
         this.documentForm.get(daysControlName).disable({emitEvent: false});
-        this.documentForm.get(daysControlName).patchValue('');
+        this.documentForm.get(daysControlName).patchValue('', {emitEvent: emit});
         this.documentForm.get(daysControlName).clearValidators();
         break;
       case 'days':
@@ -574,7 +580,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         this.documentForm.get(daysControlName).markAsDirty();
         this.documentForm.get(daysControlName).setValidators([Validators.required]);
         this.documentForm.get(dateControlName).disable({emitEvent: false});
-        this.documentForm.get(dateControlName).patchValue('');
+        this.documentForm.get(dateControlName).patchValue('', {emitEvent: emit});
         this.documentForm.get(dateControlName).clearValidators();
         break;
     }
@@ -770,20 +776,20 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   private getSignFieldAllowedFor(role: string, index: number) {
+    // 1 - disable if this field isn't allowed for current user
     const value = {
       value: '',
       disabled: this.offer[role][index] ? this.offer[role][index].email !== this.user.email : true,
     };
-    const validators = this.offer[role][index] ? (this.offer[role][index].email === this.user.email ? [Validators.required] : []) : [];
+    // const validators = this.offer[role][index] ? (this.offer[role][index].email === this.user.email ? [Validators.required] : []) : [];
 
     return [value, []];
   }
 
+  // 3 - disable if user already signed a field with class-marker
   private disableSignedFields() {
     this.signFieldElements = Array.from(document.getElementsByClassName('sign-input'));
-    this.offer.isSigned
-      ? this.signFieldElements.forEach(item => item.disabled = !!item.value)
-      : this.signFieldElements.forEach(item => item.value = '');
+    this.signFieldElements.forEach(item => item.disabled = !!item.value);
   }
 
   private finalSignAgreement() {
@@ -805,5 +811,9 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     } else {
       this.router.navigate([`portal/purchase-agreements/${this.offerId}/details`]);
     }
+  }
+
+  private clearEditableSignFields() {
+    console.log(this.signFieldElements);
   }
 }
