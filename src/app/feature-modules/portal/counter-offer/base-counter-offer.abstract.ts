@@ -157,22 +157,6 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     });
   }
 
-  rejectCO() {
-    this.counterOfferService.rejectCounterOffer(this.offerId)
-      .pipe(takeUntil(this.onDestroyed$))
-      .subscribe(() => {
-        this.closeCO();
-      });
-  }
-
-  createCO(type: 'counter_offer' | 'multiple_counter_offer' | 'buyer_counter_offer') {
-    this.counterOfferService.createCounterOffer({offer: this.offerId, type})
-      .pipe(takeUntil(this.onDestroyed$))
-      .subscribe((data: CounterOffer) => {
-        this.router.navigateByUrl(`portal/offer/${this.offerId}/counter-offers/${data.id}/multiple`);
-      });
-  }
-
   continue() {
     this.documentForm.markAllAsTouched();
 
