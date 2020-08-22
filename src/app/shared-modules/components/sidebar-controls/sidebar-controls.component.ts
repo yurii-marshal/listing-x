@@ -1,11 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CounterOffer } from 'src/app/core-modules/models/counter-offer';
-import { User } from 'src/app/feature-modules/auth/models';
 import { takeUntil } from 'rxjs/operators';
 import { CounterOfferService } from 'src/app/feature-modules/portal/services/counter-offer.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { CounterOfferType } from 'src/app/core-modules/models/counter-offer-type';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-sidebar-controls',
@@ -14,17 +13,16 @@ import { CounterOfferType } from 'src/app/core-modules/models/counter-offer-type
 })
 export class SidebarControlsComponent implements OnInit {
   @Input() counterOffer: CounterOffer;
-  @Input() user: User;
-  @Input() isSideBarOpen: boolean;
+  @Input() visible: boolean = false;
 
   offerId: number;
-
   onDestroyed$: Subject<void> = new Subject<void>();
 
   constructor(
     public route: ActivatedRoute,
     public router: Router,
     public counterOfferService: CounterOfferService,
+    private snackbar: MatSnackBar,
   ) { }
 
   ngOnInit() {
@@ -39,11 +37,14 @@ export class SidebarControlsComponent implements OnInit {
       });
   }
 
-  createCO(type: CounterOfferType) {
-    this.counterOfferService.createCounterOffer({offer: this.offerId, offerType: 'buyer_counter_offer'})
+  createCCO() {
+    const type = this.counterOffer.offerType as string === 'buyer_counter_offer' ? 'counter_offer' : 'buyer_counter_offer';
+    this.counterOfferService.createCounterOffer({offer: this.offerId, offerType: type})
       .pipe(takeUntil(this.onDestroyed$))
       .subscribe((data: CounterOffer) => {
-        this.router.navigateByUrl(`portal/offer/${this.offerId}/counter-offers/${data.id}/${CounterOfferType[type]}`);
+        this.snackbar.open('Counter Offer is created');
+        // this.router.navigateByUrl(`portal/offer/${this.offerId}/counter-offers/${data.id}/${CounterOfferType[type]}`);
+        this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/details`);
       });
   }
 }

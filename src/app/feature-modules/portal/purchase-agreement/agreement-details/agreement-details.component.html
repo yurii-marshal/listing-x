@@ -111,7 +111,7 @@
           </button>
 
           <button class="counter-offer-btn"
-                  *ngIf="offer.userRole === 'agent_seller'"
+                  *ngIf="offer.canCreateCounter"
                   mat-flat-button
                   [disabled]="!offer.isSigned || offer.status === 'denied'"
                   (click)="createCounterOffer('counter_offer')"
@@ -129,7 +129,7 @@
           <!--</button>-->
 
           <button class="counter-offer-btn"
-                  *ngIf="offer.userRole === 'agent_seller'"
+                  *ngIf="offer.canCreateMultipleCounter"
                   mat-flat-button
                   [disabled]="!offer.isSigned || offer.status === 'denied'"
                   (click)="createCounterOffer('multiple_counter_offer')"

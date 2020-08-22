@@ -8,6 +8,6 @@ export interface CounterOffer extends Offer {
   pitcher: number;
   catchers: Person[];
   pitchers: Person[];
-  catcher_customers: Person[];
-  pitcher_customers: Person[];
+  catcherCustomers: Person[];
+  pitcherCustomers: Person[];
 }

@@ -60,6 +60,9 @@ export interface Offer {
 
   lastLogs?: Log[];
   transactionDocs?: GeneratedDocument[];
+
+  canCreateCounter: boolean;
+  canCreateMultipleCounter: boolean;
 }
 
 export interface Person {
