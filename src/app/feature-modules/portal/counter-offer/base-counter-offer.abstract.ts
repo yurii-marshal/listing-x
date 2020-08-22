@@ -11,6 +11,7 @@ import { MatSnackBar } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { forkJoin, Observable, Subject } from 'rxjs';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
+import { Person } from '../../../core-modules/models/offer';
 
 export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements OnInit, OnDestroy {
   @ViewChildren('form') form;
@@ -31,11 +32,15 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   completedFieldsCount: number = 0;
   allFieldsCount: number = 0;
 
-  isDisabled: boolean;
+  isDisabled: boolean = true;
+  visibleControls: boolean = false;
 
   user: User;
 
   signFields = [];
+  finalSignFields = [];
+
+  okButtonText: string;
 
   signFieldElements: any[] = [];
   onDestroyed$: Subject<void> = new Subject<void>();
@@ -77,13 +82,23 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         map(([counterOffer, document]) => {
           this.counterOffer = counterOffer;
           this.documentObj = document;
+
+          this.visibleControls =
+            this.isSideBarOpen && this.counterOffer.catchers.some((user: Person) => user.email === this.authService.currentUser.email);
+
           this.isDisabled = this.counterOffer.pitcher !== this.user.id;
+
+          this.okButtonText = this.counterOffer.isSigned ? 'Back to the offer' : 'Sign';
 
           if (counterOffer.isSigned) {
             this.snackbar.open('Counter Offer is already signed');
           }
 
-          this.setSignFields();
+          if (counterOffer.status === 'completed') {
+            this.setSignFields(this.finalSignFields);
+          }
+
+          this.setSignFields(this.signFields);
           this.subscribeToFormChanges(this.documentForm);
         }),
       );
@@ -183,11 +198,17 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     return [{value: '', disabled: true}, []];
   }
 
-  setSignFields() {
-    this.signFields.map((fieldObj) => {
+  getFinalSignFieldMCO(controlName: string, role: string, index: number) {
+    this.finalSignFields.push({controlName, role, index});
+
+    return [{value: '', disabled: true}, []];
+  }
+
+  setSignFields(signFields) {
+    signFields.map((fieldObj) => {
       if (this.counterOffer[fieldObj.role][fieldObj.index] && this.counterOffer[fieldObj.role][fieldObj.index].email === this.user.email) {
-        this.documentForm.get(fieldObj.controlName).enable({emitEvent: false});
         this.documentForm.get(fieldObj.controlName).setValidators([Validators.required]);
+        this.documentForm.get(fieldObj.controlName).enable({emitEvent: false});
       }
     });
   }

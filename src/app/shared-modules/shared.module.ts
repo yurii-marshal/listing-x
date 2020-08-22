@@ -55,6 +55,7 @@ import { ProgressBarComponent } from './components/progress-bar/progress-bar.com
 import { OfferInformationComponent } from './components/offer-information/offer-information.component';
 import { SidebarControlsComponent } from './components/sidebar-controls/sidebar-controls.component';
 import { CurrencyMaskDirective } from './directives/currency-mask/currency-mask.directive';
+import { DisableControlDirective } from './directives/disable-control.directive';
 
 const materialModules = [
   MatDialogModule,
@@ -97,6 +98,7 @@ const components = [
   NumberToWordsDirective,
   SignatureDirective,
   CurrencyMaskDirective,
+  DisableControlDirective,
   FilePickerComponent,
   FileOption,
   FileUploaderComponent,
@@ -122,6 +124,7 @@ const components = [
   ],
   declarations: [
     ...components,
+    DisableControlDirective,
   ],
   exports: [
     ...components,

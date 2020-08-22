@@ -17,28 +17,28 @@
             </header>
             <br>
             <div class="form">
-              <div class="f-r">Date <input formControlName="date_buyer_counter_date" type="text" class="i-lr-2"></div>
+              <div class="f-r">Date <input [disableControl]="isDisabled" formControlName="date_buyer_counter_date" type="text" class="i-lr-2"></div>
               <div class="clearfix"></div>
               <div>
                 This is a counter offer to the:
-                <input formControlName="radio_counter_offer_type" value="counter" type="radio"> Seller Counter Offer No.
-                <input formControlName="text_counter_offer_number" type="text" class="i-lr__5"> ,
-                <input formControlName="radio_counter_offer_type" value="counter_multiple" type="radio"> Seller Multiple
+                <input [disableControl]="isDisabled" formControlName="radio_counter_offer_type" value="counter" type="radio"> Seller Counter Offer No.
+                <input [disableControl]="isDisabled" formControlName="text_counter_offer_number" type="text" class="i-lr__5"> ,
+                <input [disableControl]="isDisabled" formControlName="radio_counter_offer_type" value="counter_multiple" type="radio"> Seller Multiple
                 Counter Offer No.
-                <input formControlName="text_multiple_counter_offer_number" type="text" class="i-lr__5"> , or
-                <input formControlName="radio_counter_offer_type" value="other" type="radio"> Other
-                <input formControlName="text_offer_type_other" type="text" class="i-lr-1__5"> (“Offer”), dated
-                <input matInput [min]="datepickerMinDate" (click)="date_offer_dated.open()"
+                <input [disableControl]="isDisabled" formControlName="text_multiple_counter_offer_number" type="text" class="i-lr__5"> , or
+                <input [disableControl]="isDisabled" formControlName="radio_counter_offer_type" value="other" type="radio"> Other
+                <input [disableControl]="isDisabled" formControlName="text_offer_type_other" type="text" class="i-lr-1__5"> (“Offer”), dated
+                <input [disableControl]="isDisabled" matInput [min]="datepickerMinDate" (click)="date_offer_dated.open()"
                        [matDatepicker]="date_offer_dated"
                        formControlName="date_offer_dated"
                        type="text"
                        class="i-lr-2">
                 <mat-datepicker #date_offer_dated></mat-datepicker>
                 , on property known as &nbsp;
-                <input formControlName="text_property_address" type="text" class="i-lr-7__5"> &nbsp; (“Property”),
+                <input [disableControl]="isDisabled" formControlName="text_property_address" type="text" class="i-lr-7__5"> &nbsp; (“Property”),
                 between &nbsp;
-                <input formControlName="text_between_buyer" type="text" class="i-lr-5"> &nbsp; (“Buyer”) and &nbsp;
-                <input formControlName="text_between_seller" type="text" class="i-lr-5"> &nbsp; (“Seller”).
+                <input [disableControl]="isDisabled" formControlName="text_between_buyer" type="text" class="i-lr-5"> &nbsp; (“Buyer”) and &nbsp;
+                <input [disableControl]="isDisabled" formControlName="text_between_seller" type="text" class="i-lr-5"> &nbsp; (“Seller”).
               </div>
               <div>
                 <div>
@@ -66,20 +66,20 @@
                   <div>
                     <span>C. &nbsp;OTHER TERMS:</span>
                     <div class="item-pl-3">
-                      <textarea formControlName="text_other_therms" style="width: 1300px; height: 400px;"></textarea>
+                      <textarea [disableControl]="isDisabled" formControlName="text_other_therms" style="width: 1300px; height: 400px;"></textarea>
                     </div>
                   </div>
                   <div>
                         <span class="fw-bold f-l">D. The following attached addenda are incorporated into this Buyer
                             Counter offer:</span>
                     <div class="item-pl-3">
-                      &nbsp; <input formControlName="check_attached_addendum_first" type="checkbox"> &nbsp; <span
+                      &nbsp; <input [disableControl]="isDisabled" formControlName="check_attached_addendum_first" type="checkbox"> &nbsp; <span
                       class="fw-normal">Addendum No.</span>
-                      <input formControlName="text_addendum_number_first" type="text" class="i-lr-3"><br>
-                      <input formControlName="check_attached_addendum_second" type="checkbox"> &nbsp;
-                      <input formControlName="text_addendum_number_second" type="text" class="i-lr-6"> &nbsp;
-                      <input formControlName="check_attached_addendum_third" type="checkbox"> &nbsp;
-                      <input formControlName="text_addendum_number_third" type="text" class="i-lr-6">
+                      <input [disableControl]="isDisabled" formControlName="text_addendum_number_first" type="text" class="i-lr-3"><br>
+                      <input [disableControl]="isDisabled" formControlName="check_attached_addendum_second" type="checkbox"> &nbsp;
+                      <input [disableControl]="isDisabled" formControlName="text_addendum_number_second" type="text" class="i-lr-6"> &nbsp;
+                      <input [disableControl]="isDisabled" formControlName="check_attached_addendum_third" type="checkbox"> &nbsp;
+                      <input [disableControl]="isDisabled" formControlName="text_addendum_number_third" type="text" class="i-lr-6">
                     </div>
                   </div>
                 </div>
@@ -94,10 +94,10 @@
                       <div class="item-pl-3">
                         Unless by 5:00pm on the third Day After the date it is signed in paragraph 3 (if more
                         than one signature then, the last signature date)(or by <br>
-                        <input formControlName="time_counter_offer_expiration_time" type="text" class="i-lr__5">
-                        <input formControlName="radio_expiration_am_pm" value="am" type="radio"> AM
-                        <input formControlName="radio_expiration_am_pm" value="pm" type="radio"> PM on
-                        <input matInput [min]="datepickerMinDate" (click)="date_expiration_date.open()"
+                        <input [disableControl]="isDisabled" formControlName="time_counter_offer_expiration_time" type="text" class="i-lr__5">
+                        <input [disableControl]="isDisabled" formControlName="radio_expiration_am_pm" value="am" type="radio"> AM
+                        <input [disableControl]="isDisabled" formControlName="radio_expiration_am_pm" value="pm" type="radio"> PM on
+                        <input [disableControl]="isDisabled" matInput [min]="datepickerMinDate" (click)="date_expiration_date.open()"
                                [matDatepicker]="date_expiration_date"
                                formControlName="date_expiration_date"
                                type="text"
@@ -106,7 +106,7 @@
                         (date))
                         <b>(i)</b> it is signed in paragraph 4 by Seller and <b>(ii)</b> a copy of the signed
                         Buyer Counter Offer is personally received by Buyer or
-                        <input formControlName="text_buyer_alternative_name" type="text" class="i-lr-5"> , who is
+                        <input [disableControl]="isDisabled" formControlName="text_buyer_alternative_name" type="text" class="i-lr-5"> , who is
                         authorized to receive it.
                       </div>
                     </div>
@@ -114,7 +114,7 @@
                       <span class="fw-bold f-l">B.</span>
                       <div class="item-pl-3">
                         OR
-                        <input formControlName="check_buyer_withdraw" type="checkbox">
+                        <input [disableControl]="isDisabled" formControlName="check_buyer_withdraw" type="checkbox">
                         If Buyer withdraws it in writing (CAR Form WOO) anytime prior to Acceptance.
                       </div>
                     </div>
@@ -147,7 +147,7 @@
                   <div class="item-pl-3">
                     accept the above Buyer Counter Offer
                     <span class="fw-bold">
-                            (If checked <input formControlName="check_receive_copy" type="checkbox"> SUBJECT TO THE ATTACHED COUNTER OFFER)
+                            (If checked <input [disableControl]="isDisabled" formControlName="check_receive_copy" type="checkbox"> SUBJECT TO THE ATTACHED COUNTER OFFER)
                         </span>
                     and acknowledge receipt of a Copy.
                     <div>
@@ -181,6 +181,9 @@
                 <br>
                 <div>
                   ( <input appSignature [mode]="'initials'" (fieldSigned)="nextField($event)"
+                           [withDateControl]="'date_copy_received_date'"
+                           [withTimeControl]="'time_copy_received_time'"
+                           [withAmpmControl]="'radio_copy_received_am_pm'"
                            formControlName="text_buyer_initials_first" type="text" class="i-lr-1"> /
                   <input appSignature [mode]="'initials'" (fieldSigned)="nextField($event)"
                          formControlName="text_buyer_initials_second" type="text" class="i-lr-1"> ) (Initials)
@@ -255,14 +258,15 @@
       </div>
     </div>
 
-    <app-sidebar [(opened)]="isSideBarOpen" (continue)="continue()" [okButtonText]="'Sign'">
+    <app-sidebar
+      [(opened)]="isSideBarOpen"
+      (continue)="continue()"
+      [okButtonText]="okButtonText"
+    >
 
       <app-offer-information [counterOffer]="counterOffer" [isSideBarOpen]="isSideBarOpen"></app-offer-information>
 
-      <app-sidebar-controls [counterOffer]="counterOffer"
-                            [isSideBarOpen]="isSideBarOpen"
-                            [user]="user">
-      </app-sidebar-controls>
+      <app-sidebar-controls [counterOffer]="counterOffer" [visible]="visibleControls"></app-sidebar-controls>
 
       <div class="controls" *ngIf="isSideBarOpen">
         <app-progress-bar

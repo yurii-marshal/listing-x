@@ -18,13 +18,13 @@
         {{item.firstName}} {{item.lastName}} | {{item.email}}
       </div>
     </div>
-    <div class="sellers truncated" *ngFor="let item of counterOffer.catcher_customers; let i = index">
+    <div class="sellers truncated" *ngFor="let item of counterOffer.catcherCustomers; let i = index">
       <h6>Catcher customer #{{i+1}}</h6>
       <div class="item">
         {{item.firstName}} {{item.lastName}} | {{item.email}}
       </div>
     </div>
-    <div class="agents truncated" *ngFor="let item of counterOffer.pitcher_customers; let i = index">
+    <div class="agents truncated" *ngFor="let item of counterOffer.pitcherCustomers; let i = index">
       <h6>Pitcher customer #{{i+1}}</h6>
       <div class="item">
         {{item.firstName}} {{item.lastName}} | {{item.email}}

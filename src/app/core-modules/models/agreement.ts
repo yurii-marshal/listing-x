@@ -23,6 +23,7 @@ export enum AgreementStatus {
   Started = 'started',
   Delivered = 'delivered',
   Denied = 'denied',
+  Countered = 'countered',
   Accepted = 'accepted',
   Completed = 'completed',
 }
