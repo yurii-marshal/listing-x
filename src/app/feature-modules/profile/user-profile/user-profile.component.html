@@ -47,13 +47,14 @@
         <!--(310) 525-0619-->
         <div class="fieldset">
           <label>Phone number</label>
-          <input formControlName="phoneNumber" placeholder="+1" spellcheck="false" class="form-control">
+          <input formControlName="phoneNumber" spellcheck="false" class="form-control">
           <!--<input phoneMask-->
                  <!--[preValue]="form.value.phoneNumber"-->
                  <!--formControlName="phoneNumber"-->
                  <!--placeholder="(310) 525-0619"-->
                  <!--spellcheck="false"-->
                  <!--class="form-control">-->
+          <!--[mask]="'{+7} ([000]) [000] [0000]'"-->
           <app-form-validation-error [baseControl]="form?.get('phoneNumber')"></app-form-validation-error>
         </div>
 
