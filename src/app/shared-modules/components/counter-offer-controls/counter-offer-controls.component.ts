@@ -7,11 +7,11 @@ import { Subject } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
 
 @Component({
-  selector: 'app-sidebar-controls',
-  templateUrl: './sidebar-controls.component.html',
-  styleUrls: ['./sidebar-controls.component.scss']
+  selector: 'app-counter-offer-controls',
+  templateUrl: './counter-offer-controls.component.html',
+  styleUrls: ['./counter-offer-controls.component.scss']
 })
-export class SidebarControlsComponent implements OnInit {
+export class CounterOfferControlsComponent implements OnInit {
   @Input() counterOffer: CounterOffer;
   @Input() visible: boolean = false;
 

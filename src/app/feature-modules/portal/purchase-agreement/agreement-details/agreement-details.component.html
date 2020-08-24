@@ -113,25 +113,14 @@
           <button class="counter-offer-btn"
                   *ngIf="offer.canCreateCounter"
                   mat-flat-button
-                  [disabled]="!offer.isSigned || offer.status === 'denied'"
                   (click)="createCounterOffer('counter_offer')"
                   color="primary">
             COUNTER OFFER
           </button>
 
-          <!--<button class="counter-offer-btn"-->
-                  <!--*ngIf="offer.userRole === 'agent_buyer'"-->
-                  <!--mat-flat-button-->
-                  <!--[disabled]="!offer.isSigned || offer.status === 'denied'"-->
-                  <!--(click)="createCounterOffer('buyer_counter_offer')"-->
-                  <!--color="primary">-->
-            <!--COUNTER OFFER-->
-          <!--</button>-->
-
           <button class="counter-offer-btn"
                   *ngIf="offer.canCreateMultipleCounter"
                   mat-flat-button
-                  [disabled]="!offer.isSigned || offer.status === 'denied'"
                   (click)="createCounterOffer('multiple_counter_offer')"
                   color="primary">
             MCO
