@@ -50,7 +50,7 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   constructor(private authService: AuthService,
               private dialog: MatDialog,
               private route: ActivatedRoute,
-              private offerService: OfferService,
+              public offerService: OfferService,
               private transactionService: TransactionService,
               private counterOfferService: CounterOfferService,
               private snackbar: MatSnackBar,
@@ -102,23 +102,6 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     this.offerService.delete(this.offer.id).pipe(
       takeUntil(this.onDestroyed$)
     ).subscribe(() => this.router.navigate(['/portal/purchase-agreements/all']));
-  }
-
-  getClassName(status: AgreementStatus): string {
-    switch (status) {
-      case AgreementStatus.Started:
-        return 'blue';
-      case AgreementStatus.Delivered:
-        return 'orange';
-      case AgreementStatus.Accepted:
-        return 'yellow';
-      case AgreementStatus.Countered:
-        return 'yellow';
-      case AgreementStatus.Completed:
-        return 'violet';
-      case AgreementStatus.Denied:
-        return 'red';
-    }
   }
 
   inviteUser() {
