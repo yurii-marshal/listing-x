@@ -111,7 +111,7 @@
           </button>
 
           <button class="counter-offer-btn"
-                  *ngIf="isCatcherAgent"
+                  *ngIf="isAgent"
                   [disabled]="!offer.canCreateCounter"
                   mat-flat-button
                   (click)="createCounterOffer('counter_offer')"
@@ -120,7 +120,7 @@
           </button>
 
           <button class="counter-offer-btn"
-                  *ngIf="isCatcherAgent"
+                  *ngIf="isAgent"
                   [disabled]="!offer.canCreateMultipleCounter"
                   mat-flat-button
                   (click)="createCounterOffer('multiple_counter_offer')"
