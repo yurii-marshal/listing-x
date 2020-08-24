@@ -35,6 +35,7 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   pendingDocuments: Observable<GeneratedDocument[]>;
   completedDocuments: Observable<GeneratedDocument[]>;
   transactionsFlow: boolean;
+  isCatcherAgent: boolean = true;
 
   readonly statusLabels: { [key: string]: string } = {
     [AgreementStatus.All]: 'All agreements',
@@ -70,6 +71,9 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
       ).subscribe(([offer, counterOffers]: [Offer, CounterOffer[]]) => {
       this.offerLoaded(offer);
       this.counterOffers = counterOffers;
+
+      // this.isCatcherAgent = counterOffers
+      //   .map(co => co.catchers.some(user => user.email === this.authService.currentUser.email));
     });
     // this.offerService.loadCalendarByOffer(offerId)
     //   .subscribe(items => this.calendarDataSource = items);
@@ -111,7 +115,7 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
         return 'orange';
       case AgreementStatus.Accepted:
         return 'yellow';
-        case AgreementStatus.Countered:
+      case AgreementStatus.Countered:
         return 'yellow';
       case AgreementStatus.Completed:
         return 'violet';

@@ -31,7 +31,6 @@ export class SignatureDirective implements OnInit {
     private ngControl: NgControl,
     private authService: AuthService,
     private snackbar: MatSnackBar,
-    private offerService: OfferService,
   ) {
   }
 
@@ -55,33 +54,44 @@ export class SignatureDirective implements OnInit {
     // 2 - set class-marker if a field is allowed for current user
     if (!this.signatureControl.disabled) {
       this.renderer.addClass(this.el.nativeElement, 'sign-input');
-      this.offerService.activeSignControls.push(this.signatureControl);
-
-      if (this.withDateControl) {
-        this.offerService.activeSignControls.push(this.dateControl);
-      }
     }
   }
 
-  @HostListener('focus', ['$event']) focus() {
-    this.signButtonEl
-      ? this.removeSignButton()
-      : setTimeout(() => {
-        this.renderSignButton();
-      }, 200);
-  }
+  // @HostListener('focus', ['$event']) focus() {
+  //   this.signButtonEl
+  //     ? this.removeSignButton()
+  //     : setTimeout(() => {
+  //       this.renderSignButton();
+  //     }, 200);
+  // }
 
-  @HostListener('document:click', ['$event']) blur($event) {
-    if (
-      this.signButtonEl
-      && !this.signButtonEl.contains($event.target)
-      && !this.el.nativeElement.contains($event.target)
-    ) {
-      this.removeSignButton();
+  // @HostListener('document:click', ['$event']) blur($event) {
+  //   if (
+  //     this.signButtonEl
+  //     && !this.signButtonEl.contains($event.target)
+  //     && !this.el.nativeElement.contains($event.target)
+  //   ) {
+  //     this.removeSignButton();
+  //   }
+  // }
+
+  resetData() {
+    this.signatureControl.patchValue('', {emitEvent: false, onlySelf: true});
+
+    if (this.withDateControl) {
+      this.dateControl.patchValue('', {emitEvent: false, onlySelf: true});
+    }
+
+    if (this.withTimeControl) {
+      this.timeControl.patchValue('', {emitEvent: false, onlySelf: true});
+    }
+
+    if (this.withAmpmControl) {
+      this.ampmControl.patchValue('am', {emitEvent: false, onlySelf: true});
     }
   }
 
-  private renderSignButton() {
+  renderSignButton() {
     this.signButtonEl = this.renderer.createElement('button');
 
     this.renderer.appendChild(this.signButtonEl, this.renderer.createText('Sign'));

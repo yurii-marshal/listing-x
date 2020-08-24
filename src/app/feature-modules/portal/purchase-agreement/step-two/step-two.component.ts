@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChildren } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { OfferService } from '../../services/offer.service';
 import { Offer } from '../../../../core-modules/models/offer';
 import { MatDialog, MatSnackBar } from '@angular/material';
@@ -6,12 +6,13 @@ import { EditOfferDialogComponent } from '../../../../shared-modules/dialogs/edi
 import { ActivatedRoute, Router } from '@angular/router';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { fromEvent, Observable, Subject } from 'rxjs';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SaveOfferDialogComponent } from '../../../../shared-modules/dialogs/save-offer-dialog/save-offer-dialog.component';
 import { DatePipe } from '@angular/common';
 import * as _ from 'lodash';
 import { User } from '../../../auth/models';
 import { AuthService } from '../../../../core-modules/core-services/auth.service';
+import { SignatureDirective } from '../../../../shared-modules/directives/signature.directive';
 
 @Component({
   selector: 'app-step-two',
@@ -21,6 +22,7 @@ import { AuthService } from '../../../../core-modules/core-services/auth.service
 })
 export class StepTwoComponent implements OnInit, OnDestroy {
   @ViewChildren('form') form;
+  @ViewChildren(SignatureDirective) signatures: QueryList<SignatureDirective>;
 
   documentForm: FormGroup;
   currentPage: number = 0;
@@ -511,11 +513,13 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         this.getAllFieldsCount(model);
         this.updatePageProgress(model, 0);
 
-        this.disableSignedFields();
+        this.signFieldElements = Array.from(document.getElementsByClassName('sign-input'));
 
         if (!this.offer.isSigned) {
-          this.clearEditableSignFields();
+          this.checkCancellingSigns();
         }
+
+        this.disableSignFields();
 
         if (!this.isDisabled) {
           this.switchDaysAndDate(
@@ -534,8 +538,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.offerService.activeSignControls = [];
-
     this.onDestroyed$.next();
     this.onDestroyed$.complete();
   }
@@ -600,15 +602,25 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       : this.scrollToFirstInvalidField();
   }
 
-  private clearEditableSignFields() {
-    if (!this.scrollToEmptySignField() && !this.offer.isSigned) {
-      this.offerService.activeSignControls
-        .forEach((control: AbstractControl) => control.patchValue('', {emitEvent: false}));
-      // this.signFieldElements.map((item) => item.value = '');
+  private checkCancellingSigns() {
+    if (!this.scrollToEmptySignField()) {
+      this.signatures.toArray().forEach((sd: SignatureDirective) => {
+        if (sd.signatureControl.enabled) {
+          sd.resetData();
+        }
+      });
+
+      this.scrollToEmptySignField();
+    } else {
+      this.signatures.toArray().forEach((sd: SignatureDirective) => {
+        if (sd.signatureControl.enabled && !sd.signatureControl.value) {
+          sd.renderSignButton();
+        }
+      });
     }
   }
 
-  private scrollToFirstInvalidField() {
+  private scrollToFirstInvalidField(): boolean {
     for (const groupName of Object.keys(this.documentForm.controls)) {
       if (this.documentForm.controls[groupName].invalid) {
         for (const controlName of Object.keys((this.documentForm.controls[groupName] as FormGroup).controls)) {
@@ -791,10 +803,10 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     return [value, []];
   }
 
-  // 3 - disable if user already signed a field with class-marker
-  private disableSignedFields() {
-    this.signFieldElements = Array.from(document.getElementsByClassName('sign-input'));
-    this.signFieldElements.forEach(item => item.disabled = !!item.value);
+  // 2 - SignatureDirective
+  // 3 - disable every field with class-marker
+  private disableSignFields() {
+    this.signFieldElements.forEach(item => item.disabled = true);
   }
 
   private finalSignAgreement() {
