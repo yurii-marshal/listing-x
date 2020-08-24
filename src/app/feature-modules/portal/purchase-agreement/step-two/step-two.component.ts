@@ -585,8 +585,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     }
   }
 
-  moveToNextSignField(isSigned) {
-    if (isSigned) {
+  moveToNextSignField(isFieldSigned) {
+    if (isFieldSigned) {
       if (this.signFieldElements.length) {
         for (const item of this.signFieldElements) {
           if (!item.value) {
@@ -785,7 +785,24 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
   private disableSignedFields() {
     this.signFieldElements = Array.from(document.getElementsByClassName('sign-input'));
-    this.signFieldElements.forEach(item => item.disabled = !!item.value);
+
+    if (this.checkOnCancelSigns()) {
+      this.signFieldElements.forEach(item => item.disabled = !!item.value);
+    }
+  }
+
+  private checkOnCancelSigns(): boolean {
+    if (this.signFieldElements.length) {
+      for (const item of this.signFieldElements) {
+        if (!item.value) {
+          return false;
+        }
+      }
+
+      // TODO: clear date controls?
+      this.signFieldElements.forEach(el => el.value = '');
+      return true;
+    }
   }
 
   private finalSignAgreement() {
