@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { forkJoin, Observable, Subject } from 'rxjs';
 import { FormControl, Validators } from '@angular/forms';
 import { AddendumData, Document, GeneratedDocument } from '../../../../core-modules/models/document';
 import { AuthService } from '../../../../core-modules/core-services/auth.service';
@@ -40,6 +40,7 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     [AgreementStatus.All]: 'All agreements',
     [AgreementStatus.Started]: 'Started',
     [AgreementStatus.Delivered]: 'Delivered',
+    [AgreementStatus.Countered]: 'Countered',
     [AgreementStatus.Accepted]: 'Accepted',
     [AgreementStatus.Completed]: 'Completed',
     [AgreementStatus.Denied]: 'Denied',
@@ -60,14 +61,16 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     this.transactionsFlow = this.router.url.includes('transaction');
     const offerId: number = Number(this.route.snapshot.params.id);
 
-    this.offerService.loadOne(offerId).pipe(
-      takeUntil(this.onDestroyed$)
-    ).subscribe((offer: Offer) => this.offerLoaded(offer));
-
-    this.counterOfferService.getCounterOffersList(offerId).pipe(
-      takeUntil(this.onDestroyed$)
-    ).subscribe((counterOffers: CounterOffer[]) => this.counterOffers = counterOffers);
-
+    forkJoin(
+      this.offerService.loadOne(offerId),
+      this.counterOfferService.getCounterOffersList(offerId)
+    )
+      .pipe(
+        takeUntil(this.onDestroyed$)
+      ).subscribe(([offer, counterOffers]: [Offer, CounterOffer[]]) => {
+      this.offerLoaded(offer);
+      this.counterOffers = counterOffers;
+    });
     // this.offerService.loadCalendarByOffer(offerId)
     //   .subscribe(items => this.calendarDataSource = items);
   }
@@ -108,6 +111,8 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
         return 'orange';
       case AgreementStatus.Accepted:
         return 'yellow';
+        case AgreementStatus.Countered:
+        return 'yellow';
       case AgreementStatus.Completed:
         return 'violet';
       case AgreementStatus.Denied:
@@ -122,21 +127,21 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     this.transactionService.inviteUser(offerId, email).pipe(
       takeUntil(this.onDestroyed$)
     ).subscribe(() => {
-        this.snackbar.open(`Invite sent to email: ${email}`);
-        if (!this.isAgent) {
-          return;
-        }
+      this.snackbar.open(`Invite sent to email: ${email}`);
+      if (!this.isAgent) {
+        return;
+      }
 
-        const invited = {
-          email,
-          firstName: '<Invited',
-          lastName: this.isSeller ? `Listing Agent>` : `Buyer's Agent>`
-        } as Person;
+      const invited = {
+        email,
+        firstName: '<Invited',
+        lastName: this.isSeller ? `Listing Agent>` : `Buyer's Agent>`
+      } as Person;
 
-        const updatedListKey = this.isSeller ? 'agentSellers' : 'agentBuyers';
-        this.offer[updatedListKey].push(invited);
-        this.userEmailControl.setValue(null);
-      });
+      const updatedListKey = this.isSeller ? 'agentSellers' : 'agentBuyers';
+      this.offer[updatedListKey].push(invited);
+      this.userEmailControl.setValue(null);
+    });
   }
 
   goToESign(doc: GeneratedDocument): void {
@@ -158,7 +163,7 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   openCounterOffer(counterOffer: CounterOffer) {
-    this.router.navigateByUrl(`portal/offer/${this.offer.id}/counter-offers/${counterOffer.id}/${CounterOfferType[counterOffer.offerType]}`)
+    this.router.navigateByUrl(`portal/offer/${this.offer.id}/counter-offers/${counterOffer.id}/${CounterOfferType[counterOffer.offerType]}`);
   }
 
   createCounterOffer(type: CounterOfferType) {
@@ -173,9 +178,9 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     this.offerService.rejectOffer(this.offer.id).pipe(
       takeUntil(this.onDestroyed$)
     ).subscribe(() => {
-        this.offer.allowSign = false;
-        this.snackbar.open(`Denied.`);
-      });
+      this.offer.allowSign = false;
+      this.snackbar.open(`Denied.`);
+    });
   }
 
   downloadAndToggleState(file: string | Document) {

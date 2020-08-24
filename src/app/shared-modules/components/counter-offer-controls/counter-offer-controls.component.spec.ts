@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SidebarControlsComponent } from './sidebar-controls.component';
+import { CounterOfferControlsComponent } from './sidebar-controls.component';
 
 describe('SidebarControlsComponent', () => {
-  let component: SidebarControlsComponent;
-  let fixture: ComponentFixture<SidebarControlsComponent>;
+  let component: CounterOfferControlsComponent;
+  let fixture: ComponentFixture<CounterOfferControlsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SidebarControlsComponent ]
+      declarations: [ CounterOfferControlsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SidebarControlsComponent);
+    fixture = TestBed.createComponent(CounterOfferControlsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

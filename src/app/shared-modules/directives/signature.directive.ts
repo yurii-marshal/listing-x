@@ -113,26 +113,20 @@ export class SignatureDirective implements OnInit {
 
   private signField() {
     setTimeout(() => {
-      this.signatureControl.patchValue(this[this.mode]);
-      this.signatureControl.disable();
-
       if (this.withDateControl) {
-        setTimeout(() => {
-          this.dateControl.patchValue(this.datePipe.transform(new Date().getTime(), 'yyyy-MM-dd'));
-        }, 200);
+        this.dateControl.patchValue(this.datePipe.transform(new Date().getTime(), 'yyyy-MM-dd'));
       }
 
       if (this.withTimeControl) {
-        setTimeout(() => {
-          this.timeControl.patchValue(this.datePipe.transform(new Date().getTime(), 'hh:mm'));
-        }, 200);
+        this.timeControl.patchValue(this.datePipe.transform(new Date().getTime(), 'hh:mm'));
       }
 
       if (this.withAmpmControl) {
-        setTimeout(() => {
-          this.ampmControl.patchValue(new Date().getHours() > 12 ? 'pm' : 'am');
-        }, 200);
+        this.ampmControl.patchValue(new Date().getHours() > 12 ? 'pm' : 'am');
       }
+
+      this.signatureControl.patchValue(this[this.mode]);
+      this.signatureControl.disable();
 
       this.renderer.addClass(this.el.nativeElement, 'signed');
 

@@ -926,8 +926,8 @@
                   <div class="item-pl-35">
                     <input formControlName="text_offer_price_text" type="text" class="i-lr-9">
                     Dollars $
-                    <input formControlName="text_offer_price_digits" appOnlyNumbers
-                           [maxLength]="12"
+                    <input formControlName="text_offer_price_digits"
+                           currencyMask [options]="currencyMaskOptions"
                            appNumberToWords
                            [numToWordsForm]="documentForm"
                            [recipientControlName]="'page_5.text_offer_price_text'"
@@ -1092,7 +1092,9 @@
                 </div>
 
                 <div class="col-right">
-                  $ <input formControlName="text_finance_terms_amount" appOnlyNumbers type="text">
+                  $ <input formControlName="text_finance_terms_amount"
+                           currencyMask [options]="currencyMaskOptions"
+                           type="text">
                 </div>
 
                 <div class="col-left text-justify">
@@ -1115,7 +1117,7 @@
                 </div>
 
                 <div class="col-right">
-                  $ <input formControlName="text_finance_increased_deposit_amount" appOnlyNumbers type="text">
+                  $ <input formControlName="text_finance_increased_deposit_amount" currencyMask [options]="currencyMaskOptions" type="text">
                 </div>
 
                 <div class="col-left ">
@@ -1217,11 +1219,11 @@
                 </div>
 
                 <div class="col-right item-d1">
-                  $ <input formControlName="text_finance_first_loan_amount" appOnlyNumbers type="text">
+                  $ <input formControlName="text_finance_first_loan_amount" currencyMask [options]="currencyMaskOptions" type="text">
                 </div>
 
                 <div class="col-right item-d2">
-                  $ <input formControlName="text_finance_second_loan_amount" appOnlyNumbers type="text">
+                  $ <input formControlName="text_finance_second_loan_amount" currencyMask [options]="currencyMaskOptions" type="text">
                 </div>
 
                 <div class="col-left">
@@ -1238,7 +1240,7 @@
                 </div>
 
                 <div class="col-right">
-                  $ <input formControlName="text_finance_down_payment_balance" appOnlyNumbers type="text">
+                  $ <input formControlName="text_finance_down_payment_balance" currencyMask [options]="currencyMaskOptions" type="text">
                 </div>
 
                 <div class="col-left text-justify">
@@ -1248,8 +1250,7 @@
                 </div>
 
                 <div class="col-right">
-                  $ <input [value]="documentForm.get('page_5.text_offer_price_digits').value" appOnlyNumbers
-                           disabled="disabled" type="text">
+                  $ <input [value]="documentForm.get('page_5.text_offer_price_digits').value | number: '1.2-2'" disabled="disabled" type="text">
                 </div>
                 <div class="clearfix"></div>
               </div>
@@ -1768,7 +1769,7 @@
                     <input [value]="'buyer'" formControlName="radio_other_costs_shall_pay_cost" type="radio"> Buyer
                     <input [value]="'seller'" formControlName="radio_other_costs_shall_pay_cost" type="radio">
                     Seller shall pay for the cost, not to exceed $
-                    <input formControlName="text_other_costs_shall_pay_amount_cost" appOnlyNumbers type="text"
+                    <input formControlName="text_other_costs_shall_pay_amount_cost" currencyMask [options]="currencyMaskOptions" type="text"
                            class="i-lr-4">
                     , of a standard (or
                     <input formControlName="check_other_costs_warranty" type="checkbox">

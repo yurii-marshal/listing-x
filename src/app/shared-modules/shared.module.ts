@@ -52,8 +52,10 @@ import { SignatureBoxComponent } from './components/signature-box/signature-box.
 import { SignatureDirective } from './directives/signature.directive';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
-import { OfferInformationComponent } from './components/offer-information/offer-information.component';
-import { SidebarControlsComponent } from './components/sidebar-controls/sidebar-controls.component';
+import { CurrencyMaskDirective } from './directives/currency-mask/currency-mask.directive';
+import { DisableControlDirective } from './directives/disable-control.directive';
+import { CounterOfferInformationComponent } from './components/counter-offer-information/counter-offer-information.component';
+import { CounterOfferControlsComponent } from './components/counter-offer-controls/counter-offer-controls.component';
 
 const materialModules = [
   MatDialogModule,
@@ -95,6 +97,8 @@ const components = [
   TimeMaskDirective,
   NumberToWordsDirective,
   SignatureDirective,
+  CurrencyMaskDirective,
+  DisableControlDirective,
   FilePickerComponent,
   FileOption,
   FileUploaderComponent,
@@ -104,8 +108,8 @@ const components = [
   SignatureBoxComponent,
   SidebarComponent,
   ProgressBarComponent,
-  OfferInformationComponent,
-  SidebarControlsComponent,
+  CounterOfferInformationComponent,
+  CounterOfferControlsComponent,
   FirstLetterPipe,
   ...dialogs,
 ];
@@ -120,6 +124,7 @@ const components = [
   ],
   declarations: [
     ...components,
+    DisableControlDirective,
   ],
   exports: [
     ...components,

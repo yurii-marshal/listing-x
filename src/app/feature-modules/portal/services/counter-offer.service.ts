@@ -33,12 +33,12 @@ export class CounterOfferService extends BaseDataService<CounterOffer> {
     return this.http.get(`/counter_offers/`, {params});
   }
 
-  signCounterOffer(offerId: number): Observable<any> {
-    return this.http.post(`/counter_offers/${offerId}/sign/`, {})
-      .pipe(switchMap(() => super.loadOne(offerId)));
+  signCounterOffer(coId: number): Observable<any> {
+    return this.http.post(`/counter_offers/${coId}/sign/`, {})
+      .pipe(switchMap(() => super.loadOne(coId)));
   }
 
-  rejectCounterOffer(offerId: number): Observable<any> {
-    return this.http.post(`/counter_offers/${offerId}/reject/`, {});
+  rejectCounterOffer(coId: number): Observable<any> {
+    return this.http.post(`/counter_offers/${coId}/reject/`, {});
   }
 }

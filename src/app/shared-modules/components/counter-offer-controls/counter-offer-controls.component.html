@@ -1,8 +1,7 @@
-<div class="controls u-flex u-flex-justify--space-between" *ngIf="isSideBarOpen">
+<div class="controls u-flex u-flex-justify--space-between" *ngIf="visible">
   <button class="sign-btn"
           mat-flat-button
-          *ngIf="counterOffer.catcher === user.id"
-          [disabled]="counterOffer.isSigned"
+          [disabled]="counterOffer.isSigned && counterOffer.status !== 'sent'"
           (click)="rejectCO()"
           color="primary">
     DENY
@@ -10,9 +9,8 @@
 
   <button class="sign-btn"
           mat-flat-button
-          *ngIf="counterOffer.catcher === user.id"
           [disabled]="counterOffer.isSigned"
-          (click)="createCO(counterOffer.offerType)"
+          (click)="createCCO()"
           color="primary">
     COUNTER OFFER
   </button>
