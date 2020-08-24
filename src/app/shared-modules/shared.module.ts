@@ -56,6 +56,7 @@ import { CurrencyMaskDirective } from './directives/currency-mask/currency-mask.
 import { DisableControlDirective } from './directives/disable-control.directive';
 import { CounterOfferInformationComponent } from './components/counter-offer-information/counter-offer-information.component';
 import { CounterOfferControlsComponent } from './components/counter-offer-controls/counter-offer-controls.component';
+import { InputMaskDirective } from './directives/input-mask/input-mask.directive';
 
 const materialModules = [
   MatDialogModule,
@@ -99,6 +100,7 @@ const components = [
   SignatureDirective,
   CurrencyMaskDirective,
   DisableControlDirective,
+  InputMaskDirective,
   FilePickerComponent,
   FileOption,
   FileUploaderComponent,
