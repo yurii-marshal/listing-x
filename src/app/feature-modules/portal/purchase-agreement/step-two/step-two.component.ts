@@ -605,8 +605,10 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   private checkCancellingSigns() {
     if (!this.scrollToEmptySignField()) {
       this.signatures.toArray().forEach((sd: SignatureDirective) => {
+        sd.resetData();
+
         if (sd.signatureControl.enabled) {
-          sd.resetData();
+          sd.renderSignButton();
         }
       });
 
