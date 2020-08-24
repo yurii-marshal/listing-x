@@ -264,9 +264,9 @@
       [okButtonText]="okButtonText"
     >
 
-      <app-offer-information [counterOffer]="counterOffer" [isSideBarOpen]="isSideBarOpen"></app-offer-information>
+      <app-counter-offer-information [counterOffer]="counterOffer" [isSideBarOpen]="isSideBarOpen"></app-counter-offer-information>
 
-      <app-sidebar-controls [counterOffer]="counterOffer" [visible]="visibleControls"></app-sidebar-controls>
+      <app-counter-offer-controls [counterOffer]="counterOffer" [visible]="visibleControls"></app-counter-offer-controls>
 
       <div class="controls" *ngIf="isSideBarOpen">
         <app-progress-bar
