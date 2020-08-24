@@ -36,7 +36,7 @@ export class TransactionsComponent implements OnDestroy, OnInit {
   calendarDataSource: CalendarEvent[];
   user: User;
   transactionsFlow: boolean;
-  /* TODO: Refactor */
+
   readonly statusLabels: { [key: string]: string } = {
     [TransactionStatus.All]: 'All transactions',
     [TransactionStatus.New]: 'New',

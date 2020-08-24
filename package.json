@@ -10,7 +10,7 @@
     "serve": "ng serve --aot",
     "build": "ng build --prod",
     "build:production": "ng build --aot --prod",
-    "build:staging": "ng build --aot --prod",
+    "build:staging": "ng build --aot --configuration=staging",
     "build:develop": "ng build --aot --prod",
     "test": "ng test",
     "lint": "ng lint",

@@ -6,7 +6,7 @@ import { EditOfferDialogComponent } from '../../../../shared-modules/dialogs/edi
 import { ActivatedRoute, Router } from '@angular/router';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { fromEvent, Observable, Subject } from 'rxjs';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SaveOfferDialogComponent } from '../../../../shared-modules/dialogs/save-offer-dialog/save-offer-dialog.component';
 import { DatePipe } from '@angular/common';
 import * as _ from 'lodash';
@@ -29,6 +29,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   allFieldsCount: number = 0;
   allPageCount: number = 0;
   isSideBarOpen: boolean;
+  isEnableContinue: boolean = false;
   offerId: number;
   offer: Offer;
 
@@ -72,6 +73,10 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
     this.user = this.authService.currentUser;
 
+    if (this.offer.isSigned) {
+      this.snackbar.open('Offer is already signed');
+    }
+
     //  || this.route.snapshot.routeConfig.path === 'sign'
     this.isDisabled = this.offer.userRole !== 'agent_buyer';
 
@@ -80,15 +85,15 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         check_civil_code: [{value: null, disabled: this.isDisabled}, []],
         radio_disclosure_1: [{value: 'buyer', disabled: true}, []],
         text_disclosure_role_name_1: this.getSignFieldAllowedFor('buyers', 0),
-        date_disclosure_1: this.getSignFieldAllowedFor('buyers', 0),
+        date_disclosure_1: [{value: '', disabled: true}, []],
         radio_disclosure_2: [{value: 'buyer', disabled: true}, []],
         text_disclosure_role_name_2: this.getSignFieldAllowedFor('buyers', 1),
-        date_disclosure_2: this.getSignFieldAllowedFor('buyers', 1),
+        date_disclosure_2: [{value: '', disabled: true}, []],
         text_disclosure_firm: [{value: null, disabled: this.isDisabled}, []],
         text_disclosure_firm_lic: [{value: '', disabled: true}, []],
         text_disclosure_agent_buyer: this.getSignFieldAllowedFor('agentBuyers', 0),
         text_disclosure_agent_buyer_lic: [{value: '', disabled: true}, []],
-        date_disclosure_3: this.getSignFieldAllowedFor('agentBuyers', 0),
+        date_disclosure_3: [{value: '', disabled: true}, []],
       }),
       page_2: this.fb.group({
         text_confirm_seller_firm_name: [{value: '', disabled: true}, []],
@@ -106,36 +111,36 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       }),
       page_3: this.fb.group({
         text_acknowledge_seller_1: this.getSignFieldAllowedFor('sellers', 0),
-        date_acknowledge_seller_1: this.getSignFieldAllowedFor('sellers', 0),
+        date_acknowledge_seller_1: [{value: '', disabled: true}, []],
         text_acknowledge_seller_2: this.getSignFieldAllowedFor('sellers', 1),
-        date_acknowledge_seller_2: this.getSignFieldAllowedFor('sellers', 1),
+        date_acknowledge_seller_2: [{value: '', disabled: true}, []],
         text_acknowledge_buyer_1: this.getSignFieldAllowedFor('buyers', 0),
-        date_acknowledge_buyer_1: this.getSignFieldAllowedFor('buyers', 0),
+        date_acknowledge_buyer_1: [{value: '', disabled: true}, []],
         text_acknowledge_buyer_2: this.getSignFieldAllowedFor('buyers', 1),
-        date_acknowledge_buyer_2: this.getSignFieldAllowedFor('buyers', 1),
+        date_acknowledge_buyer_2: [{value: '', disabled: true}, []],
         text_acknowledge_buyer_agent_firm: [{value: '', disabled: true}, []],
         text_acknowledge_buyer_agent_firm_lic: [{value: '', disabled: true}, []],
         // date_acknowledge_buyer_agent_firm_date: [{value: '', disabled: true}, []],
         text_acknowledge_buyer_agent: this.getSignFieldAllowedFor('agentBuyers', 0),
         text_acknowledge_buyer_agent_lic: [{value: '', disabled: true}, []],
-        date_acknowledge_buyer_agent_date: this.getSignFieldAllowedFor('agentBuyers', 0),
+        date_acknowledge_buyer_agent_date: [{value: '', disabled: true}, []],
         text_acknowledge_seller_agent_firm: [{value: '', disabled: true}, []],
         text_acknowledge_seller_agent_firm_lic: [{value: '', disabled: true}, []],
         // date_acknowledge_seller_agent_firm_date: this.getSignFieldAllowedFor('agentSellers', 0),
         text_acknowledge_seller_agent: this.getSignFieldAllowedFor('agentSellers', 0),
         text_acknowledge_seller_agent_lic: [{value: '', disabled: true}, []],
-        date_acknowledge_seller_agent_date: this.getSignFieldAllowedFor('agentSellers', 0),
+        date_acknowledge_seller_agent_date: [{value: '', disabled: true}, []],
       }),
       page_4: this.fb.group({
         text_property_address: [{value: '', disabled: true}, []],
         text_buyer_tenant_1: this.getSignFieldAllowedFor('buyers', 0),
-        date_buyer_tenant_1: this.getSignFieldAllowedFor('buyers', 0),
+        date_buyer_tenant_1: [{value: '', disabled: true}, []],
         text_buyer_tenant_2: this.getSignFieldAllowedFor('buyers', 1),
-        date_buyer_tenant_2: this.getSignFieldAllowedFor('buyers', 1),
+        date_buyer_tenant_2: [{value: '', disabled: true}, []],
         text_seller_landlord_1: this.getSignFieldAllowedFor('sellers', 0),
-        date_seller_landlord_1: this.getSignFieldAllowedFor('sellers', 0),
+        date_seller_landlord_1: [{value: '', disabled: true}, []],
         text_seller_landlord_2: this.getSignFieldAllowedFor('sellers', 1),
-        date_seller_landlord_2: this.getSignFieldAllowedFor('sellers', 1),
+        date_seller_landlord_2: [{value: '', disabled: true}, []],
       }),
       page_5: this.fb.group({
         date_date_prepared: [{value: '', disabled: true}, []],
@@ -393,9 +398,9 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         date_received_on_date: [{value: null, disabled: this.isDisabled}, []],
         check_one_more_buyer: [{value: null, disabled: this.isDisabled}, []],
         text_other_buyer_first: this.getSignFieldAllowedFor('buyers', 0),
-        date_other_buyer_first: this.getSignFieldAllowedFor('buyers', 0),
+        date_other_buyer_first: [{value: '', disabled: true}, []],
         text_other_buyer_print_name_first: [{value: null, disabled: this.isDisabled}, []],
-        date_other_buyer_second: this.getSignFieldAllowedFor('buyers', 1),
+        date_other_buyer_second: [{value: '', disabled: true}, []],
         text_other_buyer_second: this.getSignFieldAllowedFor('buyers', 1),
         text_other_buyer_print_name_second: [{value: null, disabled: this.isDisabled}, []],
         check_additional_signature_attached: [{value: null, disabled: this.isDisabled}, []],
@@ -410,10 +415,10 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         check_seller_acceptance_attached: [{value: null, disabled: this.isDisabled}, []],
         check_one_or_more_seller: [{value: null, disabled: this.isDisabled}, []],
         date_one_or_more_seller: [{value: null, disabled: this.isDisabled}, []],
-        date_seller_first: this.getSignFieldAllowedFor('sellers', 0),
+        date_seller_first: [{value: '', disabled: true}, []],
         text_seller_first: this.getSignFieldAllowedFor('sellers', 0),
         text_seller_print_name_first: [{value: null, disabled: this.isDisabled}, []],
-        date_seller_second: this.getSignFieldAllowedFor('sellers', 1),
+        date_seller_second: [{value: '', disabled: true}, []],
         text_seller_second: this.getSignFieldAllowedFor('sellers', 1),
         text_seller_print_name_second: [{value: null, disabled: this.isDisabled}, []],
         check_seller_additional_signature: [{value: null, disabled: this.isDisabled}, []],
@@ -426,10 +431,10 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         text_buyers_brokerage_firm_lic: [{value: '', disabled: true}, []],
         text_buyers_brokerage_firm_by_first: this.getSignFieldAllowedFor('agentBuyers', 0),
         text_buyers_brokerage_firm_lic_by_first: [{value: '', disabled: true}, []],
-        date_buyers_brokerage_firm_date_first: this.getSignFieldAllowedFor('agentBuyers', 0),
+        date_buyers_brokerage_firm_date_first: [{value: '', disabled: true}, []],
         text_buyers_brokerage_firm_by_second: this.getSignFieldAllowedFor('agentBuyers', 1),
         text_buyers_brokerage_firm_lic_by_second: [{value: '', disabled: true}, []],
-        date_buyers_brokerage_firm_date_second: this.getSignFieldAllowedFor('agentBuyers', 1),
+        date_buyers_brokerage_firm_date_second: [{value: '', disabled: true}, []],
         text_buyers_address_street: [{value: '', disabled: true}, []],
         text_buyers_address_city: [{value: '', disabled: true}, []],
         text_buyers_address_state: [{value: 'California', disabled: true}, []],
@@ -441,10 +446,10 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         text_seller_brokerage_firm_lic: [{value: '', disabled: true}, []],
         text_seller_brokerage_firm_by_first: this.getSignFieldAllowedFor('agentSellers', 0),
         text_seller_brokerage_firm_lic_by_first: [{value: '', disabled: true}, []],
-        date_seller_brokerage_firm_date_first: this.getSignFieldAllowedFor('agentSellers', 0),
+        date_seller_brokerage_firm_date_first: [{value: '', disabled: true}, []],
         text_seller_brokerage_firm_by_second: this.getSignFieldAllowedFor('agentSellers', 1),
         text_seller_brokerage_firm_lic_by_second: [{value: '', disabled: true}, []],
-        date_seller_brokerage_firm_date_second: this.getSignFieldAllowedFor('agentSellers', 1),
+        date_seller_brokerage_firm_date_second: [{value: '', disabled: true}, []],
         text_seller_address_street: [{value: '', disabled: true}, []],
         text_seller_address_city: [{value: '', disabled: true}, []],
         text_seller_address_state: [{value: 'California', disabled: true}, []],
@@ -470,7 +475,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         check_department_real_estate: [{value: null, disabled: this.isDisabled}, []],
         text_broker_designee_initials: [{value: null, disabled: this.isDisabled}, []],
         date_presentation_of_offer: [{value: null, disabled: this.isDisabled}, []],
-        // TODO: reject offer signs
+        // reject offer signs?
         text_rejection_offer_seller_initial_first: [{value: null, disabled: this.isDisabled}, []],
         text_rejection_offer_seller_initial_second: [{value: null, disabled: this.isDisabled}, []],
         date_rejection_offer_date: [{value: null, disabled: this.isDisabled}, []],
@@ -485,31 +490,35 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       }),
       page_16: this.fb.group({
         text_privacy_act_advisory_first: this.getSignFieldAllowedFor('buyers', 0),
-        date_privacy_act_advisory_first: this.getSignFieldAllowedFor('buyers', 0),
+        date_privacy_act_advisory_first: [{value: '', disabled: true}, []],
         text_privacy_act_advisory_second: this.getSignFieldAllowedFor('buyers', 1),
-        date_privacy_act_advisory_second: this.getSignFieldAllowedFor('buyers', 1),
+        date_privacy_act_advisory_second: [{value: '', disabled: true}, []],
       }),
     }, {updateOn: 'blur'});
 
     this.offerService.getOfferDocument(this.offerId)
-      .pipe(
-        takeUntil(this.onDestroyed$),
-      )
+      .pipe(takeUntil(this.onDestroyed$))
       .subscribe((model) => {
         this.patchForm(model);
         this.getAllFieldsCount(model);
         this.updatePageProgress(model, 0);
 
         this.disableSignedFields();
-        this.moveToNextSignField(true);
+
+        if (!this.offer.isSigned) {
+          this.clearEditableSignFields();
+        }
 
         if (!this.isDisabled) {
           this.switchDaysAndDate(
             this.documentForm.get('page_5.radio_escrow').value,
             'page_5.text_escrow_days',
-            'page_5.date_escrow_date'
+            'page_5.date_escrow_date',
+            false
           );
         }
+
+        this.isEnableContinue = this.offer.isSigned || this.documentForm.valid;
       });
 
     this.initPageBreakers();
@@ -517,6 +526,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.offerService.activeSignControls = [];
+
     this.onDestroyed$.next();
     this.onDestroyed$.complete();
   }
@@ -543,20 +554,10 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   continue() {
     this.documentForm.markAllAsTouched();
 
-    const hasFormInvalidFields = this.scrollToFirstInvalidField();
-
-    if (hasFormInvalidFields) {
+    if (this.scrollToFirstInvalidField()) {
       this.snackbar.open('Please, fill all mandatory fields');
     } else {
-      if (this.route.snapshot.routeConfig.path === 'step-two') {
-        this.offerService.updateOfferProgress({progress: 3}, this.offerId)
-          .pipe(takeUntil(this.onDestroyed$))
-          .subscribe(() => {
-            this.router.navigate([`portal/purchase-agreements/${this.offerId}/step-three`]);
-          });
-      } else {
-        this.router.navigate([`portal/purchase-agreements/${this.offerId}/details`]);
-      }
+      this.moveToNextPage();
     }
   }
 
@@ -564,14 +565,14 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/portal/purchase-agreements/all');
   }
 
-  switchDaysAndDate(value: string, daysControlName: string, dateControlName: string) {
+  switchDaysAndDate(value: string, daysControlName: string, dateControlName: string, emit = true) {
     switch (value) {
       case 'date':
         this.documentForm.get(dateControlName).enable({emitEvent: false});
         this.documentForm.get(dateControlName).markAsDirty();
         this.documentForm.get(dateControlName).setValidators([Validators.required]);
         this.documentForm.get(daysControlName).disable({emitEvent: false});
-        this.documentForm.get(daysControlName).patchValue('');
+        this.documentForm.get(daysControlName).patchValue('', {emitEvent: emit});
         this.documentForm.get(daysControlName).clearValidators();
         break;
       case 'days':
@@ -579,27 +580,23 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         this.documentForm.get(daysControlName).markAsDirty();
         this.documentForm.get(daysControlName).setValidators([Validators.required]);
         this.documentForm.get(dateControlName).disable({emitEvent: false});
-        this.documentForm.get(dateControlName).patchValue('');
+        this.documentForm.get(dateControlName).patchValue('', {emitEvent: emit});
         this.documentForm.get(dateControlName).clearValidators();
         break;
     }
   }
 
-  moveToNextSignField(isFieldSigned) {
-    if (isFieldSigned) {
-      if (this.signFieldElements.length) {
-        for (const item of this.signFieldElements) {
-          if (!item.value) {
-            item.scrollIntoView({behavior: 'smooth', block: 'center'});
-            item.focus();
-            return;
-          }
-        }
+  moveToNextSignField(isSigned) {
+    isSigned
+      ? this.scrollToEmptySignField()
+      : this.scrollToFirstInvalidField();
+  }
 
-        this.finalSignAgreement();
-      }
-    } else {
-      this.scrollToFirstInvalidField();
+  private clearEditableSignFields() {
+    if (!this.scrollToEmptySignField() && !this.offer.isSigned) {
+      this.offerService.activeSignControls
+        .forEach((control: AbstractControl) => control.patchValue('', {emitEvent: false}));
+      // this.signFieldElements.map((item) => item.value = '');
     }
   }
 
@@ -704,14 +701,16 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     }
     // show saving animation if it takes a time
     this.offerService.updateOfferDocumentField({offerId: this.offerId, page: groupIndex + 1}, {[controlName]: controlValue})
-      .pipe(
-        takeUntil(this.onDestroyed$),
-      )
+      .pipe(takeUntil(this.onDestroyed$))
       .subscribe(() => {
         this.updatePageProgress(this.documentForm.getRawValue(), this.currentPage);
 
         if (_.includes(this.downPaymentAmountPredicates, controlName)) {
           this.updateDownPaymentAmount();
+        }
+
+        if (this.signFieldElements.every((el) => !!el.value) && !this.offer.isSigned) {
+          this.finalSignAgreement();
         }
       });
   }
@@ -774,6 +773,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   private getSignFieldAllowedFor(role: string, index: number) {
+    // 1 - disable if this field isn't allowed for current user
     const value = {
       value: '',
       disabled: this.offer[role][index] ? this.offer[role][index].email !== this.user.email : true,
@@ -783,36 +783,44 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     return [value, []];
   }
 
+  // 3 - disable if user already signed a field with class-marker
   private disableSignedFields() {
     this.signFieldElements = Array.from(document.getElementsByClassName('sign-input'));
-
-    if (this.checkOnCancelSigns()) {
-      this.signFieldElements.forEach(item => item.disabled = !!item.value);
-    }
-  }
-
-  private checkOnCancelSigns(): boolean {
-    if (this.signFieldElements.length) {
-      for (const item of this.signFieldElements) {
-        if (!item.value) {
-          return false;
-        }
-      }
-
-      // TODO: clear date controls?
-      this.signFieldElements.forEach(el => el.value = '');
-      return true;
-    }
+    this.signFieldElements.forEach(item => item.disabled = !!item.value);
   }
 
   private finalSignAgreement() {
-    this.offer.isSigned
-      ? this.snackbar.open('Offer is already signed')
-      : this.offerService.signOffer(this.offerId)
+    this.offerService.signOffer(this.offerId)
+      .pipe(takeUntil(this.onDestroyed$))
+      .subscribe(() => {
+        this.offer.isSigned = true;
+        this.snackbar.open('Offer is signed now');
+      });
+  }
+
+  private moveToNextPage() {
+    if (this.route.snapshot.routeConfig.path === 'step-two') {
+      this.offerService.updateOfferProgress({progress: 3}, this.offerId)
         .pipe(takeUntil(this.onDestroyed$))
         .subscribe(() => {
-          this.offer.isSigned = true;
-          this.snackbar.open('Offer is signed now');
+          this.router.navigate([`portal/purchase-agreements/${this.offerId}/step-three`]);
         });
+    } else {
+      this.router.navigate([`portal/purchase-agreements/${this.offerId}/details`]);
+    }
+  }
+
+  private scrollToEmptySignField(): boolean {
+    if (this.signFieldElements.length) {
+      for (const item of this.signFieldElements) {
+        if (!item.value) {
+          item.scrollIntoView({behavior: 'smooth', block: 'center'});
+          item.focus();
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
 }

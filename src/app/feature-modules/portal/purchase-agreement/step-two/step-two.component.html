@@ -1,4 +1,4 @@
-<app-base-template [state]="'agreement'" (close)="closeOffer()">
+<app-base-template [state]="'offer'" (close)="closeOffer()">
   <div class="u-flex viewer-container">
     <div class="u-flex viewer">
       <div class="doc-container">
@@ -926,9 +926,8 @@
                   <div class="item-pl-35">
                     <input formControlName="text_offer_price_text" type="text" class="i-lr-9">
                     Dollars $
-                    <!--TODO: create hidden input for value formatting into $$-->
-                    <input formControlName="text_offer_price_digits"
-                           appOnlyNumbers [maxLength]="9"
+                    <input formControlName="text_offer_price_digits" appOnlyNumbers
+                           [maxLength]="12"
                            appNumberToWords
                            [numToWordsForm]="documentForm"
                            [recipientControlName]="'page_5.text_offer_price_text'"
@@ -2378,7 +2377,7 @@
               </div>
               <div>
           <span class="fw-bold">12.&nbsp;BUYER'S INVESTIGATION OF PROPERTY AND MATTERS AFFECTING
-          PROPERTY:CONDITION OF PROPERTY:</span>
+          PROPERTY:</span>
                 <div class="item-pl-3">
                   <div>
                     <span class="fw-bold f-l">A.&nbsp;</span>
@@ -3902,8 +3901,7 @@
                   <input formControlName="text_buyers_phone"
                          phoneMask
                          [preValue]="documentForm?.value?.page_14?.text_buyers_phone"
-                         appOnlyNumbers
-                         [maxLength]="13"
+                         [maxLength]="14"
                          type="text" class="i-lr-4">
                   Fax
                   <input formControlName="text_buyers_fax" type="text" class="i-lr-2__5">
@@ -4479,7 +4477,7 @@
       </div>
     </div>
 
-    <app-sidebar [(opened)]="isSideBarOpen" (continue)="continue()">
+    <app-sidebar [(opened)]="isSideBarOpen" [isEnable]="isEnableContinue" (continue)="continue()">
 
       <div class="offer-information u-flex u-flex-direction--column u-flex-justify--start u-flex-align-items--start"
            *ngIf="isSideBarOpen">

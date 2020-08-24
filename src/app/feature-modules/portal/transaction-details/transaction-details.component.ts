@@ -41,7 +41,6 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
 
   transactionsFlow: boolean;
 
-  /* TODO: Refactor */
   readonly statusLabels: {[key: string]: string} = {
     [TransactionStatus.All]: 'All transactions',
     [TransactionStatus.New]: 'New',

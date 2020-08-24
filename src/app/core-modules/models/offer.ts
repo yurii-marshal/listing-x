@@ -3,6 +3,7 @@ import { Document, GeneratedDocument } from './document';
 import { AgreementStatus } from './agreement';
 import { Log } from 'src/app/core-modules/models/log';
 import { TransactionStatus } from 'src/app/core-modules/models/transaction';
+import { CounterOffer } from './counter-offer';
 
 export interface OfferSummary extends Offer {
   documents: LinkedDocuments;

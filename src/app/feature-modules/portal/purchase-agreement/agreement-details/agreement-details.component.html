@@ -114,16 +114,25 @@
                   *ngIf="offer.userRole === 'agent_seller'"
                   mat-flat-button
                   [disabled]="!offer.isSigned || offer.status === 'denied'"
-                  (click)="goToCounterOffer()"
+                  (click)="createCounterOffer('counter_offer')"
                   color="primary">
             COUNTER OFFER
           </button>
+
+          <!--<button class="counter-offer-btn"-->
+                  <!--*ngIf="offer.userRole === 'agent_buyer'"-->
+                  <!--mat-flat-button-->
+                  <!--[disabled]="!offer.isSigned || offer.status === 'denied'"-->
+                  <!--(click)="createCounterOffer('buyer_counter_offer')"-->
+                  <!--color="primary">-->
+            <!--COUNTER OFFER-->
+          <!--</button>-->
 
           <button class="counter-offer-btn"
                   *ngIf="offer.userRole === 'agent_seller'"
                   mat-flat-button
                   [disabled]="!offer.isSigned || offer.status === 'denied'"
-                  (click)="goToMCO()"
+                  (click)="createCounterOffer('multiple_counter_offer')"
                   color="primary">
             MCO
           </button>
@@ -236,6 +245,16 @@
               <button mat-menu-item (click)="triggerDownloadFile(doc)">Download</button>
               <button mat-menu-item disabled>Deny</button>
             </mat-menu>
+          </div>
+        </div>
+
+        <div class="row-layout" *ngIf="!transactionsFlow"><label>Counter offers</label>
+          <div class="doc-preview">
+            <img *ngFor="let counterOffer of counterOffers"
+                 src="assets/images/icons/pdf.svg"
+                 [title]="counterOffer.id"
+                 (click)="openCounterOffer(counterOffer)"
+                 height="20">
           </div>
         </div>
 
