@@ -8,6 +8,7 @@ import { ApiEndpoint } from '../../../core-modules/enums/api-endpoints';
 import { BaseDataService } from '../../../core-modules/base-classes/base-data-service';
 import { CalendarEvent } from '../../../core-modules/models/calendar-event';
 import { Router } from '@angular/router';
+import { AgreementStatus } from '../../../core-modules/models/agreement';
 
 @Injectable()
 export class OfferService extends BaseDataService<Offer> {
@@ -100,5 +101,22 @@ export class OfferService extends BaseDataService<Offer> {
   loadCalendarByOffer(id: number, start?: Date, end?: Date): Observable<CalendarEvent[]> {
     const url = super.transformEndpoint(ApiEndpoint.TransactionCalendar, id);
     return super.fetchCalendarData(url, start, end);
+  }
+
+  getClassName(status: AgreementStatus): string {
+    switch (status) {
+      case AgreementStatus.Started:
+        return 'blue';
+      case AgreementStatus.Delivered:
+        return 'orange';
+      case AgreementStatus.Accepted:
+        return 'yellow';
+      case AgreementStatus.Countered:
+        return 'turquoise';
+      case AgreementStatus.Completed:
+        return 'violet';
+      case AgreementStatus.Denied:
+        return 'red';
+    }
   }
 }

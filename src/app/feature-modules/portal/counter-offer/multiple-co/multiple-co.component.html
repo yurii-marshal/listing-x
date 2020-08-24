@@ -22,14 +22,16 @@
             </header>
             <br>
             <div class="form">
-              <div class="f-r">Date <input [disableControl]="isDisabled" formControlName="date_seller_counter_date" type="text" class="i-lr-2"></div>
+              <div class="f-r">
+                Date <input disabled [value]="documentForm?.get('date_seller_counter_date').value | date: 'dd/MM/yyyy'" type="text" class="i-lr-2">
+              </div>
               <div class="clearfix"></div>
               <div>
                 This is a counter offer to the: Purchase Agreement,
                 <input [disableControl]="isDisabled" formControlName="check_counter_type_other" type="checkbox"> Other
                 <input [disableControl]="isDisabled" formControlName="text_offer_type_other" type="text" class="i-lr-7"> (“Offer”),
                 <br> dated
-                <input [disableControl]="isDisabled" matInput [min]="datepickerMinDate" (click)="date_offer_dated.open()"
+                <input matInput [min]="datepickerMinDate" (click)="date_offer_dated.open()"
                        [matDatepicker]="date_offer_dated"
                        formControlName="date_offer_dated"
                        type="text"
@@ -38,9 +40,9 @@
                 , on property known as
                 <input [disableControl]="isDisabled" formControlName="text_property_address" type="text" class="i-lr-8">(“Property”),
                 <br> between &nbsp;
-                <input [disableControl]="isDisabled" formControlName="text_between_buyer" type="text" class="i-lr-11__5"> &nbsp; (“Buyer”) &nbsp;
+                <input formControlName="text_between_buyer" type="text" class="i-lr-11__5"> &nbsp; (“Buyer”) &nbsp;
                 &nbsp; and &nbsp;
-                <input [disableControl]="isDisabled" formControlName="text_between_seller" type="text" class="i-lr-12__45">&nbsp; (“Seller”).
+                <input formControlName="text_between_seller" type="text" class="i-lr-12__45">&nbsp; (“Seller”).
               </div>
               <div>
                 <div>

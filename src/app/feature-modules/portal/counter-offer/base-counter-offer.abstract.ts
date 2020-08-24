@@ -45,6 +45,12 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   signFieldElements: any[] = [];
   onDestroyed$: Subject<void> = new Subject<void>();
 
+  typeTextControls = [
+    'text_counter_offer_number',
+    'text_multiple_counter_offer_number',
+    'text_offer_type_other',
+  ];
+
   constructor(
     public route: ActivatedRoute,
     public router: Router,
@@ -94,7 +100,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
             this.snackbar.open('Counter Offer is already signed');
           }
 
-          if (counterOffer.status === 'completed') {
+          if (counterOffer.offerType as string === 'multiple_counter_offer' && counterOffer.status === 'completed') {
             this.setSignFields(this.finalSignFields);
           }
 
@@ -208,7 +214,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     signFields.map((fieldObj) => {
       if (this.counterOffer[fieldObj.role][fieldObj.index] && this.counterOffer[fieldObj.role][fieldObj.index].email === this.user.email) {
         this.documentForm.get(fieldObj.controlName).setValidators([Validators.required]);
-        this.documentForm.get(fieldObj.controlName).enable({emitEvent: false});
+        this.documentForm.get(fieldObj.controlName).enable({emitEvent: false, onlySelf: true});
       }
     });
   }
@@ -242,6 +248,12 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   disableSignedFields() {
     this.signFieldElements = Array.from(document.getElementsByClassName('sign-input'));
     this.signFieldElements.forEach(item => item.disabled = !!item.value);
+  }
+
+  coTypeChanged(val: string) {
+    this.typeTextControls.forEach((controlName: string) => {
+      this.documentForm.get(controlName).patchValue('');
+    });
   }
 
   ngOnDestroy(): void {

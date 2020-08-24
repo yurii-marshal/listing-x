@@ -11,7 +11,7 @@
           <div class="header">{{ offer.streetName }}, {{ offer.city }}, {{ offer.state }} {{ offer.zip }}</div>
           <div>
             <span class="status-label">STATUS: </span>
-            <span [ngClass]="getClassName(offer.status)" class="status">&nbsp;
+            <span [ngClass]="offerService.getClassName(offer.status)" class="status">&nbsp;
               {{ statusLabels[offer.status] }}
             </span>
           </div>

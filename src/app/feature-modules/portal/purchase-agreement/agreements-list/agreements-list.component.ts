@@ -41,6 +41,7 @@ export class AgreementsListComponent implements OnInit, AfterViewInit, OnDestroy
     [AgreementStatus.Started]: 'Started',
     [AgreementStatus.Delivered]: 'Delivered',
     [AgreementStatus.Accepted]: 'Accepted',
+    [AgreementStatus.Countered]: 'Countered',
     [AgreementStatus.Completed]: 'Completed',
     [AgreementStatus.Denied]: 'Denied',
   };
@@ -49,7 +50,7 @@ export class AgreementsListComponent implements OnInit, AfterViewInit, OnDestroy
   constructor(private router: Router,
               private route: ActivatedRoute,
               private transactionService: TransactionService,
-              private offerService: OfferService,
+              public offerService: OfferService,
               private authService: AuthService,
               private dialog: MatDialog) {
   }
@@ -107,6 +108,8 @@ export class AgreementsListComponent implements OnInit, AfterViewInit, OnDestroy
         return 'orange';
       case AgreementStatus.Accepted:
         return 'yellow';
+      case AgreementStatus.Countered:
+        return 'turquoise';
       case AgreementStatus.Completed:
         return 'violet';
       case AgreementStatus.Denied:
