@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { OfferService } from '../../services/offer.service';
 import { Offer } from '../../../../core-modules/models/offer';
 import { MatDialog, MatSnackBar } from '@angular/material';
@@ -21,7 +21,7 @@ import { SignatureDirective } from '../../../../shared-modules/directives/signat
   providers: [DatePipe]
 })
 export class StepTwoComponent implements OnInit, OnDestroy {
-  @ViewChildren('form') form;
+  @ViewChild('form', {static: true}) form: ElementRef;
   @ViewChildren(SignatureDirective) signatures: QueryList<SignatureDirective>;
 
   documentForm: FormGroup;
@@ -515,9 +515,9 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
         this.signFieldElements = Array.from(document.getElementsByClassName('sign-input'));
 
-        if (!this.offer.isSigned) {
-          this.checkCancellingSigns();
-        }
+        // if (!this.offer.isSigned) {
+        //   this.checkCancellingSigns();
+        // }
 
         this.disableSignFields();
 
@@ -563,6 +563,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
   continue() {
     this.documentForm.markAllAsTouched();
+    this.form.nativeElement.blur();
 
     if (this.scrollToFirstInvalidField()) {
       this.snackbar.open('Please, fill all mandatory fields');
@@ -572,7 +573,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   closeOffer() {
-    this.form.blur();
+    this.form.nativeElement.blur();
     this.router.navigateByUrl('/portal/purchase-agreements/all');
   }
 
@@ -826,8 +827,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
   private moveToNextPage() {
     if (this.route.snapshot.routeConfig.path === 'step-two') {
-      this.form.blur();
-
       this.offerService.updateOfferProgress({progress: 3}, this.offerId)
         .pipe(takeUntil(this.onDestroyed$))
         .subscribe(() => {
