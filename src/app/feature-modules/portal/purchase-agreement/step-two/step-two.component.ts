@@ -515,9 +515,13 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
         this.signFieldElements = Array.from(document.getElementsByClassName('sign-input'));
 
-        // if (!this.offer.isSigned) {
-        //   this.checkCancellingSigns();
-        // }
+        if (!this.offer.isSigned) {
+          this.signatures.toArray().forEach((sd: SignatureDirective) => {
+            if (sd.signatureControl.enabled && !sd.signatureControl.value) {
+              sd.renderSignButton();
+            }
+          });
+        }
 
         this.disableSignFields();
 
@@ -563,7 +567,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
   continue() {
     this.documentForm.markAllAsTouched();
-    this.form.nativeElement.blur();
 
     if (this.scrollToFirstInvalidField()) {
       this.snackbar.open('Please, fill all mandatory fields');
@@ -573,7 +576,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   closeOffer() {
-    this.form.nativeElement.blur();
     this.router.navigateByUrl('/portal/purchase-agreements/all');
   }
 
