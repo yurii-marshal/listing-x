@@ -103,6 +103,11 @@ export class OfferService extends BaseDataService<Offer> {
     return super.fetchCalendarData(url, start, end);
   }
 
+  documentOpenedEvent(id: number): Observable<any> {
+    const url = `${ApiEndpoint.Offer}${id}/pdf`;
+    return this.http.post(url, null);
+  }
+
   getClassName(status: AgreementStatus): string {
     switch (status) {
       case AgreementStatus.Started:

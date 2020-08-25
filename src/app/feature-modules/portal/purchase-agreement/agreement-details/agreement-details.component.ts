@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { forkJoin, Observable, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { FormControl, Validators } from '@angular/forms';
 import { AddendumData, Document, GeneratedDocument } from '../../../../core-modules/models/document';
 import { AuthService } from '../../../../core-modules/core-services/auth.service';
@@ -25,7 +25,6 @@ import { CounterOfferType } from 'src/app/core-modules/models/counter-offer-type
 })
 export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   offer: Offer;
-  counterOffers: CounterOffer[];
   calendarDataSource: CalendarEvent[];
   isOpenInviteUserOverlay: boolean;
   isResidentialAgreementCompleted: boolean = false;
@@ -34,7 +33,8 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   isSeller: boolean = false;
   pendingDocuments: Observable<GeneratedDocument[]>;
   completedDocuments: Observable<GeneratedDocument[]>;
-  transactionsFlow: boolean;
+
+  counterOffers: Observable<CounterOffer[]>;
 
   readonly statusLabels: { [key: string]: string } = {
     [AgreementStatus.All]: 'All agreements',
@@ -58,20 +58,17 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   ngOnInit() {
-    this.transactionsFlow = this.router.url.includes('transaction');
     const offerId: number = Number(this.route.snapshot.params.id);
 
-    forkJoin(
-      this.offerService.loadOne(offerId),
-      this.counterOfferService.getCounterOffersList(offerId)
-    )
+    this.offerService.loadOne(offerId)
       .pipe(
         takeUntil(this.onDestroyed$)
       )
-      .subscribe(([offer, counterOffers]: [Offer, CounterOffer[]]) => {
+      .subscribe((offer: Offer) => {
         this.offerLoaded(offer);
-        this.counterOffers = counterOffers;
+        this.counterOffers = this.counterOfferService.getCounterOffersList(offerId);
       });
+
     // this.offerService.loadCalendarByOffer(offerId)
     //   .subscribe(items => this.calendarDataSource = items);
   }
@@ -174,7 +171,7 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   triggerDownloadFile(doc: GeneratedDocument | Document) {
-    this.transactionService.documentOpenedEvent(doc.id).subscribe();
+    this.offerService.documentOpenedEvent(doc.id).subscribe();
 
     let {file, title} = doc;
 
@@ -214,6 +211,18 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
         docId: doc ? doc.id : null
       }
     });
+  }
+
+  rejectCO(id: number) {
+    this.counterOfferService.rejectCounterOffer(id)
+      .pipe(takeUntil(this.onDestroyed$))
+      .subscribe(() => {
+        this.router.navigateByUrl(`portal/purchase-agreements/${this.offer.id}/details`);
+      });
+  }
+
+  removeCO() {
+
   }
 
   ngOnDestroy(): void {
