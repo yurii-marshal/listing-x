@@ -28,7 +28,7 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
   calendarDataSource: CalendarEvent[];
 
   isOpenInviteUserOverlay: boolean;
-  isResidentialAgreementCompleted: boolean = false;
+  isResidentialAgreementCompleted: boolean = true;
 
   userEmailControl: FormControl = new FormControl(null, [Validators.required, Validators.email]);
 
@@ -37,7 +37,6 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
 
   pendingDocuments: Observable<GeneratedDocument[]>;
   completedDocuments: Observable<GeneratedDocument[]>;
-  purchaseAgreement: Observable<GeneratedDocument[]>;
 
   transactionsFlow: boolean;
 
@@ -90,7 +89,8 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
       createdAt: transaction.createdAt,
       lastLogs: transaction.lastLogs,
       transactionDocs: transaction.documents,
-      status: transaction.status
+      status: transaction.status,
+      purchaseAgreements: transaction.purchaseAgreements,
     };
 
     const {agentBuyers, agentSellers, sellers} = transaction.offer;
@@ -98,7 +98,7 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
     this.isSeller = [...agentSellers, ...sellers].some(({email}) => email === this.authService.currentUser.email);
 
     const residentialAgreement = transaction.documents.find(doc => doc.documentType === GeneratedDocumentType.Contract);
-    this.isResidentialAgreementCompleted = residentialAgreement && residentialAgreement.status === DocumentStatus.Completed;
+    // this.isResidentialAgreementCompleted = residentialAgreement && residentialAgreement.status === DocumentStatus.Completed;
 
     this.filterDocumentList(transaction.documents);
   }
@@ -219,15 +219,12 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
 
     const completedDocsStatuses = [DocumentStatus.Completed];
 
-    // this.pendingDocuments = of(documents).pipe(
-    //   map((docs) => docs.filter(doc => !completedDocsStatuses.includes(doc.status)))
-    // );
-    // this.completedDocuments = of(documents).pipe(
-    //   map((docs) => docs.filter(doc => completedDocsStatuses.includes(doc.status)))
-    // );
-    // this.purchaseAgreement = of(documents).pipe(
-    //   map((docs) => docs.filter(doc => completedDocsStatuses.includes(doc.status)))
-    // );
+    this.pendingDocuments = of(documents).pipe(
+      map((docs) => docs.filter(doc => !completedDocsStatuses.includes(doc.status)))
+    );
+    this.completedDocuments = of(documents).pipe(
+      map((docs) => docs.filter(doc => completedDocsStatuses.includes(doc.status)))
+    );
   }
 
   openSPQDialog(doc: GeneratedDocument, signAfterFill: boolean = false): void {

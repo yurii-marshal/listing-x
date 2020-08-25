@@ -113,12 +113,12 @@
         <th mat-header-cell *matHeaderCellDef>Last Events</th>
         <td mat-cell *matCellDef="let element">
           <div *ngFor="let item of element.lastLogs; let i = index">
-            <div *ngIf="i < 2" [class.small-text]="element?.lastLogs?.length > 2">
+            <div *ngIf="i < 2" [class.small-text]="element.lastLogs?.length > 2">
               <div style="opacity: 0.85">{{ item.createdAt | date: 'short' }}</div>
               <div class="truncated" style="width: 100%">{{ item.title }}</div>
             </div>
           </div>
-          <div *ngIf="element?.lastLogs?.length > 2" style="font-style: italic; opacity: .75;"> and {{ element?.lastLogs?.length - 2 }} more ...</div>
+          <div *ngIf="element.lastLogs?.length > 2" style="font-style: italic; opacity: .75;"> and {{ element.lastLogs?.length - 2 }} more ...</div>
         </td>
       </ng-container>
 

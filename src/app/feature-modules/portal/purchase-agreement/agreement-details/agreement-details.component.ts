@@ -33,6 +33,7 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   isSeller: boolean = false;
   pendingDocuments: Observable<GeneratedDocument[]>;
   completedDocuments: Observable<GeneratedDocument[]>;
+  transactionsFlow: boolean;
 
   counterOffers: Observable<CounterOffer[]>;
 
@@ -58,6 +59,7 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   ngOnInit() {
+    this.transactionsFlow = this.router.url.includes('transaction');
     const offerId: number = Number(this.route.snapshot.params.id);
 
     this.offerService.loadOne(offerId)
