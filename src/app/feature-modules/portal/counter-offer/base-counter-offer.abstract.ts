@@ -40,6 +40,8 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   signFields = [];
   finalSignFields = [];
 
+  isMCOFinalSign: boolean;
+
   okButtonText: string;
 
   signFieldElements: any[] = [];
@@ -94,13 +96,15 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
           this.isDisabled = this.counterOffer.pitcher !== this.user.id;
 
+          this.isMCOFinalSign = counterOffer.offerType as string === 'multiple_counter_offer' && counterOffer.status === 'completed';
+
           this.okButtonText = this.counterOffer.isSigned ? 'Back to the offer' : 'Sign';
 
           if (counterOffer.isSigned) {
             this.snackbar.open('Counter Offer is already signed');
           }
 
-          if (counterOffer.offerType as string === 'multiple_counter_offer' && counterOffer.status === 'completed') {
+          if (this.isMCOFinalSign) {
             this.setSignFields(this.finalSignFields);
           }
 
@@ -183,7 +187,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
     if (!this.counterOffer.isSigned) {
       if (this.documentForm.valid) {
-        this.counterOfferService.signCounterOffer(this.id)
+        this.counterOfferService.signCounterOffer(this.id, this.isMCOFinalSign ? 'final_approval' : 'sign')
           .pipe(takeUntil(this.onDestroyed$))
           .subscribe(() => {
             this.counterOffer.isSigned = true;

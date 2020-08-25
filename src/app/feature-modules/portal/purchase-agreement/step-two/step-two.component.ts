@@ -572,26 +572,17 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   closeOffer() {
+    this.form.blur();
     this.router.navigateByUrl('/portal/purchase-agreements/all');
   }
 
   switchDaysAndDate(value: string, daysControlName: string, dateControlName: string, emit = true) {
     switch (value) {
       case 'date':
-        this.documentForm.get(dateControlName).enable({emitEvent: false});
-        this.documentForm.get(dateControlName).markAsDirty();
-        this.documentForm.get(dateControlName).setValidators([Validators.required]);
-        this.documentForm.get(daysControlName).disable({emitEvent: false});
-        this.documentForm.get(daysControlName).patchValue('', {emitEvent: emit});
-        this.documentForm.get(daysControlName).clearValidators();
+        this.setRelatedFields(dateControlName, daysControlName, emit);
         break;
       case 'days':
-        this.documentForm.get(daysControlName).enable({emitEvent: false});
-        this.documentForm.get(daysControlName).markAsDirty();
-        this.documentForm.get(daysControlName).setValidators([Validators.required]);
-        this.documentForm.get(dateControlName).disable({emitEvent: false});
-        this.documentForm.get(dateControlName).patchValue('', {emitEvent: emit});
-        this.documentForm.get(dateControlName).clearValidators();
+        this.setRelatedFields(daysControlName, dateControlName, emit);
         break;
     }
   }
@@ -600,6 +591,16 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     isSigned
       ? this.scrollToEmptySignField()
       : this.scrollToFirstInvalidField();
+  }
+
+  private setRelatedFields(enable: string, disable: string, emit: boolean) {
+    this.documentForm.get(enable).setValidators([Validators.required]);
+    this.documentForm.get(enable).enable({emitEvent: false});
+    this.documentForm.get(enable).markAsDirty();
+
+    this.documentForm.get(disable).clearValidators();
+    this.documentForm.get(disable).disable({emitEvent: false});
+    this.documentForm.get(disable).patchValue('', {emitEvent: emit});
   }
 
   private checkCancellingSigns() {
@@ -825,6 +826,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
   private moveToNextPage() {
     if (this.route.snapshot.routeConfig.path === 'step-two') {
+      this.form.blur();
+
       this.offerService.updateOfferProgress({progress: 3}, this.offerId)
         .pipe(takeUntil(this.onDestroyed$))
         .subscribe(() => {
