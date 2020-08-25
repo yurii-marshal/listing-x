@@ -13,6 +13,7 @@ import * as _ from 'lodash';
 import { User } from '../../../auth/models';
 import { AuthService } from '../../../../core-modules/core-services/auth.service';
 import { SignatureDirective } from '../../../../shared-modules/directives/signature.directive';
+import { AgreementStatus } from '../../../../core-modules/models/agreement';
 
 @Component({
   selector: 'app-step-two',
@@ -516,11 +517,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         this.signFieldElements = Array.from(document.getElementsByClassName('sign-input'));
 
         if (!this.offer.isSigned) {
-          this.signatures.toArray().forEach((sd: SignatureDirective) => {
-            if (sd.signatureControl.enabled && !sd.signatureControl.value) {
-              sd.renderSignButton();
-            }
-          });
+          this.activateSignButtons();
         }
 
         this.disableSignFields();
@@ -596,6 +593,14 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       : this.scrollToFirstInvalidField();
   }
 
+  private activateSignButtons() {
+    this.signatures.toArray().forEach((sd: SignatureDirective) => {
+      if (sd.signatureControl.enabled && !sd.signatureControl.value) {
+        sd.renderSignButton();
+      }
+    });
+  }
+
   private setRelatedFields(enable: string, disable: string, emit: boolean) {
     this.documentForm.get(enable).setValidators([Validators.required]);
     this.documentForm.get(enable).enable({emitEvent: false});
@@ -606,25 +611,25 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.documentForm.get(disable).patchValue('', {emitEvent: emit});
   }
 
-  private checkCancellingSigns() {
-    if (!this.scrollToEmptySignField()) {
-      this.signatures.toArray().forEach((sd: SignatureDirective) => {
-        sd.resetData();
-
-        if (sd.signatureControl.enabled) {
-          sd.renderSignButton();
-        }
-      });
-
-      this.scrollToEmptySignField();
-    } else {
-      this.signatures.toArray().forEach((sd: SignatureDirective) => {
-        if (sd.signatureControl.enabled && !sd.signatureControl.value) {
-          sd.renderSignButton();
-        }
-      });
-    }
-  }
+  // private checkCancellingSigns() {
+  //   if (!this.scrollToEmptySignField()) {
+  //     this.signatures.toArray().forEach((sd: SignatureDirective) => {
+  //       sd.resetData();
+  //
+  //       if (sd.signatureControl.enabled) {
+  //         sd.renderSignButton();
+  //       }
+  //     });
+  //
+  //     this.scrollToEmptySignField();
+  //   } else {
+  //     this.signatures.toArray().forEach((sd: SignatureDirective) => {
+  //       if (sd.signatureControl.enabled && !sd.signatureControl.value) {
+  //         sd.renderSignButton();
+  //       }
+  //     });
+  //   }
+  // }
 
   private scrollToFirstInvalidField(): boolean {
     for (const groupName of Object.keys(this.documentForm.controls)) {
@@ -725,7 +730,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     } else if (+controlValue) {
       controlValue = String(controlValue).replace(',', '');
     }
-    // show saving animation if it takes a time
+
     this.offerService.updateOfferDocumentField({offerId: this.offerId, page: groupIndex + 1}, {[controlName]: controlValue})
       .pipe(takeUntil(this.onDestroyed$))
       .subscribe(() => {
@@ -735,9 +740,43 @@ export class StepTwoComponent implements OnInit, OnDestroy {
           this.updateDownPaymentAmount();
         }
 
+        if (this.offer.isSigned) {
+          this.resetAgreement();
+        }
+
+        // TODO: fix sign two requests
         if (this.signFieldElements.every((el) => !!el.value) && !this.offer.isSigned) {
           this.finalSignAgreement();
         }
+      });
+  }
+
+  private resetAgreement() {
+    this.signatures.forEach((signature) => {
+      if (signature.isActiveSignRow) {
+        signature.resetData();
+      }
+    });
+
+    this.activateSignButtons();
+    this.disableSignFields();
+
+    this.offer.status = AgreementStatus.Started;
+    this.offer.isSigned = false;
+
+    this.snackbar.open('The document was changed. Please, resign.');
+  }
+
+  private finalSignAgreement() {
+    this.offerService.signOffer(this.offerId)
+      .pipe(takeUntil(this.onDestroyed$))
+      .subscribe(() => {
+        this.offer.isSigned = true;
+        this.snackbar.open('Offer is signed now');
+      }, () => {
+        this.offer.isSigned = false;
+        this.snackbar.open('Cannot sign the offer');
+        // this.router.navigate([`portal/purchase-agreements/${this.offerId}/details`]);
       });
   }
 
@@ -813,18 +852,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   // 3 - disable every field with class-marker
   private disableSignFields() {
     this.signFieldElements.forEach(item => item.disabled = true);
-  }
-
-  private finalSignAgreement() {
-    this.offer.isSigned = true;
-
-    this.offerService.signOffer(this.offerId)
-      .pipe(takeUntil(this.onDestroyed$))
-      .subscribe(() => {
-        this.snackbar.open('Offer is signed now');
-      }, () => {
-        this.router.navigate([`portal/purchase-agreements/${this.offerId}/details`]);
-      });
   }
 
   private moveToNextPage() {

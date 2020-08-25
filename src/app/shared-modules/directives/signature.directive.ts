@@ -22,6 +22,8 @@ export class SignatureDirective implements OnInit {
 
   @Output() fieldSigned: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+  isActiveSignRow: boolean;
+
   private signButtonEl: HTMLElement;
 
   constructor(
@@ -54,6 +56,7 @@ export class SignatureDirective implements OnInit {
     // 2 - set class-marker if a field is allowed for current user
     if (!this.signatureControl.disabled) {
       this.renderer.addClass(this.el.nativeElement, 'sign-input');
+      this.isActiveSignRow = true;
     }
   }
 
@@ -76,8 +79,6 @@ export class SignatureDirective implements OnInit {
   // }
 
   resetData() {
-    this.signatureControl.patchValue('', {emitEvent: false, onlySelf: true});
-
     if (this.withDateControl) {
       this.dateControl.patchValue('', {emitEvent: false, onlySelf: true});
     }
@@ -89,6 +90,9 @@ export class SignatureDirective implements OnInit {
     if (this.withAmpmControl) {
       this.ampmControl.patchValue('am', {emitEvent: false, onlySelf: true});
     }
+
+    this.signatureControl.enable({emitEvent: false, onlySelf: true});
+    this.signatureControl.patchValue('', {emitEvent: false, onlySelf: true});
   }
 
   renderSignButton() {
