@@ -33,8 +33,8 @@ export class CounterOfferService extends BaseDataService<CounterOffer> {
     return this.http.get(`/counter_offers/`, {params});
   }
 
-  signCounterOffer(coId: number): Observable<any> {
-    return this.http.post(`/counter_offers/${coId}/sign/`, {})
+  signCounterOffer(coId: number, type: 'sign' | 'final_approval'): Observable<any> {
+    return this.http.post(`/counter_offers/${coId}/${type}/`, {})
       .pipe(switchMap(() => super.loadOne(coId)));
   }
 
