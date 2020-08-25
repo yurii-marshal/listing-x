@@ -4,6 +4,7 @@ import { AgreementStatus } from './agreement';
 import { Log } from 'src/app/core-modules/models/log';
 import { TransactionStatus } from 'src/app/core-modules/models/transaction';
 import { CounterOffer } from './counter-offer';
+import { PurchaseAgreement } from 'src/app/core-modules/models/purchase-agreement';
 
 export interface OfferSummary extends Offer {
   documents: LinkedDocuments;
@@ -60,6 +61,7 @@ export interface Offer {
 
   lastLogs?: Log[];
   transactionDocs?: GeneratedDocument[];
+  purchaseAgreements: PurchaseAgreement;
 
   canCreateCounter: boolean;
   canCreateMultipleCounter: boolean;

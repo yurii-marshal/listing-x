@@ -157,7 +157,7 @@
 }
 
 .doc-item {
-  align-items: center;
+  align-items: flex-end;
   font-size: 13px;
   line-height: 16px;
   color: #444C5C;
@@ -169,7 +169,7 @@
 
   .doc-title {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     max-width: 260px;
     min-width: 260px;
 
@@ -185,7 +185,7 @@
   .doc-actions {
     display: flex;
     align-items: center;
-    min-width: 171px;
+    min-width: 125px;
     button {
       margin: 0 22px 0 17px;
     }
@@ -291,4 +291,8 @@
   .counter-offer-btn {
     margin-left: 15px;
   }
+}
+
+.delete-btn {
+  color: $red;
 }

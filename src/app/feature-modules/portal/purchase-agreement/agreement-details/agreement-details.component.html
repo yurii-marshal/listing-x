@@ -21,7 +21,7 @@
           <span
             *ngIf="offer.remainingDaysCloseEscrow">({{ offer.remainingDaysCloseEscrow }} days until  close escrow)</span>
         </div>
-        <div class="control-bar" *ngIf="isAgent">
+        <div class="control-bar" *ngIf="isAgent && !transactionsFlow">
           <div class="u-flex-1">
             <button *ngIf="offer.allowEdit" mat-icon-button color="accent" routerLink="/portal/offer/{{ offer.id }}">
               <mat-icon fontSet="fa" fontIcon="fa-edit" class="icon"></mat-icon>
@@ -75,7 +75,7 @@
       </div>
       <div class="column-layout">
         <div class="row-layout"><label class="header">last activity</label></div>
-        <div *ngIf="transactionsFlow" class="scroll-content">
+        <div class="scroll-content">
           <div class="row-layout" *ngFor="let item of offer.lastLogs">
             <label>{{ item.createdAt | date: 'short' }}</label>
             <span>{{ item.title }}</span>
@@ -136,6 +136,43 @@
       <div class="column-layout fullwidth">
         <div *ngIf="transactionsFlow" class="row-layout new-section"><label class="header">Purchase agreements</label></div>
 
+        <div *ngIf="transactionsFlow" class="row-layout doc-item"><label></label>
+          <!--           TODO: add dynamics -->
+          <div class="doc-title"><img src="assets/images/icons/pdf.svg" [title]="offer.purchaseAgreements.purchaseAgreement" height="20">
+            <!--            {{ offer.purchaseAgreements.purchaseAgreement.title }}.{{doc.extension}}-->
+            Purchase Agreement
+          </div>
+          <div class="doc-events">
+
+          </div>
+          <div class="doc-actions">Actions:
+
+          </div>
+        </div>
+
+        <ng-container *ngIf="transactionsFlow">
+          <div class="row-layout doc-item" *ngFor="let counterOffer of offer.purchaseAgreements.counterOffers; let i = index;">
+            <label></label>
+            <div class="doc-title"><img src="assets/images/icons/pdf.svg" [title]="counterOffer" height="20">
+              <!--            {{ counterOffer.title }}-->
+              Counter offer {{ i + 1 }}
+            </div>
+            <div class="doc-events">
+              <!--            <label>{{ doc.lastEvent?.createdAt | date: 'short' }}</label>-->
+              <!--            <span>{{ doc.lastEvent?.title }}</span>-->
+            </div>
+            <div class="doc-actions">Actions:
+
+              <!--            <span class="action-icon" (click)="triggerDownloadFile(doc)">-->
+              <!--              <ng-container *ngTemplateOutlet="viewIcon"></ng-container>-->
+              <!--            </span>-->
+              <!--            <span class="action-icon" (click)="triggerDownloadFile(doc)">-->
+              <!--              <ng-container *ngTemplateOutlet="downloadIcon"></ng-container>-->
+              <!--            </span>-->
+            </div>
+          </div>
+        </ng-container>
+
         <div class="row-layout new-section"><label class="header">Completed documents</label></div>
 
         <div class="row-layout doc-item" *ngFor="let doc of (completedDocuments | async); let i = index;">
@@ -147,7 +184,6 @@
             <label>{{ doc.lastEvent?.createdAt | date: 'short' }}</label>
             <span>{{ doc.lastEvent?.title }}</span>
           </div>
-          <div class="doc-status">Status: <strong [ngClass]="doc.status">{{doc.status}}</strong></div>
           <div class="doc-actions">Actions:
 
             <span class="action-icon" (click)="triggerDownloadFile(doc)">
@@ -235,13 +271,14 @@
               <button mat-menu-item (click)="triggerDownloadFile(doc)">View</button>
               <button mat-menu-item (click)="triggerDownloadFile(doc)">Download</button>
               <button mat-menu-item disabled>Deny</button>
+              <button mat-menu-item disabled class="delete-btn">Delete</button>
             </mat-menu>
           </div>
         </div>
 
         <div class="row-layout" *ngIf="!transactionsFlow"><label>Counter offers</label>
           <div class="doc-preview">
-            <img *ngFor="let counterOffer of counterOffers"
+            <img *ngFor="let counterOffer of (counterOffers | async)"
                  src="assets/images/icons/pdf.svg"
                  [title]="counterOffer.id"
                  (click)="openCounterOffer(counterOffer)"
