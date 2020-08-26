@@ -933,11 +933,11 @@
                     <!--currencyMask-->
                     <!--[options]="currencyMaskOptions"-->
                     <input formControlName="text_offer_price_digits"
-
+                           currencyMask
+                           [options]="currencyMaskOptions"
                            appNumberToWords
                            [numToWordsForm]="documentForm"
                            [recipientControlName]="'page_5.text_offer_price_text'"
-                           (input)="updateDownPaymentAmount()"
                            type="text" class="i-lr-3">.
                   </div>
 
@@ -1102,7 +1102,6 @@
                   <!--currencyMask-->
                   <!--[options]="currencyMaskOptions"-->
                   $ <input formControlName="text_finance_terms_amount"
-                           (input)="updateDownPaymentAmount()"
                            type="text">
                 </div>
 
@@ -1129,7 +1128,6 @@
                   <!--currencyMask-->
                   <!--[options]="currencyMaskOptions"-->
                   $ <input formControlName="text_finance_increased_deposit_amount"
-                           (input)="updateDownPaymentAmount()"
                            type="text">
                 </div>
 
@@ -1235,7 +1233,6 @@
                   <!--currencyMask-->
                   <!--[options]="currencyMaskOptions"-->
                   $ <input formControlName="text_finance_first_loan_amount"
-                           (input)="updateDownPaymentAmount()"
                            type="text">
                 </div>
 
@@ -1243,7 +1240,6 @@
                   <!--currencyMask-->
                   <!--[options]="currencyMaskOptions"-->
                   $ <input formControlName="text_finance_second_loan_amount"
-                           (input)="updateDownPaymentAmount()"
                            type="text">
                 </div>
 
@@ -4512,7 +4508,7 @@
       <div class="offer-information u-flex u-flex-direction--column u-flex-justify--start u-flex-align-items--start"
            *ngIf="offerService.isSideBarOpen">
 
-        <div class="agreement-switcher u-flex u-flex-align-items--center u-flex-justify--space-between">
+        <div *ngIf="offer.userRole === 'agent_buyer'" class="agreement-switcher u-flex u-flex-align-items--center u-flex-justify--space-between">
           <h4 [class.edit]="!offer.isSigned && documentForm.valid">Edit</h4>
           <div class="switcher">
             <mat-slide-toggle

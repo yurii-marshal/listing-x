@@ -44,9 +44,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     max: 1000000000000,
     prefix: '',
     allowNegative: false,
-    allowZero: false,
     align: 'left',
-    nullable: false
   };
 
   datepickerMinDate: Date = new Date();
@@ -59,6 +57,14 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
   private pageBreakersOffsetTop: number[];
   private documentFormEl: EventTarget;
+
+  private downPaymentAmountPredicates: string[] = [
+    'text_offer_price_digits',
+    'text_finance_terms_amount',
+    'text_finance_increased_deposit_amount',
+    'text_finance_first_loan_amount',
+    'text_finance_second_loan_amount',
+  ];
 
   constructor(
     public offerService: OfferService,
@@ -768,6 +774,10 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.onDestroyed$))
       .subscribe(() => {
         this.updatePageProgress(this.documentForm.getRawValue(), this.currentPage);
+
+        if (_.includes(this.downPaymentAmountPredicates, controlName)) {
+          this.updateDownPaymentAmount();
+        }
 
         if (this.offer.isSigned) {
           this.resetAgreement();
