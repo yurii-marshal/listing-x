@@ -10,6 +10,8 @@ export interface Transaction {
   lastLogs: Log[];
   offer: OfferSummary;
   documents: GeneratedDocument[];
+  completedDocuments: GeneratedDocument[];
+  pendingDocuments: GeneratedDocument[];
   purchaseAgreements: PurchaseAgreement;
   allowEdit: boolean;
   allowDelete: boolean;

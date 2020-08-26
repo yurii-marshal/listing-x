@@ -4,11 +4,10 @@ import { TransactionService } from '../services/transaction.service';
 import { Transaction, TransactionStatus } from '../../../core-modules/models/transaction';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
-import { flatMap, map, takeUntil } from 'rxjs/operators';
+import { flatMap, takeUntil } from 'rxjs/operators';
 import { AddendumData, Document, GeneratedDocument } from '../../../core-modules/models/document';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
-import { Observable, of, Subject } from 'rxjs';
-import { DocumentStatus } from '../../../core-modules/enums/document-status';
+import { Subject } from 'rxjs';
 import { Offer, Person } from '../../../core-modules/models/offer';
 import { GeneratedDocumentType } from '../../../core-modules/enums/upload-document-type';
 import { MatDialog } from '@angular/material/dialog';
@@ -34,9 +33,6 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
 
   isAgent: boolean = false;
   isSeller: boolean = false;
-
-  pendingDocuments: Observable<GeneratedDocument[]>;
-  completedDocuments: Observable<GeneratedDocument[]>;
 
   transactionsFlow: boolean;
 
@@ -90,7 +86,9 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
       lastLogs: transaction.lastLogs,
       transactionDocs: transaction.documents,
       status: transaction.status,
-      purchaseAgreements: transaction.purchaseAgreements,
+      purchaseAgreement: transaction.purchaseAgreements,
+      completedDocuments: transaction.completedDocuments,
+      pendingDocuments: transaction.pendingDocuments
     };
 
     const {agentBuyers, agentSellers, sellers} = transaction.offer;
@@ -99,8 +97,6 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
 
     const residentialAgreement = transaction.documents.find(doc => doc.documentType === GeneratedDocumentType.Contract);
     // this.isResidentialAgreementCompleted = residentialAgreement && residentialAgreement.status === DocumentStatus.Completed;
-
-    this.filterDocumentList(transaction.documents);
   }
 
   offerLoaded(offer: Offer): void {
@@ -111,8 +107,6 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
 
     // const residentialAgreement = Array(offer.documents).find(doc => doc.documentType === GeneratedDocumentType.Contract);
     // this.isResidentialAgreementCompleted = residentialAgreement && residentialAgreement.status === DocumentStatus.Completed;
-
-    this.filterDocumentList(offer.documents);
   }
 
   onDelete() {
@@ -206,25 +200,6 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
     trigger.download = title;
     trigger.target = '_blank';
     trigger.click();
-  }
-
-  private filterDocumentList(documents): void {
-    /**
-     * contract status = STARTED
-     * if all buyers signed, contract status = DELIVERED
-     * when contract status is DELIVERED , sellers are allowed to sign.
-     * (in case are more than one seller and if not all sellers signed , contract status = ACCEPTED.
-     * after all sellers signed, contract status = COMPLETED
-     */
-
-    const completedDocsStatuses = [DocumentStatus.Completed];
-
-    this.pendingDocuments = of(documents).pipe(
-      map((docs) => docs.filter(doc => !completedDocsStatuses.includes(doc.status)))
-    );
-    this.completedDocuments = of(documents).pipe(
-      map((docs) => docs.filter(doc => completedDocsStatuses.includes(doc.status)))
-    );
   }
 
   openSPQDialog(doc: GeneratedDocument, signAfterFill: boolean = false): void {
