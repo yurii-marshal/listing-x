@@ -51,31 +51,17 @@
       padding-bottom: 8px;
     }
 
-    .progress-bar {
-      width: 100%;
-      height: 2px;
-      position: relative;
-      background: rgba(176, 183, 189, 0.4);
-      border-radius: 2px;
-      margin: 10px 0 30px;
-
-      .progress-line {
-        position: absolute;
-        height: 2px;
-        left: 0;
-        border-radius: 2px;
-        background: #66AD58;
-      }
-
-    }
-
     .continue-btn {
-      background: #66AD58;
+      background: $green;
       border-radius: 4px;
       width: 50px;
       min-width: 50px;
       height: 50px;
       display: flex;
+
+      &.sign {
+        background: $violet;
+      }
 
       img {
         display: inline-block;

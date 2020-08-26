@@ -18,6 +18,8 @@ export class OfferService extends BaseDataService<Offer> {
   public currentOffer: Offer;
   public changedOfferModel: Offer;
 
+  public isSideBarOpen: boolean = false;
+
   constructor(protected injector: Injector, private router: Router) {
     super(injector, ApiEndpoint.Offer);
   }

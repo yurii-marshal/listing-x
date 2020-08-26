@@ -1,3 +1,5 @@
+@import "~src/assets/scss/theming";
+
 .progress-bar {
   width: 100%;
   height: 2px;
@@ -11,7 +13,11 @@
     height: 2px;
     left: 0;
     border-radius: 2px;
-    background: #66AD58;
+    background: $green;
+
+    &.sign {
+      background: $violet;
+    }
   }
 }
 
@@ -23,7 +29,7 @@
   letter-spacing: 0.25px;
   display: inline;
 
-  color: #444C5C;
+  color: $primary-text;
 }
 
 

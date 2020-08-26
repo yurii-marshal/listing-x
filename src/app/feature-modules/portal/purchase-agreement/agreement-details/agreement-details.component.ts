@@ -127,7 +127,7 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     });
   }
 
-  goToESign(doc: GeneratedDocument): void {
+  goToESign(doc?: GeneratedDocument): void {
     // const url = {
     //   [GeneratedDocumentType.Contract]: '/e-sign',
     //   [GeneratedDocumentType.Spq]: '/e-sign/spq',
@@ -142,11 +142,13 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     // this.router.navigate([url, doc.id]);
     // this.transactionService.lockOffer(this.offer.id)
     //   .subscribe(() => this.router.navigate(['/e-sign', this.offer.id]));
-    this.router.navigateByUrl(`portal/purchase-agreements/${this.offer.id}/sign`);
+    this.router.navigateByUrl(`portal/purchase-agreements/${this.offer.id}/${this.offer.isSigned ? 'step-two' : 'sign'}`);
   }
 
   openCounterOffer(counterOffer: CounterOffer) {
-    this.router.navigateByUrl(`portal/offer/${this.offer.id}/counter-offers/${counterOffer.id}/${CounterOfferType[counterOffer.offerType]}`);
+    this.router.navigateByUrl(
+      `portal/offer/${this.offer.id}/counter-offers/${counterOffer.id}/${CounterOfferType[counterOffer.offerType]}`
+    );
   }
 
   createCounterOffer(type: CounterOfferType) {

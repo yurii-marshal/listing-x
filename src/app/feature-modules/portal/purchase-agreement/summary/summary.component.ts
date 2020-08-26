@@ -41,8 +41,10 @@ export class SummaryComponent implements OnInit, OnDestroy {
   }
 
   saveOffer() {
-    this.router.navigateByUrl(`/portal`);
-    // this.router.navigateByUrl(`/portal/purchase-agreements/${this.offer.id}/details`);
+    this.offer.isSigned
+      ? this.router.navigateByUrl(`/portal/purchase-agreements/${this.offer.id}/details`)
+      : this.router.navigateByUrl(`/portal/purchase-agreements/${this.offer.id}/sign`);
+
     // this.offerService.update(this.offerSummary)
     //   .pipe(takeUntil(this.onDestroyed$))
     //   .subscribe(() => {
