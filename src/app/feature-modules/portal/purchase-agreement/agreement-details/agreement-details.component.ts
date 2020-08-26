@@ -1,12 +1,11 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { FormControl, Validators } from '@angular/forms';
 import { AddendumData, Document, GeneratedDocument } from '../../../../core-modules/models/document';
 import { AuthService } from '../../../../core-modules/core-services/auth.service';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { flatMap, takeUntil } from 'rxjs/operators';
-import { DocumentStatus } from '../../../../core-modules/enums/document-status';
 import { Offer, Person } from '../../../../core-modules/models/offer';
 import { SpqDialogComponent } from '../../dialogs/spq-dialog/spq-dialog.component';
 import { AddendumDialogComponent } from '../../dialogs/addendum-dialog/addendum-dialog.component';
@@ -31,11 +30,7 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   userEmailControl: FormControl = new FormControl(null, [Validators.required, Validators.email]);
   isAgent: boolean = this.authService.currentUser.accountType === 'agent';
   isSeller: boolean = false;
-  pendingDocuments: Observable<GeneratedDocument[]>;
-  completedDocuments: Observable<GeneratedDocument[]>;
   transactionsFlow: boolean;
-
-  counterOffers: Observable<CounterOffer[]>;
 
   readonly statusLabels: { [key: string]: string } = {
     [AgreementStatus.All]: 'All agreements',
@@ -66,10 +61,7 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
       .pipe(
         takeUntil(this.onDestroyed$)
       )
-      .subscribe((offer: Offer) => {
-        this.offerLoaded(offer);
-        this.counterOffers = this.counterOfferService.getCounterOffersList(offerId);
-      });
+      .subscribe((offer: Offer) => this.offerLoaded(offer));
 
     // this.offerService.loadCalendarByOffer(offerId)
     //   .subscribe(items => this.calendarDataSource = items);
@@ -93,8 +85,6 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
 
     // const residentialAgreement = Array(offer.documents).find(doc => doc.documentType === GeneratedDocumentType.Contract);
     // this.isResidentialAgreementCompleted = residentialAgreement && residentialAgreement.status === DocumentStatus.Completed;
-
-    this.filterDocumentList(offer.documents);
   }
 
   onDelete() {
@@ -146,7 +136,9 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   openCounterOffer(counterOffer: CounterOffer) {
-    this.router.navigateByUrl(`portal/offer/${this.offer.id}/counter-offers/${counterOffer.id}/${CounterOfferType[counterOffer.offerType]}`);
+    this.router.navigateByUrl(
+      `portal/offer/${this.offer.id}/counter-offers/${counterOffer.id}/${CounterOfferType[counterOffer.offerType]}`
+    );
   }
 
   createCounterOffer(type: CounterOfferType) {
@@ -230,24 +222,5 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   ngOnDestroy(): void {
     this.onDestroyed$.next();
     this.onDestroyed$.complete();
-  }
-
-  private filterDocumentList(documents): void {
-    /**
-     * contract status = STARTED
-     * if all buyers signed, contract status = DELIVERED
-     * when contract status is DELIVERED , sellers are allowed to sign.
-     * (in case are more than one seller and if not all sellers signed , contract status = ACCEPTED.
-     * after all sellers signed, contract status = COMPLETED
-     */
-
-    const completedDocsStatuses = [DocumentStatus.Completed];
-
-    // this.pendingDocuments = of(documents).pipe(
-    //   map((docs) => docs.filter(doc => !completedDocsStatuses.includes(doc.status)))
-    // );
-    // this.completedDocuments = of(documents).pipe(
-    //   map((docs) => docs.filter(doc => completedDocsStatuses.includes(doc.status)))
-    // );
   }
 }

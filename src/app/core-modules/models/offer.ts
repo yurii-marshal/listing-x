@@ -61,7 +61,9 @@ export interface Offer {
 
   lastLogs?: Log[];
   transactionDocs?: GeneratedDocument[];
-  purchaseAgreements: PurchaseAgreement;
+  completedDocuments: GeneratedDocument[];
+  pendingDocuments: GeneratedDocument[];
+  purchaseAgreement: PurchaseAgreement;
 
   canCreateCounter: boolean;
   canCreateMultipleCounter: boolean;
