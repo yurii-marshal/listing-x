@@ -10,10 +10,10 @@ import {
   KeyValueDiffers,
   Input,
   OnInit,
-  Optional
+  Optional,
 } from '@angular/core';
 
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { CurrencyMaskConfig, CURRENCY_MASK_CONFIG, CurrencyMaskInputMode } from './currency-mask.config';
 import { InputHandler } from './input.handler';
 
@@ -23,9 +23,15 @@ export const CURRENCYMASKDIRECTIVE_VALUE_ACCESSOR: any = {
   multi: true,
 };
 
+export const VALIDATOR_PROVIDER: any = {
+  provide: NG_VALIDATORS,
+  useExisting: forwardRef(() => CurrencyMaskDirective),
+  multi: true
+};
+
 @Directive({
   selector: '[currencyMask]',
-  providers: [CURRENCYMASKDIRECTIVE_VALUE_ACCESSOR]
+  providers: [CURRENCYMASKDIRECTIVE_VALUE_ACCESSOR, VALIDATOR_PROVIDER]
 })
 export class CurrencyMaskDirective implements AfterViewInit, ControlValueAccessor, DoCheck, OnInit {
 
@@ -43,7 +49,7 @@ export class CurrencyMaskDirective implements AfterViewInit, ControlValueAccesso
     prefix: '$ ',
     suffix: '',
     thousands: ',',
-    nullable: false,
+    nullable: true,
     inputMode: CurrencyMaskInputMode.FINANCIAL
   };
 
@@ -141,5 +147,13 @@ export class CurrencyMaskDirective implements AfterViewInit, ControlValueAccesso
 
   writeValue(value: number): void {
     this.inputHandler.setValue(value);
+  }
+
+  validate({ value }: FormControl) {
+    console.log(value);
+    const isNotValid = this.options.nullable === true && isNaN(value);
+    return isNotValid && {
+      invalid: true
+    };
   }
 }

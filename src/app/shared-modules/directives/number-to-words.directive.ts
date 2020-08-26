@@ -290,7 +290,7 @@ export class NumberToWordsDirective implements OnInit, OnDestroy {
   private getInWords(num: any): string {
     this.previousValue = this.currentValue.slice();
     num = num.replace(/,/g, '');
-    return num ? (+num ? this.stringify(num) : 'NOT A NUMBER') : '';
+    return num ? ((Number(num) || Number(num) === 0) ? this.stringify(num) : 'NOT A NUMBER') : '';
   }
 
   private getAsNumber(str: string): number | string {

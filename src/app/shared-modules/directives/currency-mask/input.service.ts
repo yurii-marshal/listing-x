@@ -228,6 +228,7 @@ export class InputService {
   removeNumber(keyCode: number): void {
     const {decimal, thousands, prefix, suffix, inputMode} = this.options;
 
+    console.log(this.value);
     if (this.isNullable() && this.value === 0) {
       this.rawValue = null;
       return;
