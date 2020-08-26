@@ -82,6 +82,9 @@ export class NumberToWordsDirective implements OnInit, OnDestroy {
     decimal: '.'
   };
 
+  private currentValue = '';
+  private previousValue = '';
+
   constructor(private el: ElementRef) {
     Object.keys(this.NUMBER_MAP).forEach((num) => {
       this.WORD_MAP[this.NUMBER_MAP[num]] = isNaN(+num) ? num : +num;
@@ -106,14 +109,19 @@ export class NumberToWordsDirective implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    fromEvent(this.el.nativeElement, 'input')
+    fromEvent(this.el.nativeElement, 'blur')
       .pipe(
         takeUntil(this.onDestroyed$),
         debounceTime(300),
       )
       .subscribe(({target}) => {
-        const converted = this.toString ? this.getInWords(target.value) : this.getAsNumber(target.value);
-        this.numToWordsForm.get(this.recipientControlName).patchValue(converted);
+        this.currentValue = this.toString
+          ? this.getInWords(target.value)
+          : this.getAsNumber(target.value).toString();
+
+        if (this.previousValue !== this.currentValue) {
+          this.numToWordsForm.get(this.recipientControlName).patchValue(this.currentValue);
+        }
       });
   }
 
@@ -280,10 +288,13 @@ export class NumberToWordsDirective implements OnInit, OnDestroy {
   }
 
   private getInWords(num: any): string {
+    this.previousValue = this.currentValue.slice();
+    num = num.replace(/,/g, '');
     return num ? (+num ? this.stringify(num) : 'NOT A NUMBER') : '';
   }
 
   private getAsNumber(str: string): number | string {
+    this.previousValue = this.currentValue.toString().slice();
     return str ? (str.toString() ? this.parse(str) : NaN) : '';
   }
 }

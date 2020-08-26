@@ -53,11 +53,8 @@ export class SignatureDirective implements OnInit {
   }
 
   ngOnInit() {
-    // 2 - set class-marker if a field is allowed for current user
-    if (!this.signatureControl.disabled) {
-      this.renderer.addClass(this.el.nativeElement, 'sign-input');
-      this.isActiveSignRow = true;
-    }
+    // 2 - if a field is allowed for current user
+    this.isActiveSignRow = this.signatureControl.enabled;
   }
 
   // @HostListener('focus', ['$event']) focus() {
@@ -78,21 +75,21 @@ export class SignatureDirective implements OnInit {
   //   }
   // }
 
-  resetData() {
+  resetData(emit = false) {
     if (this.withDateControl) {
-      this.dateControl.patchValue('', {emitEvent: false, onlySelf: true});
+      this.dateControl.patchValue('', {emitEvent: emit, onlySelf: true});
     }
 
     if (this.withTimeControl) {
-      this.timeControl.patchValue('', {emitEvent: false, onlySelf: true});
+      this.timeControl.patchValue('', {emitEvent: emit, onlySelf: true});
     }
 
     if (this.withAmpmControl) {
-      this.ampmControl.patchValue('am', {emitEvent: false, onlySelf: true});
+      this.ampmControl.patchValue('am', {emitEvent: emit, onlySelf: true});
     }
 
     this.signatureControl.enable({emitEvent: false, onlySelf: true});
-    this.signatureControl.patchValue('', {emitEvent: false, onlySelf: true});
+    this.signatureControl.patchValue('', {emitEvent: emit, onlySelf: true});
   }
 
   renderSignButton() {
@@ -103,6 +100,10 @@ export class SignatureDirective implements OnInit {
     this.renderer.listen(this.signButtonEl, 'click', () => this.checkRootParent(this.signatureControl.parent));
 
     this.setButtonStyles();
+  }
+
+  scrollToButton() {
+    this.el.nativeElement.scrollIntoView({behavior: 'smooth', block: 'center'});
   }
 
   private removeSignButton() {

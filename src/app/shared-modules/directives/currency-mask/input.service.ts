@@ -109,7 +109,7 @@ export class InputService {
   }
 
   applyMask(isNumber: boolean, rawValue: string, disablePadAndTrim = false): string {
-    const {allowNegative, decimal, precision, prefix, suffix, thousands, min, max, inputMode} = this.options;
+    const {allowZero, allowNegative, decimal, precision, prefix, suffix, thousands, min, max, inputMode} = this.options;
 
     rawValue = isNumber ? (+rawValue).toFixed(precision) : rawValue;
     let onlyNumbers = rawValue.replace(this.ONLY_NUMBERS_REGEX, '');
@@ -145,13 +145,13 @@ export class InputService {
     const isNegative = rawValue.indexOf('-') > -1;
 
     // Ensure max is at least as large as min.
-    const realMax = (this.isNullOrUndefined(max) || this.isNullOrUndefined(min)) ? max : Math.max(max, min);
+    const currentMax = (this.isNullOrUndefined(max) || this.isNullOrUndefined(min)) ? max : Math.max(max, min);
 
     // Restrict to the min and max values.
     let newValue = integerValue + (decimalValue / 100);
     newValue = isNegative ? -newValue : newValue;
-    if (!this.isNullOrUndefined(realMax) && newValue > realMax) {
-      return this.applyMask(true, realMax + '');
+    if (!this.isNullOrUndefined(currentMax) && newValue > currentMax) {
+      return this.applyMask(true, currentMax + '');
     } else if (!this.isNullOrUndefined(min) && newValue < min) {
       return this.applyMask(true, min + '');
     }

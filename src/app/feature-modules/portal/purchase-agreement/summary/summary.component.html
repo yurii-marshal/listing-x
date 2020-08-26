@@ -116,7 +116,7 @@
     <button mat-flat-button appDebounceClick
             (debounceClick)="saveOffer()"
             class="save-btn">
-      DONE
+      {{offer?.isSigned ? 'DONE' : 'READY TO SIGN'}}
     </button>
 
   </div>

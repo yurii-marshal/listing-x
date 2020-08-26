@@ -3,6 +3,10 @@
     <div class="u-flex viewer">
       <div class="doc-container">
 
+        <div class="loading" *ngIf="isLoading">
+
+        </div>
+
         <form class="document-form" [formGroup]="documentForm" #form>
 
           <div class="page-breaker" id="page-0" style="display: none;">0</div>
@@ -926,11 +930,14 @@
                   <div class="item-pl-35">
                     <input formControlName="text_offer_price_text" type="text" class="i-lr-9">
                     Dollars $
+                    <!--currencyMask-->
+                    <!--[options]="currencyMaskOptions"-->
                     <input formControlName="text_offer_price_digits"
-                           currencyMask [options]="currencyMaskOptions"
+
                            appNumberToWords
                            [numToWordsForm]="documentForm"
                            [recipientControlName]="'page_5.text_offer_price_text'"
+                           (input)="updateDownPaymentAmount()"
                            type="text" class="i-lr-3">.
                   </div>
 
@@ -1092,8 +1099,10 @@
                 </div>
 
                 <div class="col-right">
+                  <!--currencyMask-->
+                  <!--[options]="currencyMaskOptions"-->
                   $ <input formControlName="text_finance_terms_amount"
-                           currencyMask [options]="currencyMaskOptions"
+                           (input)="updateDownPaymentAmount()"
                            type="text">
                 </div>
 
@@ -1117,7 +1126,11 @@
                 </div>
 
                 <div class="col-right">
-                  $ <input formControlName="text_finance_increased_deposit_amount" currencyMask [options]="currencyMaskOptions" type="text">
+                  <!--currencyMask-->
+                  <!--[options]="currencyMaskOptions"-->
+                  $ <input formControlName="text_finance_increased_deposit_amount"
+                           (input)="updateDownPaymentAmount()"
+                           type="text">
                 </div>
 
                 <div class="col-left ">
@@ -1219,11 +1232,19 @@
                 </div>
 
                 <div class="col-right item-d1">
-                  $ <input formControlName="text_finance_first_loan_amount" currencyMask [options]="currencyMaskOptions" type="text">
+                  <!--currencyMask-->
+                  <!--[options]="currencyMaskOptions"-->
+                  $ <input formControlName="text_finance_first_loan_amount"
+                           (input)="updateDownPaymentAmount()"
+                           type="text">
                 </div>
 
                 <div class="col-right item-d2">
-                  $ <input formControlName="text_finance_second_loan_amount" currencyMask [options]="currencyMaskOptions" type="text">
+                  <!--currencyMask-->
+                  <!--[options]="currencyMaskOptions"-->
+                  $ <input formControlName="text_finance_second_loan_amount"
+                           (input)="updateDownPaymentAmount()"
+                           type="text">
                 </div>
 
                 <div class="col-left">
@@ -1240,7 +1261,7 @@
                 </div>
 
                 <div class="col-right">
-                  $ <input formControlName="text_finance_down_payment_balance" currencyMask [options]="currencyMaskOptions" type="text">
+                  $ <input currencyMask [options]="currencyMaskOptions" formControlName="text_finance_down_payment_balance" type="text">
                 </div>
 
                 <div class="col-left text-justify">
@@ -1250,7 +1271,8 @@
                 </div>
 
                 <div class="col-right">
-                  $ <input [value]="documentForm.get('page_5.text_offer_price_digits').value | number: '1.2-2'" disabled="disabled" type="text">
+                  $ <input [value]="documentForm.get('page_5.text_offer_price_digits').value | number: '1.2-2'"
+                           disabled="disabled" type="text">
                 </div>
                 <div class="clearfix"></div>
               </div>
@@ -1769,7 +1791,9 @@
                     <input [value]="'buyer'" formControlName="radio_other_costs_shall_pay_cost" type="radio"> Buyer
                     <input [value]="'seller'" formControlName="radio_other_costs_shall_pay_cost" type="radio">
                     Seller shall pay for the cost, not to exceed $
-                    <input formControlName="text_other_costs_shall_pay_amount_cost" currencyMask [options]="currencyMaskOptions" type="text"
+                    <!--currencyMask-->
+                    <!--[options]="currencyMaskOptions"-->
+                    <input formControlName="text_other_costs_shall_pay_amount_cost" type="text"
                            class="i-lr-4">
                     , of a standard (or
                     <input formControlName="check_other_costs_warranty" type="checkbox">
@@ -4478,10 +4502,27 @@
       </div>
     </div>
 
-    <app-sidebar [(opened)]="isSideBarOpen" [isEnable]="isEnableContinue" (continue)="continue()">
+    <app-sidebar [(opened)]="offerService.isSideBarOpen"
+                 [isEnable]="documentForm.valid"
+                 (continue)="continue()"
+                 [okButtonText]="okButtonText"
+                 [isSignMode]="isSignMode"
+    >
 
       <div class="offer-information u-flex u-flex-direction--column u-flex-justify--start u-flex-align-items--start"
-           *ngIf="isSideBarOpen">
+           *ngIf="offerService.isSideBarOpen">
+
+        <div class="agreement-switcher u-flex u-flex-align-items--center u-flex-justify--space-between">
+          <h4 [class.edit]="!offer.isSigned && documentForm.valid">Edit</h4>
+          <div class="switcher">
+            <mat-slide-toggle
+              [checked]="isSignMode"
+              (change)="modeChanged($event.checked)"
+              [disabled]="offer.isSigned || documentForm.invalid"
+            ></mat-slide-toggle>
+          </div>
+          <h4 [class.sign]="!offer.isSigned && documentForm.valid">Sign</h4>
+        </div>
 
         <h4>Offer information</h4>
 
@@ -4530,8 +4571,9 @@
         </button>
       </div>
 
-      <div class="controls" *ngIf="isSideBarOpen">
+      <div class="controls" *ngIf="offerService.isSideBarOpen">
         <app-progress-bar
+          [isSignMode]="isSignMode"
           [pagesNum]="allPageCount"
           [completedPageCount]="completedPageCount"
           [currentPage]="currentPage"
