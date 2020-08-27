@@ -80,6 +80,7 @@ export class CurrencyMaskDirective implements AfterViewInit, ControlValueAccesso
 
   @HostListener('blur', ['$event'])
   handleBlur(event: any) {
+    this.inputHandler.setValue(Number(this.elementRef.nativeElement.value.replace(/,/g, '')));
     this.inputHandler.getOnModelTouched().apply(event);
   }
 
@@ -99,7 +100,7 @@ export class CurrencyMaskDirective implements AfterViewInit, ControlValueAccesso
 
   @HostListener('keydown', ['$event'])
   handleKeydown(event: any) {
-    if (!this.isChromeAndroid() && this.isReadOnly()) {
+    if (!this.isChromeAndroid() && !this.isReadOnly()) {
       this.inputHandler.handleKeydown(event);
     }
   }
@@ -150,7 +151,6 @@ export class CurrencyMaskDirective implements AfterViewInit, ControlValueAccesso
   }
 
   validate({ value }: FormControl) {
-    console.log(value);
     const isNotValid = (this.options.nullable === true && isNaN(value)) || (this.options.allowZero === false && Number(value) === 0);
     return isNotValid && {
       invalid: true

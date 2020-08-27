@@ -532,6 +532,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         );
 
         this.isLoading = false;
+        // this.scrollToFirstInvalidField();
       });
 
     this.initPageBreakers();
@@ -594,6 +595,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       .subscribe((data: any) => {
         if (data.saved) {
           this.snackbar.open('Offer is updated');
+          this.resetAgreement();
         }
         if (data.requestToSave) {
           this.openSaveOfferDialog(data.changedOfferModel);
@@ -831,8 +833,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       });
   }
 
-  // 2 - SignatureDirective
-
   private openSaveOfferDialog(changedOfferModel: Offer) {
     const dialogRef = this.dialog.open(SaveOfferDialogComponent, {
       width: '600px',
@@ -848,6 +848,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
               .pipe(takeUntil(this.onDestroyed$))
               .subscribe((model: Offer) => {
                 this.offer = model;
+                this.resetAgreement();
               });
           } else if (data.discard) {
             this.offer = this.offerService.currentOffer;

@@ -930,10 +930,9 @@
                   <div class="item-pl-35">
                     <input formControlName="text_offer_price_text" type="text" class="i-lr-9">
                     Dollars $
-                    <!--currencyMask-->
-                    <!--[options]="currencyMaskOptions"-->
                     <input formControlName="text_offer_price_digits"
-
+                           currencyMask
+                           [options]="currencyMaskOptions"
                            appNumberToWords
                            [numToWordsForm]="documentForm"
                            [recipientControlName]="'page_5.text_offer_price_text'"
@@ -1098,9 +1097,9 @@
                 </div>
 
                 <div class="col-right">
-                  <!--currencyMask-->
-                  <!--[options]="currencyMaskOptions"-->
                   $ <input formControlName="text_finance_terms_amount"
+                           currencyMask
+                           [options]="currencyMaskOptions"
                            type="text">
                 </div>
 
@@ -1124,9 +1123,9 @@
                 </div>
 
                 <div class="col-right">
-                  <!--currencyMask-->
-                  <!--[options]="currencyMaskOptions"-->
                   $ <input formControlName="text_finance_increased_deposit_amount"
+                           currencyMask
+                           [options]="currencyMaskOptions"
                            type="text">
                 </div>
 
@@ -1229,16 +1228,16 @@
                 </div>
 
                 <div class="col-right item-d1">
-                  <!--currencyMask-->
-                  <!--[options]="currencyMaskOptions"-->
                   $ <input formControlName="text_finance_first_loan_amount"
+                           currencyMask
+                           [options]="currencyMaskOptions"
                            type="text">
                 </div>
 
                 <div class="col-right item-d2">
-                  <!--currencyMask-->
-                  <!--[options]="currencyMaskOptions"-->
                   $ <input formControlName="text_finance_second_loan_amount"
+                           currencyMask
+                           [options]="currencyMaskOptions"
                            type="text">
                 </div>
 
@@ -1256,7 +1255,7 @@
                 </div>
 
                 <div class="col-right">
-                  $ <input currencyMask [options]="currencyMaskOptions" formControlName="text_finance_down_payment_balance" type="text">
+                  $ <input formControlName="text_finance_down_payment_balance" type="text">
                 </div>
 
                 <div class="col-left text-justify">
@@ -1786,9 +1785,9 @@
                     <input [value]="'buyer'" formControlName="radio_other_costs_shall_pay_cost" type="radio"> Buyer
                     <input [value]="'seller'" formControlName="radio_other_costs_shall_pay_cost" type="radio">
                     Seller shall pay for the cost, not to exceed $
-                    <!--currencyMask-->
-                    <!--[options]="currencyMaskOptions"-->
                     <input formControlName="text_other_costs_shall_pay_amount_cost" type="text"
+                           currencyMask
+                           [options]="currencyMaskOptions"
                            class="i-lr-4">
                     , of a standard (or
                     <input formControlName="check_other_costs_warranty" type="checkbox">

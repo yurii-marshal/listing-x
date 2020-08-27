@@ -153,6 +153,8 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
       takeUntil(this.onDestroyed$)
     ).subscribe(() => {
       this.offer.allowSign = false;
+      this.offer.canCreateCounter = false;
+      this.offer.canCreateMultipleCounter = false;
       this.snackbar.open(`Denied.`);
     });
   }

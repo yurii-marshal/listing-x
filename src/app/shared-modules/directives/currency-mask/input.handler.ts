@@ -3,8 +3,8 @@ import { InputService } from './input.service';
 export class InputHandler {
 
   private inputService: InputService;
-  private onModelChange: (value: number) => void;
-  private onModelTouched: (value: number) => void;
+  private onModelChange: (value: number | string) => void;
+  private onModelTouched: (value: number | string) => void;
 
   constructor(htmlInputElement: HTMLInputElement, options: any) {
     this.inputService = new InputService(htmlInputElement, options);
