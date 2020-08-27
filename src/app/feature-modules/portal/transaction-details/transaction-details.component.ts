@@ -202,6 +202,19 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
     trigger.click();
   }
 
+  openPendingDocument(doc: GeneratedDocument) {
+    switch (doc.documentType) {
+      case 'addendum':
+        this.openAddendumDialog(doc);
+        break;
+      case 'spq':
+        this.openSPQDialog(doc);
+        break;
+      default:
+        return;
+    }
+  }
+
   openSPQDialog(doc: GeneratedDocument, signAfterFill: boolean = false): void {
     this.dialog.open(SpqDialogComponent, {
       width: '600px',

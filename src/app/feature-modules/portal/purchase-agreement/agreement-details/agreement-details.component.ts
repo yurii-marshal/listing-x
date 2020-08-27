@@ -118,7 +118,7 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     });
   }
 
-  openPendingDocument(doc) {
+  openPendingDocument(doc: GeneratedDocument) {
     switch (doc.documentType) {
       case 'purchase_agreement':
         this.openSignOffer();
@@ -136,7 +136,7 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
 
   openCounterOffer(doc) {
     this.router.navigateByUrl(
-      `portal/offer/${this.offer.id}/counter-offers/${doc.counterOfferId}/${CounterOfferType[doc.documentType]}`
+      `portal/offer/${this.offer.id}/counter-offers/${doc.entityId}/${CounterOfferType[doc.documentType]}`
     );
   }
 
