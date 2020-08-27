@@ -86,7 +86,7 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
       lastLogs: transaction.lastLogs,
       transactionDocs: transaction.documents,
       status: transaction.status,
-      purchaseAgreement: transaction.purchaseAgreements,
+      purchaseAgreements: transaction.purchaseAgreements,
       completedDocuments: transaction.completedDocuments,
       pendingDocuments: transaction.pendingDocuments
     };
