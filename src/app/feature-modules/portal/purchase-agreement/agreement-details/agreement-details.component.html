@@ -105,7 +105,7 @@
           <button class="sign-btn"
                   mat-flat-button
                   [disabled]="!offer.allowSign || offer.status === 'denied'"
-                  (click)="goToESign()"
+                  (click)="openSignOffer()"
                   color="primary">
             {{offer.isSigned ? 'OPEN' : 'SIGN'}}
           </button>
@@ -257,9 +257,8 @@
               type="button"
               mat-flat-button
               color="primary"
-              (click)="goToESign(offer)"
-              [disabled]="!offer.allowSign"
-            >SIGN
+              (click)="openSignOffer()"
+            >{{offer.allowSign ? 'SIGN' : 'OPEN'}}
             </button>
             <svg class="menu-trigger" [matMenuTriggerFor]="menu" width="22" height="6" viewBox="0 0 22 6" fill="none"
                  xmlns="http://www.w3.org/2000/svg">
@@ -319,9 +318,8 @@
               type="button"
               mat-flat-button
               color="primary"
-              (click)="goToESign(doc)"
-              [disabled]="!doc.allowSign"
-            >SIGN
+              (click)="openPendingDocument(doc)"
+            >{{doc.allowSign ? 'SIGN' : 'OPEN'}}
             </button>
             <svg class="menu-trigger" [matMenuTriggerFor]="menu" width="22" height="6" viewBox="0 0 22 6" fill="none"
                  xmlns="http://www.w3.org/2000/svg">

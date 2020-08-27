@@ -25,13 +25,14 @@
               <div>
                 This is a counter offer to the:
                 <input [disableControl]="isDisabled" (change)="coTypeChanged($event)" formControlName="radio_counter_offer_type"
-                       value="purchase_agreement" type="radio"> Purchase
-                Agreement,
-                <input [disableControl]="isDisabled" (change)="coTypeChanged($event)" formControlName="radio_counter_offer_type" value="buyer_counter"
+                       value="purchase_agreement" type="radio"> Purchase Agreement,
+                <input [disableControl]="isDisabled" (change)="coTypeChanged($event)" formControlName="radio_counter_offer_type"
+                       value="buyer_counter"
                        type="radio"> Buyer Counter Offer No.
                 <input [disableControl]="isDisabled" formControlName="text_counter_offer_number" type="text"
                        class="i-lr__5"> , or
-                <input [disableControl]="isDisabled" (change)="coTypeChanged($event)" formControlName="radio_counter_offer_type" value="other"
+                <input [disableControl]="isDisabled" (change)="coTypeChanged($event)" formControlName="radio_counter_offer_type"
+                       value="other"
                        type="radio"> Other
                 <input [disableControl]="isDisabled" formControlName="text_offer_type_other" type="text"
                        class="i-lr-3__5"> (“Offer”), dated
@@ -308,20 +309,19 @@
     >
 
       <app-agreement-mode-switcher
-        [show]="isSideBarOpen"
+        [show]="isSideBarOpen && showSwitcher"
         [disabled]="counterOffer?.isSigned || documentForm?.invalid"
         [isChecked]="isSignMode"
         (changeMode)="modeChanged($event)"
       ></app-agreement-mode-switcher>
 
-      <app-counter-offer-information [counterOffer]="counterOffer"
-                                     [isSideBarOpen]="isSideBarOpen"></app-counter-offer-information>
+      <app-counter-offer-information [counterOffer]="counterOffer" [show]="isSideBarOpen"></app-counter-offer-information>
 
-      <app-counter-offer-controls [counterOffer]="counterOffer"
-                                  [visible]="visibleSidebarControls"></app-counter-offer-controls>
+      <app-counter-offer-controls [counterOffer]="counterOffer" [visible]="visibleSidebarControls"></app-counter-offer-controls>
 
       <div class="controls" *ngIf="isSideBarOpen">
         <app-progress-bar
+          [isSignMode]="isSignMode"
           [totalFieldsNum]="allFieldsCount"
           [completedFieldsCount]="completedFieldsCount"
         ></app-progress-bar>

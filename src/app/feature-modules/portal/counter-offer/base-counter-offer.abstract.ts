@@ -1,20 +1,23 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { OfferService } from '../services/offer.service';
-import { OnDestroy, OnInit, ViewChildren } from '@angular/core';
+import { ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { CounterOffer } from '../../../core-modules/models/counter-offer';
 import { CounterOfferService } from '../services/counter-offer.service';
-import { debounceTime, map, takeUntil } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from '../../auth/models';
 import * as _ from 'lodash';
 import { MatSnackBar } from '@angular/material';
 import { DatePipe } from '@angular/common';
-import { forkJoin, Observable, Subject } from 'rxjs';
+import { forkJoin, Subject } from 'rxjs';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
 import { Person } from '../../../core-modules/models/offer';
+import { SignatureDirective } from '../../../shared-modules/directives/signature.directive';
+import { AgreementStatus } from '../../../core-modules/models/agreement';
 
 export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements OnInit, OnDestroy {
-  @ViewChildren('form') form;
+  @ViewChild('form', {static: true}) form: ElementRef;
+  @ViewChildren(SignatureDirective) signatures: QueryList<SignatureDirective>;
 
   state: string = 'counter-offer';
 
@@ -25,8 +28,9 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   documentObj;
 
   isDisabled: boolean = true;
+  showSwitcher: boolean = false;
 
-  isSignMode: boolean;
+  isSignMode: boolean = false;
 
   documentForm: FormGroup;
 
@@ -51,7 +55,6 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
   typeTextControls = [
     'text_counter_offer_number',
-    'text_multiple_counter_offer_number',
     'text_offer_type_other',
   ];
 
@@ -75,75 +78,109 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
     this.type = this.router.url.split('/').pop() as 'seller' | 'buyer' | 'multiple';
 
-    this.getCounterOffer()
-      .pipe(
-        takeUntil(this.onDestroyed$),
-        map(() => this.patchForm())
-      ).subscribe(() => this.nextField(true));
-  }
-
-  getCounterOffer(): Observable<any> {
-    return forkJoin(
+    forkJoin(
       this.counterOfferService.loadOne(this.id),
       this.counterOfferService.getCounterOfferDocument(this.id, this.type),
     )
-      .pipe(
-        takeUntil(this.onDestroyed$),
-        map(([counterOffer, document]) => {
-          this.counterOffer = counterOffer;
-          this.documentObj = document;
+      .pipe(takeUntil(this.onDestroyed$))
+      .subscribe(([counterOffer, document]) => {
+        this.counterOffer = counterOffer;
+        this.documentObj = document;
 
-          this.visibleSidebarControls =
-            this.isSideBarOpen && this.counterOffer.catchers.some((user: Person) => user.email === this.authService.currentUser.email);
+        this.showSwitcher = this.counterOffer.pitchers.some(pitcher => pitcher.email === this.user.email);
 
-          this.isDisabled = this.counterOffer.pitcher !== this.user.id;
+        // if user isn't pitcher there's available sign mode only
+        if (!this.showSwitcher) {
+          this.isSignMode = true;
+        }
 
-          this.isMCOFinalSign = counterOffer.offerType as string === 'multiple_counter_offer' && counterOffer.status === 'completed';
+        this.isDisabled = !this.counterOffer.pitchers.some(pitcher => pitcher.email === this.user.email);
 
-          this.okButtonText = this.counterOffer.isSigned ? 'Back to the offer' : 'Sign';
+        this.isMCOFinalSign = counterOffer.offerType as string === 'multiple_counter_offer' && counterOffer.status === 'completed';
 
-          if (counterOffer.isSigned) {
-            this.isSignMode = false;
-            this.snackbar.open('Counter Offer is already signed');
-          }
+        if (counterOffer.isSigned) {
+          this.snackbar.open('Counter Offer is already signed');
+        }
 
-          if (this.isMCOFinalSign) {
-            this.setSignFields(this.finalSignFields);
-          }
+        this.visibleSidebarControls =
+          this.isSideBarOpen && this.counterOffer.catchers.some((user: Person) => user.email === this.authService.currentUser.email);
 
-          this.setSignFields(this.signFields);
-          this.subscribeToFormChanges(this.documentForm);
-        }),
-      );
+        this.isMCOFinalSign
+          ? this.setSignFields(this.finalSignFields)
+          : this.setSignFields(this.signFields);
+
+        this.patchForm();
+        this.modeChanged(this.isSignMode);
+
+        this.subscribeToFormChanges(this.documentForm);
+        this.nextField(true);
+      });
   }
 
   closeCO() {
+    this.form.nativeElement.blur();
     this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/details`);
   }
 
   nextField(isSigned) {
-    if (isSigned) {
-      if (this.signFieldElements.length) {
-        for (const item of this.signFieldElements) {
-          if (!item.value) {
-            item.scrollIntoView({behavior: 'smooth', block: 'center'});
-            item.focus();
-            return;
-          }
+    if (isSigned && this.signFieldElements.length) {
+      for (const item of this.signFieldElements) {
+        if (!item.value) {
+          item.scrollIntoView({behavior: 'smooth', block: 'center'});
+          return;
         }
-
-        // setTimeout(() => this.counterOfferService.signCounterOffer(), 500);
       }
-    } else {
-      this.scrollToFirstInvalidField(this.documentForm);
     }
   }
 
-  scrollToFirstInvalidField(documentForm): boolean {
-    for (const groupName of Object.keys(documentForm.controls)) {
-      if (documentForm.controls[groupName].invalid) {
-        for (const controlName of Object.keys((documentForm.controls[groupName] as FormGroup).controls)) {
-          if (documentForm.get(`${groupName}.${controlName}`).invalid) {
+  continue() {
+    if (this.isSignMode) {
+      this.signatures.toArray().filter(el => el.isActiveSignRow).every((el) => !!el.signatureControl.value)
+        ? this.signCO()
+        : this.nextField(true);
+
+    } else {
+      this.documentForm.markAllAsTouched();
+
+      this.scrollToFirstInvalidField()
+        ? this.snackbar.open('Please, fill all mandatory fields')
+        : this.closeCO();
+    }
+  }
+
+  getSignFieldAllowedFor(controlName: string, role: string, index: number) {
+    this.signFields.push({controlName, role, index});
+
+    return [{value: '', disabled: true}, []];
+  }
+
+  getFinalSignFieldMCO(controlName: string, role: string, index: number) {
+    this.finalSignFields.push({controlName, role, index});
+
+    return [{value: '', disabled: true}, []];
+  }
+
+  coTypeChanged(val: string) {
+    this.typeTextControls.forEach((controlName: string) => {
+      this.documentForm.get(controlName).patchValue('');
+    });
+  }
+
+  modeChanged(isSign: boolean) {
+    this.isDisabled = this.isSignMode = isSign;
+    this.okButtonText = (!this.counterOffer.isSigned && this.isSignMode) ? 'Sign' : 'Back to the offer';
+  }
+
+  ngOnDestroy(): void {
+    this.onDestroyed$.next();
+    this.onDestroyed$.complete();
+  }
+
+  private scrollToFirstInvalidField(): boolean {
+    for (const groupName of Object.keys(this.documentForm.controls)) {
+      if (this.documentForm.controls[groupName].invalid) {
+        for (const controlName of Object.keys((this.documentForm.controls[groupName] as FormGroup).controls)) {
+          if (this.documentForm.get(`${groupName}.${controlName}`).invalid) {
             const invalidControl = document.querySelector('[formcontrolname="' + controlName + '"]');
             invalidControl.scrollIntoView({behavior: 'smooth', block: 'center'});
             return true;
@@ -155,7 +192,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     return false;
   }
 
-  patchForm() {
+  private patchForm() {
     this.completedFieldsCount = 0;
 
     Object.entries(this.documentObj).map(([key, value]) => {
@@ -172,7 +209,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     this.disableSignedFields();
   }
 
-  subscribeToFormChanges(documentForm) {
+  private subscribeToFormChanges(documentForm) {
     Object.values(documentForm.controls).map((control: FormControl, controlIndex: number) => {
       control.valueChanges
         .pipe(
@@ -185,52 +222,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     });
   }
 
-  continue() {
-    this.documentForm.markAllAsTouched();
-
-    if (!this.counterOffer.isSigned) {
-      if (this.documentForm.valid) {
-        this.counterOfferService.signCounterOffer(this.id, this.isMCOFinalSign ? 'final_approval' : 'sign')
-          .pipe(takeUntil(this.onDestroyed$))
-          .subscribe(() => {
-            this.counterOffer.isSigned = true;
-            this.snackbar.open('Counter Offer is signed now');
-            this.closeCO();
-          });
-      } else {
-        this.snackbar.open('Please, fill all mandatory fields');
-      }
-    } else {
-      this.closeCO();
-    }
-  }
-
-  getSignFieldAllowedFor(controlName: string, role: string, index: number) {
-    this.signFields.push({controlName, role, index});
-
-    return [{value: '', disabled: true}, []];
-  }
-
-  getFinalSignFieldMCO(controlName: string, role: string, index: number) {
-    this.finalSignFields.push({controlName, role, index});
-
-    return [{value: '', disabled: true}, []];
-  }
-
-  setSignFields(signFields) {
-    signFields.map((fieldObj) => {
-      if (this.counterOffer[fieldObj.role][fieldObj.index] && this.counterOffer[fieldObj.role][fieldObj.index].email === this.user.email) {
-        this.documentForm.get(fieldObj.controlName).setValidators([Validators.required]);
-        this.documentForm.get(fieldObj.controlName).enable({emitEvent: false, onlySelf: true});
-      }
-    });
-  }
-
-  getAllFieldsCount() {
-    this.allFieldsCount = Object.keys(this.documentObj).length;
-  }
-
-  documentInputChanged(controlName: string, controlValue: any) {
+  private documentInputChanged(controlName: string, controlValue: any) {
     if (controlValue === '') {
       controlValue = null;
     } else if (controlValue instanceof Date) {
@@ -242,35 +234,64 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     this.counterOfferService.updateCounterOfferDocumentField(this.id, this.type, {[controlName]: controlValue})
       .pipe(takeUntil(this.onDestroyed$))
       .subscribe((document) => {
-        this.completedFieldsCount = 0;
+        this.documentObj = document;
+        this.setFieldsCount();
 
-        Object.keys(document).map((field) => {
-          if (document[field]) {
-            this.completedFieldsCount += 1;
-          }
-        });
+        if (this.counterOffer.isSigned) {
+          this.resetAgreement();
+        }
       });
   }
 
-  disableSignedFields() {
+  private resetAgreement() {
+    this.signatures.toArray().forEach((signature) => {
+      if (signature.isActiveSignRow) {
+        signature.resetData();
+      }
+    });
+
+    this.counterOffer.status = AgreementStatus.Started;
+    this.counterOffer.isSigned = false;
+
+    this.snackbar.open('The document was changed. Please, resign.');
+  }
+
+  private setSignFields(signFields) {
+    signFields.map((fieldObj) => {
+      if (this.counterOffer[fieldObj.role][fieldObj.index] && this.counterOffer[fieldObj.role][fieldObj.index].email === this.user.email) {
+        this.documentForm.get(fieldObj.controlName).setValidators([Validators.required]);
+        this.documentForm.get(fieldObj.controlName).enable({emitEvent: false, onlySelf: true});
+      }
+    });
+  }
+
+  private getAllFieldsCount() {
+    this.allFieldsCount = Object.keys(this.documentObj).length;
+  }
+
+  private disableSignedFields() {
     this.signFieldElements = Array.from(document.getElementsByClassName('sign-input'));
     this.signFieldElements.forEach(item => item.disabled = !!item.value);
   }
 
-  coTypeChanged(val: string) {
-    this.typeTextControls.forEach((controlName: string) => {
-      this.documentForm.get(controlName).patchValue('');
+  private signCO() {
+    this.counterOfferService.signCounterOffer(this.id, this.isMCOFinalSign ? 'final_approval' : 'sign')
+      .pipe(takeUntil(this.onDestroyed$))
+      .subscribe(() => {
+        this.counterOffer.isSigned = true;
+        this.snackbar.open('Counter Offer is signed now');
+        this.closeCO();
+      });
+  }
+
+  private setFieldsCount() {
+    this.completedFieldsCount = 0;
+
+    Object.keys(this.documentObj).map((field) => {
+      if (this.documentObj[field]) {
+        this.completedFieldsCount += 1;
+      }
     });
-  }
-
-  modeChanged(isSign: boolean) {
-    console.log(isSign);
-    this.isSignMode = isSign;
-  }
-
-  ngOnDestroy(): void {
-    this.onDestroyed$.next();
-    this.onDestroyed$.complete();
   }
 
 }

@@ -16,6 +16,7 @@ import { TransactionService } from '../../services/transaction.service';
 import { CounterOffer } from 'src/app/core-modules/models/counter-offer';
 import { CounterOfferService } from 'src/app/feature-modules/portal/services/counter-offer.service';
 import { CounterOfferType } from 'src/app/core-modules/models/counter-offer-type';
+import { UploadDocumentType } from '../../../../core-modules/enums/upload-document-type';
 
 @Component({
   selector: 'app-agreement-details',
@@ -117,33 +118,29 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     });
   }
 
-  goToESign(doc?: GeneratedDocument): void {
-    // const url = {
-    //   [GeneratedDocumentType.Contract]: '/e-sign',
-    //   [GeneratedDocumentType.Spq]: '/e-sign/spq',
-    //   [GeneratedDocumentType.Addendum]: '/e-sign/addendum'
-    // }[doc.documentType];
-    //
-    // if (doc.documentType === GeneratedDocumentType.Spq && !this.isAgent && this.isSeller) {
-    //   this.openSPQDialog(doc, true);
-    //   return;
-    // }
+  openPendingDocument(doc) {
+    switch (doc.documentType) {
+      case 'purchase_agreement':
+        this.openSignOffer();
+        break;
+      default:
+        this.openCounterOffer(doc);
+    }
+  }
 
-    // this.router.navigate([url, doc.id]);
-    // this.transactionService.lockOffer(this.offer.id)
-    //   .subscribe(() => this.router.navigate(['/e-sign', this.offer.id]));
+  openSignOffer() {
     this.offer.userRole === 'agent_buyer' && this.offer.isSigned
     ? this.router.navigateByUrl(`portal/purchase-agreements/${this.offer.id}/step-two`)
     : this.router.navigateByUrl(`portal/purchase-agreements/${this.offer.id}/sign`);
   }
 
-  openCounterOffer(counterOffer: CounterOffer) {
+  openCounterOffer(doc) {
     this.router.navigateByUrl(
-      `portal/offer/${this.offer.id}/counter-offers/${counterOffer.id}/${CounterOfferType[counterOffer.offerType]}`
+      `portal/offer/${this.offer.id}/counter-offers/${doc.counterOfferId}/${CounterOfferType[doc.documentType]}`
     );
   }
 
-  createCounterOffer(type: CounterOfferType) {
+  createCounterOffer(type) {
     this.counterOfferService.createCounterOffer({offer: this.offer.id, offerType: type})
       .pipe(takeUntil(this.onDestroyed$))
       .subscribe((data: CounterOffer) => {
