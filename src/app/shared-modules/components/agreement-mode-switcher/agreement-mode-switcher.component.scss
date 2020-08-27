@@ -1,0 +1,33 @@
+@import "~src/assets/scss/theming";
+
+.agreement-switcher {
+  .edit {
+    color: $green;
+  }
+
+  .sign {
+    color: $violet;
+  }
+
+  .switcher {
+    padding: 0 10px;
+
+    .mat-slide-toggle {
+      .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+        background-color: $green;
+        color: $green;
+      }
+    }
+  }
+}
+
+h4 {
+  margin: 15px 0;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 24px;
+  text-transform: uppercase;
+  width: 100%;
+  text-align: left;
+  color: $primary-text;
+}

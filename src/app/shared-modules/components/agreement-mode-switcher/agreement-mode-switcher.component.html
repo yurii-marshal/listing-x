@@ -1,0 +1,11 @@
+<div *ngIf="show" class="agreement-switcher u-flex u-flex-align-items--center u-flex-justify--space-between">
+  <h4 [class.edit]="!disabled">Edit</h4>
+  <div class="switcher">
+    <mat-slide-toggle
+      [checked]="isChecked"
+      (change)="changed($event.checked)"
+      [disabled]="disabled"
+    ></mat-slide-toggle>
+  </div>
+  <h4 [class.sign]="!disabled">Sign</h4>
+</div>

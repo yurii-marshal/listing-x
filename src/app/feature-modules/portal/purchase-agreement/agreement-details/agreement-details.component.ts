@@ -132,7 +132,7 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     // this.router.navigate([url, doc.id]);
     // this.transactionService.lockOffer(this.offer.id)
     //   .subscribe(() => this.router.navigate(['/e-sign', this.offer.id]));
-    this.router.navigateByUrl(`portal/purchase-agreements/${this.offer.id}/${this.offer.isSigned ? 'step-two' : 'sign'}`);
+    this.router.navigateByUrl(`portal/purchase-agreements/${this.offer.id}/sign`);
   }
 
   openCounterOffer(counterOffer: CounterOffer) {
