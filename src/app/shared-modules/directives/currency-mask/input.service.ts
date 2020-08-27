@@ -129,7 +129,11 @@ export class InputService {
       .replace(/^0*/g, '');
 
     if (integerPart === '') {
-      integerPart = '0';
+      if (onlyNumbers === '000' && this.value === null) {
+         return '';
+       } else {
+         integerPart = '0';
+       }
     }
     const integerValue = parseInt(integerPart, 10);
 
@@ -166,6 +170,7 @@ export class InputService {
 
     const isZero = newValue === 0;
     const operator = (isNegative && allowNegative && !isZero) ? '-' : '';
+
     return operator + prefix + newRawValue + suffix;
   }
 
@@ -228,7 +233,6 @@ export class InputService {
   removeNumber(keyCode: number): void {
     const {decimal, thousands, prefix, suffix, inputMode} = this.options;
 
-    console.log(this.value);
     if (this.isNullable() && this.value === 0) {
       this.rawValue = null;
       return;

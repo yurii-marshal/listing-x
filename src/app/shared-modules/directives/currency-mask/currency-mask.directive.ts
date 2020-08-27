@@ -80,6 +80,7 @@ export class CurrencyMaskDirective implements AfterViewInit, ControlValueAccesso
 
   @HostListener('blur', ['$event'])
   handleBlur(event: any) {
+    this.inputHandler.setValue(Number(this.elementRef.nativeElement.value.replace(/,/g, '')));
     this.inputHandler.getOnModelTouched().apply(event);
   }
 
@@ -99,7 +100,7 @@ export class CurrencyMaskDirective implements AfterViewInit, ControlValueAccesso
 
   @HostListener('keydown', ['$event'])
   handleKeydown(event: any) {
-    if (!this.isChromeAndroid() && this.isReadOnly()) {
+    if (!this.isChromeAndroid() && !this.isReadOnly()) {
       this.inputHandler.handleKeydown(event);
     }
   }

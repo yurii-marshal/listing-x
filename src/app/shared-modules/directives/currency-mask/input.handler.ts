@@ -3,8 +3,8 @@ import { InputService } from './input.service';
 export class InputHandler {
 
   private inputService: InputService;
-  private onModelChange: (value: number) => void;
-  private onModelTouched: (value: number) => void;
+  private onModelChange: (value: number | string) => void;
+  private onModelTouched: (value: number | string) => void;
 
   constructor(htmlInputElement: HTMLInputElement, options: any) {
     this.inputService = new InputService(htmlInputElement, options);
@@ -78,7 +78,6 @@ export class InputHandler {
   handleKeypress(event: any): void {
     const keyCode = event.which || event.charCode || event.keyCode;
     event.preventDefault();
-    console.log(keyCode);
     if (keyCode === 97 && event.ctrlKey) {
       return;
     }
