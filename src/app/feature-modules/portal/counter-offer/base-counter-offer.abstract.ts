@@ -16,11 +16,15 @@ import { Person } from '../../../core-modules/models/offer';
 export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements OnInit, OnDestroy {
   @ViewChildren('form') form;
 
+  state: string = 'counter-offer';
+
   type;
   id: number;
   offerId: number;
   counterOffer: CounterOffer;
   documentObj;
+
+  isDisabled: boolean = true;
 
   isSignMode: boolean;
 
@@ -28,14 +32,10 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
   datepickerMinDate: Date;
 
-  state = 'counter-offer';
-
   isSideBarOpen: boolean;
   completedFieldsCount: number = 0;
   allFieldsCount: number = 0;
-
-  isDisabled: boolean = true;
-  visibleControls: boolean = false;
+  visibleSidebarControls: boolean = false;
 
   user: User;
 
@@ -93,7 +93,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
           this.counterOffer = counterOffer;
           this.documentObj = document;
 
-          this.visibleControls =
+          this.visibleSidebarControls =
             this.isSideBarOpen && this.counterOffer.catchers.some((user: Person) => user.email === this.authService.currentUser.email);
 
           this.isDisabled = this.counterOffer.pitcher !== this.user.id;
@@ -103,6 +103,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
           this.okButtonText = this.counterOffer.isSigned ? 'Back to the offer' : 'Sign';
 
           if (counterOffer.isSigned) {
+            this.isSignMode = false;
             this.snackbar.open('Counter Offer is already signed');
           }
 
@@ -260,6 +261,10 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     this.typeTextControls.forEach((controlName: string) => {
       this.documentForm.get(controlName).patchValue('');
     });
+  }
+
+  modeChanged(isSign: boolean) {
+    this.isSignMode = isSign;
   }
 
   ngOnDestroy(): void {
