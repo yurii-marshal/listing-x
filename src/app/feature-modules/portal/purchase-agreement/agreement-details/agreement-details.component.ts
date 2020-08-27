@@ -3,9 +3,9 @@ import { Subject } from 'rxjs';
 import { FormControl, Validators } from '@angular/forms';
 import { AddendumData, Document, GeneratedDocument } from '../../../../core-modules/models/document';
 import { AuthService } from '../../../../core-modules/core-services/auth.service';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialog, MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { flatMap, takeUntil } from 'rxjs/operators';
+import { flatMap, switchMap, takeUntil } from 'rxjs/operators';
 import { Offer, Person } from '../../../../core-modules/models/offer';
 import { SpqDialogComponent } from '../../dialogs/spq-dialog/spq-dialog.component';
 import { AddendumDialogComponent } from '../../dialogs/addendum-dialog/addendum-dialog.component';
@@ -16,6 +16,7 @@ import { TransactionService } from '../../services/transaction.service';
 import { CounterOffer } from 'src/app/core-modules/models/counter-offer';
 import { CounterOfferService } from 'src/app/feature-modules/portal/services/counter-offer.service';
 import { CounterOfferType } from 'src/app/core-modules/models/counter-offer-type';
+import { ConfirmationBarComponent } from 'src/app/shared-modules/components/confirmation-bar/confirmation-bar.component';
 
 @Component({
   selector: 'app-agreement-details',
@@ -160,6 +161,34 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     });
   }
 
+  onDeny(doc: GeneratedDocument) {
+    const config: MatSnackBarConfig = {
+      duration: 0,
+      data: {
+        message: 'Are you sure want to deny?',
+        dismiss: 'Cancel',
+        action: 'Yes'
+      },
+    };
+    const snackBarRef = this.snackbar.openFromComponent(ConfirmationBarComponent, config);
+
+    snackBarRef.onAction().pipe(
+      takeUntil(this.onDestroyed$),
+      switchMap(() => {
+        if (doc.documentType === 'purchase_agreement') {
+          this.deny();
+        } else {
+          return this.counterOfferService.rejectCounterOffer(doc.id);
+        }
+      }),
+    ).subscribe(() => {
+      if (doc.documentType !== 'purchase_agreement') {
+        doc.allowSign = false;
+        this.snackbar.open(`Denied.`);
+      }
+    });
+  }
+
   downloadAndToggleState(file: string | Document) {
     const id: number = Number(this.route.snapshot.params.id);
     // this.offerService.toggleState(id).subscribe();
@@ -167,7 +196,7 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   triggerDownloadFile(doc: GeneratedDocument | Document) {
-    this.offerService.documentOpenedEvent(doc.id).subscribe();
+    this.transactionService.documentOpenedEvent(doc.id).subscribe();
 
     let {file, title} = doc;
 

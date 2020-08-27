@@ -1,7 +1,6 @@
 import { OfferSummary } from './offer';
 import { GeneratedDocument } from './document';
 import { Log } from './log';
-import { PurchaseAgreement } from 'src/app/core-modules/models/purchase-agreement';
 
 export interface Transaction {
   id: number;
@@ -12,7 +11,7 @@ export interface Transaction {
   documents: GeneratedDocument[];
   completedDocuments: GeneratedDocument[];
   pendingDocuments: GeneratedDocument[];
-  purchaseAgreements: PurchaseAgreement;
+  purchaseAgreements: GeneratedDocument[];
   allowEdit: boolean;
   allowDelete: boolean;
   allowDeny: boolean;

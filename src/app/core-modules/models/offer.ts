@@ -3,8 +3,6 @@ import { Document, GeneratedDocument } from './document';
 import { AgreementStatus } from './agreement';
 import { Log } from 'src/app/core-modules/models/log';
 import { TransactionStatus } from 'src/app/core-modules/models/transaction';
-import { CounterOffer } from './counter-offer';
-import { PurchaseAgreement } from 'src/app/core-modules/models/purchase-agreement';
 
 export interface OfferSummary extends Offer {
   documents: LinkedDocuments;
@@ -63,7 +61,7 @@ export interface Offer {
   transactionDocs?: GeneratedDocument[];
   completedDocuments: GeneratedDocument[];
   pendingDocuments: GeneratedDocument[];
-  purchaseAgreement: PurchaseAgreement;
+  purchaseAgreements: GeneratedDocument[];
 
   canCreateCounter: boolean;
   canCreateMultipleCounter: boolean;
