@@ -1,30 +1,29 @@
-<div class="offer-information u-flex u-flex-direction--column u-flex-justify--start u-flex-align-items--start"
-     *ngIf="isSideBarOpen">
+<div class="offer-information u-flex u-flex-direction--column u-flex-justify--start u-flex-align-items--start" *ngIf="show">
 
   <h4>Counter Offer information</h4>
 
-  <h6>status: {{counterOffer.status}}</h6>
+  <h6>status: {{counterOffer?.status}}</h6>
 
   <div class="roles-list">
-    <div class="agents truncated" *ngFor="let item of counterOffer.pitchers; let i = index">
+    <div class="agents truncated" *ngFor="let item of counterOffer?.pitchers; let i = index">
       <h6>Pitcher #{{i+1}}</h6>
       <div class="item">
         {{item.firstName}} {{item.lastName}} | {{item.email}}
       </div>
     </div>
-    <div class="buyers truncated" *ngFor="let item of counterOffer.catchers; let i = index">
+    <div class="buyers truncated" *ngFor="let item of counterOffer?.catchers; let i = index">
       <h6>Catcher #{{i+1}}</h6>
       <div class="item">
         {{item.firstName}} {{item.lastName}} | {{item.email}}
       </div>
     </div>
-    <div class="sellers truncated" *ngFor="let item of counterOffer.catcherCustomers; let i = index">
+    <div class="sellers truncated" *ngFor="let item of counterOffer?.catcherCustomers; let i = index">
       <h6>Catcher customer #{{i+1}}</h6>
       <div class="item">
         {{item.firstName}} {{item.lastName}} | {{item.email}}
       </div>
     </div>
-    <div class="agents truncated" *ngFor="let item of counterOffer.pitcherCustomers; let i = index">
+    <div class="agents truncated" *ngFor="let item of counterOffer?.pitcherCustomers; let i = index">
       <h6>Pitcher customer #{{i+1}}</h6>
       <div class="item">
         {{item.firstName}} {{item.lastName}} | {{item.email}}

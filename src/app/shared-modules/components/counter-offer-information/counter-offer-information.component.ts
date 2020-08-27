@@ -8,7 +8,7 @@ import { CounterOffer } from 'src/app/core-modules/models/counter-offer';
 })
 export class CounterOfferInformationComponent implements OnInit {
   @Input() counterOffer: CounterOffer;
-  @Input() isSideBarOpen: boolean;
+  @Input() show: boolean;
 
   constructor() { }
 

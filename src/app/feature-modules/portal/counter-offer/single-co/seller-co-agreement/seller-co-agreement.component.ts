@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewChildren } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { BaseCounterOfferAbstract } from '../../base-counter-offer.abstract';
 import { ActivatedRoute, Router } from '@angular/router';
