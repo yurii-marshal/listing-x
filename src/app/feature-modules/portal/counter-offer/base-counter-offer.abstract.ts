@@ -22,6 +22,8 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   counterOffer: CounterOffer;
   documentObj;
 
+  isSignMode: boolean;
+
   documentForm: FormGroup;
 
   datepickerMinDate: Date;

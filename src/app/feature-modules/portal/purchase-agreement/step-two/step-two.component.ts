@@ -577,9 +577,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   modeChanged(isSign: boolean) {
-    isSign
-      ? this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/sign`)
-      : this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/step-two`);
+    this.isSignMode = isSign;
   }
 
   editOffer(offerChangedModel?: Offer) {

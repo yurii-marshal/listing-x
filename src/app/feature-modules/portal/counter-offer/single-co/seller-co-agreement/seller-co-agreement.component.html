@@ -307,7 +307,6 @@
     >
 
       <app-agreement-mode-switcher
-        [show]="counterOffer.userRole === 'agent_buyer'"
         [disabled]="counterOffer.isSigned || documentForm.invalid"
         [isChecked]="isSignMode"
         (changeMode)="modeChanged($event.checked)"
