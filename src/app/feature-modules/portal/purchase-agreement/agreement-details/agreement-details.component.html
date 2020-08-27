@@ -136,69 +136,29 @@
       <div class="column-layout fullwidth">
         <div *ngIf="transactionsFlow" class="row-layout new-section"><label class="header">Purchase agreements</label></div>
 
-        <div *ngIf="transactionsFlow" class="row-layout doc-item"><label></label>
-          <!--           TODO: add dynamics -->
-          <div class="doc-title"><img src="assets/images/icons/pdf.svg" [title]="offer.purchaseAgreement.purchaseAgreement" height="20">
-            <!--            {{ offer.purchaseAgreements.purchaseAgreement.title }}.{{doc.extension}}-->
-            Purchase Agreement
-          </div>
-          <div class="doc-events">
-<!--            <label>{{ offer.purchaseAgreement.purchaseAgreement.lastEvent?.createdAt | date: 'short' }}</label>-->
-<!--            <span>{{ offer.purchaseAgreement.purchaseAgreement.lastEvent?.title }}</span>-->
-          </div>
-          <div class="doc-actions">Actions:
-<!--            <span class="action-icon" (click)="triggerDownloadFile(offer.purchaseAgreement.purchaseAgreement)">-->
-<!--              <ng-container *ngTemplateOutlet="viewIcon"></ng-container>-->
-<!--            </span>-->
-<!--            <span class="action-icon" (click)="triggerDownloadFile(offer.purchaseAgreement.purchaseAgreement)">-->
-<!--              <ng-container *ngTemplateOutlet="downloadIcon"></ng-container>-->
-<!--            </span>-->
-          </div>
-        </div>
-
         <ng-container *ngIf="transactionsFlow">
-          <div class="row-layout doc-item" *ngFor="let counterOffer of offer.purchaseAgreement.counterOffers; let i = index;">
-            <label></label>
-            <div class="doc-title"><img src="assets/images/icons/pdf.svg" [title]="counterOffer" height="20">
-              <!--            {{ counterOffer.title }}-->
-              Counter offer {{ i + 1 }}
+          <div class="row-layout doc-item" *ngFor="let doc of offer.purchaseAgreements"><label></label>
+            <div class="doc-title">
+              <img src="assets/images/icons/{{ doc.extension }}.svg"
+                   [title]="doc.title" height="20">
+              {{ doc.title }}.{{ doc.extension }}
             </div>
             <div class="doc-events">
-<!--              <label>{{ counterOffer.lastEvent?.createdAt | date: 'short' }}</label>-->
-<!--              <span>{{ counterOffer.lastEvent?.title }}</span>-->
+              <label>{{ doc.lastEvent?.createdAt | date: 'short' }}</label>
+              <span>{{ doc.lastEvent?.title }}</span>
             </div>
             <div class="doc-actions">Actions:
-<!--              <span class="action-icon" (click)="triggerDownloadFile(counterOffer)">-->
-<!--                <ng-container *ngTemplateOutlet="viewIcon"></ng-container>-->
-<!--              </span>-->
-<!--              <span class="action-icon" (click)="triggerDownloadFile(counterOffer)">-->
-<!--                <ng-container *ngTemplateOutlet="downloadIcon"></ng-container>-->
-<!--              </span>-->
+              <span class="action-icon" (click)="triggerDownloadFile(doc)">
+              <ng-container *ngTemplateOutlet="viewIcon"></ng-container>
+            </span>
+              <span class="action-icon" (click)="triggerDownloadFile(doc)">
+              <ng-container *ngTemplateOutlet="downloadIcon"></ng-container>
+            </span>
             </div>
           </div>
         </ng-container>
 
         <div class="row-layout new-section"><label class="header">Completed documents</label></div>
-
-        <div *ngIf="!transactionsFlow && (offer.status === 'completed' || offer.status === 'countered')" class="row-layout doc-item">
-          <label></label>
-          <div class="doc-title"><img src="assets/images/icons/pdf.svg" [title]="offer.purchaseAgreement" height="20">
-            <!--            {{ offer.purchaseAgreements.purchaseAgreement.title }}.{{doc.extension}}-->
-            Purchase Agreement
-          </div>
-          <div class="doc-events">
-<!--            <label>{{ offer.purchaseAgreement.purchaseAgreement.lastEvent?.createdAt | date: 'short' }}</label>-->
-<!--            <span>{{ offer.purchaseAgreement.purchaseAgreement.lastEvent?.title }}</span>-->
-          </div>
-          <div class="doc-actions">Actions:
-<!--            <span class="action-icon" (click)="triggerDownloadFile(offer.purchaseAgreement)">-->
-<!--              <ng-container *ngTemplateOutlet="viewIcon"></ng-container>-->
-<!--            </span>-->
-<!--            <span class="action-icon" (click)="triggerDownloadFile(offer.purchaseAgreement)">-->
-<!--              <ng-container *ngTemplateOutlet="downloadIcon"></ng-container>-->
-<!--            </span>-->
-          </div>
-        </div>
 
         <div class="row-layout doc-item" *ngFor="let doc of offer.completedDocuments; let i = index;">
           <label>document #{{i + 1}}</label>
@@ -224,7 +184,7 @@
         <div class="row-layout new-section">
           <label class="header">Documents pending approval</label>
 
-          <ng-container *ngIf="isAgent">
+          <ng-container *ngIf="isAgent && transactionsFlow">
             <button
               mat-flat-button
               type="button"
@@ -238,68 +198,6 @@
               <button mat-menu-item (click)="openAddendumDialog()">Addendum</button>
             </mat-menu>
           </ng-container>
-        </div>
-
-        <div *ngIf="!transactionsFlow && (offer.status !== 'completed' && offer.status !== 'countered')" class="row-layout doc-item">
-          <label></label>
-          <div class="doc-title"><img src="assets/images/icons/pdf.svg" [title]="offer.purchaseAgreement" height="20">
-            <!--            {{ offer.purchaseAgreements.purchaseAgreement.title }}.{{doc.extension}}-->
-            Purchase Agreement
-          </div>
-          <div class="doc-events">
-            <label>{{ offer.lastEvent?.createdAt | date: 'short' }}</label>
-            <span>{{ offer.lastEvent?.title }}</span>
-          </div>
-          <div class="doc-status">Status: <strong [ngClass]="offer.status">{{offer.status}}</strong></div>
-          <div class="doc-actions">Actions:
-            <button
-              class="button-xs"
-              type="button"
-              mat-flat-button
-              color="primary"
-              (click)="openSignOffer()"
-            >{{offer.allowSign ? 'SIGN' : 'OPEN'}}
-            </button>
-            <svg class="menu-trigger" [matMenuTriggerFor]="menu" width="22" height="6" viewBox="0 0 22 6" fill="none"
-                 xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M2.61905 0.380951C1.1749 0.380951 0 1.55586 0 3C0 4.44414 1.1749 5.61905 2.61905 5.61905C4.06319 5.61905 5.2381 4.44414 5.2381 3C5.2381 1.55586 4.06319 0.380951 2.61905 0.380951Z"
-                fill="#419BDF"/>
-              <path
-                d="M10.9999 0.380951C9.55576 0.380951 8.38086 1.55586 8.38086 3C8.38086 4.44414 9.55576 5.61905 10.9999 5.61905C12.444 5.61905 13.619 4.44414 13.619 3C13.619 1.55586 12.444 0.380951 10.9999 0.380951Z"
-                fill="#419BDF"/>
-              <path
-                d="M19.3808 0.380951C17.9366 0.380951 16.7617 1.55586 16.7617 3C16.7617 4.44414 17.9366 5.61905 19.3808 5.61905C20.8249 5.61905 21.9998 4.44414 21.9998 3C21.9998 1.55586 20.8249 0.380951 19.3808 0.380951Z"
-                fill="#419BDF"/>
-            </svg>
-
-            <mat-menu #menu="matMenu" xPosition="before">
-<!--              <button *ngIf="doc.documentType === 'contract' && isAgent && !isSeller"-->
-<!--                      mat-menu-item-->
-<!--                      [disabled]="!doc.allowEdit"-->
-<!--                      routerLink="/portal/offer/{{ offer.id }}"-->
-<!--              >Edit-->
-<!--              </button>-->
-
-<!--              <button *ngIf="doc.documentType === 'spq'"-->
-<!--                      mat-menu-item-->
-<!--                      [disabled]="!doc.allowEdit"-->
-<!--                      (click)="openSPQDialog(doc)"-->
-<!--              >Edit-->
-<!--              </button>-->
-
-<!--              <button *ngIf="doc.documentType === 'addendum' && isAgent"-->
-<!--                      mat-menu-item-->
-<!--                      [disabled]="!doc.allowEdit"-->
-<!--                      (click)="openAddendumDialog(doc)"-->
-<!--              >Edit-->
-<!--              </button>-->
-              <button mat-menu-item (click)="triggerDownloadFile(offer)">View</button>
-              <button mat-menu-item (click)="triggerDownloadFile(offer)">Download</button>
-              <button mat-menu-item disabled>Deny</button>
-              <button mat-menu-item disabled class="delete-btn">Delete</button>
-            </mat-menu>
-          </div>
         </div>
 
         <div class="row-layout doc-item" *ngFor="let doc of offer.pendingDocuments; let i = index;">
@@ -357,7 +255,7 @@
               </button>
               <button mat-menu-item (click)="triggerDownloadFile(doc)">View</button>
               <button mat-menu-item (click)="triggerDownloadFile(doc)">Download</button>
-              <button mat-menu-item disabled>Deny</button>
+              <button mat-menu-item disabled (click)="onDeny(doc)">Deny</button>
               <button mat-menu-item disabled class="delete-btn">Delete</button>
             </mat-menu>
           </div>
