@@ -217,7 +217,7 @@
               mat-flat-button
               color="primary"
               (click)="openPendingDocument(doc)"
-            >{{doc.allowSign ? 'SIGN' : 'OPEN'}}
+            >{{offer.allowSign ? 'SIGN' : 'OPEN'}}
             </button>
             <svg class="menu-trigger" [matMenuTriggerFor]="menu" width="22" height="6" viewBox="0 0 22 6" fill="none"
                  xmlns="http://www.w3.org/2000/svg">
@@ -233,10 +233,10 @@
             </svg>
 
             <mat-menu #menu="matMenu" xPosition="before">
-              <button *ngIf="doc.documentType === 'contract' && isAgent && !isSeller"
+              <button *ngIf="doc.documentType === 'purchase_agreement' && isAgent && !isSeller"
                       mat-menu-item
                       [disabled]="!doc.allowEdit"
-                      routerLink="/portal/offer/{{ offer.id }}"
+                      routerLink="portal/purchase-agreements/{{ offer.id }}/step-two"
               >Edit
               </button>
 
