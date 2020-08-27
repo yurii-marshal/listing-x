@@ -290,20 +290,19 @@
     >
 
       <app-agreement-mode-switcher
-        [show]="isSideBarOpen"
-        [disabled]="counterOffer?.isSigned || documentForm?.invalid"
+        [show]="isSideBarOpen && showSwitcher"
+        [disabled]="isDisabled || documentForm?.invalid"
         [isChecked]="isSignMode"
         (changeMode)="modeChanged($event)"
       ></app-agreement-mode-switcher>
 
-      <app-counter-offer-information [counterOffer]="counterOffer"
-                                     [isSideBarOpen]="isSideBarOpen"></app-counter-offer-information>
+      <app-counter-offer-information [counterOffer]="counterOffer" [show]="isSideBarOpen"></app-counter-offer-information>
 
-      <app-counter-offer-controls [counterOffer]="counterOffer"
-                                  [visible]="visibleSidebarControls"></app-counter-offer-controls>
+      <app-counter-offer-controls [counterOffer]="counterOffer" [visible]="visibleSidebarControls"></app-counter-offer-controls>
 
       <div class="controls" *ngIf="isSideBarOpen">
         <app-progress-bar
+          [isSignMode]="isSignMode"
           [totalFieldsNum]="allFieldsCount"
           [completedFieldsCount]="completedFieldsCount"
         ></app-progress-bar>
