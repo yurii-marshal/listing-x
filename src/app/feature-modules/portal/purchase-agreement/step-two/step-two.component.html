@@ -4512,7 +4512,7 @@
           [show]="offer.userRole === 'agent_buyer'"
           [disabled]="offer.isSigned || documentForm.invalid"
           [isChecked]="isSignMode"
-          (changeMode)="modeChanged($event.checked)"
+          (changeMode)="modeChanged($event)"
         ></app-agreement-mode-switcher>
 
         <h4>Offer information</h4>

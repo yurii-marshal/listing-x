@@ -293,7 +293,7 @@
         [show]="isSideBarOpen"
         [disabled]="counterOffer?.isSigned || documentForm?.invalid"
         [isChecked]="isSignMode"
-        (changeMode)="modeChanged($event.checked)"
+        (changeMode)="modeChanged($event)"
       ></app-agreement-mode-switcher>
 
       <app-counter-offer-information [counterOffer]="counterOffer"

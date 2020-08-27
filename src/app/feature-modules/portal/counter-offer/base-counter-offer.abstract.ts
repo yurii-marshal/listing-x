@@ -264,6 +264,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   }
 
   modeChanged(isSign: boolean) {
+    console.log(isSign);
     this.isSignMode = isSign;
   }
 
