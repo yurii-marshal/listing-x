@@ -151,7 +151,7 @@ export class CurrencyMaskDirective implements AfterViewInit, ControlValueAccesso
 
   validate({ value }: FormControl) {
     console.log(value);
-    const isNotValid = this.options.nullable === true && isNaN(value);
+    const isNotValid = (this.options.nullable === true && isNaN(value)) || (this.options.allowZero === false && Number(value) === 0);
     return isNotValid && {
       invalid: true
     };
