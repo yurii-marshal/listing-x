@@ -88,7 +88,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
     this.isSignMode = this.router.url.includes('sign');
 
-    if (!this.isSignMode && this.offer.isSigned) {
+    if (this.offer.isSigned) {
       this.snackbar.open('Offer is already signed');
     }
 
@@ -520,7 +520,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         this.getAllFieldsCount(model);
         this.updatePageProgress(model, 0);
 
-        this.checkUnfinished();
+        this.checkSignAccess();
 
         this.disableSignFields();
 
@@ -628,11 +628,13 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       .patchValue((price - (initialDeposits + increasedDeposits + loans)).toFixed(2));
   }
 
-  private checkUnfinished() {
-    if (this.isSignMode) {
-      this.documentForm.invalid || this.offer.isSigned
-        ? this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/step-two`)
-        : this.activateSignButtons();
+  private checkSignAccess() {
+    if (this.offer.userRole === 'agent_buyer' && this.isSignMode && (this.documentForm.invalid || this.offer.isSigned)) {
+      this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/step-two`);
+    } else if (this.offer.userRole !== 'agent_buyer' && !this.isSignMode) {
+      this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/sign`);
+    } else if (this.isSignMode) {
+      this.activateSignButtons();
     }
   }
 

@@ -4508,17 +4508,12 @@
       <div class="offer-information u-flex u-flex-direction--column u-flex-justify--start u-flex-align-items--start"
            *ngIf="offerService.isSideBarOpen">
 
-        <div *ngIf="offer.userRole === 'agent_buyer'" class="agreement-switcher u-flex u-flex-align-items--center u-flex-justify--space-between">
-          <h4 [class.edit]="!offer.isSigned && documentForm.valid">Edit</h4>
-          <div class="switcher">
-            <mat-slide-toggle
-              [checked]="isSignMode"
-              (change)="modeChanged($event.checked)"
-              [disabled]="offer.isSigned || documentForm.invalid"
-            ></mat-slide-toggle>
-          </div>
-          <h4 [class.sign]="!offer.isSigned && documentForm.valid">Sign</h4>
-        </div>
+        <app-agreement-mode-switcher
+          [show]="offer.userRole === 'agent_buyer'"
+          [disabled]="offer.isSigned || documentForm.invalid"
+          [isChecked]="isSignMode"
+          (changeMode)="modeChanged($event.checked)"
+        ></app-agreement-mode-switcher>
 
         <h4>Offer information</h4>
 

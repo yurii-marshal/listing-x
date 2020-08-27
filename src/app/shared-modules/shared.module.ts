@@ -8,7 +8,7 @@ import {
   MatDialogModule,
   MatIconModule,
   MatProgressSpinnerModule,
-  MatRadioModule,
+  MatRadioModule, MatSlideToggleModule,
   MatTabsModule
 } from '@angular/material';
 import { OverlayModule } from '@angular/cdk/overlay';
@@ -57,6 +57,7 @@ import { DisableControlDirective } from './directives/disable-control.directive'
 import { CounterOfferInformationComponent } from './components/counter-offer-information/counter-offer-information.component';
 import { CounterOfferControlsComponent } from './components/counter-offer-controls/counter-offer-controls.component';
 import { InputMaskDirective } from './directives/input-mask/input-mask.directive';
+import { AgreementModeSwitcherComponent } from './components/agreement-mode-switcher/agreement-mode-switcher.component';
 
 const materialModules = [
   MatDialogModule,
@@ -69,6 +70,7 @@ const materialModules = [
   MatRadioModule,
   A11yModule,
   MatProgressSpinnerModule,
+  MatSlideToggleModule,
 ];
 
 const dialogs = [
@@ -113,6 +115,8 @@ const components = [
   CounterOfferInformationComponent,
   CounterOfferControlsComponent,
   FirstLetterPipe,
+  DisableControlDirective,
+  AgreementModeSwitcherComponent,
   ...dialogs,
 ];
 
@@ -126,7 +130,6 @@ const components = [
   ],
   declarations: [
     ...components,
-    DisableControlDirective,
   ],
   exports: [
     ...components,

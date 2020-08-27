@@ -306,6 +306,13 @@
       [okButtonText]="okButtonText"
     >
 
+      <app-agreement-mode-switcher
+        [show]="counterOffer.userRole === 'agent_buyer'"
+        [disabled]="counterOffer.isSigned || documentForm.invalid"
+        [isChecked]="isSignMode"
+        (changeMode)="modeChanged($event.checked)"
+      ></app-agreement-mode-switcher>
+
       <app-counter-offer-information [counterOffer]="counterOffer"
                                      [isSideBarOpen]="isSideBarOpen"></app-counter-offer-information>
 
