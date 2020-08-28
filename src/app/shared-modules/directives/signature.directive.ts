@@ -73,7 +73,6 @@ export class SignatureDirective implements OnInit {
       this.ampmControl.patchValue('am', {emitEvent: emit, onlySelf: true});
     }
 
-    this.signatureControl.enable({emitEvent: false, onlySelf: true});
     this.signatureControl.patchValue('', {emitEvent: emit, onlySelf: true});
   }
 
