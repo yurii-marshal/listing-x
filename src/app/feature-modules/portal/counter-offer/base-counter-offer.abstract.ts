@@ -87,16 +87,16 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         this.counterOffer = counterOffer;
         this.documentObj = document;
 
-        this.showSwitcher = this.counterOffer.pitchers.some(pitcher => pitcher.email === this.user.email);
+        const isUserPitcher = this.counterOffer.pitchers.some(pitcher => pitcher.email === this.user.email);
 
-        // if user isn't pitcher there's available sign mode only
+        this.isDisabled = !isUserPitcher;
+
+        this.showSwitcher = isUserPitcher && this.counterOffer.status !== AgreementStatus.Completed;
+
+        // if user isn't pitcher there's available sign mode only / for sign / for review
         if (!this.showSwitcher) {
           this.isSignMode = true;
         }
-
-        this.isDisabled = !this.counterOffer.pitchers.some(pitcher => pitcher.email === this.user.email);
-
-        this.isMCOFinalSign = counterOffer.offerType as string === 'multiple_counter_offer' && counterOffer.status === 'completed';
 
         if (counterOffer.isSigned) {
           this.snackbar.open('Counter Offer is already signed');
@@ -104,6 +104,8 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
         this.visibleSidebarControls =
           this.isSideBarOpen && this.counterOffer.catchers.some((user: Person) => user.email === this.authService.currentUser.email);
+
+        this.isMCOFinalSign = counterOffer.offerType as string === 'multiple_counter_offer' && counterOffer.status === 'completed';
 
         this.isMCOFinalSign
           ? this.setSignFields(this.finalSignFields)
