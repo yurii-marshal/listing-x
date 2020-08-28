@@ -101,7 +101,6 @@ export class SignatureDirective implements OnInit {
     if (parent && parent.parent) {
       this.checkRootParent(parent.parent);
     } else {
-      console.log(parent);
       // now parent is root form
       if (!parent.invalid) {
         this.signField();
