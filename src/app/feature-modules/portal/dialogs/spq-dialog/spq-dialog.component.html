@@ -1,5 +1,5 @@
 <div mat-dialog-title class="u-flex u-flex-justify--space-between u-flex-align-items--center">
-  <div class="title">SPQ</div>
+  <div class="title">SPQ<span *ngIf="isConfirmMode" class="title"> REVIEW</span></div>
   <button mat-icon-button mat-dialog-close>
     <mat-icon fontSet="fa" fontIcon="fa-times"></mat-icon>
   </button>
