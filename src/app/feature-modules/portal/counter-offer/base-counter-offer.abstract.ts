@@ -39,7 +39,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   isSideBarOpen: boolean;
   completedFieldsCount: number = 0;
   allFieldsCount: number = 0;
-  visibleSidebarControls: boolean = false;
+  isSidebarControlsVisible: boolean = false;
 
   user: User;
 
@@ -53,7 +53,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   signFieldElements: any[] = [];
   onDestroyed$: Subject<void> = new Subject<void>();
 
-  typeTextControls = [
+  offerTypeTextControls = [
     'text_counter_offer_number',
     'text_offer_type_other',
   ];
@@ -98,11 +98,14 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
           this.isSignMode = true;
         }
 
+        this.allFieldsCount = Object.keys(this.documentObj).length;
+        this.okButtonText = (!this.counterOffer.isSigned && this.isSignMode) ? 'Sign' : 'Back to the offer';
+
         if (counterOffer.isSigned) {
           this.snackbar.open('Counter Offer is already signed');
         }
 
-        this.visibleSidebarControls =
+        this.isSidebarControlsVisible =
           this.isSideBarOpen && this.counterOffer.catchers.some((user: Person) => user.email === this.authService.currentUser.email);
 
         this.isMCOFinalSign = counterOffer.offerType as string === 'multiple_counter_offer' && counterOffer.status === 'completed';
@@ -112,9 +115,6 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
           : this.setSignFields(this.signFields);
 
         this.patchForm();
-        this.modeChanged(this.isSignMode);
-
-        this.getAllFieldsCount();
         this.disableSignFields();
 
         this.subscribeToFormChanges(this.documentForm);
@@ -166,14 +166,13 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   }
 
   coTypeChanged(val: string) {
-    this.typeTextControls.forEach((controlName: string) => {
+    this.offerTypeTextControls.forEach((controlName: string) => {
       this.documentForm.get(controlName).patchValue('');
     });
   }
 
   modeChanged(isSign: boolean) {
-    this.isDisabled = isSign;
-    this.isSignMode = isSign;
+    this.isDisabled = this.isSignMode = isSign;
     this.okButtonText = (!this.counterOffer.isSigned && this.isSignMode) ? 'Sign' : 'Back to the offer';
   }
 
@@ -220,12 +219,12 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
           takeUntil(this.onDestroyed$),
         )
         .subscribe((controlValue) => {
-          this.documentInputChanged(Object.keys(documentForm.getRawValue())[controlIndex], controlValue);
+          this.saveDocumentField(Object.keys(documentForm.getRawValue())[controlIndex], controlValue);
         });
     });
   }
 
-  private documentInputChanged(controlName: string, controlValue: any) {
+  private saveDocumentField(controlName: string, controlValue: any) {
     if (controlValue === '') {
       controlValue = null;
     } else if (controlValue instanceof Date) {
@@ -265,10 +264,6 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         this.documentForm.get(fieldObj.controlName).setValidators([Validators.required]);
       }
     });
-  }
-
-  private getAllFieldsCount() {
-    this.allFieldsCount = Object.keys(this.documentObj).length;
   }
 
   private disableSignFields() {
