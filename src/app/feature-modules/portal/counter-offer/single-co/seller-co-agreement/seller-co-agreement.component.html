@@ -317,7 +317,7 @@
 
       <app-counter-offer-information [counterOffer]="counterOffer" [show]="isSideBarOpen"></app-counter-offer-information>
 
-      <app-counter-offer-controls [counterOffer]="counterOffer" [visible]="visibleSidebarControls"></app-counter-offer-controls>
+      <app-counter-offer-controls [counterOffer]="counterOffer" [visible]="isSidebarControlsVisible"></app-counter-offer-controls>
 
       <div class="controls" *ngIf="isSideBarOpen">
         <app-progress-bar

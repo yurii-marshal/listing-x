@@ -10,12 +10,8 @@ import { OfferService } from '../../feature-modules/portal/services/offer.servic
 })
 export class SignatureDirective implements OnInit {
   @Input() mode: 'sign' | 'initials' = 'sign';
-  @Input() sign: string = `${this.authService.currentUser.firstName} ${this.authService.currentUser.lastName}`;
-  @Input() initials: string = `${
-    this.authService.currentUser.firstName.substr(0, 1).toUpperCase()
-    }. ${
-    this.authService.currentUser.lastName.substr(0, 1).toUpperCase()
-    }.`;
+  @Input() sign: string = '';
+  @Input() initials: string = '';
   @Input() withDateControl: string;
   @Input() withTimeControl: string;
   @Input() withAmpmControl: string;
@@ -53,27 +49,16 @@ export class SignatureDirective implements OnInit {
   }
 
   ngOnInit() {
-    // 2 - if a field is allowed for current user
+    this.sign = `${this.authService.currentUser.firstName} ${this.authService.currentUser.lastName}`;
+
+    this.initials = `${
+      this.authService.currentUser.firstName.substr(0, 1).toUpperCase()
+      }. ${
+      this.authService.currentUser.lastName.substr(0, 1).toUpperCase()
+      }.`;
+
     this.isActiveSignRow = this.signatureControl.enabled;
   }
-
-  // @HostListener('focus', ['$event']) focus() {
-  //   this.signButtonEl
-  //     ? this.removeSignButton()
-  //     : setTimeout(() => {
-  //       this.renderSignButton();
-  //     }, 200);
-  // }
-
-  // @HostListener('document:click', ['$event']) blur($event) {
-  //   if (
-  //     this.signButtonEl
-  //     && !this.signButtonEl.contains($event.target)
-  //     && !this.el.nativeElement.contains($event.target)
-  //   ) {
-  //     this.removeSignButton();
-  //   }
-  // }
 
   resetData(emit = false) {
     if (this.withDateControl) {

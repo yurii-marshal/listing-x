@@ -517,10 +517,10 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       .subscribe((model) => {
         this.patchForm(model);
 
+        this.checkSignAccess();
+
         this.getAllFieldsCount(model);
         this.updatePageProgress(model, 0);
-
-        this.checkSignAccess();
 
         this.disableSignFields();
 
@@ -640,19 +640,19 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     }
   }
 
-  // private checkUnsigned() {
-  //   if (this.isSignMode && !this.offer.isSigned) {
-  //     if (this.signatures.toArray().filter(el => el.isActiveSignRow).every(el => !!el.signatureControl.value)) {
-  //       this.signatures.toArray().forEach((signature) => {
-  //         if (signature.isActiveSignRow) {
-  //           setTimeout(() => {
-  //             signature.resetData(true);
-  //           }, 100);
-  //         }
-  //       });
-  //     }
-  //   }
-  // }
+  private checkUnsigned() {
+    if (this.isSignMode && !this.offer.isSigned) {
+      if (this.signatures.toArray().filter(el => el.isActiveSignRow).every(el => !!el.signatureControl.value)) {
+        this.signatures.toArray().forEach((signature) => {
+          if (signature.isActiveSignRow) {
+            setTimeout(() => {
+              signature.resetData(true);
+            }, 100);
+          }
+        });
+      }
+    }
+  }
 
   private activateSignButtons() {
     this.signatures.toArray().forEach((sd: SignatureDirective) => {
@@ -759,13 +759,13 @@ export class StepTwoComponent implements OnInit, OnDestroy {
             takeUntil(this.onDestroyed$),
           )
           .subscribe((controlValue) => {
-            this.documentInputChanged(Object.keys(group.getRawValue())[controlIndex], controlValue, groupIndex);
+            this.saveDocumentInput(Object.keys(group.getRawValue())[controlIndex], controlValue, groupIndex);
           });
       });
     });
   }
 
-  private documentInputChanged(controlName: string, controlValue: any, groupIndex: number) {
+  private saveDocumentInput(controlName: string, controlValue: any, groupIndex: number) {
     if (controlValue === '') {
       controlValue = null;
     } else if (controlValue instanceof Date) {
@@ -864,7 +864,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   private getSignFieldAllowedFor(role: string, index: number) {
-    // 1 - disable if this field isn't allowed for current user
     const value = this.isSignMode ? {
       value: '',
       disabled: this.offer[role][index] ? this.offer[role][index].email !== this.user.email : true,
@@ -873,7 +872,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     return [value, []];
   }
 
-  // 3 - disable every field with class-marker
   private disableSignFields() {
     this.signatures.toArray()
       .filter(el => el.isActiveSignRow)
