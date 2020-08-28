@@ -165,10 +165,15 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     return [{value: '', disabled: true}, []];
   }
 
-  coTypeChanged(val: string) {
+  coTypeChanged(controlToEnable?: string) {
     this.offerTypeTextControls.forEach((controlName: string) => {
       this.documentForm.get(controlName).patchValue('');
+      this.documentForm.get(controlName).disable({emitEvent: false});
     });
+
+    if (controlToEnable) {
+      this.documentForm.get(controlToEnable).enable({emitEvent: false});
+    }
   }
 
   modeChanged(isSign: boolean) {
