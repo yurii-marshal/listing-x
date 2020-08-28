@@ -92,7 +92,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       this.snackbar.open('Offer is already signed');
     }
 
-    this.okButtonText = this.isSignMode ? 'Sign' : 'Continue';
+    this.okButtonText = this.isSignMode && !this.offer.isSigned ? 'Sign' : 'Continue';
 
     this.isDisabled = this.offer.userRole !== 'agent_buyer' || this.isSignMode;
 
@@ -540,13 +540,12 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   continue() {
-    this.form.nativeElement.blur();
-
     if (this.isSignMode) {
       this.signatures.toArray().filter(el => el.isActiveSignRow).every((el) => !!el.signatureControl.value)
-        ? this.finalSignAgreement()
+        ? (this.offer.isSigned ? this.closeOffer() : this.finalSignAgreement())
         : this.moveToNextSignField(true);
     } else {
+      this.form.nativeElement.blur();
       this.documentForm.markAllAsTouched();
 
       if (this.scrollToFirstInvalidField()) {
@@ -563,7 +562,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
   closeOffer() {
     this.form.nativeElement.blur();
-    this.router.navigateByUrl('/portal/purchase-agreements/all');
+    this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/details`);
   }
 
   switchDaysAndDate(value: string, daysControlName: string, dateControlName: string, emit = true) {
