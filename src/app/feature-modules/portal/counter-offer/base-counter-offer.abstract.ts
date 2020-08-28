@@ -141,7 +141,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   continue() {
     if (this.isSignMode) {
       this.signatures.toArray().filter(el => el.isActiveSignRow).every((el) => !!el.signatureControl.value)
-        ? this.signCO()
+        ? (this.counterOffer.isSigned ? this.closeCO() : this.signCO())
         : this.nextField(true);
 
     } else {
