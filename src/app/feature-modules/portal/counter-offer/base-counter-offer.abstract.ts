@@ -111,7 +111,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
         this.isMCOFinalSign = counterOffer.offerType as string === 'multiple_counter_offer' && counterOffer.status === 'completed';
 
-        this.isMCOFinalSign
+        this.isMCOFinalSign && !this.counterOffer.isSigned
           ? this.setSignFields(this.finalSignFields)
           : this.setSignFields(this.signFields);
 
@@ -125,15 +125,17 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/details`);
   }
 
-  nextField(isSigned: boolean, signatures = this.signatures.toArray().filter(el => el.isActiveSignRow)) {
+  nextField(isSigned: boolean, signatures = this.signatures.toArray().filter(el => el.isActiveSignRow)): boolean {
     if (isSigned && signatures.length) {
-      for (const signature of signatures) {
-        if (!signature.signatureControl.value) {
-          signature.scrollToButton();
-          return;
+      for (const sd of signatures) {
+        if (sd.isActiveSignRow && !sd.signatureControl.value) {
+          sd.scrollToButton();
+          return true;
         }
       }
     }
+
+    return false;
   }
 
   continue() {
@@ -275,13 +277,17 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   }
 
   private signCO() {
-    this.counterOfferService.signCounterOffer(this.id, this.isMCOFinalSign ? 'final_approval' : 'sign')
-      .pipe(takeUntil(this.onDestroyed$))
-      .subscribe(() => {
-        this.counterOffer.isSigned = true;
-        this.snackbar.open('Counter Offer is signed now');
-        this.closeCO();
-      });
+    if (this.nextField(true)) {
+      this.snackbar.open('Please, sign all mandatory fields');
+    } else {
+      this.counterOfferService.signCounterOffer(this.id, this.isMCOFinalSign ? 'final_approval' : 'sign')
+        .pipe(takeUntil(this.onDestroyed$))
+        .subscribe(() => {
+          this.counterOffer.isSigned = true;
+          this.snackbar.open('Counter Offer is signed now');
+          this.closeCO();
+        });
+    }
   }
 
   private setFieldsCount() {
