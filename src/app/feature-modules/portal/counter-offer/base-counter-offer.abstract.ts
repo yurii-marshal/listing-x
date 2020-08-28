@@ -4,7 +4,7 @@ import { ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } fro
 import { CounterOffer } from '../../../core-modules/models/counter-offer';
 import { CounterOfferService } from '../services/counter-offer.service';
 import { debounceTime, takeUntil } from 'rxjs/operators';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { User } from '../../auth/models';
 import * as _ from 'lodash';
 import { MatSnackBar } from '@angular/material';
@@ -50,7 +50,6 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
   okButtonText: string;
 
-  signFieldElements: any[] = [];
   onDestroyed$: Subject<void> = new Subject<void>();
 
   offerTypeTextControls = [
@@ -87,6 +86,8 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         this.counterOffer = counterOffer;
         this.documentObj = document;
 
+        this.patchForm();
+
         const isUserPitcher = this.counterOffer.pitchers.some(pitcher => pitcher.email === this.user.email);
 
         this.isDisabled = !isUserPitcher;
@@ -114,9 +115,6 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
           ? this.setSignFields(this.finalSignFields)
           : this.setSignFields(this.signFields);
 
-        this.patchForm();
-        this.disableSignFields();
-
         this.subscribeToFormChanges(this.documentForm);
         this.nextField(true);
       });
@@ -127,11 +125,11 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/details`);
   }
 
-  nextField(isSigned) {
-    if (isSigned && this.signFieldElements.length) {
-      for (const item of this.signFieldElements) {
-        if (!item.value) {
-          item.scrollIntoView({behavior: 'smooth', block: 'center'});
+  nextField(isSigned: boolean, signatures = this.signatures.toArray().filter(el => el.isActiveSignRow)) {
+    if (isSigned && signatures.length) {
+      for (const signature of signatures) {
+        if (!signature.signatureControl.value) {
+          signature.scrollToButton();
           return;
         }
       }
@@ -259,17 +257,21 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   }
 
   private setSignFields(signFields) {
-    signFields.map((fieldObj) => {
-      if (this.counterOffer[fieldObj.role][fieldObj.index] && this.counterOffer[fieldObj.role][fieldObj.index].email === this.user.email) {
-        this.documentForm.get(fieldObj.controlName).setValidators([Validators.required]);
+    signFields.forEach((field) => {
+      if (this.counterOffer[field.role][field.index] && this.counterOffer[field.role][field.index].email === this.user.email) {
+        if (!this.documentForm.get(field.controlName).value) {
+          this.documentForm.get(field.controlName).enable({onlySelf: true, emitEvent: false});
+        }
       }
     });
-  }
 
-  private disableSignFields() {
     this.signatures.toArray()
-      .filter(el => el.isActiveSignRow)
-      .map(el => el.signatureControl.disable({onlySelf: true, emitEvent: false}));
+      .filter(el => el.signatureControl.enabled)
+      .map(el => {
+        el.isActiveSignRow = true;
+        el.renderSignButton();
+        el.signatureControl.disable({onlySelf: true, emitEvent: false});
+      });
   }
 
   private signCO() {

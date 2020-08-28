@@ -308,14 +308,16 @@
       [isSignMode]="isSignMode"
     >
 
-      <app-agreement-mode-switcher
-        [show]="isSideBarOpen && showSwitcher"
-        [disabled]="counterOffer?.isSigned || documentForm?.invalid"
-        [isChecked]="isSignMode"
-        (changeMode)="modeChanged($event)"
-      ></app-agreement-mode-switcher>
+      <section>
+        <app-agreement-mode-switcher
+          [show]="isSideBarOpen && showSwitcher"
+          [disabled]="counterOffer?.isSigned || documentForm?.invalid"
+          [isChecked]="isSignMode"
+          (changeMode)="modeChanged($event)"
+        ></app-agreement-mode-switcher>
 
-      <app-counter-offer-information [counterOffer]="counterOffer" [show]="isSideBarOpen"></app-counter-offer-information>
+        <app-counter-offer-information [counterOffer]="counterOffer" [show]="isSideBarOpen"></app-counter-offer-information>
+      </section>
 
       <app-counter-offer-controls [counterOffer]="counterOffer" [visible]="isSidebarControlsVisible"></app-counter-offer-controls>
 
