@@ -35,7 +35,7 @@ export class BuyerCOAgreementComponent extends BaseCounterOfferAbstract<CounterO
 
     this.documentForm = this.fb.group({
       date_buyer_counter_date: [{value: null, disabled: true}, []],
-      radio_counter_offer_type: [{value: 'counter', disabled: true}, []],
+      radio_counter_offer_type: [{value: null, disabled: true}, []],
       text_offer_type_other: [{value: null, disabled: true}, []],
       text_counter_offer_number: [{value: null, disabled: true}, []],
       text_multiple_counter_offer_number: [{value: null, disabled: true}, []],

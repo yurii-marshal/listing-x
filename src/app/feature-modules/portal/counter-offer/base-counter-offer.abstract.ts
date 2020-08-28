@@ -112,6 +112,9 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         this.patchForm();
         this.modeChanged(this.isSignMode);
 
+        this.getAllFieldsCount();
+        this.disableSignFields();
+
         this.subscribeToFormChanges(this.documentForm);
         this.nextField(true);
       });
@@ -167,7 +170,8 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   }
 
   modeChanged(isSign: boolean) {
-    this.isDisabled = this.isSignMode = isSign;
+    this.isDisabled = isSign;
+    this.isSignMode = isSign;
     this.okButtonText = (!this.counterOffer.isSigned && this.isSignMode) ? 'Sign' : 'Back to the offer';
   }
 
@@ -204,9 +208,6 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         }
       });
     });
-
-    this.getAllFieldsCount();
-    this.disableSignedFields();
   }
 
   private subscribeToFormChanges(documentForm) {
@@ -260,7 +261,6 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     signFields.map((fieldObj) => {
       if (this.counterOffer[fieldObj.role][fieldObj.index] && this.counterOffer[fieldObj.role][fieldObj.index].email === this.user.email) {
         this.documentForm.get(fieldObj.controlName).setValidators([Validators.required]);
-        this.documentForm.get(fieldObj.controlName).enable({emitEvent: false, onlySelf: true});
       }
     });
   }
@@ -269,9 +269,10 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     this.allFieldsCount = Object.keys(this.documentObj).length;
   }
 
-  private disableSignedFields() {
-    this.signFieldElements = Array.from(document.getElementsByClassName('sign-input'));
-    this.signFieldElements.forEach(item => item.disabled = !!item.value);
+  private disableSignFields() {
+    this.signatures.toArray()
+      .filter(el => el.isActiveSignRow)
+      .map(el => el.signatureControl.disable({onlySelf: true, emitEvent: false}));
   }
 
   private signCO() {
