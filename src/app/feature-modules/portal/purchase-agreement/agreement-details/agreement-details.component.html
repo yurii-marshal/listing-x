@@ -236,7 +236,7 @@
               <button *ngIf="doc.documentType === 'purchase_agreement' && isAgent && !isSeller"
                       mat-menu-item
                       [disabled]="!doc.allowEdit"
-                      routerLink="portal/purchase-agreements/{{ offer.id }}/step-two"
+                      routerLink="/portal/purchase-agreements/{{ offer.id }}/step-two"
               >Edit
               </button>
 

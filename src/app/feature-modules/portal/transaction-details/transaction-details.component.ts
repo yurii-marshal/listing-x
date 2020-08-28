@@ -15,6 +15,7 @@ import { SpqDialogComponent } from '../dialogs/spq-dialog/spq-dialog.component';
 import { AddendumDialogComponent } from '../dialogs/addendum-dialog/addendum-dialog.component';
 import { CalendarEvent } from '../../../core-modules/models/calendar-event';
 import { OfferService } from 'src/app/feature-modules/portal/services/offer.service';
+import { DocumentStatus } from 'src/app/core-modules/enums/document-status';
 
 @Component({
   selector: 'app-transaction-details',
@@ -27,7 +28,7 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
   calendarDataSource: CalendarEvent[];
 
   isOpenInviteUserOverlay: boolean;
-  isResidentialAgreementCompleted: boolean = true;
+  isResidentialAgreementCompleted: boolean = false;
 
   userEmailControl: FormControl = new FormControl(null, [Validators.required, Validators.email]);
 
@@ -96,7 +97,7 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
     this.isSeller = [...agentSellers, ...sellers].some(({email}) => email === this.authService.currentUser.email);
 
     const residentialAgreement = transaction.documents.find(doc => doc.documentType === GeneratedDocumentType.Contract);
-    // this.isResidentialAgreementCompleted = residentialAgreement && residentialAgreement.status === DocumentStatus.Completed;
+    this.isResidentialAgreementCompleted = residentialAgreement && residentialAgreement.status === DocumentStatus.Completed;
   }
 
   offerLoaded(offer: Offer): void {
