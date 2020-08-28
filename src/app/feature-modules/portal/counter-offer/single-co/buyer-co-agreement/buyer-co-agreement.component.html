@@ -24,17 +24,17 @@
               <div class="clearfix"></div>
               <div>
                 This is a counter offer to the:
-                <input [disableControl]="isDisabled" (change)="coTypeChanged()" formControlName="radio_counter_offer_type" value="counter"
+                <input [disableControl]="isDisabled" (change)="setCOTypeFields('text_counter_offer_number')" formControlName="radio_counter_offer_type" value="counter"
                        type="radio"> Seller Counter Offer No.
                 <input [disableControl]="isDisabled" formControlName="text_counter_offer_number" type="text"
                        class="i-lr__5"> ,
-                <input [disableControl]="isDisabled" (change)="coTypeChanged('text_multiple_counter_offer_number')"
+                <input [disableControl]="isDisabled" (change)="setCOTypeFields('text_multiple_counter_offer_number')"
                        formControlName="radio_counter_offer_type" value="counter_multiple"
                        type="radio"> Seller Multiple Counter Offer No.
                 <input [disableControl]="isDisabled"
                        formControlName="text_multiple_counter_offer_number" type="text"
                        class="i-lr__5"> , or
-                <input [disableControl]="isDisabled" (change)="coTypeChanged('text_offer_type_other')"
+                <input [disableControl]="isDisabled" (change)="setCOTypeFields('text_offer_type_other')"
                        formControlName="radio_counter_offer_type" value="other"
                        type="radio"> Other
                 <input [disableControl]="isDisabled"
@@ -287,7 +287,8 @@
     </div>
 
     <app-sidebar
-      [(opened)]="isSideBarOpen"
+      [opened]="isSideBarOpen"
+      (openedChange)="toggleSidebar($event)"
       (continue)="continue()"
       [okButtonText]="okButtonText"
       [isSignMode]="isSignMode"

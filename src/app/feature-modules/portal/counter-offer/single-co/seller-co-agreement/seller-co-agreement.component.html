@@ -24,15 +24,15 @@
               <div class="clearfix"></div>
               <div>
                 This is a counter offer to the:
-                <input [disableControl]="isDisabled" (change)="coTypeChanged()" formControlName="radio_counter_offer_type"
+                <input [disableControl]="isDisabled" (change)="setCOTypeFields()" formControlName="radio_counter_offer_type"
                        value="purchase_agreement" type="radio"> Purchase Agreement,
-                <input [disableControl]="isDisabled" (change)="coTypeChanged('text_counter_offer_number')" formControlName="radio_counter_offer_type"
+                <input [disableControl]="isDisabled" (change)="setCOTypeFields('text_counter_offer_number')" formControlName="radio_counter_offer_type"
                        value="buyer_counter"
                        type="radio"> Buyer Counter Offer No.
                 <input [disableControl]="isDisabled"
                        formControlName="text_counter_offer_number" type="text"
                        class="i-lr__5"> , or
-                <input [disableControl]="isDisabled" (change)="coTypeChanged('text_offer_type_other')" formControlName="radio_counter_offer_type"
+                <input [disableControl]="isDisabled" (change)="setCOTypeFields('text_offer_type_other')" formControlName="radio_counter_offer_type"
                        value="other"
                        type="radio"> Other
                 <input [disableControl]="isDisabled"
@@ -304,7 +304,8 @@
     </div>
 
     <app-sidebar
-      [(opened)]="isSideBarOpen"
+      [opened]="isSideBarOpen"
+      (openedChange)="toggleSidebar($event)"
       (continue)="continue()"
       [okButtonText]="okButtonText"
       [isSignMode]="isSignMode"

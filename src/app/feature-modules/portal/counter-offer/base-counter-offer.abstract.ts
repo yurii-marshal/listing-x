@@ -40,20 +40,15 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   completedFieldsCount: number = 0;
   allFieldsCount: number = 0;
   isSidebarControlsVisible: boolean = false;
-
   user: User;
-
   signFields = [];
   finalSignFields = [];
-
   isMCOFinalSign: boolean;
-
   okButtonText: string;
-
   onDestroyed$: Subject<void> = new Subject<void>();
-
   offerTypeTextControls = [
     'text_counter_offer_number',
+    'text_multiple_counter_offer_number',
     'text_offer_type_other',
   ];
 
@@ -66,6 +61,15 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     public datePipe: DatePipe,
     public authService: AuthService,
   ) {
+  }
+
+  toggleSidebar(value: boolean) {
+    this.isSideBarOpen = value;
+
+    setTimeout(() => {
+      this.isSidebarControlsVisible =
+        value && this.counterOffer.catchers.some((user: Person) => user.email === this.authService.currentUser.email);
+    }, value ? 250 : 0);
   }
 
   ngOnInit() {
@@ -86,6 +90,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         this.counterOffer = counterOffer;
         this.documentObj = document;
 
+        this.setCOTypeFields();
         this.patchForm();
 
         const isUserPitcher = this.counterOffer.pitchers.some(pitcher => pitcher.email === this.user.email);
@@ -165,10 +170,12 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     return [{value: '', disabled: true}, []];
   }
 
-  coTypeChanged(controlToEnable?: string) {
+  setCOTypeFields(controlToEnable?: string) {
     this.offerTypeTextControls.forEach((controlName: string) => {
-      this.documentForm.get(controlName).patchValue('');
-      this.documentForm.get(controlName).disable({emitEvent: false});
+      if (this.documentForm.get(controlName)) {
+        this.documentForm.get(controlName).patchValue('');
+        this.documentForm.get(controlName).disable({emitEvent: false});
+      }
     });
 
     if (controlToEnable) {
