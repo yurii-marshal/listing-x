@@ -21,7 +21,7 @@ export class SignatureBoxComponent implements OnInit {
   user: Person;
 
   @Input()
-  signature: Signature;
+  signature: any;
 
   @Input()
   signWithInitials: boolean = true;

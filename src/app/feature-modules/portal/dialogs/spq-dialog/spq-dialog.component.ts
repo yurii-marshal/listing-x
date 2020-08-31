@@ -7,7 +7,7 @@ import {TransactionService} from '../../services/transaction.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import * as _ from 'lodash';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-spqdialog',
@@ -17,7 +17,7 @@ import { takeUntil } from 'rxjs/operators';
 export class SpqDialogComponent implements AfterViewInit, OnDestroy {
   questionsStream: Observable<SpqQuestion[]>;
   form: FormGroup;
-  isConfirmMode: boolean = false;
+  isConfirmMode: boolean = !this.data.allowEdit;
 
   private onDestroyed$: Subject<void> = new Subject<void>();
 
@@ -29,7 +29,8 @@ export class SpqDialogComponent implements AfterViewInit, OnDestroy {
     return this.form.get('questions') as FormArray;
   }
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: {questions: SpqQuestion[], docId: number, explanation: string, signAfterFill: true},
+  constructor(@Inject(MAT_DIALOG_DATA)
+              public data: {questions: SpqQuestion[], docId: number, explanation: string, allowEdit: boolean, allowSign: boolean},
               public dialogRef: MatDialogRef<SpqDialogComponent>,
               private fb: FormBuilder,
               private transactionService: TransactionService,
@@ -77,14 +78,19 @@ export class SpqDialogComponent implements AfterViewInit, OnDestroy {
     }
 
     this.transactionService.updateSpq(this.data.docId, this.form.value).pipe(
-      takeUntil(this.onDestroyed$)
-    ).subscribe((data) => this.isConfirmMode = true);
+      takeUntil(this.onDestroyed$),
+      switchMap(() => this.transactionService.notifyAboutSpqUpdated$),
+      map(data => data.pendingDocuments.find(doc => doc.id === this.data.docId)),
+    ).subscribe(doc => {
+      this.data.allowSign = doc && doc.allowSign;
+      this.isConfirmMode = true;
+    });
   }
 
   finish(): void {
     this.dialogRef.close();
 
-    if (this.data.signAfterFill) {
+    if (this.data.allowSign) {
       this.router.navigate(['/e-sign/spq', this.data.docId]);
     }
   }
