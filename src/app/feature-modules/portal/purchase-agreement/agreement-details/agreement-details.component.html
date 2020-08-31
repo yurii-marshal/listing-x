@@ -111,7 +111,7 @@
           </button>
 
           <button class="counter-offer-btn"
-                  *ngIf="isAgent"
+                  *ngIf="offer.userRole === 'agent_seller'"
                   [disabled]="!offer.canCreateCounter"
                   mat-flat-button
                   (click)="createCounterOffer('counter_offer')"

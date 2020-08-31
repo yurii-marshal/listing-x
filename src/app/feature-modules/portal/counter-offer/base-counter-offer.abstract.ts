@@ -46,11 +46,6 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   isMCOFinalSign: boolean;
   okButtonText: string;
   onDestroyed$: Subject<void> = new Subject<void>();
-  offerTypeTextControls = [
-    'text_counter_offer_number',
-    'text_multiple_counter_offer_number',
-    'text_offer_type_other',
-  ];
 
   constructor(
     public route: ActivatedRoute,
@@ -90,7 +85,6 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         this.counterOffer = counterOffer;
         this.documentObj = document;
 
-        this.setCOTypeFields();
         this.patchForm();
 
         const isUserPitcher = this.counterOffer.pitchers.some(pitcher => pitcher.email === this.user.email);
@@ -168,19 +162,6 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     this.finalSignFields.push({controlName, role, index});
 
     return [{value: '', disabled: true}, []];
-  }
-
-  setCOTypeFields(controlToEnable?: string) {
-    this.offerTypeTextControls.forEach((controlName: string) => {
-      if (this.documentForm.get(controlName)) {
-        this.documentForm.get(controlName).patchValue('');
-        this.documentForm.get(controlName).disable({emitEvent: false});
-      }
-    });
-
-    if (controlToEnable) {
-      this.documentForm.get(controlToEnable).enable({emitEvent: false});
-    }
   }
 
   modeChanged(isSign: boolean) {
