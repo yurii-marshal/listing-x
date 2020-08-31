@@ -80,8 +80,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.isLoading = true;
-
     this.offerId = +this.route.snapshot.params.id;
     this.offer = this.route.snapshot.data.offer;
     this.user = this.authService.currentUser;
@@ -510,28 +508,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       }),
     }, {updateOn: 'blur'});
 
-    this.offerService.getOfferDocument(this.offerId)
-      .pipe(takeUntil(this.onDestroyed$))
-      .subscribe((model) => {
-        this.patchForm(model);
-
-        this.checkSignAccess();
-
-        this.getAllFieldsCount(model);
-        this.updatePageProgress(model, 0);
-
-        this.disableSignFields();
-
-        this.switchDaysAndDate(
-          this.documentForm.get('page_5.radio_escrow').value,
-          'page_5.text_escrow_days',
-          'page_5.date_escrow_date',
-          false
-        );
-
-        this.isLoading = false;
-        // this.scrollToFirstInvalidField();
-      });
+    this.getOfferAgreement();
 
     this.initPageBreakers();
     this.subscribeToFormChanges();
@@ -593,6 +570,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         if (data.saved) {
           this.snackbar.open('Offer is updated');
           this.resetAgreement();
+          this.getOfferAgreement();
         }
         if (data.requestToSave) {
           this.openSaveOfferDialog(data.changedOfferModel);
@@ -627,12 +605,40 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       .patchValue((price - (initialDeposits + increasedDeposits + loans)).toFixed(2));
   }
 
+  private getOfferAgreement() {
+    this.isLoading = true;
+
+    this.offerService.getOfferDocument(this.offerId)
+      .pipe(takeUntil(this.onDestroyed$))
+      .subscribe((model) => {
+        this.patchForm(model);
+
+        this.checkSignAccess();
+
+        this.getAllFieldsCount(model);
+        this.updatePageProgress(model, 0);
+
+        this.disableSignFields();
+
+        this.switchDaysAndDate(
+          this.documentForm.get('page_5.radio_escrow').value,
+          'page_5.text_escrow_days',
+          'page_5.date_escrow_date',
+          false
+        );
+
+        this.isLoading = false;
+        // this.scrollToFirstInvalidField();
+      });
+  }
+
   private checkSignAccess() {
     if (this.offer.userRole === 'agent_buyer' && this.isSignMode && (this.documentForm.invalid || this.offer.isSigned)) {
       this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/step-two`);
     } else if (this.offer.userRole !== 'agent_buyer' && !this.isSignMode) {
       this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/sign`);
     } else if (this.isSignMode) {
+      this.isDisabled = true;
       this.activateSignButtons();
     } else {
       this.isDisabled = this.offer.userRole !== 'agent_buyer';
@@ -654,8 +660,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   private activateSignButtons() {
-    this.isDisabled = true;
-
     this.signatures.toArray().forEach((sd: SignatureDirective) => {
       if (sd.signatureControl.enabled && !sd.signatureControl.value) {
         sd.renderSignButton();
@@ -850,6 +854,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
               .subscribe((model: Offer) => {
                 this.offer = model;
                 this.resetAgreement();
+                this.getOfferAgreement();
               });
           } else if (data.discard) {
             this.offer = this.offerService.currentOffer;
