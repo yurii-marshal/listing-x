@@ -611,6 +611,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.offerService.getOfferDocument(this.offerId)
       .pipe(takeUntil(this.onDestroyed$))
       .subscribe((model) => {
+        // TODO
         this.patchForm(model);
 
         this.checkSignAccess();
@@ -620,20 +621,28 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
         this.disableSignFields();
 
-        this.switchDaysAndDate(
-          this.documentForm.get('page_5.radio_escrow').value,
-          'page_5.text_escrow_days',
-          'page_5.date_escrow_date',
-          false
-        );
+        // TODO
+        setTimeout(() => {
+          if (this.documentForm.get('page_5.text_escrow_days').value) {
+            console.log(this.documentForm.get('page_5.text_escrow_days').value);
+            console.log(this.documentForm.get('page_5.radio_escrow').value);
+            this.switchDaysAndDate(
+              this.documentForm.get('page_5.radio_escrow').value,
+              'page_5.text_escrow_days',
+              'page_5.date_escrow_date',
+              false
+            );
+          }
+
+        }, 2000);
 
         this.isLoading = false;
-        // this.scrollToFirstInvalidField();
       });
   }
 
   private checkSignAccess() {
-    if (this.offer.userRole === 'agent_buyer' && this.isSignMode && (this.documentForm.invalid || this.offer.isSigned)) {
+    // this.documentForm.invalid ||
+    if (this.offer.userRole === 'agent_buyer' && this.isSignMode && (this.offer.isSigned)) {
       this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/step-two`);
     } else if (this.offer.userRole !== 'agent_buyer' && !this.isSignMode) {
       this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/sign`);
@@ -669,14 +678,15 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.moveToNextSignField(true);
   }
 
-  private setRelatedFields(enable: string, disable: string, emit: boolean) {
-    this.documentForm.get(enable).setValidators([Validators.required]);
-    this.documentForm.get(enable).enable({emitEvent: false});
-    this.documentForm.get(enable).markAsDirty();
+  private setRelatedFields(enableControl: string, disableControl: string, emit: boolean) {
+    console.log(this.documentForm.get(enableControl).value);
+    this.documentForm.get(enableControl).setValidators([Validators.required]);
+    this.documentForm.get(enableControl).enable({emitEvent: false});
+    this.documentForm.get(enableControl).markAsDirty();
 
-    this.documentForm.get(disable).clearValidators();
-    this.documentForm.get(disable).disable({emitEvent: false});
-    this.documentForm.get(disable).patchValue('', {emitEvent: emit});
+    this.documentForm.get(disableControl).clearValidators();
+    this.documentForm.get(disableControl).disable({emitEvent: false});
+    this.documentForm.get(disableControl).patchValue('', {emitEvent: emit});
   }
 
   private scrollToFirstInvalidField(): boolean {
@@ -696,26 +706,41 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   private patchForm(model) {
-    Object.entries(model).forEach(([key, value]) => {
-      Object.keys(this.documentForm.controls).forEach((groupName) => {
-
-        if (_.camelCase(groupName) === key) {
-
-          Object.entries(value).forEach(([field, data]) => {
-            Object.keys(value).forEach((controlName) => {
-
-              if (field === controlName && data) {
-                this.documentForm.get(`${groupName}.${_.snakeCase(field)}`)
-                  .patchValue(data, {emitEvent: false, onlySelf: true});
+    _.forOwn(model, (pageObj, page) => {
+      _.forOwn(this.documentForm.controls, (formGroup, groupName) => {
+        if (_.camelCase(groupName) === page) {
+          _.forOwn(formGroup.value, (value, controlName) => {
+            _.forOwn(pageObj, (fieldValue, fieldName) => {
+              if (_.camelCase(controlName) === fieldName && fieldValue) {
+                this.documentForm.get(`${groupName}.${_.snakeCase(controlName)}`)
+                  .patchValue(fieldValue, {emitEvent: false, onlySelf: true});
               }
-
             });
           });
-
         }
-
       });
     });
+
+    // Object.entries(model).forEach(([key, value]) => {
+    //   Object.keys(this.documentForm.controls).forEach((groupName) => {
+    //
+    //     if (_.camelCase(groupName) === key) {
+    //
+    //       Object.entries(value).forEach(([field, data]) => {
+    //         Object.keys(value).forEach((controlName) => {
+    //
+    //           if (field === controlName && data) {
+    //             await this.documentForm.get(`${groupName}.${_.snakeCase(field)}`)
+    //               .patchValue(data, {emitEvent: false, onlySelf: true});
+    //           }
+    //
+    //         });
+    //       });
+    //
+    //     }
+    //
+    //   });
+    // });
   }
 
   private getAllFieldsCount(model) {
