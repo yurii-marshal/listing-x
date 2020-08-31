@@ -4,7 +4,7 @@ import { TransactionService } from '../services/transaction.service';
 import { Transaction, TransactionStatus } from '../../../core-modules/models/transaction';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
-import { flatMap, takeUntil } from 'rxjs/operators';
+import { flatMap, takeUntil, tap } from 'rxjs/operators';
 import { AddendumData, Document, GeneratedDocument } from '../../../core-modules/models/document';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
 import { Subject } from 'rxjs';
@@ -72,7 +72,8 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
       flatMap(() => {
         const transactionId: number = Number(this.route.snapshot.params.id);
         return this.transactionService.loadOne(transactionId);
-      })
+      }),
+      tap(transaction => this.transactionService.notifyAboutSpqUpdated$.next(transaction))
     ).subscribe((transaction) => this.transactionLoaded(transaction));
   }
 
@@ -216,13 +217,14 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
     }
   }
 
-  openSPQDialog(doc: GeneratedDocument, signAfterFill: boolean = false): void {
+  openSPQDialog(doc: GeneratedDocument): void {
     this.dialog.open(SpqDialogComponent, {
       width: '600px',
       data: {
         ...doc.documentData,
         docId: doc.id,
-        signAfterFill
+        allowEdit: doc.allowEdit,
+        allowSign: doc.allowSign,
       }
     });
   }
