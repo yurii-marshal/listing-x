@@ -611,7 +611,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.offerService.getOfferDocument(this.offerId)
       .pipe(takeUntil(this.onDestroyed$))
       .subscribe((model) => {
-        // TODO
         this.patchForm(model);
 
         this.checkSignAccess();
@@ -621,50 +620,32 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
         this.disableSignFields();
 
-        // TODO
-        setTimeout(() => {
-          if (this.documentForm.get('page_5.text_escrow_days').value) {
-            console.log(this.documentForm.get('page_5.text_escrow_days').value);
-            console.log(this.documentForm.get('page_5.radio_escrow').value);
-            this.switchDaysAndDate(
-              this.documentForm.get('page_5.radio_escrow').value,
-              'page_5.text_escrow_days',
-              'page_5.date_escrow_date',
-              false
-            );
-          }
+        this.initSwitchDaysAndDate();
 
-        }, 2000);
+        this.isDisabled = this.offer.userRole !== 'agent_buyer' || this.isSignMode;
 
         this.isLoading = false;
       });
   }
 
+  private initSwitchDaysAndDate() {
+    if (this.documentForm.get('page_5.text_escrow_days').value) {
+      this.switchDaysAndDate(
+        this.documentForm.get('page_5.radio_escrow').value,
+        'page_5.text_escrow_days',
+        'page_5.date_escrow_date',
+        false
+      );
+    }
+  }
+
   private checkSignAccess() {
-    // this.documentForm.invalid ||
     if (this.offer.userRole === 'agent_buyer' && this.isSignMode && (this.offer.isSigned)) {
       this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/step-two`);
     } else if (this.offer.userRole !== 'agent_buyer' && !this.isSignMode) {
       this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/sign`);
     } else if (this.isSignMode) {
-      this.isDisabled = true;
       this.activateSignButtons();
-    } else {
-      this.isDisabled = this.offer.userRole !== 'agent_buyer';
-    }
-  }
-
-  private checkUnsigned() {
-    if (this.isSignMode && !this.offer.isSigned) {
-      if (this.signatures.toArray().filter(el => el.isActiveSignRow).every(el => !!el.signatureControl.value)) {
-        this.signatures.toArray().forEach((signature) => {
-          if (signature.isActiveSignRow) {
-            setTimeout(() => {
-              signature.resetData(true);
-            }, 100);
-          }
-        });
-      }
     }
   }
 
@@ -679,7 +660,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   private setRelatedFields(enableControl: string, disableControl: string, emit: boolean) {
-    console.log(this.documentForm.get(enableControl).value);
     this.documentForm.get(enableControl).setValidators([Validators.required]);
     this.documentForm.get(enableControl).enable({emitEvent: false});
     this.documentForm.get(enableControl).markAsDirty();
@@ -706,41 +686,14 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   private patchForm(model) {
-    _.forOwn(model, (pageObj, page) => {
-      _.forOwn(this.documentForm.controls, (formGroup, groupName) => {
-        if (_.camelCase(groupName) === page) {
-          _.forOwn(formGroup.value, (value, controlName) => {
-            _.forOwn(pageObj, (fieldValue, fieldName) => {
-              if (_.camelCase(controlName) === fieldName && fieldValue) {
-                this.documentForm.get(`${groupName}.${_.snakeCase(controlName)}`)
-                  .patchValue(fieldValue, {emitEvent: false, onlySelf: true});
-              }
-            });
-          });
+    Object.entries(model).forEach(([page, value]) => {
+      Object.entries(value).forEach(([field, data]) => {
+        if (this.documentForm.get(`${_.snakeCase(page)}.${_.snakeCase(field)}`)) {
+          this.documentForm.get(`${_.snakeCase(page)}.${_.snakeCase(field)}`)
+            .patchValue(data, {emitEvent: false, onlySelf: true});
         }
       });
     });
-
-    // Object.entries(model).forEach(([key, value]) => {
-    //   Object.keys(this.documentForm.controls).forEach((groupName) => {
-    //
-    //     if (_.camelCase(groupName) === key) {
-    //
-    //       Object.entries(value).forEach(([field, data]) => {
-    //         Object.keys(value).forEach((controlName) => {
-    //
-    //           if (field === controlName && data) {
-    //             await this.documentForm.get(`${groupName}.${_.snakeCase(field)}`)
-    //               .patchValue(data, {emitEvent: false, onlySelf: true});
-    //           }
-    //
-    //         });
-    //       });
-    //
-    //     }
-    //
-    //   });
-    // });
   }
 
   private getAllFieldsCount(model) {
