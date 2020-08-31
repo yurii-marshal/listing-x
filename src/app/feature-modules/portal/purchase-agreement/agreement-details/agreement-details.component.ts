@@ -58,11 +58,7 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     this.transactionsFlow = this.router.url.includes('transaction');
     const offerId: number = Number(this.route.snapshot.params.id);
 
-    this.offerService.loadOne(offerId)
-      .pipe(
-        takeUntil(this.onDestroyed$)
-      )
-      .subscribe((offer: Offer) => this.offerLoaded(offer));
+    this.loadOffer(offerId);
 
     // this.offerService.loadCalendarByOffer(offerId)
     //   .subscribe(items => this.calendarDataSource = items);
@@ -75,12 +71,10 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
         const offerId: number = Number(this.route.snapshot.params.id);
         return this.offerService.loadOne(offerId);
       })
-    ).subscribe((offer) => this.offerLoaded(offer));
+    ).subscribe((offer) => this.setUsers(offer));
   }
 
-  offerLoaded(offer: Offer): void {
-    this.offer = offer;
-
+  setUsers(offer: Offer): void {
     const {agentBuyers, agentSellers, sellers} = offer;
     this.isSeller = [...agentSellers, ...sellers].some(({email}) => email === this.authService.currentUser.email);
 
@@ -130,8 +124,8 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
 
   openSignOffer() {
     this.offer.userRole === 'agent_buyer'
-    ? this.router.navigateByUrl(`portal/purchase-agreements/${this.offer.id}/step-two`)
-    : this.router.navigateByUrl(`portal/purchase-agreements/${this.offer.id}/sign`);
+      ? this.router.navigateByUrl(`portal/purchase-agreements/${this.offer.id}/step-two`)
+      : this.router.navigateByUrl(`portal/purchase-agreements/${this.offer.id}/sign`);
   }
 
   openCounterOffer(doc) {
@@ -148,18 +142,20 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
       });
   }
 
-  deny() {
+  denyOffer() {
     this.offerService.rejectOffer(this.offer.id).pipe(
       takeUntil(this.onDestroyed$)
     ).subscribe(() => {
       this.offer.allowSign = false;
       this.offer.canCreateCounter = false;
       this.offer.canCreateMultipleCounter = false;
-      this.snackbar.open(`Denied.`);
+      this.snackbar.open(`Offer is denied.`);
+
+      this.loadOffer(this.offer.id);
     });
   }
 
-  onDeny(doc: GeneratedDocument) {
+  denyDocument(doc: GeneratedDocument) {
     const config: MatSnackBarConfig = {
       duration: 0,
       data: {
@@ -174,7 +170,7 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
       takeUntil(this.onDestroyed$),
       switchMap(() => {
         if (doc.documentType === 'purchase_agreement') {
-          this.deny();
+          this.denyOffer();
         } else {
           return this.counterOfferService.rejectCounterOffer(doc.id);
         }
@@ -236,20 +232,17 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     });
   }
 
-  rejectCO(id: number) {
-    this.counterOfferService.rejectCounterOffer(id)
-      .pipe(takeUntil(this.onDestroyed$))
-      .subscribe(() => {
-        this.router.navigateByUrl(`portal/purchase-agreements/${this.offer.id}/details`);
-      });
-  }
-
-  removeCO() {
-
-  }
-
   ngOnDestroy(): void {
     this.onDestroyed$.next();
     this.onDestroyed$.complete();
+  }
+
+  private loadOffer(id: number) {
+    this.offerService.loadOne(id)
+      .pipe(takeUntil(this.onDestroyed$))
+      .subscribe((offer: Offer) => {
+        this.offer = offer;
+        this.setUsers(offer);
+      });
   }
 }

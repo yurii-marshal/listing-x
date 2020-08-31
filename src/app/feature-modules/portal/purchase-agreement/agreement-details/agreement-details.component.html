@@ -97,7 +97,7 @@
                   mat-flat-button
                   *ngIf="offer.userRole === 'agent_seller'"
                   [disabled]="!offer.allowSign || offer.status === 'denied' || offer.isSigned"
-                  (click)="deny()"
+                  (click)="denyOffer()"
                   color="accent">
             DENY
           </button>
@@ -255,7 +255,7 @@
               </button>
               <button mat-menu-item (click)="triggerDownloadFile(doc)">View</button>
               <button mat-menu-item (click)="triggerDownloadFile(doc)">Download</button>
-              <button mat-menu-item disabled (click)="onDeny(doc)">Deny</button>
+              <button mat-menu-item disabled (click)="denyDocument(doc)">Deny</button>
               <button mat-menu-item disabled class="delete-btn">Delete</button>
             </mat-menu>
           </div>

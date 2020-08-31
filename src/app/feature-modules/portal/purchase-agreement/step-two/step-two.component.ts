@@ -699,6 +699,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   private getAllFieldsCount(model) {
+    this.allFieldsCount = 0;
+
     Object.keys(model).forEach((page) => {
       this.allFieldsCount += Object.keys(model[page]).length;
     });
