@@ -73,7 +73,6 @@ export class SignatureDirective implements OnInit {
       this.ampmControl.patchValue('am', {emitEvent: emit, onlySelf: true});
     }
 
-    this.signatureControl.enable({emitEvent: false, onlySelf: true});
     this.signatureControl.patchValue('', {emitEvent: emit, onlySelf: true});
   }
 
@@ -102,7 +101,7 @@ export class SignatureDirective implements OnInit {
       this.checkRootParent(parent.parent);
     } else {
       // now parent is root form
-      if (parent.valid) {
+      if (!parent.invalid) {
         this.signField();
       } else {
         this.snackbar.open(`Can't sign. Please, fill all required fields`);

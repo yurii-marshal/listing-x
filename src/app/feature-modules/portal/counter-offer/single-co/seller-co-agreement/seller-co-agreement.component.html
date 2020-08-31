@@ -24,17 +24,19 @@
               <div class="clearfix"></div>
               <div>
                 This is a counter offer to the:
-                <input [disableControl]="isDisabled" (change)="coTypeChanged($event)" formControlName="radio_counter_offer_type"
+                <input [disableControl]="isDisabled" (change)="setCOTypeFields()" formControlName="radio_counter_offer_type"
                        value="purchase_agreement" type="radio"> Purchase Agreement,
-                <input [disableControl]="isDisabled" (change)="coTypeChanged($event)" formControlName="radio_counter_offer_type"
+                <input [disableControl]="isDisabled" (change)="setCOTypeFields('text_counter_offer_number')" formControlName="radio_counter_offer_type"
                        value="buyer_counter"
                        type="radio"> Buyer Counter Offer No.
-                <input [disableControl]="isDisabled" formControlName="text_counter_offer_number" type="text"
+                <input [disableControl]="isDisabled"
+                       formControlName="text_counter_offer_number" type="text"
                        class="i-lr__5"> , or
-                <input [disableControl]="isDisabled" (change)="coTypeChanged($event)" formControlName="radio_counter_offer_type"
+                <input [disableControl]="isDisabled" (change)="setCOTypeFields('text_offer_type_other')" formControlName="radio_counter_offer_type"
                        value="other"
                        type="radio"> Other
-                <input [disableControl]="isDisabled" formControlName="text_offer_type_other" type="text"
+                <input [disableControl]="isDisabled"
+                       formControlName="text_offer_type_other" type="text"
                        class="i-lr-3__5"> (“Offer”), dated
                 <input matInput [min]="datepickerMinDate"
                        (click)="date_offer_dated.open()"
@@ -302,20 +304,23 @@
     </div>
 
     <app-sidebar
-      [(opened)]="isSideBarOpen"
+      [opened]="isSideBarOpen"
+      (openedChange)="toggleSidebar($event)"
       (continue)="continue()"
       [okButtonText]="okButtonText"
       [isSignMode]="isSignMode"
     >
 
-      <app-agreement-mode-switcher
-        [show]="isSideBarOpen && showSwitcher"
-        [disabled]="counterOffer?.isSigned || documentForm?.invalid"
-        [isChecked]="isSignMode"
-        (changeMode)="modeChanged($event)"
-      ></app-agreement-mode-switcher>
+      <section>
+        <app-agreement-mode-switcher
+          [show]="isSideBarOpen && showSwitcher"
+          [disabled]="counterOffer?.isSigned || documentForm?.invalid"
+          [isChecked]="isSignMode"
+          (changeMode)="modeChanged($event)"
+        ></app-agreement-mode-switcher>
 
-      <app-counter-offer-information [counterOffer]="counterOffer" [show]="isSideBarOpen"></app-counter-offer-information>
+        <app-counter-offer-information [counterOffer]="counterOffer" [show]="isSideBarOpen"></app-counter-offer-information>
+      </section>
 
       <app-counter-offer-controls [counterOffer]="counterOffer" [visible]="isSidebarControlsVisible"></app-counter-offer-controls>
 

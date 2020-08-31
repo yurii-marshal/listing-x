@@ -4,7 +4,7 @@ import { ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } fro
 import { CounterOffer } from '../../../core-modules/models/counter-offer';
 import { CounterOfferService } from '../services/counter-offer.service';
 import { debounceTime, takeUntil } from 'rxjs/operators';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { User } from '../../auth/models';
 import * as _ from 'lodash';
 import { MatSnackBar } from '@angular/material';
@@ -40,21 +40,15 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   completedFieldsCount: number = 0;
   allFieldsCount: number = 0;
   isSidebarControlsVisible: boolean = false;
-
   user: User;
-
   signFields = [];
   finalSignFields = [];
-
   isMCOFinalSign: boolean;
-
   okButtonText: string;
-
-  signFieldElements: any[] = [];
   onDestroyed$: Subject<void> = new Subject<void>();
-
   offerTypeTextControls = [
     'text_counter_offer_number',
+    'text_multiple_counter_offer_number',
     'text_offer_type_other',
   ];
 
@@ -67,6 +61,15 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     public datePipe: DatePipe,
     public authService: AuthService,
   ) {
+  }
+
+  toggleSidebar(value: boolean) {
+    this.isSideBarOpen = value;
+
+    setTimeout(() => {
+      this.isSidebarControlsVisible =
+        value && this.counterOffer.catchers.some((user: Person) => user.email === this.authService.currentUser.email);
+    }, value ? 250 : 0);
   }
 
   ngOnInit() {
@@ -86,6 +89,9 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
       .subscribe(([counterOffer, document]) => {
         this.counterOffer = counterOffer;
         this.documentObj = document;
+
+        this.setCOTypeFields();
+        this.patchForm();
 
         const isUserPitcher = this.counterOffer.pitchers.some(pitcher => pitcher.email === this.user.email);
 
@@ -110,12 +116,9 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
         this.isMCOFinalSign = counterOffer.offerType as string === 'multiple_counter_offer' && counterOffer.status === 'completed';
 
-        this.isMCOFinalSign
+        this.isMCOFinalSign && !this.counterOffer.isSigned
           ? this.setSignFields(this.finalSignFields)
           : this.setSignFields(this.signFields);
-
-        this.patchForm();
-        this.disableSignFields();
 
         this.subscribeToFormChanges(this.documentForm);
         this.nextField(true);
@@ -127,15 +130,17 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/details`);
   }
 
-  nextField(isSigned) {
-    if (isSigned && this.signFieldElements.length) {
-      for (const item of this.signFieldElements) {
-        if (!item.value) {
-          item.scrollIntoView({behavior: 'smooth', block: 'center'});
-          return;
+  nextField(isSigned: boolean, signatures = this.signatures.toArray().filter(el => el.isActiveSignRow)): boolean {
+    if (isSigned && signatures.length) {
+      for (const sd of signatures) {
+        if (sd.isActiveSignRow && !sd.signatureControl.value) {
+          sd.scrollToButton();
+          return true;
         }
       }
     }
+
+    return false;
   }
 
   continue() {
@@ -165,10 +170,17 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     return [{value: '', disabled: true}, []];
   }
 
-  coTypeChanged(val: string) {
+  setCOTypeFields(controlToEnable?: string) {
     this.offerTypeTextControls.forEach((controlName: string) => {
-      this.documentForm.get(controlName).patchValue('');
+      if (this.documentForm.get(controlName)) {
+        this.documentForm.get(controlName).patchValue('');
+        this.documentForm.get(controlName).disable({emitEvent: false});
+      }
     });
+
+    if (controlToEnable) {
+      this.documentForm.get(controlToEnable).enable({emitEvent: false});
+    }
   }
 
   modeChanged(isSign: boolean) {
@@ -259,27 +271,35 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   }
 
   private setSignFields(signFields) {
-    signFields.map((fieldObj) => {
-      if (this.counterOffer[fieldObj.role][fieldObj.index] && this.counterOffer[fieldObj.role][fieldObj.index].email === this.user.email) {
-        this.documentForm.get(fieldObj.controlName).setValidators([Validators.required]);
+    signFields.forEach((field) => {
+      if (this.counterOffer[field.role][field.index] && this.counterOffer[field.role][field.index].email === this.user.email) {
+        if (!this.documentForm.get(field.controlName).value) {
+          this.documentForm.get(field.controlName).enable({onlySelf: true, emitEvent: false});
+        }
       }
     });
-  }
 
-  private disableSignFields() {
     this.signatures.toArray()
-      .filter(el => el.isActiveSignRow)
-      .map(el => el.signatureControl.disable({onlySelf: true, emitEvent: false}));
+      .filter(el => el.signatureControl.enabled)
+      .map(el => {
+        el.isActiveSignRow = true;
+        el.renderSignButton();
+        el.signatureControl.disable({onlySelf: true, emitEvent: false});
+      });
   }
 
   private signCO() {
-    this.counterOfferService.signCounterOffer(this.id, this.isMCOFinalSign ? 'final_approval' : 'sign')
-      .pipe(takeUntil(this.onDestroyed$))
-      .subscribe(() => {
-        this.counterOffer.isSigned = true;
-        this.snackbar.open('Counter Offer is signed now');
-        this.closeCO();
-      });
+    if (this.nextField(true)) {
+      this.snackbar.open('Please, sign all mandatory fields');
+    } else {
+      this.counterOfferService.signCounterOffer(this.id, this.isMCOFinalSign ? 'final_approval' : 'sign')
+        .pipe(takeUntil(this.onDestroyed$))
+        .subscribe(() => {
+          this.counterOffer.isSigned = true;
+          this.snackbar.open('Counter Offer is signed now');
+          this.closeCO();
+        });
+    }
   }
 
   private setFieldsCount() {
