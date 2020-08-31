@@ -86,6 +86,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
     this.isSignMode = this.router.url.includes('sign');
 
+    this.isDisabled = this.offer.userRole !== 'agent_buyer' || this.isSignMode;
+
     if (this.offer.isSigned) {
       this.snackbar.open('Offer is already signed');
     }
@@ -622,8 +624,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
         this.initSwitchDaysAndDate();
 
-        this.isDisabled = this.offer.userRole !== 'agent_buyer' || this.isSignMode;
-
         this.isLoading = false;
       });
   }
@@ -640,7 +640,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   private checkSignAccess() {
-    if (this.offer.userRole === 'agent_buyer' && this.isSignMode && (this.offer.isSigned)) {
+    if (this.offer.userRole === 'agent_buyer' && this.isSignMode && (this.documentForm.invalid || this.offer.isSigned)) {
       this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/step-two`);
     } else if (this.offer.userRole !== 'agent_buyer' && !this.isSignMode) {
       this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/sign`);
@@ -693,6 +693,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
             .patchValue(data, {emitEvent: false, onlySelf: true});
         }
       });
+
+      this.documentForm.get(`${_.snakeCase(page)}`).updateValueAndValidity();
     });
   }
 
