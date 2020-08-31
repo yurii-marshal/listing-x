@@ -94,8 +94,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
     this.okButtonText = this.isSignMode && !this.offer.isSigned ? 'Sign' : 'Continue';
 
-    this.isDisabled = this.offer.userRole !== 'agent_buyer' || this.isSignMode;
-
     this.documentForm = this.fb.group({
       page_1: this.fb.group({
         check_civil_code: [{value: null, disabled: this.isDisabled}, []],
@@ -636,6 +634,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/sign`);
     } else if (this.isSignMode) {
       this.activateSignButtons();
+    } else {
+      this.isDisabled = this.offer.userRole !== 'agent_buyer';
     }
   }
 
@@ -654,6 +654,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   private activateSignButtons() {
+    this.isDisabled = true;
+
     this.signatures.toArray().forEach((sd: SignatureDirective) => {
       if (sd.signatureControl.enabled && !sd.signatureControl.value) {
         sd.renderSignButton();
