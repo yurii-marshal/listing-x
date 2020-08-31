@@ -129,7 +129,7 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   openSignOffer() {
-    this.offer.userRole === 'agent_buyer' && this.offer.isSigned
+    this.offer.userRole === 'agent_buyer'
     ? this.router.navigateByUrl(`portal/purchase-agreements/${this.offer.id}/step-two`)
     : this.router.navigateByUrl(`portal/purchase-agreements/${this.offer.id}/sign`);
   }
