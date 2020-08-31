@@ -70,6 +70,7 @@
     mat-stroked-button
     color="primary"
     (click)="isConfirmMode = false"
+    [disabled]="!data.allowEdit"
   >BACK</button>
 
   <button
@@ -78,5 +79,5 @@
     (debounceClick)="finish()"
     color="primary"
     [disabled]="form.invalid"
-  >{{data.signAfterFill ? 'SIGN' : 'FINISH'}}</button>
+  >{{data.allowSign ? 'SIGN' : 'FINISH'}}</button>
 </div>
