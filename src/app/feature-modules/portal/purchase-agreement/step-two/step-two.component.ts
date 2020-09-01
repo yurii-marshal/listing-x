@@ -86,7 +86,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
     this.isSignMode = this.router.url.includes('sign');
 
-    this.isDisabled = this.offer.userRole !== 'agent_buyer' || this.isSignMode;
+    this.isDisabled = this.offer.userRole !== 'agent_buyer' || !this.offer.allowEdit || this.isSignMode;
 
     if (this.offer.isSigned) {
       this.snackbar.open('Offer is already signed');

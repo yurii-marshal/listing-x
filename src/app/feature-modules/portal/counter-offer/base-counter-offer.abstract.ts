@@ -32,6 +32,8 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
   isSignMode: boolean = false;
 
+  isUserPitcher: boolean;
+
   documentForm: FormGroup;
 
   datepickerMinDate: Date;
@@ -87,11 +89,11 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
         this.patchForm();
 
-        const isUserPitcher = this.counterOffer.pitchers.some(pitcher => pitcher.email === this.user.email);
+        this.isUserPitcher = this.counterOffer.pitchers.some(pitcher => pitcher.email === this.user.email);
 
-        this.isDisabled = !isUserPitcher;
+        this.isDisabled = !this.isUserPitcher;
 
-        this.showSwitcher = isUserPitcher && this.counterOffer.status !== AgreementStatus.Completed;
+        this.showSwitcher = this.isUserPitcher && this.counterOffer.status !== AgreementStatus.Completed;
 
         // if user isn't pitcher there's available sign mode only / for sign / for review
         if (!this.showSwitcher) {
@@ -196,9 +198,9 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     Object.entries(this.documentObj).map(([key, value]) => {
       Object.keys(this.documentForm.controls).map((controlName) => {
         if (_.camelCase(controlName) === key && value) {
+          this.completedFieldsCount += 1;
           this.documentForm.get(`${_.snakeCase(controlName)}`)
             .patchValue(value, {emitEvent: false, onlySelf: true});
-          this.completedFieldsCount += 1;
         }
       });
     });
