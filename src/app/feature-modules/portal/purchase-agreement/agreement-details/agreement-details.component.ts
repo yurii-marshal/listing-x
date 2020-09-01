@@ -190,7 +190,9 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   triggerDownloadFile(doc: GeneratedDocument | Document) {
-    this.transactionService.documentOpenedEvent(doc.id).subscribe();
+    this.transactionService.documentOpenedEvent(doc.id).pipe(
+      takeUntil(this.onDestroyed$)
+    ).subscribe();
 
     let {file, title} = doc;
 
