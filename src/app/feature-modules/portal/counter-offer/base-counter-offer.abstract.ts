@@ -110,7 +110,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         this.isSidebarControlsVisible =
           this.isSideBarOpen && this.counterOffer.catchers.some((user: Person) => user.email === this.authService.currentUser.email);
 
-        this.isMCOFinalSign = counterOffer.offerType as string === 'multiple_counter_offer' && counterOffer.status === 'completed';
+        this.isMCOFinalSign = counterOffer.offerType as string === 'multiple_counter_offer' && counterOffer.canFinalSign;
 
         this.isMCOFinalSign && !this.counterOffer.isSigned
           ? this.setSignFields(this.finalSignFields)

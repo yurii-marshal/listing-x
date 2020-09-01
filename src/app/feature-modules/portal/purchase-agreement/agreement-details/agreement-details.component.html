@@ -102,13 +102,12 @@
             DENY
           </button>
 
-          <!--!offer.allowSign ||-->
           <button class="sign-btn"
                   mat-flat-button
                   [disabled]="offer.status === 'denied'"
                   (click)="openSignOffer()"
                   color="primary">
-            {{offer.isSigned ? 'OPEN' : 'SIGN'}}
+            {{offer.allowSign ? 'SIGN' : 'OPEN'}}
           </button>
 
           <button class="counter-offer-btn"

@@ -4507,7 +4507,7 @@
            *ngIf="offerService.isSideBarOpen">
 
         <app-agreement-mode-switcher
-          [show]="offerService.isSideBarOpen && offer.userRole === 'agent_buyer'"
+          [show]="offer.allowSign && offerService.isSideBarOpen && offer.userRole === 'agent_buyer'"
           [disabled]="offer.isSigned || documentForm.invalid"
           [isChecked]="isSignMode"
           (changeMode)="modeChanged($event)"
