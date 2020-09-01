@@ -42,7 +42,10 @@ export class SpqSignatureComponent implements AfterViewInit, OnInit {
     this.transactionService.loadSignDocument(docId).pipe(
       tap((doc) => this.doc = doc),
       switchMap((doc) => this.transactionService.loadOne(doc.transaction))
-    ).subscribe((transaction) => this.transaction = transaction);
+    ).subscribe((transaction) => {
+      this.signEnabled = transaction.pendingDocuments.find(doc => doc.id === docId).allowSign;
+      return this.transaction = transaction;
+    });
   }
 
   ngAfterViewInit(): void {

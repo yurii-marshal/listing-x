@@ -97,7 +97,7 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
     this.isAgent = [...agentSellers, ...agentBuyers].some(({email}) => email === this.authService.currentUser.email);
     this.isSeller = [...agentSellers, ...sellers].some(({email}) => email === this.authService.currentUser.email);
 
-    const residentialAgreement = transaction.documents.find(doc => doc.documentType === GeneratedDocumentType.Contract);
+    const residentialAgreement = transaction.purchaseAgreements.find(doc => doc.documentType === GeneratedDocumentType.Contract);
     this.isResidentialAgreementCompleted = residentialAgreement && residentialAgreement.status === DocumentStatus.Completed;
   }
 
@@ -184,7 +184,9 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
   }
 
   triggerDownloadFile(doc: GeneratedDocument | Document) {
-    this.transactionService.documentOpenedEvent(doc.id).subscribe();
+    this.transactionService.documentOpenedEvent(doc.id).pipe(
+      takeUntil(this.onDestroyed$)
+    ).subscribe();
 
     let {file, title} = doc;
 
@@ -236,7 +238,9 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
         transactionId: this.offer && this.offer.transaction,
         offerId: this.offer && this.offer.id,
         docData: doc ? doc.documentData as AddendumData : null,
-        docId: doc ? doc.id : null
+        docId: doc ? doc.id : null,
+        allowEdit: doc ? doc.allowEdit : true,
+        allowSign: doc ? doc.allowSign : null,
       }
     });
   }
