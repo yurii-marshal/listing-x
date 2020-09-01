@@ -92,7 +92,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       this.snackbar.open('Offer is already signed');
     }
 
-    this.okButtonText = this.isSignMode && !this.offer.isSigned ? 'Sign' : 'Continue';
+    this.okButtonText = this.isSignMode && this.offer.allowSign && !this.offer.isSigned ? 'Sign' : 'Continue';
 
     this.documentForm = this.fb.group({
       page_1: this.fb.group({
@@ -519,7 +519,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   continue() {
     if (this.isSignMode) {
       this.signatures.toArray().filter(el => el.isActiveSignRow).every((el) => !!el.signatureControl.value)
-        ? (this.offer.isSigned ? this.closeOffer() : this.finalSignAgreement())
+        ? (this.offer.allowSign && !this.offer.isSigned ? this.finalSignAgreement() : this.closeOffer())
         : this.moveToNextSignField(true);
     } else {
       this.form.nativeElement.blur();
@@ -640,7 +640,9 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   private checkSignAccess() {
-    if (this.offer.userRole === 'agent_buyer' && this.isSignMode && (this.documentForm.invalid || this.offer.isSigned)) {
+    if (this.offer.userRole === 'agent_buyer'
+      && this.isSignMode
+      && (this.documentForm.invalid || !this.offer.allowSign || this.offer.isSigned)) {
       this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/step-two`);
     } else if (this.offer.userRole !== 'agent_buyer' && !this.isSignMode) {
       this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/sign`);
@@ -746,13 +748,13 @@ export class StepTwoComponent implements OnInit, OnDestroy {
             takeUntil(this.onDestroyed$),
           )
           .subscribe((controlValue) => {
-            this.saveDocumentInput(Object.keys(group.getRawValue())[controlIndex], controlValue, groupIndex);
+            this.saveDocumentField(Object.keys(group.getRawValue())[controlIndex], controlValue, groupIndex);
           });
       });
     });
   }
 
-  private saveDocumentInput(controlName: string, controlValue: any, groupIndex: number) {
+  private saveDocumentField(controlName: string, controlValue: any, groupIndex: number) {
     if (controlValue === '') {
       controlValue = null;
     } else if (controlValue instanceof Date) {

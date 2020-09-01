@@ -10,4 +10,7 @@ export interface CounterOffer extends Offer {
   pitchers: Person[];
   catcherCustomers: Person[];
   pitcherCustomers: Person[];
+
+  canFinalSign: boolean;
+  needFinalApprove: boolean;
 }

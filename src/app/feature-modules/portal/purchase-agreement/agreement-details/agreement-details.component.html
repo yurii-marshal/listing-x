@@ -102,13 +102,12 @@
             DENY
           </button>
 
-          <!--!offer.allowSign ||-->
           <button class="sign-btn"
                   mat-flat-button
                   [disabled]="offer.status === 'denied'"
                   (click)="openSignOffer()"
                   color="primary">
-            {{offer.isSigned ? 'OPEN' : 'SIGN'}}
+            {{offer.allowSign && !offer.isSigned ? 'SIGN' : 'OPEN'}}
           </button>
 
           <button class="counter-offer-btn"
@@ -218,7 +217,7 @@
               mat-flat-button
               color="primary"
               (click)="openPendingDocument(doc)"
-            >{{doc.allowSign ? 'SIGN' : 'OPEN'}}
+            >{{doc.allowSign || doc.needFinalApprove ? 'SIGN' : 'OPEN'}}
             </button>
             <svg class="menu-trigger" [matMenuTriggerFor]="menu" width="22" height="6" viewBox="0 0 22 6" fill="none"
                  xmlns="http://www.w3.org/2000/svg">

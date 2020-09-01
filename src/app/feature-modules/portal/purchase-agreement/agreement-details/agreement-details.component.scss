@@ -71,14 +71,14 @@
   }
 
   &:last-of-type {
-    margin-right: 10%;
+    margin-right: 20%;
   }
 
   margin-top: 65px;
 }
 
 .row-layout {
-  width: 100%;
+  //width: 100%;
   display: flex;
   align-items: center;
   margin-bottom: 18px;
@@ -285,7 +285,7 @@
 }
 
 .controls {
-  margin-left: 220px;
+  margin-left: 198px;
 
   .sign-btn,
   .counter-offer-btn {

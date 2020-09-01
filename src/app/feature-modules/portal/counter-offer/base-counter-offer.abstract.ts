@@ -103,18 +103,18 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         this.allFieldsCount = Object.keys(this.documentObj).length;
         this.okButtonText = (!this.counterOffer.isSigned && this.isSignMode) ? 'Sign' : 'Back to the offer';
 
-        if (counterOffer.isSigned) {
-          this.snackbar.open('Counter Offer is already signed');
-        }
-
         this.isSidebarControlsVisible =
           this.isSideBarOpen && this.counterOffer.catchers.some((user: Person) => user.email === this.authService.currentUser.email);
 
-        this.isMCOFinalSign = counterOffer.offerType as string === 'multiple_counter_offer' && counterOffer.status === 'completed';
+        this.isMCOFinalSign = counterOffer.offerType as string === 'multiple_counter_offer' && counterOffer.canFinalSign;
 
-        this.isMCOFinalSign && !this.counterOffer.isSigned
-          ? this.setSignFields(this.finalSignFields)
-          : this.setSignFields(this.signFields);
+        if (!this.isMCOFinalSign && !this.counterOffer.isSigned) {
+          this.setSignFields(this.signFields);
+        } else if (this.isMCOFinalSign) {
+          this.setSignFields(this.finalSignFields);
+        } else {
+          this.snackbar.open('Counter Offer is already signed');
+        }
 
         this.subscribeToFormChanges(this.documentForm);
         this.nextField(true);
