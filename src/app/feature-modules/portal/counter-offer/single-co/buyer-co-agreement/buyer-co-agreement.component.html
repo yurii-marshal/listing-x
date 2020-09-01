@@ -297,7 +297,7 @@
       <section>
         <app-agreement-mode-switcher
           [show]="isSideBarOpen && showSwitcher"
-          [disabled]="isDisabled || documentForm?.invalid"
+          [disabled]="counterOffer?.isSigned || documentForm?.invalid"
           [isChecked]="isSignMode"
           (changeMode)="modeChanged($event)"
         ></app-agreement-mode-switcher>
