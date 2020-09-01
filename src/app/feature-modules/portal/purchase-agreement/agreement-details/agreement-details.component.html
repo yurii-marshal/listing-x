@@ -107,7 +107,7 @@
                   [disabled]="offer.status === 'denied'"
                   (click)="openSignOffer()"
                   color="primary">
-            {{offer.allowSign ? 'SIGN' : 'OPEN'}}
+            {{offer.allowSign && !offer.isSigned ? 'SIGN' : 'OPEN'}}
           </button>
 
           <button class="counter-offer-btn"
