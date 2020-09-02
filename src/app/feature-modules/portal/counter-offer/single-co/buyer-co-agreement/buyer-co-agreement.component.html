@@ -186,8 +186,8 @@
                                           formControlName="text_seller_signature_name_first" type="text" class="i-lr-7">
                       Date &nbsp;<input formControlName="date_seller_first_signature" type="text" class="i-lr-2__5">
                       Time &nbsp;<input formControlName="time_seller_signature_time_first" type="text" class="i-lr-1">
-                      &nbsp;<input formControlName="radio_seller_signature_first" value="am" type="checkbox"> AM/
-                      <input formControlName="radio_seller_signature_first" value="pm" type="checkbox"> PM
+                      &nbsp;<input formControlName="radio_seller_signature_first" value="am" type="radio"> AM/
+                      <input formControlName="radio_seller_signature_first" value="pm" type="radio"> PM
                     </div>
                     <div>
                       Seller &nbsp;<input appSignature (fieldSigned)="nextField($event)"
@@ -198,8 +198,8 @@
                                           class="i-lr-7">
                       Date &nbsp;<input formControlName="date_seller_second_signature" type="text" class="i-lr-2__5">
                       Time &nbsp;<input formControlName="time_seller_signature_time_second" type="text" class="i-lr-1">
-                      &nbsp;<input formControlName="radio_seller_signature_second" value="am" type="checkbox"> AM/
-                      <input formControlName="radio_seller_signature_second" value="pm" type="checkbox"> PM
+                      &nbsp;<input formControlName="radio_seller_signature_second" value="am" type="radio"> AM/
+                      <input formControlName="radio_seller_signature_second" value="pm" type="radio"> PM
                     </div>
                   </div>
                 </div>
@@ -228,8 +228,8 @@
                   <mat-datepicker #date_copy_received_date></mat-datepicker>
                   at
                   <input formControlName="time_copy_received_time" type="text" class="i-lr-1">
-                  <input formControlName="radio_copy_received_am_pm" value="am" type="checkbox"> AM/
-                  <input formControlName="radio_copy_received_am_pm" value="pm" type="checkbox"> PM.
+                  <input formControlName="radio_copy_received_am_pm" value="am" type="radio"> AM/
+                  <input formControlName="radio_copy_received_am_pm" value="pm" type="radio"> PM.
                   <span class="fw-bold">
                         A binding Agreement is created
                         when a Copy of Signed Acceptance is personally received by Buyer or Buyer's authorized agent whether or not confirmed in
