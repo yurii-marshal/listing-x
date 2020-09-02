@@ -56,6 +56,7 @@ export interface Offer {
   allowDeny: boolean;
   allowSign: boolean;
   isSigned: boolean;
+  canSign: boolean;
 
   lastLogs?: Log[];
   transactionDocs?: GeneratedDocument[];

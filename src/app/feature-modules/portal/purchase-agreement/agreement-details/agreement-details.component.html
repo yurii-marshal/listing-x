@@ -218,7 +218,7 @@
               color="primary"
               (click)="openPendingDocument(doc)"
             >
-              {{doc.allowSign || (doc.canFinalSign) ? 'SIGN' : 'OPEN'}}
+              {{doc.allowSign || doc.canFinalSign ? 'SIGN' : 'OPEN'}}
             </button>
             <svg class="menu-trigger" [matMenuTriggerFor]="menu" width="22" height="6" viewBox="0 0 22 6" fill="none"
                  xmlns="http://www.w3.org/2000/svg">
