@@ -101,7 +101,11 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         }
 
         this.allFieldsCount = Object.keys(this.documentObj).length;
-        this.okButtonText = (!this.counterOffer.isSigned && this.isSignMode) ? 'Sign' : 'Back to the offer';
+
+        this.okButtonText =
+          (!this.counterOffer.isSigned && this.isSignMode) ? 'Sign' :
+            (this.counterOffer.canFinalSign && this.counterOffer.isSigned) ? 'Final sign' :
+              'Back to the offer';
 
         this.isSidebarControlsVisible =
           this.isSideBarOpen && this.counterOffer.catchers.some((user: Person) => user.email === this.authService.currentUser.email);
@@ -142,7 +146,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   continue() {
     if (this.isSignMode) {
       this.signatures.toArray().filter(el => el.isActiveSignRow).every((el) => !!el.signatureControl.value)
-        ? (this.counterOffer.isSigned ? this.closeCO() : this.signCO())
+        ? ((!this.counterOffer.isSigned || this.counterOffer.canFinalSign) ? this.signCO() : this.closeCO())
         : this.nextField(true);
 
     } else {
@@ -234,7 +238,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         this.documentObj = document;
         this.setFieldsCount();
 
-        if (this.counterOffer.isSigned) {
+        if (this.counterOffer.isSigned && !this.counterOffer.canFinalSign) {
           this.resetAgreement();
         }
       });
