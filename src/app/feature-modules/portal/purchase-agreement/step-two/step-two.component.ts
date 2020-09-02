@@ -646,7 +646,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/step-two`);
     } else if (this.offer.userRole !== 'agent_buyer' && !this.isSignMode) {
       this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/sign`);
-    } else if (this.isSignMode) {
+    } else if (this.isSignMode && this.offer.allowSign) {
       this.activateSignButtons();
     }
   }
