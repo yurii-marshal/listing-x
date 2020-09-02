@@ -60,6 +60,7 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
 
     this.loadOffer(offerId);
 
+    // todo: load calendar data
     // this.offerService.loadCalendarByOffer(offerId)
     //   .subscribe(items => this.calendarDataSource = items);
   }
@@ -75,41 +76,38 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   setUsers(offer: Offer): void {
-    const {agentBuyers, agentSellers, sellers} = offer;
+    const {agentSellers, sellers} = offer;
     this.isSeller = [...agentSellers, ...sellers].some(({email}) => email === this.authService.currentUser.email);
-
-    // const residentialAgreement = Array(offer.documents).find(doc => doc.documentType === GeneratedDocumentType.Contract);
-    // this.isResidentialAgreementCompleted = residentialAgreement && residentialAgreement.status === DocumentStatus.Completed;
   }
 
   onDelete() {
-    this.offerService.delete(this.offer.id).pipe(
-      takeUntil(this.onDestroyed$)
-    ).subscribe(() => this.router.navigate(['/portal/purchase-agreements/all']));
+    this.offerService.delete(this.offer.id)
+      .pipe(takeUntil(this.onDestroyed$))
+      .subscribe(() => this.router.navigate(['/portal/purchase-agreements/all']));
   }
 
   inviteUser() {
     this.isOpenInviteUserOverlay = false;
     const email: string = this.userEmailControl.value.toLowerCase();
     const offerId: number = Number(this.route.snapshot.params.id);
-    this.transactionService.inviteUser(offerId, email).pipe(
-      takeUntil(this.onDestroyed$)
-    ).subscribe(() => {
-      this.snackbar.open(`Invite sent to email: ${email}`);
-      if (!this.isAgent) {
-        return;
-      }
+    this.transactionService.inviteUser(offerId, email)
+      .pipe(takeUntil(this.onDestroyed$))
+      .subscribe(() => {
+        this.snackbar.open(`Invite sent to email: ${email}`);
+        if (!this.isAgent) {
+          return;
+        }
 
-      const invited = {
-        email,
-        firstName: '<Invited',
-        lastName: this.isSeller ? `Listing Agent>` : `Buyer's Agent>`
-      } as Person;
+        const invited = {
+          email,
+          firstName: '<Invited',
+          lastName: this.isSeller ? `Listing Agent>` : `Buyer's Agent>`
+        } as Person;
 
-      const updatedListKey = this.isSeller ? 'agentSellers' : 'agentBuyers';
-      this.offer[updatedListKey].push(invited);
-      this.userEmailControl.setValue(null);
-    });
+        const updatedListKey = this.isSeller ? 'agentSellers' : 'agentBuyers';
+        this.offer[updatedListKey].push(invited);
+        this.userEmailControl.setValue(null);
+      });
   }
 
   openPendingDocument(doc: GeneratedDocument) {

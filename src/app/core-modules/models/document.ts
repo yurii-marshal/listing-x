@@ -16,6 +16,7 @@ export interface Document {
 
 export interface GeneratedDocument {
   id: number;
+  entityId: number;
   documentType: GeneratedDocumentType;
   status: DocumentStatus;
   lastEvent: Log;
