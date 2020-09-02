@@ -19,16 +19,19 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class AddendumSignatureComponent implements AfterViewInit, OnInit {
   doc: GeneratedDocument;
   transaction: Transaction;
-  signEnabled: boolean = false;
+
+  signEnabled: boolean;
+  docId: number;
+
   progress: number = 0;
   currentYear: number = new Date().getFullYear();
 
   get buyers() {
-    return this.transaction.offer.buyers.map(u => `  ${u.firstName} ${u.lastName}`).join(', ');
+    return this.transaction.offer.buyers.map(user => `  ${user.firstName} ${user.lastName}`).join(', ');
   }
 
   get sellers() {
-    return this.transaction.offer.sellers.map(u => `  ${u.firstName} ${u.lastName}`).join(', ');
+    return this.transaction.offer.sellers.map(user => `  ${user.firstName} ${user.lastName}`).join(', ');
   }
 
   get terms() {
@@ -49,11 +52,14 @@ export class AddendumSignatureComponent implements AfterViewInit, OnInit {
   ) { }
 
   ngOnInit() {
-    const id: number = +this.route.snapshot.params.id;
-    this.transactionService.loadSignDocument(id).pipe(
+    this.docId = +this.route.snapshot.params.id;
+    this.transactionService.loadSignDocument(this.docId).pipe(
       tap(doc => this.doc = doc),
       switchMap(doc => this.transactionService.loadOne(doc.transaction))
-    ).subscribe(t => this.transaction = t);
+    ).subscribe(transaction => {
+      this.signEnabled = transaction.pendingDocuments.find(doc => doc.id === this.docId).allowSign;
+      return this.transaction = transaction;
+    });
   }
 
   ngAfterViewInit(): void {
