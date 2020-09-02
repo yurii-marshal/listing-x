@@ -30,32 +30,6 @@
   </div>
   <div *ngIf="buyers.controls.length <= 1" (click)="add(Type.Buyers)" class="link">add more buyer</div>
 
-  <h4>seller information</h4>
-  <div *ngFor="let control of sellers.controls; let i = index; let first = first" [formGroup]="control">
-    <h6 class="subtitle">seller #{{ i + 1}}</h6>
-    <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
-      <div class="fieldset u-flex-03">
-        <label>First name</label>
-        <input formControlName="firstName" placeholder="First name" spellcheck="false" class="form-control">
-        <app-form-validation-error [baseControl]="control.get('firstName')"></app-form-validation-error>
-      </div>
-      <div class="fieldset u-flex-03">
-        <label>Second name</label>
-        <input formControlName="lastName" placeholder="Second name" spellcheck="false" class="form-control">
-        <app-form-validation-error [baseControl]="control.get('lastName')"></app-form-validation-error>
-      </div>
-      <div class="fieldset u-flex-04">
-        <label>Email</label>
-        <input formControlName="email" placeholder="example@maill.com" spellcheck="false" class="form-control">
-        <app-form-validation-error [baseControl]="control.get('email')"></app-form-validation-error>
-      </div>
-      <button *ngIf="!first && control.enabled" mat-icon-button color="accent" (click)="remove(Type.Sellers, i)">
-        <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
-      </button>
-    </div>
-  </div>
-  <div *ngIf="sellers.controls.length <= 1" (click)="add(Type.Sellers)" class="link">add more seller</div>
-
   <h4>Buyer's Agent</h4>
   <div *ngFor="let control of agentBuyers.controls; let i = index; let first = first" [formGroup]="control">
     <h6 class="subtitle">agent buyer #{{ i + 1}}</h6>
@@ -82,7 +56,33 @@
   </div>
   <div *ngIf="agentBuyers.controls.length <= 1" (click)="add(Type.AgentBuyers)" class="link">add more Buyer's Agent</div>
 
-  <h4>Listing Agent</h4>
+  <h4>Seller information</h4>
+  <div *ngFor="let control of sellers.controls; let i = index; let first = first" [formGroup]="control">
+    <h6 class="subtitle">seller #{{ i + 1}}</h6>
+    <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
+      <div class="fieldset u-flex-03">
+        <label>First name</label>
+        <input formControlName="firstName" placeholder="First name" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="control.get('firstName')"></app-form-validation-error>
+      </div>
+      <div class="fieldset u-flex-03">
+        <label>Second name</label>
+        <input formControlName="lastName" placeholder="Second name" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="control.get('lastName')"></app-form-validation-error>
+      </div>
+      <div class="fieldset u-flex-04">
+        <label>Email</label>
+        <input formControlName="email" placeholder="example@maill.com" spellcheck="false" class="form-control">
+        <app-form-validation-error [baseControl]="control.get('email')"></app-form-validation-error>
+      </div>
+      <button *ngIf="!first && control.enabled" mat-icon-button color="accent" (click)="remove(Type.Sellers, i)">
+        <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
+      </button>
+    </div>
+  </div>
+  <div *ngIf="sellers.controls.length <= 1" (click)="add(Type.Sellers)" class="link">add more seller</div>
+
+  <h4>Seller's agent</h4>
   <div *ngFor="let control of agentSellers.controls; let i = index; let first = first" [formGroup]="control">
     <h6 class="subtitle">agent seller #{{ i + 1}}</h6>
     <div class="u-flex u-flex-align-items--center u-flex-justify--space-between multi-column">
