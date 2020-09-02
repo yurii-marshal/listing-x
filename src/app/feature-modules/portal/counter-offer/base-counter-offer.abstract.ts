@@ -112,7 +112,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
         this.isMCOFinalSign = counterOffer.offerType as string === 'multiple_counter_offer' && counterOffer.canFinalSign;
 
-        if (!this.isMCOFinalSign && !this.counterOffer.isSigned && this.counterOffer.allowSign) {
+        if (!this.isMCOFinalSign && !this.counterOffer.isSigned && this.counterOffer.canSign) {
           this.setSignFields(this.signFields);
         } else if (this.isMCOFinalSign) {
           this.setSignFields(this.finalSignFields);
@@ -238,9 +238,10 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         this.documentObj = document;
         this.setFieldsCount();
 
-        if (this.counterOffer.isSigned && !this.counterOffer.canFinalSign) {
-          this.resetAgreement();
-        }
+        // if (this.counterOffer.isSigned && !this.counterOffer.canFinalSign) {
+          // TODO: wait for backend
+          // this.resetAgreement();
+        // }
       });
   }
 

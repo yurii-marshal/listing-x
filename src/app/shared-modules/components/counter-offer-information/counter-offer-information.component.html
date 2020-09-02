@@ -6,25 +6,25 @@
 
   <div class="roles-list">
     <div class="agents truncated" *ngFor="let item of counterOffer?.pitchers; let i = index">
-      <h6>Pitcher #{{i+1}}</h6>
-      <div class="item">
-        {{item.firstName}} {{item.lastName}} | {{item.email}}
-      </div>
-    </div>
-    <div class="buyers truncated" *ngFor="let item of counterOffer?.catchers; let i = index">
-      <h6>Catcher #{{i+1}}</h6>
-      <div class="item">
-        {{item.firstName}} {{item.lastName}} | {{item.email}}
-      </div>
-    </div>
-    <div class="sellers truncated" *ngFor="let item of counterOffer?.catcherCustomers; let i = index">
-      <h6>Catcher customer #{{i+1}}</h6>
+      <h6>{{role?.pitchers}} #{{i+1}}</h6>
       <div class="item">
         {{item.firstName}} {{item.lastName}} | {{item.email}}
       </div>
     </div>
     <div class="agents truncated" *ngFor="let item of counterOffer?.pitcherCustomers; let i = index">
-      <h6>Pitcher customer #{{i+1}}</h6>
+      <h6>{{role?.pitcherCustomers}} #{{i+1}}</h6>
+      <div class="item">
+        {{item.firstName}} {{item.lastName}} | {{item.email}}
+      </div>
+    </div>
+    <div class="buyers truncated" *ngFor="let item of counterOffer?.catchers; let i = index">
+      <h6>{{role?.catchers}} #{{i+1}}</h6>
+      <div class="item">
+        {{item.firstName}} {{item.lastName}} | {{item.email}}
+      </div>
+    </div>
+    <div class="sellers truncated" *ngFor="let item of counterOffer?.catcherCustomers; let i = index">
+      <h6>{{role?.catcherCustomers}} #{{i+1}}</h6>
       <div class="item">
         {{item.firstName}} {{item.lastName}} | {{item.email}}
       </div>
