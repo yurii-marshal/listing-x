@@ -15,6 +15,7 @@ import { Person } from '../../../core-modules/models/offer';
 import { SignatureDirective } from '../../../shared-modules/directives/signature.directive';
 import { AgreementStatus } from '../../../core-modules/models/agreement';
 import { ConfirmationBarComponent } from '../../../shared-modules/components/confirmation-bar/confirmation-bar.component';
+import { CounterOfferType } from '../../../core-modules/models/counter-offer-type';
 
 export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements OnInit, OnDestroy {
   @ViewChild('form', {static: true}) form: ElementRef;
@@ -34,6 +35,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   isSignMode: boolean = false;
 
   isUserPitcher: boolean;
+  isAgentSeller: boolean;
 
   documentForm: FormGroup;
 
@@ -91,6 +93,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         this.patchForm();
 
         this.isUserPitcher = this.counterOffer.pitchers.some(pitcher => pitcher.email === this.user.email);
+        this.isAgentSeller = this.user.accountType === 'agent' && this.counterOffer.offerType === 'buyer_counter_offer';
 
         this.isDisabled = !this.isUserPitcher;
 
