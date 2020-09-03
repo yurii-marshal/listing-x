@@ -238,7 +238,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         this.documentObj = document;
         this.setFieldsCount();
 
-        // if (this.counterOffer.isSigned && !this.counterOffer.canFinalSign) {
+        // if (this.counterOffer.anyUserSigned && !this.counterOffer.canFinalSign) {
           // TODO: wait for backend
           // this.resetAgreement();
         // }

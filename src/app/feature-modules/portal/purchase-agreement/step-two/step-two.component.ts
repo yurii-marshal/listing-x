@@ -772,7 +772,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
           this.updateDownPaymentAmount();
         }
 
-        if (this.offer.isSigned) {
+        if (this.offer.anyUserSigned) {
           this.resetAgreement();
         }
       });

@@ -1255,7 +1255,7 @@
                 </div>
 
                 <div class="col-right">
-                  $ <input formControlName="text_finance_down_payment_balance" type="text">
+                  $ <input currencyMask [options]="currencyMaskOptions" formControlName="text_finance_down_payment_balance" type="text">
                 </div>
 
                 <div class="col-left text-justify">
@@ -4516,33 +4516,34 @@
         <h4>Offer information</h4>
 
         <div class="roles-list">
+          <div class="buyers truncated" *ngFor="let item of offer.buyers; let i = index">
+            <h6>Buyer #{{i+1}}</h6>
+            <div class="item" title="{{item.firstName}} {{item.lastName}} | {{item.email}}">
+              {{item.firstName}} {{item.lastName}} | {{item.email}}
+            </div>
+          </div>
           <div class="sellers truncated" *ngFor="let item of offer.sellers; let i = index">
             <h6>Seller #{{i+1}}</h6>
-            <div class="item">
+            <div class="item" title="{{item.firstName}} {{item.lastName}} | {{item.email}}">
               {{item.firstName}} {{item.lastName}} | {{item.email}}
             </div>
           </div>
           <div class="agents truncated" *ngFor="let item of offer.agentBuyers; let i = index">
             <h6>Buyer's Agent #{{i+1}}</h6>
-            <div class="item">
+            <div class="item" title="{{item.firstName}} {{item.lastName}} | {{item.email}}">
               {{item.firstName}} {{item.lastName}} | {{item.email}}
             </div>
           </div>
           <div class="agents truncated" *ngFor="let item of offer.agentSellers; let i = index">
             <h6>Listing Agent #{{i+1}}</h6>
-            <div class="item">
+            <div class="item" title="{{item.firstName}} {{item.lastName}} | {{item.email}}">
               {{item.firstName}} {{item.lastName}} | {{item.email}}
             </div>
           </div>
-          <div class="buyers truncated" *ngFor="let item of offer.buyers; let i = index">
-            <h6>Buyer #{{i+1}}</h6>
-            <div class="item">
-              {{item.firstName}} {{item.lastName}} | {{item.email}}
-            </div>
-          </div>
+
           <div class="address truncated">
             <h6>Address</h6>
-            <div class="item">
+            <div class="item" title="{{offer.streetName}}, {{offer.city}} {{offer.zip}}">
               {{offer.streetName}}, {{offer.city}} {{offer.zip}}
             </div>
           </div>

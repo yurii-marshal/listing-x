@@ -45,6 +45,7 @@ export interface Offer {
   anySpecialFinancialTerms?: string;
   remainingDaysCloseEscrow?: number;
   userRole?: 'buyer' | 'seller' | 'agent_buyer' | 'agent_seller';
+  anyUserSigned: boolean;
 
   // Third step
   documents: LinkedDocuments;
