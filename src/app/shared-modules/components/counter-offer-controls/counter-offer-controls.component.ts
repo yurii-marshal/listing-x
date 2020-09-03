@@ -14,6 +14,8 @@ import { MatSnackBar } from '@angular/material';
 export class CounterOfferControlsComponent implements OnInit {
   @Input() counterOffer: CounterOffer;
   @Input() visible: boolean = false;
+  // optional
+  @Input() isAgentSeller: boolean;
 
   offerId: number;
   onDestroyed$: Subject<void> = new Subject<void>();
@@ -37,9 +39,9 @@ export class CounterOfferControlsComponent implements OnInit {
       });
   }
 
-  createCCO() {
-    const type = this.counterOffer.offerType as string === 'buyer_counter_offer' ? 'counter_offer' : 'buyer_counter_offer';
-    this.counterOfferService.createCounterOffer({offer: this.offerId, offerType: type})
+  createCCO(type?) {
+    const typeRevers = this.counterOffer.offerType as string === 'buyer_counter_offer' ? 'counter_offer' : 'buyer_counter_offer';
+    this.counterOfferService.createCounterOffer({offer: this.offerId, offerType: type ? type : typeRevers})
       .pipe(takeUntil(this.onDestroyed$))
       .subscribe((data: CounterOffer) => {
         this.snackbar.open('Counter Offer is created');

@@ -8,7 +8,9 @@
           Back
         </div>
         <div class="u-flex u-flex-align-items--center u-flex-justify--space-between">
-          <div class="header">{{ offer.streetName }}, {{ offer.city }}, {{ offer.state }} {{ offer.zip }}</div>
+          <div class="header" title="{{ offer.streetName }}, {{ offer.city }}, {{ offer.state }} {{ offer.zip }}">
+            {{ offer.streetName }}, {{ offer.city }}, {{ offer.state }} {{ offer.zip }}
+          </div>
           <div>
             <span class="status-label">STATUS: </span>
             <span [ngClass]="offerService.getClassName(offer.status)" class="status">&nbsp;
@@ -56,30 +58,35 @@
     <div class="u-flex u-flex-justify--center">
       <div class="column-layout">
         <div class="row-layout"><label class="header">Offer information</label></div>
-        <div class="row-layout" *ngFor="let item of offer.agentBuyers; let i = index">
-          <label>Buyer's Agent #{{ i + 1 }}</label>
-          <span title="{{ item.firstName }} {{ item.lastName }} | {{ item.email }}">
-            <b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}
-          </span>
-        </div>
-        <div class="row-layout" *ngFor="let item of offer.agentSellers; let i = index">
-          <label>Listing Agent #{{ i + 1 }}</label>
-          <span title="{{ item.firstName }} {{ item.lastName }} | {{ item.email }}">
-            <b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}
-          </span>
-        </div>
+
         <div class="row-layout" *ngFor="let item of offer.buyers; let i = index">
           <label>buyer #{{ i + 1 }}</label>
           <span title="{{ item.firstName }} {{ item.lastName }} | {{ item.email }}">
             <b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}
           </span>
         </div>
+
         <div class="row-layout" *ngFor="let item of offer.sellers; let i = index">
           <label>seller #{{ i + 1 }}</label>
           <span title="{{ item.firstName }} {{ item.lastName }} | {{ item.email }}">
             <b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}
           </span>
         </div>
+
+        <div class="row-layout" *ngFor="let item of offer.agentBuyers; let i = index">
+          <label>Buyer's Agent #{{ i + 1 }}</label>
+          <span title="{{ item.firstName }} {{ item.lastName }} | {{ item.email }}">
+            <b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}
+          </span>
+        </div>
+
+        <div class="row-layout" *ngFor="let item of offer.agentSellers; let i = index">
+          <label>Listing Agent #{{ i + 1 }}</label>
+          <span title="{{ item.firstName }} {{ item.lastName }} | {{ item.email }}">
+            <b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}
+          </span>
+        </div>
+
         <div class="row-layout">
           <label>address</label>
           <span title="{{ offer.streetName }}, {{ offer.city }}, {{ offer.state }} {{ offer.zip }}">
@@ -98,7 +105,7 @@
         <div class="scroll-content">
           <div class="row-layout" *ngFor="let item of offer.lastLogs">
             <label>{{ item.createdAt | date: 'short' }}</label>
-            <span>{{ item.title }}</span>
+            <span title="{{ item.title }}">{{ item.title }}</span>
           </div>
         </div>
         <div *ngIf="!transactionsFlow" class="row-layout" style="position: relative;"><label class="header">offer</label>
@@ -222,12 +229,13 @@
 
         <div class="row-layout doc-item" *ngFor="let doc of offer.pendingDocuments; let i = index;">
           <label>document #{{i + 1}}</label>
-          <div class="doc-title"><img src="assets/images/icons/{{ doc.extension }}.svg" [title]="doc.title" height="20">
+          <div class="doc-title">
+            <img src="assets/images/icons/{{ doc.extension }}.svg" [title]="doc.title" height="20">
             {{doc.title}}.{{doc.extension}}
           </div>
           <div class="doc-events">
             <label>{{ doc.lastEvent?.createdAt | date: 'short' }}</label>
-            <span>{{ doc.lastEvent?.title }}</span>
+            <span title="{{ doc.lastEvent?.title }}">{{ doc.lastEvent?.title }}</span>
           </div>
           <div class="doc-status">Status: <strong [ngClass]="offerService.getClassName(doc.status)" class="status">{{doc.status}}</strong></div>
           <div class="doc-actions">Actions:
