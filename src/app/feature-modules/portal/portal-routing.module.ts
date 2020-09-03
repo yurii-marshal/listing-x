@@ -205,7 +205,7 @@ const routes: Routes = [
               modalType: UploadDocsModalType.OfferUpdating,
               transactionPage: true
             },
-            resolve: {model: OfferDocumentsResolver}
+            resolve: {model: TransactionDocumentsResolver}
           }
         ]
       }
