@@ -56,15 +56,35 @@
     <div class="u-flex u-flex-justify--center">
       <div class="column-layout">
         <div class="row-layout"><label class="header">Offer information</label></div>
-        <div class="row-layout" *ngFor="let item of offer.agentBuyers; let i = index"><label>Buyer's Agent #{{ i + 1
-          }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span></div>
-        <div class="row-layout" *ngFor="let item of offer.agentSellers; let i = index"><label>Listing Agent #{{ i + 1
-          }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span></div>
-        <div class="row-layout" *ngFor="let item of offer.buyers; let i = index"><label>buyer #{{ i + 1 }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span>
+        <div class="row-layout" *ngFor="let item of offer.agentBuyers; let i = index">
+          <label>Buyer's Agent #{{ i + 1 }}</label>
+          <span title="{{ item.firstName }} {{ item.lastName }} | {{ item.email }}">
+            <b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}
+          </span>
         </div>
-        <div class="row-layout" *ngFor="let item of offer.sellers; let i = index"><label>seller #{{ i + 1
-          }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span></div>
-        <div class="row-layout"><label>address</label><span>{{ offer.streetName }}, {{ offer.city }}, {{ offer.state }} {{ offer.zip }}</span>
+        <div class="row-layout" *ngFor="let item of offer.agentSellers; let i = index">
+          <label>Listing Agent #{{ i + 1 }}</label>
+          <span title="{{ item.firstName }} {{ item.lastName }} | {{ item.email }}">
+            <b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}
+          </span>
+        </div>
+        <div class="row-layout" *ngFor="let item of offer.buyers; let i = index">
+          <label>buyer #{{ i + 1 }}</label>
+          <span title="{{ item.firstName }} {{ item.lastName }} | {{ item.email }}">
+            <b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}
+          </span>
+        </div>
+        <div class="row-layout" *ngFor="let item of offer.sellers; let i = index">
+          <label>seller #{{ i + 1 }}</label>
+          <span title="{{ item.firstName }} {{ item.lastName }} | {{ item.email }}">
+            <b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}
+          </span>
+        </div>
+        <div class="row-layout">
+          <label>address</label>
+          <span title="{{ offer.streetName }}, {{ offer.city }}, {{ offer.state }} {{ offer.zip }}">
+            {{ offer.streetName }}, {{ offer.city }}, {{ offer.state }} {{ offer.zip }}
+          </span>
         </div>
         <div class="row-layout"><label>offer info</label>
           <span>${{ offer.price | number }}
