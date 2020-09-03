@@ -93,7 +93,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         this.patchForm();
 
         this.isUserPitcher = this.counterOffer.pitchers.some(pitcher => pitcher.email === this.user.email);
-        this.isAgentSeller = this.user.accountType === 'agent' && this.counterOffer.offerType === 'buyer_counter_offer';
+        this.isAgentSeller = this.user.accountType === 'agent' && this.counterOffer.offerType as string === 'buyer_counter_offer';
 
         this.isDisabled = !this.isUserPitcher;
 
