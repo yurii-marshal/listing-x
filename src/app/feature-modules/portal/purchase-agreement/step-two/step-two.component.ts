@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { OfferService } from '../../services/offer.service';
 import { Offer } from '../../../../core-modules/models/offer';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialog, MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { EditOfferDialogComponent } from '../../../../shared-modules/dialogs/edit-offer-dialog/edit-offer-dialog.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { debounceTime, takeUntil } from 'rxjs/operators';
@@ -14,6 +14,7 @@ import { User } from '../../../auth/models';
 import { AuthService } from '../../../../core-modules/core-services/auth.service';
 import { SignatureDirective } from '../../../../shared-modules/directives/signature.directive';
 import { AgreementStatus } from '../../../../core-modules/models/agreement';
+import { ConfirmationBarComponent } from '../../../../shared-modules/components/confirmation-bar/confirmation-bar.component';
 
 @Component({
   selector: 'app-step-two',
@@ -740,6 +741,15 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   private subscribeToFormChanges() {
+    const config: MatSnackBarConfig = {
+      duration: 0,
+      data: {
+        message: 'Are you sure want to change a field? All users signatures will be cleared.',
+        dismiss: 'Cancel',
+        action: 'Yes'
+      },
+    };
+
     Object.values(this.documentForm.controls).forEach((group: FormGroup, groupIndex: number) => {
       Object.values(group.controls).forEach((control: FormControl, controlIndex: number) => {
         control.valueChanges
@@ -748,7 +758,17 @@ export class StepTwoComponent implements OnInit, OnDestroy {
             takeUntil(this.onDestroyed$),
           )
           .subscribe((controlValue) => {
-            this.saveDocumentField(Object.keys(group.getRawValue())[controlIndex], controlValue, groupIndex);
+            if (!this.offer.anyUserSigned) {
+              this.saveDocumentField(Object.keys(group.getRawValue())[controlIndex], controlValue, groupIndex);
+            } else {
+              const snackBarRef = this.snackbar.openFromComponent(ConfirmationBarComponent, config);
+
+              snackBarRef.onAction()
+                .pipe(takeUntil(this.onDestroyed$))
+                .subscribe(() => {
+                  this.resetAgreement();
+                });
+            }
           });
       });
     });
@@ -770,10 +790,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
         if (_.includes(this.downPaymentAmountPredicates, controlName)) {
           this.updateDownPaymentAmount();
-        }
-
-        if (this.offer.anyUserSigned) {
-          this.resetAgreement();
         }
       });
   }
