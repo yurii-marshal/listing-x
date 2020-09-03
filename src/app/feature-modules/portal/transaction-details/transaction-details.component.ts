@@ -9,7 +9,7 @@ import { AddendumData, Document, GeneratedDocument } from '../../../core-modules
 import { AuthService } from '../../../core-modules/core-services/auth.service';
 import { Subject } from 'rxjs';
 import { Offer, Person } from '../../../core-modules/models/offer';
-import { GeneratedDocumentType } from '../../../core-modules/enums/upload-document-type';
+import { GeneratedDocumentType, UploadDocumentType } from '../../../core-modules/enums/upload-document-type';
 import { MatDialog } from '@angular/material/dialog';
 import { SpqDialogComponent } from '../dialogs/spq-dialog/spq-dialog.component';
 import { AddendumDialogComponent } from '../dialogs/addendum-dialog/addendum-dialog.component';
@@ -184,9 +184,11 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
   }
 
   triggerDownloadFile(doc: GeneratedDocument | Document) {
-    this.transactionService.documentOpenedEvent(doc.id).pipe(
-      takeUntil(this.onDestroyed$)
-    ).subscribe();
+    if (!(Object.values(UploadDocumentType).includes(doc.documentType))) {
+      this.transactionService.documentOpenedEvent(doc.id).pipe(
+        takeUntil(this.onDestroyed$)
+      ).subscribe();
+    }
 
     let {file, title} = doc;
 
