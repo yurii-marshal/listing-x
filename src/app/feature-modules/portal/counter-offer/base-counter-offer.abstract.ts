@@ -7,13 +7,14 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
 import { FormControl, FormGroup } from '@angular/forms';
 import { User } from '../../auth/models';
 import * as _ from 'lodash';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { forkJoin, Subject } from 'rxjs';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
 import { Person } from '../../../core-modules/models/offer';
 import { SignatureDirective } from '../../../shared-modules/directives/signature.directive';
 import { AgreementStatus } from '../../../core-modules/models/agreement';
+import { ConfirmationBarComponent } from '../../../shared-modules/components/confirmation-bar/confirmation-bar.component';
 
 export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements OnInit, OnDestroy {
   @ViewChild('form', {static: true}) form: ElementRef;
@@ -211,6 +212,15 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   }
 
   private subscribeToFormChanges(documentForm) {
+    const config: MatSnackBarConfig = {
+      duration: 0,
+      data: {
+        message: 'Are you sure want to change a field? All users signatures will be cleared.',
+        dismiss: 'Cancel',
+        action: 'Yes'
+      },
+    };
+
     Object.values(documentForm.controls).map((control: FormControl, controlIndex: number) => {
       control.valueChanges
         .pipe(
@@ -218,7 +228,17 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
           takeUntil(this.onDestroyed$),
         )
         .subscribe((controlValue) => {
-          this.saveDocumentField(Object.keys(documentForm.getRawValue())[controlIndex], controlValue);
+          if (this.counterOffer.anyUserSigned && !this.counterOffer.canFinalSign) {
+            const snackBarRef = this.snackbar.openFromComponent(ConfirmationBarComponent, config);
+
+            snackBarRef.onAction()
+              .pipe(takeUntil(this.onDestroyed$))
+              .subscribe(() => {
+                this.resetAgreement();
+              });
+          } else {
+            this.saveDocumentField(Object.keys(documentForm.getRawValue())[controlIndex], controlValue);
+          }
         });
     });
   }
@@ -237,11 +257,6 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
       .subscribe((document) => {
         this.documentObj = document;
         this.setFieldsCount();
-
-        // if (this.counterOffer.anyUserSigned && !this.counterOffer.canFinalSign) {
-          // TODO: wait for backend
-          // this.resetAgreement();
-        // }
       });
   }
 
