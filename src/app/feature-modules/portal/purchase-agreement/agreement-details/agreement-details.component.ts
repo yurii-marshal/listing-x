@@ -17,6 +17,7 @@ import { CounterOffer } from 'src/app/core-modules/models/counter-offer';
 import { CounterOfferService } from 'src/app/feature-modules/portal/services/counter-offer.service';
 import { CounterOfferType } from 'src/app/core-modules/models/counter-offer-type';
 import { ConfirmationBarComponent } from 'src/app/shared-modules/components/confirmation-bar/confirmation-bar.component';
+import { UploadDocumentType } from 'src/app/core-modules/enums/upload-document-type';
 
 @Component({
   selector: 'app-agreement-details',
@@ -188,9 +189,11 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   triggerDownloadFile(doc: GeneratedDocument | Document) {
-    this.transactionService.documentOpenedEvent(doc.id).pipe(
-      takeUntil(this.onDestroyed$)
-    ).subscribe();
+    if (!(Object.values(UploadDocumentType).includes(doc.documentType))) {
+      this.transactionService.documentOpenedEvent(doc.id).pipe(
+        takeUntil(this.onDestroyed$)
+      ).subscribe();
+    }
 
     let {file, title} = doc;
 
