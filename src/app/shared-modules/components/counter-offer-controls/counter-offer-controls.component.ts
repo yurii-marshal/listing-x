@@ -18,6 +18,7 @@ export class CounterOfferControlsComponent implements OnInit {
   @Input() isAgentSeller: boolean;
 
   offerId: number;
+  isLoadingResponse: boolean;
   onDestroyed$: Subject<void> = new Subject<void>();
 
   constructor(
@@ -25,25 +26,33 @@ export class CounterOfferControlsComponent implements OnInit {
     public router: Router,
     public counterOfferService: CounterOfferService,
     private snackbar: MatSnackBar,
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.offerId = +this.route.snapshot.params.offerId;
   }
 
   rejectCO() {
+    this.isLoadingResponse = true;
+
     this.counterOfferService.rejectCounterOffer(this.counterOffer.id)
       .pipe(takeUntil(this.onDestroyed$))
       .subscribe(() => {
+        this.isLoadingResponse = false;
+
         this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/details`);
       });
   }
 
   createCCO(type?) {
+    this.isLoadingResponse = true;
+
     const typeRevers = this.counterOffer.offerType as string === 'buyer_counter_offer' ? 'counter_offer' : 'buyer_counter_offer';
     this.counterOfferService.createCounterOffer({offer: this.offerId, offerType: type ? type : typeRevers})
       .pipe(takeUntil(this.onDestroyed$))
       .subscribe((data: CounterOffer) => {
+        this.isLoadingResponse = false;
         this.snackbar.open('Counter Offer is created');
         // this.router.navigateByUrl(`portal/offer/${this.offerId}/counter-offers/${data.id}/${CounterOfferType[type]}`);
         this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/details`);

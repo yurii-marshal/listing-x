@@ -1,7 +1,7 @@
 <div class="controls u-flex u-flex-justify--space-between" *ngIf="visible">
   <button class="sign-btn"
           mat-flat-button
-          [disabled]="counterOffer?.isSigned && counterOffer?.status !== 'sent'"
+          [disabled]="counterOffer?.isSigned && counterOffer?.status !== 'sent' || isLoadingResponse"
           (click)="rejectCO()"
           color="primary">
     DENY
@@ -9,7 +9,7 @@
 
   <button class="sign-btn"
           mat-flat-button
-          [disabled]="counterOffer?.isSigned"
+          [disabled]="counterOffer?.isSigned || isLoadingResponse"
           (click)="createCCO()"
           color="primary">
     {{ isAgentSeller ? 'CO' : 'COUNTER OFFER'}}
@@ -18,7 +18,7 @@
   <button class="sign-btn"
           mat-flat-button
           *ngIf="isAgentSeller"
-          [disabled]="counterOffer?.isSigned"
+          [disabled]="counterOffer?.isSigned || isLoadingResponse"
           (click)="createCCO('multiple_counter_offer')"
           color="primary">
     MCO
