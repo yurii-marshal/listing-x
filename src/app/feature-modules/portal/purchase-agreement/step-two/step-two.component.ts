@@ -813,7 +813,9 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.offer.isSigned = true;
         this.snackbar.open('Offer is signed now');
-        this.router.navigate([`portal/purchase-agreements/${this.offerId}/details`]);
+        this.offer.progress >= 3
+          ? this.router.navigate([`portal/purchase-agreements/${this.offerId}/details`])
+          : this.router.navigate([`portal/purchase-agreements/${this.offerId}/step-three`]);
       }, () => {
         this.offer.isSigned = false;
         this.snackbar.open('Cannot sign the offer');
