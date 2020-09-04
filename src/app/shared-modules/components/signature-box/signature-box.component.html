@@ -3,8 +3,8 @@
 <div class="placeholder" [class.full-name]="!signWithInitials">
   <div *ngIf="!isReadonly" class="trigger" (click)="process()">
     <div class="arrow_box" [class.un-sign]="mode === SignMode.UnSign" >
-      <mat-icon fontSet="fa" [fontIcon]="mode === SignMode.Sign ? 'fa-signature' : 'fa-eraser'" class="icon" style="height: 16px;"></mat-icon>
-      <div class="text">{{ mode === SignMode.UnSign ? 'Unsign' : signWithInitials ? 'Initials' : 'Sign' }}</div>
+<!--      <mat-icon fontSet="fa" [fontIcon]="mode === SignMode.Sign ? 'fa-signature' : 'fa-eraser'" class="icon" style="height: 16px;"></mat-icon>-->
+      <div class="text">{{ mode === SignMode.UnSign ? 'Unsign' : 'Sign' }}</div>
     </div>
   </div>
 
