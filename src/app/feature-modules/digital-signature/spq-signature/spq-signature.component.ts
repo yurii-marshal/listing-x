@@ -10,6 +10,7 @@ import {merge, Observable} from 'rxjs';
 import {FinishSigningDialogComponent} from '../dialogs/finish-signing-dialog/finish-signing-dialog.component';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatDialog} from '@angular/material/dialog';
+import { AuthService } from 'src/app/core-modules/core-services/auth.service';
 
 @Component({
   selector: 'app-spq-signature',
@@ -23,6 +24,7 @@ export class SpqSignatureComponent implements AfterViewInit, OnInit {
   transaction: Transaction;
 
   signEnabled: boolean;
+  isAgent: boolean = this.authService.currentUser.accountType === 'agent';
 
   progress: number = 0;
 
@@ -30,6 +32,7 @@ export class SpqSignatureComponent implements AfterViewInit, OnInit {
   private signatures: QueryList<SignatureBoxComponent>;
 
   constructor(
+    private authService: AuthService,
     private dialog: MatDialog,
     private route: ActivatedRoute,
     private transactionService: TransactionService,
@@ -43,7 +46,9 @@ export class SpqSignatureComponent implements AfterViewInit, OnInit {
       tap((doc) => this.doc = doc),
       switchMap((doc) => this.transactionService.loadOne(doc.transaction))
     ).subscribe((transaction) => {
-      this.signEnabled = transaction.pendingDocuments.find(doc => doc.id === docId).allowSign;
+      if (this.isAgent) {
+        this.signEnabled = transaction.pendingDocuments.find(doc => doc.id === docId).allowSign;
+      }
       return this.transaction = transaction;
     });
   }
