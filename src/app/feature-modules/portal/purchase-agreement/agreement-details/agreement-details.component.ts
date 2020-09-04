@@ -34,6 +34,8 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   isSeller: boolean = false;
   transactionsFlow: boolean;
 
+  isLoadingResponse: boolean;
+
   readonly statusLabels: { [key: string]: string } = {
     [AgreementStatus.All]: 'All agreements',
     [AgreementStatus.Started]: 'Started',
@@ -134,17 +136,24 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   createCounterOffer(type) {
+    this.isLoadingResponse = true;
+
     this.counterOfferService.createCounterOffer({offer: this.offer.id, offerType: type})
       .pipe(takeUntil(this.onDestroyed$))
       .subscribe((data: CounterOffer) => {
+        this.isLoadingResponse = false;
         this.router.navigateByUrl(`portal/offer/${this.offer.id}/counter-offers/${data.id}/${CounterOfferType[type]}`);
       });
   }
 
   denyOffer() {
+    this.isLoadingResponse = true;
+
     this.offerService.rejectOffer(this.offer.id).pipe(
       takeUntil(this.onDestroyed$)
     ).subscribe(() => {
+      this.isLoadingResponse = false;
+
       this.offer.allowSign = false;
       this.offer.canCreateCounter = false;
       this.offer.canCreateMultipleCounter = false;

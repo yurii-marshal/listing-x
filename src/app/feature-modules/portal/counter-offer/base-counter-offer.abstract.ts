@@ -15,7 +15,6 @@ import { Person } from '../../../core-modules/models/offer';
 import { SignatureDirective } from '../../../shared-modules/directives/signature.directive';
 import { AgreementStatus } from '../../../core-modules/models/agreement';
 import { ConfirmationBarComponent } from '../../../shared-modules/components/confirmation-bar/confirmation-bar.component';
-import { CounterOfferType } from '../../../core-modules/models/counter-offer-type';
 
 export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements OnInit, OnDestroy {
   @ViewChild('form', {static: true}) form: ElementRef;

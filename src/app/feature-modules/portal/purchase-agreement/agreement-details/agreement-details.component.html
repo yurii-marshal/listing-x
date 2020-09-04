@@ -123,7 +123,7 @@
           <button class="deny-btn"
                   mat-flat-button
                   *ngIf="offer.userRole === 'agent_seller'"
-                  [disabled]="!offer.allowSign || offer.status === 'denied' || offer.isSigned"
+                  [disabled]="!offer.allowSign || offer.status === 'denied' || offer.isSigned || isLoadingResponse"
                   (click)="denyOffer()"
                   color="accent">
             DENY
@@ -139,7 +139,7 @@
 
           <button class="counter-offer-btn"
                   *ngIf="offer.userRole === 'agent_seller'"
-                  [disabled]="!offer.canCreateCounter"
+                  [disabled]="!offer.canCreateCounter || isLoadingResponse"
                   mat-flat-button
                   (click)="createCounterOffer('counter_offer')"
                   color="primary">
@@ -148,7 +148,7 @@
 
           <button class="counter-offer-btn"
                   *ngIf="offer.userRole === 'agent_seller'"
-                  [disabled]="!offer.canCreateMultipleCounter"
+                  [disabled]="!offer.canCreateMultipleCounter || isLoadingResponse"
                   mat-flat-button
                   (click)="createCounterOffer('multiple_counter_offer')"
                   color="primary">
