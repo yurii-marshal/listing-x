@@ -3,7 +3,6 @@ import { AuthService } from '../../../core-modules/core-services/auth.service';
 import { User } from '../../../feature-modules/auth/models';
 import { ActivatedRoute } from '@angular/router';
 import { Person } from '../../../core-modules/models/offer';
-import { Signature } from '../../../core-modules/models/document';
 
 export enum SignMode {
   Sign = 1,
