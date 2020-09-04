@@ -60,8 +60,10 @@ export class SignatureBoxComponent implements OnInit {
     // Toggle
     if (this.mode === SignMode.Sign) {
       this.mode = SignMode.UnSign;
+      this.signature.signature = `${this.authService.currentUser.firstName.charAt(0)}.${this.authService.currentUser.lastName.charAt(0)}.`;
     } else {
       this.mode = SignMode.Sign;
+      this.signature.signature = '';
     }
   }
 
