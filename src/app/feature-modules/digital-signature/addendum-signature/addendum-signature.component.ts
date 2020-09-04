@@ -10,6 +10,7 @@ import { merge, Observable } from 'rxjs';
 import { FinishSigningDialogComponent } from '../dialogs/finish-signing-dialog/finish-signing-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from 'src/app/core-modules/core-services/auth.service';
 
 @Component({
   selector: 'app-addendum-signature',
@@ -21,8 +22,9 @@ export class AddendumSignatureComponent implements AfterViewInit, OnInit {
   transaction: Transaction;
 
   signEnabled: boolean;
-  docId: number;
+  isAgent: boolean = this.authService.currentUser.accountType === 'agent';
 
+  docId: number;
   progress: number = 0;
   currentYear: number = new Date().getFullYear();
 
@@ -44,6 +46,7 @@ export class AddendumSignatureComponent implements AfterViewInit, OnInit {
   private signatures: QueryList<SignatureBoxComponent>;
 
   constructor(
+    private authService: AuthService,
     private router: Router,
     private dialog: MatDialog,
     private snackbar: MatSnackBar,
@@ -57,7 +60,9 @@ export class AddendumSignatureComponent implements AfterViewInit, OnInit {
       tap(doc => this.doc = doc),
       switchMap(doc => this.transactionService.loadOne(doc.transaction))
     ).subscribe(transaction => {
-      this.signEnabled = transaction.pendingDocuments.find(doc => doc.id === this.docId).allowSign;
+      if (this.isAgent) {
+        this.signEnabled = transaction.pendingDocuments.find(doc => doc.id === this.docId).allowSign;
+      }
       return this.transaction = transaction;
     });
   }

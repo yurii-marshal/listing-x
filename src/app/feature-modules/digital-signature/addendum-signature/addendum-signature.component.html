@@ -80,15 +80,13 @@
         <br>
         <div style="display: flex; justify-content: space-between">
           <div>
-            <ng-container *ngFor="let item of transaction.offer.buyers; let last = last;">
+            <ng-container *ngFor="let item of doc.signatures.buyers; let last = last;">
               <div>Buyer/Tenant <app-signature-box class="signature-box" [signature]="item"></app-signature-box></div>
-              <br *ngIf="!last">
             </ng-container>
           </div>
           <div>
-            <ng-container *ngFor="let item of transaction.offer.sellers; let last = last;">
+            <ng-container *ngFor="let item of doc.signatures.sellers; let last = last;">
               <div>Seller/Landlord <app-signature-box class="signature-box" [signature]="item"></app-signature-box>&nbsp;&nbsp;&nbsp;</div>
-              <br *ngIf="!last">
             </ng-container>
           </div>
         </div>
