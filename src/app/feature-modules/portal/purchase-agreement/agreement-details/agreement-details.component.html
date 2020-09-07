@@ -261,7 +261,7 @@
                 fill="#419BDF"/>
             </svg>
 
-            <mat-menu #menu="matMenu" xPosition="before">
+            <mat-menu #menu="matMenu" xPosition="before" backdropClass="mat-menu-overlay">
               <button *ngIf="doc.documentType === 'purchase_agreement' && isAgent && !isSeller"
                       mat-menu-item
                       [disabled]="!doc.allowEdit"
