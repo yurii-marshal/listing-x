@@ -249,7 +249,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     if (controlValue === '') {
       controlValue = null;
     } else if (controlValue instanceof Date) {
-      controlValue = this.datePipe.transform(controlValue, 'yyyy-MM-dd');
+      controlValue = this.datePipe.transform(controlValue, 'MM/dd/yyyy');
     } else if (+controlValue) {
       controlValue = String(controlValue).replace(',', '');
     }
