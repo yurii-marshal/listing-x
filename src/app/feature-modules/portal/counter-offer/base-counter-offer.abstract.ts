@@ -89,17 +89,16 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
         this.showSwitcher = this.isUserPitcher && this.counterOffer.status !== AgreementStatus.Completed;
 
+        const isFinalMode = this.counterOffer.canFinalSign && this.counterOffer.isSigned;
+
         // if user isn't pitcher there's available sign mode only / for sign / for review
-        if (!this.showSwitcher || (this.counterOffer.canFinalSign && this.counterOffer.isSigned)) {
+        if (!this.showSwitcher || isFinalMode) {
           this.isSignMode = true;
         }
 
         this.allFieldsCount = Object.keys(this.documentObj).length;
 
-        this.okButtonText =
-          (!this.counterOffer.isSigned && this.isSignMode) ? 'Sign' :
-            (this.counterOffer.canFinalSign && this.counterOffer.isSigned) ? 'Final sign' :
-              'Back to the offer';
+        this.okButtonText = (!this.counterOffer.isSigned && this.isSignMode) ? 'Sign' : isFinalMode ? 'Final sign' : 'Back to the offer';
 
         this.isSidebarControlsVisible =
           this.isSideBarOpen && this.counterOffer.catchers.some((user: Person) => user.email === this.authService.currentUser.email);
