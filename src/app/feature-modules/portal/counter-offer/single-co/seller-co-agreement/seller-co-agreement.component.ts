@@ -52,7 +52,8 @@ export class SellerCOAgreementComponent extends BaseCounterOfferAbstract<Counter
       check_attached_addendum_third: [{value: null, disabled: true}, []],
       text_addendum_number_third: [{value: null, disabled: true}, []],
       time_counter_offer_expiration_time: [{value: null, disabled: true}, []],
-      radio_expiration_am_pm: [{value: 'am', disabled: true}, []],
+      check_expiration_am: [{value: null, disabled: true}, []],
+      check_expiration_pm: [{value: null, disabled: true}, []],
       date_expiration_date: [{value: null, disabled: true}, []],
       text_seller_alternative_name: [{value: null, disabled: true}, []],
       check_seller_withdraw: [{value: null, disabled: true}, []],
@@ -74,7 +75,8 @@ export class SellerCOAgreementComponent extends BaseCounterOfferAbstract<Counter
       text_seller_initials_second: this.getSignFieldAllowedFor('text_seller_initials_second', 'pitcherCustomers', 1),
       date_copy_received_date: [{value: null, disabled: true}, []],
       time_copy_received_time: [{value: null, disabled: true}, []],
-      radio_copy_received_am_pm: [{value: 'am', disabled: true}, []],
+      check_copy_received_am: [{value: null, disabled: true}, []],
+      check_copy_received_pm: [{value: null, disabled: true}, []],
     }, {updateOn: 'blur'});
   }
 }

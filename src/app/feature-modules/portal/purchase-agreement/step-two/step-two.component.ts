@@ -98,10 +98,16 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.documentForm = this.fb.group({
       page_1: this.fb.group({
         check_civil_code: [{value: null, disabled: this.isDisabled}, []],
-        radio_disclosure_1: [{value: 'buyer', disabled: true}, []],
+        check_disclosure_1_buyer: [{value: null, disabled: true}, []],
+        check_disclosure_1_seller: [{value: null, disabled: true}, []],
+        check_disclosure_1_landlord: [{value: null, disabled: true}, []],
+        check_disclosure_1_tenant: [{value: null, disabled: true}, []],
         text_disclosure_role_name_1: this.getSignFieldAllowedFor('buyers', 0),
         date_disclosure_1: [{value: '', disabled: true}, []],
-        radio_disclosure_2: [{value: 'buyer', disabled: true}, []],
+        check_disclosure_2_buyer: [{value: null, disabled: true}, []],
+        check_disclosure_2_seller: [{value: null, disabled: true}, []],
+        check_disclosure_2_landlord: [{value: null, disabled: true}, []],
+        check_disclosure_2_tenant: [{value: null, disabled: true}, []],
         text_disclosure_role_name_2: this.getSignFieldAllowedFor('buyers', 1),
         date_disclosure_2: [{value: '', disabled: true}, []],
         text_disclosure_firm: [{value: null, disabled: this.isDisabled}, []],
@@ -113,16 +119,20 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       page_2: this.fb.group({
         text_confirm_seller_firm_name: [{value: '', disabled: true}, []],
         text_confirm_seller_firm_lic: [{value: '', disabled: true}, []],
-        radio_confirm_seller: [{value: 'seller', disabled: true}, []],
+        check_confirm_seller: [{value: null, disabled: true}, []],
+        check_confirm_1_dual_agent: [{value: null, disabled: true}, []],
         text_confirm_seller_agent_firm_name: [{value: '', disabled: true}, []],
         text_confirm_seller_agent_firm_lic: [{value: '', disabled: true}, []],
-        radio_confirm_seller_agent: [{value: 'seller_agent', disabled: true}, []],
+        check_confirm_seller_agent: [{value: null, disabled: true}, []],
+        check_confirm_2_dual_agent: [{value: null, disabled: true}, []],
         text_confirm_buyer_firm_name: [{value: '', disabled: true}, []],
         text_confirm_buyer_firm_lic: [{value: '', disabled: true}, []],
-        radio_confirm_buyer: [{value: 'buyer', disabled: true}, []],
+        check_confirm_buyer: [{value: null, disabled: true}, []],
+        check_confirm_3_dual_agent: [{value: null, disabled: true}, []],
         text_confirm_buyer_agent_firm_name: [{value: '', disabled: true}, []],
         text_confirm_buyer_agent_firm_lic: [{value: '', disabled: true}, []],
-        radio_confirm_buyer_agent: [{value: 'buyer_agent', disabled: true}, []],
+        check_confirm_buyer_agent: [{value: 'null', disabled: true}, []],
+        check_confirm_4_dual_agent: [{value: 'null', disabled: true}, []],
       }),
       page_3: this.fb.group({
         text_acknowledge_seller_1: this.getSignFieldAllowedFor('sellers', 0),
@@ -169,22 +179,27 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         // # Price = 51c
         text_offer_price_digits: [{value: null, disabled: this.isDisabled}, [Validators.required]],
         // # Close of Escrow = 51d
-        radio_escrow: [{value: 'date', disabled: this.isDisabled}, []],
+        check_escrow_date: [{value: null, disabled: this.isDisabled}, []],
+        check_escrow_days: [{value: null, disabled: this.isDisabled}, []],
         date_escrow_date: [{value: null, disabled: this.isDisabled}, [Validators.required]],
         text_escrow_days: [{value: '', disabled: true}, []],
         check_agency_disclosure: [{value: null, disabled: this.isDisabled}, []],
         text_agency_broker_seller_firm: [{value: '', disabled: true}, []],
         text_agency_broker_seller_firm_lic: [{value: '', disabled: true}, []],
-        radio_agency_broker_seller: [{value: 'seller', disabled: true}, []],
+        check_agency_broker_seller: [{value: null, disabled: true}, []],
+        check_agency_broker_1_dual_agent: [{value: null, disabled: true}, []],
         text_agency_broker_seller_agent: [{value: '', disabled: true}, []],
         text_agency_broker_seller_agent_lic: [{value: '', disabled: true}, []],
-        radio_agency_broker_seller_agent: [{value: 'seller_agent', disabled: true}, []],
+        check_agency_broker_seller_agent: [{value: null, disabled: true}, []],
+        check_agency_broker_2_dual_agent: [{value: null, disabled: true}, []],
         text_agency_broker_buyer_firm: [{value: '', disabled: true}, []],
         text_agency_broker_buyer_firm_lic: [{value: '', disabled: true}, []],
-        radio_agency_broker_buyer: [{value: 'buyer', disabled: true}, []],
+        check_agency_broker_buyer: [{value: null, disabled: true}, []],
+        check_agency_broker_3_dual_agent: [{value: null, disabled: true}, []],
         text_agency_broker_buyer_agent: [{value: '', disabled: true}, []],
         text_agency_broker_buyer_agent_lic: [{value: '', disabled: true}, []],
-        radio_agency_broker_buyer_agent: [{value: 'buyer_agent', disabled: true}, []],
+        check_agency_broker_buyer_agent: [{value: null, disabled: true}, []],
+        check_agency_broker_4_dual_agent: [{value: null, disabled: true}, []],
         check_agency_competing_buyers_and_sellers: [{value: null, disabled: this.isDisabled}, []],
         // # Deposit = 53a
         text_finance_terms_amount: [{value: null, disabled: this.isDisabled}, [Validators.required]],
@@ -262,15 +277,18 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         check_advisories_short_sale: [{value: null, disabled: this.isDisabled}, []],
         check_advisories_other: [{value: null, disabled: this.isDisabled}, []],
         text_other_terms: [{value: null, disabled: this.isDisabled}, []],
-        radio_allocation_report_first: [{value: 'buyer', disabled: this.isDisabled}, []],
+        check_allocation_report_first_buyer: [{value: null, disabled: this.isDisabled}, []],
+        check_allocation_report_first_seller: [{value: null, disabled: this.isDisabled}, []],
         check_allocation_report_environmental: [{value: null, disabled: this.isDisabled}, []],
         check_allocation_report_other: [{value: null, disabled: this.isDisabled}, []],
         text_allocation_report_other: [{value: null, disabled: this.isDisabled}, []],
         text_allocation_report_prepared_by_first: [{value: null, disabled: this.isDisabled}, []],
-        radio_allocation_report_second: [{value: 'buyer', disabled: this.isDisabled}, []],
+        check_allocation_report_second_buyer: [{value: null, disabled: this.isDisabled}, []],
+        check_allocation_report_second_seller: [{value: null, disabled: this.isDisabled}, []],
         text_allocation_report_following_first: [{value: null, disabled: this.isDisabled}, []],
         text_allocation_report_prepared_by_second: [{value: null, disabled: this.isDisabled}, []],
-        radio_allocation_report_third: [{value: 'buyer', disabled: this.isDisabled}, []],
+        check_allocation_report_third_buyer: [{value: null, disabled: this.isDisabled}, []],
+        check_allocation_report_third_seller: [{value: null, disabled: this.isDisabled}, []],
         text_allocation_report_following_second: [{value: null, disabled: this.isDisabled}, []],
         text_allocation_report_prepared_by_third: [{value: null, disabled: this.isDisabled}, []],
         check_allocation_report_government_buyer: [{value: null, disabled: this.isDisabled}, []],
@@ -283,29 +301,41 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       page_7: this.fb.group({
         text_property_address: [{value: '', disabled: true}, []],
         date_property_date: [{value: '', disabled: true}, []],
-        radio_pay_government: [{value: 'buyer', disabled: this.isDisabled}, []],
-        radio_pay_government_coe: [{value: 'buyer', disabled: this.isDisabled}, []],
-        radio_escrow_pay: [{value: 'buyer', disabled: this.isDisabled}, []],
+        check_pay_government_buyer: [{value: null, disabled: this.isDisabled}, []],
+        check_pay_government_seller: [{value: null, disabled: this.isDisabled}, []],
+        check_pay_government_coe_buyer: [{value: null, disabled: this.isDisabled}, []],
+        check_pay_government_coe_seller: [{value: null, disabled: this.isDisabled}, []],
+        check_escrow_pay_buyer: [{value: null, disabled: this.isDisabled}, []],
+        check_escrow_pay_seller: [{value: null, disabled: this.isDisabled}, []],
         text_escrow_pay_amount: [{value: null, disabled: this.isDisabled}, []],
         text_escrow_holder: [{value: null, disabled: this.isDisabled}, []],
         text_escrow_payment_days: [{value: null, disabled: this.isDisabled}, []],
-        radio_escrow_pay_insurance: [{value: 'buyer', disabled: this.isDisabled}, []],
+        check_escrow_pay_insurance_buyer: [{value: null, disabled: this.isDisabled}, []],
+        check_escrow_pay_insurance_seller: [{value: null, disabled: this.isDisabled}, []],
         text_escrow_paragraph_13: [{value: null, disabled: this.isDisabled}, []],
         text_escrow_owner_title_issued_by: [{value: null, disabled: this.isDisabled}, []],
-        radio_other_costs_country_tax: [{value: 'buyer', disabled: this.isDisabled}, []],
+        check_other_costs_country_tax_buyer: [{value: null, disabled: this.isDisabled}, []],
+        check_other_costs_country_tax_seller: [{value: null, disabled: this.isDisabled}, []],
         text_other_costs_country_tax_amount: [{value: null, disabled: this.isDisabled}, []],
-        radio_other_costs_city_tax: [{value: 'buyer', disabled: this.isDisabled}, []],
+        check_other_costs_city_tax_buyer: [{value: null, disabled: this.isDisabled}, []],
+        check_other_costs_city_tax_seller: [{value: null, disabled: this.isDisabled}, []],
         text_other_costs_country_city_amount: [{value: null, disabled: this.isDisabled}, []],
-        radio_other_costs_hometown_tax: [{value: 'buyer', disabled: this.isDisabled}, []],
+        check_other_costs_hometown_tax_buyer: [{value: null, disabled: this.isDisabled}, []],
+        check_other_costs_hometown_tax_seller: [{value: null, disabled: this.isDisabled}, []],
         text_other_costs_country_hometown_amount: [{value: null, disabled: this.isDisabled}, []],
-        radio_other_costs_hao_fee: [{value: 'buyer', disabled: this.isDisabled}, []],
-        radio_other_costs_private_fee: [{value: 'buyer', disabled: this.isDisabled}, []],
+        check_other_costs_hao_fee_buyer: [{value: null, disabled: this.isDisabled}, []],
+        check_other_costs_hao_fee_seller: [{value: null, disabled: this.isDisabled}, []],
+        check_other_costs_private_fee_buyer: [{value: null, disabled: this.isDisabled}, []],
+        check_other_costs_private_fee_seller: [{value: null, disabled: this.isDisabled}, []],
         text_other_costs_private_fee_amount: [{value: null, disabled: this.isDisabled}, []],
-        radio_other_costs_shall_pay_first: [{value: 'buyer', disabled: this.isDisabled}, []],
+        check_other_costs_shall_pay_first_buyer: [{value: null, disabled: this.isDisabled}, []],
+        check_other_costs_shall_pay_first_seller: [{value: null, disabled: this.isDisabled}, []],
         text_other_costs_shall_pay_amount_first: [{value: null, disabled: this.isDisabled}, []],
-        radio_other_costs_shall_pay_second: [{value: 'buyer', disabled: this.isDisabled}, []],
+        check_other_costs_shall_pay_second_buyer: [{value: null, disabled: this.isDisabled}, []],
+        check_other_costs_shall_pay_second_seller: [{value: null, disabled: this.isDisabled}, []],
         text_other_costs_shall_pay_amount_second: [{value: null, disabled: this.isDisabled}, []],
-        radio_other_costs_shall_pay_cost: [{value: 'buyer', disabled: this.isDisabled}, []],
+        check_other_costs_shall_pay_cost_buyer: [{value: null, disabled: this.isDisabled}, []],
+        check_other_costs_shall_pay_cost_seller: [{value: null, disabled: this.isDisabled}, []],
         text_other_costs_shall_pay_amount_cost: [{value: null, disabled: this.isDisabled}, []],
         check_other_costs_warranty: [{value: null, disabled: this.isDisabled}, []],
         text_other_costs_warranty_issued_by: [{value: null, disabled: this.isDisabled}, []],
@@ -543,16 +573,16 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/details`);
   }
 
-  switchDaysAndDate(value: string, daysControlName: string, dateControlName: string, emit = true) {
-    switch (value) {
-      case 'date':
-        this.setRelatedFields(dateControlName, daysControlName, emit);
-        break;
-      case 'days':
-        this.setRelatedFields(daysControlName, dateControlName, emit);
-        break;
-    }
-  }
+  // switchDaysAndDate(value: string, daysControlName: string, dateControlName: string, emit = true) {
+  //   switch (value) {
+  //     case 'date':
+  //       this.setRelatedFields(dateControlName, daysControlName, emit);
+  //       break;
+  //     case 'days':
+  //       this.setRelatedFields(daysControlName, dateControlName, emit);
+  //       break;
+  //   }
+  // }
 
   modeChanged(isSign: boolean) {
     isSign
@@ -623,22 +653,20 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
         this.disableSignFields();
 
-        this.initSwitchDaysAndDate();
-
         this.isLoading = false;
       });
   }
 
-  private initSwitchDaysAndDate() {
-    if (this.documentForm.get('page_5.text_escrow_days').value) {
-      this.switchDaysAndDate(
-        this.documentForm.get('page_5.radio_escrow').value,
-        'page_5.text_escrow_days',
-        'page_5.date_escrow_date',
-        false
-      );
-    }
-  }
+  // private initSwitchDaysAndDate() {
+  //   if (this.documentForm.get('page_5.text_escrow_days').value) {
+  //     this.switchDaysAndDate(
+  //       this.documentForm.get('page_5.radio_escrow').value,
+  //       'page_5.text_escrow_days',
+  //       'page_5.date_escrow_date',
+  //       false
+  //     );
+  //   }
+  // }
 
   private checkSignAccess() {
     if (this.offer.userRole === 'agent_buyer'
@@ -662,15 +690,15 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.moveToNextSignField(true);
   }
 
-  private setRelatedFields(enableControl: string, disableControl: string, emit: boolean) {
-    this.documentForm.get(enableControl).setValidators([Validators.required]);
-    this.documentForm.get(enableControl).enable({emitEvent: false});
-    this.documentForm.get(enableControl).markAsDirty();
-
-    this.documentForm.get(disableControl).clearValidators();
-    this.documentForm.get(disableControl).disable({emitEvent: false});
-    this.documentForm.get(disableControl).patchValue('', {emitEvent: emit});
-  }
+  // private setRelatedFields(enableControl: string, disableControl: string, emit: boolean) {
+  //   this.documentForm.get(enableControl).setValidators([Validators.required]);
+  //   this.documentForm.get(enableControl).enable({emitEvent: false});
+  //   this.documentForm.get(enableControl).markAsDirty();
+  //
+  //   this.documentForm.get(disableControl).clearValidators();
+  //   this.documentForm.get(disableControl).disable({emitEvent: false});
+  //   this.documentForm.get(disableControl).patchValue('', {emitEvent: emit});
+  // }
 
   private scrollToFirstInvalidField(): boolean {
     for (const groupName of Object.keys(this.documentForm.controls)) {
@@ -778,7 +806,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     if (controlValue === '') {
       controlValue = null;
     } else if (controlValue instanceof Date) {
-      controlValue = this.datePipe.transform(controlValue, 'yyyy-MM-dd');
+      controlValue = this.datePipe.transform(controlValue, 'MM/dd/yyyy');
     } else if (+controlValue) {
       controlValue = String(controlValue).replace(',', '');
     }

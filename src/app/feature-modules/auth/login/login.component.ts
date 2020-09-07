@@ -22,13 +22,9 @@ export class LoginComponent implements OnInit {
   }
 
   private get redirectUrl(): string {
-    let uri = this.route.snapshot.queryParams.redirectUrl || '/portal/purchase-agreements/all';
-
-    if (this.hasOfferData) {
-      uri = '/portal/purchase-agreements/step-one';
-    }
-
-    return uri;
+    return this.hasOfferData
+      ? '/portal/purchase-agreements/step-one'
+      : this.route.snapshot.queryParams.redirectUrl || '/portal/purchase-agreements/all';
   }
 
   private get hasOfferData(): boolean {
@@ -56,9 +52,7 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(data)
       .subscribe(() => {
-        const url = this.redirectUrl;
-
-        this.router.navigateByUrl(url);
+        this.router.navigateByUrl(this.redirectUrl);
       });
   }
 
