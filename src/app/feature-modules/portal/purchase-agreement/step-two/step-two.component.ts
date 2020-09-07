@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { OfferService } from '../../services/offer.service';
 import { Offer } from '../../../../core-modules/models/offer';
-import { MatDialog, MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { DateAdapter, MAT_DATE_FORMATS, MatDialog, MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { EditOfferDialogComponent } from '../../../../shared-modules/dialogs/edit-offer-dialog/edit-offer-dialog.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { debounceTime, takeUntil } from 'rxjs/operators';
@@ -15,12 +15,17 @@ import { AuthService } from '../../../../core-modules/core-services/auth.service
 import { SignatureDirective } from '../../../../shared-modules/directives/signature.directive';
 import { AgreementStatus } from '../../../../core-modules/models/agreement';
 import { ConfirmationBarComponent } from '../../../../shared-modules/components/confirmation-bar/confirmation-bar.component';
+import { PICK_FORMATS, PickDateAdapter } from '../../../../core-modules/adapter/date-adapter';
 
 @Component({
   selector: 'app-step-two',
   templateUrl: './step-two.component.html',
   styleUrls: ['./step-two.component.scss'],
-  providers: [DatePipe]
+  providers: [
+    DatePipe,
+    {provide: DateAdapter, useClass: PickDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS},
+  ]
 })
 export class StepTwoComponent implements OnInit, OnDestroy {
   @ViewChild('form', {static: true}) form: ElementRef;
@@ -98,13 +103,13 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.documentForm = this.fb.group({
       page_1: this.fb.group({
         check_civil_code: [{value: null, disabled: this.isDisabled}, []],
-        check_disclosure_1_buyer: [{value: null, disabled: true}, []],
+        check_disclosure_1_buyer: [{value: true, disabled: true}, []],
         check_disclosure_1_seller: [{value: null, disabled: true}, []],
         check_disclosure_1_landlord: [{value: null, disabled: true}, []],
         check_disclosure_1_tenant: [{value: null, disabled: true}, []],
         text_disclosure_role_name_1: this.getSignFieldAllowedFor('buyers', 0),
         date_disclosure_1: [{value: '', disabled: true}, []],
-        check_disclosure_2_buyer: [{value: null, disabled: true}, []],
+        check_disclosure_2_buyer: [{value: true, disabled: true}, []],
         check_disclosure_2_seller: [{value: null, disabled: true}, []],
         check_disclosure_2_landlord: [{value: null, disabled: true}, []],
         check_disclosure_2_tenant: [{value: null, disabled: true}, []],
@@ -182,20 +187,20 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         check_escrow_date: [{value: null, disabled: this.isDisabled}, []],
         check_escrow_days: [{value: null, disabled: this.isDisabled}, []],
         date_escrow_date: [{value: null, disabled: this.isDisabled}, [Validators.required]],
-        text_escrow_days: [{value: '', disabled: true}, []],
+        text_escrow_days: [{value: '', disabled: this.isDisabled}, []],
         check_agency_disclosure: [{value: null, disabled: this.isDisabled}, []],
         text_agency_broker_seller_firm: [{value: '', disabled: true}, []],
         text_agency_broker_seller_firm_lic: [{value: '', disabled: true}, []],
-        check_agency_broker_seller: [{value: null, disabled: true}, []],
-        check_agency_broker_1_dual_agent: [{value: null, disabled: true}, []],
+        check_agency_broker_seller: [{value: null, disabled: this.isDisabled}, []],
+        check_agency_broker_1_dual_agent: [{value: null, disabled: this.isDisabled}, []],
         text_agency_broker_seller_agent: [{value: '', disabled: true}, []],
         text_agency_broker_seller_agent_lic: [{value: '', disabled: true}, []],
-        check_agency_broker_seller_agent: [{value: null, disabled: true}, []],
-        check_agency_broker_2_dual_agent: [{value: null, disabled: true}, []],
+        check_agency_broker_seller_agent: [{value: null, disabled: this.isDisabled}, []],
+        check_agency_broker_2_dual_agent: [{value: null, disabled: this.isDisabled}, []],
         text_agency_broker_buyer_firm: [{value: '', disabled: true}, []],
         text_agency_broker_buyer_firm_lic: [{value: '', disabled: true}, []],
-        check_agency_broker_buyer: [{value: null, disabled: true}, []],
-        check_agency_broker_3_dual_agent: [{value: null, disabled: true}, []],
+        check_agency_broker_buyer: [{value: null, disabled: this.isDisabled}, []],
+        check_agency_broker_3_dual_agent: [{value: null, disabled: this.isDisabled}, []],
         text_agency_broker_buyer_agent: [{value: '', disabled: true}, []],
         text_agency_broker_buyer_agent_lic: [{value: '', disabled: true}, []],
         check_agency_broker_buyer_agent: [{value: null, disabled: true}, []],
@@ -806,7 +811,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     if (controlValue === '') {
       controlValue = null;
     } else if (controlValue instanceof Date) {
-      controlValue = this.datePipe.transform(controlValue, 'MM/dd/yyyy');
+      controlValue = this.datePipe.transform(controlValue, 'yyyy-MM-dd');
     } else if (+controlValue) {
       controlValue = String(controlValue).replace(',', '');
     }

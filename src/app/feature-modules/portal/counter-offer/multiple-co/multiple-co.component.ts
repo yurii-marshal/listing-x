@@ -4,16 +4,21 @@ import { BaseCounterOfferAbstract } from '../base-counter-offer.abstract';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OfferService } from '../../services/offer.service';
 import { CounterOfferService } from '../../services/counter-offer.service';
-import { MatSnackBar } from '@angular/material';
+import { DateAdapter, MAT_DATE_FORMATS, MatSnackBar } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { CounterOffer } from '../../../../core-modules/models/counter-offer';
 import { AuthService } from '../../../../core-modules/core-services/auth.service';
+import { PICK_FORMATS, PickDateAdapter } from '../../../../core-modules/adapter/date-adapter';
 
 @Component({
   selector: 'app-multiple-co',
   templateUrl: './multiple-co.component.html',
   styleUrls: ['./../counter-offer.scss', './multiple-co.component.scss'],
-  providers: [DatePipe],
+  providers: [
+    DatePipe,
+    {provide: DateAdapter, useClass: PickDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS},
+  ]
 })
 export class MultipleCOComponent extends BaseCounterOfferAbstract<CounterOffer> implements OnInit {
 

@@ -5,15 +5,20 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { OfferService } from '../../../services/offer.service';
 import { CounterOfferService } from '../../../services/counter-offer.service';
 import { DatePipe } from '@angular/common';
-import { MatSnackBar } from '@angular/material';
+import { DateAdapter, MAT_DATE_FORMATS, MatSnackBar } from '@angular/material';
 import { CounterOffer } from '../../../../../core-modules/models/counter-offer';
 import { AuthService } from '../../../../../core-modules/core-services/auth.service';
+import { PICK_FORMATS, PickDateAdapter } from '../../../../../core-modules/adapter/date-adapter';
 
 @Component({
   selector: 'app-seller-co-agreement',
   templateUrl: './seller-co-agreement.component.html',
   styleUrls: ['./../../counter-offer.scss', './seller-co-agreement.component.scss'],
-  providers: [DatePipe],
+  providers: [
+    DatePipe,
+    {provide: DateAdapter, useClass: PickDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS},
+  ]
 })
 export class SellerCOAgreementComponent extends BaseCounterOfferAbstract<CounterOffer> implements OnInit, OnDestroy {
 
