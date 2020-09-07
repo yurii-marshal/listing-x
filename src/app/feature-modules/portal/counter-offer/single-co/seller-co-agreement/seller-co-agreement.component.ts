@@ -8,7 +8,7 @@ import { DatePipe } from '@angular/common';
 import { DateAdapter, MAT_DATE_FORMATS, MatSnackBar } from '@angular/material';
 import { CounterOffer } from '../../../../../core-modules/models/counter-offer';
 import { AuthService } from '../../../../../core-modules/core-services/auth.service';
-import { PICK_FORMATS, PickDateAdapter } from '../../../../../core-modules/adapter/date-adapter';
+import { PICK_FORMATS, PickDateAdapter } from '../../../../../core-modules/adapters/date-adapter';
 
 @Component({
   selector: 'app-seller-co-agreement',

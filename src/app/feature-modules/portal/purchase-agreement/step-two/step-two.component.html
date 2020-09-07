@@ -943,6 +943,7 @@
                 <div>
                   <span class="fw-bold">D. &nbsp;CLOSE OF ESCROW</span> shall occur on
                   <input type="checkbox"
+                         (change)="switchDaysAndDate($event.target.checked, 'date', 'page_5.date_escrow_date', 'page_5.text_escrow_days')"
                          formControlName="check_escrow_date">
                   <input matInput [min]="datepickerMinDate"
                          (click)="date_escrow_date.open()"
@@ -953,6 +954,7 @@
                   <mat-datepicker #date_escrow_date></mat-datepicker>
                   (date)(or
                   <input type="checkbox"
+                         (change)="switchDaysAndDate($event.target.checked, 'days', 'page_5.text_escrow_days', 'page_5.date_escrow_date')"
                          formControlName="check_escrow_days">
                   <input formControlName="text_escrow_days"
                          appOnlyNumbers [maxLength]="3"
