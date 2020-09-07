@@ -1,9 +1,8 @@
-import { Directive, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2 } from '@angular/core';
 import { AbstractControl, NgControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { AuthService } from '../../core-modules/core-services/auth.service';
 import { MatSnackBar } from '@angular/material';
-import { OfferService } from '../../feature-modules/portal/services/offer.service';
 
 @Directive({
   selector: '[appSignature]'
@@ -113,7 +112,7 @@ export class SignatureDirective implements OnInit {
   private signField() {
     setTimeout(() => {
       if (this.withDateControl) {
-        this.dateControl.patchValue(this.datePipe.transform(new Date().getTime(), 'MM/dd/yyyy'));
+        this.dateControl.patchValue(this.datePipe.transform(new Date().getTime(), 'yyyy-MM-dd'));
       }
 
       if (this.withTimeControl) {
