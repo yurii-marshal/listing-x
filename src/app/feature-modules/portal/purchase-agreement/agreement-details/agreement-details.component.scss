@@ -303,3 +303,7 @@
 .delete-btn {
   color: $red;
 }
+
+::ng-deep .mat-menu-overlay+* .cdk-overlay-pane {
+  max-height: none !important;
+}
