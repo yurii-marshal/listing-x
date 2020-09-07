@@ -163,20 +163,20 @@
               </div>
 
               <div>
-                <input [value]="'buyer'" formControlName="radio_disclosure_1" type="radio"> Buyer
-                <input [value]="'seller'" formControlName="radio_disclosure_1" type="radio"> Seller
-                <input [value]="'landlord'" formControlName="radio_disclosure_1" type="radio"> Landlord
-                <input [value]="'tenant'" formControlName="radio_disclosure_1" type="radio"> Tenant
+                <input formControlName="check_disclosure_1_buyer" type="checkbox"> Buyer
+                <input formControlName="check_disclosure_1_seller" type="checkbox"> Seller
+                <input formControlName="check_disclosure_1_landlord" type="checkbox"> Landlord
+                <input formControlName="check_disclosure_1_tenant" type="checkbox"> Tenant
                 <input appSignature (fieldSigned)="moveToNextSignField($event)" [withDateControl]="'date_disclosure_1'"
                        formControlName="text_disclosure_role_name_1"
                        type="text" class="i-lr-6"> Date
                 <input formControlName="date_disclosure_1" type="text" class="i-lr-3">
               </div>
               <div>
-                <input [value]="'buyer'" formControlName="radio_disclosure_2" type="radio"> Buyer
-                <input [value]="'seller'" formControlName="radio_disclosure_2" type="radio"> Seller
-                <input [value]="'landlord'" formControlName="radio_disclosure_2" type="radio"> Landlord
-                <input [value]="'tenant'" formControlName="radio_disclosure_2" type="radio"> Tenant
+                <input formControlName="check_disclosure_2_buyer" type="checkbox"> Buyer
+                <input formControlName="check_disclosure_2_seller" type="checkbox"> Seller
+                <input formControlName="check_disclosure_2_landlord" type="checkbox"> Landlord
+                <input formControlName="check_disclosure_2_tenant" type="checkbox"> Tenant
                 <input
                   appSignature (fieldSigned)="moveToNextSignField($event)" [withDateControl]="'date_disclosure_2'"
                   formControlName="text_disclosure_role_name_2"
@@ -362,8 +362,8 @@
               </div>
               <div>
                 Is the broker of (check one):
-                <input [value]="'seller'" formControlName="radio_confirm_seller" type="radio"> the seller; or
-                <input [value]="'dual_agent'" formControlName="radio_confirm_seller" type="radio"> both the buyer and
+                <input formControlName="check_confirm_seller" type="checkbox"> the seller; or
+                <input formControlName="check_confirm_1_dual_agent" type="checkbox"> both the buyer and
                 seller.
                 (dual agent)
               </div>
@@ -376,10 +376,10 @@
               </div>
               <div>
                 Is (check one):
-                <input [value]="'seller_agent'" formControlName="radio_confirm_seller_agent" type="radio"> the Seller's
+                <input formControlName="check_confirm_seller_agent" type="checkbox"> the Seller's
                 Agent.
                 (salesperson or broker associate)
-                <input [value]="'dual_agent'" formControlName="radio_confirm_seller_agent" type="radio"> both the
+                <input formControlName="check_confirm_2_dual_agent" type="checkbox"> both the
                 Buyer's and
                 Seller's Agent. (dual agent)
               </div>
@@ -392,8 +392,8 @@
               </div>
               <div>
                 Is the broker of (check one):
-                <input [value]="'buyer'" formControlName="radio_confirm_buyer" type="radio"> the buyer; or
-                <input [value]="'dual_agent'" formControlName="radio_confirm_buyer" type="radio"> both the buyer and
+                <input formControlName="check_confirm_buyer" type="checkbox"> the buyer; or
+                <input formControlName="check_confirm_3_dual_agent" type="checkbox"> both the buyer and
                 seller.
                 (dual agent)
               </div>
@@ -406,10 +406,10 @@
               </div>
               <div>
                 Is (check one):
-                <input [value]="'buyer_agent'" formControlName="radio_confirm_buyer_agent" type="radio"> the Buyer's
+                <input formControlName="check_confirm_buyer_agent" type="checkbox"> the Buyer's
                 Agent.
                 (salesperson or broker associate)
-                <input [value]="'dual_agent'" formControlName="radio_confirm_buyer_agent" type="radio"> both the Buyer's
+                <input formControlName="check_confirm_3_dual_agent" type="checkbox"> both the Buyer's
                 and
                 Seller's Agent. (dual agent)
               </div>
@@ -942,9 +942,8 @@
                 </div>
                 <div>
                   <span class="fw-bold">D. &nbsp;CLOSE OF ESCROW</span> shall occur on
-                  <input [value]="'date'" type="radio"
-                         (change)="switchDaysAndDate('date', 'page_5.text_escrow_days', 'page_5.date_escrow_date')"
-                         formControlName="radio_escrow">
+                  <input type="checkbox"
+                         formControlName="check_escrow_date">
                   <input matInput [min]="datepickerMinDate"
                          (click)="date_escrow_date.open()"
                          [matDatepicker]="date_escrow_date"
@@ -953,9 +952,8 @@
                          class="i-lr-5">
                   <mat-datepicker #date_escrow_date></mat-datepicker>
                   (date)(or
-                  <input [value]="'days'" type="radio"
-                         (change)="switchDaysAndDate('days', 'page_5.text_escrow_days', 'page_5.date_escrow_date')"
-                         formControlName="radio_escrow">
+                  <input type="checkbox"
+                         formControlName="check_escrow_days">
                   <input formControlName="text_escrow_days"
                          appOnlyNumbers [maxLength]="3"
                          type="text"
@@ -993,9 +991,9 @@
                     &nbsp; <input formControlName="text_agency_broker_seller_firm_lic" type="text" class="i-lr-2">
                     <br>
                     Is the broker of (check one):
-                    <input [value]="'seller'" formControlName="radio_agency_broker_seller" type="radio">
+                    <input formControlName="check_agency_broker_seller" type="checkbox">
                     the seller; or
-                    <input [value]="'both'" formControlName="radio_agency_broker_seller" type="radio">
+                    <input formControlName="check_agency_broker_1_dual_agent" type="checkbox">
                     both the buyer and seller. (dual agent)
                     <br>
                     Seller's Agent
@@ -1004,9 +1002,9 @@
                     &nbsp; <input formControlName="text_agency_broker_seller_agent_lic" type="text" class="i-lr-2">
                     <br>
                     Is (check one):
-                    <input [value]="'seller_agent'" formControlName="radio_agency_broker_seller_agent" type="radio">
+                    <input formControlName="check_agency_broker_seller_agent" type="checkbox">
                     the Seller's Agent. (salesperson or broker associate)
-                    <input [value]="'dual'" formControlName="radio_agency_broker_seller_agent" type="radio">
+                    <input formControlName="check_agency_broker_2_dual_agent" type="checkbox">
                     both the Buyer's and Seller's Agent. (dual agent)
                     <br>
                     <span class="fw-bold">
@@ -1017,9 +1015,9 @@
                     &nbsp; <input formControlName="text_agency_broker_buyer_firm_lic" type="text" class="i-lr-2">
                     <br>
                     Is the broker of (check one):
-                    <input [value]="'buyer'" formControlName="radio_agency_broker_buyer" type="radio">
+                    <input formControlName="check_agency_broker_buyer" type="checkbox">
                     the buyer; or
-                    <input [value]="'both'" formControlName="radio_agency_broker_buyer" type="radio">
+                    <input formControlName="check_agency_broker_3_dual_agent" type="checkbox">
                     both the buyer and seller. (dual agent)
                     <br>
                     Buyer's Agent
@@ -1028,9 +1026,9 @@
                     &nbsp; <input formControlName="text_agency_broker_buyer_agent_lic" type="text" class="i-lr-2">
                     <br>
                     Is (check one):
-                    <input [value]="'buyer_agent'" formControlName="radio_agency_broker_buyer_agent" type="radio">
+                    <input formControlName="check_agency_broker_buyer_agent" type="checkbox">
                     the Buyer's Agent. (salesperson or broker associate)
-                    <input [value]="'dual'" formControlName="radio_agency_broker_buyer_agent" type="radio">
+                    <input formControlName="check_agency_broker_4_dual_agent" type="checkbox">
                     both the Buyer's and Seller's Agent. (dual agent)
                   </div>
                 </div>
@@ -1539,8 +1537,8 @@
                   <div>
                     <span class="fw-bold f-l">(1)</span>
                     <div class="item-pl-3">
-                      <input [value]="'buyer'" formControlName="radio_allocation_report_first" type="radio"> Buyer
-                      <input [value]="'seller'" formControlName="radio_allocation_report_first" type="radio"> Seller
+                      <input formControlName="check_allocation_report_first_buyer" type="checkbox"> Buyer
+                      <input formControlName="check_allocation_report_first_seller" type="checkbox"> Seller
                       shall pay
                       for a natural hazard zone
                       disclosure report,
@@ -1556,8 +1554,8 @@
                   <div>
                     <span class="fw-bold f-l">(2)</span>
                     <div class="item-pl-3">
-                      <input [value]="'buyer'" formControlName="radio_allocation_report_second" type="radio"> Buyer
-                      <input [value]="'seller'" formControlName="radio_allocation_report_second" type="radio"> Seller
+                      <input formControlName="check_allocation_report_second_buyer" type="checkbox"> Buyer
+                      <input formControlName="check_allocation_report_second_seller" type="checkbox"> Seller
                       shall pay
                       for the following Report
                       <input formControlName="text_allocation_report_following_first" type="text" class="i-lr-8">
@@ -1568,8 +1566,8 @@
                   <div>
                     <span class="fw-bold f-l">(3)</span>
                     <div class="item-pl-3">
-                      <input [value]="'buyer'" formControlName="radio_allocation_report_third" type="radio"> Buyer
-                      <input [value]="'seller'" formControlName="radio_allocation_report_third" type="radio"> Seller
+                      <input formControlName="check_allocation_report_third_buyer" type="checkbox"> Buyer
+                      <input formControlName="check_allocation_report_third_seller" type="checkbox"> Seller
                       shall pay
                       for the following Report
                       <input formControlName="text_allocation_report_following_second" type="text" class="i-lr-8">
@@ -1648,16 +1646,16 @@
                   <span class="fw-bold f-l">(2)</span>
                   <div class="item-pl-3">
                     <span class="fw-bold">(i)</span>
-                    <input [value]="'buyer'" formControlName="radio_pay_government" type="radio"> Buyer
-                    <input [value]="'seller'" formControlName="radio_pay_government" type="radio">
+                    <input formControlName="check_pay_government_buyer" type="checkbox"> Buyer
+                    <input formControlName="check_pay_government_seller" type="checkbox">
                     Seller shall pay the cost of compliance with any other minimum mandatory government inspections
                     and
                     reports if required as a condition of closing escrow under any Law.
                   </div>
                   <div class="item-pl-3">
                     <span class="fw-bold">(ii)</span>
-                    <input [value]="'buyer'" formControlName="radio_pay_government_coe" type="radio"> Buyer
-                    <input [value]="'seller'" formControlName="radio_pay_government_coe" type="radio">
+                    <input formControlName="check_pay_government_coe_buyer" type="checkbox"> Buyer
+                    <input formControlName="check_pay_government_coe_seller" type="checkbox">
                     Seller shall pay the cost of compliance with any other minimum mandatory government retrofit
                     standards required as a condition of closing escrow under any Law, whether the work is required
                     to
@@ -1679,8 +1677,8 @@
                   <div class="item-pl-3">
                     <div>
                       (a)
-                      <input [value]="'buyer'" formControlName="radio_escrow_pay" type="radio"> Buyer
-                      <input [value]="'seller'" formControlName="radio_escrow_pay" type="radio">
+                      <input formControlName="check_escrow_pay_buyer" type="checkbox"> Buyer
+                      <input formControlName="check_escrow_pay_seller" type="checkbox">
                       Seller shall pay escrow fee
                       <input formControlName="text_escrow_pay_amount" type="text" class="i-lr-8__5"> .
                     </div>
@@ -1701,8 +1699,8 @@
                   <div class="item-pl-3">
                     <div>
                       (a)
-                      <input [value]="'buyer'" formControlName="radio_escrow_pay_insurance" type="radio"> Buyer
-                      <input [value]="'seller'" formControlName="radio_escrow_pay_insurance" type="radio">
+                      <input formControlName="check_escrow_pay_insurance_buyer" type="checkbox"> Buyer
+                      <input formControlName="check_escrow_pay_insurance_seller" type="checkbox">
                       Seller shall pay for <span class="fw-bold">owner's</span> title insurance policy specified
                       in
                       paragraph 13E
@@ -1725,22 +1723,22 @@
                 <div class="item-pl-3">
                   <span class="fw-bold f-l">(1) </span>
                   <div class="item-pl-3">
-                    <input [value]="'buyer'" formControlName="radio_other_costs_country_tax" type="radio"> Buyer
-                    <input [value]="'seller'" formControlName="radio_other_costs_country_tax" type="radio">
+                    <input formControlName="check_other_costs_country_tax_buyer" type="checkbox"> Buyer
+                    <input formControlName="check_other_costs_country_tax_seller" type="checkbox">
                     Seller shall pay County transfer tax or fee
                     <input formControlName="text_other_costs_country_tax_amount" type="text" class="i-lr-7__5"> .
                   </div>
                   <span class="fw-bold f-l">(2) </span>
                   <div class="item-pl-3">
-                    <input [value]="'buyer'" formControlName="radio_other_costs_city_tax" type="radio"> Buyer
-                    <input [value]="'seller'" formControlName="radio_other_costs_city_tax" type="radio">
+                    <input formControlName="check_other_costs_city_tax_buyer" type="checkbox"> Buyer
+                    <input formControlName="check_other_costs_city_tax_seller" type="checkbox">
                     Seller shall pay City transfer tax or fee
                     <input formControlName="text_other_costs_country_city_amount" type="text" class="i-lr-8"> .
                   </div>
                   <span class="fw-bold f-l">(3) </span>
                   <div class="item-pl-3">
-                    <input [value]="'buyer'" formControlName="radio_other_costs_hometown_tax" type="radio"> Buyer
-                    <input [value]="'seller'" formControlName="radio_other_costs_hometown_tax" type="radio">
+                    <input formControlName="check_other_costs_hometown_tax_buyer" type="checkbox"> Buyer
+                    <input formControlName="check_other_costs_hometown_tax_seller" type="checkbox">
                     Seller shall pay Homeowners' Association (“HOA”) transfer fee
                     <input formControlName="text_other_costs_country_hometown_amount" type="text" class="i-lr-5__5"> .
                   </div>
@@ -1750,8 +1748,8 @@
                   </div>
                   <span class="fw-bold f-l">(5) </span>
                   <div class="item-pl-3">
-                    <input [value]="'buyer'" formControlName="radio_other_costs_hao_fee" type="radio"> Buyer
-                    <input [value]="'seller'" formControlName="radio_other_costs_hao_fee" type="radio">
+                    <input formControlName="check_other_costs_hao_fee_buyer" type="checkbox"> Buyer
+                    <input formControlName="check_other_costs_hao_fee_seller" type="checkbox">
                     Seller shall pay HOA fees for preparing all documents other than those required by Civil Code
                     §4525.
                   </div>
@@ -1761,29 +1759,29 @@
                   </div>
                   <span class="fw-bold f-l">(7) </span>
                   <div class="item-pl-3">
-                    <input [value]="'buyer'" formControlName="radio_other_costs_private_fee" type="radio"> Buyer
-                    <input [value]="'seller'" formControlName="radio_other_costs_private_fee" type="radio">
+                    <input formControlName="check_other_costs_private_fee_buyer" type="checkbox"> Buyer
+                    <input formControlName="check_other_costs_private_fee_seller" type="checkbox">
                     Seller shall pay for any private transfer fee
                     <input formControlName="text_other_costs_private_fee_amount" type="text" class="i-lr-7__5"> .
                   </div>
                   <span class="fw-bold f-l">(8) </span>
                   <div class="item-pl-3">
-                    <input [value]="'buyer'" formControlName="radio_other_costs_shall_pay_first" type="radio"> Buyer
-                    <input [value]="'seller'" formControlName="radio_other_costs_shall_pay_first" type="radio">
+                    <input formControlName="check_other_costs_shall_pay_first_buyer" type="checkbox"> Buyer
+                    <input formControlName="check_other_costs_shall_pay_first_seller" type="checkbox">
                     Seller shall pay for
                     <input formControlName="text_other_costs_shall_pay_amount_first" type="text" class="i-lr-9__5"> .
                   </div>
                   <span class="fw-bold f-l">(9) </span>
                   <div class="item-pl-3">
-                    <input [value]="'buyer'" formControlName="radio_other_costs_shall_pay_second" type="radio"> Buyer
-                    <input [value]="'seller'" formControlName="radio_other_costs_shall_pay_second" type="radio">
+                    <input formControlName="check_other_costs_shall_pay_second_buyer" type="checkbox"> Buyer
+                    <input formControlName="check_other_costs_shall_pay_second_seller" type="checkbox">
                     Seller shall pay for
                     <input formControlName="text_other_costs_shall_pay_amount_second" type="text" class="i-lr-9__5"> .
                   </div>
                   <span class="fw-bold f-l">(10) </span>
                   <div class="item-pl-3">
-                    <input [value]="'buyer'" formControlName="radio_other_costs_shall_pay_cost" type="radio"> Buyer
-                    <input [value]="'seller'" formControlName="radio_other_costs_shall_pay_cost" type="radio">
+                    <input formControlName="check_other_costs_shall_pay_cost_buyer" type="checkbox"> Buyer
+                    <input formControlName="check_other_costs_shall_pay_cost_seller" type="checkbox">
                     Seller shall pay for the cost, not to exceed $
                     <input formControlName="text_other_costs_shall_pay_amount_cost" type="text"
                            currencyMask
@@ -4516,24 +4514,28 @@
         <h4>Offer information</h4>
 
         <div class="roles-list">
+
           <div class="buyers truncated" *ngFor="let item of offer.buyers; let i = index">
             <h6>Buyer #{{i+1}}</h6>
             <div class="item" title="{{item.firstName}} {{item.lastName}} | {{item.email}}">
               {{item.firstName}} {{item.lastName}} | {{item.email}}
             </div>
           </div>
-          <div class="sellers truncated" *ngFor="let item of offer.sellers; let i = index">
-            <h6>Seller #{{i+1}}</h6>
-            <div class="item" title="{{item.firstName}} {{item.lastName}} | {{item.email}}">
-              {{item.firstName}} {{item.lastName}} | {{item.email}}
-            </div>
-          </div>
+
           <div class="agents truncated" *ngFor="let item of offer.agentBuyers; let i = index">
             <h6>Buyer's Agent #{{i+1}}</h6>
             <div class="item" title="{{item.firstName}} {{item.lastName}} | {{item.email}}">
               {{item.firstName}} {{item.lastName}} | {{item.email}}
             </div>
           </div>
+
+          <div class="sellers truncated" *ngFor="let item of offer.sellers; let i = index">
+            <h6>Seller #{{i+1}}</h6>
+            <div class="item" title="{{item.firstName}} {{item.lastName}} | {{item.email}}">
+              {{item.firstName}} {{item.lastName}} | {{item.email}}
+            </div>
+          </div>
+
           <div class="agents truncated" *ngFor="let item of offer.agentSellers; let i = index">
             <h6>Listing Agent #{{i+1}}</h6>
             <div class="item" title="{{item.firstName}} {{item.lastName}} | {{item.email}}">
