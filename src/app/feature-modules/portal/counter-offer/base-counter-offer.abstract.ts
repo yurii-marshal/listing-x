@@ -90,7 +90,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         this.showSwitcher = this.isUserPitcher && this.counterOffer.status !== AgreementStatus.Completed;
 
         // if user isn't pitcher there's available sign mode only / for sign / for review
-        if (!this.showSwitcher) {
+        if (!this.showSwitcher || (this.counterOffer.canFinalSign && this.counterOffer.isSigned)) {
           this.isSignMode = true;
         }
 
