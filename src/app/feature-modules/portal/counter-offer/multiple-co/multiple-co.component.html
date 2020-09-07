@@ -70,7 +70,9 @@
                   <div>
                     <span>C. &nbsp;OTHER TERMS:</span>
                     <div class="item-pl-3">
-                      <textarea [disableControl]="isDisabled" formControlName="text_other_therms" style="width: 1300px; height: 270px;"></textarea>
+                      <textarea class="input-other-terms" [disableControl]="isDisabled" #otherTerms
+                                (keydown)="limitLines(otherTerms, 9)"
+                                formControlName="text_other_therms"></textarea>
                     </div>
                   </div>
                   <div>
@@ -111,7 +113,7 @@
                     This Multiple Counter Offer shall be deemed revoked and the deposits, if any, shall be
                     returned to Buyer unless by 5:00PM on the third Day After the date Seller signs in paragraph 5 (if
                     more than one Seller, then the last date) (or by
-                    <input [disableControl]="isDisabled" formControlName="time_counter_offer_expiration_time" type="text" class="i-lr-1">
+                    <input [disableControl]="isDisabled" timeMask formControlName="time_counter_offer_expiration_time" type="text" class="i-lr-1">
                     &nbsp;<input [disableControl]="isDisabled" formControlName="check_expiration_am" type="checkbox"> AM/
                     <input [disableControl]="isDisabled" formControlName="check_expiration_pm" type="checkbox"> PM
                     on <input [disableControl]="isDisabled" matInput [min]="datepickerMinDate" (click)="date_expiration_date.open()"
@@ -168,7 +170,7 @@
                     the deposit, if any, shall be returned to Buyer unless by 5:00PM on the fourth Day After the date
                     Seller signs in paragraph 5 (if more than one Seller,
                     then the last date) (or by
-                    <input [disableControl]="isDisabled" formControlName="time_deposit_revoke_time" type="text" class="i-lr-1">
+                    <input [disableControl]="isDisabled" timeMask formControlName="time_deposit_revoke_time" type="text" class="i-lr-1">
                     &nbsp;<input [disableControl]="isDisabled" formControlName="check_deposit_revoke_am" type="checkbox"> AM/
                     <input [disableControl]="isDisabled" formControlName="check_deposit_revoke_pm" type="checkbox"> PM
                     on <input [disableControl]="isDisabled" matInput [min]="datepickerMinDate" (click)="date_deposit_revoke_expiration_date.open()"
@@ -269,7 +271,7 @@
                          class="i-lr-3">
                   <mat-datepicker #date_copy_received_date></mat-datepicker>
                   at
-                  <input formControlName="time_copy_received_time" type="text" class="i-lr-1">
+                  <input formControlName="time_copy_received_time" timeMask type="text" class="i-lr-1">
                   <input formControlName="check_copy_received_am" type="checkbox"> AM/
                   <input formControlName="check_copy_received_pm" type="checkbox"> PM.
                   <span class="fw-bold">

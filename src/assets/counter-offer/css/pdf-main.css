@@ -308,6 +308,11 @@ form {
     padding-left: 30px;
 }
 
+.input-other-terms {
+  width: 1300px;
+  height: 270px;
+}
+
 .item-pl-35 {
     padding-left: 35px;
 }

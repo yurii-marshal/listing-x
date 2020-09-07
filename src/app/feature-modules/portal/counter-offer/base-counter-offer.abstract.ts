@@ -178,6 +178,15 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     this.okButtonText = (!this.counterOffer.isSigned && this.isSignMode) ? 'Sign' : 'Back to the offer';
   }
 
+  limitLines(input, limit) {
+    console.log(input);
+    const values = input.value.replace(/\r\n/g, '\n').split('\n');
+
+    if (values.length > limit) {
+      input.value = values.slice(0, limit).join('\n');
+    }
+  }
+
   ngOnDestroy(): void {
     this.onDestroyed$.next();
     this.onDestroyed$.complete();
