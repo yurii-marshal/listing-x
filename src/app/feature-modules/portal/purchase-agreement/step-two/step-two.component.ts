@@ -15,7 +15,7 @@ import { AuthService } from '../../../../core-modules/core-services/auth.service
 import { SignatureDirective } from '../../../../shared-modules/directives/signature.directive';
 import { AgreementStatus } from '../../../../core-modules/models/agreement';
 import { ConfirmationBarComponent } from '../../../../shared-modules/components/confirmation-bar/confirmation-bar.component';
-import { PICK_FORMATS, PickDateAdapter } from '../../../../core-modules/adapter/date-adapter';
+import { PICK_FORMATS, PickDateAdapter } from '../../../../core-modules/adapters/date-adapter';
 
 @Component({
   selector: 'app-step-two',
@@ -643,6 +643,19 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       .patchValue((price - (initialDeposits + increasedDeposits + loans)).toFixed(2));
   }
 
+  switchDaysAndDate(checked: boolean, value: string, daysControlName: string, dateControlName: string, emit = true) {
+    switch (value) {
+      case 'date':
+        this.documentForm.get('page_5.check_escrow_days').patchValue(!checked);
+        this.setRelatedFields(checked ? daysControlName : dateControlName, checked ? dateControlName : daysControlName, emit);
+        break;
+      case 'days':
+        this.documentForm.get('page_5.check_escrow_date').patchValue(!checked);
+        this.setRelatedFields(checked ? daysControlName : dateControlName, checked ? dateControlName : daysControlName, emit);
+        break;
+    }
+  }
+
   private getOfferAgreement() {
     this.isLoading = true;
 
@@ -658,20 +671,23 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
         this.disableSignFields();
 
+        this.initSwitchDaysAndDate();
+
         this.isLoading = false;
       });
   }
 
-  // private initSwitchDaysAndDate() {
-  //   if (this.documentForm.get('page_5.text_escrow_days').value) {
-  //     this.switchDaysAndDate(
-  //       this.documentForm.get('page_5.radio_escrow').value,
-  //       'page_5.text_escrow_days',
-  //       'page_5.date_escrow_date',
-  //       false
-  //     );
-  //   }
-  // }
+  private initSwitchDaysAndDate() {
+    if (this.documentForm.get('page_5.text_escrow_days').value) {
+      this.switchDaysAndDate(
+        true,
+        'days',
+        'page_5.text_escrow_days',
+        'page_5.date_escrow_date',
+        false
+      );
+    }
+  }
 
   private checkSignAccess() {
     if (this.offer.userRole === 'agent_buyer'
@@ -695,15 +711,15 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.moveToNextSignField(true);
   }
 
-  // private setRelatedFields(enableControl: string, disableControl: string, emit: boolean) {
-  //   this.documentForm.get(enableControl).setValidators([Validators.required]);
-  //   this.documentForm.get(enableControl).enable({emitEvent: false});
-  //   this.documentForm.get(enableControl).markAsDirty();
-  //
-  //   this.documentForm.get(disableControl).clearValidators();
-  //   this.documentForm.get(disableControl).disable({emitEvent: false});
-  //   this.documentForm.get(disableControl).patchValue('', {emitEvent: emit});
-  // }
+  private setRelatedFields(enableControl: string, disableControl: string, emit: boolean) {
+    this.documentForm.get(enableControl).setValidators([Validators.required]);
+    this.documentForm.get(enableControl).enable({emitEvent: false});
+    this.documentForm.get(enableControl).markAsDirty();
+
+    this.documentForm.get(disableControl).clearValidators();
+    this.documentForm.get(disableControl).disable({emitEvent: false});
+    this.documentForm.get(disableControl).patchValue('', {emitEvent: emit});
+  }
 
   private scrollToFirstInvalidField(): boolean {
     for (const groupName of Object.keys(this.documentForm.controls)) {

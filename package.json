@@ -7,7 +7,7 @@
   "scripts": {
     "ng": "ng",
     "start": "node server.js",
-    "serve": "ng serve --aot",
+    "serve": "GENERATE_SOURCEMAP=false ng serve --aot",
     "build": "ng build --prod",
     "build:production": "ng build --aot --prod",
     "build:staging": "ng build --aot --configuration=staging",
