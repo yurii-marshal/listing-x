@@ -62,15 +62,6 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   ) {
   }
 
-  toggleSidebar(value: boolean) {
-    this.isSideBarOpen = value;
-
-    setTimeout(() => {
-      this.isSidebarControlsVisible =
-        value && this.counterOffer.catchers.some((user: Person) => user.email === this.authService.currentUser.email);
-    }, value ? 250 : 0);
-  }
-
   ngOnInit() {
     this.id = +this.route.snapshot.params.id;
     this.offerId = +this.route.snapshot.params.offerId;
@@ -126,6 +117,15 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         this.subscribeToFormChanges(this.documentForm);
         this.nextField(true);
       });
+  }
+
+  toggleSidebar(value: boolean) {
+    this.isSideBarOpen = value;
+
+    setTimeout(() => {
+      this.isSidebarControlsVisible =
+        value && this.counterOffer.catchers.some((user: Person) => user.email === this.authService.currentUser.email);
+    }, value ? 250 : 0);
   }
 
   closeCO() {

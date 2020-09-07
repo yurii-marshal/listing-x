@@ -11,7 +11,7 @@ export class CounterOfferInformationComponent implements OnInit {
   @Input() counterOffer: CounterOffer;
   @Input() show: boolean;
 
-  role: object;
+  role = {};
 
   constructor() {
   }
