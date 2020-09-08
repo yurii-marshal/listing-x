@@ -90,9 +90,11 @@ export class SignatureDirective implements OnInit {
   }
 
   private removeSignButton() {
-    this.renderer.removeClass(this.signButtonEl, 'sign-button');
-    this.renderer.removeChild(this.el.nativeElement.parentNode, this.signButtonEl);
-    this.signButtonEl = null;
+    if (this.signButtonEl) {
+      this.renderer.removeClass(this.signButtonEl, 'sign-button');
+      this.renderer.removeChild(this.el.nativeElement.parentNode, this.signButtonEl);
+      this.signButtonEl = null;
+    }
   }
 
   private checkRootParent(parent: AbstractControl) {
