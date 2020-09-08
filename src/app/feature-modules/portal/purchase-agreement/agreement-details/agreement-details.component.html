@@ -292,29 +292,43 @@
 
         <div class="row-layout new-section"><label class="header">Attached docs</label></div>
         <div class="row-layout"><label>Add Pre-approval Letter</label>
-          <div class="doc-preview">
-            <img *ngFor="let img of offer.documents?.preApproval"
-                 src="assets/images/icons/{{ img.extension }}.svg"
-                 [title]="img.title"
-                 (click)="triggerDownloadFile(img)"
-                 height="20">
+          <div class="doc-preview u-flex u-flex-align-items--center">
+            <ng-container *ngFor="let img of offer.documents?.preApproval; let i = index;">
+              <img *ngIf="i < 5"
+                   src="assets/images/icons/{{ img.extension }}.svg"
+                   [title]="img.title"
+                   (click)="triggerDownloadFile(img)"
+                   height="20">
+            </ng-container>
+            <div class="more-label" *ngIf="offer?.documents?.preApproval.length > 5">(+{{offer?.documents?.preApproval.length - 5}} more)</div>
           </div>
         </div>
         <div class="row-layout"><label>Add Proof of Funds</label>
           <div class="doc-preview">
-            <div class="doc-preview"><img *ngFor="let img of offer.documents?.proofOfFunds"
-                                          src="assets/images/icons/{{ img.extension }}.svg"
-                                          (click)="triggerDownloadFile(img)"
-                                          [title]="img.title" height="20"></div>
+            <div class="doc-preview u-flex u-flex-align-items--center">
+              <ng-container *ngFor="let img of offer.documents?.proofOfFunds; let i = index;">
+                <img *ngIf="i < 5"
+                     src="assets/images/icons/{{ img.extension }}.svg"
+                     (click)="triggerDownloadFile(img)"
+                     [title]="img.title"
+                     height="20">
+              </ng-container>
+              <div class="more-label" *ngIf="offer?.documents?.proofOfFunds.length > 5">(+{{offer?.documents?.proofOfFunds.length - 5}} more)</div>
+            </div>
           </div>
         </div>
         <div class="row-layout"><label>Add Cover Letter</label>
           <div class="doc-preview">
-            <div class="doc-preview"><img *ngFor="let img of offer.documents?.coverLetter"
-                                          src="assets/images/icons/{{ img.extension }}.svg"
-                                          (click)="triggerDownloadFile(img)"
-                                          [title]="img.title"
-                                          height="20"></div>
+            <div class="doc-preview u-flex u-flex-align-items--center">
+              <ng-container *ngFor="let img of offer.documents?.coverLetter; let i = index;">
+                <img *ngIf="i < 5"
+                     src="assets/images/icons/{{ img.extension }}.svg"
+                     (click)="triggerDownloadFile(img)"
+                     [title]="img.title"
+                     height="20">
+              </ng-container>
+              <div class="more-label" *ngIf="offer?.documents?.coverLetter.length > 5">(+{{offer?.documents?.coverLetter.length - 5}} more)</div>
+            </div>
           </div>
         </div>
       </div>

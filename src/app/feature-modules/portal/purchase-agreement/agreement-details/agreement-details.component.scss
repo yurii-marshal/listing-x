@@ -307,3 +307,10 @@
 ::ng-deep .mat-menu-overlay+* .cdk-overlay-pane {
   max-height: none !important;
 }
+
+.more-label {
+  font-size: 12px;
+  min-width: 50px;
+  padding-left: 5px;
+  color: $primary-text;
+}
