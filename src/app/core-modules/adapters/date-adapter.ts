@@ -1,10 +1,9 @@
 import { formatDate } from '@angular/common';
 import { NativeDateAdapter } from '@angular/material';
 import { Injectable } from '@angular/core';
-import * as moment from 'moment';
 
 export const PICK_FORMATS = {
-  parse: {dateInput: {month: 'numeric', day: 'numeric', year: 'numeric'}},
+  parse: {dateInput: 'MM/DD/YYYY'},
   display: {
     dateInput: 'input',
     monthYearLabel: {year: 'numeric', month: 'short'},
@@ -16,8 +15,19 @@ export const PICK_FORMATS = {
 @Injectable()
 export class PickDateAdapter extends NativeDateAdapter {
   parse(value: any): Date | null {
-    const date = moment(value, 'MM/DD/YYYY');
-    return date.isValid() ? date.toDate() : null;
+    if ((typeof value === 'string') && (value.indexOf('/') > -1)) {
+      const str = value.split('/');
+      const dayArray = str[2].split('T');
+
+      const year = Number(str[0]);
+      const month = Number(str[1]) - 1;
+      const day = Number(dayArray[0]);
+
+      return new Date(year, month, day);
+    }
+
+    const timestamp = typeof value === 'number' ? value : Date.parse(value);
+    return isNaN(timestamp) ? null : new Date(timestamp);
   }
 
   format(date: Date, displayFormat: Object): string {

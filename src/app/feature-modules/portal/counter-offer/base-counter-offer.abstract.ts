@@ -94,6 +94,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         // if user isn't pitcher there's available sign mode only / for sign / for review
         if (!this.showSwitcher || isFinalMode) {
           this.isSignMode = true;
+          this.isDisabled = true;
         }
 
         this.allFieldsCount = Object.keys(this.documentObj).length;
@@ -174,11 +175,11 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
   modeChanged(isSign: boolean) {
     this.isDisabled = this.isSignMode = isSign;
-    this.okButtonText = (!this.counterOffer.isSigned && this.isSignMode) ? 'Sign' : 'Back to the offer';
+    this.okButtonText = (this.isSignMode && !this.counterOffer.isSigned) ? 'Sign'
+      : ((this.isSignMode && this.counterOffer.canFinalSign) ? 'Final Sign' : 'Back to the offer');
   }
 
   limitLines(input, limit) {
-    console.log(input);
     const values = input.value.replace(/\r\n/g, '\n').split('\n');
 
     if (values.length > limit) {
@@ -214,6 +215,11 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
       Object.keys(this.documentForm.controls).map((controlName) => {
         if (_.camelCase(controlName) === key && value) {
           this.completedFieldsCount += 1;
+
+          if (this.offerService.isDateISOFormat(value)) {
+            value = this.datePipe.transform(this.offerService.convertStringToDate(value), 'MM/dd/yyyy');
+          }
+
           this.documentForm.get(`${_.snakeCase(controlName)}`)
             .patchValue(value, {emitEvent: false, onlySelf: true});
         }
@@ -256,8 +262,8 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   private saveDocumentField(controlName: string, controlValue: any) {
     if (controlValue === '') {
       controlValue = null;
-    } else if (controlValue instanceof Date) {
-      controlValue = this.datePipe.transform(controlValue, 'MM/dd/yyyy');
+    } else if (this.offerService.isDateFormat(controlValue) || controlValue instanceof Date) {
+      controlValue = this.datePipe.transform(controlValue, 'yyyy-MM-dd');
     } else if (+controlValue) {
       controlValue = String(controlValue).replace(',', '');
     }

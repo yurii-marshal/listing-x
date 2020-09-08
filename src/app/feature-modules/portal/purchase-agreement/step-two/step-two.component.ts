@@ -741,6 +741,10 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     Object.entries(model).forEach(([page, value]) => {
       Object.entries(value).forEach(([field, data]) => {
         if (this.documentForm.get(`${_.snakeCase(page)}.${_.snakeCase(field)}`)) {
+          if (this.offerService.isDateISOFormat(data)) {
+            data = this.datePipe.transform(this.offerService.convertStringToDate(data), 'MM/dd/yyyy');
+          }
+
           this.documentForm.get(`${_.snakeCase(page)}.${_.snakeCase(field)}`)
             .patchValue(data, {emitEvent: false, onlySelf: true});
         }
@@ -826,7 +830,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   private saveDocumentField(controlName: string, controlValue: any, groupIndex: number) {
     if (controlValue === '') {
       controlValue = null;
-    } else if (controlValue instanceof Date) {
+    } else if (this.offerService.isDateFormat(controlValue) || controlValue instanceof Date) {
       controlValue = this.datePipe.transform(controlValue, 'yyyy-MM-dd');
     } else if (+controlValue) {
       controlValue = String(controlValue).replace(',', '');
