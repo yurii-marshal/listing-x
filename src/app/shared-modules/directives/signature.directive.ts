@@ -112,7 +112,7 @@ export class SignatureDirective implements OnInit {
   private signField() {
     setTimeout(() => {
       if (this.withDateControl) {
-        this.dateControl.patchValue(this.datePipe.transform(new Date().getTime(), 'MM/dd/yyyy'));
+        this.dateControl.patchValue(new Date());
       }
 
       if (this.withTimeControl) {
