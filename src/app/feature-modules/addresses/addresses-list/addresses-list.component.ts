@@ -6,6 +6,7 @@ import { filter } from 'rxjs/operators';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { AddressDialogComponent } from '../../../shared-modules/dialogs/address-dialog/address-dialog.component';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from 'src/app/core-modules/core-services/auth.service';
 
 @Component({
   selector: 'app-addresses-list',
@@ -16,8 +17,10 @@ export class AddressesListComponent implements OnInit {
   displayedColumns: string[] = ['createdAt', 'name', 'sellers', 'address', 'totalOffers', 'offersSigned', 'actions'];
   /* TODO: check address model depending addresses list response */
   dataSource: BaseTableDataSource<Address>;
+  isAgent: boolean = this.authService.currentUser.accountType === 'agent';
 
   constructor(private service: AddressesService,
+              private authService: AuthService,
               private dialog: MatDialog,
               private snackbar: MatSnackBar,
               private route: ActivatedRoute) {
