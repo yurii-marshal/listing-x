@@ -170,7 +170,12 @@
                 <input appSignature (fieldSigned)="moveToNextSignField($event)" [withDateControl]="'date_disclosure_1'"
                        formControlName="text_disclosure_role_name_1"
                        type="text" class="i-lr-6"> Date
-                <input formControlName="date_disclosure_1" type="text" class="i-lr-3">
+                <input matInput
+                       [matDatepicker]="date_disclosure_1"
+                       formControlName="date_disclosure_1"
+                       type="text"
+                       class="i-lr-3">
+                <mat-datepicker #date_disclosure_1></mat-datepicker>
               </div>
               <div>
                 <input formControlName="check_disclosure_2_buyer" type="checkbox"> Buyer
@@ -181,7 +186,12 @@
                   appSignature (fieldSigned)="moveToNextSignField($event)" [withDateControl]="'date_disclosure_2'"
                   formControlName="text_disclosure_role_name_2"
                   type="text" class="i-lr-6"> Date
-                <input formControlName="date_disclosure_2" type="text" class="i-lr-3">
+                <input matInput
+                       [matDatepicker]="date_disclosure_2"
+                       formControlName="date_disclosure_2"
+                       type="text"
+                       class="i-lr-3">
+                <mat-datepicker #date_disclosure_2></mat-datepicker>
               </div>
               <div class="pb-20">
                 <span class="p-relative">Agent &nbsp;
@@ -203,7 +213,12 @@
                 &nbsp; DRE Lic. #
                 &nbsp; <input formControlName="text_disclosure_agent_buyer_lic" type="text" class="i-lr-3">
                 Date
-                <input formControlName="date_disclosure_3" type="text" class="i-lr-3">
+                <input matInput
+                       [matDatepicker]="date_disclosure_3"
+                       formControlName="date_disclosure_3"
+                       type="text"
+                       class="i-lr-3">
+                <mat-datepicker #date_disclosure_3></mat-datepicker>
               </div>
             </div>
             <footer>
@@ -605,26 +620,46 @@
                 Seller &nbsp;<input appSignature (fieldSigned)="moveToNextSignField($event)"
                                     [withDateControl]="'date_acknowledge_seller_1'"
                                     formControlName="text_acknowledge_seller_1" type="text" class="i-lr-10">
-                Date &nbsp;<input formControlName="date_acknowledge_seller_1" type="text" class="i-lr-2__5">
+                Date &nbsp;<input matInput
+                                  [matDatepicker]="date_acknowledge_seller_1"
+                                  formControlName="date_acknowledge_seller_1"
+                                  type="text"
+                                  class="i-lr-2__5">
+                <mat-datepicker #date_acknowledge_seller_1></mat-datepicker>
               </div>
               <div>
                 Seller &nbsp;<input appSignature (fieldSigned)="moveToNextSignField($event)"
                                     [withDateControl]="'date_acknowledge_seller_2'"
                                     formControlName="text_acknowledge_seller_2" type="text" class="i-lr-10">
-                Date &nbsp;<input formControlName="date_acknowledge_seller_2" type="text" class="i-lr-2__5">
+                Date &nbsp;<input matInput
+                                  [matDatepicker]="date_acknowledge_seller_2"
+                                  formControlName="date_acknowledge_seller_2"
+                                  type="text"
+                                  class="i-lr-2__5">
+                <mat-datepicker #date_acknowledge_seller_2></mat-datepicker>
               </div>
               <br>
               <div>
                 Buyer &nbsp;<input appSignature (fieldSigned)="moveToNextSignField($event)"
                                    [withDateControl]="'date_acknowledge_buyer_1'"
                                    formControlName="text_acknowledge_buyer_1" type="text" class="i-lr-10">
-                Date &nbsp;<input formControlName="date_acknowledge_buyer_1" type="text" class="i-lr-2__5">
+                Date &nbsp;<input matInput
+                                  [matDatepicker]="date_acknowledge_buyer_1"
+                                  formControlName="date_acknowledge_buyer_1"
+                                  type="text"
+                                  class="i-lr-2__5">
+                <mat-datepicker #date_acknowledge_buyer_1></mat-datepicker>
               </div>
               <div>
                 Buyer &nbsp;<input appSignature (fieldSigned)="moveToNextSignField($event)"
                                    [withDateControl]="'date_acknowledge_buyer_2'"
                                    formControlName="text_acknowledge_buyer_2" type="text" class="i-lr-10">
-                Date &nbsp;<input formControlName="date_acknowledge_buyer_2" type="text" class="i-lr-2__5">
+                Date &nbsp;<input matInput
+                                  [matDatepicker]="date_acknowledge_buyer_2"
+                                  formControlName="date_acknowledge_buyer_2"
+                                  type="text"
+                                  class="i-lr-2__5">
+                <mat-datepicker #date_acknowledge_buyer_2></mat-datepicker>
               </div>
               <br>
               <div>
@@ -645,7 +680,12 @@
                 &nbsp; &nbsp;DRE Lic. #
                 &nbsp; <input formControlName="text_acknowledge_buyer_agent_lic" type="text" class="i-lr-2">
                 &nbsp; Date
-                <input formControlName="date_acknowledge_buyer_agent_date" type="text" class="i-lr-2__5">
+                <input matInput
+                       [matDatepicker]="date_acknowledge_buyer_agent_date"
+                       formControlName="date_acknowledge_buyer_agent_date"
+                       type="text"
+                       class="i-lr-2__5">
+                <mat-datepicker #date_acknowledge_buyer_agent_date></mat-datepicker>
               </div>
               <br>
               <div>
@@ -666,7 +706,12 @@
                 &nbsp; &nbsp;DRE Lic. #
                 &nbsp; <input formControlName="text_acknowledge_seller_agent_lic" type="text" class="i-lr-2">
                 &nbsp; Date
-                <input formControlName="date_acknowledge_seller_agent_date" type="text" class="i-lr-2__5">
+                <input matInput
+                       [matDatepicker]="date_acknowledge_seller_agent_date"
+                       formControlName="date_acknowledge_seller_agent_date"
+                       type="text"
+                       class="i-lr-2__5">
+                <mat-datepicker #date_acknowledge_seller_agent_date></mat-datepicker>
               </div>
             </div>
 
@@ -809,25 +854,46 @@
                 Buyer/Tenant &nbsp;<input appSignature (fieldSigned)="moveToNextSignField($event)"
                                           [withDateControl]="'date_buyer_tenant_1'"
                                           formControlName="text_buyer_tenant_1" type="text" class="i-lr-9">
-                &nbsp; Date <input formControlName="date_buyer_tenant_1" type="text" class="i-lr-2__5">
+                &nbsp; Date <input matInput
+                                   [matDatepicker]="date_buyer_tenant_1"
+                                   formControlName="date_buyer_tenant_1"
+                                   type="text"
+                                   class="i-lr-2__5">
+                <mat-datepicker #date_buyer_tenant_1></mat-datepicker>
               </div>
               <div>
                 Buyer/Tenant &nbsp;<input appSignature (fieldSigned)="moveToNextSignField($event)"
                                           [withDateControl]="'date_buyer_tenant_2'"
                                           formControlName="text_buyer_tenant_2" type="text" class="i-lr-9">
-                &nbsp; Date <input formControlName="date_buyer_tenant_2" type="text" class="i-lr-2__5">
+                &nbsp; Date <input matInput
+                                   [matDatepicker]="date_buyer_tenant_2"
+                                   formControlName="date_buyer_tenant_2"
+                                   type="text"
+                                   class="i-lr-2__5">
+                <mat-datepicker #date_buyer_tenant_2></mat-datepicker>
               </div>
               <div>
                 Seller/Landlord <input appSignature (fieldSigned)="moveToNextSignField($event)"
                                        [withDateControl]="'date_seller_landlord_1'"
                                        formControlName="text_seller_landlord_1" type="text" class="i-lr-9">
-                Date <input formControlName="date_seller_landlord_1" type="text" class="i-lr-2__5">
+                Date
+                Date <input matInput
+                            [matDatepicker]="date_seller_landlord_1"
+                            formControlName="date_seller_landlord_1"
+                            type="text"
+                            class="i-lr-2__5">
+                <mat-datepicker #date_seller_landlord_1></mat-datepicker>
               </div>
               <div>
                 Seller/Landlord <input appSignature (fieldSigned)="moveToNextSignField($event)"
                                        [withDateControl]="'date_seller_landlord_2'"
                                        formControlName="text_seller_landlord_2" type="text" class="i-lr-9">
-                Date <input formControlName="date_seller_landlord_2" type="text" class="i-lr-2__5">
+                Date <input matInput
+                            [matDatepicker]="date_seller_landlord_2"
+                            formControlName="date_seller_landlord_2"
+                            type="text"
+                            class="i-lr-2__5">
+                <mat-datepicker #date_seller_landlord_2></mat-datepicker>
               </div>
             </div>
             <br>
@@ -1255,7 +1321,8 @@
                 </div>
 
                 <div class="col-right">
-                  $ <input currencyMask [options]="currencyMaskOptions" formControlName="text_finance_down_payment_balance" type="text">
+                  $ <input currencyMask [options]="currencyMaskOptions"
+                           formControlName="text_finance_down_payment_balance" type="text">
                 </div>
 
                 <div class="col-left text-justify">
@@ -3671,7 +3738,12 @@
                 </div>
                 <div>
                   Date
-                  <input formControlName="date_other_buyer_first" type="text" class="i-lr-2">
+                  <input matInput
+                         [matDatepicker]="date_other_buyer_first"
+                         formControlName="date_other_buyer_first"
+                         type="text"
+                         class="i-lr-2">
+                  <mat-datepicker #date_other_buyer_first></mat-datepicker>
                   BUYER
                   <input appSignature (fieldSigned)="moveToNextSignField($event)"
                          [withDateControl]="'date_other_buyer_first'"
@@ -3683,7 +3755,12 @@
                 </div>
                 <div>
                   Date
-                  <input formControlName="date_other_buyer_second" type="text" class="i-lr-2">
+                  <input matInput
+                         [matDatepicker]="date_other_buyer_second"
+                         formControlName="date_other_buyer_second"
+                         type="text"
+                         class="i-lr-2">
+                  <mat-datepicker #date_other_buyer_second></mat-datepicker>
                   BUYER
                   <input appSignature (fieldSigned)="moveToNextSignField($event)"
                          [withDateControl]="'date_other_buyer_second'"
@@ -3785,7 +3862,12 @@
               </div>
               <div>
                 Date
-                <input formControlName="date_seller_first" type="text" class="i-lr-2">
+                <input matInput
+                       [matDatepicker]="date_seller_first"
+                       formControlName="date_seller_first"
+                       type="text"
+                       class="i-lr-2">
+                <mat-datepicker #date_seller_first></mat-datepicker>
                 SELLER
                 <input appSignature (fieldSigned)="moveToNextSignField($event)" [withDateControl]="'date_seller_first'"
                        formControlName="text_seller_first" type="text" class="i-lr-10__5">
@@ -3796,7 +3878,12 @@
               </div>
               <div>
                 Date
-                <input formControlName="date_seller_second" type="text" class="i-lr-2">
+                <input matInput
+                       [matDatepicker]="date_seller_second"
+                       formControlName="date_seller_second"
+                       type="text"
+                       class="i-lr-2">
+                <mat-datepicker #date_seller_second></mat-datepicker>
                 SELLER
                 <input appSignature (fieldSigned)="moveToNextSignField($event)" [withDateControl]="'date_seller_second'"
                        formControlName="text_seller_second" type="text" class="i-lr-10__5">
@@ -3893,7 +3980,12 @@
                   &nbsp; DRE Lic. #&nbsp;&nbsp;
                   <input formControlName="text_buyers_brokerage_firm_lic_by_first" type="text" class="i-lr-2">
                   &nbsp;&nbsp;Date&nbsp;
-                  <input formControlName="date_buyers_brokerage_firm_date_first" type="text" class="i-lr-2__5">
+                  <input matInput
+                         [matDatepicker]="date_buyers_brokerage_firm_date_first"
+                         formControlName="date_buyers_brokerage_firm_date_first"
+                         type="text"
+                         class="i-lr-2__5">
+                  <mat-datepicker #date_buyers_brokerage_firm_date_first></mat-datepicker>
                 </div>
                 <div class="u-flex u-flex-justify--space-between">
                   By
@@ -3903,7 +3995,12 @@
                   &nbsp; DRE Lic. #&nbsp;&nbsp;
                   <input formControlName="text_buyers_brokerage_firm_lic_by_second" type="text" class="i-lr-2">
                   &nbsp;&nbsp;Date&nbsp;
-                  <input formControlName="date_buyers_brokerage_firm_date_second" type="text" class="i-lr-2__5">
+                  <input matInput
+                         [matDatepicker]="date_buyers_brokerage_firm_date_second"
+                         formControlName="date_buyers_brokerage_firm_date_second"
+                         type="text"
+                         class="i-lr-2__5">
+                  <mat-datepicker #date_buyers_brokerage_firm_date_second></mat-datepicker>
                 </div>
                 <div class="u-flex u-flex-justify--space-between">
                   Address
@@ -3941,7 +4038,12 @@
                   &nbsp; DRE Lic. #&nbsp;&nbsp;
                   <input formControlName="text_seller_brokerage_firm_lic_by_first" type="text" class="i-lr-2">
                   &nbsp;&nbsp;Date&nbsp;
-                  <input formControlName="date_seller_brokerage_firm_date_first" type="text" class="i-lr-2__5">
+                  <input matInput
+                         [matDatepicker]="date_seller_brokerage_firm_date_first"
+                         formControlName="date_seller_brokerage_firm_date_first"
+                         type="text"
+                         class="i-lr-2__5">
+                  <mat-datepicker #date_seller_brokerage_firm_date_first></mat-datepicker>
                 </div>
                 <div class="u-flex u-flex-justify--space-between">
                   By
@@ -3951,7 +4053,12 @@
                   &nbsp; DRE Lic. #&nbsp;&nbsp;
                   <input formControlName="text_seller_brokerage_firm_lic_by_second" type="text" class="i-lr-2">
                   &nbsp;&nbsp;Date&nbsp;
-                  <input formControlName="date_seller_brokerage_firm_date_second" type="text" class="i-lr-2__5">
+                  <input matInput
+                         [matDatepicker]="date_seller_brokerage_firm_date_second"
+                         formControlName="date_seller_brokerage_firm_date_second"
+                         type="text"
+                         class="i-lr-2__5">
+                  <mat-datepicker #date_seller_brokerage_firm_date_second></mat-datepicker>
                 </div>
                 <div class="u-flex u-flex-justify--space-between">
                   Address
@@ -4434,16 +4541,22 @@
                                                     [withDateControl]="'date_privacy_act_advisory_first'"
                                                     formControlName="text_privacy_act_advisory_first" type="text"
                                                     class="i-lr-7">
-                &nbsp; Date &nbsp;<input formControlName="date_privacy_act_advisory_first" type="text"
+                &nbsp; Date &nbsp;<input matInput [matDatepicker]="date_privacy_act_advisory_first"
+                                         formControlName="date_privacy_act_advisory_first"
+                                         type="text"
                                          class="i-lr-2__5">
+                <mat-datepicker #date_privacy_act_advisory_first></mat-datepicker>
               </div>
               <div>
                 Buyer/Seller/Landlord/Tenant <input appSignature (fieldSigned)="moveToNextSignField($event)"
                                                     [withDateControl]="'date_privacy_act_advisory_second'"
                                                     formControlName="text_privacy_act_advisory_second" type="text"
                                                     class="i-lr-7">
-                &nbsp; Date &nbsp;<input formControlName="date_privacy_act_advisory_second" type="text"
+                &nbsp; Date &nbsp;<input matInput [matDatepicker]="date_privacy_act_advisory_second"
+                                         formControlName="date_privacy_act_advisory_second"
+                                         type="text"
                                          class="i-lr-2__5">
+                <mat-datepicker #date_privacy_act_advisory_second></mat-datepicker>
               </div>
             </div>
 

@@ -217,7 +217,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
           this.completedFieldsCount += 1;
 
           if (this.offerService.isDateISOFormat(value)) {
-            value = this.datePipe.transform(this.offerService.convertStringToDate(value), 'MM/dd/yyyy');
+            value = this.offerService.convertStringToDate(value);
           }
 
           this.documentForm.get(`${_.snakeCase(controlName)}`)

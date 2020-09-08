@@ -742,7 +742,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       Object.entries(value).forEach(([field, data]) => {
         if (this.documentForm.get(`${_.snakeCase(page)}.${_.snakeCase(field)}`)) {
           if (this.offerService.isDateISOFormat(data)) {
-            data = this.datePipe.transform(this.offerService.convertStringToDate(data), 'MM/dd/yyyy');
+            data = this.offerService.convertStringToDate(data);
           }
 
           this.documentForm.get(`${_.snakeCase(page)}.${_.snakeCase(field)}`)
