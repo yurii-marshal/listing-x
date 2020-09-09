@@ -10,6 +10,7 @@ import { merge, Observable } from 'rxjs';
 import { FinishSigningDialogComponent } from '../dialogs/finish-signing-dialog/finish-signing-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from 'src/app/core-modules/core-services/auth.service';
 
 @Component({
   selector: 'app-addendum-signature',
@@ -19,16 +20,20 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class AddendumSignatureComponent implements AfterViewInit, OnInit {
   doc: GeneratedDocument;
   transaction: Transaction;
-  signEnabled: boolean = false;
+
+  signEnabled: boolean;
+  isAgent: boolean = this.authService.currentUser.accountType === 'agent';
+
+  docId: number;
   progress: number = 0;
   currentYear: number = new Date().getFullYear();
 
   get buyers() {
-    return this.transaction.offer.buyers.map(u => `  ${u.firstName} ${u.lastName}`).join(', ');
+    return this.transaction.offer.buyers.map(user => `  ${user.firstName} ${user.lastName}`).join(', ');
   }
 
   get sellers() {
-    return this.transaction.offer.sellers.map(u => `  ${u.firstName} ${u.lastName}`).join(', ');
+    return this.transaction.offer.sellers.map(user => `  ${user.firstName} ${user.lastName}`).join(', ');
   }
 
   get terms() {
@@ -41,6 +46,7 @@ export class AddendumSignatureComponent implements AfterViewInit, OnInit {
   private signatures: QueryList<SignatureBoxComponent>;
 
   constructor(
+    private authService: AuthService,
     private router: Router,
     private dialog: MatDialog,
     private snackbar: MatSnackBar,
@@ -49,11 +55,16 @@ export class AddendumSignatureComponent implements AfterViewInit, OnInit {
   ) { }
 
   ngOnInit() {
-    const id: number = +this.route.snapshot.params.id;
-    this.transactionService.loadSignDocument(id).pipe(
+    this.docId = +this.route.snapshot.params.id;
+    this.transactionService.loadSignDocument(this.docId).pipe(
       tap(doc => this.doc = doc),
       switchMap(doc => this.transactionService.loadOne(doc.transaction))
-    ).subscribe(t => this.transaction = t);
+    ).subscribe(transaction => {
+      if (this.isAgent) {
+        this.signEnabled = transaction.pendingDocuments.find(doc => doc.id === this.docId).allowSign;
+      }
+      return this.transaction = transaction;
+    });
   }
 
   ngAfterViewInit(): void {

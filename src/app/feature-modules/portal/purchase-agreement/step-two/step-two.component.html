@@ -3,6 +3,10 @@
     <div class="u-flex viewer">
       <div class="doc-container">
 
+        <div class="loading" *ngIf="isLoading">
+
+        </div>
+
         <form class="document-form" [formGroup]="documentForm" #form>
 
           <div class="page-breaker" id="page-0" style="display: none;">0</div>
@@ -159,25 +163,35 @@
               </div>
 
               <div>
-                <input [value]="'buyer'" formControlName="radio_disclosure_1" type="radio"> Buyer
-                <input [value]="'seller'" formControlName="radio_disclosure_1" type="radio"> Seller
-                <input [value]="'landlord'" formControlName="radio_disclosure_1" type="radio"> Landlord
-                <input [value]="'tenant'" formControlName="radio_disclosure_1" type="radio"> Tenant
+                <input formControlName="check_disclosure_1_buyer" type="checkbox"> Buyer
+                <input formControlName="check_disclosure_1_seller" type="checkbox"> Seller
+                <input formControlName="check_disclosure_1_landlord" type="checkbox"> Landlord
+                <input formControlName="check_disclosure_1_tenant" type="checkbox"> Tenant
                 <input appSignature (fieldSigned)="moveToNextSignField($event)" [withDateControl]="'date_disclosure_1'"
                        formControlName="text_disclosure_role_name_1"
                        type="text" class="i-lr-6"> Date
-                <input formControlName="date_disclosure_1" type="text" class="i-lr-3">
+                <input matInput
+                       [matDatepicker]="date_disclosure_1"
+                       formControlName="date_disclosure_1"
+                       type="text"
+                       class="i-lr-3">
+                <mat-datepicker #date_disclosure_1></mat-datepicker>
               </div>
               <div>
-                <input [value]="'buyer'" formControlName="radio_disclosure_2" type="radio"> Buyer
-                <input [value]="'seller'" formControlName="radio_disclosure_2" type="radio"> Seller
-                <input [value]="'landlord'" formControlName="radio_disclosure_2" type="radio"> Landlord
-                <input [value]="'tenant'" formControlName="radio_disclosure_2" type="radio"> Tenant
+                <input formControlName="check_disclosure_2_buyer" type="checkbox"> Buyer
+                <input formControlName="check_disclosure_2_seller" type="checkbox"> Seller
+                <input formControlName="check_disclosure_2_landlord" type="checkbox"> Landlord
+                <input formControlName="check_disclosure_2_tenant" type="checkbox"> Tenant
                 <input
                   appSignature (fieldSigned)="moveToNextSignField($event)" [withDateControl]="'date_disclosure_2'"
                   formControlName="text_disclosure_role_name_2"
                   type="text" class="i-lr-6"> Date
-                <input formControlName="date_disclosure_2" type="text" class="i-lr-3">
+                <input matInput
+                       [matDatepicker]="date_disclosure_2"
+                       formControlName="date_disclosure_2"
+                       type="text"
+                       class="i-lr-3">
+                <mat-datepicker #date_disclosure_2></mat-datepicker>
               </div>
               <div class="pb-20">
                 <span class="p-relative">Agent &nbsp;
@@ -199,7 +213,12 @@
                 &nbsp; DRE Lic. #
                 &nbsp; <input formControlName="text_disclosure_agent_buyer_lic" type="text" class="i-lr-3">
                 Date
-                <input formControlName="date_disclosure_3" type="text" class="i-lr-3">
+                <input matInput
+                       [matDatepicker]="date_disclosure_3"
+                       formControlName="date_disclosure_3"
+                       type="text"
+                       class="i-lr-3">
+                <mat-datepicker #date_disclosure_3></mat-datepicker>
               </div>
             </div>
             <footer>
@@ -358,8 +377,8 @@
               </div>
               <div>
                 Is the broker of (check one):
-                <input [value]="'seller'" formControlName="radio_confirm_seller" type="radio"> the seller; or
-                <input [value]="'dual_agent'" formControlName="radio_confirm_seller" type="radio"> both the buyer and
+                <input formControlName="check_confirm_seller" type="checkbox"> the seller; or
+                <input formControlName="check_confirm_1_dual_agent" type="checkbox"> both the buyer and
                 seller.
                 (dual agent)
               </div>
@@ -372,10 +391,10 @@
               </div>
               <div>
                 Is (check one):
-                <input [value]="'seller_agent'" formControlName="radio_confirm_seller_agent" type="radio"> the Seller's
+                <input formControlName="check_confirm_seller_agent" type="checkbox"> the Seller's
                 Agent.
                 (salesperson or broker associate)
-                <input [value]="'dual_agent'" formControlName="radio_confirm_seller_agent" type="radio"> both the
+                <input formControlName="check_confirm_2_dual_agent" type="checkbox"> both the
                 Buyer's and
                 Seller's Agent. (dual agent)
               </div>
@@ -388,8 +407,8 @@
               </div>
               <div>
                 Is the broker of (check one):
-                <input [value]="'buyer'" formControlName="radio_confirm_buyer" type="radio"> the buyer; or
-                <input [value]="'dual_agent'" formControlName="radio_confirm_buyer" type="radio"> both the buyer and
+                <input formControlName="check_confirm_buyer" type="checkbox"> the buyer; or
+                <input formControlName="check_confirm_3_dual_agent" type="checkbox"> both the buyer and
                 seller.
                 (dual agent)
               </div>
@@ -402,10 +421,10 @@
               </div>
               <div>
                 Is (check one):
-                <input [value]="'buyer_agent'" formControlName="radio_confirm_buyer_agent" type="radio"> the Buyer's
+                <input formControlName="check_confirm_buyer_agent" type="checkbox"> the Buyer's
                 Agent.
                 (salesperson or broker associate)
-                <input [value]="'dual_agent'" formControlName="radio_confirm_buyer_agent" type="radio"> both the Buyer's
+                <input formControlName="check_confirm_3_dual_agent" type="checkbox"> both the Buyer's
                 and
                 Seller's Agent. (dual agent)
               </div>
@@ -601,26 +620,46 @@
                 Seller &nbsp;<input appSignature (fieldSigned)="moveToNextSignField($event)"
                                     [withDateControl]="'date_acknowledge_seller_1'"
                                     formControlName="text_acknowledge_seller_1" type="text" class="i-lr-10">
-                Date &nbsp;<input formControlName="date_acknowledge_seller_1" type="text" class="i-lr-2__5">
+                Date &nbsp;<input matInput
+                                  [matDatepicker]="date_acknowledge_seller_1"
+                                  formControlName="date_acknowledge_seller_1"
+                                  type="text"
+                                  class="i-lr-2__5">
+                <mat-datepicker #date_acknowledge_seller_1></mat-datepicker>
               </div>
               <div>
                 Seller &nbsp;<input appSignature (fieldSigned)="moveToNextSignField($event)"
                                     [withDateControl]="'date_acknowledge_seller_2'"
                                     formControlName="text_acknowledge_seller_2" type="text" class="i-lr-10">
-                Date &nbsp;<input formControlName="date_acknowledge_seller_2" type="text" class="i-lr-2__5">
+                Date &nbsp;<input matInput
+                                  [matDatepicker]="date_acknowledge_seller_2"
+                                  formControlName="date_acknowledge_seller_2"
+                                  type="text"
+                                  class="i-lr-2__5">
+                <mat-datepicker #date_acknowledge_seller_2></mat-datepicker>
               </div>
               <br>
               <div>
                 Buyer &nbsp;<input appSignature (fieldSigned)="moveToNextSignField($event)"
                                    [withDateControl]="'date_acknowledge_buyer_1'"
                                    formControlName="text_acknowledge_buyer_1" type="text" class="i-lr-10">
-                Date &nbsp;<input formControlName="date_acknowledge_buyer_1" type="text" class="i-lr-2__5">
+                Date &nbsp;<input matInput
+                                  [matDatepicker]="date_acknowledge_buyer_1"
+                                  formControlName="date_acknowledge_buyer_1"
+                                  type="text"
+                                  class="i-lr-2__5">
+                <mat-datepicker #date_acknowledge_buyer_1></mat-datepicker>
               </div>
               <div>
                 Buyer &nbsp;<input appSignature (fieldSigned)="moveToNextSignField($event)"
                                    [withDateControl]="'date_acknowledge_buyer_2'"
                                    formControlName="text_acknowledge_buyer_2" type="text" class="i-lr-10">
-                Date &nbsp;<input formControlName="date_acknowledge_buyer_2" type="text" class="i-lr-2__5">
+                Date &nbsp;<input matInput
+                                  [matDatepicker]="date_acknowledge_buyer_2"
+                                  formControlName="date_acknowledge_buyer_2"
+                                  type="text"
+                                  class="i-lr-2__5">
+                <mat-datepicker #date_acknowledge_buyer_2></mat-datepicker>
               </div>
               <br>
               <div>
@@ -641,7 +680,12 @@
                 &nbsp; &nbsp;DRE Lic. #
                 &nbsp; <input formControlName="text_acknowledge_buyer_agent_lic" type="text" class="i-lr-2">
                 &nbsp; Date
-                <input formControlName="date_acknowledge_buyer_agent_date" type="text" class="i-lr-2__5">
+                <input matInput
+                       [matDatepicker]="date_acknowledge_buyer_agent_date"
+                       formControlName="date_acknowledge_buyer_agent_date"
+                       type="text"
+                       class="i-lr-2__5">
+                <mat-datepicker #date_acknowledge_buyer_agent_date></mat-datepicker>
               </div>
               <br>
               <div>
@@ -662,7 +706,12 @@
                 &nbsp; &nbsp;DRE Lic. #
                 &nbsp; <input formControlName="text_acknowledge_seller_agent_lic" type="text" class="i-lr-2">
                 &nbsp; Date
-                <input formControlName="date_acknowledge_seller_agent_date" type="text" class="i-lr-2__5">
+                <input matInput
+                       [matDatepicker]="date_acknowledge_seller_agent_date"
+                       formControlName="date_acknowledge_seller_agent_date"
+                       type="text"
+                       class="i-lr-2__5">
+                <mat-datepicker #date_acknowledge_seller_agent_date></mat-datepicker>
               </div>
             </div>
 
@@ -788,12 +837,12 @@
               can also provide information:
             </div>
             <div>
-              Federal Bureau of Investigation: <a href="https://www.fbi.gov/">https://www.fbi.gov/</a>; the FBI's IC3 at
-              <a href="https://www.ic3.gov">www.ic3.gov</a>; or 310-477-6565
+              Federal Bureau of Investigation: https://www.fbi.gov/; the FBI's IC3 at
+              www.ic3.gov; or 310-477-6565
               <br>
-              National White Collar Crime Center: <a href="http://www.nw3c.org/">http://www.nw3c.org/</a>
+              National White Collar Crime Center: http://www.nw3c.org/
               <br>
-              On Guard Online: <a href="https://www.onguardonline.gov/">https://www.onguardonline.gov/</a>
+              On Guard Online: https://www.onguardonline.gov/
             </div>
             <div class="fw-bold text-left">
               NOTE: There are existing alternatives to electronic and wired fund transfers such as cashier's checks.
@@ -805,25 +854,45 @@
                 Buyer/Tenant &nbsp;<input appSignature (fieldSigned)="moveToNextSignField($event)"
                                           [withDateControl]="'date_buyer_tenant_1'"
                                           formControlName="text_buyer_tenant_1" type="text" class="i-lr-9">
-                &nbsp; Date <input formControlName="date_buyer_tenant_1" type="text" class="i-lr-2__5">
+                &nbsp; Date <input matInput
+                                   [matDatepicker]="date_buyer_tenant_1"
+                                   formControlName="date_buyer_tenant_1"
+                                   type="text"
+                                   class="i-lr-2__5">
+                <mat-datepicker #date_buyer_tenant_1></mat-datepicker>
               </div>
               <div>
                 Buyer/Tenant &nbsp;<input appSignature (fieldSigned)="moveToNextSignField($event)"
                                           [withDateControl]="'date_buyer_tenant_2'"
                                           formControlName="text_buyer_tenant_2" type="text" class="i-lr-9">
-                &nbsp; Date <input formControlName="date_buyer_tenant_2" type="text" class="i-lr-2__5">
+                &nbsp; Date <input matInput
+                                   [matDatepicker]="date_buyer_tenant_2"
+                                   formControlName="date_buyer_tenant_2"
+                                   type="text"
+                                   class="i-lr-2__5">
+                <mat-datepicker #date_buyer_tenant_2></mat-datepicker>
               </div>
               <div>
                 Seller/Landlord <input appSignature (fieldSigned)="moveToNextSignField($event)"
                                        [withDateControl]="'date_seller_landlord_1'"
                                        formControlName="text_seller_landlord_1" type="text" class="i-lr-9">
-                Date <input formControlName="date_seller_landlord_1" type="text" class="i-lr-2__5">
+                Date <input matInput
+                            [matDatepicker]="date_seller_landlord_1"
+                            formControlName="date_seller_landlord_1"
+                            type="text"
+                            class="i-lr-2__5">
+                <mat-datepicker #date_seller_landlord_1></mat-datepicker>
               </div>
               <div>
                 Seller/Landlord <input appSignature (fieldSigned)="moveToNextSignField($event)"
                                        [withDateControl]="'date_seller_landlord_2'"
                                        formControlName="text_seller_landlord_2" type="text" class="i-lr-9">
-                Date <input formControlName="date_seller_landlord_2" type="text" class="i-lr-2__5">
+                Date <input matInput
+                            [matDatepicker]="date_seller_landlord_2"
+                            formControlName="date_seller_landlord_2"
+                            type="text"
+                            class="i-lr-2__5">
+                <mat-datepicker #date_seller_landlord_2></mat-datepicker>
               </div>
             </div>
             <br>
@@ -908,16 +977,16 @@
                   <input formControlName="text_offer_street_name" type="text" name="" class="i-lr-8">,
                   situated in
                   <div class="item-pl-35">
-          <span>
-          <input formControlName="text_offer_city" type="text" class="i-lr-2__5">
-          &nbsp;(City),&nbsp;
-          <input formControlName="text_offer_country" type="text" class="i-lr-2">
-          &nbsp;(County), California,&nbsp;
-          <input formControlName="text_offer_zip_code" type="text" class="i-lr-1">
-          &nbsp;(Zip Code), Assessor's Parcel No.&nbsp;
-          <input formControlName="text_offer_apn" appOnlyNumbers type="text" class="i-lr-1">
-          &nbsp;(“Property”).&nbsp;
-          </span>
+                    <span>
+                      <input formControlName="text_offer_city" type="text" class="i-lr-2__5">
+                      &nbsp;(City),&nbsp;
+                      <input formControlName="text_offer_country" type="text" class="i-lr-2">
+                      &nbsp;(County), California,&nbsp;
+                      <input formControlName="text_offer_zip_code" type="text" class="i-lr-1">
+                      &nbsp;(Zip Code), Assessor's Parcel No.&nbsp;
+                      <input formControlName="text_offer_apn" appOnlyNumbers type="text" class="i-lr-1">
+                      &nbsp;(“Property”).&nbsp;
+                    </span>
                   </div>
                 </div>
                 <div>
@@ -926,8 +995,9 @@
                   <div class="item-pl-35">
                     <input formControlName="text_offer_price_text" type="text" class="i-lr-9">
                     Dollars $
-                    <input formControlName="text_offer_price_digits" appOnlyNumbers
-                           [maxLength]="12"
+                    <input formControlName="text_offer_price_digits"
+                           currencyMask
+                           [options]="currencyMaskOptions"
                            appNumberToWords
                            [numToWordsForm]="documentForm"
                            [recipientControlName]="'page_5.text_offer_price_text'"
@@ -937,9 +1007,9 @@
                 </div>
                 <div>
                   <span class="fw-bold">D. &nbsp;CLOSE OF ESCROW</span> shall occur on
-                  <input [value]="'date'" type="radio"
-                         (change)="switchDaysAndDate('date', 'page_5.text_escrow_days', 'page_5.date_escrow_date')"
-                         formControlName="radio_escrow">
+                  <input type="checkbox"
+                         (change)="switchDaysAndDate($event.target.checked, 'date', 'page_5.date_escrow_date', 'page_5.text_escrow_days')"
+                         formControlName="check_escrow_date">
                   <input matInput [min]="datepickerMinDate"
                          (click)="date_escrow_date.open()"
                          [matDatepicker]="date_escrow_date"
@@ -948,9 +1018,9 @@
                          class="i-lr-5">
                   <mat-datepicker #date_escrow_date></mat-datepicker>
                   (date)(or
-                  <input [value]="'days'" type="radio"
-                         (change)="switchDaysAndDate('days', 'page_5.text_escrow_days', 'page_5.date_escrow_date')"
-                         formControlName="radio_escrow">
+                  <input type="checkbox"
+                         (change)="switchDaysAndDate($event.target.checked, 'days', 'page_5.text_escrow_days', 'page_5.date_escrow_date')"
+                         formControlName="check_escrow_days">
                   <input formControlName="text_escrow_days"
                          appOnlyNumbers [maxLength]="3"
                          type="text"
@@ -988,9 +1058,9 @@
                     &nbsp; <input formControlName="text_agency_broker_seller_firm_lic" type="text" class="i-lr-2">
                     <br>
                     Is the broker of (check one):
-                    <input [value]="'seller'" formControlName="radio_agency_broker_seller" type="radio">
+                    <input formControlName="check_agency_broker_seller" type="checkbox">
                     the seller; or
-                    <input [value]="'both'" formControlName="radio_agency_broker_seller" type="radio">
+                    <input formControlName="check_agency_broker_1_dual_agent" type="checkbox">
                     both the buyer and seller. (dual agent)
                     <br>
                     Seller's Agent
@@ -999,9 +1069,9 @@
                     &nbsp; <input formControlName="text_agency_broker_seller_agent_lic" type="text" class="i-lr-2">
                     <br>
                     Is (check one):
-                    <input [value]="'seller_agent'" formControlName="radio_agency_broker_seller_agent" type="radio">
+                    <input formControlName="check_agency_broker_seller_agent" type="checkbox">
                     the Seller's Agent. (salesperson or broker associate)
-                    <input [value]="'dual'" formControlName="radio_agency_broker_seller_agent" type="radio">
+                    <input formControlName="check_agency_broker_2_dual_agent" type="checkbox">
                     both the Buyer's and Seller's Agent. (dual agent)
                     <br>
                     <span class="fw-bold">
@@ -1012,9 +1082,9 @@
                     &nbsp; <input formControlName="text_agency_broker_buyer_firm_lic" type="text" class="i-lr-2">
                     <br>
                     Is the broker of (check one):
-                    <input [value]="'buyer'" formControlName="radio_agency_broker_buyer" type="radio">
+                    <input formControlName="check_agency_broker_buyer" type="checkbox">
                     the buyer; or
-                    <input [value]="'both'" formControlName="radio_agency_broker_buyer" type="radio">
+                    <input formControlName="check_agency_broker_3_dual_agent" type="checkbox">
                     both the buyer and seller. (dual agent)
                     <br>
                     Buyer's Agent
@@ -1023,9 +1093,9 @@
                     &nbsp; <input formControlName="text_agency_broker_buyer_agent_lic" type="text" class="i-lr-2">
                     <br>
                     Is (check one):
-                    <input [value]="'buyer_agent'" formControlName="radio_agency_broker_buyer_agent" type="radio">
+                    <input formControlName="check_agency_broker_buyer_agent" type="checkbox">
                     the Buyer's Agent. (salesperson or broker associate)
-                    <input [value]="'dual'" formControlName="radio_agency_broker_buyer_agent" type="radio">
+                    <input formControlName="check_agency_broker_4_dual_agent" type="checkbox">
                     both the Buyer's and Seller's Agent. (dual agent)
                   </div>
                 </div>
@@ -1092,7 +1162,10 @@
                 </div>
 
                 <div class="col-right">
-                  $ <input formControlName="text_finance_terms_amount" appOnlyNumbers type="text">
+                  $ <input formControlName="text_finance_terms_amount"
+                           currencyMask
+                           [options]="currencyMaskOptions"
+                           type="text">
                 </div>
 
                 <div class="col-left text-justify">
@@ -1115,7 +1188,10 @@
                 </div>
 
                 <div class="col-right">
-                  $ <input formControlName="text_finance_increased_deposit_amount" appOnlyNumbers type="text">
+                  $ <input formControlName="text_finance_increased_deposit_amount"
+                           currencyMask
+                           [options]="currencyMaskOptions"
+                           type="text">
                 </div>
 
                 <div class="col-left ">
@@ -1217,11 +1293,17 @@
                 </div>
 
                 <div class="col-right item-d1">
-                  $ <input formControlName="text_finance_first_loan_amount" appOnlyNumbers type="text">
+                  $ <input formControlName="text_finance_first_loan_amount"
+                           currencyMask
+                           [options]="currencyMaskOptions"
+                           type="text">
                 </div>
 
                 <div class="col-right item-d2">
-                  $ <input formControlName="text_finance_second_loan_amount" appOnlyNumbers type="text">
+                  $ <input formControlName="text_finance_second_loan_amount"
+                           currencyMask
+                           [options]="currencyMaskOptions"
+                           type="text">
                 </div>
 
                 <div class="col-left">
@@ -1238,7 +1320,8 @@
                 </div>
 
                 <div class="col-right">
-                  $ <input formControlName="text_finance_down_payment_balance" appOnlyNumbers type="text">
+                  $ <input currencyMask [options]="currencyMaskOptions"
+                           formControlName="text_finance_down_payment_balance" type="text">
                 </div>
 
                 <div class="col-left text-justify">
@@ -1248,7 +1331,7 @@
                 </div>
 
                 <div class="col-right">
-                  $ <input [value]="documentForm.get('page_5.text_offer_price_digits').value" appOnlyNumbers
+                  $ <input [value]="documentForm.get('page_5.text_offer_price_digits').value | number: '1.2-2'"
                            disabled="disabled" type="text">
                 </div>
                 <div class="clearfix"></div>
@@ -1522,8 +1605,8 @@
                   <div>
                     <span class="fw-bold f-l">(1)</span>
                     <div class="item-pl-3">
-                      <input [value]="'buyer'" formControlName="radio_allocation_report_first" type="radio"> Buyer
-                      <input [value]="'seller'" formControlName="radio_allocation_report_first" type="radio"> Seller
+                      <input formControlName="check_allocation_report_first_buyer" type="checkbox"> Buyer
+                      <input formControlName="check_allocation_report_first_seller" type="checkbox"> Seller
                       shall pay
                       for a natural hazard zone
                       disclosure report,
@@ -1539,8 +1622,8 @@
                   <div>
                     <span class="fw-bold f-l">(2)</span>
                     <div class="item-pl-3">
-                      <input [value]="'buyer'" formControlName="radio_allocation_report_second" type="radio"> Buyer
-                      <input [value]="'seller'" formControlName="radio_allocation_report_second" type="radio"> Seller
+                      <input formControlName="check_allocation_report_second_buyer" type="checkbox"> Buyer
+                      <input formControlName="check_allocation_report_second_seller" type="checkbox"> Seller
                       shall pay
                       for the following Report
                       <input formControlName="text_allocation_report_following_first" type="text" class="i-lr-8">
@@ -1551,8 +1634,8 @@
                   <div>
                     <span class="fw-bold f-l">(3)</span>
                     <div class="item-pl-3">
-                      <input [value]="'buyer'" formControlName="radio_allocation_report_third" type="radio"> Buyer
-                      <input [value]="'seller'" formControlName="radio_allocation_report_third" type="radio"> Seller
+                      <input formControlName="check_allocation_report_third_buyer" type="checkbox"> Buyer
+                      <input formControlName="check_allocation_report_third_seller" type="checkbox"> Seller
                       shall pay
                       for the following Report
                       <input formControlName="text_allocation_report_following_second" type="text" class="i-lr-8">
@@ -1631,16 +1714,16 @@
                   <span class="fw-bold f-l">(2)</span>
                   <div class="item-pl-3">
                     <span class="fw-bold">(i)</span>
-                    <input [value]="'buyer'" formControlName="radio_pay_government" type="radio"> Buyer
-                    <input [value]="'seller'" formControlName="radio_pay_government" type="radio">
+                    <input formControlName="check_pay_government_buyer" type="checkbox"> Buyer
+                    <input formControlName="check_pay_government_seller" type="checkbox">
                     Seller shall pay the cost of compliance with any other minimum mandatory government inspections
                     and
                     reports if required as a condition of closing escrow under any Law.
                   </div>
                   <div class="item-pl-3">
                     <span class="fw-bold">(ii)</span>
-                    <input [value]="'buyer'" formControlName="radio_pay_government_coe" type="radio"> Buyer
-                    <input [value]="'seller'" formControlName="radio_pay_government_coe" type="radio">
+                    <input formControlName="check_pay_government_coe_buyer" type="checkbox"> Buyer
+                    <input formControlName="check_pay_government_coe_seller" type="checkbox">
                     Seller shall pay the cost of compliance with any other minimum mandatory government retrofit
                     standards required as a condition of closing escrow under any Law, whether the work is required
                     to
@@ -1662,8 +1745,8 @@
                   <div class="item-pl-3">
                     <div>
                       (a)
-                      <input [value]="'buyer'" formControlName="radio_escrow_pay" type="radio"> Buyer
-                      <input [value]="'seller'" formControlName="radio_escrow_pay" type="radio">
+                      <input formControlName="check_escrow_pay_buyer" type="checkbox"> Buyer
+                      <input formControlName="check_escrow_pay_seller" type="checkbox">
                       Seller shall pay escrow fee
                       <input formControlName="text_escrow_pay_amount" type="text" class="i-lr-8__5"> .
                     </div>
@@ -1684,8 +1767,8 @@
                   <div class="item-pl-3">
                     <div>
                       (a)
-                      <input [value]="'buyer'" formControlName="radio_escrow_pay_insurance" type="radio"> Buyer
-                      <input [value]="'seller'" formControlName="radio_escrow_pay_insurance" type="radio">
+                      <input formControlName="check_escrow_pay_insurance_buyer" type="checkbox"> Buyer
+                      <input formControlName="check_escrow_pay_insurance_seller" type="checkbox">
                       Seller shall pay for <span class="fw-bold">owner's</span> title insurance policy specified
                       in
                       paragraph 13E
@@ -1708,22 +1791,22 @@
                 <div class="item-pl-3">
                   <span class="fw-bold f-l">(1) </span>
                   <div class="item-pl-3">
-                    <input [value]="'buyer'" formControlName="radio_other_costs_country_tax" type="radio"> Buyer
-                    <input [value]="'seller'" formControlName="radio_other_costs_country_tax" type="radio">
+                    <input formControlName="check_other_costs_country_tax_buyer" type="checkbox"> Buyer
+                    <input formControlName="check_other_costs_country_tax_seller" type="checkbox">
                     Seller shall pay County transfer tax or fee
                     <input formControlName="text_other_costs_country_tax_amount" type="text" class="i-lr-7__5"> .
                   </div>
                   <span class="fw-bold f-l">(2) </span>
                   <div class="item-pl-3">
-                    <input [value]="'buyer'" formControlName="radio_other_costs_city_tax" type="radio"> Buyer
-                    <input [value]="'seller'" formControlName="radio_other_costs_city_tax" type="radio">
+                    <input formControlName="check_other_costs_city_tax_buyer" type="checkbox"> Buyer
+                    <input formControlName="check_other_costs_city_tax_seller" type="checkbox">
                     Seller shall pay City transfer tax or fee
                     <input formControlName="text_other_costs_country_city_amount" type="text" class="i-lr-8"> .
                   </div>
                   <span class="fw-bold f-l">(3) </span>
                   <div class="item-pl-3">
-                    <input [value]="'buyer'" formControlName="radio_other_costs_hometown_tax" type="radio"> Buyer
-                    <input [value]="'seller'" formControlName="radio_other_costs_hometown_tax" type="radio">
+                    <input formControlName="check_other_costs_hometown_tax_buyer" type="checkbox"> Buyer
+                    <input formControlName="check_other_costs_hometown_tax_seller" type="checkbox">
                     Seller shall pay Homeowners' Association (“HOA”) transfer fee
                     <input formControlName="text_other_costs_country_hometown_amount" type="text" class="i-lr-5__5"> .
                   </div>
@@ -1733,8 +1816,8 @@
                   </div>
                   <span class="fw-bold f-l">(5) </span>
                   <div class="item-pl-3">
-                    <input [value]="'buyer'" formControlName="radio_other_costs_hao_fee" type="radio"> Buyer
-                    <input [value]="'seller'" formControlName="radio_other_costs_hao_fee" type="radio">
+                    <input formControlName="check_other_costs_hao_fee_buyer" type="checkbox"> Buyer
+                    <input formControlName="check_other_costs_hao_fee_seller" type="checkbox">
                     Seller shall pay HOA fees for preparing all documents other than those required by Civil Code
                     §4525.
                   </div>
@@ -1744,31 +1827,33 @@
                   </div>
                   <span class="fw-bold f-l">(7) </span>
                   <div class="item-pl-3">
-                    <input [value]="'buyer'" formControlName="radio_other_costs_private_fee" type="radio"> Buyer
-                    <input [value]="'seller'" formControlName="radio_other_costs_private_fee" type="radio">
+                    <input formControlName="check_other_costs_private_fee_buyer" type="checkbox"> Buyer
+                    <input formControlName="check_other_costs_private_fee_seller" type="checkbox">
                     Seller shall pay for any private transfer fee
                     <input formControlName="text_other_costs_private_fee_amount" type="text" class="i-lr-7__5"> .
                   </div>
                   <span class="fw-bold f-l">(8) </span>
                   <div class="item-pl-3">
-                    <input [value]="'buyer'" formControlName="radio_other_costs_shall_pay_first" type="radio"> Buyer
-                    <input [value]="'seller'" formControlName="radio_other_costs_shall_pay_first" type="radio">
+                    <input formControlName="check_other_costs_shall_pay_first_buyer" type="checkbox"> Buyer
+                    <input formControlName="check_other_costs_shall_pay_first_seller" type="checkbox">
                     Seller shall pay for
                     <input formControlName="text_other_costs_shall_pay_amount_first" type="text" class="i-lr-9__5"> .
                   </div>
                   <span class="fw-bold f-l">(9) </span>
                   <div class="item-pl-3">
-                    <input [value]="'buyer'" formControlName="radio_other_costs_shall_pay_second" type="radio"> Buyer
-                    <input [value]="'seller'" formControlName="radio_other_costs_shall_pay_second" type="radio">
+                    <input formControlName="check_other_costs_shall_pay_second_buyer" type="checkbox"> Buyer
+                    <input formControlName="check_other_costs_shall_pay_second_seller" type="checkbox">
                     Seller shall pay for
                     <input formControlName="text_other_costs_shall_pay_amount_second" type="text" class="i-lr-9__5"> .
                   </div>
                   <span class="fw-bold f-l">(10) </span>
                   <div class="item-pl-3">
-                    <input [value]="'buyer'" formControlName="radio_other_costs_shall_pay_cost" type="radio"> Buyer
-                    <input [value]="'seller'" formControlName="radio_other_costs_shall_pay_cost" type="radio">
+                    <input formControlName="check_other_costs_shall_pay_cost_buyer" type="checkbox"> Buyer
+                    <input formControlName="check_other_costs_shall_pay_cost_seller" type="checkbox">
                     Seller shall pay for the cost, not to exceed $
-                    <input formControlName="text_other_costs_shall_pay_amount_cost" appOnlyNumbers type="text"
+                    <input formControlName="text_other_costs_shall_pay_amount_cost" type="text"
+                           currencyMask
+                           [options]="currencyMaskOptions"
                            class="i-lr-4">
                     , of a standard (or
                     <input formControlName="check_other_costs_warranty" type="checkbox">
@@ -2191,7 +2276,7 @@
                       Notice: Pursuant to Section 290.46 of the Penal Code, information about specified
                       registered sex offenders is made available to the public via an Internet Web site maintained
                       by the Department of Justice at
-                      <a href="https://www.meganslaw.ca.gov/" class="fw-bold">www.meganslaw.ca.gov</a>. Depending
+                      www.meganslaw.ca.gov. Depending
                       on an offender's criminal history, this information will
                       include either the address at which the
                       offender resides or the community of residence and ZIP Code in which he or she resides.
@@ -2213,7 +2298,7 @@
                       pipelines is available to the public via the
                       National Pipeline Mapping System (NPMS) Internet Web site maintained by the United States
                       Department of Transportation at
-                      <a href="http://www.npms.phmsa.dot.gov/" class="fw-bold">http://www.npms.phmsa.dot.gov/</a>.
+                      http://www.npms.phmsa.dot.gov/.
                       To seek further information about possible transmission pipelines near the Property, you may
                       contact your local gas utility or other pipeline operators in the area. Contact information
                       for pipeline operators is searchable by ZIP
@@ -2304,7 +2389,7 @@
                   <span class="fw-bold f-l">(2)</span>
                   <div class="item-pl-3">
                     If the Property is a condominium or is located in a planned development or other common
-                    interest subdivision, Seller has
+                    interest subdivision,
                     <span class="fw-bold">
           SELLER HAS:
           <br>
@@ -3237,7 +3322,7 @@
                     any resulting
                     transaction, before resorting to arbitration or court action through the C.A.R. Real Estate
                     Mediation Center for Consumers
-                    (<a href="https://www.car.org/mediation/" class="fw-bold">www.consumermediation.org</a>) or
+                    (www.consumermediation.org) or
                     through any other mediation provider or service mutually agreed to by the Parties. The Parties
                     <span class="fw-bold">
           also agree to mediate any disputes or claims with Broker(s), who, in writing, agree to such
@@ -3652,7 +3737,12 @@
                 </div>
                 <div>
                   Date
-                  <input formControlName="date_other_buyer_first" type="text" class="i-lr-2">
+                  <input matInput
+                         [matDatepicker]="date_other_buyer_first"
+                         formControlName="date_other_buyer_first"
+                         type="text"
+                         class="i-lr-2">
+                  <mat-datepicker #date_other_buyer_first></mat-datepicker>
                   BUYER
                   <input appSignature (fieldSigned)="moveToNextSignField($event)"
                          [withDateControl]="'date_other_buyer_first'"
@@ -3664,7 +3754,12 @@
                 </div>
                 <div>
                   Date
-                  <input formControlName="date_other_buyer_second" type="text" class="i-lr-2">
+                  <input matInput
+                         [matDatepicker]="date_other_buyer_second"
+                         formControlName="date_other_buyer_second"
+                         type="text"
+                         class="i-lr-2">
+                  <mat-datepicker #date_other_buyer_second></mat-datepicker>
                   BUYER
                   <input appSignature (fieldSigned)="moveToNextSignField($event)"
                          [withDateControl]="'date_other_buyer_second'"
@@ -3766,7 +3861,12 @@
               </div>
               <div>
                 Date
-                <input formControlName="date_seller_first" type="text" class="i-lr-2">
+                <input matInput
+                       [matDatepicker]="date_seller_first"
+                       formControlName="date_seller_first"
+                       type="text"
+                       class="i-lr-2">
+                <mat-datepicker #date_seller_first></mat-datepicker>
                 SELLER
                 <input appSignature (fieldSigned)="moveToNextSignField($event)" [withDateControl]="'date_seller_first'"
                        formControlName="text_seller_first" type="text" class="i-lr-10__5">
@@ -3777,7 +3877,12 @@
               </div>
               <div>
                 Date
-                <input formControlName="date_seller_second" type="text" class="i-lr-2">
+                <input matInput
+                       [matDatepicker]="date_seller_second"
+                       formControlName="date_seller_second"
+                       type="text"
+                       class="i-lr-2">
+                <mat-datepicker #date_seller_second></mat-datepicker>
                 SELLER
                 <input appSignature (fieldSigned)="moveToNextSignField($event)" [withDateControl]="'date_seller_second'"
                        formControlName="text_seller_second" type="text" class="i-lr-10__5">
@@ -3874,7 +3979,12 @@
                   &nbsp; DRE Lic. #&nbsp;&nbsp;
                   <input formControlName="text_buyers_brokerage_firm_lic_by_first" type="text" class="i-lr-2">
                   &nbsp;&nbsp;Date&nbsp;
-                  <input formControlName="date_buyers_brokerage_firm_date_first" type="text" class="i-lr-2__5">
+                  <input matInput
+                         [matDatepicker]="date_buyers_brokerage_firm_date_first"
+                         formControlName="date_buyers_brokerage_firm_date_first"
+                         type="text"
+                         class="i-lr-2__5">
+                  <mat-datepicker #date_buyers_brokerage_firm_date_first></mat-datepicker>
                 </div>
                 <div class="u-flex u-flex-justify--space-between">
                   By
@@ -3884,7 +3994,12 @@
                   &nbsp; DRE Lic. #&nbsp;&nbsp;
                   <input formControlName="text_buyers_brokerage_firm_lic_by_second" type="text" class="i-lr-2">
                   &nbsp;&nbsp;Date&nbsp;
-                  <input formControlName="date_buyers_brokerage_firm_date_second" type="text" class="i-lr-2__5">
+                  <input matInput
+                         [matDatepicker]="date_buyers_brokerage_firm_date_second"
+                         formControlName="date_buyers_brokerage_firm_date_second"
+                         type="text"
+                         class="i-lr-2__5">
+                  <mat-datepicker #date_buyers_brokerage_firm_date_second></mat-datepicker>
                 </div>
                 <div class="u-flex u-flex-justify--space-between">
                   Address
@@ -3922,7 +4037,12 @@
                   &nbsp; DRE Lic. #&nbsp;&nbsp;
                   <input formControlName="text_seller_brokerage_firm_lic_by_first" type="text" class="i-lr-2">
                   &nbsp;&nbsp;Date&nbsp;
-                  <input formControlName="date_seller_brokerage_firm_date_first" type="text" class="i-lr-2__5">
+                  <input matInput
+                         [matDatepicker]="date_seller_brokerage_firm_date_first"
+                         formControlName="date_seller_brokerage_firm_date_first"
+                         type="text"
+                         class="i-lr-2__5">
+                  <mat-datepicker #date_seller_brokerage_firm_date_first></mat-datepicker>
                 </div>
                 <div class="u-flex u-flex-justify--space-between">
                   By
@@ -3932,7 +4052,12 @@
                   &nbsp; DRE Lic. #&nbsp;&nbsp;
                   <input formControlName="text_seller_brokerage_firm_lic_by_second" type="text" class="i-lr-2">
                   &nbsp;&nbsp;Date&nbsp;
-                  <input formControlName="date_seller_brokerage_firm_date_second" type="text" class="i-lr-2__5">
+                  <input matInput
+                         [matDatepicker]="date_seller_brokerage_firm_date_second"
+                         formControlName="date_seller_brokerage_firm_date_second"
+                         type="text"
+                         class="i-lr-2__5">
+                  <mat-datepicker #date_seller_brokerage_firm_date_second></mat-datepicker>
                 </div>
                 <div class="u-flex u-flex-justify--space-between">
                   Address
@@ -4415,16 +4540,22 @@
                                                     [withDateControl]="'date_privacy_act_advisory_first'"
                                                     formControlName="text_privacy_act_advisory_first" type="text"
                                                     class="i-lr-7">
-                &nbsp; Date &nbsp;<input formControlName="date_privacy_act_advisory_first" type="text"
+                &nbsp; Date &nbsp;<input matInput [matDatepicker]="date_privacy_act_advisory_first"
+                                         formControlName="date_privacy_act_advisory_first"
+                                         type="text"
                                          class="i-lr-2__5">
+                <mat-datepicker #date_privacy_act_advisory_first></mat-datepicker>
               </div>
               <div>
                 Buyer/Seller/Landlord/Tenant <input appSignature (fieldSigned)="moveToNextSignField($event)"
                                                     [withDateControl]="'date_privacy_act_advisory_second'"
                                                     formControlName="text_privacy_act_advisory_second" type="text"
                                                     class="i-lr-7">
-                &nbsp; Date &nbsp;<input formControlName="date_privacy_act_advisory_second" type="text"
+                &nbsp; Date &nbsp;<input matInput [matDatepicker]="date_privacy_act_advisory_second"
+                                         formControlName="date_privacy_act_advisory_second"
+                                         type="text"
                                          class="i-lr-2__5">
+                <mat-datepicker #date_privacy_act_advisory_second></mat-datepicker>
               </div>
             </div>
 
@@ -4477,41 +4608,58 @@
       </div>
     </div>
 
-    <app-sidebar [(opened)]="isSideBarOpen" [isEnable]="isEnableContinue" (continue)="continue()">
+    <app-sidebar [(opened)]="offerService.isSideBarOpen"
+                 [isEnable]="documentForm.valid"
+                 (continue)="continue()"
+                 [okButtonText]="okButtonText"
+                 [isSignMode]="isSignMode"
+    >
 
       <div class="offer-information u-flex u-flex-direction--column u-flex-justify--start u-flex-align-items--start"
-           *ngIf="isSideBarOpen">
+           *ngIf="offerService.isSideBarOpen">
+
+        <app-agreement-mode-switcher
+          [show]="offer.allowSign && offerService.isSideBarOpen && offer.userRole === 'agent_buyer'"
+          [disabled]="offer.isSigned || documentForm.invalid"
+          [isChecked]="isSignMode"
+          (changeMode)="modeChanged($event)"
+        ></app-agreement-mode-switcher>
 
         <h4>Offer information</h4>
 
         <div class="roles-list">
-          <div class="sellers truncated" *ngFor="let item of offer.sellers; let i = index">
-            <h6>Seller #{{i+1}}</h6>
-            <div class="item">
-              {{item.firstName}} {{item.lastName}} | {{item.email}}
-            </div>
-          </div>
-          <div class="agents truncated" *ngFor="let item of offer.agentBuyers; let i = index">
-            <h6>Buyer's Agent #{{i+1}}</h6>
-            <div class="item">
-              {{item.firstName}} {{item.lastName}} | {{item.email}}
-            </div>
-          </div>
-          <div class="agents truncated" *ngFor="let item of offer.agentSellers; let i = index">
-            <h6>Listing Agent #{{i+1}}</h6>
-            <div class="item">
-              {{item.firstName}} {{item.lastName}} | {{item.email}}
-            </div>
-          </div>
+
           <div class="buyers truncated" *ngFor="let item of offer.buyers; let i = index">
             <h6>Buyer #{{i+1}}</h6>
-            <div class="item">
+            <div class="item" title="{{item.firstName}} {{item.lastName}} | {{item.email}}">
               {{item.firstName}} {{item.lastName}} | {{item.email}}
             </div>
           </div>
+
+          <div class="agents truncated" *ngFor="let item of offer.agentBuyers; let i = index">
+            <h6>Buyer's Agent #{{i+1}}</h6>
+            <div class="item" title="{{item.firstName}} {{item.lastName}} | {{item.email}}">
+              {{item.firstName}} {{item.lastName}} | {{item.email}}
+            </div>
+          </div>
+
+          <div class="sellers truncated" *ngFor="let item of offer.sellers; let i = index">
+            <h6>Seller #{{i+1}}</h6>
+            <div class="item" title="{{item.firstName}} {{item.lastName}} | {{item.email}}">
+              {{item.firstName}} {{item.lastName}} | {{item.email}}
+            </div>
+          </div>
+
+          <div class="agents truncated" *ngFor="let item of offer.agentSellers; let i = index">
+            <h6>Listing Agent #{{i+1}}</h6>
+            <div class="item" title="{{item.firstName}} {{item.lastName}} | {{item.email}}">
+              {{item.firstName}} {{item.lastName}} | {{item.email}}
+            </div>
+          </div>
+
           <div class="address truncated">
             <h6>Address</h6>
-            <div class="item">
+            <div class="item" title="{{offer.streetName}}, {{offer.city}} {{offer.zip}}">
               {{offer.streetName}}, {{offer.city}} {{offer.zip}}
             </div>
           </div>
@@ -4529,8 +4677,9 @@
         </button>
       </div>
 
-      <div class="controls" *ngIf="isSideBarOpen">
+      <div class="controls" *ngIf="offerService.isSideBarOpen">
         <app-progress-bar
+          [isSignMode]="isSignMode"
           [pagesNum]="allPageCount"
           [completedPageCount]="completedPageCount"
           [currentPage]="currentPage"

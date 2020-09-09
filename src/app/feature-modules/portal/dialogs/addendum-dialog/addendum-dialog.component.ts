@@ -1,8 +1,11 @@
-import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {TransactionService} from '../../services/transaction.service';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {AddendumData} from '../../../../core-modules/models/document';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TransactionService } from '../../services/transaction.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { AddendumData } from '../../../../core-modules/models/document';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-addendum-dialog',
@@ -13,16 +16,22 @@ import {AddendumData} from '../../../../core-modules/models/document';
 export class AddendumDialogComponent {
   form: FormGroup;
   isEdit: boolean = false;
+  isConfirmMode: boolean = !this.data.allowEdit;
+
+  private onDestroyed$: Subject<void> = new Subject<void>();
 
   get termsControl() {
     return this.form.get('terms');
   }
 
   constructor(
+    @Inject(MAT_DIALOG_DATA)
+    public data: {transactionId: number, docData: AddendumData, docId: number, allowEdit: boolean, allowSign: boolean},
     private fb: FormBuilder,
+    private router: Router,
     private transactionService: TransactionService,
     private dialogRef: MatDialogRef<AddendumDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) private data: {transactionId: number, docData: AddendumData, docId: number}
+    private cdr: ChangeDetectorRef,
   ) {
     this.isEdit = !!data.docData;
     this.form = this.fb.group({
@@ -43,7 +52,19 @@ export class AddendumDialogComponent {
       id: this.data.docId
     };
 
-    this.transactionService.updateAddendum(requestData)
-      .subscribe((doc) => this.dialogRef.close(doc));
+    this.transactionService.updateAddendum(requestData).pipe(
+      takeUntil(this.onDestroyed$),
+    ).subscribe((doc) => {
+      this.isConfirmMode = true;
+      this.cdr.detectChanges();
+    });
+  }
+
+  finish(): void {
+    this.dialogRef.close();
+
+    if (this.data.allowSign) {
+      this.router.navigate(['/e-sign/addendum', this.data.docId]);
+    }
   }
 }

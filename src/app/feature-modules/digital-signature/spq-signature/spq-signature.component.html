@@ -195,10 +195,11 @@
         <div class="clearfix">
           <div class="col-left-initials">
             <label>Buyer's Initials</label>
-            <ng-container *ngFor="let item of doc.signatures.buyers; let last = last">
-              <app-signature-box [signature]="item"></app-signature-box>
-              <ng-container *ngIf="!last">,&nbsp;&nbsp;</ng-container>
-            </ng-container>
+            <div class="u-flex">
+              <ng-container *ngFor="let item of doc.signatures.buyers; let i = index;">
+                <app-signature-box [signature]="item"></app-signature-box>
+              </ng-container>
+            </div>
             <br>
             <br>
             <br>
@@ -207,12 +208,12 @@
           </div>
 
           <div class="col-right-initials">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <label>Seller's Initials</label>
-            <ng-container *ngFor="let item of doc.signatures.sellers; let last = last">
-              <app-signature-box [signature]="item"></app-signature-box>
-              <ng-container *ngIf="!last">,&nbsp;&nbsp;</ng-container>
-            </ng-container>
+            <div class="u-flex">
+              <ng-container *ngFor="let item of doc.signatures.sellers">
+                <app-signature-box [signature]="item"></app-signature-box>
+              </ng-container>
+            </div>
             <br>
             <br>
             <img src="/assets/spq/housing.png" width="80" height="70" class="image-left">

@@ -4,7 +4,7 @@
     <h2>
       Addresses
     </h2>
-    <button mat-flat-button (click)="onCreate()" color="primary" style="margin-bottom: 85px;">
+    <button *ngIf="isAgent" mat-flat-button (click)="onCreate()" color="primary" style="margin-bottom: 85px;">
       ADD NEW ADDRESS
     </button>
 

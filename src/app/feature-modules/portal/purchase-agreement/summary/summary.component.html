@@ -14,12 +14,12 @@
           <label>buyer #{{ i + 1 }}</label>
           <span>{{ item.firstName }} {{ item.lastName }} | {{ item.email }}</span>
         </div>
-        <div class="row-layout" *ngFor="let item of offer?.sellers; let i = index">
-          <label>seller #{{ i + 1 }}</label>
-          <span>{{ item.firstName }} {{ item.lastName }} | {{ item.email }}</span>
-        </div>
         <div class="row-layout" *ngFor="let item of offer?.agentBuyers; let i = index">
           <label>agent buyer #{{ i + 1 }}</label>
+          <span>{{ item.firstName }} {{ item.lastName }} | {{ item.email }}</span>
+        </div>
+        <div class="row-layout" *ngFor="let item of offer?.sellers; let i = index">
+          <label>seller #{{ i + 1 }}</label>
           <span>{{ item.firstName }} {{ item.lastName }} | {{ item.email }}</span>
         </div>
         <div class="row-layout" *ngFor="let item of offer?.agentSellers; let i = index">
@@ -116,7 +116,7 @@
     <button mat-flat-button appDebounceClick
             (debounceClick)="saveOffer()"
             class="save-btn">
-      DONE
+      {{offer?.isSigned ? 'DONE' : 'READY TO SIGN'}}
     </button>
 
   </div>

@@ -76,3 +76,11 @@ $ease-out-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1) !default;
   color: #c7ccd6;
   font-family: 'SFUIDisplay' !important;
 }
+
+@mixin text-overflow($n: 1) {
+  display: -webkit-box;
+  -webkit-line-clamp: $n;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -5,7 +5,13 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './core-modules/interceptors/jwt.interceptor';
-import { MAT_DATE_LOCALE, MAT_SNACK_BAR_DEFAULT_OPTIONS, MatIconModule, MatProgressBarModule, MatSnackBarModule } from '@angular/material';
+import {
+  MAT_DATE_LOCALE,
+  MAT_SNACK_BAR_DEFAULT_OPTIONS,
+  MatIconModule,
+  MatProgressBarModule,
+  MatSnackBarModule
+} from '@angular/material';
 import { HttpErrorsInterceptor } from './core-modules/interceptors/http-errors.interceptor';
 import { HttpProgressInterceptor } from './core-modules/interceptors/http-progress.interceptor';
 import { AuthService } from './core-modules/core-services/auth.service';
@@ -51,7 +57,7 @@ import { SharedModule } from './shared-modules/shared.module';
       multi: true,
     },
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
-    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500, verticalPosition: 'top'}}
+    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500, verticalPosition: 'top'}},
   ],
   bootstrap: [AppComponent]
 })

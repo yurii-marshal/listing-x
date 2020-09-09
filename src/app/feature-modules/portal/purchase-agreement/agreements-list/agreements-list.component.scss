@@ -1,12 +1,5 @@
-@import "../../../../../assets/scss/mixins";
-
-$green: #66ad58;
-$yellow: #f8ce5f;
-$orange: #f89949;
-$red: #cd584a;
-$violet: #9b63cd;
-$blue: rgba(2, 136, 209, 0.9);
-$grey: rgba(0, 0, 0, .12);
+@import "~src/assets/scss/mixins";
+@import "~src/assets/scss/theming";
 
 .buttons-bar {
   margin-top: 85px;
@@ -70,6 +63,10 @@ $grey: rgba(0, 0, 0, .12);
     border: solid 1px $yellow;
     background-color: $yellow;
   }
+  &.turquoise {
+    border: solid 1px $turquoise;
+    background-color: $turquoise;
+  }
   &.blue {
     border: solid 1px $blue;
     background-color: $blue;
@@ -89,7 +86,7 @@ $grey: rgba(0, 0, 0, .12);
   margin-bottom: 7px;
 }
 
-.mat-cell {
+.common-grid table .mat-row .mat-cell {
   font-size: 13px!important;
   &.mat-column-createdAt {
     border-bottom-left-radius: 4px;
@@ -99,13 +96,15 @@ $grey: rgba(0, 0, 0, .12);
     &.yellow { border-left-color: $yellow; }
     &.orange { border-left-color: $orange; }
     &.blue { border-left-color: $blue; }
+    &.turquoise { border-left-color: $turquoise; }
     &.violet { border-left-color: $violet; }
   }
 
   &.mat-column-agentBuyers,
   &.mat-column-agentSellers,
   &.mat-column-buyers,
-  &.mat-column-sellers {
+  &.mat-column-sellers,
+  &.mat-column-lastLogs {
     width: 130px;
 
     div {
@@ -127,6 +126,7 @@ $grey: rgba(0, 0, 0, .12);
     &.yellow { color: $yellow; }
     &.orange { color: $orange; }
     &.blue { color: $blue; }
+    &.turquoise { color: $turquoise; }
     &.violet { color: $violet; }
   }
   &.mat-column-createdAt {

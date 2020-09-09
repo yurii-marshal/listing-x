@@ -3,7 +3,6 @@ import { Document, GeneratedDocument } from './document';
 import { AgreementStatus } from './agreement';
 import { Log } from 'src/app/core-modules/models/log';
 import { TransactionStatus } from 'src/app/core-modules/models/transaction';
-import { CounterOffer } from './counter-offer';
 
 export interface OfferSummary extends Offer {
   documents: LinkedDocuments;
@@ -46,6 +45,7 @@ export interface Offer {
   anySpecialFinancialTerms?: string;
   remainingDaysCloseEscrow?: number;
   userRole?: 'buyer' | 'seller' | 'agent_buyer' | 'agent_seller';
+  anyUserSigned: boolean;
 
   // Third step
   documents: LinkedDocuments;
@@ -57,9 +57,16 @@ export interface Offer {
   allowDeny: boolean;
   allowSign: boolean;
   isSigned: boolean;
+  canSign: boolean;
 
   lastLogs?: Log[];
   transactionDocs?: GeneratedDocument[];
+  completedDocuments: GeneratedDocument[];
+  pendingDocuments: GeneratedDocument[];
+  purchaseAgreements: GeneratedDocument[];
+
+  canCreateCounter: boolean;
+  canCreateMultipleCounter: boolean;
 }
 
 export interface Person {

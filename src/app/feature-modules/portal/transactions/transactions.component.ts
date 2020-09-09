@@ -69,7 +69,7 @@ export class TransactionsComponent implements OnDestroy, OnInit {
       takeUntil(this.onDestroyed$),
       map((resp: any) => {
         return resp.results.map(transaction => {
-          return {...transaction.offer, status: transaction.status};
+          return {...transaction.offer, status: transaction.status, lastLogs: transaction.lastLogs};
         });
       })
     ).subscribe(offer => {

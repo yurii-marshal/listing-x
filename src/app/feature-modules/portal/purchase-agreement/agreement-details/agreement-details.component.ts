@@ -1,12 +1,11 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { FormControl, Validators } from '@angular/forms';
 import { AddendumData, Document, GeneratedDocument } from '../../../../core-modules/models/document';
 import { AuthService } from '../../../../core-modules/core-services/auth.service';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialog, MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { flatMap, takeUntil } from 'rxjs/operators';
-import { DocumentStatus } from '../../../../core-modules/enums/document-status';
+import { flatMap, switchMap, takeUntil } from 'rxjs/operators';
 import { Offer, Person } from '../../../../core-modules/models/offer';
 import { SpqDialogComponent } from '../../dialogs/spq-dialog/spq-dialog.component';
 import { AddendumDialogComponent } from '../../dialogs/addendum-dialog/addendum-dialog.component';
@@ -16,6 +15,9 @@ import { AgreementStatus } from '../../../../core-modules/models/agreement';
 import { TransactionService } from '../../services/transaction.service';
 import { CounterOffer } from 'src/app/core-modules/models/counter-offer';
 import { CounterOfferService } from 'src/app/feature-modules/portal/services/counter-offer.service';
+import { CounterOfferType } from 'src/app/core-modules/models/counter-offer-type';
+import { ConfirmationBarComponent } from 'src/app/shared-modules/components/confirmation-bar/confirmation-bar.component';
+import { UploadDocumentType } from 'src/app/core-modules/enums/upload-document-type';
 
 @Component({
   selector: 'app-agreement-details',
@@ -24,21 +26,21 @@ import { CounterOfferService } from 'src/app/feature-modules/portal/services/cou
 })
 export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   offer: Offer;
-  counterOffers: CounterOffer[];
   calendarDataSource: CalendarEvent[];
   isOpenInviteUserOverlay: boolean;
   isResidentialAgreementCompleted: boolean = false;
   userEmailControl: FormControl = new FormControl(null, [Validators.required, Validators.email]);
   isAgent: boolean = this.authService.currentUser.accountType === 'agent';
   isSeller: boolean = false;
-  pendingDocuments: Observable<GeneratedDocument[]>;
-  completedDocuments: Observable<GeneratedDocument[]>;
   transactionsFlow: boolean;
+
+  isLoadingResponse: boolean;
 
   readonly statusLabels: { [key: string]: string } = {
     [AgreementStatus.All]: 'All agreements',
     [AgreementStatus.Started]: 'Started',
     [AgreementStatus.Delivered]: 'Delivered',
+    [AgreementStatus.Countered]: 'Countered',
     [AgreementStatus.Accepted]: 'Accepted',
     [AgreementStatus.Completed]: 'Completed',
     [AgreementStatus.Denied]: 'Denied',
@@ -48,7 +50,7 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   constructor(private authService: AuthService,
               private dialog: MatDialog,
               private route: ActivatedRoute,
-              private offerService: OfferService,
+              public offerService: OfferService,
               private transactionService: TransactionService,
               private counterOfferService: CounterOfferService,
               private snackbar: MatSnackBar,
@@ -59,14 +61,9 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     this.transactionsFlow = this.router.url.includes('transaction');
     const offerId: number = Number(this.route.snapshot.params.id);
 
-    this.offerService.loadOne(offerId).pipe(
-      takeUntil(this.onDestroyed$)
-    ).subscribe((offer: Offer) => this.offerLoaded(offer));
+    this.loadOffer(offerId);
 
-    this.counterOfferService.getCounterOffersList(offerId).pipe(
-      takeUntil(this.onDestroyed$)
-    ).subscribe((counterOffers: CounterOffer[]) => this.counterOffers = counterOffers);
-
+    // todo: load calendar data
     // this.offerService.loadCalendarByOffer(offerId)
     //   .subscribe(items => this.calendarDataSource = items);
   }
@@ -78,49 +75,27 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
         const offerId: number = Number(this.route.snapshot.params.id);
         return this.offerService.loadOne(offerId);
       })
-    ).subscribe((offer) => this.offerLoaded(offer));
+    ).subscribe((offer) => this.setUsers(offer));
   }
 
-  offerLoaded(offer: Offer): void {
-    this.offer = offer;
-
-    const {agentBuyers, agentSellers, sellers} = offer;
+  setUsers(offer: Offer): void {
+    const {agentSellers, sellers} = offer;
     this.isSeller = [...agentSellers, ...sellers].some(({email}) => email === this.authService.currentUser.email);
-
-    // const residentialAgreement = Array(offer.documents).find(doc => doc.documentType === GeneratedDocumentType.Contract);
-    // this.isResidentialAgreementCompleted = residentialAgreement && residentialAgreement.status === DocumentStatus.Completed;
-
-    this.filterDocumentList(offer.documents);
   }
 
   onDelete() {
-    this.offerService.delete(this.offer.id).pipe(
-      takeUntil(this.onDestroyed$)
-    ).subscribe(() => this.router.navigate(['/portal/purchase-agreements/all']));
-  }
-
-  getClassName(status: AgreementStatus): string {
-    switch (status) {
-      case AgreementStatus.Started:
-        return 'blue';
-      case AgreementStatus.Delivered:
-        return 'orange';
-      case AgreementStatus.Accepted:
-        return 'yellow';
-      case AgreementStatus.Completed:
-        return 'violet';
-      case AgreementStatus.Denied:
-        return 'red';
-    }
+    this.offerService.delete(this.offer.id)
+      .pipe(takeUntil(this.onDestroyed$))
+      .subscribe(() => this.router.navigate(['/portal/purchase-agreements/all']));
   }
 
   inviteUser() {
     this.isOpenInviteUserOverlay = false;
     const email: string = this.userEmailControl.value.toLowerCase();
     const offerId: number = Number(this.route.snapshot.params.id);
-    this.transactionService.inviteUser(offerId, email).pipe(
-      takeUntil(this.onDestroyed$)
-    ).subscribe(() => {
+    this.transactionService.inviteUser(offerId, email)
+      .pipe(takeUntil(this.onDestroyed$))
+      .subscribe(() => {
         this.snackbar.open(`Invite sent to email: ${email}`);
         if (!this.isAgent) {
           return;
@@ -138,49 +113,82 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
       });
   }
 
-  goToESign(doc: GeneratedDocument): void {
-    // const url = {
-    //   [GeneratedDocumentType.Contract]: '/e-sign',
-    //   [GeneratedDocumentType.Spq]: '/e-sign/spq',
-    //   [GeneratedDocumentType.Addendum]: '/e-sign/addendum'
-    // }[doc.documentType];
-    //
-    // if (doc.documentType === GeneratedDocumentType.Spq && !this.isAgent && this.isSeller) {
-    //   this.openSPQDialog(doc, true);
-    //   return;
-    // }
-
-    // this.router.navigate([url, doc.id]);
-    // this.transactionService.lockOffer(this.offer.id)
-    //   .subscribe(() => this.router.navigate(['/e-sign', this.offer.id]));
-    this.router.navigateByUrl(`portal/purchase-agreements/${this.offer.id}/sign`);
-  }
-
-  openCounterOffer(id?: number) {
-    if (id) {
-      this.isSeller ?
-        this.router.navigateByUrl(`portal/offer/${this.offer.id}/counter-offers/${id}/seller`) :
-        this.router.navigateByUrl(`portal/offer/${this.offer.id}/counter-offers/${id}/buyer`);
-    } else {
-      this.router.navigateByUrl(`portal/offer/${this.offer.id}/counter-offers/single`);
+  openPendingDocument(doc: GeneratedDocument) {
+    switch (doc.documentType) {
+      case 'purchase_agreement':
+        this.openSignOffer();
+        break;
+      default:
+        this.openCounterOffer(doc);
     }
   }
 
-  createCounterOffer(type: 'counter_offer' | 'multiple_counter_offer' | 'buyer_counter_offer') {
-    this.counterOfferService.createCounterOffer({offer: this.offer.id, type})
+  openSignOffer() {
+    this.offer.userRole === 'agent_buyer'
+      ? this.router.navigateByUrl(`portal/purchase-agreements/${this.offer.id}/step-two`)
+      : this.router.navigateByUrl(`portal/purchase-agreements/${this.offer.id}/sign`);
+  }
+
+  openCounterOffer(doc) {
+    this.router.navigateByUrl(
+      `portal/offer/${this.offer.id}/counter-offers/${doc.entityId}/${CounterOfferType[doc.documentType]}`
+    );
+  }
+
+  createCounterOffer(type) {
+    this.isLoadingResponse = true;
+
+    this.counterOfferService.createCounterOffer({offer: this.offer.id, offerType: type})
       .pipe(takeUntil(this.onDestroyed$))
       .subscribe((data: CounterOffer) => {
-        this.router.navigateByUrl(`portal/offer/${this.offer.id}/counter-offers/${data.id}/multiple`);
+        this.isLoadingResponse = false;
+        this.router.navigateByUrl(`portal/offer/${this.offer.id}/counter-offers/${data.id}/${CounterOfferType[type]}`);
       });
   }
 
-  deny() {
+  denyOffer() {
+    this.isLoadingResponse = true;
+
     this.offerService.rejectOffer(this.offer.id).pipe(
       takeUntil(this.onDestroyed$)
     ).subscribe(() => {
-        this.offer.allowSign = false;
+      this.isLoadingResponse = false;
+
+      this.offer.allowSign = false;
+      this.offer.canCreateCounter = false;
+      this.offer.canCreateMultipleCounter = false;
+      this.snackbar.open(`Offer is denied.`);
+
+      this.loadOffer(this.offer.id);
+    });
+  }
+
+  denyDocument(doc: GeneratedDocument) {
+    const config: MatSnackBarConfig = {
+      duration: 0,
+      data: {
+        message: 'Are you sure want to deny?',
+        dismiss: 'Cancel',
+        action: 'Yes'
+      },
+    };
+    const snackBarRef = this.snackbar.openFromComponent(ConfirmationBarComponent, config);
+
+    snackBarRef.onAction().pipe(
+      takeUntil(this.onDestroyed$),
+      switchMap(() => {
+        if (doc.documentType === 'purchase_agreement') {
+          this.denyOffer();
+        } else {
+          return this.counterOfferService.rejectCounterOffer(doc.id);
+        }
+      }),
+    ).subscribe(() => {
+      if (doc.documentType !== 'purchase_agreement') {
+        doc.allowSign = false;
         this.snackbar.open(`Denied.`);
-      });
+      }
+    });
   }
 
   downloadAndToggleState(file: string | Document) {
@@ -190,7 +198,11 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   triggerDownloadFile(doc: GeneratedDocument | Document) {
-    this.transactionService.documentOpenedEvent(doc.id).subscribe();
+    if (!(Object.values(UploadDocumentType).includes(doc.documentType))) {
+      this.transactionService.documentOpenedEvent(doc.id).pipe(
+        takeUntil(this.onDestroyed$)
+      ).subscribe();
+    }
 
     let {file, title} = doc;
 
@@ -237,22 +249,12 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     this.onDestroyed$.complete();
   }
 
-  private filterDocumentList(documents): void {
-    /**
-     * contract status = STARTED
-     * if all buyers signed, contract status = DELIVERED
-     * when contract status is DELIVERED , sellers are allowed to sign.
-     * (in case are more than one seller and if not all sellers signed , contract status = ACCEPTED.
-     * after all sellers signed, contract status = COMPLETED
-     */
-
-    const completedDocsStatuses = [DocumentStatus.Completed];
-
-    // this.pendingDocuments = of(documents).pipe(
-    //   map((docs) => docs.filter(doc => !completedDocsStatuses.includes(doc.status)))
-    // );
-    // this.completedDocuments = of(documents).pipe(
-    //   map((docs) => docs.filter(doc => completedDocsStatuses.includes(doc.status)))
-    // );
+  private loadOffer(id: number) {
+    this.offerService.loadOne(id)
+      .pipe(takeUntil(this.onDestroyed$))
+      .subscribe((offer: Offer) => {
+        this.offer = offer;
+        this.setUsers(offer);
+      });
   }
 }

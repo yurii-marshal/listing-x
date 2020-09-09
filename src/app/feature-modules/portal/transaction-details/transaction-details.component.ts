@@ -4,18 +4,18 @@ import { TransactionService } from '../services/transaction.service';
 import { Transaction, TransactionStatus } from '../../../core-modules/models/transaction';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
-import { flatMap, map, takeUntil } from 'rxjs/operators';
+import { flatMap, takeUntil, tap } from 'rxjs/operators';
 import { AddendumData, Document, GeneratedDocument } from '../../../core-modules/models/document';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
-import { Observable, of, Subject } from 'rxjs';
-import { DocumentStatus } from '../../../core-modules/enums/document-status';
+import { Subject } from 'rxjs';
 import { Offer, Person } from '../../../core-modules/models/offer';
-import { GeneratedDocumentType } from '../../../core-modules/enums/upload-document-type';
+import { GeneratedDocumentType, UploadDocumentType } from '../../../core-modules/enums/upload-document-type';
 import { MatDialog } from '@angular/material/dialog';
 import { SpqDialogComponent } from '../dialogs/spq-dialog/spq-dialog.component';
 import { AddendumDialogComponent } from '../dialogs/addendum-dialog/addendum-dialog.component';
 import { CalendarEvent } from '../../../core-modules/models/calendar-event';
 import { OfferService } from 'src/app/feature-modules/portal/services/offer.service';
+import { DocumentStatus } from 'src/app/core-modules/enums/document-status';
 
 @Component({
   selector: 'app-transaction-details',
@@ -34,10 +34,6 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
 
   isAgent: boolean = false;
   isSeller: boolean = false;
-
-  pendingDocuments: Observable<GeneratedDocument[]>;
-  completedDocuments: Observable<GeneratedDocument[]>;
-  purchaseAgreement: Observable<GeneratedDocument[]>;
 
   transactionsFlow: boolean;
 
@@ -76,7 +72,8 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
       flatMap(() => {
         const transactionId: number = Number(this.route.snapshot.params.id);
         return this.transactionService.loadOne(transactionId);
-      })
+      }),
+      tap(transaction => this.transactionService.notifyAboutSpqUpdated$.next(transaction))
     ).subscribe((transaction) => this.transactionLoaded(transaction));
   }
 
@@ -90,17 +87,18 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
       createdAt: transaction.createdAt,
       lastLogs: transaction.lastLogs,
       transactionDocs: transaction.documents,
-      status: transaction.status
+      status: transaction.status,
+      purchaseAgreements: transaction.purchaseAgreements,
+      completedDocuments: transaction.completedDocuments,
+      pendingDocuments: transaction.pendingDocuments
     };
 
     const {agentBuyers, agentSellers, sellers} = transaction.offer;
     this.isAgent = [...agentSellers, ...agentBuyers].some(({email}) => email === this.authService.currentUser.email);
     this.isSeller = [...agentSellers, ...sellers].some(({email}) => email === this.authService.currentUser.email);
 
-    const residentialAgreement = transaction.documents.find(doc => doc.documentType === GeneratedDocumentType.Contract);
+    const residentialAgreement = transaction.purchaseAgreements.find(doc => doc.documentType === GeneratedDocumentType.Contract);
     this.isResidentialAgreementCompleted = residentialAgreement && residentialAgreement.status === DocumentStatus.Completed;
-
-    this.filterDocumentList(transaction.documents);
   }
 
   offerLoaded(offer: Offer): void {
@@ -111,8 +109,6 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
 
     // const residentialAgreement = Array(offer.documents).find(doc => doc.documentType === GeneratedDocumentType.Contract);
     // this.isResidentialAgreementCompleted = residentialAgreement && residentialAgreement.status === DocumentStatus.Completed;
-
-    this.filterDocumentList(offer.documents);
   }
 
   onDelete() {
@@ -188,7 +184,11 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
   }
 
   triggerDownloadFile(doc: GeneratedDocument | Document) {
-    this.transactionService.documentOpenedEvent(doc.id).subscribe();
+    if (!(Object.values(UploadDocumentType).includes(doc.documentType))) {
+      this.transactionService.documentOpenedEvent(doc.id).pipe(
+        takeUntil(this.onDestroyed$)
+      ).subscribe();
+    }
 
     let {file, title} = doc;
 
@@ -208,35 +208,27 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
     trigger.click();
   }
 
-  private filterDocumentList(documents): void {
-    /**
-     * contract status = STARTED
-     * if all buyers signed, contract status = DELIVERED
-     * when contract status is DELIVERED , sellers are allowed to sign.
-     * (in case are more than one seller and if not all sellers signed , contract status = ACCEPTED.
-     * after all sellers signed, contract status = COMPLETED
-     */
-
-    const completedDocsStatuses = [DocumentStatus.Completed];
-
-    // this.pendingDocuments = of(documents).pipe(
-    //   map((docs) => docs.filter(doc => !completedDocsStatuses.includes(doc.status)))
-    // );
-    // this.completedDocuments = of(documents).pipe(
-    //   map((docs) => docs.filter(doc => completedDocsStatuses.includes(doc.status)))
-    // );
-    // this.purchaseAgreement = of(documents).pipe(
-    //   map((docs) => docs.filter(doc => completedDocsStatuses.includes(doc.status)))
-    // );
+  openPendingDocument(doc: GeneratedDocument) {
+    switch (doc.documentType) {
+      case 'addendum':
+        this.openAddendumDialog(doc);
+        break;
+      case 'spq':
+        this.openSPQDialog(doc);
+        break;
+      default:
+        return;
+    }
   }
 
-  openSPQDialog(doc: GeneratedDocument, signAfterFill: boolean = false): void {
+  openSPQDialog(doc: GeneratedDocument): void {
     this.dialog.open(SpqDialogComponent, {
       width: '600px',
       data: {
         ...doc.documentData,
         docId: doc.id,
-        signAfterFill
+        allowEdit: doc.allowEdit,
+        allowSign: doc.allowSign,
       }
     });
   }
@@ -248,7 +240,9 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
         transactionId: this.offer && this.offer.transaction,
         offerId: this.offer && this.offer.id,
         docData: doc ? doc.documentData as AddendumData : null,
-        docId: doc ? doc.id : null
+        docId: doc ? doc.id : null,
+        allowEdit: doc ? doc.allowEdit : true,
+        allowSign: doc ? doc.allowSign : null,
       }
     });
   }

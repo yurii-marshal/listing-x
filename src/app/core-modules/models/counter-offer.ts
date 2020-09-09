@@ -1,12 +1,16 @@
 import { Offer, Person } from './offer';
+import { CounterOfferType } from './counter-offer-type';
 
 export interface CounterOffer extends Offer {
   round: number;
-  offerType: 'counter_offer' | 'multiple_counter_offer' | 'buyer_counter_offer';
+  offerType: CounterOfferType;
   catcher: number;
   pitcher: number;
   catchers: Person[];
   pitchers: Person[];
-  catcher_customers: Person[];
-  pitcher_customers: Person[];
+  catcherCustomers: Person[];
+  pitcherCustomers: Person[];
+
+  canFinalSign: boolean;
+  needFinalApprove: boolean;
 }

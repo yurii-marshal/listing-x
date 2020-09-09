@@ -8,10 +8,12 @@
           Back
         </div>
         <div class="u-flex u-flex-align-items--center u-flex-justify--space-between">
-          <div class="header">{{ offer.streetName }}, {{ offer.city }}, {{ offer.state }} {{ offer.zip }}</div>
+          <div class="header" title="{{ offer.streetName }}, {{ offer.city }}, {{ offer.state }} {{ offer.zip }}">
+            {{ offer.streetName }}, {{ offer.city }}, {{ offer.state }} {{ offer.zip }}
+          </div>
           <div>
             <span class="status-label">STATUS: </span>
-            <span [ngClass]="getClassName(offer.status)" class="status">&nbsp;
+            <span [ngClass]="offerService.getClassName(offer.status)" class="status">&nbsp;
               {{ statusLabels[offer.status] }}
             </span>
           </div>
@@ -21,7 +23,7 @@
           <span
             *ngIf="offer.remainingDaysCloseEscrow">({{ offer.remainingDaysCloseEscrow }} days until  close escrow)</span>
         </div>
-        <div class="control-bar" *ngIf="isAgent">
+        <div class="control-bar" *ngIf="isAgent && !transactionsFlow">
           <div class="u-flex-1">
             <button *ngIf="offer.allowEdit" mat-icon-button color="accent" routerLink="/portal/offer/{{ offer.id }}">
               <mat-icon fontSet="fa" fontIcon="fa-edit" class="icon"></mat-icon>
@@ -56,15 +58,40 @@
     <div class="u-flex u-flex-justify--center">
       <div class="column-layout">
         <div class="row-layout"><label class="header">Offer information</label></div>
-        <div class="row-layout" *ngFor="let item of offer.agentBuyers; let i = index"><label>Buyer's Agent #{{ i + 1
-          }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span></div>
-        <div class="row-layout" *ngFor="let item of offer.agentSellers; let i = index"><label>Listing Agent #{{ i + 1
-          }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span></div>
-        <div class="row-layout" *ngFor="let item of offer.buyers; let i = index"><label>buyer #{{ i + 1 }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span>
+
+        <div class="row-layout" *ngFor="let item of offer.buyers; let i = index">
+          <label>buyer #{{ i + 1 }}</label>
+          <span title="{{ item.firstName }} {{ item.lastName }} | {{ item.email }}">
+            <b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}
+          </span>
         </div>
-        <div class="row-layout" *ngFor="let item of offer.sellers; let i = index"><label>seller #{{ i + 1
-          }}</label><span><b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}</span></div>
-        <div class="row-layout"><label>address</label><span>{{ offer.streetName }}, {{ offer.city }}, {{ offer.state }} {{ offer.zip }}</span>
+
+        <div class="row-layout" *ngFor="let item of offer.agentBuyers; let i = index">
+          <label>Buyer's Agent #{{ i + 1 }}</label>
+          <span title="{{ item.firstName }} {{ item.lastName }} | {{ item.email }}">
+            <b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}
+          </span>
+        </div>
+
+        <div class="row-layout" *ngFor="let item of offer.sellers; let i = index">
+          <label>seller #{{ i + 1 }}</label>
+          <span title="{{ item.firstName }} {{ item.lastName }} | {{ item.email }}">
+            <b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}
+          </span>
+        </div>
+
+        <div class="row-layout" *ngFor="let item of offer.agentSellers; let i = index">
+          <label>Listing Agent #{{ i + 1 }}</label>
+          <span title="{{ item.firstName }} {{ item.lastName }} | {{ item.email }}">
+            <b>{{ item.firstName }} {{ item.lastName }}</b> | {{ item.email }}
+          </span>
+        </div>
+
+        <div class="row-layout">
+          <label>address</label>
+          <span title="{{ offer.streetName }}, {{ offer.city }}, {{ offer.state }} {{ offer.zip }}">
+            {{ offer.streetName }}, {{ offer.city }}, {{ offer.state }} {{ offer.zip }}
+          </span>
         </div>
         <div class="row-layout"><label>offer info</label>
           <span>${{ offer.price | number }}
@@ -75,10 +102,10 @@
       </div>
       <div class="column-layout">
         <div class="row-layout"><label class="header">last activity</label></div>
-        <div *ngIf="transactionsFlow" class="scroll-content">
+        <div class="scroll-content">
           <div class="row-layout" *ngFor="let item of offer.lastLogs">
             <label>{{ item.createdAt | date: 'short' }}</label>
-            <span>{{ item.title }}</span>
+            <span title="{{ item.title }}">{{ item.title }}</span>
           </div>
         </div>
         <div *ngIf="!transactionsFlow" class="row-layout" style="position: relative;"><label class="header">offer</label>
@@ -96,42 +123,33 @@
           <button class="deny-btn"
                   mat-flat-button
                   *ngIf="offer.userRole === 'agent_seller'"
-                  [disabled]="!offer.allowSign || offer.status === 'denied' || offer.isSigned"
-                  (click)="deny()"
+                  [disabled]="!offer.allowSign || offer.status === 'denied' || offer.isSigned || isLoadingResponse"
+                  (click)="denyOffer()"
                   color="accent">
             DENY
           </button>
 
           <button class="sign-btn"
                   mat-flat-button
-                  [disabled]="!offer.allowSign || offer.status === 'denied'"
-                  (click)="goToESign()"
+                  [disabled]="offer.status === 'denied'"
+                  (click)="openSignOffer()"
                   color="primary">
-            {{offer.isSigned ? 'OPEN' : 'SIGN'}}
+            {{offer.allowSign && !offer.isSigned ? 'SIGN' : 'OPEN'}}
           </button>
 
           <button class="counter-offer-btn"
                   *ngIf="offer.userRole === 'agent_seller'"
+                  [disabled]="!offer.canCreateCounter || isLoadingResponse"
                   mat-flat-button
-                  [disabled]="!offer.isSigned || offer.status === 'denied'"
                   (click)="createCounterOffer('counter_offer')"
                   color="primary">
             COUNTER OFFER
           </button>
 
-          <!--<button class="counter-offer-btn"-->
-                  <!--*ngIf="offer.userRole === 'agent_buyer'"-->
-                  <!--mat-flat-button-->
-                  <!--[disabled]="!offer.isSigned || offer.status === 'denied'"-->
-                  <!--(click)="createCounterOffer('buyer_counter_offer')"-->
-                  <!--color="primary">-->
-            <!--COUNTER OFFER-->
-          <!--</button>-->
-
           <button class="counter-offer-btn"
                   *ngIf="offer.userRole === 'agent_seller'"
+                  [disabled]="!offer.canCreateMultipleCounter || isLoadingResponse"
                   mat-flat-button
-                  [disabled]="!offer.isSigned || offer.status === 'denied'"
                   (click)="createCounterOffer('multiple_counter_offer')"
                   color="primary">
             MCO
@@ -145,9 +163,31 @@
       <div class="column-layout fullwidth">
         <div *ngIf="transactionsFlow" class="row-layout new-section"><label class="header">Purchase agreements</label></div>
 
+        <ng-container *ngIf="transactionsFlow">
+          <div class="row-layout doc-item" *ngFor="let doc of offer.purchaseAgreements"><label></label>
+            <div class="doc-title">
+              <img src="assets/images/icons/{{ doc.extension }}.svg"
+                   [title]="doc.title" height="20">
+              {{ doc.title }}.{{ doc.extension }}
+            </div>
+            <div class="doc-events">
+              <label>{{ doc.lastEvent?.createdAt | date: 'short' }}</label>
+              <span>{{ doc.lastEvent?.title }}</span>
+            </div>
+            <div class="doc-actions">Actions:
+              <span class="action-icon" (click)="triggerDownloadFile(doc)">
+              <ng-container *ngTemplateOutlet="viewIcon"></ng-container>
+            </span>
+              <span class="action-icon" (click)="triggerDownloadFile(doc)">
+              <ng-container *ngTemplateOutlet="downloadIcon"></ng-container>
+            </span>
+            </div>
+          </div>
+        </ng-container>
+
         <div class="row-layout new-section"><label class="header">Completed documents</label></div>
 
-        <div class="row-layout doc-item" *ngFor="let doc of (completedDocuments | async); let i = index;">
+        <div class="row-layout doc-item" *ngFor="let doc of offer.completedDocuments; let i = index;">
           <label>document #{{i + 1}}</label>
           <div class="doc-title"><img src="assets/images/icons/{{ doc.extension }}.svg" [title]="doc.title" height="20">
             {{doc.title}}.{{doc.extension}}
@@ -156,22 +196,22 @@
             <label>{{ doc.lastEvent?.createdAt | date: 'short' }}</label>
             <span>{{ doc.lastEvent?.title }}</span>
           </div>
-          <div class="doc-status">Status: <strong [ngClass]="doc.status">{{doc.status}}</strong></div>
           <div class="doc-actions">Actions:
 
             <span class="action-icon" (click)="triggerDownloadFile(doc)">
-              <ng-container *ngTemplateOutlet="viewIcon"></ng-container>
-            </span>
+            <ng-container *ngTemplateOutlet="viewIcon"></ng-container>
+          </span>
             <span class="action-icon" (click)="triggerDownloadFile(doc)">
-              <ng-container *ngTemplateOutlet="downloadIcon"></ng-container>
-            </span>
+            <ng-container *ngTemplateOutlet="downloadIcon"></ng-container>
+          </span>
           </div>
         </div>
+
 
         <div class="row-layout new-section">
           <label class="header">Documents pending approval</label>
 
-          <ng-container *ngIf="isAgent">
+          <ng-container *ngIf="isAgent && transactionsFlow">
             <button
               mat-flat-button
               type="button"
@@ -187,25 +227,26 @@
           </ng-container>
         </div>
 
-        <div class="row-layout doc-item" *ngFor="let doc of (pendingDocuments | async); let i = index;">
+        <div class="row-layout doc-item" *ngFor="let doc of offer.pendingDocuments; let i = index;">
           <label>document #{{i + 1}}</label>
-          <div class="doc-title"><img src="assets/images/icons/{{ doc.extension }}.svg" [title]="doc.title" height="20">
+          <div class="doc-title">
+            <img src="assets/images/icons/{{ doc.extension }}.svg" [title]="doc.title" height="20">
             {{doc.title}}.{{doc.extension}}
           </div>
           <div class="doc-events">
             <label>{{ doc.lastEvent?.createdAt | date: 'short' }}</label>
-            <span>{{ doc.lastEvent?.title }}</span>
+            <span title="{{ doc.lastEvent?.title }}">{{ doc.lastEvent?.title }}</span>
           </div>
-          <div class="doc-status">Status: <strong [ngClass]="doc.status">{{doc.status}}</strong></div>
+          <div class="doc-status">Status: <strong [ngClass]="offerService.getClassName(doc.status)" class="status">{{doc.status}}</strong></div>
           <div class="doc-actions">Actions:
             <button
               class="button-xs"
               type="button"
               mat-flat-button
               color="primary"
-              (click)="goToESign(doc)"
-              [disabled]="!doc.allowSign"
-            >SIGN
+              (click)="openPendingDocument(doc)"
+            >
+              {{doc.allowSign || doc.canFinalSign ? 'SIGN' : 'OPEN'}}
             </button>
             <svg class="menu-trigger" [matMenuTriggerFor]="menu" width="22" height="6" viewBox="0 0 22 6" fill="none"
                  xmlns="http://www.w3.org/2000/svg">
@@ -220,11 +261,11 @@
                 fill="#419BDF"/>
             </svg>
 
-            <mat-menu #menu="matMenu" xPosition="before">
-              <button *ngIf="doc.documentType === 'contract' && isAgent && !isSeller"
+            <mat-menu #menu="matMenu" xPosition="before" backdropClass="mat-menu-overlay">
+              <button *ngIf="doc.documentType === 'purchase_agreement' && isAgent && !isSeller"
                       mat-menu-item
                       [disabled]="!doc.allowEdit"
-                      routerLink="/portal/offer/{{ offer.id }}"
+                      routerLink="/portal/purchase-agreements/{{ offer.id }}/step-two"
               >Edit
               </button>
 
@@ -243,46 +284,51 @@
               </button>
               <button mat-menu-item (click)="triggerDownloadFile(doc)">View</button>
               <button mat-menu-item (click)="triggerDownloadFile(doc)">Download</button>
-              <button mat-menu-item disabled>Deny</button>
+              <button mat-menu-item disabled (click)="denyDocument(doc)">Deny</button>
+              <button mat-menu-item disabled class="delete-btn">Delete</button>
             </mat-menu>
-          </div>
-        </div>
-
-        <div class="row-layout"><label>Counter offers</label>
-          <div class="doc-preview">
-            <img *ngFor="let counterOffer of counterOffers"
-                 src="assets/images/icons/pdf.svg"
-                 [title]="counterOffer.id"
-                 (click)="openCounterOffer(counterOffer.id)"
-                 height="20">
           </div>
         </div>
 
         <div class="row-layout new-section"><label class="header">Attached docs</label></div>
         <div class="row-layout"><label>Add Pre-approval Letter</label>
-          <div class="doc-preview">
-            <img *ngFor="let img of offer.documents?.preApproval"
-                 src="assets/images/icons/{{ img.extension }}.svg"
-                 [title]="img.title"
-                 (click)="triggerDownloadFile(img)"
-                 height="20">
+          <div class="doc-preview u-flex u-flex-align-items--center">
+            <ng-container *ngFor="let img of offer.documents?.preApproval; let i = index;">
+              <img *ngIf="i < 5"
+                   src="assets/images/icons/{{ img.extension }}.svg"
+                   [title]="img.title"
+                   (click)="triggerDownloadFile(img)"
+                   height="20">
+            </ng-container>
+            <div class="more-label" *ngIf="offer?.documents?.preApproval.length > 5">(+{{offer?.documents?.preApproval.length - 5}} more)</div>
           </div>
         </div>
         <div class="row-layout"><label>Add Proof of Funds</label>
           <div class="doc-preview">
-            <div class="doc-preview"><img *ngFor="let img of offer.documents?.proofOfFunds"
-                                          src="assets/images/icons/{{ img.extension }}.svg"
-                                          (click)="triggerDownloadFile(img)"
-                                          [title]="img.title" height="20"></div>
+            <div class="doc-preview u-flex u-flex-align-items--center">
+              <ng-container *ngFor="let img of offer.documents?.proofOfFunds; let i = index;">
+                <img *ngIf="i < 5"
+                     src="assets/images/icons/{{ img.extension }}.svg"
+                     (click)="triggerDownloadFile(img)"
+                     [title]="img.title"
+                     height="20">
+              </ng-container>
+              <div class="more-label" *ngIf="offer?.documents?.proofOfFunds.length > 5">(+{{offer?.documents?.proofOfFunds.length - 5}} more)</div>
+            </div>
           </div>
         </div>
         <div class="row-layout"><label>Add Cover Letter</label>
           <div class="doc-preview">
-            <div class="doc-preview"><img *ngFor="let img of offer.documents?.coverLetter"
-                                          src="assets/images/icons/{{ img.extension }}.svg"
-                                          (click)="triggerDownloadFile(img)"
-                                          [title]="img.title"
-                                          height="20"></div>
+            <div class="doc-preview u-flex u-flex-align-items--center">
+              <ng-container *ngFor="let img of offer.documents?.coverLetter; let i = index;">
+                <img *ngIf="i < 5"
+                     src="assets/images/icons/{{ img.extension }}.svg"
+                     (click)="triggerDownloadFile(img)"
+                     [title]="img.title"
+                     height="20">
+              </ng-container>
+              <div class="more-label" *ngIf="offer?.documents?.coverLetter.length > 5">(+{{offer?.documents?.coverLetter.length - 5}} more)</div>
+            </div>
           </div>
         </div>
       </div>

@@ -1,0 +1,26 @@
+<div class="controls u-flex u-flex-justify--space-between" *ngIf="visible">
+  <button class="sign-btn"
+          mat-flat-button
+          [disabled]="counterOffer?.isSigned && counterOffer?.status !== 'sent' || isLoadingResponse"
+          (click)="rejectCO()"
+          color="primary">
+    DENY
+  </button>
+
+  <button class="sign-btn"
+          mat-flat-button
+          [disabled]="counterOffer?.isSigned || isLoadingResponse"
+          (click)="createCCO()"
+          color="primary">
+    {{ isAgentSeller ? 'CO' : 'COUNTER OFFER'}}
+  </button>
+
+  <button class="sign-btn"
+          mat-flat-button
+          *ngIf="isAgentSeller"
+          [disabled]="counterOffer?.isSigned || isLoadingResponse"
+          (click)="createCCO('multiple_counter_offer')"
+          color="primary">
+    MCO
+  </button>
+</div>

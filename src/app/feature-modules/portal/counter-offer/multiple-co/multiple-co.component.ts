@@ -4,16 +4,21 @@ import { BaseCounterOfferAbstract } from '../base-counter-offer.abstract';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OfferService } from '../../services/offer.service';
 import { CounterOfferService } from '../../services/counter-offer.service';
-import { MatSnackBar } from '@angular/material';
+import { DateAdapter, MAT_DATE_FORMATS, MatSnackBar } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { CounterOffer } from '../../../../core-modules/models/counter-offer';
 import { AuthService } from '../../../../core-modules/core-services/auth.service';
+import { PICK_FORMATS, PickDateAdapter } from '../../../../core-modules/adapters/date-adapter';
 
 @Component({
   selector: 'app-multiple-co',
   templateUrl: './multiple-co.component.html',
   styleUrls: ['./../counter-offer.scss', './multiple-co.component.scss'],
-  providers: [DatePipe],
+  providers: [
+    DatePipe,
+    {provide: DateAdapter, useClass: PickDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS},
+  ]
 })
 export class MultipleCOComponent extends BaseCounterOfferAbstract<CounterOffer> implements OnInit {
 
@@ -50,7 +55,8 @@ export class MultipleCOComponent extends BaseCounterOfferAbstract<CounterOffer> 
       check_attached_addendum_third: [{value: null, disabled: true}, []],
       text_addendum_number_third: [{value: null, disabled: true}, []],
       time_counter_offer_expiration_time: [{value: null, disabled: true}, []],
-      radio_expiration_am_pm: [{value: 'am', disabled: true}, []],
+      check_expiration_am: [{value: null, disabled: true}, []],
+      check_expiration_pm: [{value: null, disabled: true}, []],
       date_expiration_date: [{value: null, disabled: true}, []],
       text_seller_alternative_name: [{value: null, disabled: true}, []],
       text_seller_name_first: this.getSignFieldAllowedFor('text_seller_name_first', 'pitcherCustomers', 0),
@@ -58,7 +64,8 @@ export class MultipleCOComponent extends BaseCounterOfferAbstract<CounterOffer> 
       text_seller_name_second: this.getSignFieldAllowedFor('text_seller_name_second', 'pitcherCustomers', 1),
       date_seller_signature_second: [{value: null, disabled: true}, []],
       time_deposit_revoke_time: [{value: null, disabled: true}, []],
-      radio_deposit_revoke_am_pm: [{value: 'am', disabled: true}, []],
+      check_deposit_revoke_am: [{value: null, disabled: true}, []],
+      check_deposit_revoke_pm: [{value: null, disabled: true}, []],
       date_deposit_revoke_expiration_date: [{value: null, disabled: true}, []],
       text_buyer_alternative_name: [{value: null, disabled: true}, []],
       check_receive_copy: [{value: null, disabled: true}, []],
@@ -71,11 +78,11 @@ export class MultipleCOComponent extends BaseCounterOfferAbstract<CounterOffer> 
       date_buyer_signature_second: [{value: null, disabled: true}, []],
       time_buyer_signature_time_second: [{value: null, disabled: true}, []],
       radio_buyer_signature_second: [{value: 'am', disabled: true}, []],
-      text_seller_signature_name_first: this.getSignFieldAllowedFor('text_seller_signature_name_first', 'pitcherCustomers', 0),
+      text_seller_signature_name_first: this.getFinalSignFieldMCO('text_seller_signature_name_first', 'pitcherCustomers', 0),
       date_seller_first_signature: [{value: null, disabled: true}, []],
       time_seller_signature_time_first: [{value: null, disabled: true}, []],
       radio_seller_signature_first: [{value: 'am', disabled: true}, []],
-      text_seller_signature_name_second: this.getSignFieldAllowedFor('text_seller_signature_name_second', 'pitcherCustomers', 1),
+      text_seller_signature_name_second: this.getFinalSignFieldMCO('text_seller_signature_name_second', 'pitcherCustomers', 1),
       date_seller_second_signature: [{value: null, disabled: true}, []],
       time_seller_signature_time_second: [{value: null, disabled: true}, []],
       radio_seller_signature_second: [{value: 'am', disabled: true}, []],
@@ -83,7 +90,8 @@ export class MultipleCOComponent extends BaseCounterOfferAbstract<CounterOffer> 
       text_seller_initials_second: this.getSignFieldAllowedFor('text_seller_initials_second', 'pitcherCustomers', 1),
       date_copy_received_date: [{value: null, disabled: true}, []],
       time_copy_received_time: [{value: null, disabled: true}, []],
-      radio_copy_received_am_pm: [{value: 'am', disabled: true}, []],
+      check_copy_received_am: [{value: null, disabled: true}, []],
+      check_copy_received_pm: [{value: null, disabled: true}, []],
     }, {updateOn: 'blur'});
   }
 }

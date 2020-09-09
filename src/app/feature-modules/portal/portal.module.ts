@@ -6,8 +6,10 @@ import {
   MatButtonModule,
   MatCheckboxModule,
   MatDatepickerModule,
-  MatIconModule, MatNativeDateModule,
+  MatIconModule,
+  MatNativeDateModule,
   MatSelectModule,
+  MatSlideToggleModule,
   MatTableModule,
   MatTabsModule
 } from '@angular/material';
@@ -48,6 +50,7 @@ const MatModules = [
   MatRadioModule,
   MatDatepickerModule,
   MatNativeDateModule,
+  MatSlideToggleModule,
 ];
 
 @NgModule({

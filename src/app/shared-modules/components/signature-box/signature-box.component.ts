@@ -3,7 +3,6 @@ import { AuthService } from '../../../core-modules/core-services/auth.service';
 import { User } from '../../../feature-modules/auth/models';
 import { ActivatedRoute } from '@angular/router';
 import { Person } from '../../../core-modules/models/offer';
-import { Signature } from '../../../core-modules/models/document';
 
 export enum SignMode {
   Sign = 1,
@@ -21,7 +20,7 @@ export class SignatureBoxComponent implements OnInit {
   user: Person;
 
   @Input()
-  signature: Signature;
+  signature: any;
 
   @Input()
   signWithInitials: boolean = true;
@@ -60,8 +59,10 @@ export class SignatureBoxComponent implements OnInit {
     // Toggle
     if (this.mode === SignMode.Sign) {
       this.mode = SignMode.UnSign;
+      this.signature.signature = `${this.authService.currentUser.firstName.charAt(0)}.${this.authService.currentUser.lastName.charAt(0)}.`;
     } else {
       this.mode = SignMode.Sign;
+      this.signature.signature = '';
     }
   }
 

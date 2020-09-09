@@ -1,22 +1,25 @@
-import { AfterViewInit, Component, Inject } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnDestroy } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {SpqQuestion} from '../../../../core-modules/models/spq-question';
-import {Observable, of} from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TransactionService} from '../../services/transaction.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import * as _ from 'lodash';
+import { takeUntil, map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-spqdialog',
   templateUrl: './spq-dialog.component.html',
   styleUrls: ['./spq-dialog.component.scss']
 })
-export class SpqDialogComponent implements AfterViewInit {
+export class SpqDialogComponent implements AfterViewInit, OnDestroy {
   questionsStream: Observable<SpqQuestion[]>;
   form: FormGroup;
-  isConfirmMode: boolean = false;
+  isConfirmMode: boolean = !this.data.allowEdit;
+
+  private onDestroyed$: Subject<void> = new Subject<void>();
 
   get explanationControl() {
     return this.form.get('explanation');
@@ -26,12 +29,14 @@ export class SpqDialogComponent implements AfterViewInit {
     return this.form.get('questions') as FormArray;
   }
 
-  constructor(@Inject(MAT_DIALOG_DATA) private data: {questions: SpqQuestion[], docId: number, explanation: string, signAfterFill: true},
+  constructor(@Inject(MAT_DIALOG_DATA)
+              public data: {questions: SpqQuestion[], docId: number, explanation: string, allowEdit: boolean, allowSign: boolean},
               public dialogRef: MatDialogRef<SpqDialogComponent>,
               private fb: FormBuilder,
               private transactionService: TransactionService,
               private snackbar: MatSnackBar,
               private router: Router) {
+
     this.questionsStream = of(data.questions);
 
     const initialAnswers: FormGroup[] = data.questions.map(i => this.fb.group({
@@ -46,7 +51,9 @@ export class SpqDialogComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.answers.valueChanges.subscribe((answers) => {
+    this.answers.valueChanges.pipe(
+      takeUntil(this.onDestroyed$)
+    ).subscribe((answers) => {
       const hasYesAnswer = answers.some((a) => a.answer);
       const validators = [Validators.maxLength(2000)];
       if (hasYesAnswer) {
@@ -71,14 +78,25 @@ export class SpqDialogComponent implements AfterViewInit {
     }
 
     this.transactionService.updateSpq(this.data.docId, this.form.value).pipe(
-    ).subscribe((data) => this.isConfirmMode = true);
+      takeUntil(this.onDestroyed$),
+      switchMap(() => this.transactionService.notifyAboutSpqUpdated$),
+      map(data => data.pendingDocuments.find(doc => doc.id === this.data.docId)),
+    ).subscribe(doc => {
+      this.data.allowSign = doc && doc.allowSign;
+      this.isConfirmMode = true;
+    });
   }
 
   finish(): void {
     this.dialogRef.close();
 
-    if (this.data.signAfterFill) {
+    if (this.data.allowSign) {
       this.router.navigate(['/e-sign/spq', this.data.docId]);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.onDestroyed$.next();
+    this.onDestroyed$.complete();
   }
 }

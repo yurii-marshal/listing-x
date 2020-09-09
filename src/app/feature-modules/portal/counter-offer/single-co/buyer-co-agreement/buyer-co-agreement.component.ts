@@ -4,16 +4,21 @@ import { BaseCounterOfferAbstract } from '../../base-counter-offer.abstract';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OfferService } from '../../../services/offer.service';
 import { CounterOfferService } from '../../../services/counter-offer.service';
-import { MatSnackBar } from '@angular/material';
+import { DateAdapter, MAT_DATE_FORMATS, MatSnackBar } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { CounterOffer } from '../../../../../core-modules/models/counter-offer';
 import { AuthService } from '../../../../../core-modules/core-services/auth.service';
+import { PICK_FORMATS, PickDateAdapter } from '../../../../../core-modules/adapters/date-adapter';
 
 @Component({
   selector: 'app-buyer-co-agreement',
   templateUrl: './buyer-co-agreement.component.html',
   styleUrls: ['./../../counter-offer.scss', './buyer-co-agreement.component.scss'],
-  providers: [DatePipe],
+  providers: [
+    DatePipe,
+    {provide: DateAdapter, useClass: PickDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS},
+  ]
 })
 export class BuyerCOAgreementComponent extends BaseCounterOfferAbstract<CounterOffer> implements OnInit {
 
@@ -35,7 +40,9 @@ export class BuyerCOAgreementComponent extends BaseCounterOfferAbstract<CounterO
 
     this.documentForm = this.fb.group({
       date_buyer_counter_date: [{value: null, disabled: true}, []],
-      radio_counter_offer_type: [{value: 'Counter Offer', disabled: true}, []],
+      check_counter_offer: [{value: null, disabled: true}, []],
+      check_counter_offer_multiple: [{value: null, disabled: true}, []],
+      check_counter_offer_other: [{value: null, disabled: true}, []],
       text_offer_type_other: [{value: null, disabled: true}, []],
       text_counter_offer_number: [{value: null, disabled: true}, []],
       text_multiple_counter_offer_number: [{value: null, disabled: true}, []],
@@ -51,7 +58,8 @@ export class BuyerCOAgreementComponent extends BaseCounterOfferAbstract<CounterO
       check_attached_addendum_third: [{value: null, disabled: true}, []],
       text_addendum_number_third: [{value: null, disabled: true}, []],
       time_counter_offer_expiration_time: [{value: null, disabled: true}, []],
-      radio_expiration_am_pm: [{value: 'am', disabled: true}, []],
+      check_expiration_am: [{value: null, disabled: true}, []],
+      check_expiration_pm: [{value: null, disabled: true}, []],
       date_expiration_date: [{value: null, disabled: true}, []],
       text_buyer_alternative_name: [{value: null, disabled: true}, []],
       check_buyer_withdraw: [{value: null, disabled: true}, []],
@@ -72,7 +80,8 @@ export class BuyerCOAgreementComponent extends BaseCounterOfferAbstract<CounterO
       text_buyer_initials_second: this.getSignFieldAllowedFor('text_buyer_initials_second', 'pitcherCustomers', 1),
       date_copy_received_date: [{value: null, disabled: true}, []],
       time_copy_received_time: [{value: null, disabled: true}, []],
-      radio_copy_received_am_pm: [{value: 'am', disabled: true}, []],
+      check_copy_received_am: [{value: null, disabled: true}, []],
+      check_copy_received_pm: [{value: null, disabled: true}, []],
     }, {updateOn: 'blur'});
   }
 }

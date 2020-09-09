@@ -11,6 +11,7 @@ import { CalendarEvent } from '../../../core-modules/models/calendar-event';
 @Injectable()
 export class TransactionService extends BaseDataService<Transaction> {
   transactionChanged: Subject<void> = new Subject<void>();
+  notifyAboutSpqUpdated$: Subject<any> = new Subject<any>();
 
   constructor(protected injector: Injector) {
     super(injector, ApiEndpoint.Transactions);
