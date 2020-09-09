@@ -184,7 +184,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         // # Price = 51c
         text_offer_price_digits: [{value: null, disabled: this.isDisabled}, [Validators.required]],
         // # Close of Escrow = 51d
-        check_escrow_date: [{value: null, disabled: this.isDisabled}, []],
+        check_escrow_date: [{value: true, disabled: this.isDisabled}, []],
         check_escrow_days: [{value: null, disabled: this.isDisabled}, []],
         date_escrow_date: [{value: null, disabled: this.isDisabled}, [Validators.required]],
         text_escrow_days: [{value: '', disabled: this.isDisabled}, []],
