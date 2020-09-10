@@ -21,16 +21,6 @@ export class LoginComponent implements OnInit {
               private snackBar: MatSnackBar) {
   }
 
-  private get redirectUrl(): string {
-    return this.hasOfferData
-      ? '/portal/purchase-agreements/step-one'
-      : this.route.snapshot.queryParams.redirectUrl || '/portal/purchase-agreements/all';
-  }
-
-  private get hasOfferData(): boolean {
-    return !!localStorage.getItem(LocalStorageKey.Offer);
-  }
-
   ngOnInit() {
     const isAccountActivated = !!this.route.snapshot.queryParams.activated;
 
@@ -52,7 +42,7 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(data)
       .subscribe(() => {
-        this.router.navigateByUrl(this.redirectUrl);
+        this.router.navigateByUrl(this.authService.redirectUrl(data.email));
       });
   }
 

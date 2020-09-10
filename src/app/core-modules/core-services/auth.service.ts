@@ -6,10 +6,11 @@ import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { LocalStorageKey } from '../enums/local-storage-key';
 import { Observable, of, Subject } from 'rxjs';
 import { JwtResponse } from '../interfaces/jwt-response';
-import * as _ from 'lodash';
 import { ApiEndpoint, AuthEndpoint } from '../enums/api-endpoints';
 import { ProfileService } from './profile.service';
 import { OfferService } from '../../feature-modules/portal/services/offer.service';
+import { ActivatedRoute } from '@angular/router';
+import { Offer } from '../models/offer';
 
 @Injectable({
   providedIn: 'root'
@@ -20,29 +21,11 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
+    private route: ActivatedRoute,
     private profileService: ProfileService,
     private offerService: OfferService,
   ) {
   }
-
-  /** @Deprecated */
-  private get expirationTm() {
-    const expiration = localStorage.getItem(LocalStorageKey.Expiration);
-    const expiresAt = JSON.parse(expiration);
-    return moment(expiresAt);
-  }
-
-  private get expirationTime(): moment.Moment {
-    const base64Token = localStorage.getItem(LocalStorageKey.Token);
-    if (base64Token) {
-      const [header, payload, signature] = _.split(base64Token, '.');
-      const decodedPayload = JSON.parse(atob(payload));
-      const expiresAt: number = _.get(decodedPayload, 'exp');
-      return moment.unix(expiresAt);
-    }
-    return null;
-  }
-
 
   private get jwtToken(): string {
     return localStorage.getItem(LocalStorageKey.Token);
@@ -117,6 +100,14 @@ export class AuthService {
     this.offerService.currentOffer = null;
     localStorage.removeItem(LocalStorageKey.Token);
     localStorage.removeItem(LocalStorageKey.Expiration);
+  }
+
+  redirectUrl(userEmail: string): string {
+    const offer = JSON.parse(localStorage.getItem(LocalStorageKey.Offer)) as Offer;
+
+    return !!offer && offer.agentBuyers[0].email === userEmail
+      ? '/portal/purchase-agreements/step-one'
+      : this.route.snapshot.queryParams.redirectUrl || '/portal/purchase-agreements/all';
   }
 
   private setSession(resp: JwtResponse): void {

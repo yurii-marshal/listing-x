@@ -23,7 +23,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
-              private service: AuthService,
+              private authService: AuthService,
               private snackBar: MatSnackBar) {
   }
 
@@ -47,7 +47,7 @@ export class RegisterComponent implements OnInit {
       email: this.form.getRawValue().email.toLowerCase()
     } as User;
 
-    this.service.register(user)
+    this.authService.register(user)
       .pipe(
         tap({
           error: res => {
@@ -65,7 +65,7 @@ export class RegisterComponent implements OnInit {
 
   public onResendEmail(): void {
     const user: User = this.form.value;
-    this.service.resendActivation(user.email)
+    this.authService.resendActivation(user.email)
       .subscribe(() =>
         this.snackBar.open(
           'Activation link re-sent to your email',
