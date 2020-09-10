@@ -78,7 +78,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
             'OK',
             {duration: 5000});
           this.authService.updateUser({registrationCompleted: true});
-          this.router.navigateByUrl('/portal/purchase-agreements/all');
+          this.router.navigateByUrl(this.authService.redirectUrl(this.user.email));
         });
     }
   }
