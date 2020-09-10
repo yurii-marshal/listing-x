@@ -23,35 +23,35 @@
           <span
             *ngIf="offer.remainingDaysCloseEscrow">({{ offer.remainingDaysCloseEscrow }} days until  close escrow)</span>
         </div>
-        <div class="control-bar" *ngIf="isAgent && !transactionsFlow">
-          <div class="u-flex-1">
-            <button *ngIf="offer.allowEdit" mat-icon-button color="accent" routerLink="/portal/offer/{{ offer.id }}">
-              <mat-icon fontSet="fa" fontIcon="fa-edit" class="icon"></mat-icon>
-            </button>
-            <button *ngIf="offer.allowDelete" mat-icon-button color="accent" (click)="onDelete()">
-              <mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>
-            </button>
-          </div>
+        <!--<div class="control-bar" *ngIf="isAgent && !transactionsFlow">-->
+          <!--<div class="u-flex-1">-->
+            <!--<button *ngIf="offer.allowEdit" mat-icon-button color="accent" routerLink="/portal/offer/{{ offer.id }}">-->
+              <!--<mat-icon fontSet="fa" fontIcon="fa-edit" class="icon"></mat-icon>-->
+            <!--</button>-->
+            <!--<button *ngIf="offer.allowDelete" mat-icon-button color="accent" (click)="onDelete()">-->
+              <!--<mat-icon fontSet="fa" fontIcon="fa-trash-alt" class="icon"></mat-icon>-->
+            <!--</button>-->
+          <!--</div>-->
           <!-- TODO: [disabled]="!allowInvite" -->
-          <button mat-flat-button
-                  cdkOverlayOrigin
-                  #trigger="cdkOverlayOrigin"
-                  (click)="isOpenInviteUserOverlay = !isOpenInviteUserOverlay"
-                  color="primary">
-            INVITE USERS
-          </button>
-          <ng-template cdkConnectedOverlay
-                       [cdkConnectedOverlayOrigin]="trigger"
-                       [cdkConnectedOverlayOffsetY]="3"
-                       [cdkConnectedOverlayOpen]="isOpenInviteUserOverlay">
-            <div role="dialog" class="invite-user-dialog">
-              <input [formControl]="userEmailControl" class="u-flex-1" spellcheck="false">
-              <button mat-icon-button [disabled]="userEmailControl.invalid" (click)="inviteUser()">
-                <mat-icon fontSet="fa" fontIcon="fa-envelope-open-text"></mat-icon>
-              </button>
-            </div>
-          </ng-template>
-        </div>
+          <!--<button mat-flat-button-->
+                  <!--cdkOverlayOrigin-->
+                  <!--#trigger="cdkOverlayOrigin"-->
+                  <!--(click)="isOpenInviteUserOverlay = !isOpenInviteUserOverlay"-->
+                  <!--color="primary">-->
+            <!--INVITE USERS-->
+          <!--</button>-->
+          <!--<ng-template cdkConnectedOverlay-->
+                       <!--[cdkConnectedOverlayOrigin]="trigger"-->
+                       <!--[cdkConnectedOverlayOffsetY]="3"-->
+                       <!--[cdkConnectedOverlayOpen]="isOpenInviteUserOverlay">-->
+            <!--<div role="dialog" class="invite-user-dialog">-->
+              <!--<input [formControl]="userEmailControl" class="u-flex-1" spellcheck="false">-->
+              <!--<button mat-icon-button [disabled]="userEmailControl.invalid" (click)="inviteUser()">-->
+                <!--<mat-icon fontSet="fa" fontIcon="fa-envelope-open-text"></mat-icon>-->
+              <!--</button>-->
+            <!--</div>-->
+          <!--</ng-template>-->
+        <!--</div>-->
       </div>
     </div>
 
