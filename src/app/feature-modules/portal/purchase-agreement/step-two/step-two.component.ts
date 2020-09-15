@@ -621,13 +621,18 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.onDestroyed$.complete();
   }
 
-  moveToNextSignField(isSigned: boolean, signatures = this.signatures.toArray().filter(el => el.isActiveSignRow)) {
-    if (isSigned && signatures.length) {
+  moveToNextSignField(isSignedField: boolean, signatures = this.signatures.toArray().filter(el => el.isActiveSignRow)) {
+    if (isSignedField && signatures.length) {
       for (const signature of signatures) {
         if (!signature.signatureControl.value) {
           signature.scrollToButton();
           return;
         }
+      }
+
+      if (!this.offer.isSigned) {
+        this.snackbar.open('Now you can sign the offer finally');
+        return;
       }
     }
   }
@@ -646,11 +651,11 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   switchDaysAndDate(checked: boolean, value: string, daysControlName: string, dateControlName: string, emit = true) {
     switch (value) {
       case 'date':
-        this.documentForm.get('page_5.check_escrow_days').patchValue(!checked);
+        this.documentForm.get('page_5.check_escrow_days').patchValue(!checked, {emitEvent: emit});
         this.setRelatedFields(checked ? daysControlName : dateControlName, checked ? dateControlName : daysControlName, emit);
         break;
       case 'days':
-        this.documentForm.get('page_5.check_escrow_date').patchValue(!checked);
+        this.documentForm.get('page_5.check_escrow_date').patchValue(!checked, {emitEvent: emit});
         this.setRelatedFields(checked ? daysControlName : dateControlName, checked ? dateControlName : daysControlName, emit);
         break;
     }
@@ -686,6 +691,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         'page_5.date_escrow_date',
         false
       );
+    } else {
+      this.documentForm.get('page_5.check_escrow_date').patchValue(true, {emitEvent: false});
     }
   }
 
@@ -866,9 +873,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.offer.isSigned = true;
         this.snackbar.open('Offer is signed now');
-        this.offer.progress >= 3
-          ? this.router.navigate([`portal/purchase-agreements/${this.offerId}/details`])
-          : this.router.navigate([`portal/purchase-agreements/${this.offerId}/step-three`]);
+        this.router.navigate([`portal/purchase-agreements/${this.offerId}/${this.offer.progress >= 3 ? 'details' : 'step-three'}`]);
       }, () => {
         this.offer.isSigned = false;
         this.snackbar.open('Cannot sign the offer');
