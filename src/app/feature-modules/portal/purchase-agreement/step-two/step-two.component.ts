@@ -646,11 +646,11 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   switchDaysAndDate(checked: boolean, value: string, daysControlName: string, dateControlName: string, emit = true) {
     switch (value) {
       case 'date':
-        this.documentForm.get('page_5.check_escrow_days').patchValue(!checked);
+        this.documentForm.get('page_5.check_escrow_days').patchValue(!checked, {emitEvent: emit});
         this.setRelatedFields(checked ? daysControlName : dateControlName, checked ? dateControlName : daysControlName, emit);
         break;
       case 'days':
-        this.documentForm.get('page_5.check_escrow_date').patchValue(!checked);
+        this.documentForm.get('page_5.check_escrow_date').patchValue(!checked, {emitEvent: emit});
         this.setRelatedFields(checked ? daysControlName : dateControlName, checked ? dateControlName : daysControlName, emit);
         break;
     }
