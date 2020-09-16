@@ -4,7 +4,6 @@ import { Offer, OfferSummary } from '../../../../core-modules/models/offer';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-summary',
@@ -21,7 +20,6 @@ export class SummaryComponent implements OnInit, OnDestroy {
     private offerService: OfferService,
     private route: ActivatedRoute,
     private router: Router,
-    private snackbar: MatSnackBar,
   ) {
   }
 
