@@ -37,6 +37,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   okButtonText: string;
 
   documentForm: FormGroup;
+  prevFormSnapshot: FormGroup;
   currentPage: number = 0;
   completedFieldsCount: number = 0;
   completedPageCount: number = 0;
@@ -85,23 +86,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   ) {
   }
 
-  ngOnInit() {
-    this.offerId = +this.route.snapshot.params.id;
-    this.offer = this.route.snapshot.data.offer;
-    this.user = this.authService.currentUser;
-
-    this.isSignMode = this.router.url.includes('sign');
-
-    // || !this.offer.allowEdit
-    this.isDisabled = this.offer.userRole !== 'agent_buyer' || this.isSignMode;
-
-    if (this.offer.isSigned) {
-      this.snackbar.open('Offer is already signed');
-    }
-
-    this.okButtonText = this.isSignMode && this.offer.allowSign && !this.offer.isSigned ? 'Sign' : 'Continue';
-
-    this.documentForm = this.fb.group({
+  private get formGroupPage(): FormGroup {
+    return this.fb.group({
       page_1: this.fb.group({
         check_civil_code: [{value: null, disabled: this.isDisabled}, []],
         check_disclosure_1_buyer: [{value: true, disabled: true}, []],
@@ -546,6 +532,26 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         date_privacy_act_advisory_second: [{value: '', disabled: true}, []],
       }),
     }, {updateOn: 'blur'});
+  }
+
+  ngOnInit() {
+    this.offerId = +this.route.snapshot.params.id;
+    this.offer = this.route.snapshot.data.offer;
+    this.user = this.authService.currentUser;
+
+    this.isSignMode = this.router.url.includes('sign');
+
+    // || !this.offer.allowEdit
+    this.isDisabled = this.offer.userRole !== 'agent_buyer' || this.isSignMode;
+
+    if (this.offer.isSigned) {
+      this.snackbar.open('Offer is already signed');
+    }
+
+    this.okButtonText = this.isSignMode && this.offer.allowSign && !this.offer.isSigned ? 'Sign' : 'Continue';
+
+    this.prevFormSnapshot = this.formGroupPage;
+    this.documentForm = this.formGroupPage;
 
     this.getOfferAgreement();
 
@@ -692,8 +698,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         'page_5.date_escrow_date',
         false
       );
-    } else {
-      this.documentForm.get('page_5.check_escrow_date').patchValue(true, {emitEvent: false});
     }
   }
 
@@ -755,6 +759,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
           this.documentForm.get(`${_.snakeCase(page)}.${_.snakeCase(field)}`)
             .patchValue(data, {emitEvent: false, onlySelf: true});
+          this.prevFormSnapshot.get(`${_.snakeCase(page)}.${_.snakeCase(field)}`)
+            .patchValue(data, {emitEvent: false, onlySelf: true});
         }
       });
 
@@ -802,15 +808,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   private subscribeToFormChanges() {
-    const config: MatSnackBarConfig = {
-      duration: 0,
-      data: {
-        message: 'Are you sure want to change a field? All users signatures will be cleared.',
-        dismiss: 'Cancel',
-        action: 'Yes'
-      },
-    };
-
     Object.values(this.documentForm.controls).forEach((group: FormGroup, groupIndex: number) => {
       Object.values(group.controls).forEach((control: FormControl, controlIndex: number) => {
         control.valueChanges
@@ -820,14 +817,30 @@ export class StepTwoComponent implements OnInit, OnDestroy {
           )
           .subscribe((controlValue) => {
             if (!this.offer.anyUserSigned) {
+              this.prevFormSnapshot.patchValue(this.documentForm.getRawValue(), {emitEvent: false});
               this.saveDocumentField(Object.keys(group.getRawValue())[controlIndex], controlValue, groupIndex);
             } else {
+              const config: MatSnackBarConfig = {
+                duration: 0,
+                data: {
+                  message: 'Are you sure want to change a field? All users signatures will be cleared.',
+                  dismiss: 'Cancel',
+                  action: 'Yes'
+                },
+              };
+
               const snackBarRef = this.snackbar.openFromComponent(ConfirmationBarComponent, config);
 
-              snackBarRef.onAction()
+              snackBarRef.afterDismissed()
                 .pipe(takeUntil(this.onDestroyed$))
-                .subscribe(() => {
-                  this.resetAgreement();
+                .subscribe(info => {
+                  if (info.dismissedByAction) {
+                    this.prevFormSnapshot.patchValue(this.documentForm.getRawValue(), {emitEvent: false});
+                    this.resetAgreement();
+                    this.saveDocumentField(Object.keys(group.getRawValue())[controlIndex], controlValue, groupIndex);
+                  } else {
+                    this.documentForm.patchValue(this.prevFormSnapshot.getRawValue(), {emitEvent: false});
+                  }
                 });
             }
           });
@@ -862,6 +875,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       }
     });
 
+    this.offer.anyUserSigned = false;
     this.offer.status = AgreementStatus.Started;
     this.offer.isSigned = false;
 

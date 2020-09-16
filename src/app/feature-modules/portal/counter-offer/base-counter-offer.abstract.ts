@@ -37,6 +37,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   isAgentSeller: boolean;
 
   documentForm: FormGroup;
+  prevFormSnapshot: FormGroup;
 
   datepickerMinDate: Date;
 
@@ -222,21 +223,14 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
           this.documentForm.get(`${_.snakeCase(controlName)}`)
             .patchValue(value, {emitEvent: false, onlySelf: true});
+          this.prevFormSnapshot.get(`${_.snakeCase(controlName)}`)
+            .patchValue(value, {emitEvent: false, onlySelf: true});
         }
       });
     });
   }
 
   private subscribeToFormChanges(documentForm) {
-    const config: MatSnackBarConfig = {
-      duration: 0,
-      data: {
-        message: 'Are you sure want to change a field? All users signatures will be cleared.',
-        dismiss: 'Cancel',
-        action: 'Yes'
-      },
-    };
-
     Object.values(documentForm.controls).map((control: FormControl, controlIndex: number) => {
       control.valueChanges
         .pipe(
@@ -245,14 +239,30 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         )
         .subscribe((controlValue) => {
           if (this.counterOffer.anyUserSigned && !this.counterOffer.canFinalSign) {
+            const config: MatSnackBarConfig = {
+              duration: 0,
+              data: {
+                message: 'Are you sure want to change a field? All users signatures will be cleared.',
+                dismiss: 'Cancel',
+                action: 'Yes'
+              },
+            };
+
             const snackBarRef = this.snackbar.openFromComponent(ConfirmationBarComponent, config);
 
-            snackBarRef.onAction()
+            snackBarRef.afterDismissed()
               .pipe(takeUntil(this.onDestroyed$))
-              .subscribe(() => {
-                this.resetAgreement();
+              .subscribe(info => {
+                if (info.dismissedByAction) {
+                  this.prevFormSnapshot.patchValue(this.documentForm.getRawValue(), {emitEvent: false});
+                  this.resetAgreement();
+                  this.saveDocumentField(Object.keys(documentForm.getRawValue())[controlIndex], controlValue);
+                } else {
+                  this.documentForm.patchValue(this.prevFormSnapshot.getRawValue(), {emitEvent: false});
+                }
               });
           } else {
+            this.prevFormSnapshot.patchValue(this.documentForm.getRawValue(), {emitEvent: false});
             this.saveDocumentField(Object.keys(documentForm.getRawValue())[controlIndex], controlValue);
           }
         });
@@ -283,6 +293,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
       }
     });
 
+    this.counterOffer.anyUserSigned = false;
     this.counterOffer.status = AgreementStatus.Started;
     this.counterOffer.isSigned = false;
 
