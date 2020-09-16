@@ -38,7 +38,6 @@ export class StepThreeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.offerService.offerProgress = 3;
     this.offer = this.route.snapshot.data.offer;
 
     this.form = this.formBuilder.group({
