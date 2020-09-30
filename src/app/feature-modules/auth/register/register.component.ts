@@ -30,11 +30,13 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
     const role = this.route.snapshot.queryParamMap.get('role');
     const email = this.route.snapshot.queryParamMap.get('email');
+    const firstName = this.route.snapshot.queryParamMap.get('fn');
+    const lastName = this.route.snapshot.queryParamMap.get('ln');
 
     this.form = this.formBuilder.group({
       accountType: [{value: role || null, disabled: !!role}, [Validators.required]],
-      firstName: [null, [Validators.required]],
-      lastName: [null, [Validators.required]],
+      firstName: [{value: firstName, disabled: !!role}, [Validators.required]],
+      lastName: [{value: lastName, disabled: !!role}, [Validators.required]],
       email: [{value: email || '', disabled: !!email}, [Validators.required, Validators.email]],
       password: [null, [Validators.required]],
       confirmPassword: [null, [Validators.required]]

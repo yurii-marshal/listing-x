@@ -20,9 +20,7 @@ export class GetOfferResolver implements Resolve<Offer> {
             this.offerService.currentOffer = offer;
 
             if (route.data && route.data.progress) {
-              this.offerService.offerProgress = route.data.progress;
-
-              if (offer.progress < this.offerService.offerProgress) {
+              if (offer.progress < route.data.progress) {
                 this.router.navigateByUrl('/portal/purchase-agreements/all');
               }
             }

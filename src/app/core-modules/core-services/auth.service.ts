@@ -105,7 +105,7 @@ export class AuthService {
   redirectUrl(userEmail: string): string {
     const offer = JSON.parse(localStorage.getItem(LocalStorageKey.Offer)) as Offer;
 
-    return !!offer && offer.agentBuyers[0].email === userEmail
+    return !!offer && offer.agentBuyers[0] && offer.agentBuyers[0].email === userEmail
       ? '/portal/purchase-agreements/step-one'
       : this.route.snapshot.queryParams.redirectUrl || '/portal/purchase-agreements/all';
   }

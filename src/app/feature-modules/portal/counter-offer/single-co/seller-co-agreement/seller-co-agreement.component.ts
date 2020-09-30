@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { BaseCounterOfferAbstract } from '../../base-counter-offer.abstract';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OfferService } from '../../../services/offer.service';
@@ -35,10 +35,8 @@ export class SellerCOAgreementComponent extends BaseCounterOfferAbstract<Counter
     super(route, router, offerService, counterOfferService, snackbar, datePipe, authService);
   }
 
-  ngOnInit() {
-    super.ngOnInit();
-
-    this.documentForm = this.fb.group({
+  private get formGroupPage(): FormGroup {
+    return this.fb.group({
       date_seller_counter_date: [{value: null, disabled: true}, []],
       check_purchase_agreement: [{value: null, disabled: true}, []],
       check_counter_offer_buyer: [{value: null, disabled: true}, []],
@@ -83,5 +81,12 @@ export class SellerCOAgreementComponent extends BaseCounterOfferAbstract<Counter
       check_copy_received_am: [{value: null, disabled: true}, []],
       check_copy_received_pm: [{value: null, disabled: true}, []],
     }, {updateOn: 'blur'});
+  }
+
+  ngOnInit() {
+    super.ngOnInit();
+
+    this.prevFormSnapshot = this.formGroupPage;
+    this.documentForm = this.formGroupPage;
   }
 }

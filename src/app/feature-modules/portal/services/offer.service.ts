@@ -11,7 +11,6 @@ import { AgreementStatus } from '../../../core-modules/models/agreement';
 
 @Injectable()
 export class OfferService extends BaseDataService<Offer> {
-  public offerProgress: number;
   public offerChanged$: Subject<Offer> = new Subject<Offer>();
 
   public currentOffer: Offer;
