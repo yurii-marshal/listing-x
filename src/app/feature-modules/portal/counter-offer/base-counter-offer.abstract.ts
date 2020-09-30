@@ -7,7 +7,7 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
 import { FormControl, FormGroup } from '@angular/forms';
 import { User } from '../../auth/models';
 import * as _ from 'lodash';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { MatDialog, MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { forkJoin, Subject } from 'rxjs';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
@@ -15,6 +15,7 @@ import { Person } from '../../../core-modules/models/offer';
 import { SignatureDirective } from '../../../shared-modules/directives/signature.directive';
 import { AgreementStatus } from '../../../core-modules/models/agreement';
 import { ConfirmationBarComponent } from '../../../shared-modules/components/confirmation-bar/confirmation-bar.component';
+import { FinishSigningDialogComponent } from '../../../shared-modules/dialogs/finish-signing-dialog/finish-signing-dialog.component';
 
 export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements OnInit, OnDestroy {
   @ViewChild('form', {static: true}) form: ElementRef;
@@ -60,6 +61,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     public snackbar: MatSnackBar,
     public datePipe: DatePipe,
     public authService: AuthService,
+    public dialog: MatDialog,
   ) {
   }
 
@@ -100,7 +102,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
         this.allFieldsCount = Object.keys(this.documentObj).length;
 
-        this.okButtonText = (!this.counterOffer.isSigned && this.isSignMode) ? 'Sign' : isFinalMode ? 'Final sign' : 'Back to the offer';
+        this.okButtonText = (!this.counterOffer.isSigned && this.isSignMode) ? 'Sign' : isFinalMode ? 'Finish' : 'Back to the offer';
 
         this.isSidebarControlsVisible =
           this.isSideBarOpen && this.counterOffer.catchers.some((user: Person) => user.email === this.authService.currentUser.email);
@@ -149,10 +151,19 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
   continue() {
     if (this.isSignMode) {
-      this.signatures.toArray().filter(el => el.isActiveSignRow).every((el) => !!el.signatureControl.value)
-        ? ((!this.counterOffer.isSigned || this.counterOffer.canFinalSign) ? this.signCO() : this.closeCO())
-        : this.nextField(true);
+      const isSigningComplete = this.signatures.toArray().filter(el => el.isActiveSignRow).every((el) => !!el.signatureControl.value);
 
+      if (isSigningComplete) {
+        if (this.counterOffer.canFinalSign) {
+          this.openFinishingDialog();
+        } else if (!this.counterOffer.isSigned) {
+          this.signCO();
+        } else {
+          this.closeCO();
+        }
+      } else {
+        this.nextField(true);
+      }
     } else {
       this.documentForm.markAllAsTouched();
 
@@ -177,7 +188,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   modeChanged(isSign: boolean) {
     this.isDisabled = this.isSignMode = isSign;
     this.okButtonText = (this.isSignMode && !this.counterOffer.isSigned) ? 'Sign'
-      : ((this.isSignMode && this.counterOffer.canFinalSign) ? 'Final Sign' : 'Back to the offer');
+      : ((this.isSignMode && this.counterOffer.canFinalSign) ? 'Finish' : 'Back to the offer');
   }
 
   limitLines(input, limit) {
@@ -340,6 +351,17 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         this.completedFieldsCount += 1;
       }
     });
+  }
+
+  private openFinishingDialog() {
+    const dialogRef = this.dialog.open(FinishSigningDialogComponent, {width: '600px'});
+
+    dialogRef.afterClosed()
+      .subscribe((isFinished: boolean) => {
+        if (isFinished) {
+          this.signCO();
+        }
+      });
   }
 
 }

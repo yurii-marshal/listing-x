@@ -7,7 +7,7 @@ import { Transaction } from '../../../core-modules/models/transaction';
 import { SignatureBoxComponent, SignMode } from '../../../shared-modules/components/signature-box/signature-box.component';
 import * as _ from 'lodash';
 import { merge, Observable } from 'rxjs';
-import { FinishSigningDialogComponent } from '../dialogs/finish-signing-dialog/finish-signing-dialog.component';
+import { FinishSigningDialogComponent } from '../../../shared-modules/dialogs/finish-signing-dialog/finish-signing-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/core-modules/core-services/auth.service';

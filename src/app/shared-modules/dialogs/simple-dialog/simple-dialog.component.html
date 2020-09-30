@@ -1,0 +1,20 @@
+<div mat-dialog-title class="u-flex u-flex-justify--space-between u-flex-align-items--center">
+  <button class="close-btn" mat-icon-button mat-dialog-close (click)="close()">
+    <mat-icon fontSet="fa" fontIcon="fa-times"></mat-icon>
+  </button>
+</div>
+<div mat-dialog-content class="form-container dialog-form">
+  <div class="title" *ngIf="data?.header">
+    {{data?.header}}
+  </div>
+
+  <div class="subtitle">
+    {{data?.message || 'Confirm'}}
+  </div>
+
+  <div class="controls u-flex u-flex-justify--center">
+    <button class="btn cancel" mat-flat-button (click)="close()">
+      ok
+    </button>
+  </div>
+</div>
