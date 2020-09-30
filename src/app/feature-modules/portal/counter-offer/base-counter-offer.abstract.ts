@@ -32,7 +32,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   isDisabled: boolean = true;
   showSwitcher: boolean = false;
 
-  isSignMode: boolean = false;
+  isSignMode: boolean = true;
 
   isUserPitcher: boolean;
   isAgentSeller: boolean;

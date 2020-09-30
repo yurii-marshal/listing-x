@@ -63,7 +63,6 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     const offerId: number = Number(this.route.snapshot.params.id);
 
     this.loadOffer(offerId);
-    this.openPAFirstDialog();
 
     // todo: load calendar data
     // this.offerService.loadCalendarByOffer(offerId)
