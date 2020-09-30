@@ -4,7 +4,7 @@ import { Offer } from '../../../../core-modules/models/offer';
 import { DateAdapter, MAT_DATE_FORMATS, MatDialog, MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { EditOfferDialogComponent } from '../../../../shared-modules/dialogs/edit-offer-dialog/edit-offer-dialog.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import { debounceTime, filter, takeUntil } from 'rxjs/operators';
 import { fromEvent, Observable, Subject } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SaveOfferDialogComponent } from '../../../../shared-modules/dialogs/save-offer-dialog/save-offer-dialog.component';
@@ -16,6 +16,7 @@ import { SignatureDirective } from '../../../../shared-modules/directives/signat
 import { AgreementStatus } from '../../../../core-modules/models/agreement';
 import { ConfirmationBarComponent } from '../../../../shared-modules/components/confirmation-bar/confirmation-bar.component';
 import { PICK_FORMATS, PickDateAdapter } from '../../../../core-modules/adapters/date-adapter';
+import { FinishSigningDialogComponent } from '../../../../shared-modules/dialogs/finish-signing-dialog/finish-signing-dialog.component';
 
 @Component({
   selector: 'app-step-two',
@@ -548,7 +549,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       this.snackbar.open('Offer is already signed');
     }
 
-    this.okButtonText = this.isSignMode && this.offer.allowSign && !this.offer.isSigned ? 'Sign' : 'Continue';
+    this.okButtonText = this.isSignMode && this.offer.allowSign && !this.offer.isSigned ? 'Finish' : 'Continue';
 
     this.prevFormSnapshot = this.formGroupPage;
     this.documentForm = this.formGroupPage;
@@ -561,9 +562,17 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
   continue() {
     if (this.isSignMode) {
-      this.signatures.toArray().filter(el => el.isActiveSignRow).every((el) => !!el.signatureControl.value)
-        ? (this.offer.allowSign && !this.offer.isSigned ? this.finalSignAgreement() : this.closeOffer())
-        : this.moveToNextSignField(true);
+      const isSigningComplete = this.signatures.toArray().filter(el => el.isActiveSignRow).every((el) => !!el.signatureControl.value);
+
+      if (isSigningComplete) {
+        if (this.offer.allowSign && !this.offer.isSigned) {
+          this.openFinishingDialog();
+        } else {
+          this.closeOffer();
+        }
+      } else {
+        this.moveToNextSignField(true);
+      }
     } else {
       this.form.nativeElement.blur();
       this.documentForm.markAllAsTouched();
@@ -957,5 +966,16 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.signatures.toArray()
       .filter(el => el.isActiveSignRow)
       .map(el => el.signatureControl.disable({onlySelf: true, emitEvent: false}));
+  }
+
+  private openFinishingDialog() {
+    const dialogRef = this.dialog.open(FinishSigningDialogComponent, {width: '600px'});
+
+    dialogRef.afterClosed()
+      .subscribe((isFinished: boolean) => {
+        if (isFinished) {
+          this.finalSignAgreement();
+        }
+      });
   }
 }

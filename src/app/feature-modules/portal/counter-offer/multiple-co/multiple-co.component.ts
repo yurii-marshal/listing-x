@@ -4,7 +4,7 @@ import { BaseCounterOfferAbstract } from '../base-counter-offer.abstract';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OfferService } from '../../services/offer.service';
 import { CounterOfferService } from '../../services/counter-offer.service';
-import { DateAdapter, MAT_DATE_FORMATS, MatSnackBar } from '@angular/material';
+import { DateAdapter, MAT_DATE_FORMATS, MatDialog, MatSnackBar } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { CounterOffer } from '../../../../core-modules/models/counter-offer';
 import { AuthService } from '../../../../core-modules/core-services/auth.service';
@@ -31,8 +31,9 @@ export class MultipleCOComponent extends BaseCounterOfferAbstract<CounterOffer> 
     public snackbar: MatSnackBar,
     public datePipe: DatePipe,
     public authService: AuthService,
+    public dialog: MatDialog,
   ) {
-    super(route, router, offerService, counterOfferService, snackbar, datePipe, authService);
+    super(route, router, offerService, counterOfferService, snackbar, datePipe, authService, dialog);
   }
 
   private get formGroupPage(): FormGroup {

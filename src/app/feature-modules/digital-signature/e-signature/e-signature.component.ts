@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit, QueryList, ViewChildren } from '@angu
 import { SignatureBoxComponent, SignMode } from '../../../shared-modules/components/signature-box/signature-box.component';
 import { filter, map, scan, switchMap, tap } from 'rxjs/operators';
 import { merge, Observable } from 'rxjs';
-import { FinishSigningDialogComponent } from '../dialogs/finish-signing-dialog/finish-signing-dialog.component';
+import { FinishSigningDialogComponent } from '../../../shared-modules/dialogs/finish-signing-dialog/finish-signing-dialog.component';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Transaction } from '../../../core-modules/models/transaction';

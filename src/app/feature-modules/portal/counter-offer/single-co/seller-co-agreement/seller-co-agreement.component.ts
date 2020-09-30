@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { OfferService } from '../../../services/offer.service';
 import { CounterOfferService } from '../../../services/counter-offer.service';
 import { DatePipe } from '@angular/common';
-import { DateAdapter, MAT_DATE_FORMATS, MatSnackBar } from '@angular/material';
+import { DateAdapter, MAT_DATE_FORMATS, MatDialog, MatSnackBar } from '@angular/material';
 import { CounterOffer } from '../../../../../core-modules/models/counter-offer';
 import { AuthService } from '../../../../../core-modules/core-services/auth.service';
 import { PICK_FORMATS, PickDateAdapter } from '../../../../../core-modules/adapters/date-adapter';
@@ -31,8 +31,9 @@ export class SellerCOAgreementComponent extends BaseCounterOfferAbstract<Counter
     public snackbar: MatSnackBar,
     public datePipe: DatePipe,
     public authService: AuthService,
+    public dialog: MatDialog,
   ) {
-    super(route, router, offerService, counterOfferService, snackbar, datePipe, authService);
+    super(route, router, offerService, counterOfferService, snackbar, datePipe, authService, dialog);
   }
 
   private get formGroupPage(): FormGroup {
