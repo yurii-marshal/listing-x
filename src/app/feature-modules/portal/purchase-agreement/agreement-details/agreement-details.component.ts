@@ -18,6 +18,7 @@ import { CounterOfferService } from 'src/app/feature-modules/portal/services/cou
 import { CounterOfferType } from 'src/app/core-modules/models/counter-offer-type';
 import { ConfirmationBarComponent } from 'src/app/shared-modules/components/confirmation-bar/confirmation-bar.component';
 import { UploadDocumentType } from 'src/app/core-modules/enums/upload-document-type';
+import { SimpleDialogComponent } from '../../../../shared-modules/dialogs/simple-dialog/simple-dialog.component';
 
 @Component({
   selector: 'app-agreement-details',
@@ -62,6 +63,7 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     const offerId: number = Number(this.route.snapshot.params.id);
 
     this.loadOffer(offerId);
+    this.openPAFirstDialog();
 
     // todo: load calendar data
     // this.offerService.loadCalendarByOffer(offerId)
@@ -130,9 +132,13 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   openCounterOffer(doc) {
-    this.router.navigateByUrl(
-      `portal/offer/${this.offer.id}/counter-offers/${doc.entityId}/${CounterOfferType[doc.documentType]}`
-    );
+    if (this.offer.isSigned) {
+      this.router.navigateByUrl(
+        `portal/offer/${this.offer.id}/counter-offers/${doc.entityId}/${CounterOfferType[doc.documentType]}`
+      );
+    } else {
+      this.openPAFirstDialog();
+    }
   }
 
   createCounterOffer(type) {
@@ -256,5 +262,15 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
         this.offer = offer;
         this.setUsers(offer);
       });
+  }
+
+  private openPAFirstDialog() {
+    this.dialog.open(SimpleDialogComponent, {
+      width: '600px',
+      data: {
+        header: 'Purchase agreement is not signed',
+        message: 'Please, sign the purchase agreement first to allow this operation.',
+      }
+    });
   }
 }

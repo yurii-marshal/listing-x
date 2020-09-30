@@ -1,4 +1,4 @@
-@import "../dialogs.template";
+@import "dialogs.template";
 
 .mat-dialog-title {
   position: relative;
@@ -35,8 +35,6 @@
 
 .controls {
   padding-bottom: 25px;
-  display: flex;
-  justify-content: space-between;
 
   .btn {
     width: 178px;

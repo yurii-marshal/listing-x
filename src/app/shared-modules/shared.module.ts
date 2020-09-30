@@ -58,6 +58,8 @@ import { CounterOfferInformationComponent } from './components/counter-offer-inf
 import { CounterOfferControlsComponent } from './components/counter-offer-controls/counter-offer-controls.component';
 import { InputMaskDirective } from './directives/input-mask/input-mask.directive';
 import { AgreementModeSwitcherComponent } from './components/agreement-mode-switcher/agreement-mode-switcher.component';
+import { FinishSigningDialogComponent } from './dialogs/finish-signing-dialog/finish-signing-dialog.component';
+import { SimpleDialogComponent } from './dialogs/simple-dialog/simple-dialog.component';
 
 const materialModules = [
   MatDialogModule,
@@ -81,6 +83,8 @@ const dialogs = [
   WriteOfferUploadDocumentsDialogComponent,
   WriteOfferSummaryComponent,
   TooltipContentComponent,
+  FinishSigningDialogComponent,
+  SimpleDialogComponent,
 ];
 
 const components = [
