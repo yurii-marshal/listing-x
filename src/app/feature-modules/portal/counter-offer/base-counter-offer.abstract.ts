@@ -102,7 +102,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
         this.allFieldsCount = Object.keys(this.documentObj).length;
 
-        this.okButtonText = (!this.counterOffer.isSigned && this.isSignMode) ? 'Sign' : isFinalMode ? 'Finish' : 'Back to the offer';
+        this.okButtonText = (!this.counterOffer.isSigned && this.isSignMode) || isFinalMode ? 'Finish' : 'Back to the offer';
 
         this.isSidebarControlsVisible =
           this.isSideBarOpen && this.counterOffer.catchers.some((user: Person) => user.email === this.authService.currentUser.email);
@@ -154,13 +154,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
       const isSigningComplete = this.signatures.toArray().filter(el => el.isActiveSignRow).every((el) => !!el.signatureControl.value);
 
       if (isSigningComplete) {
-        if (this.counterOffer.canFinalSign) {
-          this.openFinishingDialog();
-        } else if (!this.counterOffer.isSigned) {
-          this.signCO();
-        } else {
-          this.closeCO();
-        }
+        !this.counterOffer.isSigned || this.counterOffer.canFinalSign ? this.openFinishingDialog() : this.closeCO();
       } else {
         this.nextField(true);
       }
@@ -187,8 +181,9 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
   modeChanged(isSign: boolean) {
     this.isDisabled = this.isSignMode = isSign;
-    this.okButtonText = (this.isSignMode && !this.counterOffer.isSigned) ? 'Sign'
-      : ((this.isSignMode && this.counterOffer.canFinalSign) ? 'Finish' : 'Back to the offer');
+    this.okButtonText = this.isSignMode && (!this.counterOffer.isSigned || this.counterOffer.canFinalSign)
+      ? 'Finish'
+      : 'Back to the offer';
   }
 
   limitLines(input, limit) {
