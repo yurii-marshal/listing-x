@@ -40,7 +40,6 @@ export class AgreementsListComponent implements OnInit, AfterViewInit, OnDestroy
     [AgreementStatus.All]: 'All agreements',
     [AgreementStatus.Started]: 'Started',
     [AgreementStatus.Delivered]: 'Delivered',
-    [AgreementStatus.Accepted]: 'Accepted',
     [AgreementStatus.Countered]: 'Countered',
     [AgreementStatus.Completed]: 'Completed',
     [AgreementStatus.Denied]: 'Denied',
@@ -106,8 +105,6 @@ export class AgreementsListComponent implements OnInit, AfterViewInit, OnDestroy
         return 'blue';
       case AgreementStatus.Delivered:
         return 'orange';
-      case AgreementStatus.Accepted:
-        return 'yellow';
       case AgreementStatus.Countered:
         return 'turquoise';
       case AgreementStatus.Completed:

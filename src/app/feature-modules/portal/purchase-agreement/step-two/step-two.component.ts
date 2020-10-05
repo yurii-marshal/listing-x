@@ -6,7 +6,7 @@ import { EditOfferDialogComponent } from '../../../../shared-modules/dialogs/edi
 import { ActivatedRoute, Router } from '@angular/router';
 import { debounceTime, filter, takeUntil } from 'rxjs/operators';
 import { fromEvent, Observable, Subject } from 'rxjs';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { SaveOfferDialogComponent } from '../../../../shared-modules/dialogs/save-offer-dialog/save-offer-dialog.component';
 import { DatePipe } from '@angular/common';
 import * as _ from 'lodash';
@@ -17,6 +17,7 @@ import { AgreementStatus } from '../../../../core-modules/models/agreement';
 import { ConfirmationBarComponent } from '../../../../shared-modules/components/confirmation-bar/confirmation-bar.component';
 import { PICK_FORMATS, PickDateAdapter } from '../../../../core-modules/adapters/date-adapter';
 import { FinishSigningDialogComponent } from '../../../../shared-modules/dialogs/finish-signing-dialog/finish-signing-dialog.component';
+import { ProfileService } from '../../../../core-modules/core-services/profile.service';
 
 @Component({
   selector: 'app-step-two',
@@ -84,6 +85,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     private elRef: ElementRef,
     private datePipe: DatePipe,
     private authService: AuthService,
+    private profileService: ProfileService,
   ) {
   }
 
@@ -637,8 +639,11 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.onDestroyed$.complete();
   }
 
-  moveToNextSignField(isSignedField: boolean, signatures = this.signatures.toArray().filter(el => el.isActiveSignRow)) {
-    if (isSignedField && signatures.length) {
+  moveToNextSignField(
+    signStatus,
+    signatures = this.signatures.toArray().filter(el => el.isActiveSignRow,
+    )) {
+    if (signStatus === true && signatures.length) {
       for (const signature of signatures) {
         if (!signature.signatureControl.value) {
           signature.scrollToButton();
@@ -646,10 +651,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         }
       }
 
-      if (!this.offer.isSigned) {
-        this.snackbar.open('Now you can sign the offer finally');
-        return;
-      }
+      this.openFinishingDialog();
     }
   }
 
@@ -897,7 +899,12 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.offer.isSigned = true;
         this.snackbar.open('Offer is signed now');
-        this.router.navigate([`portal/purchase-agreements/${this.offerId}/${this.offer.progress >= 3 ? 'details' : 'step-three'}`]);
+
+        if (this.profileService.previousRouteUrl && this.profileService.previousRouteUrl.includes('counter-offers')) {
+          this.router.navigateByUrl(this.profileService.previousRouteUrl);
+        } else {
+          this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/${this.offer.progress >= 3 ? 'details' : 'step-three'}`);
+        }
       }, () => {
         this.offer.isSigned = false;
         this.snackbar.open('Cannot sign the offer');

@@ -4,14 +4,14 @@ import { ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } fro
 import { CounterOffer } from '../../../core-modules/models/counter-offer';
 import { CounterOfferService } from '../services/counter-offer.service';
 import { debounceTime, takeUntil } from 'rxjs/operators';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { User } from '../../auth/models';
 import * as _ from 'lodash';
 import { MatDialog, MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { forkJoin, Subject } from 'rxjs';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
-import { Person } from '../../../core-modules/models/offer';
+import { Offer, Person } from '../../../core-modules/models/offer';
 import { SignatureDirective } from '../../../shared-modules/directives/signature.directive';
 import { AgreementStatus } from '../../../core-modules/models/agreement';
 import { ConfirmationBarComponent } from '../../../shared-modules/components/confirmation-bar/confirmation-bar.component';
@@ -26,6 +26,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   type;
   id: number;
   offerId: number;
+  offer: Offer;
   counterOffer: CounterOffer;
   documentObj;
 
@@ -75,11 +76,13 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     this.type = this.router.url.split('/').pop() as 'seller' | 'buyer' | 'multiple';
 
     forkJoin(
+      this.offerService.loadOne(this.offerId),
       this.counterOfferService.loadOne(this.id),
       this.counterOfferService.getCounterOfferDocument(this.id, this.type),
     )
       .pipe(takeUntil(this.onDestroyed$))
-      .subscribe(([counterOffer, document]) => {
+      .subscribe(([offer, counterOffer, document]) => {
+        this.offer = offer;
         this.counterOffer = counterOffer;
         this.documentObj = document;
 
@@ -136,14 +139,24 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/details`);
   }
 
-  nextField(isSigned: boolean, signatures = this.signatures.toArray().filter(el => el.isActiveSignRow)): boolean {
-    if (isSigned && signatures.length) {
-      for (const sd of signatures) {
-        if (sd.isActiveSignRow && !sd.signatureControl.value) {
-          sd.scrollToButton();
-          return true;
+  nextField(signStatus, signatures = this.signatures.toArray().filter(el => el.isActiveSignRow)): boolean {
+    if (signStatus === true && (!this.counterOffer.isSigned || this.isMCOFinalSign)) {
+      if (signatures.length) {
+        for (const sd of signatures) {
+          if (sd.isActiveSignRow && !sd.signatureControl.value) {
+            sd.scrollToButton();
+            return true;
+          }
         }
+      } else {
+        this.openFinishingDialog();
+        return false;
       }
+
+    } else if (signStatus.notSignedPA) {
+      this.form.nativeElement.blur();
+      this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/sign`);
+      return false;
     }
 
     return false;
@@ -273,6 +286,10 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
           }
         });
     });
+
+    if (!this.offer.isSigned) {
+      this.documentForm.setErrors({notSignedPA: true});
+    }
   }
 
   private saveDocumentField(controlName: string, controlValue: any) {

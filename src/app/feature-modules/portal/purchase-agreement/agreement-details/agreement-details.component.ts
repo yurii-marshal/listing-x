@@ -42,7 +42,6 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     [AgreementStatus.Started]: 'Started',
     [AgreementStatus.Delivered]: 'Delivered',
     [AgreementStatus.Countered]: 'Countered',
-    [AgreementStatus.Accepted]: 'Accepted',
     [AgreementStatus.Completed]: 'Completed',
     [AgreementStatus.Denied]: 'Denied',
   };

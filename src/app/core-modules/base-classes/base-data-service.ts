@@ -13,23 +13,16 @@ import * as moment from 'moment';
 /*
 * Base CRUD dataservice
 * */
-export abstract class BaseDataService<TModel extends {id: number}> implements IDataService<TModel> {
+export abstract class BaseDataService<TModel extends { id: number }> implements IDataService<TModel> {
   protected snackbar: MatSnackBar;
   protected http: HttpClient;
 
   private today = moment().utcOffset(0);
 
-  protected detailUrl(id: number): string {
-    return `${this.crudEndpoint}${id}/`;
-  }
-
-  protected transformEndpoint(endpoint: ApiEndpoint, id: any): string {
-    return endpoint.replace('{id}', id);
-  }
-
-  constructor(protected injector: Injector,
-              protected crudEndpoint: ApiEndpoint) {
-
+  constructor(
+    protected injector: Injector,
+    protected crudEndpoint: ApiEndpoint,
+  ) {
     this.snackbar = injector.get(MatSnackBar);
     this.http = injector.get(HttpClient);
   }
@@ -81,6 +74,14 @@ export abstract class BaseDataService<TModel extends {id: number}> implements ID
       .pipe(
         map(events => _.map(events, event => this.wrapCalendarEvent(event)))
       );
+  }
+
+  protected detailUrl(id: number): string {
+    return `${this.crudEndpoint}${id}/`;
+  }
+
+  protected transformEndpoint(endpoint: ApiEndpoint, id: any): string {
+    return endpoint.replace('{id}', id);
   }
 
   private wrapCalendarEvent(event: CalendarEvent): CalendarEvent {

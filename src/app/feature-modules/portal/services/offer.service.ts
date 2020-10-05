@@ -114,8 +114,6 @@ export class OfferService extends BaseDataService<Offer> {
         return 'blue';
       case AgreementStatus.Delivered:
         return 'orange';
-      case AgreementStatus.Accepted:
-        return 'yellow';
       case AgreementStatus.Countered:
         return 'turquoise';
       case AgreementStatus.Completed:
