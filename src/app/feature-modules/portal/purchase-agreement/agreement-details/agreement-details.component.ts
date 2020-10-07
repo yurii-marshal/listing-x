@@ -130,13 +130,9 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   openCounterOffer(doc) {
-    if (this.offer.isSigned) {
-      this.router.navigateByUrl(
-        `portal/offer/${this.offer.id}/counter-offers/${doc.entityId}/${CounterOfferType[doc.documentType]}`
-      );
-    } else {
-      this.openPAFirstDialog();
-    }
+    this.router.navigateByUrl(
+      `portal/offer/${this.offer.id}/counter-offers/${doc.entityId}/${CounterOfferType[doc.documentType]}`
+    );
   }
 
   createCounterOffer(type) {
@@ -260,15 +256,5 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
         this.offer = offer;
         this.setUsers(offer);
       });
-  }
-
-  private openPAFirstDialog() {
-    this.dialog.open(SimpleDialogComponent, {
-      width: '600px',
-      data: {
-        header: 'Purchase agreement is not signed',
-        message: 'Please, sign the purchase agreement first to allow this operation.',
-      }
-    });
   }
 }

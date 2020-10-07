@@ -573,6 +573,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
           this.closeOffer();
         }
       } else {
+        this.snackbar.open('Please, fill all sign fields');
         this.moveToNextSignField(true);
       }
     } else {
@@ -639,19 +640,19 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.onDestroyed$.complete();
   }
 
-  moveToNextSignField(
-    signStatus,
-    signatures = this.signatures.toArray().filter(el => el.isActiveSignRow,
-    )) {
-    if (signStatus === true && signatures.length) {
-      for (const signature of signatures) {
-        if (!signature.signatureControl.value) {
-          signature.scrollToButton();
-          return;
+  moveToNextSignField(signStatus, signatures = this.signatures.toArray().filter(el => el.isActiveSignRow)) {
+    if (!this.offer.isSigned && signStatus === true) {
+      if (signatures.length) {
+        for (const sd of signatures) {
+          if (sd.isActiveSignRow && !sd.signatureControl.value) {
+            sd.scrollToButton();
+            return true;
+          }
         }
       }
 
       this.openFinishingDialog();
+      return false;
     }
   }
 
@@ -903,7 +904,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         if (this.profileService.previousRouteUrl && this.profileService.previousRouteUrl.includes('counter-offers')) {
           this.router.navigateByUrl(this.profileService.previousRouteUrl);
         } else {
-          this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/${this.offer.progress >= 3 ? 'details' : 'step-three'}`);
+          this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/${this.offer.progress >= 3 ? 'details' : 'step-three'}`);
         }
       }, () => {
         this.offer.isSigned = false;
@@ -979,6 +980,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(FinishSigningDialogComponent, {width: '600px'});
 
     dialogRef.afterClosed()
+      .pipe(takeUntil(this.onDestroyed$))
       .subscribe((isFinished: boolean) => {
         if (isFinished) {
           this.finalSignAgreement();

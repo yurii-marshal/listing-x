@@ -4,7 +4,7 @@ import { ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } fro
 import { CounterOffer } from '../../../core-modules/models/counter-offer';
 import { CounterOfferService } from '../services/counter-offer.service';
 import { debounceTime, takeUntil } from 'rxjs/operators';
-import { FormControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { User } from '../../auth/models';
 import * as _ from 'lodash';
 import { MatDialog, MatSnackBar, MatSnackBarConfig } from '@angular/material';
@@ -140,26 +140,26 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   }
 
   nextField(signStatus, signatures = this.signatures.toArray().filter(el => el.isActiveSignRow)): boolean {
-    if (signStatus === true && (!this.counterOffer.isSigned || this.isMCOFinalSign)) {
-      if (signatures.length) {
-        for (const sd of signatures) {
-          if (sd.isActiveSignRow && !sd.signatureControl.value) {
-            sd.scrollToButton();
-            return true;
+    if (!this.counterOffer.isSigned || this.isMCOFinalSign) {
+      if (signStatus === true) {
+        if (signatures.length) {
+          for (const sd of signatures) {
+            if (sd.isActiveSignRow && !sd.signatureControl.value) {
+              sd.scrollToButton();
+              return true;
+            }
           }
         }
-      } else {
+
         this.openFinishingDialog();
         return false;
       }
 
-    } else if (signStatus.notSignedPA) {
-      this.form.nativeElement.blur();
-      this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/sign`);
-      return false;
+      if (signStatus.notSignedPA) {
+        this.form.nativeElement.blur();
+        this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/sign`);
+      }
     }
-
-    return false;
   }
 
   continue() {
@@ -342,7 +342,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   }
 
   private signCO() {
-    if (this.nextField(true)) {
+    if (!this.signatures.toArray().filter(el => el.isActiveSignRow).every((el) => !!el.signatureControl.value)) {
       this.snackbar.open('Please, sign all mandatory fields');
     } else {
       this.counterOfferService.signCounterOffer(this.id, this.isMCOFinalSign ? 'final_approval' : 'sign')
@@ -369,9 +369,16 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     const dialogRef = this.dialog.open(FinishSigningDialogComponent, {width: '600px'});
 
     dialogRef.afterClosed()
+      .pipe(takeUntil(this.onDestroyed$))
       .subscribe((isFinished: boolean) => {
         if (isFinished) {
-          this.signCO();
+          if (this.offer.isSigned) {
+            this.signCO();
+          } else {
+            this.form.nativeElement.blur();
+            this.snackbar.open('Please, sign the purchase agreement first.');
+            this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/sign`);
+          }
         }
       });
   }
