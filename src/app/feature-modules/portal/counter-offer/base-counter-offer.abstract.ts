@@ -151,7 +151,10 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
           }
         }
 
-        this.openFinishingDialog();
+        if (signatures.length) {
+          this.openFinishingDialog();
+        }
+
         return false;
       }
 

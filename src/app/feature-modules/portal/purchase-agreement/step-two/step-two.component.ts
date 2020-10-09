@@ -4,9 +4,9 @@ import { Offer } from '../../../../core-modules/models/offer';
 import { DateAdapter, MAT_DATE_FORMATS, MatDialog, MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { EditOfferDialogComponent } from '../../../../shared-modules/dialogs/edit-offer-dialog/edit-offer-dialog.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { debounceTime, filter, takeUntil } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 import { fromEvent, Observable, Subject } from 'rxjs';
-import { FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SaveOfferDialogComponent } from '../../../../shared-modules/dialogs/save-offer-dialog/save-offer-dialog.component';
 import { DatePipe } from '@angular/common';
 import * as _ from 'lodash';
@@ -597,17 +597,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/details`);
   }
 
-  // switchDaysAndDate(value: string, daysControlName: string, dateControlName: string, emit = true) {
-  //   switch (value) {
-  //     case 'date':
-  //       this.setRelatedFields(dateControlName, daysControlName, emit);
-  //       break;
-  //     case 'days':
-  //       this.setRelatedFields(daysControlName, dateControlName, emit);
-  //       break;
-  //   }
-  // }
-
   modeChanged(isSign: boolean) {
     isSign
       ? this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/sign`)
@@ -909,7 +898,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       }, () => {
         this.offer.isSigned = false;
         this.snackbar.open('Cannot sign the offer');
-        // this.router.navigate([`portal/purchase-agreements/${this.offerId}/details`]);
       });
   }
 
