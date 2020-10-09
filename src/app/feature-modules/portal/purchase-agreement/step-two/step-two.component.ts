@@ -594,13 +594,13 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
   closeOffer() {
     this.form.nativeElement.blur();
-    this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/details`);
+    this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/details`);
   }
 
   modeChanged(isSign: boolean) {
     isSign
-      ? this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/sign`)
-      : this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/step-two`);
+      ? this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/sign`)
+      : this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/step-two`);
   }
 
   editOffer(offerChangedModel?: Offer) {
@@ -706,9 +706,9 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     if (this.offer.userRole === 'agent_buyer'
       && this.isSignMode
       && (this.documentForm.invalid || !this.offer.allowSign || this.offer.isSigned)) {
-      this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/step-two`);
+      this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/step-two`);
     } else if (this.offer.userRole !== 'agent_buyer' && !this.isSignMode) {
-      this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/sign`);
+      this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/sign`);
     } else if (this.isSignMode && this.offer.allowSign) {
       this.activateSignButtons();
     }
@@ -893,7 +893,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         if (this.profileService.previousRouteUrl && this.profileService.previousRouteUrl.includes('counter-offers')) {
           this.router.navigateByUrl(this.profileService.previousRouteUrl);
         } else {
-          this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/${this.offer.progress >= 3 ? 'details' : 'step-three'}`);
+          this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/${this.offer.progress >= 3 ? 'details' : 'step-three'}`);
         }
       }, () => {
         this.offer.isSigned = false;
