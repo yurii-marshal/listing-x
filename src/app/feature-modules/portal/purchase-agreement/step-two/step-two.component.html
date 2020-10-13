@@ -4627,8 +4627,13 @@
                 known as
                 <input formControlName="text_agreement_address" type="text" class="i-lr-10__5"> (“Property”), <br>
                 between
-                <input formControlName="text_sign_buyer" type="text" class="i-lr-12"> ("Buyer"), <br> and
-                <input formControlName="text_sign_seller" type="text" class="i-lr-12__45"> ("Seller").
+                <input formControlName="text_sign_buyer"
+                       appSignature
+                       (fieldSigned)="moveToNextSignField($event)"
+                       type="text" class="i-lr-12"> ("Buyer"), <br> and
+                <input formControlName="text_sign_seller"
+                       appSignature (fieldSigned)="moveToNextSignField($event)"
+                       type="text" class="i-lr-12__45"> ("Seller").
               </div>
               <div>
                 <div>
@@ -4702,19 +4707,32 @@
                   Date &nbsp; <input formControlName="date_buyer_first_sign" type="text" class="i-lr-6">
                   <br>
                   <br>
-                  Buyer <input formControlName="text_buyer_first_sign" type="text" class="i-lr-6">
+                  Buyer <input formControlName="text_buyer_first_sign"
+                               appSignature
+                               (fieldSigned)="moveToNextSignField($event)"
+                               [withDateControl]="'date_buyer_first_sign'"
+                               type="text" class="i-lr-6">
                   <br>
                   <br>
-                  Buyer <input formControlName="text_buyer_second_sign" type="text" class="i-lr-6">
+                  Buyer <input formControlName="text_buyer_second_sign"
+                               appSignature (fieldSigned)="moveToNextSignField($event)"
+                               type="text" class="i-lr-6">
                 </div>
                 <div class="f-r ml-4">
                   Date &nbsp;<input formControlName="date_seller_first_sign" type="text" class="i-lr-6">
                   <br>
                   <br>
-                  Seller <input formControlName="text_seller_first_sign" type="text" class="i-lr-6">
+                  Seller <input formControlName="text_seller_first_sign"
+                                appSignature
+                                (fieldSigned)="moveToNextSignField($event)"
+                                [withDateControl]="'date_seller_first_sign'"
+                                type="text" class="i-lr-6">
                   <br>
                   <br>
-                  Seller <input formControlName="text_seller_second_sign" type="text" class="i-lr-6">
+                  Seller <input formControlName="text_seller_second_sign"
+                                appSignature
+                                (fieldSigned)="moveToNextSignField($event)"
+                                type="text" class="i-lr-6">
                 </div>
               </div>
               <br>
@@ -4857,9 +4875,15 @@
                 known as
                 <input formControlName="text_seller_property" type="text" class="i-lr-11"> (“Seller's
                 Property”), between &nbsp;
-                <input formControlName="text_buyer_sign" type="text" class="i-lr-12">&nbsp; ("Buyer"),
+                <input formControlName="text_buyer_sign"
+                       appSignature
+                       (fieldSigned)="moveToNextSignField($event)"
+                       type="text" class="i-lr-12">&nbsp; ("Buyer"),
                 &nbsp; and &nbsp;
-                <input formControlName="text_seller_sign" type="text" class="i-lr-12__45"> &nbsp;("Seller").
+                <input formControlName="text_seller_sign"
+                       appSignature
+                       (fieldSigned)="moveToNextSignField($event)"
+                       type="text" class="i-lr-12__45"> &nbsp;("Seller").
               </div>
               <div>
                 <span class="fw-bold">SALE OF BUYER'S PROPERTY:</span>
@@ -5107,18 +5131,32 @@
                 <div class="f-l">
                   Date &nbsp; <input formControlName="date_buyer_first_sign_copy" type="text" class="i-lr-6">
                   <br>
-                  Buyer <input formControlName="text_buyer_first_sign_copy" type="text" class="i-lr-6">
+                  Buyer <input formControlName="text_buyer_first_sign_copy"
+                               appSignature
+                               (fieldSigned)="moveToNextSignField($event)"
+                               [withDateControl]="'date_buyer_first_sign_copy'"
+                               type="text" class="i-lr-6">
                   <br>
                   <br>
-                  Buyer <input formControlName="text_buyer_second_sign_copy" type="text" class="i-lr-6">
+                  Buyer <input formControlName="text_buyer_second_sign_copy"
+                               appSignature
+                               (fieldSigned)="moveToNextSignField($event)"
+                               type="text" class="i-lr-6">
                 </div>
                 <div class="f-r ml-4">
                   Date &nbsp;<input formControlName="date_seller_first_sign_copy" type="text" class="i-lr-6">
                   <br>
-                  Seller <input formControlName="text_seller_first_sign_copy" type="text" class="i-lr-6">
+                  Seller <input formControlName="text_seller_first_sign_copy"
+                                appSignature
+                                (fieldSigned)="moveToNextSignField($event)"
+                                [withDateControl]="'date_seller_first_sign_copy'"
+                                type="text" class="i-lr-6">
                   <br>
                   <br>
-                  Seller <input formControlName="text_seller_second_sign_copy" type="text" class="i-lr-6">
+                  Seller <input formControlName="text_seller_second_sign_copy"
+                                appSignature
+                                (fieldSigned)="moveToNextSignField($event)"
+                                type="text" class="i-lr-6">
                 </div>
               </div>
               <hr>
@@ -5129,26 +5167,43 @@
               </div>
               <div>
                 Seller&nbsp;
-                <input formControlName="text_seller_first_sign_notice" type="text" class="i-lr-4">
+                <input formControlName="text_seller_first_sign_notice"
+                       appSignature
+                       (fieldSigned)="moveToNextSignField($event)"
+                       [withDateControl]="'date_seller_first_sign_notice'"
+                       type="text" class="i-lr-4">
                 &nbsp;Date &nbsp;
                 <input formControlName="date_seller_first_sign_notice" type="text" class="i-lr-1__5">
                 &nbsp;Seller &nbsp;
-                <input formControlName="text_seller_second_sign_notice" type="text" class="i-lr-4">
+                <input formControlName="text_seller_second_sign_notice"
+                       appSignature
+                       (fieldSigned)="moveToNextSignField($event)"
+                       [withDateControl]="'date_seller_second_sign_notice'"
+                       type="text" class="i-lr-4">
                 &nbsp;Date &nbsp;
                 <input formControlName="date_seller_second_sign_notice" type="text" class="i-lr-1__5">
               </div>
               <div>
                 <br>
                 <div>
-                  ( <input formControlName="text_seller_first_initials" type="text" class="i-lr-1"> /
-                  <input formControlName="text_seller_second_initials" type="text" class="i-lr-1"> ) (Initials)
+                  ( <input formControlName="text_seller_first_initials"
+                           appSignature [mode]="'initials'"
+                           (fieldSigned)="moveToNextSignField($event)"
+                           [withDateControl]="'date_signed_notice_date'"
+                           [withTimeControl]="'text_signed_notice_time'"
+                           [withAmpmControl]="'radio_signed_notice_ampm'"
+                           type="text" class="i-lr-1"> /
+                  <input formControlName="text_seller_second_initials"
+                         appSignature [mode]="'initials'"
+                         (fieldSigned)="moveToNextSignField($event)"
+                         type="text" class="i-lr-1"> ) (Initials)
                   <span class="fw-bold">CONFIRMATION OF RECEIPT:</span>
                   A Copy of this Signed Notice to Buyer to remove contingencies and take actions was
                   personally received by Buyer or authorized agent on
                   <input formControlName="date_signed_notice_date" type="text" class="i-lr-1"> at
                   <input formControlName="text_signed_notice_time" type="text" class="i-lr-1">
-                  <input formControlName="check_signed_notice_am" type="checkbox"> AM/
-                  <input formControlName="check_signed_notice_pm" type="checkbox"> PM.
+                  <input formControlName="radio_signed_notice_ampm" type="radio" value="am"> AM/
+                  <input formControlName="radio_signed_notice_ampm" type="radio" value="pm"> PM.
                   <span class="fw-bold">
                         Completion of this confirmation is not legally required. It is solely intended to evidence the
                         date that confirmation or receipt has occurred.
@@ -5239,21 +5294,35 @@
                                                   class="i-lr-5__5">
                   <br>
                   <br>
-                  Buyer/Tenant <input formControlName="text_buyer_first_sign" type="text" class="i-lr-5">
+                  Buyer/Tenant <input formControlName="text_buyer_first_sign"
+                                      appSignature
+                                      (fieldSigned)="moveToNextSignField($event)"
+                                      [withDateControl]="'date_buyer_first_sign'"
+                                      type="text" class="i-lr-5">
                   <br>
                   <br>
                   <br>
-                  Buyer/Tenant <input formControlName="text_buyer_second_sign" type="text" class="i-lr-5">
+                  Buyer/Tenant <input formControlName="text_buyer_second_sign"
+                                      appSignature
+                                      (fieldSigned)="moveToNextSignField($event)"
+                                      type="text" class="i-lr-5">
                 </div>
                 <div class="f-r ml-4">
                   Date <input formControlName="date_seller_first_sign" type="text" class="i-lr-6">
                   <br>
                   <br>
-                  Seller/Landlord <input formControlName="text_seller_first_sign" type="text" class="i-lr-5">
+                  Seller/Landlord <input formControlName="text_seller_first_sign"
+                                         appSignature
+                                         (fieldSigned)="moveToNextSignField($event)"
+                                         [withDateControl]="'date_seller_first_sign'"
+                                         type="text" class="i-lr-5">
                   <br>
                   <br>
                   <br>
-                  Seller/Landlord <input formControlName="text_seller_second_sign" type="text" class="i-lr-5">
+                  Seller/Landlord <input formControlName="text_seller_second_sign"
+                                         appSignature
+                                         (fieldSigned)="moveToNextSignField($event)"
+                                         type="text" class="i-lr-5">
                 </div>
               </div>
             </div>
