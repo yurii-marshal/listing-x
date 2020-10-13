@@ -4603,8 +4603,6 @@
 
           <div class="page-breaker" id="page-16">16</div>
 
-          <!--TODO: new additional pages-->
-
           <div *ngIf="additionalList['FHA/VA']" formGroupName="page_17" class="container" style="font-size: 21px; line-height: 1.4;">
             <header class="clearfix">
               <img src="assets/agreement/images/logo1.png" width="350" height="120" class="image">
@@ -4621,11 +4619,10 @@
                 <input formControlName="check_agreement_residential" type="checkbox"> California Residential Purchase
                 Agreement or
                 <input formControlName="check_agreement_other" type="checkbox"> Other
-                <!--<input formControlName="text_agreement_name" type="text" class="i-lr-5__5">-->
-                <input formControlName="text_agreement_name" type="text" class="i-lr-9"> (“Agreement”), dated
-                <input formControlName="date_agreement_date" type="text" class="i-lr-2__5"> , <br> on property
+                <input formControlName="text_agreement_name" type="text" class="i-lr-5__5"> (“Agreement”), dated
+                <input formControlName="date_agreement_date" type="text" class="i-lr-2__5"> , on property
                 known as
-                <input formControlName="text_agreement_address" type="text" class="i-lr-10__5"> (“Property”), <br>
+                <input formControlName="text_agreement_address" type="text" class="i-lr-6"> (“Property”), <br>
                 between
                 <input formControlName="text_sign_buyer"
                        appSignature
@@ -4868,17 +4865,16 @@
               <div>
                 This is an addendum to the Purchase Agreement,
                 <input formControlName="check_agreement_purchase" type="checkbox"> Other &nbsp;
-                <input formControlName="check_agreement_other" type="text" class="i-lr-8">
                 <input formControlName="text_agreement_name" type="text" class="i-lr-8"> (“Agreement”), dated
                 &nbsp;
                 <input formControlName="date_agreement_date" type="text" class="i-lr-2__5">&nbsp; , on property
                 known as
-                <input formControlName="text_seller_property" type="text" class="i-lr-11"> (“Seller's
+                <input formControlName="text_seller_property" type="text" class="i-lr-6"> (“Seller's
                 Property”), between &nbsp;
                 <input formControlName="text_buyer_sign"
                        appSignature
                        (fieldSigned)="moveToNextSignField($event)"
-                       type="text" class="i-lr-12">&nbsp; ("Buyer"),
+                       type="text" class="i-lr-11">&nbsp; ("Buyer"),
                 &nbsp; and &nbsp;
                 <input formControlName="text_seller_sign"
                        appSignature

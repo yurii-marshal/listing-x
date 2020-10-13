@@ -590,7 +590,6 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
       }),
       page_18: this.fb.group({
         check_agreement_purchase: [{value: '', disabled: this.isDisabled}, []],
-        check_agreement_other: [{value: '', disabled: this.isDisabled}, []],
         text_agreement_name: [{value: '', disabled: this.isDisabled}, []],
         date_agreement_date: [{value: '', disabled: true}, []],
         text_seller_property: [{value: '', disabled: this.isDisabled}, []],
