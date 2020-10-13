@@ -1,4 +1,13 @@
-import { Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren
+} from '@angular/core';
 import { OfferService } from '../../services/offer.service';
 import { Offer } from '../../../../core-modules/models/offer';
 import { DateAdapter, MAT_DATE_FORMATS, MatDialog, MatSnackBar, MatSnackBarConfig } from '@angular/material';
@@ -18,7 +27,6 @@ import { ConfirmationBarComponent } from '../../../../shared-modules/components/
 import { PICK_FORMATS, PickDateAdapter } from '../../../../core-modules/adapters/date-adapter';
 import { FinishSigningDialogComponent } from '../../../../shared-modules/dialogs/finish-signing-dialog/finish-signing-dialog.component';
 import { ProfileService } from '../../../../core-modules/core-services/profile.service';
-import { CounterOfferType } from '../../../../core-modules/models/counter-offer-type';
 
 @Component({
   selector: 'app-step-two',
@@ -30,7 +38,7 @@ import { CounterOfferType } from '../../../../core-modules/models/counter-offer-
     {provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS},
   ]
 })
-export class StepTwoComponent implements OnInit, OnDestroy {
+export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('form', {static: true}) form: ElementRef;
   @ViewChildren(SignatureDirective) signatures: QueryList<SignatureDirective>;
 
@@ -59,15 +67,20 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
   datepickerMinDate: Date = new Date();
 
+  additionalList = {
+    'FHA/VA': false,
+    CONTINGENCY: false,
+    ADDENDA: false,
+  };
+
+  readonly AGREEMENT_PAGE_NUM = 16;
+  additionalPageCount: number[] = [];
+
   private user: User;
-
   private isDisabled: boolean;
-
   private onDestroyed$: Subject<void> = new Subject<void>();
-
   private pageBreakersOffsetTop: number[];
   private documentFormEl: EventTarget;
-
   private downPaymentAmountPredicates: string[] = [
     'text_offer_price_digits',
     'text_finance_terms_amount',
@@ -535,6 +548,15 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         text_privacy_act_advisory_second: this.getSignFieldAllowedFor('buyers', 1),
         date_privacy_act_advisory_second: [{value: '', disabled: true}, []],
       }),
+      page_17: this.fb.group({
+        date_presentation_of_offer_1: [{value: '', disabled: true}, []],
+      }),
+      page_18: this.fb.group({
+        date_presentation_of_offer_1: [{value: '', disabled: true}, []],
+      }),
+      page_19: this.fb.group({
+        date_presentation_of_offer_1: [{value: '', disabled: true}, []],
+      }),
     }, {updateOn: 'blur'});
   }
 
@@ -559,43 +581,12 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
     this.getOfferAgreement();
 
-    this.initPageBreakers();
+    this.getAdditionalCount();
     this.subscribeToFormChanges();
   }
 
-  continue() {
-    if (this.isSignMode) {
-      const isSigningComplete = this.signatures.toArray().filter(el => el.isActiveSignRow).every((el) => !!el.signatureControl.value);
-
-      if (isSigningComplete) {
-        if (this.offer.allowSign && !this.offer.isSigned) {
-          this.openFinishingDialog();
-        } else {
-          this.closeOffer();
-        }
-      } else {
-        this.snackbar.open('Please, fill all sign fields');
-        this.moveToNextSignField(true);
-      }
-    } else {
-      this.form.nativeElement.blur();
-      this.documentForm.markAllAsTouched();
-
-      if (this.scrollToFirstInvalidField()) {
-        this.snackbar.open('Please, fill all mandatory fields');
-      } else {
-        this.offerService.updateOfferProgress({progress: 3}, this.offerId)
-          .pipe(takeUntil(this.onDestroyed$))
-          .subscribe(() => {
-            this.router.navigate([`portal/purchase-agreements/${this.offerId}/step-three`]);
-          });
-      }
-    }
-  }
-
-  closeOffer() {
-    this.form.nativeElement.blur();
-    this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/details`);
+  ngAfterViewInit() {
+    this.setPageBreakers();
   }
 
   modeChanged(isSign: boolean) {
@@ -623,11 +614,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
           this.openSaveOfferDialog(data.changedOfferModel);
         }
       });
-  }
-
-  ngOnDestroy(): void {
-    this.onDestroyed$.next();
-    this.onDestroyed$.complete();
   }
 
   moveToNextSignField(signStatus, signatures = this.signatures.toArray().filter(el => el.isActiveSignRow)) {
@@ -668,6 +654,75 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         this.setRelatedFields(checked ? daysControlName : dateControlName, checked ? dateControlName : daysControlName, emit);
         break;
     }
+  }
+
+  additionalListChanges(pageId: string) {
+    switch (pageId) {
+      case 'FHA/VA':
+        this.additionalList[pageId] =
+          this.documentForm.get('page_5.check_finance_loan_type_fha').value ||
+          this.documentForm.get('page_5.check_finance_loan_type_va').value ||
+          this.documentForm.get('page_5.check_finance_loan_type_seller').value ||
+          this.documentForm.get('page_5.check_finance_loan_type_assumed').value ||
+          this.documentForm.get('page_5.check_finance_loan_type_other').value;
+        break;
+      case 'CONTINGENCY':
+        this.additionalList[pageId] = this.documentForm.get('page_6.check_sale_of_buyers_property').value;
+        break;
+      case 'ADDENDA':
+        this.additionalList[pageId] =
+          this.documentForm.get('page_6.check_addenda_addendum').value ||
+          this.documentForm.get('page_6.check_addenda_back_up_offer').value;
+        break;
+    }
+
+    this.getAdditionalCount();
+    this.setPageBreakers();
+  }
+
+  continue() {
+    if (this.isSignMode) {
+      const isSigningComplete = this.signatures.toArray().filter(el => el.isActiveSignRow).every((el) => !!el.signatureControl.value);
+
+      if (isSigningComplete) {
+        if (this.offer.allowSign && !this.offer.isSigned) {
+          this.openFinishingDialog();
+        } else {
+          this.closeOffer();
+        }
+      } else {
+        this.snackbar.open('Please, fill all sign fields');
+        this.moveToNextSignField(true);
+      }
+    } else {
+      this.form.nativeElement.blur();
+      this.documentForm.markAllAsTouched();
+
+      if (this.scrollToFirstInvalidField()) {
+        this.snackbar.open('Please, fill all mandatory fields');
+      } else {
+        this.offerService.updateOfferProgress({progress: 3}, this.offerId)
+          .pipe(takeUntil(this.onDestroyed$))
+          .subscribe(() => {
+            this.router.navigate([`portal/purchase-agreements/${this.offerId}/step-three`]);
+          });
+      }
+    }
+  }
+
+  closeOffer() {
+    this.form.nativeElement.blur();
+    this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/details`);
+  }
+
+  ngOnDestroy(): void {
+    this.onDestroyed$.next();
+    this.onDestroyed$.complete();
+  }
+
+  private getAdditionalCount() {
+    let firstPageCount = this.AGREEMENT_PAGE_NUM + 1;
+    this.additionalPageCount = [...Object.values(this.additionalList).map((page) => page ? firstPageCount++ : null)];
   }
 
   private getOfferAgreement() {
@@ -904,7 +959,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       });
   }
 
-  private initPageBreakers() {
+  private setPageBreakers() {
     this.pageBreakersOffsetTop =
       Array.from(this.elRef.nativeElement.querySelectorAll('.page-breaker'))
         .map((item: any) => item.offsetTop);
