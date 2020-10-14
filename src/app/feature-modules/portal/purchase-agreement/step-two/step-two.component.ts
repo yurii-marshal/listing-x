@@ -68,9 +68,9 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
   datepickerMinDate: Date = new Date();
 
   additionalList = {
-    'FHA/VA': true,
-    CONTINGENCY: true,
-    ADDENDA: true,
+    'FHA/VA': false,
+    CONTINGENCY: false,
+    ADDENDA: false,
   };
 
   readonly AGREEMENT_PAGE_NUM = 16;
@@ -552,7 +552,6 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
         check_agreement_residential: [{value: null, disabled: this.isDisabled}, []],
         check_agreement_other: [{value: null, disabled: this.isDisabled}, []],
         text_agreement_name: [{value: null, disabled: this.isDisabled}, []],
-        date_agreement_date: [{value: null, disabled: this.isDisabled}, []],
         text_agreement_address: [{value: null, disabled: this.isDisabled}, []],
         text_sign_buyer: this.getSignFieldAllowedFor('buyers', 0),
         text_sign_seller: this.getSignFieldAllowedFor('sellers', 0),
@@ -563,39 +562,39 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
         date_seller_first_sign: [{value: null, disabled: true}, []],
         text_seller_first_sign: this.getSignFieldAllowedFor('sellers', 0),
         text_seller_second_sign: this.getSignFieldAllowedFor('sellers', 1),
-        text_seller_broker_firm_name: [{value: null, disabled: this.isDisabled}, []],
-        text_seller_broker_firm_license: [{value: null, disabled: this.isDisabled}, []],
-        text_seller_broker_name: [{value: null, disabled: this.isDisabled}, []],
-        text_seller_broker_license: [{value: null, disabled: this.isDisabled}, []],
-        date_seller_broker_license: [{value: null, disabled: this.isDisabled}, []],
-        text_seller_broker_address: [{value: null, disabled: this.isDisabled}, []],
-        text_seller_broker_city: [{value: null, disabled: this.isDisabled}, []],
-        text_seller_broker_state: [{value: null, disabled: this.isDisabled}, []],
-        text_seller_broker_zip: [{value: null, disabled: this.isDisabled}, []],
-        text_seller_broker_phone: [{value: null, disabled: this.isDisabled}, []],
-        text_seller_broker_fax: [{value: null, disabled: this.isDisabled}, []],
-        text_seller_broker_email: [{value: null, disabled: this.isDisabled}, []],
-        text_buyer_broker_firm_name: [{value: null, disabled: this.isDisabled}, []],
-        text_buyer_broker_firm_license: [{value: null, disabled: this.isDisabled}, []],
-        text_buyer_broker_name: [{value: null, disabled: this.isDisabled}, []],
-        text_buyer_broker_license: [{value: null, disabled: this.isDisabled}, []],
-        date_buyer_broker_license: [{value: null, disabled: this.isDisabled}, []],
-        text_buyer_broker_address: [{value: null, disabled: this.isDisabled}, []],
-        text_buyer_broker_city: [{value: null, disabled: this.isDisabled}, []],
-        text_buyer_broker_state: [{value: null, disabled: this.isDisabled}, []],
-        text_buyer_broker_zip: [{value: null, disabled: this.isDisabled}, []],
-        text_buyer_broker_phone: [{value: null, disabled: this.isDisabled}, []],
-        text_buyer_broker_fax: [{value: null, disabled: this.isDisabled}, []],
-        text_buyer_broker_email: [{value: null, disabled: this.isDisabled}, []],
+        text_seller_broker_firm_name: [{value: null, disabled: true}, []],
+        text_seller_broker_firm_license: [{value: null, disabled: true}, []],
+        text_seller_broker_name: [{value: null, disabled: true}, []],
+        text_seller_broker_license: [{value: null, disabled: true}, []],
+        date_seller_broker_license: [{value: null, disabled: true}, []],
+        text_seller_broker_address: [{value: null, disabled: true}, []],
+        text_seller_broker_city: [{value: null, disabled: true}, []],
+        text_seller_broker_state: [{value: null, disabled: true}, []],
+        text_seller_broker_zip: [{value: null, disabled: true}, []],
+        text_seller_broker_phone: [{value: null, disabled: true}, []],
+        text_seller_broker_fax: [{value: null, disabled: true}, []],
+        text_seller_broker_email: [{value: null, disabled: true}, []],
+        text_buyer_broker_firm_name: [{value: null, disabled: true}, []],
+        text_buyer_broker_firm_license: [{value: null, disabled: true}, []],
+        text_buyer_broker_name: [{value: null, disabled: true}, []],
+        text_buyer_broker_license: [{value: null, disabled: true}, []],
+        date_buyer_broker_license: [{value: null, disabled: true}, []],
+        text_buyer_broker_address: [{value: null, disabled: true}, []],
+        text_buyer_broker_city: [{value: null, disabled: true}, []],
+        text_buyer_broker_state: [{value: null, disabled: true}, []],
+        text_buyer_broker_zip: [{value: null, disabled: true}, []],
+        text_buyer_broker_phone: [{value: null, disabled: true}, []],
+        text_buyer_broker_fax: [{value: null, disabled: true}, []],
+        text_buyer_broker_email: [{value: null, disabled: true}, []],
       }),
       page_18: this.fb.group({
         check_agreement_purchase: [{value: '', disabled: this.isDisabled}, []],
         text_agreement_name: [{value: '', disabled: this.isDisabled}, []],
         date_agreement_date: [{value: '', disabled: true}, []],
-        text_seller_property: [{value: '', disabled: this.isDisabled}, []],
+        text_seller_property: [{value: '', disabled: true}, []],
         text_buyer_sign: this.getSignFieldAllowedFor('buyers', 0),
         text_seller_sign: this.getSignFieldAllowedFor('sellers', 0),
-        text_buyer_property: [{value: '', disabled: this.isDisabled}, []],
+        text_buyer_property: [{value: '', disabled: true}, []],
         check_describe_other: [{value: '', disabled: this.isDisabled}, []],
         text_describe_other: [{value: '', disabled: this.isDisabled}, []],
         text_after_close_escrow_days: [{value: '', disabled: this.isDisabled}, []],
@@ -634,16 +633,15 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
         radio_signed_notice_ampm: [{value: '', disabled: true}, []],
       }),
       page_19: this.fb.group({
-        text_addendum_number: [{value: '', disabled: this.isDisabled}, []],
+        text_addendum_number: [{value: '', disabled: true}, []],
         check_terms_for_agreement: [{value: '', disabled: this.isDisabled}, []],
         check_terms_for_residential_lease: [{value: '', disabled: this.isDisabled}, []],
         check_terms_for_tds: [{value: '', disabled: this.isDisabled}, []],
         check_terms_for_other: [{value: '', disabled: this.isDisabled}, []],
         text_terms_for_other: [{value: '', disabled: this.isDisabled}, []],
-        date_terms_for_date: [{value: '', disabled: this.isDisabled}, []],
-        text_property_name: [{value: '', disabled: this.isDisabled}, []],
-        text_referred_to_buyer: [{value: '', disabled: this.isDisabled}, []],
-        text_referred_to_seller: [{value: '', disabled: this.isDisabled}, []],
+        text_property_name: [{value: '', disabled: true}, []],
+        text_referred_to_buyer: [{value: '', disabled: true}, []],
+        text_referred_to_seller: [{value: '', disabled: true}, []],
         text_terms_and_conditions: [{value: '', disabled: this.isDisabled}, []],
         date_buyer_first_sign: [{value: '', disabled: true}, []],
         text_buyer_first_sign: this.getSignFieldAllowedFor('buyers', 0),
@@ -827,6 +825,7 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
       .pipe(takeUntil(this.onDestroyed$))
       .subscribe((model) => {
         this.patchForm(model);
+        this.updateAdditionalPages();
 
         this.checkSignAccess();
 
@@ -839,6 +838,12 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.isLoading = false;
       });
+  }
+
+  private updateAdditionalPages() {
+    Object.entries(this.additionalList)
+      .filter(item => item[1])
+      .map(page => this.additionalListChanges(page[0]));
   }
 
   private initSwitchDaysAndDate() {
