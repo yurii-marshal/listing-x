@@ -3,9 +3,7 @@
     <div class="u-flex viewer">
       <div class="doc-container">
 
-        <div class="loading" *ngIf="isLoading">
-
-        </div>
+        <div class="loading" *ngIf="isLoading"></div>
 
         <form class="document-form" [formGroup]="documentForm" #form>
 
@@ -1222,15 +1220,15 @@
                     <div class="item-pl-3 ">
                       This loan will be conventional financing
                       <span class="fw-bold">OR</span>
-                      <input formControlName="check_finance_loan_type_fha" type="checkbox">
+                      <input (change)="additionalListChanges('FHA/VA')" formControlName="check_finance_loan_type_fha" type="checkbox">
                       FHA,
-                      <input formControlName="check_finance_loan_type_va" type="checkbox">
+                      <input (change)="additionalListChanges('FHA/VA')" formControlName="check_finance_loan_type_va" type="checkbox">
                       VA,
-                      <input formControlName="check_finance_loan_type_seller" type="checkbox">
+                      <input (change)="additionalListChanges('FHA/VA')" formControlName="check_finance_loan_type_seller" type="checkbox">
                       Seller financing (C.A.R. Form SFA),
-                      <input formControlName="check_finance_loan_type_assumed" type="checkbox">
+                      <input (change)="additionalListChanges('FHA/VA')" formControlName="check_finance_loan_type_assumed" type="checkbox">
                       assumed financing (C.A.R. Form AFA),
-                      <input formControlName="check_finance_loan_type_other" type="checkbox">
+                      <input (change)="additionalListChanges('FHA/VA')" formControlName="check_finance_loan_type_other" type="checkbox">
                       Other
                       <input formControlName="text_finance_loan_type_other_details" type="text" class="i-lr-2">.
                       This loan shall be at a fixed
@@ -1523,7 +1521,7 @@
               </div>
               <div>
                 <span class="fw-bold f-l">OR&nbsp;B.&nbsp;</span>
-                <div class="item-pl-35"><input formControlName="check_sale_of_buyers_property" type="checkbox">
+                <div class="item-pl-35"><input (change)="additionalListChanges('CONTINGENCY')" formControlName="check_sale_of_buyers_property" type="checkbox">
                   This Agreement and Buyer's ability to obtain financing are contingent upon the sale of property
                   owned by
                   Buyer as specified
@@ -1535,8 +1533,8 @@
                 <span class="f-l"> A. &nbsp;ADDENDA:</span>
                 <div class="item-pl-3">
                   <div style="border-bottom: rgb(122, 120, 120) 1px solid;">
-                    &nbsp; <input formControlName="check_addenda_addendum" type="checkbox"> Addendum # (C.A.R. Form ADM)
-                    &nbsp; <input formControlName="check_addenda_back_up_offer" type="checkbox"> Back Up Offer Addendum
+                    &nbsp; <input (change)="additionalListChanges('ADDENDA')" formControlName="check_addenda_addendum" type="checkbox"> Addendum # (C.A.R. Form ADM)
+                    &nbsp; <input (change)="additionalListChanges('ADDENDA')" formControlName="check_addenda_back_up_offer" type="checkbox"> Back Up Offer Addendum
                     (C.A.R. Form BUO)
                   </div>
 
@@ -4146,7 +4144,9 @@
                   <input formControlName="text_broker_designee_initials" type="text" class="i-lr-3 text-center">
                   </span>
                   &nbsp; Seller's Broker presented this offer to Seller on
-                  &nbsp;<input matInput [min]="datepickerMinDate" (click)="date_presentation_of_offer.open()"
+                  &nbsp;<input matInput
+                               [min]="datepickerMinDate"
+                               (click)="date_presentation_of_offer.open()"
                                [matDatepicker]="date_presentation_of_offer"
                                formControlName="date_presentation_of_offer"
                                type="text"
@@ -4602,6 +4602,769 @@
           </div>
 
           <div class="page-breaker" id="page-16">16</div>
+
+          <div *ngIf="additionalList['FHA/VA']" formGroupName="page_17" class="container" style="font-size: 21px; line-height: 1.4;">
+            <header class="clearfix">
+              <img src="assets/agreement/images/logo1.png" width="350" height="120" class="image">
+              <div class="box">
+                <br>
+                <div class="main-title">FHA/VA Amendatory Clause</div>
+                <div class="main-subtitle">(C.A.R. Form FVAC, Revised 12/16)</div>
+              </div>
+            </header>
+            <br>
+            <div class="form">
+              <div>
+                This is an addendum to the
+                <input formControlName="check_agreement_residential" type="checkbox"> California Residential Purchase
+                Agreement or
+                <input formControlName="check_agreement_other" type="checkbox"> Other
+                <input formControlName="text_agreement_name" type="text" class="i-lr-5__5"> (“Agreement”), on property
+                known as
+                <input formControlName="text_agreement_address" type="text" class="i-lr-9"> (“Property”), <br>
+                between
+                <input formControlName="text_sign_buyer"
+                       appSignature
+                       (fieldSigned)="moveToNextSignField($event)"
+                       type="text" class="i-lr-12"> ("Buyer"), <br> and
+                <input formControlName="text_sign_seller"
+                       appSignature (fieldSigned)="moveToNextSignField($event)"
+                       type="text" class="i-lr-12__45"> ("Seller").
+              </div>
+              <div>
+                <div>
+                    <span class="f-l fw-bold">
+                        1. &nbsp;
+                    </span>
+                  <div class="item-pl-3 text-justify">
+                    "It is expressly agreed that notwithstanding any other provisions of this contract, the
+                    purchaser shall not be obligated to complete
+                    the purchase of the property described herein or to incur any penalty by forfeiture of earnest
+                    money deposits or otherwise unless the
+                    purchaser has been given in accordance with HUD/FHA or VA requirements a written statement by
+                    the Federal Housing
+                    Commissioner, Department of Veterans Affairs, or a Direct Endorsement lender setting forth the
+                    appraised value of the property of
+                    not less than $ <input formControlName="text_property_value" type="text" class="i-lr-3"> . The purchaser shall have the privilege and
+                    option of proceeding with consummation of
+                    the contract without regard to the amount of the appraised valuation. The appraised valuation is
+                    arrived at to determine the
+                    maximum mortgage the Department of Housing and Urban Development will insure or Department of
+                    Veterans Affairs will guaranty.
+                    Neither HUD or VA warrant the value or the condition of the property. The purchaser should
+                    satisfy himself/herself that the price and
+                    condition of the property are acceptable."
+                    <br>
+                    <br>
+                    If, after signing this Amendatory Clause, the purchase price increases, Buyer and Seller agree
+                    to sign, before Close of Escrow, a
+                    new amendatory clause that reflects the final purchase price agreed to by Buyer and Seller.
+                    <br>
+                    <br>
+                    For FHA transactions, the Amendatory Clause is not required on HUD REO sales, sales where the
+                    seller is Fannie Mae, Freddie
+                    Mac, the Department of Veterans Affairs, Rural Housing Services, other Federal, State and local
+                    government agencies, mortgagees
+                    disposing of REO assets, or sellers at foreclosure sales and those sales where the borrower will
+                    not be an owner-occupant (e.g.,
+                    sales to nonprofit agencies).
+                  </div>
+                </div>
+                <br>
+                <div>
+                    <span class="f-l fw-bold">
+                        2. &nbsp;
+                    </span>
+                  <div class="item-pl-3">
+                    <b>CERTIFICATION: </b>The undersigned Buyer, Seller, and real estate agent(s) or broker(s)
+                    hereby certify that the terms and conditions
+                    of the sales contract referenced above are true to the best of their knowledge and belief and
+                    that any other agreement entered into
+                    by any of the parties in connection with the real estate transaction is part of, or attached to,
+                    the sales agreement.
+                    <br>
+                    <br>
+                    <b>WARNING: </b>It is a crime to knowingly make false statements to the United States on this
+                    or
+                    any other
+                    similar form. Penalties can
+                    include fine, imprisonment, or both. Title 18 U.S. Code Sections 1001 et seq.
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="fw-bold">
+                By signing below, the undersigned acknowledge that each has read, understands and has received a copy
+                of this Amendatory Clause.
+              </div>
+              <br>
+              <div class="clearfix">
+                <div class="f-l">
+                  Date &nbsp; <input formControlName="date_buyer_first_sign" type="text" class="i-lr-6">
+                  <br>
+                  <br>
+                  Buyer <input formControlName="text_buyer_first_sign"
+                               appSignature
+                               (fieldSigned)="moveToNextSignField($event)"
+                               [withDateControl]="'date_buyer_first_sign'"
+                               type="text" class="i-lr-6">
+                  <br>
+                  <br>
+                  Buyer <input formControlName="text_buyer_second_sign"
+                               appSignature (fieldSigned)="moveToNextSignField($event)"
+                               type="text" class="i-lr-6">
+                </div>
+                <div class="f-r ml-4">
+                  Date &nbsp;<input formControlName="date_seller_first_sign" type="text" class="i-lr-6">
+                  <br>
+                  <br>
+                  Seller <input formControlName="text_seller_first_sign"
+                                appSignature
+                                (fieldSigned)="moveToNextSignField($event)"
+                                [withDateControl]="'date_seller_first_sign'"
+                                type="text" class="i-lr-6">
+                  <br>
+                  <br>
+                  Seller <input formControlName="text_seller_second_sign"
+                                appSignature
+                                (fieldSigned)="moveToNextSignField($event)"
+                                type="text" class="i-lr-6">
+                </div>
+              </div>
+              <br>
+              <div>
+                <div>
+                  Real Estate Broker (Selling Firm)
+                  <input formControlName="text_seller_broker_firm_name" type="text" class="i-lr-6">
+                  &nbsp;DRE Lic. #
+                  <input formControlName="text_seller_broker_firm_license" type="text" class="i-lr-3__5">
+                </div>
+                <div>
+                  By
+                  <input formControlName="text_seller_broker_name" type="text" class="i-lr-7">
+                  &nbsp; DRE Lic. #&nbsp;&nbsp;
+                  <input formControlName="text_seller_broker_license" type="text" class="i-lr-2">
+                  &nbsp;&nbsp;Date&nbsp;
+                  <input formControlName="date_seller_broker_license" type="text" class="i-lr-2__5">
+                </div>
+                <div>
+                  Address
+                  <input formControlName="text_seller_broker_address" type="text" class="i-lr-6">
+                  City
+                  <input formControlName="text_seller_broker_city" type="text" class="i-lr-2">
+                  State
+                  <input formControlName="text_seller_broker_state" type="text" class="i-lr-1__5">
+                  Zip
+                  <input formControlName="text_seller_broker_zip" type="text" class="i-lr-zip">
+                </div>
+                <div>
+                  Telephone
+                  <input formControlName="text_seller_broker_phone" type="text" class="i-lr-4">
+                  Fax
+                  <input formControlName="text_seller_broker_fax" type="text" class="i-lr-2__5">
+                  &nbsp;E-mail
+                  <input formControlName="text_seller_broker_email" type="text" class="i-lr-5">
+                </div>
+                <br>
+                <div>
+                  Real Estate Broker (Listing Firm)
+                  <input formControlName="text_buyer_broker_firm_name" type="text" class="i-lr-6">
+                  &nbsp;DRE Lic. #
+                  <input formControlName="text_buyer_broker_firm_license" type="text" class="i-lr-3__5">
+                </div>
+                <div>
+                  By
+                  <input formControlName="text_buyer_broker_name" type="text" class="i-lr-7">
+                  &nbsp; DRE Lic. #&nbsp;&nbsp;
+                  <input formControlName="text_buyer_broker_license" type="text" class="i-lr-2">
+                  &nbsp;&nbsp;Date&nbsp;
+                  <input formControlName="date_buyer_broker_license" type="text" class="i-lr-2__5">
+                </div>
+                <div>
+                  Address
+                  <input formControlName="text_buyer_broker_address" type="text" class="i-lr-6">
+                  City
+                  <input formControlName="text_buyer_broker_city" type="text" class="i-lr-2">
+                  State
+                  <input formControlName="text_buyer_broker_state" type="text" class="i-lr-1__5">
+                  Zip
+                  <input formControlName="text_buyer_broker_zip" type="text" class="i-lr-zip">
+                </div>
+                <div>
+                  Telephone
+                  <input formControlName="text_buyer_broker_phone" type="text" class="i-lr-4">
+                  Fax
+                  <input formControlName="text_buyer_broker_fax" type="text" class="i-lr-2__5">
+                  &nbsp;E-mail
+                  <input formControlName="text_buyer_broker_email" type="text" class="i-lr-5">
+                </div>
+              </div>
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <footer>
+              <div class="fs-small text-left">
+                &#169;2016, California Association of REALTORS &#174;, Inc. United States copyright law (Title 17
+                U.S.
+                Code) forbids the unauthorized distribution, display and reproduction of this form,
+                or any portion thereof, by photocopy machine or any other means, including facsimile or computerized
+                formats.
+                <br>
+                THIS FORM HAS BEEN APPROVED BY THE CALIFORNIA ASSOCIATION OF REALTORS&#174; (C.A.R.). NO REPRESENTATION
+                IS
+                MADE AS TO THE LEGAL VALIDITY
+                OR ACCURACY OF ANY PROVISION IN ANY SPECIFIC TRANSACTION. A REAL ESTATE BROKER IS THE PERSON QUALIFIED
+                TO ADVISE ON REAL ESTATE
+                TRANSACTIONS. IF YOU DESIRE LEGAL OR TAX ADVICE, CONSULT AN APPROPRIATE PROFESSIONAL.
+                <br>
+                This form is made available to real estate professionals through an agreement with or purchase from the
+                California Association of REALTORS&#174;. It is not intended to identify
+                the user as a REALTOR&#174;. REALTOR&#174; is a registered collective membership mark which may be used
+                only by
+                members of the NATIONAL ASSOCIATION OF REALTORS&#174;
+                who subscribe to its Code of Ethics.
+              </div>
+              <br>
+
+              <div class="fs-small">
+                <div class="item-pl-3">
+                  <img src="assets/agreement/images/rebs-llc.png" width="80" height="90" class="image-left">
+                  <div>Published and Distributed by:</div>
+                  <div>REAL ESTATE BUSINESS SERVICES, LLC.</div>
+                  <div class="fs-italic">a subsidiary of the California Association of REALTORS&#174;</div>
+                  <div>525 South Virgil Avenue, Los Angeles, California 90020</div>
+                  <img src="assets/agreement/images/housing.png" width="80" height="70" class="image-right">
+                </div>
+              </div>
+              <div class="fw-bold mt-25">FVAC 12/16 (PAGE 1 OF 1)</div>
+              <br>
+              <div class="text-center fw-bold">
+                FHA/VA Amendatory Clause (FVAC PAGE 1 OF 1)
+              </div>
+
+            </footer>
+          </div>
+
+          <div *ngIf="additionalList['FHA/VA']" class="page-breaker" id="page-{{additionalPageCount[0]}}">{{additionalPageCount[0]}}</div>
+
+          <div *ngIf="additionalList['CONTINGENCY']" formGroupName="page_18" class="container" style="font-size: 20px; line-height: 1.2;">
+            <header class="clearfix">
+              <img src="assets/agreement/images/logo1.png" width="350" height="120" class="image">
+              <div class="box">
+                <br>
+                <div class="main-title">CONTINGENCY FOR SALE OF BUYER'S PROPERTY</div>
+                <div class="main-title">(And Notice To Remove Contingencies)</div>
+                <div class="main-subtitle">(C.A.R. Form COP, Revised 12/17)</div>
+              </div>
+            </header>
+            <br>
+            <div class="form">
+              <div>
+                This is an addendum to the Purchase Agreement,
+                <input formControlName="check_agreement_purchase" type="checkbox"> Other &nbsp;
+                <input formControlName="text_agreement_name" type="text" class="i-lr-8"> (“Agreement”), dated
+                &nbsp;
+                <input formControlName="date_agreement_date" type="text" class="i-lr-2__5">&nbsp; , on property
+                known as
+                <input formControlName="text_seller_property" type="text" class="i-lr-6"> (“Seller's
+                Property”), between &nbsp;
+                <input formControlName="text_buyer_sign"
+                       appSignature
+                       (fieldSigned)="moveToNextSignField($event)"
+                       type="text" class="i-lr-11">&nbsp; ("Buyer"),
+                &nbsp; and &nbsp;
+                <input formControlName="text_seller_sign"
+                       appSignature
+                       (fieldSigned)="moveToNextSignField($event)"
+                       type="text" class="i-lr-12__45"> &nbsp;("Seller").
+              </div>
+              <div>
+                <span class="fw-bold">SALE OF BUYER'S PROPERTY:</span>
+                <br>
+                <div>
+                  <span class="fw-bold f-l">1. &nbsp;</span>
+                  <div class="item-pl-3">
+                    <div>
+                      <span class="f-l fw-bold">A. &nbsp;LENGTH OF CONTINGENCY:&nbsp;</span>
+                      <div class="item-pl-3 text-justify">
+                        The Agreement is contingent on the close of escrow of Buyer's property, described as:
+                        <!--&nbsp; <input formControlName="text_buyer_property" type="text" class="i-lr-2">-->
+                        <input formControlName="text_buyer_property" type="text" class="i-lr-11__5">&nbsp;(“Buyer's
+                        Property”)
+                        by the earliest of: <b>(i)</b> the scheduled close of escrow of Seller's Property
+                        specified
+                        in the Agreement; <b>(ii)</b> the date specified in paragraph 3; or <b>(iii)</b>
+                        Other <input formControlName="check_describe_other" type="checkbox">
+                        <input formControlName="text_describe_other" type="text" class="i-lr-12__45">.
+                        Buyer shall within <span class="fw-bold">2 (or <input
+                        formControlName="text_after_close_escrow_days" type="text" class="i-lr-1"> )
+                                    Days</span> After close of escrow of Buyer's Property, provide documentation of
+                        close to
+                        Seller.
+                      </div>
+                    </div>
+                    <div>
+                      <span class="f-l fw-bold">B. &nbsp;CONTINUATION OF CONTINGENCY:&nbsp;</span>
+                      <div class="item-pl-3 text-justify">
+                        This contingency can only be removed in writing. Even if Buyer removes this contingency,
+                        unless Buyer also performs all actions pursuant to paragraph 8, Seller retains the right
+                        to
+                        cancel under paragraph 5. Once Buyer's
+                        Property closes, Buyer can no longer use this contingency to cancel the Agreement.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <span class="fw-bold f-l">2. &nbsp;</span>
+                  <div class="item-pl-3">
+                    <div>
+                            <span><input formControlName="check_property_not_escrow" type="checkbox"> <b>BUYER'S PROPERTY NOT IN ESCROW:</b> Buyer's
+                                Property is <b>not</b> now in escrow and (check boxes as applicable):</span>
+                    </div>
+                    <div>
+                      <span class="f-l fw-bold">A. &nbsp;</span>
+                      <div class="item-pl-3 text-justify">
+                        <input formControlName="check_listed_for_sale" type="checkbox"> is <input
+                        formControlName="check_not_listed_for_sale" type="checkbox">
+                        is not yet listed for sale. If listed, Listing Broker is&nbsp;
+                        <input formControlName="text_broker_mls_name" type="text" class="i-lr-5"> MLS, #&nbsp;
+                        <input formControlName="text_broker_mls_number" type="text" class="i-lr-2"> .
+                      </div>
+                    </div>
+
+                    <div>
+                      <span class="f-l fw-bold">B. &nbsp;</span>
+                      <div class="item-pl-3 text-justify">
+                        Buyer has
+                        <span class="fw-bold">17 (or <input formControlName="text_days_after_acceptance" type="text" class="i-lr-1"> ) Days</span>
+                        After Acceptance to enter into escrow for the sale of Buyer's Property. Buyer shall,
+                        within the time specified,
+                        provide Seller with Copies of the contract, escrow instructions and all related
+                        documents (“Escrow Evidence”) showing that Buyer's Property
+                        has entered escrow.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <span class="fw-bold f-l">3. &nbsp;</span>
+                  <div class="item-pl-3">
+                    <div>
+                            <span><input formControlName="check_property_in_escrow" type="checkbox"><b> BUYER'S PROPERTY IN ESCROW:</b> Buyer's Property <b>is in
+                                    escrow</b> and escrow is scheduled to close on &nbsp;<input
+                              formControlName="date_property_escrow_date" type="text"
+                              class="i-lr-1">&nbsp; (date).</span>
+                    </div>
+                    <div>
+                      <span class="fw-bold f-l">A. &nbsp;</span>
+                      <div class="item-pl-3 text-justify">
+                        Escrow Holder is
+                        <input formControlName="text_escrow_holder_name" type="text" class="i-lr-7__5">,(escrow #
+                        <input formControlName="text_escrow_number" type="text" class="i-lr-3"> ).
+                      </div>
+                    </div>
+
+                    <div>
+                      <span class="f-l fw-bold">B. &nbsp;</span>
+                      <div class="item-pl-3">
+                        Buyer shall, within <b>5 Days</b> After Acceptance, deliver to Seller Escrow Evidence
+                        that Buyer's Property is in escrow.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <span class="fw-bold f-l">4. &nbsp;</span>
+                  <div class="item-pl-3">
+                    <b> CANCELLATION OF BUYER'S PROPERTY:</b> If Buyer's Property is in or enters escrow, and either
+                    party to that escrow gives notice to the
+                    other to cancel that contract, Buyer, within <span class="fw-bold">2 (or <input
+                    formControlName="text_cancel_contract_days" type="text"
+                    class="i-lr-1"> ) Days</span> thereafter, shall give Seller written notice of that
+                    cancellation.
+                  </div>
+                </div>
+
+                <div>
+                  <span class="fw-bold f-l">5. &nbsp;</span>
+                  <div class="item-pl-3">
+                    <div>
+                            <span><input formControlName="check_seller_can_cancel" type="checkbox"> <b>SELLER RIGHT TO CANCEL:</b> Seller may cancel the Agreement
+                                in writing as follows:</span>
+                    </div>
+                    <div>
+                      <span class="fw-bold f-l">A. &nbsp;</span>
+                      <div class="item-pl-3">
+                        After first giving Buyer a Notice to Buyer to Perform to provide documentation of close
+                        of Buyer's Property, if Buyer's Property does
+                        not close escrow by the time specified in paragraph 1,
+                      </div>
+                    </div>
+
+                    <div>
+                      <span class="f-l fw-bold">B. &nbsp;</span>
+                      <div class="item-pl-3">
+                        After first giving Buyer a Notice to Buyer to Perform, if Buyer fails to provide Escrow
+                        Evidence within the time specified in paragraph 2(B) or 3(B), or
+                      </div>
+                    </div>
+                    <div>
+                      <span class="f-l fw-bold">C. &nbsp;</span>
+                      <div class="item-pl-3">
+                        If Buyer gives notice to Seller of either party's cancellation of contract for Buyer's
+                        Property, or
+                      </div>
+                    </div>
+                    <div>
+                      <span class="f-l fw-bold">D. &nbsp;</span>
+                      <div class="item-pl-3">
+                        If Buyer, after being given a notice to remove contingencies, fails to remove the
+                        contingencies specified in 8A.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <span class="fw-bold f-l">6. &nbsp;</span>
+                  <div class="item-pl-3">
+                    <b>BUYER RIGHT TO CANCEL:</b> Buyer may cancel the Agreement in writing if, <b>prior</b> to
+                    Buyer's removal of the contingency for sale of
+                    Buyer's Property, <b>(i)</b> Buyer's Property does not close escrow by the time specified in
+                    paragraph 1, or <b>(ii)</b> the buyer for Buyer's Property
+                    gives notice to Buyer of intent to cancel the escrow for Buyer's Property.
+                  </div>
+                </div>
+
+                <div>
+                  <span class="fw-bold f-l">7. &nbsp;</span>
+                  <div class="item-pl-3">
+                    <div>
+                      <span class="fw-bold f-l">A. &nbsp;TIME PERIODS:&nbsp;</span>
+                      <div class="item-pl-3 text-justify">
+                        Time periods in the Agreement for inspections, contingencies, covenants, close of
+                        escrow, and other obligations shall begin
+                        as specified in the Agreement, or
+                        <input formControlName="check_day_after_deliver" type="checkbox">
+                        on the Day After Buyer Delivers to Seller any of the following: <b>(i)</b> Escrow
+                        Evidence for Buyer's Property, or
+                        <b>(ii)</b> Buyer's election in writing, signed by Buyer, to begin time periods, or
+                        <b>(iii)</b> Buyer's removal of this contingency for the sale of Buyer's Property.
+                      </div>
+                    </div>
+                    <div>
+                      <span class="f-l fw-bold">B. &nbsp;BUYER'S DEPOSIT:&nbsp;</span>
+                      <div class="item-pl-3 text-justify">
+                        Buyer's deposit shall be delivered to escrow within the time specified in the Agreement,
+                        or
+                        <input formControlName="check_days_after_deliver" type="checkbox">
+                        within 3 business
+                        days After Buyer Delivers to Seller any of the following: <b>(i)</b> Escrow Evidence for
+                        Buyer's Property, or <b>(ii)</b> Buyer's election in writing,
+                        signed by Buyer, to begin time periods, or <b>(iii)</b> Buyer's removal of this
+                        contingency for the sale of Buyer's Property.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <span class="fw-bold f-l">8. &nbsp;</span>
+                  <div class="item-pl-3">
+                    <div>
+                            <span class="fw-bold">BACK UP OFFERS AND SELLER RIGHT TO HAVE BUYER REMOVE CONTINGENCIES OR
+                                CANCEL:</span>
+                      After Acceptance, Seller shall
+                      have the right to continue to offer Seller's Property for sale for back-up offers. If Seller
+                      accepts a written back-up offer and provides Buyer
+                      a Copy of the signed, accepted back-up offer:
+                    </div>
+                    <div>
+                            <span class="fw-bold f-l">A. &nbsp;Immediate Right to Notify Buyer to Remove Sale of
+                                Property Contingency:&nbsp;</span>
+                      <div class="item-pl-3">
+                        Seller shall have the right to immediately give written
+                        notice to Buyer to, in writing: <b>(i)</b> remove this contingency; <b>(ii)</b> remove
+                        the loan contingency, if any; and <b>(iii)</b> provide verification of
+                        sufficient funds to close escrow without the sale of Buyer's Property. If Buyer fails to
+                        complete these actions within
+                        <span class="fw-bold">
+                          3 (or <input formControlName="text_days_after_delivery" type="text" class="i-lr-1"> ) Days
+                        </span>
+                        After Delivery of such notice, Seller may then immediately cancel the Agreement in
+                        writing.
+                      </div>
+                    </div>
+
+                    <div>
+                      <span class="f-l fw-bold">B. &nbsp;</span>
+                      <div class="item-pl-3 te">
+                        OR <input formControlName="check_delayed_right" type="checkbox"> (If checked) Delayed
+                        Right to Notify Buyer: Seller shall not
+                        invoke the notice provisions in paragraph 8A: <b>(i)</b> within the first
+                        <span class="fw-bold">
+                                    17 (or <input formControlName="text_days_not_invoke_provisions" type="text"
+                                                  class="i-lr-1"> ) Days
+                                </span>
+                        After Acceptance; or <b>(ii)</b> (if checked) <input
+                        formControlName="check_days_not_invoke_provisions" type="checkbox"> during the term of
+                        the Agreement.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="fw-bold">
+                By signing below, Buyer and Seller each acknowledge that they have read, understand, accept and have
+                received a Copy of this Addendum.
+              </div>
+              <div class="clearfix">
+                <div class="f-l">
+                  Date &nbsp; <input formControlName="date_buyer_first_sign_copy" type="text" class="i-lr-6">
+                  <br>
+                  Buyer <input formControlName="text_buyer_first_sign_copy"
+                               appSignature
+                               (fieldSigned)="moveToNextSignField($event)"
+                               [withDateControl]="'date_buyer_first_sign_copy'"
+                               type="text" class="i-lr-6">
+                  <br>
+                  <br>
+                  Buyer <input formControlName="text_buyer_second_sign_copy"
+                               appSignature
+                               (fieldSigned)="moveToNextSignField($event)"
+                               type="text" class="i-lr-6">
+                </div>
+                <div class="f-r ml-4">
+                  Date &nbsp;<input formControlName="date_seller_first_sign_copy" type="text" class="i-lr-6">
+                  <br>
+                  Seller <input formControlName="text_seller_first_sign_copy"
+                                appSignature
+                                (fieldSigned)="moveToNextSignField($event)"
+                                [withDateControl]="'date_seller_first_sign_copy'"
+                                type="text" class="i-lr-6">
+                  <br>
+                  <br>
+                  Seller <input formControlName="text_seller_second_sign_copy"
+                                appSignature
+                                (fieldSigned)="moveToNextSignField($event)"
+                                type="text" class="i-lr-6">
+                </div>
+              </div>
+              <hr>
+              <div>
+                <b>NOTICE TO REMOVE CONTINGENCIES:</b> Seller hereby gives notice to Buyer to remove the contingencies
+                and take the actions specified in
+                paragraph 8A. (Note: Not to be delivered until the time specified in 8A or B.)
+              </div>
+              <div>
+                Seller&nbsp;
+                <input formControlName="text_seller_first_sign_notice"
+                       appSignature
+                       (fieldSigned)="moveToNextSignField($event)"
+                       [withDateControl]="'date_seller_first_sign_notice'"
+                       type="text" class="i-lr-4">
+                &nbsp;Date &nbsp;
+                <input formControlName="date_seller_first_sign_notice" type="text" class="i-lr-1__5">
+                &nbsp;Seller &nbsp;
+                <input formControlName="text_seller_second_sign_notice"
+                       appSignature
+                       (fieldSigned)="moveToNextSignField($event)"
+                       [withDateControl]="'date_seller_second_sign_notice'"
+                       type="text" class="i-lr-4">
+                &nbsp;Date &nbsp;
+                <input formControlName="date_seller_second_sign_notice" type="text" class="i-lr-1__5">
+              </div>
+              <div>
+                <br>
+                <div>
+                  ( <input formControlName="text_seller_first_initials"
+                           appSignature [mode]="'initials'"
+                           (fieldSigned)="moveToNextSignField($event)"
+                           [withDateControl]="'date_signed_notice_date'"
+                           [withTimeControl]="'text_signed_notice_time'"
+                           [withAmpmControl]="'radio_signed_notice_ampm'"
+                           type="text" class="i-lr-1"> /
+                  <input formControlName="text_seller_second_initials"
+                         appSignature [mode]="'initials'"
+                         (fieldSigned)="moveToNextSignField($event)"
+                         type="text" class="i-lr-1"> ) (Initials)
+                  <span class="fw-bold">CONFIRMATION OF RECEIPT:</span>
+                  A Copy of this Signed Notice to Buyer to remove contingencies and take actions was
+                  personally received by Buyer or authorized agent on
+                  <input formControlName="date_signed_notice_date" type="text" class="i-lr-1"> at
+                  <input formControlName="text_signed_notice_time" type="text" class="i-lr-1">
+                  <input formControlName="radio_signed_notice_ampm" type="radio" value="am"> AM/
+                  <input formControlName="radio_signed_notice_ampm" type="radio" value="pm"> PM.
+                  <span class="fw-bold">
+                        Completion of this confirmation is not legally required. It is solely intended to evidence the
+                        date that confirmation or receipt has occurred.
+                    </span>
+                </div>
+              </div>
+            </div>
+            <br>
+            <footer>
+              <div class="fs-small text-left">
+                &#169;2008-2017, California Association of REALTORS &#174;, Inc.
+                THIS FORM HAS BEEN APPROVED BY THE CALIFORNIA ASSOCIATION OF REALTORS&#174; (C.A.R.). NO REPRESENTATION
+                IS
+                MADE AS TO THE LEGAL VALIDITY
+                OR ACCURACY OF ANY PROVISION IN ANY SPECIFIC TRANSACTION. A REAL ESTATE BROKER IS THE PERSON QUALIFIED
+                TO ADVISE ON REAL ESTATE
+                TRANSACTIONS. IF YOU DESIRE LEGAL OR TAX ADVICE, CONSULT AN APPROPRIATE PROFESSIONAL.
+              </div>
+              <br>
+
+              <div class="fs-small">
+                <div class="item-pl-3">
+                  <img src="assets/agreement/images/rebs-llc.png" width="80" height="90" class="image-left">
+                  <div>Published and Distributed by:</div>
+                  <div>REAL ESTATE BUSINESS SERVICES, LLC.</div>
+                  <div class="fs-italic">a subsidiary of the California Association of REALTORS&#174;</div>
+                  <div>525 South Virgil Avenue, Los Angeles, California 90020</div>
+                  <img src="assets/agreement/images/housing.png" width="80" height="70" class="image-right">
+                </div>
+              </div>
+              <div class="fw-bold mt-25">COP Revised 12/17 (PAGE 1 OF 1)</div>
+              <div class="text-center fw-bold">
+                CONTINGENCY FOR SALE OF BUYER'S PROPERTY (COP PAGE 1 OF 1)
+              </div>
+
+            </footer>
+          </div>
+
+          <div *ngIf="additionalList['CONTINGENCY']" class="page-breaker" id="page-{{additionalPageCount[1]}}">{{additionalPageCount[1]}}</div>
+
+          <div *ngIf="additionalList['ADDENDA']" formGroupName="page_19" class="container" style="font-size: 21px; line-height: 1.2;">
+            <header class="clearfix">
+              <img src="assets/agreement/images/logo1.png" width="350" height="120" class="image">
+              <div class="box">
+                <br>
+                <div class="main-title mr-6">ADDENDUM</div>
+                <div class="main-subtitle">
+                  <div class="form f-r ml-4">
+                    No.
+                    <input formControlName="text_addendum_number" type="text" class="i-lr-3">
+                  </div>
+                  <p class="f-r"> (C.A.R. Form ADM, Revised 12/15)</p>
+                </div>
+
+              </div>
+            </header>
+            <br>
+            <div class="form">
+              <div>
+                The following terms and conditions are hereby incorporated in and made a part of the:
+                <input formControlName="check_terms_for_agreement" type="checkbox"> Purchase Agreement,
+                <input formControlName="check_terms_for_residential_lease" type="checkbox"> Residential Lease or
+                Month-to-Month Rental Agreement,
+                <input formControlName="check_terms_for_tds" type="checkbox"> Transfer Disclosure Statement
+                (Note: An amendment to the TDS may give the Buyer
+                a right to rescind),
+                <input formControlName="check_terms_for_other" type="checkbox"> Other
+                <input formControlName="text_terms_for_other" type="text" class="i-lr-10">, on property known
+                as
+                <input formControlName="text_property_name" type="text" class="i-lr-12"> in which
+                <input formControlName="text_referred_to_buyer" type="text" class="i-lr-10"> is referred to as
+                ("Buyer/Tenant") and
+                &nbsp; <input formControlName="text_referred_to_seller" type="text" class="i-lr-10"> is referred to
+                as ("Seller/Landlord").
+              </div>
+              <br>
+              <div>
+                <textarea formControlName="text_terms_and_conditions" style="width: 1380px;  height: 1000px;"></textarea>
+              </div>
+              <div>
+                The foregoing terms and conditions are hereby agreed to, and the undersigned acknowledge receipt of a
+                copy of this document.
+              </div>
+              <div class="clearfix">
+                <div class="f-l">
+                  Date &nbsp; &nbsp; &nbsp;<input formControlName="date_buyer_first_sign" type="text"
+                                                  class="i-lr-5__5">
+                  <br>
+                  <br>
+                  Buyer/Tenant <input formControlName="text_buyer_first_sign"
+                                      appSignature
+                                      (fieldSigned)="moveToNextSignField($event)"
+                                      [withDateControl]="'date_buyer_first_sign'"
+                                      type="text" class="i-lr-5">
+                  <br>
+                  <br>
+                  <br>
+                  Buyer/Tenant <input formControlName="text_buyer_second_sign"
+                                      appSignature
+                                      (fieldSigned)="moveToNextSignField($event)"
+                                      type="text" class="i-lr-5">
+                </div>
+                <div class="f-r ml-4">
+                  Date <input formControlName="date_seller_first_sign" type="text" class="i-lr-6">
+                  <br>
+                  <br>
+                  Seller/Landlord <input formControlName="text_seller_first_sign"
+                                         appSignature
+                                         (fieldSigned)="moveToNextSignField($event)"
+                                         [withDateControl]="'date_seller_first_sign'"
+                                         type="text" class="i-lr-5">
+                  <br>
+                  <br>
+                  <br>
+                  Seller/Landlord <input formControlName="text_seller_second_sign"
+                                         appSignature
+                                         (fieldSigned)="moveToNextSignField($event)"
+                                         type="text" class="i-lr-5">
+                </div>
+              </div>
+            </div>
+            <br>
+            <br>
+            <footer>
+              <div class="fs-small text-left">
+                &#169;1986-2015, California Association of REALTORS &#174;, Inc. United States copyright law (Title 17
+                U.S.
+                Code) forbids the unauthorized distribution, display and reproduction of this form,
+                or any portion thereof, by photocopy machine or any other means, including facsimile or computerized
+                formats.
+                <br>
+                THIS FORM HAS BEEN APPROVED BY THE CALIFORNIA ASSOCIATION OF REALTORS&#174; (C.A.R.). NO REPRESENTATION
+                IS
+                MADE AS TO THE LEGAL VALIDITY
+                OR ACCURACY OF ANY PROVISION IN ANY SPECIFIC TRANSACTION. A REAL ESTATE BROKER IS THE PERSON QUALIFIED
+                TO ADVISE ON REAL ESTATE
+                TRANSACTIONS. IF YOU DESIRE LEGAL OR TAX ADVICE, CONSULT AN APPROPRIATE PROFESSIONAL.
+                <br>
+                This form is made available to real estate professionals through an agreement with or purchase from the
+                California Association of REALTORS&#174;. It is not intended to identify
+                the user as a REALTOR&#174;. REALTOR&#174; is a registered collective membership mark which may be used
+                only by
+                members of the NATIONAL ASSOCIATION OF REALTORS&#174;
+                who subscribe to its Code of Ethics.
+              </div>
+              <br>
+
+              <div class="fs-small">
+                <div class="item-pl-3">
+                  <img src="assets/agreement/images/rebs-llc.png" width="80" height="90" class="image-left">
+                  <div>Published and Distributed by:</div>
+                  <div>REAL ESTATE BUSINESS SERVICES, LLC.</div>
+                  <div class="fs-italic">a subsidiary of the California Association of REALTORS&#174;</div>
+                  <div>525 South Virgil Avenue, Los Angeles, California 90020</div>
+                  <img src="assets/agreement/images/housing.png" width="80" height="70" class="image-right">
+                </div>
+              </div>
+              <div class="fw-bold mt-25">ADM REVISED 12/15 (PAGE 1 OF 1)</div>
+              <br>
+              <div class="text-center fw-bold">
+                ADDENDUM (ADM PAGE 1 OF 1)
+              </div>
+            </footer>
+          </div>
+
+          <div *ngIf="additionalList['ADDENDA']" class="page-breaker" id="page-{{additionalPageCount[2]}}">{{additionalPageCount[2]}}</div>
 
         </form>
 
