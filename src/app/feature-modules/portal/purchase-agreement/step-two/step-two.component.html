@@ -4866,7 +4866,12 @@
                 <input formControlName="check_agreement_purchase" type="checkbox"> Other &nbsp;
                 <input formControlName="text_agreement_name" type="text" class="i-lr-8"> (“Agreement”), dated
                 &nbsp;
-                <input formControlName="date_agreement_date" type="text" class="i-lr-2__5">&nbsp; , on property
+                <input matInput [min]="datepickerMinDate" (click)="date_agreement_date.open()"
+                       [matDatepicker]="date_agreement_date"
+                       formControlName="date_agreement_date"
+                       type="text"
+                       class="i-lr-2__5">
+                <mat-datepicker #date_agreement_date></mat-datepicker>&nbsp; , on property
                 known as
                 <input formControlName="text_seller_property" type="text" class="i-lr-6"> (“Seller's
                 Property”), between &nbsp;
