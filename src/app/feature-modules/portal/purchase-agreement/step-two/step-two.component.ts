@@ -228,11 +228,11 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
         check_finance_all_cash_offer: [{value: null, disabled: this.isDisabled}, []],
         check_finance_attach_to_buyer_shall: [{value: null, disabled: this.isDisabled}, []],
         text_finance_verification_deliver_countdown: [{value: null, disabled: this.isDisabled}, []],
-        check_finance_loan_type_fha: [{value: null, disabled: this.isDisabled}, []],
-        check_finance_loan_type_va: [{value: null, disabled: this.isDisabled}, []],
-        check_finance_loan_type_seller: [{value: null, disabled: this.isDisabled}, []],
-        check_finance_loan_type_assumed: [{value: null, disabled: this.isDisabled}, []],
-        check_finance_loan_type_other: [{value: null, disabled: this.isDisabled}, []],
+        check_finance_loan_type_fha: [{value: null, disabled: this.isDisabled}, {updateOn: 'change'}],
+        check_finance_loan_type_va: [{value: null, disabled: this.isDisabled}, {updateOn: 'change'}],
+        check_finance_loan_type_seller: [{value: null, disabled: this.isDisabled}, {updateOn: 'change'}],
+        check_finance_loan_type_assumed: [{value: null, disabled: this.isDisabled}, {updateOn: 'change'}],
+        check_finance_loan_type_other: [{value: null, disabled: this.isDisabled}, {updateOn: 'change'}],
         text_finance_loan_type_other_details: [{value: null, disabled: this.isDisabled}, []],
         text_finance_loan_max_percent: [{value: null, disabled: this.isDisabled}, []],
         check_finance_first_loan_adjustable: [{value: null, disabled: this.isDisabled}, []],
@@ -271,9 +271,9 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
         check_loan_terms_letter_attached: [{value: null, disabled: this.isDisabled}, []],
         text_loan_terms_contingency_removal_days: [{value: null, disabled: this.isDisabled}, []],
         check_no_loan_contingency: [{value: null, disabled: this.isDisabled}, []],
-        check_sale_of_buyers_property: [{value: null, disabled: this.isDisabled}, []],
-        check_addenda_addendum: [{value: null, disabled: this.isDisabled}, []],
-        check_addenda_back_up_offer: [{value: null, disabled: this.isDisabled}, []],
+        check_sale_of_buyers_property: [{value: null, disabled: this.isDisabled}, {updateOn: 'change'}],
+        check_addenda_addendum: [{value: null, disabled: this.isDisabled}, {updateOn: 'change'}],
+        check_addenda_back_up_offer: [{value: null, disabled: this.isDisabled}, {updateOn: 'change'}],
         check_addenda_court_confirmation: [{value: null, disabled: this.isDisabled}, []],
         check_addenda_septic: [{value: null, disabled: this.isDisabled}, []],
         check_addenda_short_sale: [{value: null, disabled: this.isDisabled}, []],
@@ -825,12 +825,13 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
       .pipe(takeUntil(this.onDestroyed$))
       .subscribe((model) => {
         this.patchForm(model);
-        this.updateAdditionalPages();
 
         this.checkSignAccess();
 
         this.getAllFieldsCount(model);
         this.updatePageProgress(model, 0);
+
+        this.updateAdditionalPages();
 
         this.disableSignFields();
 
@@ -841,9 +842,7 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private updateAdditionalPages() {
-    Object.entries(this.additionalList)
-      .filter(item => item[1])
-      .map(page => this.additionalListChanges(page[0]));
+    Object.entries(this.additionalList).map(page => this.additionalListChanges(page[0]));
   }
 
   private initSwitchDaysAndDate() {
