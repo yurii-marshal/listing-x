@@ -4700,7 +4700,12 @@
               <br>
               <div class="clearfix">
                 <div class="f-l">
-                  Date &nbsp; <input formControlName="date_buyer_first_sign" type="text" class="i-lr-6">
+                  Date &nbsp; <input matInput
+                                     [matDatepicker]="date_buyer_first_sign"
+                                     formControlName="date_buyer_first_sign"
+                                     type="text"
+                                     class="i-lr-6">
+                  <mat-datepicker #date_buyer_first_sign></mat-datepicker>
                   <br>
                   <br>
                   Buyer <input formControlName="text_buyer_first_sign"
@@ -4715,7 +4720,12 @@
                                type="text" class="i-lr-6">
                 </div>
                 <div class="f-r ml-4">
-                  Date &nbsp;<input formControlName="date_seller_first_sign" type="text" class="i-lr-6">
+                  Date &nbsp;<input matInput
+                         [matDatepicker]="date_seller_first_sign"
+                         formControlName="date_seller_first_sign"
+                         type="text"
+                         class="i-lr-6">
+                  <mat-datepicker #date_seller_first_sign></mat-datepicker>
                   <br>
                   <br>
                   Seller <input formControlName="text_seller_first_sign"
@@ -4745,7 +4755,12 @@
                   &nbsp; DRE Lic. #&nbsp;&nbsp;
                   <input formControlName="text_seller_broker_license" type="text" class="i-lr-2">
                   &nbsp;&nbsp;Date&nbsp;
-                  <input formControlName="date_seller_broker_license" type="text" class="i-lr-2__5">
+                  <input matInput
+                         [matDatepicker]="date_seller_broker_license"
+                         formControlName="date_seller_broker_license"
+                         type="text"
+                         class="i-lr-2__5">
+                  <mat-datepicker #date_seller_broker_license></mat-datepicker>
                 </div>
                 <div>
                   Address
@@ -4778,7 +4793,12 @@
                   &nbsp; DRE Lic. #&nbsp;&nbsp;
                   <input formControlName="text_buyer_broker_license" type="text" class="i-lr-2">
                   &nbsp;&nbsp;Date&nbsp;
-                  <input formControlName="date_buyer_broker_license" type="text" class="i-lr-2__5">
+                  <input matInput
+                         [matDatepicker]="date_buyer_broker_license"
+                         formControlName="date_buyer_broker_license"
+                         type="text"
+                         class="i-lr-2__5">
+                  <mat-datepicker #date_buyer_broker_license></mat-datepicker>
                 </div>
                 <div>
                   Address
@@ -4959,9 +4979,13 @@
                   <div class="item-pl-3">
                     <div>
                             <span><input formControlName="check_property_in_escrow" type="checkbox"><b> BUYER'S PROPERTY IN ESCROW:</b> Buyer's Property <b>is in
-                                    escrow</b> and escrow is scheduled to close on &nbsp;<input
-                              formControlName="date_property_escrow_date" type="text"
-                              class="i-lr-1">&nbsp; (date).</span>
+                                    escrow</b> and escrow is scheduled to close on &nbsp;
+                              <input matInput
+                                     [matDatepicker]="date_property_escrow_date"
+                                     formControlName="date_property_escrow_date"
+                                     type="text"
+                                     class="i-lr-1">
+                  <mat-datepicker #date_property_escrow_date></mat-datepicker>&nbsp; (date).</span>
                     </div>
                     <div>
                       <span class="fw-bold f-l">A. &nbsp;</span>
@@ -5129,7 +5153,13 @@
               </div>
               <div class="clearfix">
                 <div class="f-l">
-                  Date &nbsp; <input formControlName="date_buyer_first_sign_copy" type="text" class="i-lr-6">
+                  Date &nbsp;
+                  <input matInput
+                         [matDatepicker]="date_buyer_first_sign_copy"
+                         formControlName="date_buyer_first_sign_copy"
+                         type="text"
+                         class="i-lr-6">
+                  <mat-datepicker #date_buyer_first_sign_copy></mat-datepicker>
                   <br>
                   Buyer <input formControlName="text_buyer_first_sign_copy"
                                appSignature
@@ -5144,7 +5174,13 @@
                                type="text" class="i-lr-6">
                 </div>
                 <div class="f-r ml-4">
-                  Date &nbsp;<input formControlName="date_seller_first_sign_copy" type="text" class="i-lr-6">
+                  Date &nbsp;
+                  <input matInput
+                         [matDatepicker]="date_seller_first_sign_copy"
+                         formControlName="date_seller_first_sign_copy"
+                         type="text"
+                         class="i-lr-6">
+                  <mat-datepicker #date_seller_first_sign_copy></mat-datepicker>
                   <br>
                   Seller <input formControlName="text_seller_first_sign_copy"
                                 appSignature
@@ -5173,7 +5209,12 @@
                        [withDateControl]="'date_seller_first_sign_notice'"
                        type="text" class="i-lr-4">
                 &nbsp;Date &nbsp;
-                <input formControlName="date_seller_first_sign_notice" type="text" class="i-lr-1__5">
+                <input matInput
+                       [matDatepicker]="date_seller_first_sign_notice"
+                       formControlName="date_seller_first_sign_notice"
+                       type="text"
+                       class="i-lr-1__5">
+                <mat-datepicker #date_seller_first_sign_notice></mat-datepicker>
                 &nbsp;Seller &nbsp;
                 <input formControlName="text_seller_second_sign_notice"
                        appSignature
@@ -5181,7 +5222,12 @@
                        [withDateControl]="'date_seller_second_sign_notice'"
                        type="text" class="i-lr-4">
                 &nbsp;Date &nbsp;
-                <input formControlName="date_seller_second_sign_notice" type="text" class="i-lr-1__5">
+                <input matInput
+                       [matDatepicker]="date_seller_second_sign_notice"
+                       formControlName="date_seller_second_sign_notice"
+                       type="text"
+                       class="i-lr-1__5">
+                <mat-datepicker #date_seller_second_sign_notice></mat-datepicker>
               </div>
               <div>
                 <br>
@@ -5200,7 +5246,12 @@
                   <span class="fw-bold">CONFIRMATION OF RECEIPT:</span>
                   A Copy of this Signed Notice to Buyer to remove contingencies and take actions was
                   personally received by Buyer or authorized agent on
-                  <input formControlName="date_signed_notice_date" type="text" class="i-lr-1"> at
+                  <input matInput
+                         [matDatepicker]="date_signed_notice_date"
+                         formControlName="date_signed_notice_date"
+                         type="text"
+                         class="i-lr-1__5">
+                  <mat-datepicker #date_signed_notice_date></mat-datepicker> at
                   <input formControlName="text_signed_notice_time" type="text" class="i-lr-1">
                   <input formControlName="radio_signed_notice_ampm" type="radio" value="am"> AM/
                   <input formControlName="radio_signed_notice_ampm" type="radio" value="pm"> PM.
@@ -5289,8 +5340,12 @@
               </div>
               <div class="clearfix">
                 <div class="f-l">
-                  Date &nbsp; &nbsp; &nbsp;<input formControlName="date_buyer_first_sign" type="text"
-                                                  class="i-lr-5__5">
+                  Date &nbsp; &nbsp; &nbsp;<input matInput
+                         [matDatepicker]="date_buyer_first_sign"
+                         formControlName="date_buyer_first_sign"
+                         type="text"
+                         class="i-lr-5__5">
+                  <mat-datepicker #date_buyer_first_sign></mat-datepicker>
                   <br>
                   <br>
                   Buyer/Tenant <input formControlName="text_buyer_first_sign"
@@ -5307,7 +5362,13 @@
                                       type="text" class="i-lr-5">
                 </div>
                 <div class="f-r ml-4">
-                  Date <input formControlName="date_seller_first_sign" type="text" class="i-lr-6">
+                  Date
+                  <input matInput
+                         [matDatepicker]="date_seller_first_sign"
+                         formControlName="date_seller_first_sign"
+                         type="text"
+                         class="i-lr-6">
+                  <mat-datepicker #date_seller_first_sign></mat-datepicker>
                   <br>
                   <br>
                   Seller/Landlord <input formControlName="text_seller_first_sign"
