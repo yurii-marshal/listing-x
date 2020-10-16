@@ -42,7 +42,7 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('form', {static: true}) form: ElementRef;
   @ViewChildren(SignatureDirective) signatures: QueryList<SignatureDirective>;
 
-  isLoading: boolean;
+  isLoading = true;
   isSignMode: boolean;
 
   okButtonText: string;
@@ -592,8 +592,8 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
         text_agreement_name: [{value: '', disabled: this.isDisabled}, []],
         date_agreement_date: [{value: '', disabled: true}, []],
         text_seller_property: [{value: '', disabled: true}, []],
-        text_buyer_sign: this.getSignFieldAllowedFor('buyers', 0),
-        text_seller_sign: this.getSignFieldAllowedFor('sellers', 0),
+        text_buyer_sign: [{value: '', disabled: true}, []],
+        text_seller_sign: [{value: '', disabled: true}, []],
         text_buyer_property: [{value: '', disabled: true}, []],
         check_describe_other: [{value: '', disabled: this.isDisabled}, []],
         text_describe_other: [{value: '', disabled: this.isDisabled}, []],
@@ -672,13 +672,14 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
     this.prevFormSnapshot = this.formGroupPage;
     this.documentForm = this.formGroupPage;
 
-    this.getOfferAgreement();
-
-    this.getAdditionalCount();
     this.subscribeToFormChanges();
   }
 
   ngAfterViewInit() {
+    this.getOfferAgreement();
+
+    this.getAdditionalCount();
+
     this.setPageBreakers();
   }
 
@@ -826,12 +827,12 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe((model) => {
         this.patchForm(model);
 
-        this.checkSignAccess();
-
         this.getAllFieldsCount(model);
         this.updatePageProgress(model, 0);
 
         this.updateAdditionalPages();
+
+        this.checkSignAccess();
 
         this.disableSignFields();
 
@@ -858,8 +859,7 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private checkSignAccess() {
-    if (this.offer.userRole === 'agent_buyer'
-      && this.isSignMode
+    if (this.offer.userRole === 'agent_buyer' && this.isSignMode
       && (this.documentForm.invalid || !this.offer.allowSign || this.offer.isSigned)) {
       this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/step-two`);
     } else if (this.offer.userRole !== 'agent_buyer' && !this.isSignMode) {
