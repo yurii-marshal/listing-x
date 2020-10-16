@@ -1224,11 +1224,11 @@
                       FHA,
                       <input (change)="additionalListChanges('FHA/VA')" formControlName="check_finance_loan_type_va" type="checkbox">
                       VA,
-                      <input (change)="additionalListChanges('FHA/VA')" formControlName="check_finance_loan_type_seller" type="checkbox">
+                      <input formControlName="check_finance_loan_type_seller" type="checkbox">
                       Seller financing (C.A.R. Form SFA),
-                      <input (change)="additionalListChanges('FHA/VA')" formControlName="check_finance_loan_type_assumed" type="checkbox">
+                      <input formControlName="check_finance_loan_type_assumed" type="checkbox">
                       assumed financing (C.A.R. Form AFA),
-                      <input (change)="additionalListChanges('FHA/VA')" formControlName="check_finance_loan_type_other" type="checkbox">
+                      <input formControlName="check_finance_loan_type_other" type="checkbox">
                       Other
                       <input formControlName="text_finance_loan_type_other_details" type="text" class="i-lr-2">.
                       This loan shall be at a fixed
@@ -1534,7 +1534,7 @@
                 <div class="item-pl-3">
                   <div style="border-bottom: rgb(122, 120, 120) 1px solid;">
                     &nbsp; <input (change)="additionalListChanges('ADDENDA')" formControlName="check_addenda_addendum" type="checkbox"> Addendum # (C.A.R. Form ADM)
-                    &nbsp; <input (change)="additionalListChanges('ADDENDA')" formControlName="check_addenda_back_up_offer" type="checkbox"> Back Up Offer Addendum
+                    &nbsp; <input formControlName="check_addenda_back_up_offer" type="checkbox"> Back Up Offer Addendum
                     (C.A.R. Form BUO)
                   </div>
 

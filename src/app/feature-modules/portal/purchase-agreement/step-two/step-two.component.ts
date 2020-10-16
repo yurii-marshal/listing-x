@@ -230,9 +230,9 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
         text_finance_verification_deliver_countdown: [{value: null, disabled: this.isDisabled}, []],
         check_finance_loan_type_fha: [{value: null, disabled: this.isDisabled}, {updateOn: 'change'}],
         check_finance_loan_type_va: [{value: null, disabled: this.isDisabled}, {updateOn: 'change'}],
-        check_finance_loan_type_seller: [{value: null, disabled: this.isDisabled}, {updateOn: 'change'}],
-        check_finance_loan_type_assumed: [{value: null, disabled: this.isDisabled}, {updateOn: 'change'}],
-        check_finance_loan_type_other: [{value: null, disabled: this.isDisabled}, {updateOn: 'change'}],
+        check_finance_loan_type_seller: [{value: null, disabled: this.isDisabled}],
+        check_finance_loan_type_assumed: [{value: null, disabled: this.isDisabled}],
+        check_finance_loan_type_other: [{value: null, disabled: this.isDisabled}],
         text_finance_loan_type_other_details: [{value: null, disabled: this.isDisabled}, []],
         text_finance_loan_max_percent: [{value: null, disabled: this.isDisabled}, []],
         check_finance_first_loan_adjustable: [{value: null, disabled: this.isDisabled}, []],
@@ -273,7 +273,7 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
         check_no_loan_contingency: [{value: null, disabled: this.isDisabled}, []],
         check_sale_of_buyers_property: [{value: null, disabled: this.isDisabled}, {updateOn: 'change'}],
         check_addenda_addendum: [{value: null, disabled: this.isDisabled}, {updateOn: 'change'}],
-        check_addenda_back_up_offer: [{value: null, disabled: this.isDisabled}, {updateOn: 'change'}],
+        check_addenda_back_up_offer: [{value: null, disabled: this.isDisabled}],
         check_addenda_court_confirmation: [{value: null, disabled: this.isDisabled}, []],
         check_addenda_septic: [{value: null, disabled: this.isDisabled}, []],
         check_addenda_short_sale: [{value: null, disabled: this.isDisabled}, []],
@@ -755,18 +755,14 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
       case 'FHA/VA':
         this.additionalList[pageId] =
           this.documentForm.get('page_5.check_finance_loan_type_fha').value ||
-          this.documentForm.get('page_5.check_finance_loan_type_va').value ||
-          this.documentForm.get('page_5.check_finance_loan_type_seller').value ||
-          this.documentForm.get('page_5.check_finance_loan_type_assumed').value ||
-          this.documentForm.get('page_5.check_finance_loan_type_other').value;
+          this.documentForm.get('page_5.check_finance_loan_type_va').value;
         break;
       case 'CONTINGENCY':
         this.additionalList[pageId] = this.documentForm.get('page_6.check_sale_of_buyers_property').value;
         break;
       case 'ADDENDA':
         this.additionalList[pageId] =
-          this.documentForm.get('page_6.check_addenda_addendum').value ||
-          this.documentForm.get('page_6.check_addenda_back_up_offer').value;
+          this.documentForm.get('page_6.check_addenda_addendum').value;
         break;
     }
 
