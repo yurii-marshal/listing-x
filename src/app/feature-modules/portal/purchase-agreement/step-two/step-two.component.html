@@ -4623,13 +4623,8 @@
                 known as
                 <input formControlName="text_agreement_address" type="text" class="i-lr-9"> (“Property”), <br>
                 between
-                <input formControlName="text_sign_buyer"
-                       appSignature
-                       (fieldSigned)="moveToNextSignField($event)"
-                       type="text" class="i-lr-12"> ("Buyer"), <br> and
-                <input formControlName="text_sign_seller"
-                       appSignature (fieldSigned)="moveToNextSignField($event)"
-                       type="text" class="i-lr-12__45"> ("Seller").
+                <input formControlName="text_sign_buyer" type="text" class="i-lr-12"> ("Buyer"), <br> and
+                <input formControlName="text_sign_seller" type="text" class="i-lr-12__45"> ("Seller").
               </div>
               <div>
                 <div>
@@ -4745,44 +4740,6 @@
               <div>
                 <div>
                   Real Estate Broker (Selling Firm)
-                  <input formControlName="text_seller_broker_firm_name" type="text" class="i-lr-6">
-                  &nbsp;DRE Lic. #
-                  <input formControlName="text_seller_broker_firm_license" type="text" class="i-lr-3__5">
-                </div>
-                <div>
-                  By
-                  <input formControlName="text_seller_broker_name" type="text" class="i-lr-7">
-                  &nbsp; DRE Lic. #&nbsp;&nbsp;
-                  <input formControlName="text_seller_broker_license" type="text" class="i-lr-2">
-                  &nbsp;&nbsp;Date&nbsp;
-                  <input matInput
-                         [matDatepicker]="date_seller_broker_license"
-                         formControlName="date_seller_broker_license"
-                         type="text"
-                         class="i-lr-2__5">
-                  <mat-datepicker #date_seller_broker_license></mat-datepicker>
-                </div>
-                <div>
-                  Address
-                  <input formControlName="text_seller_broker_address" type="text" class="i-lr-6">
-                  City
-                  <input formControlName="text_seller_broker_city" type="text" class="i-lr-2">
-                  State
-                  <input formControlName="text_seller_broker_state" type="text" class="i-lr-1__5">
-                  Zip
-                  <input formControlName="text_seller_broker_zip" type="text" class="i-lr-zip">
-                </div>
-                <div>
-                  Telephone
-                  <input formControlName="text_seller_broker_phone" type="text" class="i-lr-4">
-                  Fax
-                  <input formControlName="text_seller_broker_fax" type="text" class="i-lr-2__5">
-                  &nbsp;E-mail
-                  <input formControlName="text_seller_broker_email" type="text" class="i-lr-5">
-                </div>
-                <br>
-                <div>
-                  Real Estate Broker (Listing Firm)
                   <input formControlName="text_buyer_broker_firm_name" type="text" class="i-lr-6">
                   &nbsp;DRE Lic. #
                   <input formControlName="text_buyer_broker_firm_license" type="text" class="i-lr-3__5">
@@ -4817,6 +4774,44 @@
                   <input formControlName="text_buyer_broker_fax" type="text" class="i-lr-2__5">
                   &nbsp;E-mail
                   <input formControlName="text_buyer_broker_email" type="text" class="i-lr-5">
+                </div>
+                <br>
+                <div>
+                  Real Estate Broker (Listing Firm)
+                  <input formControlName="text_seller_broker_firm_name" type="text" class="i-lr-6">
+                  &nbsp;DRE Lic. #
+                  <input formControlName="text_seller_broker_firm_license" type="text" class="i-lr-3__5">
+                </div>
+                <div>
+                  By
+                  <input formControlName="text_seller_broker_name" type="text" class="i-lr-7">
+                  &nbsp; DRE Lic. #&nbsp;&nbsp;
+                  <input formControlName="text_seller_broker_license" type="text" class="i-lr-2">
+                  &nbsp;&nbsp;Date&nbsp;
+                  <input matInput
+                         [matDatepicker]="date_seller_broker_license"
+                         formControlName="date_seller_broker_license"
+                         type="text"
+                         class="i-lr-2__5">
+                  <mat-datepicker #date_seller_broker_license></mat-datepicker>
+                </div>
+                <div>
+                  Address
+                  <input formControlName="text_seller_broker_address" type="text" class="i-lr-6">
+                  City
+                  <input formControlName="text_seller_broker_city" type="text" class="i-lr-2">
+                  State
+                  <input formControlName="text_seller_broker_state" type="text" class="i-lr-1__5">
+                  Zip
+                  <input formControlName="text_seller_broker_zip" type="text" class="i-lr-zip">
+                </div>
+                <div>
+                  Telephone
+                  <input formControlName="text_seller_broker_phone" type="text" class="i-lr-4">
+                  Fax
+                  <input formControlName="text_seller_broker_fax" type="text" class="i-lr-2__5">
+                  &nbsp;E-mail
+                  <input formControlName="text_seller_broker_email" type="text" class="i-lr-5">
                 </div>
               </div>
             </div>
