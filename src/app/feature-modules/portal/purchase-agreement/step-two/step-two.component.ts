@@ -42,7 +42,7 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('form', {static: true}) form: ElementRef;
   @ViewChildren(SignatureDirective) signatures: QueryList<SignatureDirective>;
 
-  isLoading: boolean;
+  isLoading = true;
   isSignMode: boolean;
 
   okButtonText: string;
@@ -230,9 +230,9 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
         text_finance_verification_deliver_countdown: [{value: null, disabled: this.isDisabled}, []],
         check_finance_loan_type_fha: [{value: null, disabled: this.isDisabled}, {updateOn: 'change'}],
         check_finance_loan_type_va: [{value: null, disabled: this.isDisabled}, {updateOn: 'change'}],
-        check_finance_loan_type_seller: [{value: null, disabled: this.isDisabled}, {updateOn: 'change'}],
-        check_finance_loan_type_assumed: [{value: null, disabled: this.isDisabled}, {updateOn: 'change'}],
-        check_finance_loan_type_other: [{value: null, disabled: this.isDisabled}, {updateOn: 'change'}],
+        check_finance_loan_type_seller: [{value: null, disabled: this.isDisabled}],
+        check_finance_loan_type_assumed: [{value: null, disabled: this.isDisabled}],
+        check_finance_loan_type_other: [{value: null, disabled: this.isDisabled}],
         text_finance_loan_type_other_details: [{value: null, disabled: this.isDisabled}, []],
         text_finance_loan_max_percent: [{value: null, disabled: this.isDisabled}, []],
         check_finance_first_loan_adjustable: [{value: null, disabled: this.isDisabled}, []],
@@ -273,7 +273,7 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
         check_no_loan_contingency: [{value: null, disabled: this.isDisabled}, []],
         check_sale_of_buyers_property: [{value: null, disabled: this.isDisabled}, {updateOn: 'change'}],
         check_addenda_addendum: [{value: null, disabled: this.isDisabled}, {updateOn: 'change'}],
-        check_addenda_back_up_offer: [{value: null, disabled: this.isDisabled}, {updateOn: 'change'}],
+        check_addenda_back_up_offer: [{value: null, disabled: this.isDisabled}],
         check_addenda_court_confirmation: [{value: null, disabled: this.isDisabled}, []],
         check_addenda_septic: [{value: null, disabled: this.isDisabled}, []],
         check_addenda_short_sale: [{value: null, disabled: this.isDisabled}, []],
@@ -592,8 +592,8 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
         text_agreement_name: [{value: '', disabled: this.isDisabled}, []],
         date_agreement_date: [{value: '', disabled: true}, []],
         text_seller_property: [{value: '', disabled: true}, []],
-        text_buyer_sign: this.getSignFieldAllowedFor('buyers', 0),
-        text_seller_sign: this.getSignFieldAllowedFor('sellers', 0),
+        text_buyer_sign: [{value: '', disabled: true}, []],
+        text_seller_sign: [{value: '', disabled: true}, []],
         text_buyer_property: [{value: '', disabled: true}, []],
         check_describe_other: [{value: '', disabled: this.isDisabled}, []],
         text_describe_other: [{value: '', disabled: this.isDisabled}, []],
@@ -672,13 +672,14 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
     this.prevFormSnapshot = this.formGroupPage;
     this.documentForm = this.formGroupPage;
 
-    this.getOfferAgreement();
-
-    this.getAdditionalCount();
     this.subscribeToFormChanges();
   }
 
   ngAfterViewInit() {
+    this.getOfferAgreement();
+
+    this.getAdditionalCount();
+
     this.setPageBreakers();
   }
 
@@ -754,18 +755,14 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
       case 'FHA/VA':
         this.additionalList[pageId] =
           this.documentForm.get('page_5.check_finance_loan_type_fha').value ||
-          this.documentForm.get('page_5.check_finance_loan_type_va').value ||
-          this.documentForm.get('page_5.check_finance_loan_type_seller').value ||
-          this.documentForm.get('page_5.check_finance_loan_type_assumed').value ||
-          this.documentForm.get('page_5.check_finance_loan_type_other').value;
+          this.documentForm.get('page_5.check_finance_loan_type_va').value;
         break;
       case 'CONTINGENCY':
         this.additionalList[pageId] = this.documentForm.get('page_6.check_sale_of_buyers_property').value;
         break;
       case 'ADDENDA':
         this.additionalList[pageId] =
-          this.documentForm.get('page_6.check_addenda_addendum').value ||
-          this.documentForm.get('page_6.check_addenda_back_up_offer').value;
+          this.documentForm.get('page_6.check_addenda_addendum').value;
         break;
     }
 
@@ -826,12 +823,12 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe((model) => {
         this.patchForm(model);
 
-        this.checkSignAccess();
-
         this.getAllFieldsCount(model);
         this.updatePageProgress(model, 0);
 
         this.updateAdditionalPages();
+
+        this.checkSignAccess();
 
         this.disableSignFields();
 
@@ -858,8 +855,7 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private checkSignAccess() {
-    if (this.offer.userRole === 'agent_buyer'
-      && this.isSignMode
+    if (this.offer.userRole === 'agent_buyer' && this.isSignMode
       && (this.documentForm.invalid || !this.offer.allowSign || this.offer.isSigned)) {
       this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/step-two`);
     } else if (this.offer.userRole !== 'agent_buyer' && !this.isSignMode) {
