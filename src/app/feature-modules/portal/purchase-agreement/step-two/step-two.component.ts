@@ -1,12 +1,13 @@
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   OnDestroy,
   OnInit,
   QueryList,
   ViewChild,
-  ViewChildren
+  ViewChildren,
 } from '@angular/core';
 import { OfferService } from '../../services/offer.service';
 import { Offer } from '../../../../core-modules/models/offer';
@@ -100,6 +101,7 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
     private datePipe: DatePipe,
     private authService: AuthService,
     private profileService: ProfileService,
+    protected cdr: ChangeDetectorRef,
   ) {
   }
 
@@ -830,6 +832,8 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.updateAdditionalPages();
 
+        this.cdr.detectChanges();
+
         this.checkSignAccess();
 
         this.disableSignFields();
@@ -1048,7 +1052,7 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
             .includes(`portal/offer/${this.offer.id}/counter-offers/${this.offerService.currentOffer.id}/`)) {
           this.router.navigateByUrl(this.profileService.previousRouteUrl);
         } else {
-          this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/${this.offer.progress >= 3 ? 'details' : 'step-three'}`);
+          this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}${this.offer.progress >= 3 ? '/details' : '/step-three'}`);
         }
       }, () => {
         this.offer.isSigned = false;
