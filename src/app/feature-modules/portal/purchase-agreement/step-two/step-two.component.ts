@@ -1,4 +1,14 @@
-import { Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+} from '@angular/core';
 import { OfferService } from '../../services/offer.service';
 import { Offer } from '../../../../core-modules/models/offer';
 import { DateAdapter, MAT_DATE_FORMATS, MatDialog, MatSnackBar, MatSnackBarConfig } from '@angular/material';
@@ -18,7 +28,6 @@ import { ConfirmationBarComponent } from '../../../../shared-modules/components/
 import { PICK_FORMATS, PickDateAdapter } from '../../../../core-modules/adapters/date-adapter';
 import { FinishSigningDialogComponent } from '../../../../shared-modules/dialogs/finish-signing-dialog/finish-signing-dialog.component';
 import { ProfileService } from '../../../../core-modules/core-services/profile.service';
-import { CounterOfferType } from '../../../../core-modules/models/counter-offer-type';
 
 @Component({
   selector: 'app-step-two',
@@ -30,11 +39,11 @@ import { CounterOfferType } from '../../../../core-modules/models/counter-offer-
     {provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS},
   ]
 })
-export class StepTwoComponent implements OnInit, OnDestroy {
+export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('form', {static: true}) form: ElementRef;
   @ViewChildren(SignatureDirective) signatures: QueryList<SignatureDirective>;
 
-  isLoading: boolean;
+  isLoading = true;
   isSignMode: boolean;
 
   okButtonText: string;
@@ -59,15 +68,20 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
   datepickerMinDate: Date = new Date();
 
+  additionalList = {
+    'FHA/VA': false,
+    CONTINGENCY: false,
+    ADDENDA: false,
+  };
+
+  readonly AGREEMENT_PAGE_NUM = 16;
+  additionalPageCount: number[] = [];
+
   private user: User;
-
   private isDisabled: boolean;
-
   private onDestroyed$: Subject<void> = new Subject<void>();
-
   private pageBreakersOffsetTop: number[];
   private documentFormEl: EventTarget;
-
   private downPaymentAmountPredicates: string[] = [
     'text_offer_price_digits',
     'text_finance_terms_amount',
@@ -87,6 +101,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     private datePipe: DatePipe,
     private authService: AuthService,
     private profileService: ProfileService,
+    protected cdr: ChangeDetectorRef,
   ) {
   }
 
@@ -215,11 +230,11 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         check_finance_all_cash_offer: [{value: null, disabled: this.isDisabled}, []],
         check_finance_attach_to_buyer_shall: [{value: null, disabled: this.isDisabled}, []],
         text_finance_verification_deliver_countdown: [{value: null, disabled: this.isDisabled}, []],
-        check_finance_loan_type_fha: [{value: null, disabled: this.isDisabled}, []],
-        check_finance_loan_type_va: [{value: null, disabled: this.isDisabled}, []],
-        check_finance_loan_type_seller: [{value: null, disabled: this.isDisabled}, []],
-        check_finance_loan_type_assumed: [{value: null, disabled: this.isDisabled}, []],
-        check_finance_loan_type_other: [{value: null, disabled: this.isDisabled}, []],
+        check_finance_loan_type_fha: [{value: null, disabled: this.isDisabled}, {updateOn: 'change'}],
+        check_finance_loan_type_va: [{value: null, disabled: this.isDisabled}, {updateOn: 'change'}],
+        check_finance_loan_type_seller: [{value: null, disabled: this.isDisabled}],
+        check_finance_loan_type_assumed: [{value: null, disabled: this.isDisabled}],
+        check_finance_loan_type_other: [{value: null, disabled: this.isDisabled}],
         text_finance_loan_type_other_details: [{value: null, disabled: this.isDisabled}, []],
         text_finance_loan_max_percent: [{value: null, disabled: this.isDisabled}, []],
         check_finance_first_loan_adjustable: [{value: null, disabled: this.isDisabled}, []],
@@ -258,9 +273,9 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         check_loan_terms_letter_attached: [{value: null, disabled: this.isDisabled}, []],
         text_loan_terms_contingency_removal_days: [{value: null, disabled: this.isDisabled}, []],
         check_no_loan_contingency: [{value: null, disabled: this.isDisabled}, []],
-        check_sale_of_buyers_property: [{value: null, disabled: this.isDisabled}, []],
-        check_addenda_addendum: [{value: null, disabled: this.isDisabled}, []],
-        check_addenda_back_up_offer: [{value: null, disabled: this.isDisabled}, []],
+        check_sale_of_buyers_property: [{value: null, disabled: this.isDisabled}, {updateOn: 'change'}],
+        check_addenda_addendum: [{value: null, disabled: this.isDisabled}, {updateOn: 'change'}],
+        check_addenda_back_up_offer: [{value: null, disabled: this.isDisabled}],
         check_addenda_court_confirmation: [{value: null, disabled: this.isDisabled}, []],
         check_addenda_septic: [{value: null, disabled: this.isDisabled}, []],
         check_addenda_short_sale: [{value: null, disabled: this.isDisabled}, []],
@@ -535,6 +550,110 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         text_privacy_act_advisory_second: this.getSignFieldAllowedFor('buyers', 1),
         date_privacy_act_advisory_second: [{value: '', disabled: true}, []],
       }),
+      page_17: this.fb.group({
+        check_agreement_residential: [{value: null, disabled: this.isDisabled}, []],
+        check_agreement_other: [{value: null, disabled: this.isDisabled}, []],
+        text_agreement_name: [{value: null, disabled: this.isDisabled}, []],
+        text_agreement_address: [{value: null, disabled: this.isDisabled}, []],
+        text_sign_buyer: [{value: null, disabled: true}, []],
+        text_sign_seller: [{value: null, disabled: true}, []],
+        text_property_value: [{value: null, disabled: this.isDisabled}, []],
+        date_buyer_first_sign: [{value: null, disabled: true}, []],
+        text_buyer_first_sign: this.getSignFieldAllowedFor('buyers', 0),
+        text_buyer_second_sign: this.getSignFieldAllowedFor('buyers', 1),
+        date_seller_first_sign: [{value: null, disabled: true}, []],
+        text_seller_first_sign: this.getSignFieldAllowedFor('sellers', 0),
+        text_seller_second_sign: this.getSignFieldAllowedFor('sellers', 1),
+
+        text_buyer_broker_firm_name: [{value: null, disabled: true}, []],
+        text_buyer_broker_firm_license: [{value: null, disabled: true}, []],
+        text_buyer_broker_name: [{value: null, disabled: true}, []],
+        text_buyer_broker_license: [{value: null, disabled: true}, []],
+        date_buyer_broker_license: [{value: null, disabled: true}, []],
+        text_buyer_broker_address: [{value: null, disabled: true}, []],
+        text_buyer_broker_city: [{value: null, disabled: true}, []],
+        text_buyer_broker_state: [{value: null, disabled: true}, []],
+        text_buyer_broker_zip: [{value: null, disabled: true}, []],
+        text_buyer_broker_phone: [{value: null, disabled: true}, []],
+        text_buyer_broker_fax: [{value: null, disabled: true}, []],
+        text_buyer_broker_email: [{value: null, disabled: true}, []],
+
+        text_seller_broker_firm_name: [{value: null, disabled: true}, []],
+        text_seller_broker_firm_license: [{value: null, disabled: true}, []],
+        text_seller_broker_name: [{value: null, disabled: true}, []],
+        text_seller_broker_license: [{value: null, disabled: true}, []],
+        date_seller_broker_license: [{value: null, disabled: true}, []],
+        text_seller_broker_address: [{value: null, disabled: true}, []],
+        text_seller_broker_city: [{value: null, disabled: true}, []],
+        text_seller_broker_state: [{value: null, disabled: true}, []],
+        text_seller_broker_zip: [{value: null, disabled: true}, []],
+        text_seller_broker_phone: [{value: null, disabled: true}, []],
+        text_seller_broker_fax: [{value: null, disabled: true}, []],
+        text_seller_broker_email: [{value: null, disabled: true}, []],
+      }),
+      page_18: this.fb.group({
+        check_agreement_purchase: [{value: '', disabled: this.isDisabled}, []],
+        text_agreement_name: [{value: '', disabled: this.isDisabled}, []],
+        date_agreement_date: [{value: '', disabled: true}, []],
+        text_seller_property: [{value: '', disabled: true}, []],
+        text_buyer_sign: [{value: '', disabled: true}, []],
+        text_seller_sign: [{value: '', disabled: true}, []],
+        text_buyer_property: [{value: '', disabled: true}, []],
+        check_describe_other: [{value: '', disabled: this.isDisabled}, []],
+        text_describe_other: [{value: '', disabled: this.isDisabled}, []],
+        text_after_close_escrow_days: [{value: '', disabled: this.isDisabled}, []],
+        check_property_not_escrow: [{value: '', disabled: this.isDisabled}, []],
+        check_listed_for_sale: [{value: '', disabled: this.isDisabled}, []],
+        check_not_listed_for_sale: [{value: '', disabled: this.isDisabled}, []],
+        text_broker_mls_name: [{value: '', disabled: this.isDisabled}, []],
+        text_broker_mls_number: [{value: '', disabled: this.isDisabled}, []],
+        text_days_after_acceptance: [{value: '', disabled: this.isDisabled}, []],
+        check_property_in_escrow: [{value: '', disabled: this.isDisabled}, []],
+        date_property_escrow_date: [{value: '', disabled: this.isDisabled}, []],
+        text_escrow_holder_name: [{value: '', disabled: this.isDisabled}, []],
+        text_escrow_number: [{value: '', disabled: this.isDisabled}, []],
+        text_cancel_contract_days: [{value: '', disabled: this.isDisabled}, []],
+        check_seller_can_cancel: [{value: '', disabled: this.isDisabled}, []],
+        check_day_after_deliver: [{value: '', disabled: this.isDisabled}, []],
+        check_days_after_deliver: [{value: '', disabled: this.isDisabled}, []],
+        text_days_after_delivery: [{value: '', disabled: this.isDisabled}, []],
+        check_delayed_right: [{value: '', disabled: this.isDisabled}, []],
+        text_days_not_invoke_provisions: [{value: '', disabled: this.isDisabled}, []],
+        check_days_not_invoke_provisions: [{value: '', disabled: this.isDisabled}, []],
+        date_buyer_first_sign_copy: [{value: '', disabled: true}, []],
+        text_buyer_first_sign_copy: this.getSignFieldAllowedFor('buyers', 0),
+        text_buyer_second_sign_copy: this.getSignFieldAllowedFor('buyers', 1),
+        date_seller_first_sign_copy: [{value: '', disabled: true}, []],
+        text_seller_first_sign_copy: this.getSignFieldAllowedFor('sellers', 0),
+        text_seller_second_sign_copy: this.getSignFieldAllowedFor('sellers', 1),
+        text_seller_first_sign_notice: this.getSignFieldAllowedFor('sellers', 0),
+        date_seller_first_sign_notice: [{value: '', disabled: true}, []],
+        text_seller_second_sign_notice: this.getSignFieldAllowedFor('sellers', 1),
+        date_seller_second_sign_notice: [{value: '', disabled: true}, []],
+        text_seller_first_initials: this.getSignFieldAllowedFor('sellers', 0),
+        text_seller_second_initials: this.getSignFieldAllowedFor('sellers', 1),
+        date_signed_notice_date: [{value: '', disabled: true}, []],
+        text_signed_notice_time: [{value: '', disabled: true}, []],
+        radio_signed_notice_ampm: [{value: '', disabled: true}, []],
+      }),
+      page_19: this.fb.group({
+        text_addendum_number: [{value: '', disabled: true}, []],
+        check_terms_for_agreement: [{value: '', disabled: this.isDisabled}, []],
+        check_terms_for_residential_lease: [{value: '', disabled: this.isDisabled}, []],
+        check_terms_for_tds: [{value: '', disabled: this.isDisabled}, []],
+        check_terms_for_other: [{value: '', disabled: this.isDisabled}, []],
+        text_terms_for_other: [{value: '', disabled: this.isDisabled}, []],
+        text_property_name: [{value: '', disabled: true}, []],
+        text_referred_to_buyer: [{value: '', disabled: true}, []],
+        text_referred_to_seller: [{value: '', disabled: true}, []],
+        text_terms_and_conditions: [{value: '', disabled: this.isDisabled}, []],
+        date_buyer_first_sign: [{value: '', disabled: true}, []],
+        text_buyer_first_sign: this.getSignFieldAllowedFor('buyers', 0),
+        text_buyer_second_sign: this.getSignFieldAllowedFor('buyers', 1),
+        date_seller_first_sign: [{value: '', disabled: true}, []],
+        text_seller_first_sign: this.getSignFieldAllowedFor('sellers', 0),
+        text_seller_second_sign: this.getSignFieldAllowedFor('sellers', 1),
+      }),
     }, {updateOn: 'blur'});
   }
 
@@ -557,45 +676,15 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.prevFormSnapshot = this.formGroupPage;
     this.documentForm = this.formGroupPage;
 
-    this.getOfferAgreement();
-
-    this.initPageBreakers();
     this.subscribeToFormChanges();
   }
 
-  continue() {
-    if (this.isSignMode) {
-      const isSigningComplete = this.signatures.toArray().filter(el => el.isActiveSignRow).every((el) => !!el.signatureControl.value);
+  ngAfterViewInit() {
+    this.getOfferAgreement();
 
-      if (isSigningComplete) {
-        if (this.offer.allowSign && !this.offer.isSigned) {
-          this.openFinishingDialog();
-        } else {
-          this.closeOffer();
-        }
-      } else {
-        this.snackbar.open('Please, fill all sign fields');
-        this.moveToNextSignField(true);
-      }
-    } else {
-      this.form.nativeElement.blur();
-      this.documentForm.markAllAsTouched();
+    this.getAdditionalCount();
 
-      if (this.scrollToFirstInvalidField()) {
-        this.snackbar.open('Please, fill all mandatory fields');
-      } else {
-        this.offerService.updateOfferProgress({progress: 3}, this.offerId)
-          .pipe(takeUntil(this.onDestroyed$))
-          .subscribe(() => {
-            this.router.navigate([`portal/purchase-agreements/${this.offerId}/step-three`]);
-          });
-      }
-    }
-  }
-
-  closeOffer() {
-    this.form.nativeElement.blur();
-    this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/details`);
+    this.setPageBreakers();
   }
 
   modeChanged(isSign: boolean) {
@@ -623,11 +712,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
           this.openSaveOfferDialog(data.changedOfferModel);
         }
       });
-  }
-
-  ngOnDestroy(): void {
-    this.onDestroyed$.next();
-    this.onDestroyed$.complete();
   }
 
   moveToNextSignField(signStatus, signatures = this.signatures.toArray().filter(el => el.isActiveSignRow)) {
@@ -670,6 +754,71 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     }
   }
 
+  additionalListChanges(pageId: string) {
+    switch (pageId) {
+      case 'FHA/VA':
+        this.additionalList[pageId] =
+          this.documentForm.get('page_5.check_finance_loan_type_fha').value ||
+          this.documentForm.get('page_5.check_finance_loan_type_va').value;
+        break;
+      case 'CONTINGENCY':
+        this.additionalList[pageId] = this.documentForm.get('page_6.check_sale_of_buyers_property').value;
+        break;
+      case 'ADDENDA':
+        this.additionalList[pageId] =
+          this.documentForm.get('page_6.check_addenda_addendum').value;
+        break;
+    }
+
+    this.getAdditionalCount();
+    this.setPageBreakers();
+  }
+
+  continue() {
+    if (this.isSignMode) {
+      const isSigningComplete = this.signatures.toArray().filter(el => el.isActiveSignRow).every((el) => !!el.signatureControl.value);
+
+      if (isSigningComplete) {
+        if (this.offer.allowSign && !this.offer.isSigned) {
+          this.openFinishingDialog();
+        } else {
+          this.closeOffer();
+        }
+      } else {
+        this.snackbar.open('Please, fill all sign fields');
+        this.moveToNextSignField(true);
+      }
+    } else {
+      this.form.nativeElement.blur();
+      this.documentForm.markAllAsTouched();
+
+      if (this.scrollToFirstInvalidField()) {
+        this.snackbar.open('Please, fill all mandatory fields');
+      } else {
+        this.offerService.updateOfferProgress({progress: 3}, this.offerId)
+          .pipe(takeUntil(this.onDestroyed$))
+          .subscribe(() => {
+            this.router.navigate([`portal/purchase-agreements/${this.offerId}/step-three`]);
+          });
+      }
+    }
+  }
+
+  closeOffer() {
+    this.form.nativeElement.blur();
+    this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/details`);
+  }
+
+  ngOnDestroy(): void {
+    this.onDestroyed$.next();
+    this.onDestroyed$.complete();
+  }
+
+  private getAdditionalCount() {
+    let firstPageCount = this.AGREEMENT_PAGE_NUM + 1;
+    this.additionalPageCount = [...Object.values(this.additionalList).map((page) => page ? firstPageCount++ : null)];
+  }
+
   private getOfferAgreement() {
     this.isLoading = true;
 
@@ -678,10 +827,14 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       .subscribe((model) => {
         this.patchForm(model);
 
-        this.checkSignAccess();
-
         this.getAllFieldsCount(model);
         this.updatePageProgress(model, 0);
+
+        this.updateAdditionalPages();
+
+        this.cdr.detectChanges();
+
+        this.checkSignAccess();
 
         this.disableSignFields();
 
@@ -689,6 +842,10 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
         this.isLoading = false;
       });
+  }
+
+  private updateAdditionalPages() {
+    Object.entries(this.additionalList).map(page => this.additionalListChanges(page[0]));
   }
 
   private initSwitchDaysAndDate() {
@@ -704,8 +861,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   private checkSignAccess() {
-    if (this.offer.userRole === 'agent_buyer'
-      && this.isSignMode
+    if (this.offer.userRole === 'agent_buyer' && this.isSignMode
       && (this.documentForm.invalid || !this.offer.allowSign || this.offer.isSigned)) {
       this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/step-two`);
     } else if (this.offer.userRole !== 'agent_buyer' && !this.isSignMode) {
@@ -896,7 +1052,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
             .includes(`portal/offer/${this.offer.id}/counter-offers/${this.offerService.currentOffer.id}/`)) {
           this.router.navigateByUrl(this.profileService.previousRouteUrl);
         } else {
-          this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/${this.offer.progress >= 3 ? 'details' : 'step-three'}`);
+          this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}${this.offer.progress >= 3 ? '/details' : '/step-three'}`);
         }
       }, () => {
         this.offer.isSigned = false;
@@ -904,7 +1060,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       });
   }
 
-  private initPageBreakers() {
+  private setPageBreakers() {
     this.pageBreakersOffsetTop =
       Array.from(this.elRef.nativeElement.querySelectorAll('.page-breaker'))
         .map((item: any) => item.offsetTop);
