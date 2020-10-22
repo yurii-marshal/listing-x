@@ -1220,9 +1220,11 @@
                     <div class="item-pl-3 ">
                       This loan will be conventional financing
                       <span class="fw-bold">OR</span>
-                      <input (change)="additionalListChanges('FHA/VA')" formControlName="check_finance_loan_type_fha" type="checkbox">
+                      <input (change)="additionalListChanges('FHA/VA')" formControlName="check_finance_loan_type_fha"
+                             type="checkbox">
                       FHA,
-                      <input (change)="additionalListChanges('FHA/VA')" formControlName="check_finance_loan_type_va" type="checkbox">
+                      <input (change)="additionalListChanges('FHA/VA')" formControlName="check_finance_loan_type_va"
+                             type="checkbox">
                       VA,
                       <input formControlName="check_finance_loan_type_seller" type="checkbox">
                       Seller financing (C.A.R. Form SFA),
@@ -1521,7 +1523,8 @@
               </div>
               <div>
                 <span class="fw-bold f-l">OR&nbsp;B.&nbsp;</span>
-                <div class="item-pl-35"><input (change)="additionalListChanges('CONTINGENCY')" formControlName="check_sale_of_buyers_property" type="checkbox">
+                <div class="item-pl-35"><input (change)="additionalListChanges('CONTINGENCY')"
+                                               formControlName="check_sale_of_buyers_property" type="checkbox">
                   This Agreement and Buyer's ability to obtain financing are contingent upon the sale of property
                   owned by
                   Buyer as specified
@@ -1533,7 +1536,8 @@
                 <span class="f-l"> A. &nbsp;ADDENDA:</span>
                 <div class="item-pl-3">
                   <div style="border-bottom: rgb(122, 120, 120) 1px solid;">
-                    &nbsp; <input (change)="additionalListChanges('ADDENDA')" formControlName="check_addenda_addendum" type="checkbox"> Addendum # (C.A.R. Form ADM)
+                    &nbsp; <input (change)="additionalListChanges('ADDENDA')" formControlName="check_addenda_addendum"
+                                  type="checkbox"> Addendum # (C.A.R. Form ADM)
                     &nbsp; <input formControlName="check_addenda_back_up_offer" type="checkbox"> Back Up Offer Addendum
                     (C.A.R. Form BUO)
                   </div>
@@ -4603,7 +4607,8 @@
 
           <div class="page-breaker" id="page-16">16</div>
 
-          <div *ngIf="additionalList['FHA/VA']" formGroupName="page_17" class="container" style="font-size: 21px; line-height: 1.4;">
+          <div *ngIf="additionalList['FHA/VA']" formGroupName="page_17" class="container"
+               style="font-size: 21px; line-height: 1.4;">
             <header class="clearfix">
               <img src="assets/agreement/images/logo1.png" width="350" height="120" class="image">
               <div class="box">
@@ -4640,7 +4645,8 @@
                     the Federal Housing
                     Commissioner, Department of Veterans Affairs, or a Direct Endorsement lender setting forth the
                     appraised value of the property of
-                    not less than $ <input formControlName="text_property_value" type="text" class="i-lr-3"> . The purchaser shall have the privilege and
+                    not less than $ <input formControlName="text_property_value" type="text" class="i-lr-3"> . The
+                    purchaser shall have the privilege and
                     option of proceeding with consummation of
                     the contract without regard to the amount of the appraised valuation. The appraised valuation is
                     arrived at to determine the
@@ -4716,10 +4722,10 @@
                 </div>
                 <div class="f-r ml-4">
                   Date &nbsp;<input matInput
-                         [matDatepicker]="date_seller_first_sign"
-                         formControlName="date_seller_first_sign"
-                         type="text"
-                         class="i-lr-6">
+                                    [matDatepicker]="date_seller_first_sign"
+                                    formControlName="date_seller_first_sign"
+                                    type="text"
+                                    class="i-lr-6">
                   <mat-datepicker #date_seller_first_sign></mat-datepicker>
                   <br>
                   <br>
@@ -4862,9 +4868,12 @@
             </footer>
           </div>
 
-          <div *ngIf="additionalList['FHA/VA']" class="page-breaker" id="page-{{additionalPageCount[0]}}">{{additionalPageCount[0]}}</div>
+          <div *ngIf="additionalList['FHA/VA']" class="page-breaker" id="page-{{additionalPageCount[0]}}">
+            {{additionalPageCount[0]}}
+          </div>
 
-          <div *ngIf="additionalList['CONTINGENCY']" formGroupName="page_18" class="container" style="font-size: 20px; line-height: 1.2;">
+          <div *ngIf="additionalList['CONTINGENCY']" formGroupName="page_18" class="container"
+               style="font-size: 20px; line-height: 1.2;">
             <header class="clearfix">
               <img src="assets/agreement/images/logo1.png" width="350" height="120" class="image">
               <div class="box">
@@ -4953,7 +4962,8 @@
                       <span class="f-l fw-bold">B. &nbsp;</span>
                       <div class="item-pl-3 text-justify">
                         Buyer has
-                        <span class="fw-bold">17 (or <input formControlName="text_days_after_acceptance" type="text" class="i-lr-1"> ) Days</span>
+                        <span class="fw-bold">17 (or <input formControlName="text_days_after_acceptance" type="text"
+                                                            class="i-lr-1"> ) Days</span>
                         After Acceptance to enter into escrow for the sale of Buyer's Property. Buyer shall,
                         within the time specified,
                         provide Seller with Copies of the contract, escrow instructions and all related
@@ -5150,17 +5160,17 @@
                          class="i-lr-6">
                   <mat-datepicker #date_buyer_first_sign_copy></mat-datepicker>
                   <br>
-                  Buyer <input formControlName="text_buyer_first_sign_copy"
-                               appSignature
-                               (fieldSigned)="moveToNextSignField($event)"
-                               [withDateControl]="'date_buyer_first_sign_copy'"
-                               type="text" class="i-lr-6">
+                  Buyer <span class="i-lr-6"><input formControlName="text_buyer_first_sign_copy"
+                                     appSignature style="width: inherit;"
+                                     (fieldSigned)="moveToNextSignField($event)"
+                                     [withDateControl]="'date_buyer_first_sign_copy'"
+                                     type="text"></span>
                   <br>
                   <br>
-                  Buyer <input formControlName="text_buyer_second_sign_copy"
-                               appSignature
-                               (fieldSigned)="moveToNextSignField($event)"
-                               type="text" class="i-lr-6">
+                  Buyer <span class="i-lr-6"><input formControlName="text_buyer_second_sign_copy"
+                                     appSignature style="width: inherit;"
+                                     (fieldSigned)="moveToNextSignField($event)"
+                                     type="text"></span>
                 </div>
                 <div class="f-r ml-4">
                   Date &nbsp;
@@ -5171,17 +5181,17 @@
                          class="i-lr-6">
                   <mat-datepicker #date_seller_first_sign_copy></mat-datepicker>
                   <br>
-                  Seller <input formControlName="text_seller_first_sign_copy"
-                                appSignature
-                                (fieldSigned)="moveToNextSignField($event)"
-                                [withDateControl]="'date_seller_first_sign_copy'"
-                                type="text" class="i-lr-6">
+                  Seller <span class="i-lr-6"><input formControlName="text_seller_first_sign_copy"
+                                                     appSignature style="width: inherit;"
+                                                     (fieldSigned)="moveToNextSignField($event)"
+                                                     [withDateControl]="'date_seller_first_sign_copy'"
+                                                     type="text"></span>
                   <br>
                   <br>
-                  Seller <input formControlName="text_seller_second_sign_copy"
-                                appSignature
-                                (fieldSigned)="moveToNextSignField($event)"
-                                type="text" class="i-lr-6">
+                  Seller <span class="i-lr-6"><input formControlName="text_seller_second_sign_copy"
+                                                     appSignature style="width: inherit;"
+                                                     (fieldSigned)="moveToNextSignField($event)"
+                                                     type="text"></span>
                 </div>
               </div>
               <hr>
@@ -5221,26 +5231,27 @@
               <div>
                 <br>
                 <div>
-                  ( <input formControlName="text_seller_first_initials"
-                           appSignature [mode]="'initials'"
-                           (fieldSigned)="moveToNextSignField($event)"
-                           [withDateControl]="'date_signed_notice_date'"
-                           [withTimeControl]="'text_signed_notice_time'"
-                           [withAmpmControl]="'radio_signed_notice_ampm'"
-                           type="text" class="i-lr-1"> /
-                  <input formControlName="text_seller_second_initials"
-                         appSignature [mode]="'initials'"
-                         (fieldSigned)="moveToNextSignField($event)"
-                         type="text" class="i-lr-1"> ) (Initials)
+                  ( <span><input formControlName="text_seller_first_initials"
+                                 appSignature [mode]="'initials'"
+                                 (fieldSigned)="moveToNextSignField($event)"
+                                 [withDateControl]="'date_signed_notice_date'"
+                                 [withTimeControl]="'text_signed_notice_time'"
+                                 [withAmpmControl]="'radio_signed_notice_ampm'"
+                                 type="text" class="i-lr-1"></span> /
+                  <span><input formControlName="text_seller_second_initials"
+                               appSignature [mode]="'initials'"
+                               (fieldSigned)="moveToNextSignField($event)"
+                               type="text" class="i-lr-1"></span> ) (Initials)
                   <span class="fw-bold">CONFIRMATION OF RECEIPT:</span>
                   A Copy of this Signed Notice to Buyer to remove contingencies and take actions was
                   personally received by Buyer or authorized agent on
-                  <input matInput
-                         [matDatepicker]="date_signed_notice_date"
-                         formControlName="date_signed_notice_date"
-                         type="text"
-                         class="i-lr-1__5">
-                  <mat-datepicker #date_signed_notice_date></mat-datepicker> at
+                  <span><input matInput
+                               [matDatepicker]="date_signed_notice_date"
+                               formControlName="date_signed_notice_date"
+                               type="text"
+                               class="i-lr-1__5"></span>
+                  <mat-datepicker #date_signed_notice_date></mat-datepicker>
+                  at
                   <input formControlName="text_signed_notice_time" type="text" class="i-lr-1">
                   <input formControlName="radio_signed_notice_ampm" type="radio" value="am"> AM/
                   <input formControlName="radio_signed_notice_ampm" type="radio" value="pm"> PM.
@@ -5282,9 +5293,12 @@
             </footer>
           </div>
 
-          <div *ngIf="additionalList['CONTINGENCY']" class="page-breaker" id="page-{{additionalPageCount[1]}}">{{additionalPageCount[1]}}</div>
+          <div *ngIf="additionalList['CONTINGENCY']" class="page-breaker" id="page-{{additionalPageCount[1]}}">
+            {{additionalPageCount[1]}}
+          </div>
 
-          <div *ngIf="additionalList['ADDENDA']" formGroupName="page_19" class="container" style="font-size: 21px; line-height: 1.2;">
+          <div *ngIf="additionalList['ADDENDA']" formGroupName="page_19" class="container"
+               style="font-size: 21px; line-height: 1.2;">
             <header class="clearfix">
               <img src="assets/agreement/images/logo1.png" width="350" height="120" class="image">
               <div class="box">
@@ -5321,36 +5335,37 @@
               </div>
               <br>
               <div>
-                <textarea formControlName="text_terms_and_conditions" style="width: 1380px;  height: 1000px;"></textarea>
+                <textarea formControlName="text_terms_and_conditions"
+                          style="width: 1380px;  height: 1000px;"></textarea>
               </div>
               <div>
                 The foregoing terms and conditions are hereby agreed to, and the undersigned acknowledge receipt of a
                 copy of this document.
               </div>
-              <div class="clearfix">
-                <div class="f-l">
+              <div class="clearfix" style="display: flex;justify-content: space-between;">
+                <div class="">
                   Date &nbsp; &nbsp; &nbsp;<input matInput
-                         [matDatepicker]="date_buyer_first_sign"
-                         formControlName="date_buyer_first_sign"
-                         type="text"
-                         class="i-lr-5__5">
+                                                  [matDatepicker]="date_buyer_first_sign"
+                                                  formControlName="date_buyer_first_sign"
+                                                  type="text"
+                                                  class="i-lr-5__5">
                   <mat-datepicker #date_buyer_first_sign></mat-datepicker>
                   <br>
                   <br>
-                  Buyer/Tenant <input formControlName="text_buyer_first_sign"
-                                      appSignature
-                                      (fieldSigned)="moveToNextSignField($event)"
-                                      [withDateControl]="'date_buyer_first_sign'"
-                                      type="text" class="i-lr-5">
+                  Buyer/Tenant <span class="i-lr-5"><input formControlName="text_buyer_first_sign"
+                                                           style="width: inherit;"
+                                                           appSignature (fieldSigned)="moveToNextSignField($event)"
+                                                           [withDateControl]="'date_buyer_first_sign'"
+                                                           type="text"></span>
                   <br>
                   <br>
                   <br>
-                  Buyer/Tenant <input formControlName="text_buyer_second_sign"
-                                      appSignature
-                                      (fieldSigned)="moveToNextSignField($event)"
-                                      type="text" class="i-lr-5">
+                  Buyer/Tenant <span class="i-lr-5"><input formControlName="text_buyer_second_sign"
+                                                           style="width: inherit;"
+                                                           appSignature (fieldSigned)="moveToNextSignField($event)"
+                                                           type="text"></span>
                 </div>
-                <div class="f-r ml-4">
+                <div class="">
                   Date
                   <input matInput
                          [matDatepicker]="date_seller_first_sign"
@@ -5360,18 +5375,18 @@
                   <mat-datepicker #date_seller_first_sign></mat-datepicker>
                   <br>
                   <br>
-                  Seller/Landlord <input formControlName="text_seller_first_sign"
-                                         appSignature
-                                         (fieldSigned)="moveToNextSignField($event)"
-                                         [withDateControl]="'date_seller_first_sign'"
-                                         type="text" class="i-lr-5">
+                  Seller/Landlord <span class="i-lr-5"><input formControlName="text_seller_first_sign"
+                                                              appSignature style="width: inherit;"
+                                                              (fieldSigned)="moveToNextSignField($event)"
+                                                              [withDateControl]="'date_seller_first_sign'"
+                                                              type="text"></span>
                   <br>
                   <br>
                   <br>
-                  Seller/Landlord <input formControlName="text_seller_second_sign"
-                                         appSignature
-                                         (fieldSigned)="moveToNextSignField($event)"
-                                         type="text" class="i-lr-5">
+                  Seller/Landlord <span class="i-lr-5"><input formControlName="text_seller_second_sign"
+                                                              appSignature style="width: inherit;"
+                                                              (fieldSigned)="moveToNextSignField($event)"
+                                                              type="text"></span>
                 </div>
               </div>
             </div>
@@ -5419,7 +5434,9 @@
             </footer>
           </div>
 
-          <div *ngIf="additionalList['ADDENDA']" class="page-breaker" id="page-{{additionalPageCount[2]}}">{{additionalPageCount[2]}}</div>
+          <div *ngIf="additionalList['ADDENDA']" class="page-breaker" id="page-{{additionalPageCount[2]}}">
+            {{additionalPageCount[2]}}
+          </div>
 
         </form>
 
