@@ -4709,16 +4709,16 @@
                   <mat-datepicker #date_buyer_first_sign></mat-datepicker>
                   <br>
                   <br>
-                  Buyer <input formControlName="text_buyer_first_sign"
-                               appSignature
-                               (fieldSigned)="moveToNextSignField($event)"
-                               [withDateControl]="'date_buyer_first_sign'"
-                               type="text" class="i-lr-6">
+                  Buyer <span class="i-lr-6"><input formControlName="text_buyer_first_sign"
+                                    appSignature style="width: inherit;"
+                                    (fieldSigned)="moveToNextSignField($event)"
+                                    [withDateControl]="'date_buyer_first_sign'"
+                                    type="text"></span>
                   <br>
                   <br>
-                  Buyer <input formControlName="text_buyer_second_sign"
-                               appSignature (fieldSigned)="moveToNextSignField($event)"
-                               type="text" class="i-lr-6">
+                  Buyer <span class="i-lr-6"><input formControlName="text_buyer_second_sign" style="width: inherit;"
+                                     appSignature (fieldSigned)="moveToNextSignField($event)"
+                                     type="text"></span>
                 </div>
                 <div class="f-r ml-4">
                   Date &nbsp;<input matInput
@@ -4729,17 +4729,17 @@
                   <mat-datepicker #date_seller_first_sign></mat-datepicker>
                   <br>
                   <br>
-                  Seller <input formControlName="text_seller_first_sign"
-                                appSignature
-                                (fieldSigned)="moveToNextSignField($event)"
-                                [withDateControl]="'date_seller_first_sign'"
-                                type="text" class="i-lr-6">
+                  Seller <span class="i-lr-6"><input formControlName="text_seller_first_sign"
+                                      appSignature style="width: inherit;"
+                                      (fieldSigned)="moveToNextSignField($event)"
+                                      [withDateControl]="'date_seller_first_sign'"
+                                      type="text"></span>
                   <br>
                   <br>
-                  Seller <input formControlName="text_seller_second_sign"
-                                appSignature
-                                (fieldSigned)="moveToNextSignField($event)"
-                                type="text" class="i-lr-6">
+                  Seller <span class="i-lr-6"><input formControlName="text_seller_second_sign"
+                                      appSignature style="width: inherit;"
+                                      (fieldSigned)="moveToNextSignField($event)"
+                                      type="text"></span>
                 </div>
               </div>
               <br>
