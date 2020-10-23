@@ -5203,10 +5203,10 @@
               <div>
                 Seller&nbsp;
                 <input formControlName="text_seller_first_sign_notice"
-                       appSignature
-                       (fieldSigned)="moveToNextSignField($event)"
-                       [withDateControl]="'date_seller_first_sign_notice'"
                        type="text" class="i-lr-4">
+                <!--appSignature-->
+                <!--(fieldSigned)="moveToNextSignField($event)"-->
+                <!--[withDateControl]="'date_seller_first_sign_notice'"-->
                 &nbsp;Date &nbsp;
                 <input matInput
                        [matDatepicker]="date_seller_first_sign_notice"
@@ -5216,10 +5216,10 @@
                 <mat-datepicker #date_seller_first_sign_notice></mat-datepicker>
                 &nbsp;Seller &nbsp;
                 <input formControlName="text_seller_second_sign_notice"
-                       appSignature
-                       (fieldSigned)="moveToNextSignField($event)"
-                       [withDateControl]="'date_seller_second_sign_notice'"
                        type="text" class="i-lr-4">
+                <!--appSignature-->
+                <!--(fieldSigned)="moveToNextSignField($event)"-->
+                <!--[withDateControl]="'date_seller_second_sign_notice'"-->
                 &nbsp;Date &nbsp;
                 <input matInput
                        [matDatepicker]="date_seller_second_sign_notice"
@@ -5231,16 +5231,16 @@
               <div>
                 <br>
                 <div>
+                  <!--appSignature [mode]="'initials'"-->
+                  <!--(fieldSigned)="moveToNextSignField($event)"-->
+                  <!--[withDateControl]="'date_signed_notice_date'"-->
+                  <!--[withTimeControl]="'text_signed_notice_time'"-->
+                  <!--[withAmpmControl]="'radio_signed_notice_ampm'"-->
                   ( <span><input formControlName="text_seller_first_initials"
-                                 appSignature [mode]="'initials'"
-                                 (fieldSigned)="moveToNextSignField($event)"
-                                 [withDateControl]="'date_signed_notice_date'"
-                                 [withTimeControl]="'text_signed_notice_time'"
-                                 [withAmpmControl]="'radio_signed_notice_ampm'"
                                  type="text" class="i-lr-1"></span> /
+                  <!--appSignature [mode]="'initials'"-->
+                  <!--(fieldSigned)="moveToNextSignField($event)"-->
                   <span><input formControlName="text_seller_second_initials"
-                               appSignature [mode]="'initials'"
-                               (fieldSigned)="moveToNextSignField($event)"
                                type="text" class="i-lr-1"></span> ) (Initials)
                   <span class="fw-bold">CONFIRMATION OF RECEIPT:</span>
                   A Copy of this Signed Notice to Buyer to remove contingencies and take actions was
