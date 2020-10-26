@@ -28,6 +28,7 @@ import { ConfirmationBarComponent } from '../../../../shared-modules/components/
 import { PICK_FORMATS, PickDateAdapter } from '../../../../core-modules/adapters/date-adapter';
 import { FinishSigningDialogComponent } from '../../../../shared-modules/dialogs/finish-signing-dialog/finish-signing-dialog.component';
 import { ProfileService } from '../../../../core-modules/core-services/profile.service';
+import { CounterOfferService } from '../../services/counter-offer.service';
 
 @Component({
   selector: 'app-step-two',
@@ -92,6 +93,7 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     public offerService: OfferService,
+    public counterOfferService: CounterOfferService,
     private dialog: MatDialog,
     private router: Router,
     public route: ActivatedRoute,
@@ -1046,13 +1048,15 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe(() => {
         this.offer.isSigned = true;
         this.snackbar.open('Offer is signed now');
-        if (
-          this.profileService.previousRouteUrl &&
-          this.profileService.previousRouteUrl
-            .includes(`portal/offer/${this.offer.id}/counter-offers/${this.offerService.currentOffer.id}/`)) {
+        if (this.profileService.previousRouteUrl
+          .includes(`/portal/offer/${this.offerId}/counter-offers/${this.counterOfferService.currentCO.id}/`)) {
           this.router.navigateByUrl(this.profileService.previousRouteUrl);
         } else {
-          this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}${this.offer.progress >= 3 ? '/details' : '/step-three'}`);
+          if (this.offer.progress >= 3) {
+            this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/details`);
+          } else {
+            this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/step-three`);
+          }
         }
       }, () => {
         this.offer.isSigned = false;

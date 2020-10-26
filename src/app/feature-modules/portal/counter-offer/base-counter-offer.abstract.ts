@@ -85,6 +85,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
       .pipe(takeUntil(this.onDestroyed$))
       .subscribe(([offer, counterOffer, document]) => {
         this.offer = offer;
+        this.counterOfferService.currentCO = counterOffer;
         this.counterOffer = counterOffer;
         this.documentObj = document;
 
@@ -162,7 +163,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         return false;
       }
 
-      if (signStatus.notSignedPA) {
+      if (this.offer && !this.offer.isSigned) {
         this.form.nativeElement.blur();
         this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/sign`);
       }
@@ -174,7 +175,15 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
       const isSigningComplete = this.signatures.toArray().filter(el => el.isActiveSignRow).every((el) => !!el.signatureControl.value);
 
       if (isSigningComplete) {
-        !this.counterOffer.isSigned || this.counterOffer.canFinalSign ? this.openFinishingDialog() : this.closeCO();
+        if (this.offer && !this.offer.isSigned) {
+          this.form.nativeElement.blur();
+          this.snackbar.open('First, please, sign the purchase agreement');
+          this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/sign`);
+        } else if (!this.counterOffer.isSigned || this.counterOffer.canFinalSign) {
+          this.openFinishingDialog();
+        } else {
+          this.closeCO();
+        }
       } else {
         this.nextField(true);
       }
