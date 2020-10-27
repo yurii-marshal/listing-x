@@ -1048,15 +1048,16 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe(() => {
         this.offer.isSigned = true;
         this.snackbar.open('Offer is signed now');
-        if (this.profileService.previousRouteUrl
+        if (this.counterOfferService.currentCO && this.profileService.previousRouteUrl
           .includes(`/portal/offer/${this.offerId}/counter-offers/${this.counterOfferService.currentCO.id}/`)) {
           this.router.navigateByUrl(this.profileService.previousRouteUrl);
         } else {
-          if (this.offer.progress >= 3) {
-            this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/details`);
-          } else {
-            this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/step-three`);
-          }
+          this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/details`);
+          // if (this.offer.progress >= 3) {
+          //   this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/details`);
+          // } else {
+          //   this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/step-three`);
+          // }
         }
       }, () => {
         this.offer.isSigned = false;
