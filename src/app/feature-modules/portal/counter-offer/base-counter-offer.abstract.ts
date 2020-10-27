@@ -16,6 +16,7 @@ import { SignatureDirective } from '../../../shared-modules/directives/signature
 import { AgreementStatus } from '../../../core-modules/models/agreement';
 import { ConfirmationBarComponent } from '../../../shared-modules/components/confirmation-bar/confirmation-bar.component';
 import { FinishSigningDialogComponent } from '../../../shared-modules/dialogs/finish-signing-dialog/finish-signing-dialog.component';
+import { ProfileService } from '../../../core-modules/core-services/profile.service';
 
 export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements OnInit, OnDestroy {
   @ViewChild('form', {static: true}) form: ElementRef;
@@ -63,6 +64,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     public datePipe: DatePipe,
     public authService: AuthService,
     public dialog: MatDialog,
+    public profileService: ProfileService,
   ) {
   }
 
@@ -152,7 +154,9 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
           }
         }
 
-        if (signatures.length) {
+        if (signatures.length ||
+          (!this.offer.isSigned && this.profileService.previousRouteUrl && this.profileService.previousRouteUrl.includes('sign'))
+        ) {
           this.openFinishingDialog();
         }
 

@@ -9,6 +9,7 @@ import { DatePipe } from '@angular/common';
 import { CounterOffer } from '../../../../../core-modules/models/counter-offer';
 import { AuthService } from '../../../../../core-modules/core-services/auth.service';
 import { PICK_FORMATS, PickDateAdapter } from '../../../../../core-modules/adapters/date-adapter';
+import { ProfileService } from '../../../../../core-modules/core-services/profile.service';
 
 @Component({
   selector: 'app-buyer-co-agreement',
@@ -32,8 +33,9 @@ export class BuyerCOAgreementComponent extends BaseCounterOfferAbstract<CounterO
     public datePipe: DatePipe,
     public authService: AuthService,
     public dialog: MatDialog,
+    public profileService: ProfileService,
   ) {
-    super(route, router, offerService, counterOfferService, snackbar, datePipe, authService, dialog);
+    super(route, router, offerService, counterOfferService, snackbar, datePipe, authService, dialog, profileService);
   }
 
   private get formGroupPage(): FormGroup {
