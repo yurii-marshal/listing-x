@@ -600,7 +600,7 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
         text_seller_property: [{value: '', disabled: true}, []],
         text_buyer_sign: [{value: '', disabled: true}, []],
         text_seller_sign: [{value: '', disabled: true}, []],
-        text_buyer_property: [{value: '', disabled: true}, []],
+        text_buyer_property: [{value: '', disabled: this.isDisabled}, []],
         check_describe_other: [{value: '', disabled: this.isDisabled}, []],
         text_describe_other: [{value: '', disabled: this.isDisabled}, []],
         text_after_close_escrow_days: [{value: '', disabled: this.isDisabled}, []],
