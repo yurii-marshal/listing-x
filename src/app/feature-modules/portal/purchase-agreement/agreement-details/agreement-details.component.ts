@@ -18,7 +18,6 @@ import { CounterOfferService } from 'src/app/feature-modules/portal/services/cou
 import { CounterOfferType } from 'src/app/core-modules/models/counter-offer-type';
 import { ConfirmationBarComponent } from 'src/app/shared-modules/components/confirmation-bar/confirmation-bar.component';
 import { UploadDocumentType } from 'src/app/core-modules/enums/upload-document-type';
-import { SimpleDialogComponent } from '../../../../shared-modules/dialogs/simple-dialog/simple-dialog.component';
 
 @Component({
   selector: 'app-agreement-details',
@@ -135,17 +134,6 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     );
   }
 
-  createCounterOffer(type) {
-    this.isLoadingResponse = true;
-
-    this.counterOfferService.createCounterOffer({offer: this.offer.id, offerType: type})
-      .pipe(takeUntil(this.onDestroyed$))
-      .subscribe((data: CounterOffer) => {
-        this.isLoadingResponse = false;
-        this.router.navigateByUrl(`portal/offer/${this.offer.id}/counter-offers/${data.id}/${CounterOfferType[type]}`);
-      });
-  }
-
   denyOffer() {
     this.isLoadingResponse = true;
 
@@ -204,9 +192,11 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
       ).subscribe();
     }
 
+    /* tslint:disable */
     let {file, title} = doc;
+    const trigger: HTMLAnchorElement = document['createElement']('a');
+    /* tslint:enable */
 
-    const trigger: HTMLAnchorElement = document.createElement('a');
     if (file.startsWith('/')) {
       let {origin} = window.location;
 
