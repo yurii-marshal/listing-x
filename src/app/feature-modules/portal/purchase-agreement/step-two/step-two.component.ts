@@ -435,6 +435,7 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
       page_12: this.fb.group({
         text_property_address: [{value: '', disabled: true}, []],
         date_property_date: [{value: '', disabled: true}, []],
+        // optional
         text_first_buyer_initials_first: this.getSignFieldAllowedFor('buyers', 0),
         text_first_buyer_initials_second: this.getSignFieldAllowedFor('buyers', 1),
         text_first_seller_initials_first: this.getSignFieldAllowedFor('sellers', 0),
@@ -443,6 +444,7 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
         text_second_buyer_initials_second: this.getSignFieldAllowedFor('buyers', 1),
         text_second_seller_initials_first: this.getSignFieldAllowedFor('sellers', 0),
         text_second_seller_initials_second: this.getSignFieldAllowedFor('sellers', 1),
+        // end of optional
         text_third_buyer_initials_first: this.getSignFieldAllowedFor('buyers', 0),
         text_third_buyer_initials_second: this.getSignFieldAllowedFor('buyers', 1),
         text_third_seller_initials_first: this.getSignFieldAllowedFor('sellers', 0),
@@ -630,15 +632,15 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
         date_seller_first_sign_copy: [{value: '', disabled: true}, []],
         text_seller_first_sign_copy: this.getSignFieldAllowedFor('sellers', 0),
         text_seller_second_sign_copy: this.getSignFieldAllowedFor('sellers', 1),
-        text_seller_first_sign_notice: [{value: '', disabled: this.isDisabled}, []],
-        date_seller_first_sign_notice: [{value: '', disabled: this.isDisabled}, []],
-        text_seller_second_sign_notice: [{value: '', disabled: this.isDisabled}, []],
-        date_seller_second_sign_notice: [{value: '', disabled: this.isDisabled}, []],
-        text_seller_first_initials: [{value: '', disabled: this.isDisabled}, []],
-        text_seller_second_initials: [{value: '', disabled: this.isDisabled}, []],
-        date_signed_notice_date: [{value: '', disabled: this.isDisabled}, []],
-        text_signed_notice_time: [{value: '', disabled: this.isDisabled}, []],
-        radio_signed_notice_ampm: [{value: '', disabled: this.isDisabled}, []],
+        text_seller_first_sign_notice: [{value: '', disabled: true}, []],
+        date_seller_first_sign_notice: [{value: '', disabled: true}, []],
+        text_seller_second_sign_notice: [{value: '', disabled: true}, []],
+        date_seller_second_sign_notice: [{value: '', disabled: true}, []],
+        text_seller_first_initials: [{value: '', disabled: true}, []],
+        text_seller_second_initials: [{value: '', disabled: true}, []],
+        date_signed_notice_date: [{value: '', disabled: true}, []],
+        text_signed_notice_time: [{value: '', disabled: true}, []],
+        radio_signed_notice_ampm: [{value: '', disabled: true}, []],
       }),
       page_19: this.fb.group({
         text_addendum_number: [{value: '', disabled: true}, []],
@@ -722,7 +724,7 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!this.offer.isSigned && signStatus === true) {
       if (signatures.length) {
         for (const sd of signatures) {
-          if (sd.isActiveSignRow && !sd.signatureControl.value) {
+          if (!sd.optional && sd.isActiveSignRow && !sd.signatureControl.value) {
             sd.scrollToButton();
             return true;
           }
@@ -780,7 +782,10 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
 
   continue() {
     if (this.isSignMode) {
-      const isSigningComplete = this.signatures.toArray().filter(el => el.isActiveSignRow).every((el) => !!el.signatureControl.value);
+      const isSigningComplete =
+        this.signatures.toArray()
+          .filter(el => el.isActiveSignRow && !el.optional)
+          .every((el) => !!el.signatureControl.value);
 
       if (isSigningComplete) {
         if (this.offer.allowSign && !this.offer.isSigned) {
