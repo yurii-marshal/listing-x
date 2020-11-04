@@ -29,6 +29,8 @@ import { PICK_FORMATS, PickDateAdapter } from '../../../../core-modules/adapters
 import { FinishSigningDialogComponent } from '../../../../shared-modules/dialogs/finish-signing-dialog/finish-signing-dialog.component';
 import { ProfileService } from '../../../../core-modules/core-services/profile.service';
 import { CounterOfferService } from '../../services/counter-offer.service';
+import { CounterOffer } from '../../../../core-modules/models/counter-offer';
+import { CounterOfferType } from '../../../../core-modules/models/counter-offer-type';
 
 @Component({
   selector: 'app-step-two',
@@ -814,6 +816,30 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this.onDestroyed$.next();
     this.onDestroyed$.complete();
+  }
+
+  denyOffer() {
+    this.isLoading = true;
+
+    this.offerService.rejectOffer(this.offer.id).pipe(
+      takeUntil(this.onDestroyed$)
+    ).subscribe(() => {
+      this.isLoading = false;
+      this.snackbar.open(`Offer is denied.`);
+
+      this.closeOffer();
+    });
+  }
+
+  createCounterOffer(type) {
+    this.isLoading = true;
+
+    this.counterOfferService.createCounterOffer({offer: this.offer.id, offerType: type})
+      .pipe(takeUntil(this.onDestroyed$))
+      .subscribe((data: CounterOffer) => {
+        this.isLoading = false;
+        this.router.navigateByUrl(`portal/offer/${this.offer.id}/counter-offers/${data.id}/${CounterOfferType[type]}`);
+      });
   }
 
   private getAdditionalCount() {
