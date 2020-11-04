@@ -14,6 +14,7 @@ export class SignatureDirective implements OnInit {
   @Input() withDateControl: string;
   @Input() withTimeControl: string;
   @Input() withAmpmControl: string;
+  @Input() optional: boolean = false;
 
   @Output() fieldSigned: EventEmitter<boolean | ValidationErrors> = new EventEmitter<boolean | ValidationErrors>();
 
@@ -91,6 +92,9 @@ export class SignatureDirective implements OnInit {
 
   private removeSignButton() {
     if (this.signButtonEl) {
+      if (this.optional) {
+        this.renderer.removeClass(this.signButtonEl, 'optional');
+      }
       this.renderer.removeClass(this.signButtonEl, 'sign-button');
       this.renderer.removeChild(this.el.nativeElement.parentNode, this.signButtonEl);
       this.signButtonEl = null;
@@ -148,6 +152,10 @@ export class SignatureDirective implements OnInit {
     this.renderer.setStyle(this.signButtonEl, 'left', signField.offsetLeft + 'px');
 
     this.renderer.addClass(this.signButtonEl, 'sign-button');
+
+    if (this.optional) {
+      this.renderer.addClass(this.signButtonEl, 'optional');
+    }
   }
 
 }
