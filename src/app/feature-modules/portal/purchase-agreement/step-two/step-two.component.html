@@ -4710,15 +4710,15 @@
                   <br>
                   <br>
                   Buyer <span class="i-lr-6"><input formControlName="text_buyer_first_sign"
-                                    appSignature style="width: inherit;"
-                                    (fieldSigned)="moveToNextSignField($event)"
-                                    [withDateControl]="'date_buyer_first_sign'"
-                                    type="text"></span>
+                                                    appSignature style="width: inherit;"
+                                                    (fieldSigned)="moveToNextSignField($event)"
+                                                    [withDateControl]="'date_buyer_first_sign'"
+                                                    type="text"></span>
                   <br>
                   <br>
                   Buyer <span class="i-lr-6"><input formControlName="text_buyer_second_sign" style="width: inherit;"
-                                     appSignature (fieldSigned)="moveToNextSignField($event)"
-                                     type="text"></span>
+                                                    appSignature (fieldSigned)="moveToNextSignField($event)"
+                                                    type="text"></span>
                 </div>
                 <div class="f-r ml-4">
                   Date &nbsp;<input matInput
@@ -4730,16 +4730,16 @@
                   <br>
                   <br>
                   Seller <span class="i-lr-6"><input formControlName="text_seller_first_sign"
-                                      appSignature style="width: inherit;"
-                                      (fieldSigned)="moveToNextSignField($event)"
-                                      [withDateControl]="'date_seller_first_sign'"
-                                      type="text"></span>
+                                                     appSignature style="width: inherit;"
+                                                     (fieldSigned)="moveToNextSignField($event)"
+                                                     [withDateControl]="'date_seller_first_sign'"
+                                                     type="text"></span>
                   <br>
                   <br>
                   Seller <span class="i-lr-6"><input formControlName="text_seller_second_sign"
-                                      appSignature style="width: inherit;"
-                                      (fieldSigned)="moveToNextSignField($event)"
-                                      type="text"></span>
+                                                     appSignature style="width: inherit;"
+                                                     (fieldSigned)="moveToNextSignField($event)"
+                                                     type="text"></span>
                 </div>
               </div>
               <br>
@@ -5161,16 +5161,16 @@
                   <mat-datepicker #date_buyer_first_sign_copy></mat-datepicker>
                   <br>
                   Buyer <span class="i-lr-6"><input formControlName="text_buyer_first_sign_copy"
-                                     appSignature style="width: inherit;"
-                                     (fieldSigned)="moveToNextSignField($event)"
-                                     [withDateControl]="'date_buyer_first_sign_copy'"
-                                     type="text"></span>
+                                                    appSignature style="width: inherit;"
+                                                    (fieldSigned)="moveToNextSignField($event)"
+                                                    [withDateControl]="'date_buyer_first_sign_copy'"
+                                                    type="text"></span>
                   <br>
                   <br>
                   Buyer <span class="i-lr-6"><input formControlName="text_buyer_second_sign_copy"
-                                     appSignature style="width: inherit;"
-                                     (fieldSigned)="moveToNextSignField($event)"
-                                     type="text"></span>
+                                                    appSignature style="width: inherit;"
+                                                    (fieldSigned)="moveToNextSignField($event)"
+                                                    type="text"></span>
                 </div>
                 <div class="f-r ml-4">
                   Date &nbsp;
@@ -5510,6 +5510,32 @@
             Edit
           </span>
         </button>
+
+        <div class="offer-controls u-flex u-flex-justify--space-between" *ngIf="offer.userRole === 'agent_seller'">
+          <button class="deny-btn"
+                  mat-flat-button
+                  [disabled]="!offer.allowSign || offer.status === 'denied' || offer.isSigned || isLoading"
+                  (click)="denyOffer()"
+                  color="accent">
+            DENY
+          </button>
+
+          <button class="counter-offer-btn"
+                  [disabled]="!offer.canCreateCounter || isLoading"
+                  mat-flat-button
+                  (click)="createCounterOffer('counter_offer')"
+                  color="primary">
+            CO
+          </button>
+
+          <button class="counter-offer-btn"
+                  [disabled]="!offer.canCreateMultipleCounter || isLoading"
+                  mat-flat-button
+                  (click)="createCounterOffer('multiple_counter_offer')"
+                  color="primary">
+            MCO
+          </button>
+        </div>
       </div>
 
       <div class="controls" *ngIf="offerService.isSideBarOpen">

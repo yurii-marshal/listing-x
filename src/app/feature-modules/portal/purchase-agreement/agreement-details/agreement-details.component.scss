@@ -4,7 +4,9 @@
 @import "~src/assets/scss/theming";
 
 .toolbar {
-  width: 100%; height: 230px; border-bottom: 1px solid rgba(213, 217, 225, 0.28);
+  width: 100%;
+  height: 230px;
+  border-bottom: 1px solid rgba(213, 217, 225, 0.28);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -52,12 +54,24 @@
 .status {
   text-transform: uppercase;
   color: $green;
-  &.red { color: $red; }
-  &.yellow { color: $yellow; }
-  &.orange { color: $orange; }
-  &.blue { color: $blue; }
-  &.turquoise { color: $turquoise; }
-  &.violet { color: $violet; }
+  &.red {
+    color: $red;
+  }
+  &.yellow {
+    color: $yellow;
+  }
+  &.orange {
+    color: $orange;
+  }
+  &.blue {
+    color: $blue;
+  }
+  &.turquoise {
+    color: $turquoise;
+  }
+  &.violet {
+    color: $violet;
+  }
 }
 
 .column-layout {
@@ -221,22 +235,31 @@
 }
 
 .scroll-content {
-  width: 100%; overflow-y: auto; max-height: 135px;
+  width: 100%;
+  overflow-y: auto;
+  max-height: 100%;
+
   .row-layout:first-of-type {
     margin-top: 0;
   }
 }
 
 .invite-user-dialog {
-  background-image: linear-gradient(rgba(102, 173, 88, 0.9),rgba(102, 173, 88, 0.9),rgba(102, 173, 88, 0.9)); // linear-gradient(151deg, rgba(102, 173, 88, 0.9), rgba(102, 173, 88, 0.65), rgba(102, 173, 88, 1));
+  background-image: linear-gradient(rgba(102, 173, 88, 0.9), rgba(102, 173, 88, 0.9), rgba(102, 173, 88, 0.9)); // linear-gradient(151deg, rgba(102, 173, 88, 0.9), rgba(102, 173, 88, 0.65), rgba(102, 173, 88, 1));
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 250px; height: 50px; padding: 8px; border-radius: 4px; background-color: white;
-  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+  width: 250px;
+  height: 50px;
+  padding: 8px;
+  border-radius: 4px;
+  background-color: white;
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
   input {
     margin-left: 10px;
-    padding: 7px 9px;font-size: 13px;letter-spacing: 0.25px;
+    padding: 7px 9px;
+    font-size: 13px;
+    letter-spacing: 0.25px;
   }
   button {
     &[disabled] mat-icon {
@@ -304,7 +327,7 @@
   color: $red;
 }
 
-::ng-deep .mat-menu-overlay+* .cdk-overlay-pane {
+::ng-deep .mat-menu-overlay + * .cdk-overlay-pane {
   max-height: none !important;
 }
 

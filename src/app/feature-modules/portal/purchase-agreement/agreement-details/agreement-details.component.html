@@ -108,53 +108,6 @@
             <span title="{{ item.title }}">{{ item.title }}</span>
           </div>
         </div>
-        <div *ngIf="!transactionsFlow" class="row-layout" style="position: relative;"><label class="header">offer</label>
-          <img *ngIf="offer.urlDocument"
-               src="assets/images/icons/pdf.svg"
-               (click)="downloadAndToggleState(offer.urlDocument)"
-               [title]="offer.urlDocument"
-               height="80"
-               class="e-document">
-        </div>
-        <!--<div class="row-layout" style="opacity: .0"><label></label><span>Signed by buyer 1</span></div>-->
-        <!--<div class="row-layout" style="opacity: .0"><label></label><span>Signed by seller 1</span></div>-->
-        <!--<div class="row-layout" style="opacity: .0"><label></label><span>Hasn’t been signed by all buyers</span></div>-->
-        <div *ngIf="!transactionsFlow" class="controls row-layout u-flex-justify--start">
-          <button class="deny-btn"
-                  mat-flat-button
-                  *ngIf="offer.userRole === 'agent_seller'"
-                  [disabled]="!offer.allowSign || offer.status === 'denied' || offer.isSigned || isLoadingResponse"
-                  (click)="denyOffer()"
-                  color="accent">
-            DENY
-          </button>
-
-          <button class="sign-btn"
-                  mat-flat-button
-                  [disabled]="offer.status === 'denied'"
-                  (click)="openSignOffer()"
-                  color="primary">
-            {{offer.allowSign && !offer.isSigned ? 'SIGN' : 'OPEN'}}
-          </button>
-
-          <button class="counter-offer-btn"
-                  *ngIf="offer.userRole === 'agent_seller'"
-                  [disabled]="!offer.canCreateCounter || isLoadingResponse"
-                  mat-flat-button
-                  (click)="createCounterOffer('counter_offer')"
-                  color="primary">
-            COUNTER OFFER
-          </button>
-
-          <button class="counter-offer-btn"
-                  *ngIf="offer.userRole === 'agent_seller'"
-                  [disabled]="!offer.canCreateMultipleCounter || isLoadingResponse"
-                  mat-flat-button
-                  (click)="createCounterOffer('multiple_counter_offer')"
-                  color="primary">
-            MCO
-          </button>
-        </div>
       </div>
     </div>
 
