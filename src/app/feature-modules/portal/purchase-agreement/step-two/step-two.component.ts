@@ -869,8 +869,6 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.checkSignAccess();
 
-        this.disableSignFields();
-
         this.initSwitchDaysAndDate();
 
         this.isLoading = false;
@@ -904,6 +902,7 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  // TODO incapsulate sign button rendering
   private activateSignButtons() {
     this.signatures.toArray().forEach((sd: SignatureDirective) => {
       if (sd.signatureControl.enabled && !sd.signatureControl.value) {
@@ -941,17 +940,17 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private patchForm(model) {
-    Object.entries(model).forEach(([page, value]) => {
-      Object.entries(value).forEach(([field, data]) => {
-        if (this.documentForm.get(`${_.snakeCase(page)}.${_.snakeCase(field)}`)) {
-          if (this.offerService.isDateISOFormat(data)) {
-            data = this.offerService.convertStringToDate(data);
+    Object.entries(model).forEach(([page, pageValue]) => {
+      Object.entries(pageValue).forEach(([field, fieldValue]) => {
+        const control = this.documentForm.get(`${_.snakeCase(page)}.${_.snakeCase(field)}`);
+        if (control) {
+          if (this.offerService.isDateISOFormat(fieldValue)) {
+            fieldValue = this.offerService.convertStringToDate(fieldValue);
           }
 
-          this.documentForm.get(`${_.snakeCase(page)}.${_.snakeCase(field)}`)
-            .patchValue(data, {emitEvent: false, onlySelf: true});
+          control.patchValue(fieldValue, {emitEvent: false, onlySelf: true});
           this.prevFormSnapshot.get(`${_.snakeCase(page)}.${_.snakeCase(field)}`)
-            .patchValue(data, {emitEvent: false, onlySelf: true});
+            .patchValue(fieldValue, {emitEvent: false, onlySelf: true});
         }
       });
 
@@ -1151,12 +1150,6 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
     } : '';
 
     return [value, []];
-  }
-
-  private disableSignFields() {
-    this.signatures.toArray()
-      .filter(el => el.isActiveSignRow)
-      .map(el => el.signatureControl.disable({onlySelf: true, emitEvent: false}));
   }
 
   private openFinishingDialog() {

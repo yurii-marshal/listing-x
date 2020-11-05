@@ -353,7 +353,6 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
       .map(el => {
         el.isActiveSignRow = true;
         el.renderSignButton();
-        el.signatureControl.disable({onlySelf: true, emitEvent: false});
       });
   }
 
