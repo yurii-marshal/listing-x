@@ -5,6 +5,7 @@ import { CounterOfferService } from 'src/app/feature-modules/portal/services/cou
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
+import { CounterOfferType } from '../../../core-modules/models/counter-offer-type';
 
 @Component({
   selector: 'app-counter-offer-controls',
@@ -54,8 +55,7 @@ export class CounterOfferControlsComponent implements OnInit {
       .subscribe((data: CounterOffer) => {
         this.isLoadingResponse = false;
         this.snackbar.open('Counter Offer is created');
-        // this.router.navigateByUrl(`portal/offer/${this.offerId}/counter-offers/${data.id}/${CounterOfferType[type]}`);
-        this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/details`);
+        this.router.navigateByUrl(`portal/offer/${this.offerId}/counter-offers/${data.id}/${CounterOfferType[data.offerType]}`);
       });
   }
 }
