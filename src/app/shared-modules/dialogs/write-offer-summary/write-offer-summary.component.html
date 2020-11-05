@@ -23,7 +23,6 @@
     </ng-container>
     <div class="row-layout"><label>variation</label><span clas="bold">{{ data.model.loanType }}</span></div>
     <div class="row-layout"><label>down payment</label><span>${{ data.model.downPayment | number }}</span></div>
-    <div class="row-layout"><label>special financing terms</label><span>{{ data.model.anySpecialFinancialTerms }}</span></div>
 
     <div class="row-layout"><label class="header">Supporting docs</label><span [routerLink]="backLink" (click)="hide()" class="link">Edit</span></div>
     <div class="row-layout"><label>Add Pre-approval Letter</label>
