@@ -170,9 +170,9 @@ export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
       state: [{value: 'California', disabled: true}, [Validators.required, Validators.maxLength(150)]],
       zip: [
         {value: offerValues ? offerValues.zip : null, disabled},
-        [Validators.required, CustomValidators.number, Validators.maxLength(10)]
+        [Validators.required, Validators.maxLength(10)]
       ],
-      apn: [{value: offerValues ? offerValues.apn : null, disabled}, [CustomValidators.number]],
+      apn: [{value: offerValues ? offerValues.apn : null, disabled}, []],
     });
 
     if (offerValues) {
