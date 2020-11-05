@@ -44,8 +44,8 @@ export class AddressDialogComponent implements OnInit {
       streetName: [null, [Validators.required]],
       city: [null, [Validators.required, Validators.maxLength(255)]],
       state: [{value: 'California', disabled: true}, [Validators.required, Validators.maxLength(150)]],
-      zip: [null, [Validators.required, CustomValidators.number, Validators.maxLength(10)]],
-      apn: [null, [CustomValidators.number]],
+      zip: [null, [Validators.required, Validators.maxLength(10)]],
+      apn: [null, []],
     });
 
     if (this.data.model) {
