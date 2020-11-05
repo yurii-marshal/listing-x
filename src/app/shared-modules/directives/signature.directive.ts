@@ -48,6 +48,10 @@ export class SignatureDirective implements OnInit {
     return this.ngControl.control.parent.get(this.withAmpmControl);
   }
 
+  @Input() set active(val: boolean) {
+    val ? this.renderSignButton() : this.removeSignButton();
+  }
+
   ngOnInit() {
     this.sign = `${this.authService.currentUser.firstName} ${this.authService.currentUser.lastName}`;
 
@@ -76,6 +80,10 @@ export class SignatureDirective implements OnInit {
     this.signatureControl.patchValue('', {emitEvent: emit, onlySelf: true});
   }
 
+  scrollToButton() {
+    this.el.nativeElement.scrollIntoView({behavior: 'smooth', block: 'center'});
+  }
+
   renderSignButton() {
     this.signButtonEl = this.renderer.createElement('button');
 
@@ -84,10 +92,8 @@ export class SignatureDirective implements OnInit {
     this.renderer.listen(this.signButtonEl, 'click', () => this.checkRootParent(this.signatureControl.parent));
 
     this.setButtonStyles();
-  }
 
-  scrollToButton() {
-    this.el.nativeElement.scrollIntoView({behavior: 'smooth', block: 'center'});
+    this.signatureControl.disable({onlySelf: true, emitEvent: false});
   }
 
   private removeSignButton() {

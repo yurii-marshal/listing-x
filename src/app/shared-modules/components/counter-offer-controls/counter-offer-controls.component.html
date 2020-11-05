@@ -1,9 +1,9 @@
 <div class="controls u-flex u-flex-justify--space-between" *ngIf="visible">
-  <button class="sign-btn"
+  <button class="deny-btn"
           mat-flat-button
           [disabled]="counterOffer?.isSigned && counterOffer?.status !== 'sent' || isLoadingResponse"
           (click)="rejectCO()"
-          color="primary">
+          color="accent">
     DENY
   </button>
 
