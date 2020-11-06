@@ -137,6 +137,7 @@ export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
   submit(): void {
     const model: Offer = {
       ...this.form.getRawValue(),
+      apn: this.form.value.apn || null,
       agentBuyers: this.agentBuyers.getRawValue().map(i => ({...i, email: i.email.toLowerCase()})),
       agentSellers: this.agentSellers.getRawValue().map(i => ({...i, email: i.email.toLowerCase()})),
       sellers: this.sellers.getRawValue().map(i => ({...i, email: i.email.toLowerCase()})),
