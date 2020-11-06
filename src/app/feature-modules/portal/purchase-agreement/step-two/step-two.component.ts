@@ -31,6 +31,7 @@ import { ProfileService } from '../../../../core-modules/core-services/profile.s
 import { CounterOfferService } from '../../services/counter-offer.service';
 import { CounterOffer } from '../../../../core-modules/models/counter-offer';
 import { CounterOfferType } from '../../../../core-modules/models/counter-offer-type';
+import { GeneratedDocumentType } from '../../../../core-modules/enums/upload-document-type';
 
 @Component({
   selector: 'app-step-two',
@@ -79,6 +80,8 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
 
   readonly AGREEMENT_PAGE_NUM = 16;
   additionalPageCount: number[] = [];
+
+  isCountered: boolean;
 
   private user: User;
   private isDisabled: boolean;
@@ -667,6 +670,9 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
     this.offerId = +this.route.snapshot.params.id;
     this.offer = this.route.snapshot.data.offer;
     this.user = this.authService.currentUser;
+
+    this.isCountered = !![...this.offer.completedDocuments, ...this.offer.pendingDocuments]
+      .find((item) => item.documentType === GeneratedDocumentType.CounterOffer);
 
     this.isSignMode = this.router.url.includes('sign');
 
