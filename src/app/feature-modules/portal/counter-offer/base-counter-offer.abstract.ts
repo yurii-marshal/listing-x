@@ -152,11 +152,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
               return true;
             }
           }
-        }
 
-        if (signatures.length ||
-          (!this.offer.isSigned && this.profileService.previousRouteUrl && this.profileService.previousRouteUrl.includes('sign'))
-        ) {
           this.openFinishingDialog();
         }
 
