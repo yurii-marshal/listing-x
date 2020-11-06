@@ -5,6 +5,7 @@ export enum UploadDocumentType {
 }
 
 export enum GeneratedDocumentType {
+  CounterOffer = 'counter_offer',
   Contract = 'purchase_agreement',
   Addendum = 'addendum',
   Spq = 'spq'
