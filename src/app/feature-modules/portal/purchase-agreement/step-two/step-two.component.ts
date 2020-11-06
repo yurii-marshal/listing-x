@@ -192,11 +192,11 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
         text_offer_apn: [{value: '', disabled: true}, []],
         text_offer_price_text: [{value: null, disabled: true}, []],
         // # Price = 51c
-        text_offer_price_digits: [{value: null, disabled: this.isDisabled}, [Validators.required]],
+        text_offer_price_digits: [{value: null, disabled: this.isDisabled}, []],
         // # Close of Escrow = 51d
         check_escrow_date: [{value: true, disabled: this.isDisabled}, []],
         check_escrow_days: [{value: null, disabled: this.isDisabled}, []],
-        date_escrow_date: [{value: null, disabled: this.isDisabled}, [Validators.required]],
+        date_escrow_date: [{value: null, disabled: this.isDisabled}, []],
         text_escrow_days: [{value: '', disabled: this.isDisabled}, []],
         check_agency_disclosure: [{value: null, disabled: this.isDisabled}, []],
         text_agency_broker_seller_firm: [{value: '', disabled: true}, []],
@@ -217,7 +217,7 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
         check_agency_broker_4_dual_agent: [{value: null, disabled: this.isDisabled}, []],
         check_agency_competing_buyers_and_sellers: [{value: null, disabled: this.isDisabled}, []],
         // # Deposit = 53a
-        text_finance_terms_amount: [{value: null, disabled: this.isDisabled}, [Validators.required]],
+        text_finance_terms_amount: [{value: null, disabled: this.isDisabled}, []],
         check_finance_buyer_cashier_check: [{value: null, disabled: this.isDisabled}, []],
         check_finance_buyer_personal_check: [{value: null, disabled: this.isDisabled}, []],
         check_finance_buyer_other_check: [{value: null, disabled: this.isDisabled}, []],
@@ -254,12 +254,12 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
         text_finance_second_loan_initial_rate: [{value: null, disabled: this.isDisabled}, []],
         text_finance_second_loan_max_pay_points: [{value: null, disabled: this.isDisabled}, []],
         text_finance_written_notice_delivery_days: [{value: null, disabled: this.isDisabled}, []],
-        text_finance_first_loan_amount: [{value: null, disabled: this.isDisabled}, [Validators.required]],
+        text_finance_first_loan_amount: [{value: null, disabled: this.isDisabled}, []],
         text_finance_second_loan_amount: [{value: null, disabled: this.isDisabled}, []],
         // # Loan Amount = loan1 + loan2 (3d1,3d2)
         text_finance_additional_terms: [{value: null, disabled: this.isDisabled}, []],
         // # Down Payment = formula = price - (initial deposits + all loans (3a…3d))
-        text_finance_down_payment_balance: [{value: null, disabled: true}, [Validators.required]],
+        text_finance_down_payment_balance: [{value: null, disabled: true}, []],
         // text_finance_additional_terms_amount: [{value: null, disabled: true}, []],
         text_finance_buyer_initials_first: this.getSignFieldAllowedFor('buyers', 0),
         text_finance_buyer_initials_second: this.getSignFieldAllowedFor('buyers', 1),
@@ -914,7 +914,6 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private setRelatedFields(enableControl: string, disableControl: string, emit: boolean) {
-    this.documentForm.get(enableControl).setValidators([Validators.required]);
     this.documentForm.get(enableControl).enable({emitEvent: false});
     this.documentForm.get(enableControl).markAsDirty();
 
