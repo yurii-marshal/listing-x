@@ -59,8 +59,9 @@ export class AgreementsListComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   ngOnInit() {
-    // this.service.loadCalendar()
-    //   .subscribe(events => this.calendarDataSource = events);
+    this.offerService.loadCalendar()
+      .pipe(takeUntil(this.onDestroyed$))
+      .subscribe(events => this.calendarDataSource = events);
     this.transactionsFlow = this.router.url.includes('transaction');
     this.user = this.authService.currentUser;
     this.dataSource = new BaseTableDataSource(this.offerService, null, null);
