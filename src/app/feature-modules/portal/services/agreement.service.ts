@@ -22,10 +22,6 @@ export class AgreementService extends BaseDataService<Agreement> {
     return this.http.get<GeneratedDocument>(url);
   }
 
-  loadCalendar(start?: Date, end?: Date): Observable<CalendarEvent[]> {
-    return this.fetchCalendarData(ApiEndpoint.Calendar, start, end);
-  }
-
   loadCalendarByTransaction(id: number, start?: Date, end?: Date): Observable<CalendarEvent[]> {
     const url = super.transformEndpoint(ApiEndpoint.TransactionCalendar, id);
     return this.fetchCalendarData(url, start, end);

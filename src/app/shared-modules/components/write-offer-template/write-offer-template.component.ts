@@ -137,11 +137,14 @@ export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
   submit(): void {
     const model: Offer = {
       ...this.form.getRawValue(),
+      address_token: (this.anonymousOffer && this.anonymousOffer.address_token) || null,
       agentBuyers: this.agentBuyers.getRawValue().map(i => ({...i, email: i.email.toLowerCase()})),
       agentSellers: this.agentSellers.getRawValue().map(i => ({...i, email: i.email.toLowerCase()})),
       sellers: this.sellers.getRawValue().map(i => ({...i, email: i.email.toLowerCase()})),
       buyers: this.buyers.getRawValue().map(i => ({...i, email: i.email.toLowerCase()}))
     } as Offer; // to include 'state'
+
+    model.apn = model.apn || null;
 
     const message = `Successfully ${this.offer ? 'updated' : 'created new'} offer.`;
 
@@ -170,9 +173,9 @@ export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
       state: [{value: 'California', disabled: true}, [Validators.required, Validators.maxLength(150)]],
       zip: [
         {value: offerValues ? offerValues.zip : null, disabled},
-        [Validators.required, CustomValidators.number, Validators.maxLength(10)]
+        [Validators.required, Validators.maxLength(10)]
       ],
-      apn: [{value: offerValues ? offerValues.apn : null, disabled}, [CustomValidators.number]],
+      apn: [{value: offerValues ? offerValues.apn : null, disabled}, []],
     });
 
     if (offerValues) {

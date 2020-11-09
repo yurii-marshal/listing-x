@@ -18,7 +18,7 @@ export enum CalendarView {
 }
 
 @Component({
-  selector: 'lis-calendar',
+  selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss']
 })
@@ -106,7 +106,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
         originY:  'top',
         overlayX: 'center',
         overlayY: 'top',
-        offsetY:   offsetY,
+        offsetY,
       }
     ]);
 

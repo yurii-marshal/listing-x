@@ -103,12 +103,6 @@
         <div class="row-layout" *ngIf="offerSummary?.downPayment">
           <label>down payment</label><span>{{ offerSummary?.downPayment | currency }}</span>
         </div>
-        <div class="row-layout">
-          <label>special financing terms</label>
-          <span>
-          {{ offer?.anySpecialFinancialTerms || 'Without any special financing terms'}}
-          </span>
-        </div>
       </div>
 
     </div>
