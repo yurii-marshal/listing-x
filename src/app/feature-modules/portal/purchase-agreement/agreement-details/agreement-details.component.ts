@@ -5,7 +5,7 @@ import { AddendumData, Document, GeneratedDocument } from '../../../../core-modu
 import { AuthService } from '../../../../core-modules/core-services/auth.service';
 import { MatDialog, MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { flatMap, switchMap, takeUntil } from 'rxjs/operators';
+import { flatMap, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { Offer, Person } from '../../../../core-modules/models/offer';
 import { SpqDialogComponent } from '../../dialogs/spq-dialog/spq-dialog.component';
 import { AddendumDialogComponent } from '../../dialogs/addendum-dialog/addendum-dialog.component';
@@ -13,7 +13,6 @@ import { CalendarEvent } from '../../../../core-modules/models/calendar-event';
 import { OfferService } from '../../services/offer.service';
 import { AgreementStatus } from '../../../../core-modules/models/agreement';
 import { TransactionService } from '../../services/transaction.service';
-import { CounterOffer } from 'src/app/core-modules/models/counter-offer';
 import { CounterOfferService } from 'src/app/feature-modules/portal/services/counter-offer.service';
 import { CounterOfferType } from 'src/app/core-modules/models/counter-offer-type';
 import { ConfirmationBarComponent } from 'src/app/shared-modules/components/confirmation-bar/confirmation-bar.component';
@@ -61,10 +60,6 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
     const offerId: number = Number(this.route.snapshot.params.id);
 
     this.loadOffer(offerId);
-
-    this.offerService.loadCalendarByOffer(offerId)
-      .pipe(takeUntil(this.onDestroyed$))
-      .subscribe(items => this.calendarDataSource = items);
   }
 
   ngAfterViewInit(): void {
@@ -74,7 +69,9 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
         const offerId: number = Number(this.route.snapshot.params.id);
         return this.offerService.loadOne(offerId);
       })
-    ).subscribe((offer) => this.setUsers(offer));
+    ).subscribe((offer) => {
+      this.setUsers(offer);
+    });
   }
 
   setUsers(offer: Offer): void {
@@ -241,10 +238,14 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
 
   private loadOffer(id: number) {
     this.offerService.loadOne(id)
-      .pipe(takeUntil(this.onDestroyed$))
-      .subscribe((offer: Offer) => {
-        this.offer = offer;
-        this.setUsers(offer);
-      });
+      .pipe(
+        takeUntil(this.onDestroyed$),
+        tap((offer: Offer) => {
+          this.offer = offer;
+          this.setUsers(offer);
+        }),
+        switchMap((offer: Offer) => this.offerService.loadCalendarByOffer(offer.transaction))
+      )
+      .subscribe((items) => this.calendarDataSource = items);
   }
 }
