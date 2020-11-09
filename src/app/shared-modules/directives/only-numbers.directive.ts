@@ -51,7 +51,7 @@ export class OnlyNumbersDirective implements OnInit, OnDestroy {
       this.maxLength = (next.includes('.') || event.key === '.') ? 14 : 11;
     }
 
-    if (next && !String(next).match(this.regex) || current.length > this.maxLength) {
+    if (next && !String(next).match(this.regex) || current.length >= this.maxLength) {
       event.preventDefault();
     }
   }
