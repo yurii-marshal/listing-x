@@ -16,7 +16,7 @@ import { EditOfferDialogComponent } from '../../../../shared-modules/dialogs/edi
 import { ActivatedRoute, Router } from '@angular/router';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { fromEvent, Observable, Subject } from 'rxjs';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { SaveOfferDialogComponent } from '../../../../shared-modules/dialogs/save-offer-dialog/save-offer-dialog.component';
 import { DatePipe } from '@angular/common';
 import * as _ from 'lodash';
