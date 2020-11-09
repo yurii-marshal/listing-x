@@ -147,7 +147,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
       if (signStatus === true) {
         if (signatures.length) {
           for (const sd of signatures) {
-            if (sd.isActiveSignRow && !sd.signatureControl.value) {
+            if (!sd.signatureControl.value) {
               sd.scrollToButton();
               return true;
             }
