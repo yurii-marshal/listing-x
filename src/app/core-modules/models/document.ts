@@ -2,6 +2,7 @@ import {GeneratedDocumentType, UploadDocumentType} from '../enums/upload-documen
 import {DocumentStatus} from '../enums/document-status';
 import {SpqQuestion} from './spq-question';
 import { Log } from './log';
+import { CounterOfferType } from './counter-offer-type';
 
 export interface Document {
   id: number;
@@ -17,7 +18,7 @@ export interface Document {
 export interface GeneratedDocument {
   id: number;
   entityId: number;
-  documentType: GeneratedDocumentType;
+  documentType: GeneratedDocumentType | CounterOfferType;
   status: DocumentStatus;
   lastEvent: Log;
   file: string;
