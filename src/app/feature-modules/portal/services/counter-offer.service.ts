@@ -10,6 +10,7 @@ import { HttpParams } from '@angular/common/http';
   providedIn: 'root'
 })
 export class CounterOfferService extends BaseDataService<CounterOffer> {
+  prevCO: CounterOffer;
   currentCO: CounterOffer;
 
   constructor(protected injector: Injector) {

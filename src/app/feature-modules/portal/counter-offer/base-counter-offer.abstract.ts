@@ -16,6 +16,8 @@ import { SignatureDirective } from '../../../shared-modules/directives/signature
 import { AgreementStatus } from '../../../core-modules/models/agreement';
 import { ConfirmationBarComponent } from '../../../shared-modules/components/confirmation-bar/confirmation-bar.component';
 import { FinishSigningDialogComponent } from '../../../shared-modules/dialogs/finish-signing-dialog/finish-signing-dialog.component';
+import { CounterOfferType } from '../../../core-modules/models/counter-offer-type';
+import { GeneratedDocument } from '../../../core-modules/models/document';
 import { ProfileService } from '../../../core-modules/core-services/profile.service';
 
 export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements OnInit, OnDestroy {
@@ -38,6 +40,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
   isUserPitcher: boolean;
   isAgentSeller: boolean;
+  pendingCO: GeneratedDocument[];
 
   documentForm: FormGroup;
   prevFormSnapshot: FormGroup;
@@ -85,6 +88,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
       .pipe(takeUntil(this.onDestroyed$))
       .subscribe(([offer, counterOffer, document]) => {
         this.offer = offer;
+        this.counterOfferService.prevCO = Object.assign({}, this.counterOfferService.currentCO);
         this.counterOfferService.currentCO = counterOffer;
         this.counterOffer = counterOffer;
         this.documentObj = document;
@@ -100,7 +104,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
         const isFinalMode = this.counterOffer.canFinalSign && this.counterOffer.isSigned;
 
-        // if user isn't pitcher there's available sign mode only / for sign / for review
+        // if user isn't contra-reviewer there's available sign mode only / for sign / for review
         if (!this.showSwitcher || isFinalMode) {
           this.isSignMode = true;
           this.isDisabled = true;
@@ -114,6 +118,8 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
           this.isSideBarOpen && this.counterOffer.catchers.some((user: Person) => user.email === this.authService.currentUser.email);
 
         this.isMCOFinalSign = counterOffer.offerType as string === 'multiple_counter_offer' && counterOffer.canFinalSign;
+
+        this.pendingCO = this.offer.pendingDocuments.filter((item) => !!CounterOfferType[item.documentType]);
 
         if (!this.isMCOFinalSign && !this.counterOffer.isSigned && this.counterOffer.canSign) {
           this.setSignFields(this.signFields);
@@ -133,7 +139,8 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
     setTimeout(() => {
       this.isSidebarControlsVisible =
-        value && this.counterOffer.catchers.some((user: Person) => user.email === this.authService.currentUser.email);
+        value && this.counterOffer &&
+        this.counterOffer.catchers.some((user: Person) => user.email === this.authService.currentUser.email);
     }, value ? 250 : 0);
   }
 
@@ -147,7 +154,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
       if (signStatus === true) {
         if (signatures.length) {
           for (const sd of signatures) {
-            if (sd.isActiveSignRow && !sd.signatureControl.value) {
+            if (!sd.signatureControl.value) {
               sd.scrollToButton();
               return true;
             }
@@ -359,6 +366,20 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
       this.counterOfferService.signCounterOffer(this.id, this.isMCOFinalSign ? 'final_approval' : 'sign')
         .pipe(takeUntil(this.onDestroyed$))
         .subscribe(() => {
+          if (this.counterOfferService.prevCO) {
+            const prevPendingCO = this.pendingCO.find(item => item.entityId === this.counterOfferService.prevCO.id);
+            const lastCO = `/portal/offer/${this.offer.id}/counter-offers/` +
+              `${this.counterOfferService.prevCO.id}/${CounterOfferType[prevPendingCO ? prevPendingCO.documentType : null]}`;
+
+            if (this.profileService.previousRouteUrl &&
+              this.profileService.previousRouteUrl.includes(lastCO) &&
+              !this.counterOfferService.prevCO.isSigned) {
+              this.counterOfferService.prevCO.isSigned = true;
+              this.router.navigateByUrl(lastCO);
+              return;
+            }
+          }
+
           this.counterOffer.isSigned = true;
           this.snackbar.open('Counter Offer is signed now');
           this.closeCO();
@@ -383,12 +404,16 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
       .pipe(takeUntil(this.onDestroyed$))
       .subscribe((isFinished: boolean) => {
         if (isFinished) {
-          if (this.offer.isSigned) {
-            this.signCO();
-          } else {
-            this.form.nativeElement.blur();
+          this.form.nativeElement.blur();
+          if (!this.offer.isSigned) {
             this.snackbar.open('Please, sign the purchase agreement first.');
             this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/sign`);
+          } else if (this.pendingCO.length > 1 && this.pendingCO[0].allowSign && this.counterOffer.id !== this.pendingCO[0].entityId) {
+            this.snackbar.open('Please, sign previous counter-offer');
+            this.router.navigateByUrl(`portal/offer/${this.offer.id}/counter-offers/` +
+              `${this.pendingCO[0].entityId}/${CounterOfferType[this.pendingCO[0].documentType]}`);
+          } else {
+            this.signCO();
           }
         }
       });

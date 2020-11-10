@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/ro
 import { Observable } from 'rxjs';
 import { Offer } from '../../core-modules/models/offer';
 import { OfferService } from '../portal/services/offer.service';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { AuthService } from '../../core-modules/core-services/auth.service';
 
 @Injectable()
@@ -19,6 +19,10 @@ export class AnonymousOfferResolver {
     this.authService.logout();
     return this.service.getAnonymousOffer(token)
       .pipe(
+        map((offer: Offer) => {
+          offer.address_token = token;
+          return offer;
+        }),
         tap({error: err => this.router.navigateByUrl('/error/expired')})
       );
   }

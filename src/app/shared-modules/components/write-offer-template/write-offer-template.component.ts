@@ -137,12 +137,14 @@ export class WriteOfferTemplateComponent implements OnInit, OnDestroy {
   submit(): void {
     const model: Offer = {
       ...this.form.getRawValue(),
-      apn: this.form.value.apn || null,
+      address_token: (this.offer && this.offer.address_token) || (this.anonymousOffer && this.anonymousOffer.address_token),
       agentBuyers: this.agentBuyers.getRawValue().map(i => ({...i, email: i.email.toLowerCase()})),
       agentSellers: this.agentSellers.getRawValue().map(i => ({...i, email: i.email.toLowerCase()})),
       sellers: this.sellers.getRawValue().map(i => ({...i, email: i.email.toLowerCase()})),
       buyers: this.buyers.getRawValue().map(i => ({...i, email: i.email.toLowerCase()}))
     } as Offer; // to include 'state'
+
+    model.apn = model.apn || null;
 
     const message = `Successfully ${this.offer ? 'updated' : 'created new'} offer.`;
 

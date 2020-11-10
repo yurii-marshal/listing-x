@@ -23,7 +23,8 @@
             <br>
             <div class="form">
               <div class="f-r">
-                Date <input formControlName="date_seller_counter_date" type="text" class="i-lr-2">
+                Date <input disabled [value]="documentForm?.get('date_seller_counter_date').value | date: 'MM/dd/yyyy'"
+                            type="text" class="i-lr-2">
               </div>
               <div class="clearfix"></div>
               <div>

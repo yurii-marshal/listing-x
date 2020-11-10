@@ -4,21 +4,6 @@
 
       <h1 class="title">Write Offer</h1>
 
-      <!--<div class="u-flex u-flex-direction&#45;&#45;column u-flex-justify&#45;&#45;start find-existing">-->
-        <!--<h4>find existing offer or create new one</h4>-->
-        <!--<div class="u-flex u-flex-align-items&#45;&#45;center existing-offers">-->
-          <!--<button mat-flat-button appDebounceClick-->
-                  <!--(debounceClick)="findOffers()"-->
-                  <!--class="find-btn"-->
-                  <!--color="primary">-->
-            <!--FIND EXISTING-->
-          <!--</button>-->
-          <!--<div class="label">-->
-            <!--For create new offer just enter all offer information-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
-
       <app-write-offer-template
         [offer]="offer"
         (offerSent)="nextStep($event)"
