@@ -802,10 +802,10 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
       const isSigningComplete =
         this.signatures.toArray()
           .filter(el => el.isActiveSignRow && !el.optional)
-          .every((el) => !!el.signatureControl.value);
+          .every((el) => !!el.signatureControl.value) || this.offer.isSigned;
 
       if (isSigningComplete) {
-        if (this.offer.allowSign && !this.offer.isSigned) {
+        if (this.offer.allowSign) {
           this.openFinishingDialog();
         } else {
           this.closeOffer();
