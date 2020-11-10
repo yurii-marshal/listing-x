@@ -1,5 +1,5 @@
 import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2 } from '@angular/core';
-import { AbstractControl, NgControl, ValidationErrors } from '@angular/forms';
+import { AbstractControl, NgControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { AuthService } from '../../core-modules/core-services/auth.service';
 import { MatSnackBar } from '@angular/material';
@@ -15,8 +15,9 @@ export class SignatureDirective implements OnInit {
   @Input() withTimeControl: string;
   @Input() withAmpmControl: string;
   @Input() optional: boolean = false;
+  @Input() signId: number;
 
-  @Output() fieldSigned: EventEmitter<boolean | ValidationErrors> = new EventEmitter<boolean | ValidationErrors>();
+  @Output() fieldSigned: EventEmitter<object> = new EventEmitter<object>();
 
   isActiveSignRow: boolean;
 
@@ -121,7 +122,7 @@ export class SignatureDirective implements OnInit {
           this.snackbar.open(`Can't sign. Please, fill all required fields`);
         }
 
-        this.fieldSigned.emit(parent.errors);
+        this.fieldSigned.emit({errors: parent.errors});
       }
     }
   }
@@ -147,7 +148,7 @@ export class SignatureDirective implements OnInit {
 
       this.removeSignButton();
 
-      this.fieldSigned.emit(true);
+      this.fieldSigned.emit({id: this.signId});
     }, 300);
   }
 
