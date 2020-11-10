@@ -67,6 +67,8 @@ export interface Offer {
 
   canCreateCounter: boolean;
   canCreateMultipleCounter: boolean;
+
+  address_token?: string;
 }
 
 export interface Person {

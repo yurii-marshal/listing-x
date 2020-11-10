@@ -62,9 +62,9 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
 
     this.loadOffer(offerId);
 
-    // todo: load calendar data
-    // this.offerService.loadCalendarByOffer(offerId)
-    //   .subscribe(items => this.calendarDataSource = items);
+    this.offerService.loadCalendarByOffer(offerId)
+      .pipe(takeUntil(this.onDestroyed$))
+      .subscribe(items => this.calendarDataSource = items);
   }
 
   ngAfterViewInit(): void {
