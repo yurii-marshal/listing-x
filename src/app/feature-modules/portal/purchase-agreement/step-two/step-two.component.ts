@@ -720,13 +720,24 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
       });
   }
 
-  moveToNextSignField(signStatus, signatures = this.signatures.toArray().filter(el => el.isActiveSignRow)) {
-    if (!this.offer.isSigned && signStatus === true) {
+  moveToNextSignField(signRes?) {
+    const signatures = this.signatures.toArray().filter(el => el.isActiveSignRow);
+
+    if (!this.offer.isSigned) {
       if (signatures.length) {
-        for (const sd of signatures) {
-          if (!sd.signatureControl.value) {
-            sd.scrollToButton();
-            return true;
+        if (signRes && Number(signRes.id) && signatures[signRes.id + 1]) {
+          for (let i = signRes.id + 1; i < signatures.length; i++) {
+            if (!signatures[i].signatureControl.value) {
+              signatures[i].scrollToButton();
+              return true;
+            }
+          }
+        } else {
+          for (const sd of signatures) {
+            if (!sd.signatureControl.value) {
+              sd.scrollToButton();
+              return true;
+            }
           }
         }
       }
@@ -795,7 +806,7 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       } else {
         this.snackbar.open('Please, fill all sign fields');
-        this.moveToNextSignField(true);
+        this.moveToNextSignField();
       }
     } else {
       this.form.nativeElement.blur();
@@ -904,13 +915,16 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // TODO incapsulate sign button rendering
   private activateSignButtons() {
+    let index = 0;
     this.signatures.toArray().forEach((sd: SignatureDirective) => {
       if (sd.signatureControl.enabled && !sd.signatureControl.value) {
         sd.renderSignButton();
+        sd.signId = index;
+        index++;
       }
     });
 
-    this.moveToNextSignField(true);
+    this.moveToNextSignField();
   }
 
   private setRelatedFields(enableControl: string, disableControl: string, emit: boolean) {
