@@ -70,7 +70,7 @@
       </div>
       <div class="fieldset">
         <label>APN</label>
-        <input appOnlyNumbers formControlName="apn" placeholder="Apn" spellcheck="false" class="form-control">
+        <input appOnlyNumbers [maxLength]="11" formControlName="apn" placeholder="Apn" spellcheck="false" class="form-control">
         <app-form-validation-error [baseControl]="form.get('apn')"></app-form-validation-error>
       </div>
     </div>
