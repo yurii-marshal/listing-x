@@ -5514,7 +5514,7 @@
         <div class="offer-controls u-flex u-flex-justify--space-between" *ngIf="offer.userRole === 'agent_seller'">
           <button class="deny-btn"
                   mat-flat-button
-                  [disabled]="!offer.allowSign || isCountered || offer.isSigned || isLoading"
+                  [disabled]="!offer.allowSign || isLoading"
                   (click)="denyOffer()"
                   color="accent">
             DENY

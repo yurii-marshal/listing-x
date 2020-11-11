@@ -374,7 +374,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
             if (this.profileService.previousRouteUrl &&
               this.profileService.previousRouteUrl.includes(lastCO) &&
               !this.counterOfferService.prevCO.isSigned) {
-              this.counterOfferService.prevCO.isSigned = true;
+              this.counterOfferService.currentCO.isSigned = true;
               this.router.navigateByUrl(lastCO);
               return;
             }
