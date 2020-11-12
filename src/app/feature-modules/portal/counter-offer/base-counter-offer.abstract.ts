@@ -19,6 +19,7 @@ import { FinishSigningDialogComponent } from '../../../shared-modules/dialogs/fi
 import { CounterOfferType } from '../../../core-modules/models/counter-offer-type';
 import { GeneratedDocument } from '../../../core-modules/models/document';
 import { ProfileService } from '../../../core-modules/core-services/profile.service';
+import { isNumber } from 'util';
 
 export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements OnInit, OnDestroy {
   @ViewChild('form', {static: true}) form: ElementRef;
@@ -151,7 +152,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
   nextField(signStatus, signatures = this.signatures.toArray().filter(el => el.isActiveSignRow)): boolean {
     if (!this.counterOffer.isSigned || this.isMCOFinalSign) {
-      if (signStatus === true) {
+      if (signStatus === true || isNumber(signStatus.id)) {
         if (signatures.length) {
           for (const sd of signatures) {
             if (!sd.signatureControl.value) {
@@ -161,9 +162,8 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
           }
 
           this.openFinishingDialog();
+          return false;
         }
-
-        return false;
       }
 
       if (this.offer && !this.offer.isSigned) {
@@ -343,6 +343,8 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   }
 
   private setSignFields(signFields) {
+    let index = 0;
+
     signFields.forEach((field) => {
       if (this.counterOffer[field.role][field.index] && this.counterOffer[field.role][field.index].email === this.user.email) {
         if (!this.documentForm.get(field.controlName).value) {
@@ -356,6 +358,8 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
       .map(el => {
         el.isActiveSignRow = true;
         el.renderSignButton();
+        el.signId = index;
+        index++;
       });
   }
 
