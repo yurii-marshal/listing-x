@@ -740,7 +740,7 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         } else {
           for (const sd of signatures) {
-            if (!sd.signatureControl.value) {
+            if (!sd.signatureControl.value && !sd.optional) {
               sd.scrollToButton();
               return true;
             }
