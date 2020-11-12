@@ -132,6 +132,21 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
         this.subscribeToFormChanges(this.documentForm);
         this.nextField(true);
+
+        // TODO: open final on CCO after CO, seller_1; prevPendingCO is undefined
+        if (this.counterOfferService.prevCO &&
+          !this.signatures.toArray().find(el => el.isActiveSignRow)) {
+          const prevPendingCO = this.pendingCO.find(item => item.entityId === this.counterOfferService.prevCO.id);
+          const lastCO = `/portal/offer/${this.offer.id}/counter-offers/` +
+            `${this.counterOfferService.prevCO.id}/${CounterOfferType[prevPendingCO ? prevPendingCO.documentType : null]}`;
+
+          if (
+            this.profileService.previousRouteUrl &&
+            this.profileService.previousRouteUrl.includes(lastCO)
+          ) {
+            this.openFinishingDialog();
+          }
+        }
       });
   }
 
@@ -171,6 +186,8 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/sign`);
       }
     }
+
+    return false;
   }
 
   continue() {
