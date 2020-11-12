@@ -366,22 +366,25 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
       this.counterOfferService.signCounterOffer(this.id, this.isMCOFinalSign ? 'final_approval' : 'sign')
         .pipe(takeUntil(this.onDestroyed$))
         .subscribe(() => {
+          this.counterOffer.isSigned = true;
+          this.snackbar.open('Counter Offer is signed now');
+
           if (this.counterOfferService.prevCO) {
             const prevPendingCO = this.pendingCO.find(item => item.entityId === this.counterOfferService.prevCO.id);
             const lastCO = `/portal/offer/${this.offer.id}/counter-offers/` +
               `${this.counterOfferService.prevCO.id}/${CounterOfferType[prevPendingCO ? prevPendingCO.documentType : null]}`;
 
-            if (this.profileService.previousRouteUrl &&
+            if (
+              this.profileService.previousRouteUrl &&
               this.profileService.previousRouteUrl.includes(lastCO) &&
-              !this.counterOfferService.prevCO.isSigned) {
-              this.counterOfferService.prevCO.isSigned = true;
+              !this.counterOfferService.prevCO.isSigned
+            ) {
+              this.counterOfferService.currentCO.isSigned = true;
               this.router.navigateByUrl(lastCO);
               return;
             }
           }
 
-          this.counterOffer.isSigned = true;
-          this.snackbar.open('Counter Offer is signed now');
           this.closeCO();
         });
     }
