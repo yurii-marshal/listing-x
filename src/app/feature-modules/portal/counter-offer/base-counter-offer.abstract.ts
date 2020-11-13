@@ -43,6 +43,8 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   isAgentSeller: boolean;
   pendingCO: GeneratedDocument[];
 
+  isLoading: boolean;
+
   documentForm: FormGroup;
   prevFormSnapshot: FormGroup;
 
@@ -73,6 +75,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   }
 
   ngOnInit() {
+    this.isLoading = true;
     this.id = +this.route.snapshot.params.id;
     this.offerId = +this.route.snapshot.params.offerId;
     this.datepickerMinDate = new Date();
@@ -133,21 +136,10 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         this.subscribeToFormChanges(this.documentForm);
         this.nextField(true);
 
-        // TODO: open final on CCO after CO, seller_1; prevPendingCO is undefined
-        if (this.counterOfferService.prevCO &&
-          !this.signatures.toArray().find(el => el.isActiveSignRow)) {
-          const prevPendingCO = this.pendingCO.find(item => item.entityId === this.counterOfferService.prevCO.id);
-          const lastCO = `/portal/offer/${this.offer.id}/counter-offers/` +
-            `${this.counterOfferService.prevCO.id}/${CounterOfferType[prevPendingCO ? prevPendingCO.documentType : null]}`;
-
-          if (
-            this.profileService.previousRouteUrl &&
-            this.profileService.previousRouteUrl.includes(lastCO)
-          ) {
-            this.openFinishingDialog();
-          }
-        }
-      });
+        this.checkOnFinalTransitions();
+        this.isLoading = false;
+      },
+        () => this.isLoading = false);
   }
 
   toggleSidebar(value: boolean) {
@@ -246,6 +238,24 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   ngOnDestroy(): void {
     this.onDestroyed$.next();
     this.onDestroyed$.complete();
+  }
+
+  private checkOnFinalTransitions() {
+    // TODO: open final on CCO after CO, seller_1; prevPendingCO is undefined
+    if (this.counterOfferService.prevCO && !this.signatures.toArray().find(el => el.isActiveSignRow)) {
+      const completedCO = this.offer.completedDocuments.filter((item) => !!CounterOfferType[item.documentType]);
+      const prevCO = completedCO.find(item => item.entityId === this.counterOfferService.prevCO.id);
+      const lastCO = `/portal/offer/${this.offer.id}/counter-offers/` +
+        `${this.counterOfferService.prevCO.id}/${CounterOfferType[prevCO ? prevCO.documentType : null]}`;
+
+      if (
+        this.profileService.previousRouteUrl &&
+        this.profileService.previousRouteUrl.includes(lastCO) &&
+        this.counterOfferService.prevCO.isSigned
+      ) {
+        this.openFinishingDialog();
+      }
+    }
   }
 
   private scrollToFirstInvalidField(): boolean {
