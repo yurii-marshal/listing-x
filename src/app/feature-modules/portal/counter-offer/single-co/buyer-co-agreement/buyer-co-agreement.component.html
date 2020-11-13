@@ -305,6 +305,7 @@
       (continue)="continue()"
       [okButtonText]="okButtonText"
       [isSignMode]="isSignMode"
+      [isEnable]="!isLoading"
     >
 
       <section>
@@ -318,7 +319,7 @@
         <app-counter-offer-information [counterOffer]="counterOffer" [show]="isSideBarOpen"></app-counter-offer-information>
       </section>
 
-      <app-counter-offer-controls [isAgentSeller]="isAgentSeller" [counterOffer]="counterOffer" [visible]="isSidebarControlsVisible"></app-counter-offer-controls>
+      <app-counter-offer-controls [disabled]="isLoading" [isAgentSeller]="isAgentSeller" [counterOffer]="counterOffer" [visible]="isSidebarControlsVisible"></app-counter-offer-controls>
 
       <div class="controls" *ngIf="isSideBarOpen">
         <app-progress-bar
