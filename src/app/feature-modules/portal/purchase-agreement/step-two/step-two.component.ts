@@ -1087,6 +1087,7 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
     this.offer.anyUserSigned = false;
     this.offer.status = AgreementStatus.Started;
     this.offer.isSigned = false;
+    this.isSignMode = false;
 
     this.snackbar.open('The document was changed. Please, resign.');
   }
