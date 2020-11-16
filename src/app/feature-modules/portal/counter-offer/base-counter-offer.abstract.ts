@@ -99,7 +99,9 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         this.isUserPitcher = this.counterOffer.pitchers.some(pitcher => pitcher.email === this.user.email);
         this.isAgentSeller = this.user.accountType === 'agent' && this.counterOffer.offerType as string === 'buyer_counter_offer';
 
-        this.isDisabled = !this.isUserPitcher || this.isSignMode;
+        // check if creator signs first time he can edit and sign simultaneously
+        const creatorSignAndEdit = this.counterOffer.pitcher === this.user.id && !this.counterOffer.anyUserSigned;
+        this.isDisabled = (!this.isUserPitcher || this.isSignMode) && !creatorSignAndEdit;
 
         this.showSwitcher = this.isUserPitcher && this.counterOffer.status !== AgreementStatus.Completed;
 
