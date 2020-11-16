@@ -19,6 +19,7 @@ import { FinishSigningDialogComponent } from '../../../shared-modules/dialogs/fi
 import { CounterOfferType } from '../../../core-modules/models/counter-offer-type';
 import { GeneratedDocument } from '../../../core-modules/models/document';
 import { ProfileService } from '../../../core-modules/core-services/profile.service';
+import { isNumber } from 'util';
 
 export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements OnInit, OnDestroy {
   @ViewChild('form', {static: true}) form: ElementRef;
@@ -41,6 +42,8 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   isUserPitcher: boolean;
   isAgentSeller: boolean;
   pendingCO: GeneratedDocument[];
+
+  isLoading: boolean;
 
   documentForm: FormGroup;
   prevFormSnapshot: FormGroup;
@@ -72,6 +75,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   }
 
   ngOnInit() {
+    this.isLoading = true;
     this.id = +this.route.snapshot.params.id;
     this.offerId = +this.route.snapshot.params.offerId;
     this.datepickerMinDate = new Date();
@@ -131,7 +135,11 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
         this.subscribeToFormChanges(this.documentForm);
         this.nextField(true);
-      });
+
+        this.checkOnFinalTransitions();
+        this.isLoading = false;
+      },
+        () => this.isLoading = false);
   }
 
   toggleSidebar(value: boolean) {
@@ -151,7 +159,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
   nextField(signStatus, signatures = this.signatures.toArray().filter(el => el.isActiveSignRow)): boolean {
     if (!this.counterOffer.isSigned || this.isMCOFinalSign) {
-      if (signStatus === true) {
+      if (signStatus === true || isNumber(signStatus.id)) {
         if (signatures.length) {
           for (const sd of signatures) {
             if (!sd.signatureControl.value) {
@@ -161,9 +169,8 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
           }
 
           this.openFinishingDialog();
+          return false;
         }
-
-        return false;
       }
 
       if (this.offer && !this.offer.isSigned) {
@@ -171,6 +178,8 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/sign`);
       }
     }
+
+    return false;
   }
 
   continue() {
@@ -229,6 +238,24 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   ngOnDestroy(): void {
     this.onDestroyed$.next();
     this.onDestroyed$.complete();
+  }
+
+  private checkOnFinalTransitions() {
+    // TODO: open final on CCO after CO, seller_1; prevPendingCO is undefined
+    if (this.counterOfferService.prevCO && !this.signatures.toArray().find(el => el.isActiveSignRow)) {
+      const completedCO = this.offer.completedDocuments.filter((item) => !!CounterOfferType[item.documentType]);
+      const prevCO = completedCO.find(item => item.entityId === this.counterOfferService.prevCO.id);
+      const lastCO = `/portal/offer/${this.offer.id}/counter-offers/` +
+        `${this.counterOfferService.prevCO.id}/${CounterOfferType[prevCO ? prevCO.documentType : null]}`;
+
+      if (
+        this.profileService.previousRouteUrl &&
+        this.profileService.previousRouteUrl.includes(lastCO) &&
+        this.counterOfferService.prevCO.isSigned
+      ) {
+        this.openFinishingDialog();
+      }
+    }
   }
 
   private scrollToFirstInvalidField(): boolean {
@@ -343,6 +370,8 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   }
 
   private setSignFields(signFields) {
+    let index = 0;
+
     signFields.forEach((field) => {
       if (this.counterOffer[field.role][field.index] && this.counterOffer[field.role][field.index].email === this.user.email) {
         if (!this.documentForm.get(field.controlName).value) {
@@ -356,6 +385,8 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
       .map(el => {
         el.isActiveSignRow = true;
         el.renderSignButton();
+        el.signId = index;
+        index++;
       });
   }
 
