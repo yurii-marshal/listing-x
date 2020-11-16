@@ -102,13 +102,13 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         this.isUserPitcher = this.counterOffer.pitchers.some(pitcher => pitcher.email === this.user.email);
         this.isAgentSeller = this.user.accountType === 'agent' && this.counterOffer.offerType as string === 'buyer_counter_offer';
 
-        this.isDisabled = !this.isUserPitcher;
+        this.isDisabled = !this.isUserPitcher || this.isSignMode;
 
         this.showSwitcher = this.isUserPitcher && this.counterOffer.status !== AgreementStatus.Completed;
 
         const isFinalMode = this.counterOffer.canFinalSign && this.counterOffer.isSigned;
 
-        // if user isn't contra-reviewer there's available sign mode only / for sign / for review
+        // if user isn't creator there's available sign mode only / for sign / for review
         if (!this.showSwitcher || isFinalMode) {
           this.isSignMode = true;
           this.isDisabled = true;
@@ -168,11 +168,15 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
             }
           }
 
+          // if CO has signature fields but everyone is signed
           this.openFinishingDialog();
-          return false;
         }
+
+        // if CO doesn't have local signs and just is opened
+        return false;
       }
 
+      // if CO has error sign because of the offer is not signed
       if (this.offer && !this.offer.isSigned) {
         this.form.nativeElement.blur();
         this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/sign`);
@@ -303,7 +307,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
           takeUntil(this.onDestroyed$),
         )
         .subscribe((controlValue) => {
-          if (this.counterOffer.anyUserSigned && !this.counterOffer.canFinalSign) {
+          if (this.counterOffer.anyUserSigned && !this.counterOffer.canFinalSign && this.counterOffer.pitcher === this.user.id) {
             const config: MatSnackBarConfig = {
               duration: 0,
               data: {
@@ -365,6 +369,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     this.counterOffer.anyUserSigned = false;
     this.counterOffer.status = AgreementStatus.Started;
     this.counterOffer.isSigned = false;
+    this.isSignMode = false;
 
     this.snackbar.open('The document was changed. Please, resign.');
   }

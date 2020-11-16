@@ -1025,10 +1025,7 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
             takeUntil(this.onDestroyed$),
           )
           .subscribe((controlValue) => {
-            if (!this.offer.anyUserSigned) {
-              this.prevFormSnapshot.patchValue(this.documentForm.getRawValue(), {emitEvent: false});
-              this.saveDocumentField(Object.keys(group.getRawValue())[controlIndex], controlValue, groupIndex);
-            } else {
+            if (this.offer.anyUserSigned && this.offer.userRole === 'agent_buyer') {
               const config: MatSnackBarConfig = {
                 duration: 0,
                 data: {
@@ -1051,6 +1048,9 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
                     this.documentForm.patchValue(this.prevFormSnapshot.getRawValue(), {emitEvent: false});
                   }
                 });
+            } else {
+              this.prevFormSnapshot.patchValue(this.documentForm.getRawValue(), {emitEvent: false});
+              this.saveDocumentField(Object.keys(group.getRawValue())[controlIndex], controlValue, groupIndex);
             }
           });
       });
@@ -1087,6 +1087,7 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
     this.offer.anyUserSigned = false;
     this.offer.status = AgreementStatus.Started;
     this.offer.isSigned = false;
+    this.isSignMode = false;
 
     this.snackbar.open('The document was changed. Please, resign.');
   }
@@ -1163,12 +1164,12 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private getSignFieldAllowedFor(role: string, index: number) {
-    const value = this.isSignMode ? {
+    return [{
       value: '',
-      disabled: this.offer[role][index] ? this.offer[role][index].email !== this.user.email : true,
-    } : '';
-
-    return [value, []];
+      disabled: this.isSignMode
+        ? (this.offer[role][index] ? this.offer[role][index].email !== this.user.email : true)
+        : true,
+    }, []];
   }
 
   private openFinishingDialog() {
