@@ -168,11 +168,15 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
             }
           }
 
+          // if CO has signature fields but everyone is signed
           this.openFinishingDialog();
-          return false;
         }
+
+        // if CO doesn't have local signs and just is opened
+        return false;
       }
 
+      // if CO has error sign because of the offer is not signed
       if (this.offer && !this.offer.isSigned) {
         this.form.nativeElement.blur();
         this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/sign`);
