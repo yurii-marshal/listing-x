@@ -1164,12 +1164,12 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private getSignFieldAllowedFor(role: string, index: number) {
-    const value = this.isSignMode ? {
+    return [{
       value: '',
-      disabled: this.offer[role][index] ? this.offer[role][index].email !== this.user.email : true,
-    } : '';
-
-    return [value, []];
+      disabled: this.isSignMode
+        ? (this.offer[role][index] ? this.offer[role][index].email !== this.user.email : true)
+        : true,
+    }, []];
   }
 
   private openFinishingDialog() {
