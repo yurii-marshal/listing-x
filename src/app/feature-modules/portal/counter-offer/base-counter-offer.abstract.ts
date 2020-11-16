@@ -303,7 +303,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
           takeUntil(this.onDestroyed$),
         )
         .subscribe((controlValue) => {
-          if (this.counterOffer.anyUserSigned && !this.counterOffer.canFinalSign) {
+          if (this.counterOffer.anyUserSigned && !this.counterOffer.canFinalSign && this.counterOffer.pitcher === this.user.id) {
             const config: MatSnackBarConfig = {
               duration: 0,
               data: {
