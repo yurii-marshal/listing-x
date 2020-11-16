@@ -1025,10 +1025,7 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
             takeUntil(this.onDestroyed$),
           )
           .subscribe((controlValue) => {
-            if (!this.offer.anyUserSigned) {
-              this.prevFormSnapshot.patchValue(this.documentForm.getRawValue(), {emitEvent: false});
-              this.saveDocumentField(Object.keys(group.getRawValue())[controlIndex], controlValue, groupIndex);
-            } else {
+            if (this.offer.anyUserSigned && this.offer.userRole === 'agent_buyer') {
               const config: MatSnackBarConfig = {
                 duration: 0,
                 data: {
@@ -1051,6 +1048,9 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
                     this.documentForm.patchValue(this.prevFormSnapshot.getRawValue(), {emitEvent: false});
                   }
                 });
+            } else {
+              this.prevFormSnapshot.patchValue(this.documentForm.getRawValue(), {emitEvent: false});
+              this.saveDocumentField(Object.keys(group.getRawValue())[controlIndex], controlValue, groupIndex);
             }
           });
       });
