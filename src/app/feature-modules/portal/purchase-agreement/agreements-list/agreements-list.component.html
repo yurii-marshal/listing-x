@@ -141,7 +141,7 @@
     </table>
   </div>
 
-  <div class="calendar-container">
+  <div class="calendar-container" *ngIf="transactionsFlow">
     <h2 class="u-flex u-flex-justify--center">Calendar</h2>
     <app-calendar [dataSource]="calendarDataSource"></app-calendar>
   </div>
