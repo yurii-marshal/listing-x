@@ -352,7 +352,7 @@
       <section>
         <app-agreement-mode-switcher
           [show]="isSideBarOpen && showSwitcher"
-          [disabled]="(counterOffer?.isSigned && !counterOffer?.canFinalSign) || documentForm?.invalid"
+          [disabled]="!counterOffer.canEdit || documentForm?.invalid"
           [isChecked]="isSignMode"
           (changeMode)="modeChanged($event)"
         ></app-agreement-mode-switcher>

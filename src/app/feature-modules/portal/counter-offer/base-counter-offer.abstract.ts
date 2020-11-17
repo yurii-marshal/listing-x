@@ -102,7 +102,9 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         this.isUserPitcher = this.counterOffer.pitchers.some(pitcher => pitcher.email === this.user.email);
         this.isAgentSeller = this.user.accountType === 'agent' && this.counterOffer.offerType as string === 'buyer_counter_offer';
 
-        this.isDisabled = !this.isUserPitcher || this.isSignMode;
+        // check if creator signs first time he can edit and sign simultaneously
+        const creatorSignAndEdit = this.counterOffer.pitcher === this.user.id && !this.counterOffer.anyUserSigned;
+        this.isDisabled = (!this.isUserPitcher || this.isSignMode) && !creatorSignAndEdit;
 
         this.showSwitcher = this.isUserPitcher && this.counterOffer.status !== AgreementStatus.Completed;
 
@@ -245,7 +247,6 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   }
 
   private checkOnFinalTransitions() {
-    // TODO: open final on CCO after CO, seller_1; prevPendingCO is undefined
     if (this.counterOfferService.prevCO && !this.signatures.toArray().find(el => el.isActiveSignRow)) {
       const completedCO = this.offer.completedDocuments.filter((item) => !!CounterOfferType[item.documentType]);
       const prevCO = completedCO.find(item => item.entityId === this.counterOfferService.prevCO.id);
@@ -307,7 +308,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
           takeUntil(this.onDestroyed$),
         )
         .subscribe((controlValue) => {
-          if (this.counterOffer.anyUserSigned && !this.counterOffer.canFinalSign && this.counterOffer.pitcher === this.user.id) {
+          if (this.counterOffer.anyUserSigned && !this.counterOffer.canFinalSign && this.isUserPitcher) {
             const config: MatSnackBarConfig = {
               duration: 0,
               data: {
