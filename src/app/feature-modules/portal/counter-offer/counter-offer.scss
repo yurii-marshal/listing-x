@@ -69,6 +69,16 @@
     }
   }
 
+  .loading {
+    position: fixed;
+    z-index: 1;
+    top: $header-height;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(176, 183, 189, 0.5);
+  }
+
   .side-bar {
     width: 73px;
     position: absolute;

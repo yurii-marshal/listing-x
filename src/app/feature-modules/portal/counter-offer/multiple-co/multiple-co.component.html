@@ -2,6 +2,7 @@
   <div class="u-flex viewer-container">
     <div class="u-flex viewer">
       <div class="doc-container">
+        <div class="loading" *ngIf="isLoading"></div>
 
         <form class="document-form" [formGroup]="documentForm" #form>
 
@@ -330,7 +331,7 @@
               </div>
               <div class="fw-bold mt-25">SMCO REVISED 12/18 (PAGE 1 OF 1)</div>
               <div class="text-center fw-bold">
-                SELLER MULTIPLE COUNTER OFFER (SMCO PAGE 1 OF 1) {{isDisabled}}
+                SELLER MULTIPLE COUNTER OFFER (SMCO PAGE 1 OF 1)
               </div>
             </footer>
           </div>
@@ -351,7 +352,7 @@
       <section>
         <app-agreement-mode-switcher
           [show]="isSideBarOpen && showSwitcher"
-          [disabled]="!counterOffer.canEdit || documentForm?.invalid"
+          [disabled]="!counterOffer?.canEdit || documentForm?.invalid"
           [isChecked]="isSignMode"
           (changeMode)="modeChanged($event)"
         ></app-agreement-mode-switcher>
@@ -359,7 +360,8 @@
         <app-counter-offer-information [counterOffer]="counterOffer" [show]="isSideBarOpen"></app-counter-offer-information>
       </section>
 
-      <app-counter-offer-controls [counterOffer]="counterOffer" [visible]="isSidebarControlsVisible"></app-counter-offer-controls>
+      <app-counter-offer-controls [isLoading]="isLoading" [counterOffer]="counterOffer" [visible]="isSidebarControlsVisible"
+      ></app-counter-offer-controls>
 
       <div class="controls" *ngIf="isSideBarOpen">
         <app-progress-bar

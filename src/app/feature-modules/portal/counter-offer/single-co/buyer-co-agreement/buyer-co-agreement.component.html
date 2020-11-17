@@ -2,6 +2,7 @@
   <div class="u-flex viewer-container">
     <div class="u-flex viewer">
       <div class="doc-container">
+        <div class="loading" *ngIf="isLoading"></div>
 
         <form class="document-form" [formGroup]="documentForm" #form>
 
