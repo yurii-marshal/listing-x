@@ -2,6 +2,7 @@
   <div class="u-flex viewer-container">
     <div class="u-flex viewer">
       <div class="doc-container">
+        <div class="loading" *ngIf="isLoading"></div>
 
         <form class="document-form" [formGroup]="documentForm" #form>
 
@@ -311,7 +312,7 @@
       <section>
         <app-agreement-mode-switcher
           [show]="isSideBarOpen && showSwitcher"
-          [disabled]="counterOffer?.isSigned || documentForm?.invalid"
+          [disabled]="!counterOffer?.canEdit || documentForm?.invalid"
           [isChecked]="isSignMode"
           (changeMode)="modeChanged($event)"
         ></app-agreement-mode-switcher>

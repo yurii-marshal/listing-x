@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { OfferService } from '../../services/offer.service';
 import { Offer } from '../../../../core-modules/models/offer';
-import { DateAdapter, MAT_DATE_FORMATS, MatDialog, MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { DateAdapter, MAT_DATE_FORMATS, MatDialog, MatSnackBar } from '@angular/material';
 import { EditOfferDialogComponent } from '../../../../shared-modules/dialogs/edit-offer-dialog/edit-offer-dialog.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { debounceTime, takeUntil } from 'rxjs/operators';
@@ -24,7 +24,6 @@ import { User } from '../../../auth/models';
 import { AuthService } from '../../../../core-modules/core-services/auth.service';
 import { SignatureDirective } from '../../../../shared-modules/directives/signature.directive';
 import { AgreementStatus } from '../../../../core-modules/models/agreement';
-import { ConfirmationBarComponent } from '../../../../shared-modules/components/confirmation-bar/confirmation-bar.component';
 import { PICK_FORMATS, PickDateAdapter } from '../../../../core-modules/adapters/date-adapter';
 import { FinishSigningDialogComponent } from '../../../../shared-modules/dialogs/finish-signing-dialog/finish-signing-dialog.component';
 import { ProfileService } from '../../../../core-modules/core-services/profile.service';
@@ -53,7 +52,6 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
   okButtonText: string;
 
   documentForm: FormGroup;
-  prevFormSnapshot: FormGroup;
   currentPage: number = 0;
   completedFieldsCount: number = 0;
   completedPageCount: number = 0;
@@ -685,7 +683,6 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.okButtonText = this.isSignMode && this.offer.allowSign && !this.offer.isSigned ? 'Finish' : 'Continue';
 
-    this.prevFormSnapshot = this.formGroupPage;
     this.documentForm = this.formGroupPage;
 
     this.subscribeToFormChanges();
@@ -968,8 +965,6 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
           }
 
           control.patchValue(fieldValue, {emitEvent: false, onlySelf: true});
-          this.prevFormSnapshot.get(`${_.snakeCase(page)}.${_.snakeCase(field)}`)
-            .patchValue(fieldValue, {emitEvent: false, onlySelf: true});
         }
       });
 
@@ -1026,32 +1021,10 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
           )
           .subscribe((controlValue) => {
             if (this.offer.anyUserSigned && this.offer.userRole === 'agent_buyer') {
-              const config: MatSnackBarConfig = {
-                duration: 0,
-                data: {
-                  message: 'Are you sure want to change a field? All users signatures will be cleared.',
-                  dismiss: 'Cancel',
-                  action: 'Yes'
-                },
-              };
-
-              const snackBarRef = this.snackbar.openFromComponent(ConfirmationBarComponent, config);
-
-              snackBarRef.afterDismissed()
-                .pipe(takeUntil(this.onDestroyed$))
-                .subscribe(info => {
-                  if (info.dismissedByAction) {
-                    this.prevFormSnapshot.patchValue(this.documentForm.getRawValue(), {emitEvent: false});
-                    this.resetAgreement();
-                    this.saveDocumentField(Object.keys(group.getRawValue())[controlIndex], controlValue, groupIndex);
-                  } else {
-                    this.documentForm.patchValue(this.prevFormSnapshot.getRawValue(), {emitEvent: false});
-                  }
-                });
-            } else {
-              this.prevFormSnapshot.patchValue(this.documentForm.getRawValue(), {emitEvent: false});
-              this.saveDocumentField(Object.keys(group.getRawValue())[controlIndex], controlValue, groupIndex);
+              this.resetAgreement();
             }
+
+            this.saveDocumentField(Object.keys(group.getRawValue())[controlIndex], controlValue, groupIndex);
           });
       });
     });

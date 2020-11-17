@@ -7,14 +7,13 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
 import { FormControl, FormGroup } from '@angular/forms';
 import { User } from '../../auth/models';
 import * as _ from 'lodash';
-import { MatDialog, MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { forkJoin, Subject } from 'rxjs';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
 import { Offer, Person } from '../../../core-modules/models/offer';
 import { SignatureDirective } from '../../../shared-modules/directives/signature.directive';
 import { AgreementStatus } from '../../../core-modules/models/agreement';
-import { ConfirmationBarComponent } from '../../../shared-modules/components/confirmation-bar/confirmation-bar.component';
 import { FinishSigningDialogComponent } from '../../../shared-modules/dialogs/finish-signing-dialog/finish-signing-dialog.component';
 import { CounterOfferType } from '../../../core-modules/models/counter-offer-type';
 import { GeneratedDocument } from '../../../core-modules/models/document';
@@ -27,6 +26,8 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
   state: string = 'counter-offer';
 
+  isLoading = true;
+
   type;
   id: number;
   offerId: number;
@@ -37,16 +38,13 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   isDisabled: boolean = true;
   showSwitcher: boolean = false;
 
-  isSignMode: boolean = true;
+  isSignMode: boolean = false;
 
   isUserPitcher: boolean;
   isAgentSeller: boolean;
   pendingCO: GeneratedDocument[];
 
-  isLoading: boolean;
-
   documentForm: FormGroup;
-  prevFormSnapshot: FormGroup;
 
   datepickerMinDate: Date;
 
@@ -91,56 +89,54 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     )
       .pipe(takeUntil(this.onDestroyed$))
       .subscribe(([offer, counterOffer, document]) => {
-        this.offer = offer;
-        this.counterOfferService.prevCO = Object.assign({}, this.counterOfferService.currentCO);
-        this.counterOfferService.currentCO = counterOffer;
-        this.counterOffer = counterOffer;
-        this.documentObj = document;
+          this.offer = offer;
+          this.counterOfferService.prevCO = Object.assign({}, this.counterOfferService.currentCO);
+          this.counterOfferService.currentCO = counterOffer;
+          this.counterOffer = counterOffer;
+          this.documentObj = document;
 
-        this.patchForm();
+          this.patchForm();
 
-        this.isUserPitcher = this.counterOffer.pitchers.some(pitcher => pitcher.email === this.user.email);
-        this.isAgentSeller = this.user.accountType === 'agent' && this.counterOffer.offerType as string === 'buyer_counter_offer';
+          this.isUserPitcher = this.counterOffer.pitchers.some(pitcher => pitcher.email === this.user.email);
+          this.isAgentSeller = this.user.accountType === 'agent' && this.counterOffer.offerType as string === 'buyer_counter_offer';
 
-        // check if creator signs first time he can edit and sign simultaneously
-        const creatorSignAndEdit = this.counterOffer.pitcher === this.user.id && !this.counterOffer.anyUserSigned;
-        this.isDisabled = (!this.isUserPitcher || this.isSignMode) && !creatorSignAndEdit;
+          this.isDisabled = !this.isUserPitcher || this.isSignMode;
 
-        this.showSwitcher = this.isUserPitcher && this.counterOffer.status !== AgreementStatus.Completed;
+          this.showSwitcher = this.isUserPitcher && this.counterOffer.status !== AgreementStatus.Completed;
 
-        const isFinalMode = this.counterOffer.canFinalSign && this.counterOffer.isSigned;
+          const isFinalMode = this.counterOffer.canFinalSign && this.counterOffer.isSigned;
 
-        // if user isn't creator there's available sign mode only / for sign / for review
-        if (!this.showSwitcher || isFinalMode) {
-          this.isSignMode = true;
-          this.isDisabled = true;
-        }
+          // if user isn't creator there's available sign mode only / for sign / for review
+          if (!this.showSwitcher || isFinalMode) {
+            this.isSignMode = true;
+            this.isDisabled = true;
+          }
 
-        this.allFieldsCount = Object.keys(this.documentObj).length;
+          this.allFieldsCount = Object.keys(this.documentObj).length;
 
-        this.okButtonText = (!this.counterOffer.isSigned && this.isSignMode) || isFinalMode ? 'Finish' : 'Back to the offer';
+          this.okButtonText = (!this.counterOffer.isSigned && this.isSignMode) || isFinalMode ? 'Finish' : 'Continue';
 
-        this.isSidebarControlsVisible =
-          this.isSideBarOpen && this.counterOffer.catchers.some((user: Person) => user.email === this.authService.currentUser.email);
+          this.isSidebarControlsVisible =
+            this.isSideBarOpen && this.counterOffer.catchers.some((user: Person) => user.email === this.user.email);
 
-        this.isMCOFinalSign = counterOffer.offerType as string === 'multiple_counter_offer' && counterOffer.canFinalSign;
+          this.isMCOFinalSign = counterOffer.offerType as string === 'multiple_counter_offer' && counterOffer.canFinalSign;
 
-        this.pendingCO = this.offer.pendingDocuments.filter((item) => !!CounterOfferType[item.documentType]);
+          this.pendingCO = this.offer.pendingDocuments.filter((item) => !!CounterOfferType[item.documentType]);
 
-        if (!this.isMCOFinalSign && !this.counterOffer.isSigned && this.counterOffer.canSign) {
-          this.setSignFields(this.signFields);
-        } else if (this.isMCOFinalSign) {
-          this.setSignFields(this.finalSignFields);
-        } else {
-          this.snackbar.open('Counter Offer is already signed');
-        }
+          if (!this.isMCOFinalSign && !this.counterOffer.isSigned && this.counterOffer.canSign) {
+            this.setSignFields(this.signFields);
+          } else if (this.isMCOFinalSign) {
+            this.setSignFields(this.finalSignFields);
+          } else {
+            this.snackbar.open('Counter Offer is already signed');
+          }
 
-        this.subscribeToFormChanges(this.documentForm);
-        this.nextField(true);
+          this.subscribeToFormChanges(this.documentForm);
+          this.nextField(true);
 
-        this.checkOnFinalTransitions();
-        this.isLoading = false;
-      },
+          this.checkOnFinalTransitions();
+          this.isLoading = false;
+        },
         () => this.isLoading = false);
   }
 
@@ -150,7 +146,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     setTimeout(() => {
       this.isSidebarControlsVisible =
         value && this.counterOffer &&
-        this.counterOffer.catchers.some((user: Person) => user.email === this.authService.currentUser.email);
+        this.counterOffer.catchers.some((user: Person) => user.email === this.user.email);
     }, value ? 250 : 0);
   }
 
@@ -210,7 +206,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
       this.scrollToFirstInvalidField()
         ? this.snackbar.open('Please, fill all mandatory fields')
-        : this.closeCO();
+        : this.modeChanged(true); // this.closeCO()
     }
   }
 
@@ -230,7 +226,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     this.isDisabled = this.isSignMode = isSign;
     this.okButtonText = this.isSignMode && (!this.counterOffer.isSigned || this.counterOffer.canFinalSign)
       ? 'Finish'
-      : 'Back to the offer';
+      : 'Continue';
   }
 
   limitLines(input, limit) {
@@ -293,8 +289,6 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
           this.documentForm.get(`${_.snakeCase(controlName)}`)
             .patchValue(value, {emitEvent: false, onlySelf: true});
-          this.prevFormSnapshot.get(`${_.snakeCase(controlName)}`)
-            .patchValue(value, {emitEvent: false, onlySelf: true});
         }
       });
     });
@@ -309,32 +303,10 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         )
         .subscribe((controlValue) => {
           if (this.counterOffer.anyUserSigned && !this.counterOffer.canFinalSign && this.isUserPitcher) {
-            const config: MatSnackBarConfig = {
-              duration: 0,
-              data: {
-                message: 'Are you sure want to change a field? All users signatures will be cleared.',
-                dismiss: 'Cancel',
-                action: 'Yes'
-              },
-            };
-
-            const snackBarRef = this.snackbar.openFromComponent(ConfirmationBarComponent, config);
-
-            snackBarRef.afterDismissed()
-              .pipe(takeUntil(this.onDestroyed$))
-              .subscribe(info => {
-                if (info.dismissedByAction) {
-                  this.prevFormSnapshot.patchValue(this.documentForm.getRawValue(), {emitEvent: false});
-                  this.resetAgreement();
-                  this.saveDocumentField(Object.keys(documentForm.getRawValue())[controlIndex], controlValue);
-                } else {
-                  this.documentForm.patchValue(this.prevFormSnapshot.getRawValue(), {emitEvent: false});
-                }
-              });
-          } else {
-            this.prevFormSnapshot.patchValue(this.documentForm.getRawValue(), {emitEvent: false});
-            this.saveDocumentField(Object.keys(documentForm.getRawValue())[controlIndex], controlValue);
+            this.resetAgreement();
           }
+
+          this.saveDocumentField(Object.keys(documentForm.getRawValue())[controlIndex], controlValue);
         });
     });
 
@@ -386,6 +358,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
       }
     });
 
+    // TODO incapsulate sign button rendering
     this.signatures.toArray()
       .filter(el => el.signatureControl.enabled)
       .map(el => {
@@ -400,6 +373,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     if (!this.signatures.toArray().filter(el => el.isActiveSignRow).every((el) => !!el.signatureControl.value)) {
       this.snackbar.open('Please, sign all mandatory fields');
     } else {
+      this.isLoading = true;
       this.counterOfferService.signCounterOffer(this.id, this.isMCOFinalSign ? 'final_approval' : 'sign')
         .pipe(takeUntil(this.onDestroyed$))
         .subscribe(() => {
@@ -423,6 +397,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
           }
 
           this.closeCO();
+          this.isLoading = false;
         });
     }
   }

@@ -89,7 +89,6 @@ export class SellerCOAgreementComponent extends BaseCounterOfferAbstract<Counter
   ngOnInit() {
     super.ngOnInit();
 
-    this.prevFormSnapshot = this.formGroupPage;
     this.documentForm = this.formGroupPage;
   }
 }
