@@ -135,7 +135,6 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         this.subscribeToFormChanges(this.documentForm);
         this.nextField(true);
 
-        // TODO: open final on CCO after CO, seller_1; prevPendingCO is undefined
         if (this.counterOfferService.prevCO &&
           !this.signatures.toArray().find(el => el.isActiveSignRow)) {
           const prevPendingCO = this.pendingCO.find(item => item.entityId === this.counterOfferService.prevCO.id);
@@ -299,7 +298,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
           takeUntil(this.onDestroyed$),
         )
         .subscribe((controlValue) => {
-          if (this.counterOffer.anyUserSigned && !this.counterOffer.canFinalSign && this.counterOffer.pitcher === this.user.id) {
+          if (this.counterOffer.anyUserSigned && !this.counterOffer.canFinalSign && this.isUserPitcher) {
             const config: MatSnackBarConfig = {
               duration: 0,
               data: {
