@@ -13,4 +13,6 @@ export interface CounterOffer extends Offer {
 
   canFinalSign: boolean;
   needFinalApprove: boolean;
+
+  canEdit?: boolean;
 }
