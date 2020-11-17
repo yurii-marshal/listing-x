@@ -7,14 +7,13 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
 import { FormControl, FormGroup } from '@angular/forms';
 import { User } from '../../auth/models';
 import * as _ from 'lodash';
-import { MatDialog, MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { forkJoin, Subject } from 'rxjs';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
 import { Offer, Person } from '../../../core-modules/models/offer';
 import { SignatureDirective } from '../../../shared-modules/directives/signature.directive';
 import { AgreementStatus } from '../../../core-modules/models/agreement';
-import { ConfirmationBarComponent } from '../../../shared-modules/components/confirmation-bar/confirmation-bar.component';
 import { FinishSigningDialogComponent } from '../../../shared-modules/dialogs/finish-signing-dialog/finish-signing-dialog.component';
 import { CounterOfferType } from '../../../core-modules/models/counter-offer-type';
 import { GeneratedDocument } from '../../../core-modules/models/document';
@@ -39,14 +38,13 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   isDisabled: boolean = true;
   showSwitcher: boolean = false;
 
-  isSignMode: boolean = true;
+  isSignMode: boolean = false;
 
   isUserPitcher: boolean;
   isAgentSeller: boolean;
   pendingCO: GeneratedDocument[];
 
   documentForm: FormGroup;
-  prevFormSnapshot: FormGroup;
 
   datepickerMinDate: Date;
 
@@ -102,9 +100,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
           this.isUserPitcher = this.counterOffer.pitchers.some(pitcher => pitcher.email === this.user.email);
           this.isAgentSeller = this.user.accountType === 'agent' && this.counterOffer.offerType as string === 'buyer_counter_offer';
 
-          // check if creator signs first time he can edit and sign simultaneously
-          const creatorSignAndEdit = this.counterOffer.pitcher === this.user.id && !this.counterOffer.anyUserSigned;
-          this.isDisabled = (!this.isUserPitcher || this.isSignMode) && !creatorSignAndEdit;
+          this.isDisabled = !this.isUserPitcher || this.isSignMode;
 
           this.showSwitcher = this.isUserPitcher && this.counterOffer.status !== AgreementStatus.Completed;
 
@@ -118,7 +114,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
           this.allFieldsCount = Object.keys(this.documentObj).length;
 
-          this.okButtonText = (!this.counterOffer.isSigned && this.isSignMode) || isFinalMode ? 'Finish' : 'Back to the offer';
+          this.okButtonText = (!this.counterOffer.isSigned && this.isSignMode) || isFinalMode ? 'Finish' : 'Continue';
 
           this.isSidebarControlsVisible =
             this.isSideBarOpen && this.counterOffer.catchers.some((user: Person) => user.email === this.user.email);
@@ -230,7 +226,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     this.isDisabled = this.isSignMode = isSign;
     this.okButtonText = this.isSignMode && (!this.counterOffer.isSigned || this.counterOffer.canFinalSign)
       ? 'Finish'
-      : 'Save';
+      : 'Continue';
   }
 
   limitLines(input, limit) {
@@ -293,8 +289,6 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
           this.documentForm.get(`${_.snakeCase(controlName)}`)
             .patchValue(value, {emitEvent: false, onlySelf: true});
-          this.prevFormSnapshot.get(`${_.snakeCase(controlName)}`)
-            .patchValue(value, {emitEvent: false, onlySelf: true});
         }
       });
     });
@@ -309,32 +303,10 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         )
         .subscribe((controlValue) => {
           if (this.counterOffer.anyUserSigned && !this.counterOffer.canFinalSign && this.isUserPitcher) {
-            const config: MatSnackBarConfig = {
-              duration: 0,
-              data: {
-                message: 'Are you sure want to change a field? All users signatures will be cleared.',
-                dismiss: 'Cancel',
-                action: 'Yes'
-              },
-            };
-
-            const snackBarRef = this.snackbar.openFromComponent(ConfirmationBarComponent, config);
-
-            snackBarRef.afterDismissed()
-              .pipe(takeUntil(this.onDestroyed$))
-              .subscribe(info => {
-                if (info.dismissedByAction) {
-                  this.prevFormSnapshot.patchValue(this.documentForm.getRawValue(), {emitEvent: false});
-                  this.resetAgreement();
-                  this.saveDocumentField(Object.keys(documentForm.getRawValue())[controlIndex], controlValue);
-                } else {
-                  this.documentForm.patchValue(this.prevFormSnapshot.getRawValue(), {emitEvent: false});
-                }
-              });
-          } else {
-            this.prevFormSnapshot.patchValue(this.documentForm.getRawValue(), {emitEvent: false});
-            this.saveDocumentField(Object.keys(documentForm.getRawValue())[controlIndex], controlValue);
+            this.resetAgreement();
           }
+
+          this.saveDocumentField(Object.keys(documentForm.getRawValue())[controlIndex], controlValue);
         });
     });
 
