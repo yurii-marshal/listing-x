@@ -99,7 +99,6 @@ export class MultipleCOComponent extends BaseCounterOfferAbstract<CounterOffer> 
   ngOnInit() {
     super.ngOnInit();
 
-    this.prevFormSnapshot = this.formGroupPage;
     this.documentForm = this.formGroupPage;
   }
 }
