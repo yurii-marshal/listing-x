@@ -27,6 +27,8 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
   state: string = 'counter-offer';
 
+  isLoading = true;
+
   type;
   id: number;
   offerId: number;
@@ -42,8 +44,6 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   isUserPitcher: boolean;
   isAgentSeller: boolean;
   pendingCO: GeneratedDocument[];
-
-  isLoading: boolean;
 
   documentForm: FormGroup;
   prevFormSnapshot: FormGroup;
@@ -121,7 +121,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         this.okButtonText = (!this.counterOffer.isSigned && this.isSignMode) || isFinalMode ? 'Finish' : 'Back to the offer';
 
         this.isSidebarControlsVisible =
-          this.isSideBarOpen && this.counterOffer.catchers.some((user: Person) => user.email === this.authService.currentUser.email);
+          this.isSideBarOpen && this.counterOffer.catchers.some((user: Person) => user.email === this.user.email);
 
         this.isMCOFinalSign = counterOffer.offerType as string === 'multiple_counter_offer' && counterOffer.canFinalSign;
 
@@ -150,7 +150,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     setTimeout(() => {
       this.isSidebarControlsVisible =
         value && this.counterOffer &&
-        this.counterOffer.catchers.some((user: Person) => user.email === this.authService.currentUser.email);
+        this.counterOffer.catchers.some((user: Person) => user.email === this.user.email);
     }, value ? 250 : 0);
   }
 
@@ -401,6 +401,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     if (!this.signatures.toArray().filter(el => el.isActiveSignRow).every((el) => !!el.signatureControl.value)) {
       this.snackbar.open('Please, sign all mandatory fields');
     } else {
+      this.isLoading = true;
       this.counterOfferService.signCounterOffer(this.id, this.isMCOFinalSign ? 'final_approval' : 'sign')
         .pipe(takeUntil(this.onDestroyed$))
         .subscribe(() => {
@@ -424,6 +425,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
           }
 
           this.closeCO();
+          this.isLoading = false;
         });
     }
   }
