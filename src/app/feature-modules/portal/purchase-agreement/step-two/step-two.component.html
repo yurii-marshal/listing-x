@@ -5453,12 +5453,12 @@
       <div class="offer-information u-flex u-flex-direction--column u-flex-justify--start u-flex-align-items--start"
            *ngIf="offerService.isSideBarOpen">
 
-        <app-agreement-mode-switcher
-          [show]="offer.allowSign && offerService.isSideBarOpen && offer.userRole === 'agent_buyer'"
-          [disabled]="offer.isSigned || documentForm.invalid"
-          [isChecked]="isSignMode"
-          (changeMode)="modeChanged($event)"
-        ></app-agreement-mode-switcher>
+        <!--<app-agreement-mode-switcher-->
+          <!--[show]="offer.allowSign && offerService.isSideBarOpen && offer.userRole === 'agent_buyer'"-->
+          <!--[disabled]="offer.isSigned || documentForm.invalid"-->
+          <!--[isChecked]="isSignMode"-->
+          <!--(changeMode)="modeChanged($event)"-->
+        <!--&gt;</app-agreement-mode-switcher>-->
 
         <h4>Offer information</h4>
 
