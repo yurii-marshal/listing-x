@@ -3846,7 +3846,7 @@
                   <input formControlName="check_seller_acceptance_attached" type="checkbox">
                   <span>(If checked) SELLER'S ACCEPTANCE IS </span>
                   <span class="fw-bold">SUBJECT TO ATTACHED COUNTER OFFER (C.A.R. Form SCO or SMCO) DATED:</span>
-                  <input matInput [min]="datepickerMinDate" (click)="date_one_or_more_seller.open()"
+                  <input matInput (click)="date_one_or_more_seller.open()"
                          [matDatepicker]="date_one_or_more_seller"
                          formControlName="date_one_or_more_seller"
                          type="text"
