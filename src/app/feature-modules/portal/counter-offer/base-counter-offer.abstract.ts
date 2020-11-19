@@ -134,6 +134,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
           this.subscribeToFormChanges(this.documentForm);
           this.nextField(true);
 
+          this.checkOnAgreementTransition();
           this.checkOnFinalTransitions();
           this.isLoading = false;
         },
@@ -255,6 +256,16 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
         this.counterOfferService.prevCO.isSigned
       ) {
         this.openFinishingDialog();
+      }
+    }
+  }
+
+  private checkOnAgreementTransition() {
+    if (this.profileService.previousRouteUrl) {
+      const lastPA = `/portal/purchase-agreements/${this.offerId}/sign`;
+
+      if (this.profileService.previousRouteUrl.includes(lastPA) && this.offer.isSigned) {
+        this.isSignMode = true;
       }
     }
   }
