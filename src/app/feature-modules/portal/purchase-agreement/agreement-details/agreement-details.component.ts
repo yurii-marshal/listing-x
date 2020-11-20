@@ -5,7 +5,7 @@ import { AddendumData, Document, GeneratedDocument } from '../../../../core-modu
 import { AuthService } from '../../../../core-modules/core-services/auth.service';
 import { MatDialog, MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { flatMap, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { flatMap, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { Offer, Person } from '../../../../core-modules/models/offer';
 import { SpqDialogComponent } from '../../dialogs/spq-dialog/spq-dialog.component';
 import { AddendumDialogComponent } from '../../dialogs/addendum-dialog/addendum-dialog.component';
@@ -110,19 +110,11 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   openPendingDocument(doc: GeneratedDocument) {
-    switch (doc.documentType) {
-      case 'purchase_agreement':
-        this.openSignOffer();
-        break;
-      default:
-        this.openCounterOffer(doc);
-    }
+    doc.documentType === 'purchase_agreement' ? this.openSignOffer() : this.openCounterOffer(doc);
   }
 
   openSignOffer() {
-    this.offer.userRole === 'agent_buyer'
-      ? this.router.navigateByUrl(`portal/purchase-agreements/${this.offer.id}/step-two`)
-      : this.router.navigateByUrl(`portal/purchase-agreements/${this.offer.id}/sign`);
+    this.router.navigateByUrl(`portal/purchase-agreements/${this.offer.id}/` + (this.offer.isSigned ? 'step-two' : 'sign'));
   }
 
   openCounterOffer(doc) {

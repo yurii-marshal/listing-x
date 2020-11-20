@@ -36,9 +36,6 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   documentObj;
 
   isDisabled: boolean = true;
-  showSwitcher: boolean = false;
-
-  isSignMode: boolean = false;
 
   isUserPitcher: boolean;
   isAgentSeller: boolean;
@@ -100,21 +97,13 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
           this.isUserPitcher = this.counterOffer.pitchers.some(pitcher => pitcher.email === this.user.email);
           this.isAgentSeller = this.user.accountType === 'agent' && this.counterOffer.offerType as string === 'buyer_counter_offer';
 
-          this.isDisabled = !this.isUserPitcher || this.isSignMode;
-
-          this.showSwitcher = this.isUserPitcher && this.counterOffer.status !== AgreementStatus.Completed;
-
           const isFinalMode = this.counterOffer.canFinalSign && this.counterOffer.isSigned;
 
-          // if user isn't creator there's available sign mode only / for sign / for review
-          if (!this.showSwitcher || isFinalMode) {
-            this.isSignMode = true;
-            this.isDisabled = true;
-          }
+          this.isDisabled = !this.isUserPitcher || isFinalMode;
 
           this.allFieldsCount = Object.keys(this.documentObj).length;
 
-          this.okButtonText = (!this.counterOffer.isSigned && this.isSignMode) || isFinalMode ? 'Finish' : 'Continue';
+          this.okButtonText = !this.counterOffer.isSigned || isFinalMode ? 'Finish' : 'Continue';
 
           this.isSidebarControlsVisible =
             this.isSideBarOpen && this.counterOffer.catchers.some((user: Person) => user.email === this.user.email);
@@ -132,7 +121,10 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
           }
 
           this.subscribeToFormChanges(this.documentForm);
-          this.nextField(true);
+
+          if (!this.isUserPitcher) {
+            this.nextField(true);
+          }
 
           this.checkOnFinalTransitions();
           this.isLoading = false;
@@ -185,28 +177,26 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   }
 
   continue() {
-    if (this.isSignMode) {
-      const isSigningComplete = this.signatures.toArray().filter(el => el.isActiveSignRow).every((el) => !!el.signatureControl.value);
+    this.documentForm.markAllAsTouched();
 
-      if (isSigningComplete) {
-        if (this.offer && !this.offer.isSigned) {
-          this.form.nativeElement.blur();
-          this.snackbar.open('First, please, sign the purchase agreement');
-          this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/sign`);
-        } else if (!this.counterOffer.isSigned || this.counterOffer.canFinalSign) {
-          this.openFinishingDialog();
-        } else {
-          this.closeCO();
-        }
+    const isSigningComplete = this.signatures.toArray().filter(el => el.isActiveSignRow).every((el) => !!el.signatureControl.value);
+
+    if (isSigningComplete) {
+      if (this.offer && !this.offer.isSigned) {
+        this.form.nativeElement.blur();
+        this.snackbar.open('First, please, sign the purchase agreement');
+        this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/sign`);
+      } else if (!this.counterOffer.isSigned || this.counterOffer.canFinalSign) {
+        this.openFinishingDialog();
       } else {
-        this.nextField(true);
+        this.closeCO();
       }
     } else {
-      this.documentForm.markAllAsTouched();
+      this.nextField(true);
+    }
 
-      this.scrollToFirstInvalidField()
-        ? this.snackbar.open('Please, fill all mandatory fields')
-        : this.modeChanged(true); // this.closeCO()
+    if (this.scrollToFirstInvalidField()) {
+      this.snackbar.open('Please, fill all mandatory fields');
     }
   }
 
@@ -220,13 +210,6 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     this.finalSignFields.push({controlName, role, index});
 
     return [{value: '', disabled: true}, []];
-  }
-
-  modeChanged(isSign: boolean) {
-    this.isDisabled = this.isSignMode = isSign;
-    this.okButtonText = this.isSignMode && (!this.counterOffer.isSigned || this.counterOffer.canFinalSign)
-      ? 'Finish'
-      : 'Continue';
   }
 
   limitLines(input, limit) {
@@ -249,11 +232,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
       const lastCO = `/portal/offer/${this.offer.id}/counter-offers/` +
         `${this.counterOfferService.prevCO.id}/${CounterOfferType[prevCO ? prevCO.documentType : null]}`;
 
-      if (
-        this.profileService.previousRouteUrl &&
-        this.profileService.previousRouteUrl.includes(lastCO) &&
-        this.counterOfferService.prevCO.isSigned
-      ) {
+      if (this.profileService.previousRouteUrl && this.profileService.previousRouteUrl.includes(lastCO)) {
         this.openFinishingDialog();
       }
     }
@@ -342,7 +321,6 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
     this.counterOffer.anyUserSigned = false;
     this.counterOffer.status = AgreementStatus.Started;
     this.counterOffer.isSigned = false;
-    this.isSignMode = false;
 
     this.snackbar.open('The document was changed. Please, resign.');
   }

@@ -305,18 +305,10 @@
       (openedChange)="toggleSidebar($event)"
       (continue)="continue()"
       [okButtonText]="okButtonText"
-      [isSignMode]="isSignMode"
       [isEnable]="!isLoading"
     >
 
       <section>
-        <app-agreement-mode-switcher
-          [show]="isSideBarOpen && showSwitcher"
-          [disabled]="!counterOffer?.canEdit || documentForm?.invalid"
-          [isChecked]="isSignMode"
-          (changeMode)="modeChanged($event)"
-        ></app-agreement-mode-switcher>
-
         <app-counter-offer-information [counterOffer]="counterOffer" [show]="isSideBarOpen"></app-counter-offer-information>
       </section>
 
@@ -324,7 +316,6 @@
 
       <div class="controls" *ngIf="isSideBarOpen">
         <app-progress-bar
-          [isSignMode]="isSignMode"
           [totalFieldsNum]="allFieldsCount"
           [completedFieldsCount]="completedFieldsCount"
         ></app-progress-bar>
