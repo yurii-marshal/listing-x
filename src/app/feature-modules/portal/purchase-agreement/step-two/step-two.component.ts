@@ -696,12 +696,6 @@ export class StepTwoComponent implements OnInit, AfterViewInit, OnDestroy {
     this.setPageBreakers();
   }
 
-  modeChanged(isSign: boolean) {
-    isSign
-      ? this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/sign`)
-      : this.router.navigateByUrl(`/portal/purchase-agreements/${this.offerId}/step-two`);
-  }
-
   editOffer(offerChangedModel?: Offer) {
     const dialogRef = this.dialog.open(EditOfferDialogComponent, {
       width: '600px',

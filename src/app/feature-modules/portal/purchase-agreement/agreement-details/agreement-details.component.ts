@@ -110,17 +110,11 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   openPendingDocument(doc: GeneratedDocument) {
-    switch (doc.documentType) {
-      case 'purchase_agreement':
-        this.openSignOffer();
-        break;
-      default:
-        this.openCounterOffer(doc);
-    }
+    doc.documentType === 'purchase_agreement' ? this.openSignOffer() : this.openCounterOffer(doc);
   }
 
   openSignOffer() {
-    this.router.navigateByUrl(`portal/purchase-agreements/${this.offer.id}/sign`);
+    this.router.navigateByUrl(`portal/purchase-agreements/${this.offer.id}/` + (this.offer.isSigned ? 'step-two' : 'sign'));
   }
 
   openCounterOffer(doc) {
