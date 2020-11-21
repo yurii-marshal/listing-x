@@ -13,7 +13,6 @@ export class ProgressBarComponent {
   @Input() pagesNum: number = 0;
   @Input() completedPageCount: number = 0;
   @Input() currentPage: number;
-  @Input() isSignMode: boolean = false;
 
   constructor() { }
 

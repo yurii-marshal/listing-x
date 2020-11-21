@@ -5447,7 +5447,6 @@
                  [isEnable]="documentForm.valid"
                  (continue)="continue()"
                  [okButtonText]="okButtonText"
-                 [isSignMode]="isSignMode"
     >
 
       <div class="offer-information u-flex u-flex-direction--column u-flex-justify--start u-flex-align-items--start"
@@ -5533,7 +5532,6 @@
 
       <div class="controls" *ngIf="offerService.isSideBarOpen">
         <app-progress-bar
-          [isSignMode]="isSignMode"
           [pagesNum]="allPageCount"
           [completedPageCount]="completedPageCount"
           [currentPage]="currentPage"

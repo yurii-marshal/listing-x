@@ -99,7 +99,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
           const isFinalMode = this.counterOffer.canFinalSign && this.counterOffer.isSigned;
 
-          this.isDisabled = !this.isUserPitcher || isFinalMode;
+          this.isDisabled = !this.isUserPitcher || isFinalMode || !this.counterOffer.canEdit;
 
           this.allFieldsCount = Object.keys(this.documentObj).length;
 
