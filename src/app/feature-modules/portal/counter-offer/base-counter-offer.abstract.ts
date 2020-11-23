@@ -105,12 +105,15 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
           this.okButtonText = !this.counterOffer.isSigned || isFinalMode ? 'Finish' : 'Continue';
 
-          this.isSidebarControlsVisible =
-            this.isSideBarOpen && this.counterOffer.catchers.some((user: Person) => user.email === this.user.email);
-
           this.isMCOFinalSign = counterOffer.offerType as string === 'multiple_counter_offer' && counterOffer.canFinalSign;
 
-          this.pendingCO = this.offer.pendingDocuments.filter((item) => !!CounterOfferType[item.documentType]);
+          this.pendingCO = this.offer.pendingDocuments
+            .filter((item) => (item.documentType as string).includes('counter_offer'));
+
+          this.isSidebarControlsVisible =
+            this.isSideBarOpen &&
+            this.pendingCO.length === 1 &&
+            this.counterOffer.catchers.some((user: Person) => user.email === this.user.email);
 
           if (!this.isMCOFinalSign && !this.counterOffer.isSigned && this.counterOffer.canSign) {
             this.setSignFields(this.signFields);
@@ -137,7 +140,7 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
 
     setTimeout(() => {
       this.isSidebarControlsVisible =
-        value && this.counterOffer &&
+        value && this.counterOffer && this.pendingCO.length === 1 &&
         this.counterOffer.catchers.some((user: Person) => user.email === this.user.email);
     }, value ? 250 : 0);
   }
@@ -177,13 +180,14 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   }
 
   continue() {
+    // todo: waiting for valueChange detection
+    this.form.nativeElement.blur();
     this.documentForm.markAllAsTouched();
 
     const isSigningComplete = this.signatures.toArray().filter(el => el.isActiveSignRow).every((el) => !!el.signatureControl.value);
 
     if (isSigningComplete) {
       if (this.offer && !this.offer.isSigned) {
-        this.form.nativeElement.blur();
         this.snackbar.open('First, please, sign the purchase agreement');
         this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/sign`);
       } else if (!this.counterOffer.isSigned || this.counterOffer.canFinalSign) {
@@ -397,7 +401,6 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
       .pipe(takeUntil(this.onDestroyed$))
       .subscribe((isFinished: boolean) => {
         if (isFinished) {
-          this.form.nativeElement.blur();
           if (!this.offer.isSigned) {
             this.snackbar.open('Please, sign the purchase agreement first.');
             this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/sign`);
