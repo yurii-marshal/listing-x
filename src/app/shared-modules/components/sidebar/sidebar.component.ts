@@ -12,8 +12,6 @@ export class SidebarComponent implements OnInit {
 
   @Input() okButtonText: string = 'Continue';
 
-  @Input() isSignMode: boolean = false;
-
   @Output() continue: EventEmitter<void> = new EventEmitter<void>();
 
   constructor() {

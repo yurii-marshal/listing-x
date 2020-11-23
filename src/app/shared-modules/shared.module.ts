@@ -57,7 +57,6 @@ import { DisableControlDirective } from './directives/disable-control.directive'
 import { CounterOfferInformationComponent } from './components/counter-offer-information/counter-offer-information.component';
 import { CounterOfferControlsComponent } from './components/counter-offer-controls/counter-offer-controls.component';
 import { InputMaskDirective } from './directives/input-mask/input-mask.directive';
-import { AgreementModeSwitcherComponent } from './components/agreement-mode-switcher/agreement-mode-switcher.component';
 import { FinishSigningDialogComponent } from './dialogs/finish-signing-dialog/finish-signing-dialog.component';
 import { SimpleDialogComponent } from './dialogs/simple-dialog/simple-dialog.component';
 
@@ -120,7 +119,6 @@ const components = [
   CounterOfferControlsComponent,
   FirstLetterPipe,
   DisableControlDirective,
-  AgreementModeSwitcherComponent,
   ...dialogs,
 ];
 
