@@ -180,28 +180,32 @@ export abstract class BaseCounterOfferAbstract<TModel = CounterOffer> implements
   }
 
   continue() {
-    // todo: waiting for valueChange detection
     this.form.nativeElement.blur();
     this.documentForm.markAllAsTouched();
 
-    const isSigningComplete = this.signatures.toArray().filter(el => el.isActiveSignRow).every((el) => !!el.signatureControl.value);
+    // TODO: waiting for changeValue - resetAgreement - isSigned=false; remove setTimeout
+    setTimeout(() => {
+      const isSigningComplete = this.signatures.toArray()
+        .filter(el => el.isActiveSignRow)
+        .every((el) => !!el.signatureControl.value);
 
-    if (isSigningComplete) {
-      if (this.offer && !this.offer.isSigned) {
-        this.snackbar.open('First, please, sign the purchase agreement');
-        this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/sign`);
-      } else if (!this.counterOffer.isSigned || this.counterOffer.canFinalSign) {
-        this.openFinishingDialog();
+      if (isSigningComplete) {
+        if (this.offer && !this.offer.isSigned) {
+          this.snackbar.open('First, please, sign the purchase agreement');
+          this.router.navigateByUrl(`portal/purchase-agreements/${this.offerId}/sign`);
+        } else if (!this.counterOffer.isSigned || this.counterOffer.canFinalSign) {
+          this.openFinishingDialog();
+        } else {
+          this.closeCO();
+        }
       } else {
-        this.closeCO();
+        this.nextField(true);
       }
-    } else {
-      this.nextField(true);
-    }
 
-    if (this.scrollToFirstInvalidField()) {
-      this.snackbar.open('Please, fill all mandatory fields');
-    }
+      if (this.scrollToFirstInvalidField()) {
+        this.snackbar.open('Please, fill all mandatory fields');
+      }
+    }, 200);
   }
 
   getSignFieldAllowedFor(controlName: string, role: string, index: number) {
