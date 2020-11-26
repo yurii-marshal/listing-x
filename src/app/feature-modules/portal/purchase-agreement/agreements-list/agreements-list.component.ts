@@ -32,7 +32,7 @@ export class AgreementsListComponent implements OnInit, AfterViewInit, OnDestroy
   ];
   dataSource: BaseTableDataSource<Agreement>;
   statuses: string[] = Object.values(AgreementStatus);
-  calendarDataSource: CalendarEvent[];
+  calendarDataSource: CalendarEvent[] = [];
   user: User;
   transactionsFlow: boolean;
 
@@ -59,12 +59,12 @@ export class AgreementsListComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   ngOnInit() {
-    this.offerService.loadCalendar()
-      .pipe(takeUntil(this.onDestroyed$))
-      .subscribe(events => this.calendarDataSource = events);
     this.transactionsFlow = this.router.url.includes('transaction');
     this.user = this.authService.currentUser;
     this.dataSource = new BaseTableDataSource(this.offerService, null, null);
+    this.offerService.loadCalendar()
+      .pipe(takeUntil(this.onDestroyed$))
+      .subscribe(events => this.calendarDataSource = events);
   }
 
   ngAfterViewInit(): void {

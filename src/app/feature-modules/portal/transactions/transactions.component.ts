@@ -58,6 +58,7 @@ export class TransactionsComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit() {
+    // TODO: add calendar endpoint for agreement flow
     // this.service.loadCalendar()
     //   .subscribe(events => this.calendarDataSource = events);
     let params = new HttpParams();
