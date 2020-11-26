@@ -25,7 +25,7 @@ import { DocumentStatus } from 'src/app/core-modules/enums/document-status';
 export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, OnInit {
   offer: Offer;
 
-  calendarDataSource: CalendarEvent[];
+  calendarDataSource: CalendarEvent[] = [];
 
   isOpenInviteUserOverlay: boolean;
   isResidentialAgreementCompleted: boolean = false;
@@ -62,8 +62,9 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
     this.transactionService.loadOne(transactionId)
       .subscribe((transaction: Transaction) => this.transactionLoaded(transaction));
 
-    this.transactionService.loadCalendarByTransaction(transactionId)
-      .subscribe(items => this.calendarDataSource = items);
+    // TODO: add calendar endpoint for agreement flow
+    // this.transactionService.loadCalendarByTransaction(transactionId)
+    //   .subscribe(items => this.calendarDataSource = items);
   }
 
   ngAfterViewInit(): void {
@@ -91,7 +92,7 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
       purchaseAgreements: transaction.purchaseAgreements,
       completedDocuments: transaction.completedDocuments,
       pendingDocuments: transaction.pendingDocuments
-    };
+    } as Offer;
 
     const {agentBuyers, agentSellers, sellers} = transaction.offer;
     this.isAgent = [...agentSellers, ...agentBuyers].some(({email}) => email === this.authService.currentUser.email);
@@ -106,9 +107,6 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
 
     const {agentBuyers, agentSellers, sellers} = offer;
     this.isSeller = [...agentSellers, ...sellers].some(({email}) => email === this.authService.currentUser.email);
-
-    // const residentialAgreement = Array(offer.documents).find(doc => doc.documentType === GeneratedDocumentType.Contract);
-    // this.isResidentialAgreementCompleted = residentialAgreement && residentialAgreement.status === DocumentStatus.Completed;
   }
 
   onDelete() {
@@ -150,23 +148,6 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
       });
   }
 
-  goToESign(doc: GeneratedDocument): void {
-    // const url = {
-    //   [GeneratedDocumentType.Contract]: '/e-sign',
-    //   [GeneratedDocumentType.Spq]: '/e-sign/spq',
-    //   [GeneratedDocumentType.Addendum]: '/e-sign/addendum'
-    // }[doc.documentType];
-    //
-    // if (doc.documentType === GeneratedDocumentType.Spq && !this.isAgent && this.isSeller) {
-    //   this.openSPQDialog(doc, true);
-    //   return;
-    // }
-
-    // this.router.navigate([url, doc.id]);
-    // this.transactionService.lockOffer(this.offer.transaction)
-    //   .subscribe(() => this.router.navigate(['/e-sign', this.offer.transaction]));
-  }
-
   deny() {
     const id: number = Number(this.route.snapshot.params.id);
     this.transactionService.deny(id)
@@ -190,6 +171,7 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
       ).subscribe();
     }
 
+    /* */
     let {file, title} = doc;
 
     const trigger: HTMLAnchorElement = document.createElement('a');

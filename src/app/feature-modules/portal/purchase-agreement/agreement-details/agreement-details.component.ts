@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { FormControl, Validators } from '@angular/forms';
 import { AddendumData, Document, GeneratedDocument } from '../../../../core-modules/models/document';
 import { AuthService } from '../../../../core-modules/core-services/auth.service';
@@ -238,6 +238,6 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
         }),
         switchMap((offer: Offer) => this.offerService.loadCalendarByOffer(offer.transaction))
       )
-      .subscribe((items) => this.calendarDataSource = items);
+      .subscribe((events) => this.calendarDataSource = events);
   }
 }
