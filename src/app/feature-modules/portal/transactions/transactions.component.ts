@@ -1,9 +1,9 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AddressDialogComponent } from '../../../shared-modules/dialogs/address-dialog/address-dialog.component';
 import { filter, map, takeUntil } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
-import { Transaction, TransactionStatus } from '../../../core-modules/models/transaction';
+import { TransactionStatus } from '../../../core-modules/models/transaction';
 import { TransactionService } from '../services/transaction.service';
 import { AuthService } from '../../../core-modules/core-services/auth.service';
 import { Offer, Person } from '../../../core-modules/models/offer';
