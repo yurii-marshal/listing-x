@@ -62,9 +62,8 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
     this.transactionService.loadOne(transactionId)
       .subscribe((transaction: Transaction) => this.transactionLoaded(transaction));
 
-    // TODO: add calendar endpoint for agreement flow
-    // this.transactionService.loadCalendarByTransaction(transactionId)
-    //   .subscribe(items => this.calendarDataSource = items);
+    this.transactionService.loadCalendarByTransaction(transactionId)
+      .subscribe(items => this.calendarDataSource = items);
   }
 
   ngAfterViewInit(): void {
@@ -171,10 +170,10 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
       ).subscribe();
     }
 
-    /* */
+    // tslint:disable-next-line
     let {file, title} = doc;
-
-    const trigger: HTMLAnchorElement = document.createElement('a');
+    // tslint:disable-next-line
+    const trigger: HTMLAnchorElement = document['createElement']('a');
     if (file.startsWith('/')) {
       let {origin} = window.location;
 

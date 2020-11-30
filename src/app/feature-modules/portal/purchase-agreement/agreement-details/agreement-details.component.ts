@@ -25,7 +25,7 @@ import { UploadDocumentType } from 'src/app/core-modules/enums/upload-document-t
 })
 export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   offer: Offer;
-  calendarDataSource: CalendarEvent[];
+  calendarDataSource: CalendarEvent[] = [];
   isOpenInviteUserOverlay: boolean;
   isResidentialAgreementCompleted: boolean = false;
   userEmailControl: FormControl = new FormControl(null, [Validators.required, Validators.email]);
@@ -236,8 +236,11 @@ export class AgreementDetailsComponent implements OnInit, AfterViewInit, OnDestr
           this.offer = offer;
           this.setUsers(offer);
         }),
+        // TODO: add calendar endpoint for agreement flow
         switchMap((offer: Offer) => this.offerService.loadCalendarByOffer(offer.transaction))
       )
-      .subscribe((events) => this.calendarDataSource = events);
+      .subscribe((events) => {
+        // this.calendarDataSource = events;
+      });
   }
 }
