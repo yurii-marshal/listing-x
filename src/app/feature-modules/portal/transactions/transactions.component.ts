@@ -33,7 +33,7 @@ export class TransactionsComponent implements OnDestroy, OnInit {
   ];
   dataSource: Offer[];
   statuses: string[] = Object.values(TransactionStatus);
-  calendarDataSource: CalendarEvent[];
+  calendarDataSource: CalendarEvent[] = [];
   user: User;
   transactionsFlow: boolean;
 
@@ -58,9 +58,8 @@ export class TransactionsComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit() {
-    // TODO: add calendar endpoint for agreement flow
-    // this.service.loadCalendar()
-    //   .subscribe(events => this.calendarDataSource = events);
+    this.service.loadCalendar()
+      .subscribe(events => this.calendarDataSource = events);
     let params = new HttpParams();
     params = params.set('ordering', '-id');
 

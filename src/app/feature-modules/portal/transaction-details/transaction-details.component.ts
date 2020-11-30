@@ -62,9 +62,8 @@ export class TransactionDetailsComponent implements AfterViewInit, OnDestroy, On
     this.transactionService.loadOne(transactionId)
       .subscribe((transaction: Transaction) => this.transactionLoaded(transaction));
 
-    // TODO: add calendar endpoint for agreement flow
-    // this.transactionService.loadCalendarByTransaction(transactionId)
-    //   .subscribe(items => this.calendarDataSource = items);
+    this.transactionService.loadCalendarByTransaction(transactionId)
+      .subscribe(items => this.calendarDataSource = items);
   }
 
   ngAfterViewInit(): void {
